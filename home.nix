@@ -10,9 +10,17 @@ let
   };
   omz = ~/.oh-my-zsh;
   omzCustom = "${omz}/custom";
+  linux = [ ./env/linux/packages.nix ];
+  darwin = [ ./env/darwin/packages.nix ];
+  envs = {
+    inherit linux;
+    inherit darwin;
+  };
 in {
+  imports = [ ./env/common/packages.nix ] ++ envs."${system}";
+
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.overlays = [ (import ./overlays/jj.nix) ];
+  nixpkgs.overlays = [ (import ./overlays/jujutsu.nix) ];
   font.fontconfig.enable = true;
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -31,78 +39,26 @@ in {
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs; [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
+  home.packages = with pkgs;
+    [
+      # # Adds the 'hello' command to your environment. It prints a friendly
+      # # "Hello, world!" when run.
+      # pkgs.hello
 
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+      # # It is sometimes useful to fine-tune packages, for example, by applying
+      # # overrides. You can do that directly here, just don't forget the
+      # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
+      # # fonts?
+      # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+      # # You can also create simple shell scripts directly inside your
+      # # configuration. For example, this adds a command 'my-hello' to your
+      # # environment:
+      # (pkgs.writeShellScriptBin "my-hello" ''
+      #   echo "Hello, ${config.home.username}!"
+      # '')
 
-    # Essentials
-    exa
-    mosh
-    ranger
-    rclone
-    ripgrep
-
-    # Utilities
-    curl
-    neofetch
-    pv
-    watch
-    tree
-    hurl
-
-    # Programming languages
-    nodejs
-    python3Full
-
-    # Package managers
-    pipx
-    yarn
-    asdf-vm
-
-    # Cryptography
-    age
-    magic-wormhole
-    openssh
-    openssl
-    pwgen-secure
-    rage
-
-    # Programming tools
-    docker
-    docker-compose
-    lazydocker
-    lazygit
-    jj
-    glab
-    gh-dash
-
-    # Language servers
-    shellcheck
-    vale
-
-    # System and network tools
-    bandwhich
-    htop
-    httpie
-    netcat
-
-    # Fonts
-    fira-code
-  ];
+    ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
