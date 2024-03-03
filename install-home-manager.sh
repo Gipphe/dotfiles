@@ -38,7 +38,9 @@ fi
 
 if [ "$1" = "nix" ]; then
 	cfg=~/.config/nix/nix.conf
-	if ! $(grep -q 'nix-command flakes' $cfg 2>/dev/null); then
+	if grep -q 'nixos\/configuration\.nix' $cfg 2>/dev/null; then
+		echo "Ensure 'nix-command' and 'flakes' experimental features are enabled in your NixOS config"
+	elif ! $(grep -q 'nix-command flakes|flakes nix-command' $cfg 2>/dev/null); then
 		echo "Adding experimental features to nix.conf"
 		mkdir -p $(dirname $cfg)
 		echo "experimental-features = nix-command flakes" >> $cfg

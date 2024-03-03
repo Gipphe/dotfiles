@@ -1,5 +1,5 @@
 { pkgs }: {
-  home.packages = with pkgs; [
+  packages = with pkgs; [
     # Essentials
     exa
     mosh
@@ -16,8 +16,9 @@
     hurl
 
     # Programming languages
-    nodejs
     python3Full
+    terraform
+    nodejs_20
 
     # Package managers
     pipx
@@ -49,6 +50,6 @@
     netcat
 
     # Fonts
-    fira-code
+    (pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
 }
