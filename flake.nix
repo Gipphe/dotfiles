@@ -25,5 +25,7 @@
             # to pass through arguments to home.nix
             # extraSpecialArgs = { inherit pkgs nixpkgs system; }
           };
+        devShells.default =
+          pkgs.mkShell { buildInputs = with pkgs; [ nixfmt ]; };
       });
 }
