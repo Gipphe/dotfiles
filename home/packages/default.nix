@@ -14,42 +14,46 @@
     # '')
 
     # Essentials
-    eza
     # mosh
     ranger
-    rclone
+    # rclone
     ripgrep
+
+    # Libraries
+    imagemagick
 
     # Utilities
     curl
     # pv
     # watch
-    tree
+    # tree
     # hurl
+    entr
+    fastgron
+    fd
+    _1password
+    docker
 
     # Cryptography
     age
     # magic-wormhole
-    openssh
+    # openssh
     openssl
     # pwgen-secure
     # rage
 
     # Programming tools
-    lazygit
-    jujutsu
     glab
-    gh-dash
+    python3Full
 
     # Language servers
     shellcheck
     vale
 
     # System and network tools
-    bandwhich
-    htop
-    httpie
-    netcat
+    # bandwhich
+    # httpie
+    # netcat
 
     # Fonts
     (nerdfonts.override { fonts = [ "FiraCode" ]; })

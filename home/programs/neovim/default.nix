@@ -3,10 +3,10 @@
     ripgrep
     fzf
     fd
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
     tar
     curl
     libgcc
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
   programs.neovim = {
     enable = true;

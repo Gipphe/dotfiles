@@ -1,8 +1,4 @@
 { pkgs, ... }: {
-  meta = {
-    name = "jarle";
-  };
-  packages = with pkgs; [
-		
-  ];
+  meta = { name = "jarle"; };
+  packages = with pkgs; [ xdg-utils ];
 }
