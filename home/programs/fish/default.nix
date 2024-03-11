@@ -8,9 +8,9 @@ with lib.attrsets; {
     functions = let
       function_files = filterAttrs (f: t: t == "regular") (readDir ./functions);
       function_list = attrNames function_files;
-      functions = foldl' (l: r: l // { ${r} = readFile ./functions/${r}; }) { }
+      functions =
+        foldl' (fs: f: fs // { ${f} = readFile ./functions/${f}; }) { }
         function_list;
-
     in functions;
     plugins = with pkgs.fishPlugins; [
       {
@@ -45,7 +45,7 @@ with lib.attrsets; {
           owner = "kidonng";
           repo = "nix.fish";
           rev = "master";
-          sha256 = lib.fakeHash;
+          sha256 = "sha256-GMV0GyORJ8Tt2S9wTCo2lkkLtetYv0rc19aA5KJbo48=";
         };
       }
     ];

@@ -1,7 +1,0 @@
-[user]
-name = "Victor Nascimento Bakke"
-email = "gipphe@gmail.com"
-
-[ui]
-pager = ["less", "-FX"]
-editor = "vim"

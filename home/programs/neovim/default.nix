@@ -1,9 +1,9 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   home.packages = with pkgs; [
     ripgrep
     fzf
     fd
-    tar
+    gnutar
     curl
     libgcc
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
@@ -14,5 +14,8 @@
     withNodeJs = true;
     withPython3 = true;
   };
-  home.file.".config/nvim" = { source = ./.; };
+  # home.file.".config/nvim" = { source = ./.; };
+  systemd.user.tmpfiles.rules = [
+    "L ${config.home.homeDirectory}/.config/nvim - - - - ${config.home.homeDirectory}/projects/dotfiles/home/programs/neovim"
+  ];
 }

@@ -1,4 +1,5 @@
-{ lib, ... }:
+{ lib, stdenv, ... }:
+with stdenv;
 with lib;
 let
   inherit (attrsets) filterAttrs;
@@ -9,10 +10,14 @@ let
       machineNames;
   in machines.${thisMachine};
 in {
-  extraSpecialArgs = { inherit machineConfig; };
+  imports = [
+    ./packages
+    ./programs
+    # machineConfig 
+  ];
 
   nixpkgs.config.allowUnfree = true;
-  font.fontconfig.enable = true;
+  fonts.fontconfig.enable = true;
 
   home = {
     # Home Manager needs a bit of information about you and the paths it should
@@ -60,118 +65,8 @@ in {
     };
   };
 
-  programs = {
-    # Let Home Manager install and manage itself.
-    home-manager.enable = true;
-
-    bat = {
-      enable = true;
-      config = {
-        pager = "less -FXR";
-        theme = "TwoDark";
-      };
-    };
-
-    direnv = {
-      enable = true;
-      enableFishIntegration = true;
-    };
-
-    gh = {
-      enable = true;
-      settings = {
-        editor = "";
-        prompt = "enabled";
-        pager = "";
-        http_unix_socket = "";
-        browser = "";
-        git_protocol = "https";
-        aliases = {
-          prc = "pr create -df";
-          prm = "pr merge --auto -sd";
-        };
-      };
-    };
-
-    gpg.enable = true;
-    jq.enable = true;
-
-    kitty.enable = true;
-
-    less.enable = true;
-
-    ssh = {
-      enable = true;
-      matchBlocks = {
-        "github.com-strise" = lib.hm.dag.entryBefore [ "github.com" ] {
-          hostname = "github.com";
-          user = "git";
-          identitiesOnly = true;
-          identityFile = "~/.ssh/id_rsa.strise";
-        };
-
-        "github.com" = {
-          hostname = "github.com";
-          user = "git";
-          identitiesOnly = true;
-          identityFile = "~/.ssh/id_rsa.github";
-        };
-
-        "gitlab.com" = {
-          hostname = "gitlab.com";
-          user = "git";
-          identitiesOnly = true;
-          identityFile = "~/.ssh/id_rsa.gitlab";
-        };
-      };
-    };
-
-    tmux = {
-      enable = true;
-      mouse = true;
-      clock24 = true;
-    };
-
-    vim = {
-      enable = true;
-      settings = {
-        # Size of a hard tabstop
-        tabstop = 4;
-        # Size of an 'indent'
-        shiftwidth = 4;
-        # always use tabs instead of spaces
-        expandtab = false;
-      };
-      extraConfig = ''
-        scriptencoding utf-8
-        set encoding=utf-8
-
-        " A combination of spaces and tabs are used to simulate tab stops at a width
-        " other than the (hard)tabstop
-        set softtabstop=0
-
-        set list listchars=tab:▸\ ,trail:·,precedes:←,extends:→
-
-        if exists('+colorcolumn')
-          set colorcolumn=100
-        else
-          au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>100v.\+', -1)
-        endif
-      '';
-    };
-
-    zsh = {
-      enable = true;
-      enableAutoSuggestions = true;
-      enableCompletion = true;
-      oh-my-zsh = {
-        enable = true;
-        plugins = [ "git" "stack" "docker" "docker-compose" ];
-        theme = omzThemeName;
-        custom = omzCustom;
-      };
-    };
-  } // env.programs;
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
 
   services = {
     gpg-agent = {

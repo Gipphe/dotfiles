@@ -9,23 +9,22 @@
     utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, home-manager, utils, ... }:
+  outputs = { nixpkgs, home-manager, utils, ... }:
     utils.lib.eachDefaultSystem (system:
       let pkgs = nixpkgs.legacyPackages.${system};
       in {
-        homeConfigurations."gipphe" =
+        packages.homeConfigurations."gipphe" =
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
 
             # Specify your home configuration modules here, for example,
             # the path to your home.nix.
-            modules = [ ./home.nix ];
+            modules = [ ./home ];
 
             # Optionally use extraSpecialArgs
             # to pass through arguments to home.nix
             # extraSpecialArgs = { inherit pkgs nixpkgs system; }
           };
-        homeConfigurations."gipphe@Jarle" = self.homeConfigurations."gipphe";
         devShells.default =
           pkgs.mkShell { buildInputs = with pkgs; [ nixfmt ]; };
       });

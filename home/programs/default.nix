@@ -1,15 +1,69 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: {
   imports = [ ./git ./neovim ./fish ./tmux ./tmux ];
-  programs.zoxide.enable = true;
-  programs.gpg.enable = true;
+
+  programs.bat = {
+    enable = true;
+    config = {
+      pager = "less -FXR";
+      theme = "TwoDark";
+    };
+  };
+
+  programs.direnv.enable = true;
+
   programs.eza = {
     enable = true;
     enableAliases = true;
     icons = true;
     git = true;
   };
+
+  programs.gh = {
+    enable = true;
+    settings = {
+      editor = "";
+      prompt = "enabled";
+      pager = "";
+      http_unix_socket = "";
+      browser = "";
+      git_protocol = "https";
+      aliases = {
+        co = "pr checkout";
+        prc = "pr create -df";
+        prm = "pr merge --auto -sd";
+      };
+    };
+  };
+
+  programs.gpg.enable = true;
+
+  programs.htop.enable = true;
+
   programs.jq.enable = true;
-  programs.thefuck.enable = true;
+
+  programs.jujutsu = {
+    enable = true;
+    settings = {
+      user = {
+        name = "Victor Nascimento Bakke";
+        email = "gipphe@gmail.com";
+      };
+      ui = {
+        editor = "nvim";
+        default-command = "lol";
+      };
+      git = { auto-local-branch = true; };
+      aliases = {
+        lol = [ "log" "-r" "all()" ];
+        sync = [ "branch" "set" "-r" "@-" ];
+      };
+    };
+  };
+
+  programs.lazygit.enable = true;
+
+  programs.less.enable = true;
+
   programs.ssh = {
     enable = true;
     package = pkgs.openssh;
@@ -17,58 +71,54 @@
     matchBlocks = {
       "github.com" = {
         user = "git";
-        identityFile = ~/.ssh/github.ssh;
+        identityFile = "${config.home.homeDirectory}/.ssh/github.ssh";
         identitiesOnly = true;
-        # strictHostKeyChecking yes
+        # strictHostKeyChecking yes 
       };
-
       "gitlab.com" = {
         user = "git";
-        identityFile = ~/.ssh/gitlab.ssh;
+        identityFile = "${config.home.homeDirectory}/.ssh/gitlab.ssh";
         identitiesOnly = true;
-        # StrictHostKeyChecking yes
+        #StrictHostKeyChecking yes
       };
-
       "codeberg.com" = {
         user = "git";
-        identityFile = ~/.ssh/codeberg.ssh;
+        identityFile = "${config.home.homeDirectory}/.ssh/codeberg.ssh";
         identitiesOnly = true;
-        # StrictHostKeyChecking yes
+        # StrictHostKeyChecking yes 
       };
     };
   };
-  programs.lazygit.enable = true;
-  programs.jujutsu = {
-    enable = true;
 
-    settings = {
-      user = {
-        name = "Victor Nascimento Bakke";
-        email = "gipphe@gmail.com";
-      };
+  programs.thefuck.enable = true;
 
-      ui = {
-        editor = "nvim";
-        default-command = "lol";
-      };
+  programs.zoxide.enable = true;
 
-      git = { auto-local-branch = true; };
-
-      aliases = {
-        lol = [ "log" "-r" "all()" ];
-        sync = [ "branch" "set" "-r" "@-" ];
-      };
-    };
-  };
-  programs.gh = {
+  programs.vim = {
     enable = true;
     settings = {
-      aliases = {
-        co = "pr checkout";
-        prc = "pr create -df --assignee @me";
-        prm = "pr merge -sd --auto";
-      };
+      # Size of a hard tabstop
+      tabstop = 4;
+      # Size of an 'indent'
+      shiftwidth = 4;
+      # always use tabs instead of spaces
+      expandtab = false;
     };
+    extraConfig = ''
+      scriptencoding utf-8
+      set encoding=utf-8
+
+      " A combination of spaces and tabs are used to simulate tab stops at a width
+      " other than the (hard)tabstop
+      set softtabstop=0
+
+      set list listchars=tab:▸\ ,trail:·,precedes:←,extends:→
+
+      if exists('+colorcolumn')
+        set colorcolumn=100
+      else
+        au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>100v.\+', -1)
+      endif
+    '';
   };
-  programs.htop.enable = true;
 }

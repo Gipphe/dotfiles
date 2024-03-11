@@ -1,4 +1,4 @@
-{ pkgs, filen, ... }: rec {
+{ pkgs, system, ... }: rec {
   meta = { name = "VNB-MB-Pro"; };
   packages = with pkgs; [
     openvpn
@@ -6,7 +6,7 @@
     alt-tab-macos
     cyberduck
     _1password-gui
-    filen
+    (import ../../home/packages/filen { inherit pkgs system; })
   ];
   services = {
     barrier.client = {
