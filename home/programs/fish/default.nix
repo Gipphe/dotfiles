@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 with builtins;
 with lib.attrsets; {
   home.packages = with pkgs.fishPlugins; [ bass tide ];
@@ -8,37 +8,33 @@ with lib.attrsets; {
     functions = let
       function_files = filterAttrs (f: t: t == "regular") (readDir ./functions);
       function_list = attrNames function_files;
-      functions =
-        foldl' (fs: f: fs // { ${f} = readFile ./functions/${f}; }) { }
-        function_list;
+      functions = foldl' (fs: f:
+        let fname = head (split "\\.fish$" f);
+        in fs // { ${fname} = readFile ./functions/${f}; }) { } function_list;
     in functions;
-    plugins = with pkgs.fishPlugins; [
-      {
-        name = "tide";
-        src = tide.src;
-      }
-      {
-        name = "bass";
-        src = bass.src;
-      }
+    shellAbbrs = {
+      hms =
+        "home-manager switch --flake ${config.home.homeDirectory}/projects/dotfiles";
+    };
+    plugins = with pkgs; [
       # {
       #   name = "tide";
-      #   src = pkgs.fetchFromGitHub {
-      #     owner = "IlanCosman";
-      #     repo = "tide";
-      #     rev = "refs/tags/v6";
-      #     sha256 = lib.fakeHash;
-      #   };
+      #   src = fishPlugins.tide.src;
       # }
-      # {
-      #   name = "bass";
-      #   src = pkgs.fetchFromGitHub {
-      #     owner = "edc";
-      #     repo = "bass";
-      #     rev = "master";
-      #     sha256 = lib.fakeHash;
-      #   };
-      # }
+      # tide configure --auto --style=Lean --prompt_colors='True color' --show_time='24-hour format' --lean_prompt_height='Two lines' --prompt_connection=Solid --prompt_connection_andor_frame_color=Dark --prompt_spacing=Sparse --icons='Many icons' --transient=Yes
+      {
+        name = "bass";
+        src = fishPlugins.bass.src;
+      }
+      {
+        name = "tide";
+        src = pkgs.fetchFromGitHub {
+          owner = "IlanCosman";
+          repo = "tide";
+          rev = "57afe578d36110615df6c8ce9165d9971e271063";
+          sha256 = "sha256-dw6XLjtaOF7jVAsMqH+CZJFpy20o3gc85A8CQWe/N/8=";
+        };
+      }
       {
         name = "nix";
         src = pkgs.fetchFromGitHub {

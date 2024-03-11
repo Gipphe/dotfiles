@@ -4,7 +4,7 @@ with lib;
 let
   inherit (attrsets) filterAttrs;
   machineConfig = let
-    thisMachine = readFile ./machineName;
+    thisMachine = readFile ../machineName;
     machineNames = filterAttrs (_: v: v == "directory") (readDir ./machines);
     machines = foldl' (l: m: l // { "${m}" = ./machines/${m}/default.nix; }) { }
       machineNames;
