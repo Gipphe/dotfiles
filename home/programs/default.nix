@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  imports = [ ./git ./neovim ./fish ./tmux ];
+  imports = [ ./git ./neovim ./fish ./tmux ./tmux ];
   programs.zoxide.enable = true;
   programs.gpg.enable = true;
   programs.eza = {

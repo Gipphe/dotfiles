@@ -7,12 +7,9 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     utils.url = "github:numtide/flake-utils";
-    filen.url = "./flakes/filen";
-    filen.inputs.nixpkgs.follows = "nixpkgs";
-    filen.inputs.flake-utils.follows = "utils";
   };
 
-  outputs = { nixpkgs, home-manager, filen, utils, ... }:
+  outputs = { nixpkgs, home-manager, utils, ... }:
     utils.lib.eachDefaultSystem (system:
       let pkgs = import nixpkgs { inherit system; };
       in {
