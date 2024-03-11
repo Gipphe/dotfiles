@@ -11,11 +11,9 @@
 
   outputs = { nixpkgs, home-manager, utils, ... }:
     utils.lib.eachDefaultSystem (system:
-      let
-        pkgs =
-          nixpkgs.legacyPackages.${system}.extend (import ./overlays/filen.nix);
+      let pkgs = nixpkgs.legacyPackages.${system};
       in {
-        homeConfigurations."gipphe" =
+        homeConfigurations."gipphe@Jarle" =
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
 

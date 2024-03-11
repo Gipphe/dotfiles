@@ -1,4 +1,4 @@
-{ pkgs, system, ... }:
+{ pkgs, system }:
 let
   appImages = {
     "x86_64-linux" =
