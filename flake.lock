@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "filen": {
+      "inputs": {
+        "flake-utils": [
+          "utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-BMsaFgjd/p9cUJLZjrDSUq0YM3yhhw1jNA34GoPLA1I=",
+        "path": "/nix/store/dasxn5q3pwbjcyn9rgsqyvl5y0gcx057-source/flakes/filen",
+        "type": "path"
+      },
+      "original": {
+        "path": "/nix/store/dasxn5q3pwbjcyn9rgsqyvl5y0gcx057-source/flakes/filen",
+        "type": "path"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -38,6 +58,7 @@
     },
     "root": {
       "inputs": {
+        "filen": "filen",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "utils": "utils"
