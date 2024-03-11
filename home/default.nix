@@ -72,9 +72,11 @@ in {
     gpg-agent = {
       enable = true;
       defaultCacheTtl = 1800;
-      enableSshSupport = true;
+      grabKeyboardAndMouse = false;
+      pinentryFlavor = "curses";
+      # enableSshSupport = true;
     };
 
-    ssh-agent.enable = true;
+    # ssh-agent.enable = true;
   };
 }

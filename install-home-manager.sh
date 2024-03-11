@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 if ! which nix 1>/dev/null; then
 	if ! which curl 1>/dev/null; then

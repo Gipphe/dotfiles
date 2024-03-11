@@ -165,8 +165,10 @@ end
 # end
 
 # SSH config
-# source ~/projects/git-config/config/ssh/ssh-agent.fish
-# init_ssh_agent
+source ~/.config/fish/functions/init_ssh_agent.fish
+if functions -q init_ssh_agent
+    init_ssh_agent
+end
 
 # Initialize zoxide
 zoxide init --cmd cd fish | source
