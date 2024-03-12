@@ -73,19 +73,16 @@
         user = "git";
         identityFile = "${config.home.homeDirectory}/.ssh/github.ssh";
         identitiesOnly = true;
-        # strictHostKeyChecking yes 
       };
       "gitlab.com" = {
         user = "git";
         identityFile = "${config.home.homeDirectory}/.ssh/gitlab.ssh";
         identitiesOnly = true;
-        #StrictHostKeyChecking yes
       };
       "codeberg.com" = {
         user = "git";
         identityFile = "${config.home.homeDirectory}/.ssh/codeberg.ssh";
         identitiesOnly = true;
-        # StrictHostKeyChecking yes 
       };
     };
   };
