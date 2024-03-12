@@ -1,5 +1,7 @@
-{ pkgs, system, ... }: rec {
-  meta = { name = "VNB-MB-Pro"; };
+{ pkgs, system, hostname, ... }:
+if hostname != "strise-mb" then
+  { }
+else {
   packages = with pkgs; [
     openvpn
     reattach-to-user-namespace
@@ -12,7 +14,7 @@
     barrier.client = {
       enable = true;
       enableDragDrop = true;
-      machine.name = meta.name;
+      machine.name = hostname;
     };
   };
 }

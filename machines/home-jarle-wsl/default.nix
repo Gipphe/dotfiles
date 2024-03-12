@@ -1,4 +1,6 @@
-{ pkgs, ... }: {
-  meta = { name = "jarle"; };
-  packages = with pkgs; [ xdg-utils ];
+{ pkgs, hostname, ... }:
+if hostname != "home-wsl-jarle" then
+  { }
+else {
+  home.packages = with pkgs; [ xdg-utils ];
 }

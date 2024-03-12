@@ -13,7 +13,7 @@
     utils.lib.eachDefaultSystem (system:
       let pkgs = nixpkgs.legacyPackages.${system};
       in {
-        packages.homeConfigurations."gipphe" =
+        packages.homeConfigurations."gipphe@Jarle" =
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
 
@@ -23,7 +23,7 @@
 
             # Optionally use extraSpecialArgs
             # to pass through arguments to home.nix
-            # extraSpecialArgs = { inherit pkgs nixpkgs system; }
+            extraSpecialArgs = { hostname = "Jarle"; };
           };
         devShells.default =
           pkgs.mkShell { buildInputs = with pkgs; [ nixfmt ]; };

@@ -1,20 +1,5 @@
-{ lib, stdenv, ... }:
-with stdenv;
-with lib;
-let
-  inherit (attrsets) filterAttrs;
-  machineConfig = let
-    thisMachine = readFile ../machineName;
-    machineNames = filterAttrs (_: v: v == "directory") (readDir ./machines);
-    machines = foldl' (l: m: l // { "${m}" = ./machines/${m}/default.nix; }) { }
-      machineNames;
-  in machines.${thisMachine};
-in {
-  imports = [
-    ./packages
-    ./programs
-    # machineConfig 
-  ];
+{ ... }: {
+  imports = [ ./packages ./programs ../machines ];
 
   nixpkgs.config.allowUnfree = true;
   fonts.fontconfig.enable = true;
