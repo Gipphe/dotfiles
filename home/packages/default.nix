@@ -45,6 +45,7 @@
     # Programming tools
     glab
     python3Full
+    libgcc
 
     # Language servers
     shellcheck

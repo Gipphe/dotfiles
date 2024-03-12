@@ -51,12 +51,12 @@
     aliases = {
       last = "log -1 HEAD";
       st = "status";
-      ch = "checkout";
       sw = "switch";
       fa = "fetch --all --prune";
       ba = "branch -a";
       b = "branch";
-      co = "commit";
+      co = "checkout";
+      ci = "commit";
       cp = "cherry-pick";
       pp = "pull --prune";
       gr = ''

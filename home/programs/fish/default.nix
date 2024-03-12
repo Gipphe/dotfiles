@@ -1,10 +1,34 @@
 { pkgs, lib, config, ... }:
 with builtins;
 with lib.attrsets; {
-  home.packages = with pkgs.fishPlugins; [ bass tide ];
+  home.packages = with pkgs; [ procps ];
+
+  programs.starship = {
+    enable = true;
+    enableTransience = true;
+    settings = {
+      java = {
+        format = "[\${symbol}]";
+        style = "red";
+      };
+    };
+  };
+
+  programs.bash = {
+    enable = true;
+    initExtra = ''
+      if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
+      then
+        shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+        exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
+      fi
+    '';
+  };
+
   programs.fish = {
     enable = true;
     shellInit = readFile ./config.fish;
+    package = pkgs.fish;
     functions = let
       function_files = filterAttrs (f: t: t == "regular") (readDir ./functions);
       function_list = attrNames function_files;

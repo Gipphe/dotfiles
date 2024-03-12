@@ -1,5 +1,5 @@
 { config, pkgs, ... }: {
-  imports = [ ./git ./neovim ./fish ./tmux ./tmux ];
+  imports = [ ./git ./neovim ./fish ./tmux ];
 
   programs.bat = {
     enable = true;

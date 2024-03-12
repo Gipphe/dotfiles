@@ -3,6 +3,10 @@
     ripgrep
     fzf
     fd
+    # Required by treesitter
+    libgcc
+    # Required by terraformls LSP
+    unzip
     gnutar
     curl
     libgcc

@@ -25,6 +25,7 @@ with lib.attrsets; {
         plugin = pkgs.tmuxPlugins.mkTmuxPlugin {
           pluginName = "tmux-tokyo-night";
           version = "unstable-2024-03-11";
+          rtpFilePath = "tmux-tokyo-night.tmux";
           src = pkgs.fetchFromGitHub {
             owner = "fabioluciano";
             repo = "tmux-tokyo-night";
