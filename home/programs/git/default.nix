@@ -12,7 +12,7 @@
     extraConfig = {
       "url \"git@github.com:\"" = { insteadOf = "https://github.com/"; };
       push = {
-        default = "current";
+        default = "upstream";
         followTags = true;
       };
       pull.ff = "only";
