@@ -5,6 +5,7 @@
     fd
     # Required by treesitter
     libgcc
+    gcc-unwrapped
     # Required by terraformls LSP
     unzip
     gnutar

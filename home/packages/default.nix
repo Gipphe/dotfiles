@@ -49,6 +49,7 @@
     python3Full
 
     # Libraries
+    libgcc
     gcc-unwrapped
 
     # Language servers
