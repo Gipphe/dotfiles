@@ -46,6 +46,7 @@
     glab
     python3Full
     libgcc
+    libstdcxx5
 
     # Language servers
     shellcheck
