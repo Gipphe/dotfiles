@@ -25,10 +25,7 @@
         whitespace = "fix,-indent-with-non-tab,trailing-space,cr-at-eol";
       };
       repack.usedeltabaseoffset = "true";
-      rebase = {
-        autoStash = "true";
-        autoSquash = "true";
-      };
+      rebase = { autoSquash = "true"; };
       merge.stat = "true";
       branch.autosetupmerge = "true";
       credential = { credentialStore = "gpg"; };
