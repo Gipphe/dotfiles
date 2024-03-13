@@ -9,7 +9,6 @@
     unzip
     gnutar
     curl
-    libgcc
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
   programs.neovim = {

@@ -47,8 +47,9 @@
     # Programming tools
     glab
     python3Full
-    libgcc
-    libstdcxx5
+
+    # Libraries
+    gcc-unwrapped
 
     # Language servers
     shellcheck
