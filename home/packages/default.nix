@@ -18,6 +18,8 @@
     ranger
     # rclone
     ripgrep
+    gnused
+    gnutar
 
     # Libraries
     imagemagick
