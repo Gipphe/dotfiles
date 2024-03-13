@@ -1,5 +1,5 @@
 { pkgs, hostname, ... }:
-if hostname != "home-wsl-jarle" then
+if hostname != "Jarle" then
   { }
 else {
   home.packages = with pkgs; [ xdg-utils ];
