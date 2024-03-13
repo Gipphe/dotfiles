@@ -222,4 +222,5 @@ end
 init_ssh_agent
 
 # Initialize zoxide
-zoxide init --cmd cd fish | source
+# Managed through nix
+# zoxide init --cmd cd fish | source
