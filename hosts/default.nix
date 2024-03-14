@@ -88,7 +88,8 @@ in
         ./darwin/strise-mb
         inputs.home-manager.darwinModules.home-manager
         { inherit home-manager; }
-      ] ++ shared;
+        agenix
+      ];
       specialArgs = {
         inherit inputs;
       };
