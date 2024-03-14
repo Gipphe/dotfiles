@@ -54,14 +54,6 @@
   programs.home-manager.enable = true;
 
   services = {
-    gpg-agent = {
-      enable = true;
-      defaultCacheTtl = 1800;
-      grabKeyboardAndMouse = false;
-      pinentryFlavor = "curses";
-      # enableSshSupport = true;
-    };
-
     # ssh-agent.enable = true;
   };
 }
