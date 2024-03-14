@@ -5,4 +5,4 @@ if command -v home-manager >/dev/null; then
 	exit 0
 fi
 
-nix run home-manager/master -- init --switch $(pwd)
+nix --extra-experimental-features nix-command --extra-experimental-features flakes run home-manager/master -- init --switch $(pwd)

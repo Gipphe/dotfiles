@@ -45,9 +45,17 @@
         # Build darwin flake using:
         # $ darwin-rebuild build --flake .#simple
         packages.darwinConfigurations = {
-
           "VNB-MB-Pro" = darwin.lib.darwinSystem {
-            modules = [ ../machines/strise-mb/configuration.nix ];
+            modules = [
+              ./machines/strise-mb/configuration.nix
+              home-manager.darwinModules.home-manager
+              {
+                home-manager.useGlobalPkgs = true;
+                home-manager.useUserPackages = true;
+                home-manager.users.victor = import ./home;
+                home-manager.extraSpecialArgs = { hostname = "strise-mb"; };
+              }
+            ];
           };
           "VNB-MB-Pro.local" =
             self.packages.${system}.darwinConfigurations."VNB-MB-Pro";

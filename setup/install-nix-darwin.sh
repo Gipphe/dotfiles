@@ -5,4 +5,4 @@ if command -v darwin-rebuild >/dev/null; then
 	exit 0
 fi
 
-nix run nix-darwin -- switch --flake $(pwd)
+nix --extra-experimental-features nix-command --extra-experimental-features flakes run nix-darwin -- switch --flake $(pwd)
