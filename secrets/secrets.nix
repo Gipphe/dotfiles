@@ -13,6 +13,9 @@ let
     trond-arne-user
   ];
 
+  VNB-MB-Pro-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAvkGogV7sRBoR8XhCspJPNXpDPTAedNij+CoT/gqfNU victor@VNB-MB-Pro.local";
+  VNB-MB-Pro = [ VNB-MB-Pro-user ];
+
   services = [
     "github"
     "gitlab"
@@ -21,6 +24,7 @@ let
   hosts = {
     "nixos-vm" = nixos-vm;
     "trond-arne" = trond-arne;
+    "VNB-MB-Pro" = VNB-MB-Pro;
   };
   extensions = [
     ".ssh"
