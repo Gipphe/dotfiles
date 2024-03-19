@@ -33,7 +33,7 @@
     {
       help = "Rebuild the home environment using home-manager switch";
       name = "hms";
-      command = "home-manager switch --flake ${builtins.toString ../.}";
+      command = "home-manager switch --flake $(pwd)";
       category = "build";
     }
   ];
