@@ -41,7 +41,7 @@
   shellEnv = [
     {
       # make direnv shut up
-      name = "DIENV_LOG_FORMAT";
+      name = "DIRENV_LOG_FORMAT";
       value = "";
     }
   ];

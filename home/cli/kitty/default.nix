@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   programs.kitty = {
     enable = true;
     font = {
@@ -9,7 +10,7 @@
       scrollback_lines = 4000;
       show_hyperlink_targets = "yes";
       paste_actions = "quote-urls-at-prompt";
-      mouse_hide_wait = 3.0;
+      mouse_hide_wait = 3;
       strip_trailing_spaces = "smart";
       allow_remote_control = "password";
     };

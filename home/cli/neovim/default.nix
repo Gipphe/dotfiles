@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   home.packages = with pkgs; [
     ripgrep
@@ -25,7 +25,7 @@
     ".config/nvim/lazyvim.json".source = ./lazyvim.json;
     ".config/nvim/stylua.toml".source = ./stylua.toml;
     ".config/nvim/init.lua".text = ''
-      vim.g.lazy_lockfile = "/home/gipphe/projects/dotfiles/home/common/programs/neovim/lazy-lock.json"
+      vim.g.lazy_lockfile = "${config.home.homeDirectory}/projects/dotfiles/home/cli/neovim/lazy-lock.json"
 
       -- bootstrap lazy.nvim, LazyVim and your plugins
       require("config.lazy")
