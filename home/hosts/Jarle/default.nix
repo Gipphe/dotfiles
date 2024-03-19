@@ -1,7 +1,5 @@
-{ pkgs, hostname, ... }:
-if hostname != "Jarle" then
-  { }
-else {
+{ pkgs, ... }:
+{
   home.packages = with pkgs; [ xdg-utils ];
   home.sessionVariables = {
     # Help dynamically linked libraries and other libraries depending upon the

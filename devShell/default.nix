@@ -7,13 +7,13 @@
       category = "build";
     }
     {
-      help = "Rebuild the ysstem using nh os boot";
+      help = "Rebuild the system using nh os boot";
       name = "boot";
       command = "nh os boot";
       category = "build";
     }
     {
-      help = "Forma the source tree with treefmt";
+      help = "Format the source tree with treefmt";
       name = "fmt";
       command = "treefmt";
       category = "formatter";
@@ -29,6 +29,12 @@
       name = "update";
       command = ''nix flake update && git commit flake.lock -n "flake: bump inputs"'';
       category = "utils";
+    }
+    {
+      help = "Rebuild the home environment using home-manager switch";
+      name = "hms";
+      command = "home-manager switch --flake ${builtins.toString ../.}";
+      category = "build";
     }
   ];
 

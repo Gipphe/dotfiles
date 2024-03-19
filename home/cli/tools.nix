@@ -1,6 +1,5 @@
-{ config, pkgs, ... }: {
-  imports = [ ./fish ./git ./neovim ./starship ./tmux ];
-
+{ config, pkgs, ... }:
+{
   programs.bat = {
     enable = true;
     config = {
@@ -52,10 +51,21 @@
         editor = "nvim";
         default-command = "lol";
       };
-      git = { auto-local-branch = true; };
+      git = {
+        auto-local-branch = true;
+      };
       aliases = {
-        lol = [ "log" "-r" "all()" ];
-        sync = [ "branch" "set" "-r" "@-" ];
+        lol = [
+          "log"
+          "-r"
+          "all()"
+        ];
+        sync = [
+          "branch"
+          "set"
+          "-r"
+          "@-"
+        ];
       };
     };
   };
@@ -91,11 +101,14 @@
 
   programs.zoxide = {
     enable = true;
-    options = [ "--cmd" "cd" ];
+    options = [
+      "--cmd"
+      "cd"
+    ];
   };
 
   programs.vim = {
-    enable = true;
+    enable = false;
     settings = {
       # Size of a hard tabstop
       tabstop = 4;

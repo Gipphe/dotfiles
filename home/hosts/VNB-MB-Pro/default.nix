@@ -18,5 +18,15 @@
       ];
     })
     jetbrains.idea-ultimate
+    reattach-to-user-namespace
+    alt-tab-macos
+    cyberduck
+    (import ../../home/packages/filen { inherit pkgs system; })
   ];
+
+  protrams.barrier.client = {
+    enable = true;
+    enableDragDrop = true;
+    machine.name = "VNB-MB-Pro";
+  };
 }

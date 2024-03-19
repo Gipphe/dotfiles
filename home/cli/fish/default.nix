@@ -1,6 +1,12 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 with builtins;
-with lib.attrsets; {
+with lib.attrsets;
+{
   home.packages = with pkgs; [ procps ];
 
   programs.bash = {
@@ -16,25 +22,30 @@ with lib.attrsets; {
 
   programs.fish = {
     enable = true;
-    shellInit = ''
-      set fish_greeting '''
-      if test -n "$TMUX"
-          set -x DISABLE_AUTO_TITLE true
-      end
-    '' + readFile ./config.fish;
+    shellInit =
+      ''
+        set fish_greeting '''
+        if test -n "$TMUX"
+            set -x DISABLE_AUTO_TITLE true
+        end
+      ''
+      + readFile ./config.fish;
     package = pkgs.fish;
-    functions = let
-      function_files = filterAttrs (f: t: t == "regular") (readDir ./functions);
-      function_list = attrNames function_files;
-      functions = foldl' (fs: f:
-        let fname = head (split "\\.fish$" f);
-        in fs // { ${fname} = readFile ./functions/${f}; }) { } function_list;
-    in functions;
+    functions =
+      let
+        function_files = filterAttrs (f: t: t == "regular") (readDir ./functions);
+        function_list = attrNames function_files;
+        functions = foldl' (
+          fs: f:
+          let
+            fname = head (split "\\.fish$" f);
+          in
+          fs // { ${fname} = readFile ./functions/${f}; }
+        ) { } function_list;
+      in
+      functions;
     shellAbbrs = {
-      hms =
-        "home-manager switch --flake ${config.home.homeDirectory}/projects/dotfiles";
-      set_tide_prompt =
-        "tide configure --auto --style=Lean --prompt_colors='True color' --show_time='24-hour format' --lean_prompt_height='Two lines' --prompt_connection=Solid --prompt_connection_andor_frame_color=Dark --prompt_spacing=Sparse --icons='Many icons' --transient=Yes";
+      set_tide_prompt = "tide configure --auto --style=Lean --prompt_colors='True color' --show_time='24-hour format' --lean_prompt_height='Two lines' --prompt_connection=Solid --prompt_connection_andor_frame_color=Dark --prompt_spacing=Sparse --icons='Many icons' --transient=Yes";
       k = "kubectl";
       kn = "kubens";
       kcx = "kubectx";
@@ -45,14 +56,10 @@ with lib.attrsets; {
       rmz = "find . -name '*Zone.Identifier' -type f -delete";
       reload_shell = "source ~/.config/fish/config.fish";
       nix-health = "nix run 'github:juspay/nix-browser#nix-health'";
-      docker_clean_images =
-        "docker rmi (docker images -a --filter=dangling=true -q)";
-      docker_clean_ps =
-        "docker rm (docker ps --filter=status=exited --filter=status=created -q)";
-      docker_clean_testcontainer = ''
-        docker rmi -f (docker images --filter="reference=*-*-*-*-*:*-*-*-*-*" --format "{{ .ID }}" | sort | uniq)'';
-      docker_pull_images =
-        "docker images --format '{{.Repository}}:{{.Tag}}' | xargs -n 1 -P 1 docker pull";
+      docker_clean_images = "docker rmi (docker images -a --filter=dangling=true -q)";
+      docker_clean_ps = "docker rm (docker ps --filter=status=exited --filter=status=created -q)";
+      docker_clean_testcontainer = ''docker rmi -f (docker images --filter="reference=*-*-*-*-*:*-*-*-*-*" --format "{{ .ID }}" | sort | uniq)'';
+      docker_pull_images = "docker images --format '{{.Repository}}:{{.Tag}}' | xargs -n 1 -P 1 docker pull";
     };
     plugins = with pkgs; [
       {

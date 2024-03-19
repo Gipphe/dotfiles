@@ -12,7 +12,7 @@ let
   hmModule = inputs.home-manager.nixosModules.home-manager;
 
   shared = [
-    core
+    # core
     agenix
   ];
 
@@ -85,7 +85,7 @@ in
     "VNB-MB-Pro" = inputs.darwin.lib.darwinSystem {
       modules = [
         { networking.hostName = "VNB-MB-Pro"; }
-        ./darwin/strise-mb
+        ./VNB-MB-Pro/darwin.nix
         inputs.home-manager.darwinModules.home-manager
         { inherit home-manager; }
         agenix
@@ -98,6 +98,12 @@ in
 
   homeConfigurations = {
     # Non-NixOS home-manager configuration
-    gipphe = inputs.home-manager.lib.homeManagerConfiguration { modules = [ ./home ]; };
+    "gipphe@Jarle" = inputs.home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages."x86_64-linux";
+      modules = [
+        ../home/base.nix
+        ../home/hosts/Jarle
+      ];
+    };
   };
 }
