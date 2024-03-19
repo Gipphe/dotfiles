@@ -25,6 +25,4 @@ windows:
           root: ~/projects/strise/prefect
           panes:
               - editor:
-                    - nix shell nixpkgs#poetry nixpkgs#python311Full -c fish -c "poetry shell"
               - term:
-                    - nix shell nixpkgs#poetry nixpkgs#python311Full -c fish -c "poetry shell"
