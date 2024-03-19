@@ -55,7 +55,7 @@
     _1password
 
     # containers
-    docker
+    # docker
 
     # openssh
     openssl
