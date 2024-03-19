@@ -87,7 +87,17 @@ in
         { networking.hostName = "VNB-MB-Pro"; }
         ./VNB-MB-Pro/darwin.nix
         inputs.home-manager.darwinModules.home-manager
-        { inherit home-manager; }
+        {
+          home-manager = {
+            useUserPackages = true;
+            useGlobalPkgs = true;
+            extraSpecialArgs = {
+              inherit inputs;
+              inherit self;
+            };
+            users.gipphe.imports = [ ../home/base.nix ];
+          };
+        }
         agenix
       ];
       specialArgs = {
