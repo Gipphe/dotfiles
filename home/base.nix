@@ -12,7 +12,7 @@
   config.programs.home-manager.enable = true;
 
   imports = [
-    # inputs.nix-index-db.hmModules.nix-index
+    inputs.nix-index-db.hmModules.nix-index
     ./cli
     ./services.nix
   ];
