@@ -31,9 +31,9 @@
       category = "utils";
     }
     {
-      help = "Rebuild the home environment using home-manager switch";
+      help = "Rebuild the home environment using nh home switch";
       name = "hms";
-      command = "home-manager switch --flake $(pwd)";
+      command = "nh home switch $(pwd)";
       category = "build";
     }
   ];

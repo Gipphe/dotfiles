@@ -7,6 +7,7 @@
     username = "gipphe";
     homeDirectory = "/home/gipphe";
     sessionVariables.PAGER = "less -FXR";
+    sessionVariables.FLAKE = "${config.home.homeDirectory}/projects/dotfiles";
   };
   config.programs.home-manager.enable = true;
 

@@ -58,6 +58,7 @@
                 packages = with pkgs; [
                   inputs'.agenix.packages.default # agenix CLI in flake shell
                   inputs'.catppuccinifier.packages.cli
+                  inputs'.nh.packages.default # better nix CLI
                   config.treefmt.build.wrapper # treewide formatter
                   nil # nix ls
                   nixfmt-rfc-style # nix formatter
@@ -197,6 +198,10 @@
     };
     darwin = {
       url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nh = {
+      url = "github:viperML/nh";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
