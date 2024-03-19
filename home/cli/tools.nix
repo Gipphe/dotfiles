@@ -74,6 +74,8 @@
 
   programs.less.enable = true;
 
+  programs.nnn.enable = true;
+
   programs.ssh = {
     enable = true;
     package = pkgs.openssh;

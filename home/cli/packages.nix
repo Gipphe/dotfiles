@@ -28,9 +28,6 @@
 
     # mosh
 
-    # terminal file explorer
-    ranger
-
     # rclone
 
     # probably pre-installed, but included just in case
