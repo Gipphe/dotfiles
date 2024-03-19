@@ -123,6 +123,9 @@ in
         ../home/base.nix
         ../home/hosts/Jarle
       ];
+      extraSpecialArgs = {
+        inherit inputs;
+      };
     };
   };
 }
