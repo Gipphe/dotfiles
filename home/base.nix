@@ -14,6 +14,6 @@
   imports = [
     # inputs.nix-index-db.hmModules.nix-index
     ./cli
-    ./packages
+    ./services.nix
   ];
 }
