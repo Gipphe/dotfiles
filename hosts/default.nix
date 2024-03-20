@@ -13,7 +13,7 @@ let
   hmModule = inputs.home-manager.nixosModules.home-manager;
 
   shared = [
-    # core
+    core
     agenix
     nh
     {
