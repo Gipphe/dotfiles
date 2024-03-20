@@ -1,7 +1,7 @@
 { config, lib, ... }:
 let
   forHost =
-    hostnames: secretfile: secretName: extra:
+    hostnames: secretFile: secretName: extra:
     lib.mkIf (builtins.elem config.networking.hostName hostnames) {
       ${secretName} = {
         file = secretFile;
