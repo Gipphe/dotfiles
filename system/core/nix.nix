@@ -64,7 +64,7 @@
     package = pkgs.nixUnstable;
 
     # Make builds run with low priority so my system stays responsive
-    daemonCPUSchedpolicy = "idle";
+    daemonCPUSchedPolicy = "idle";
     daemonIOSchedClass = "idle";
 
     # pin the registry to avoid downloading and evaling a new nixpkgs version every time
