@@ -10,33 +10,29 @@ in
 
   boot = {
     binfmt.emulatedSystems = [ "aarch64-linux" ];
-    # Bootloader.
-    loader.grub.enable = true;
-    loader.grub.device = "/dev/sda";
-    loader.grub.useOSProber = true;
-    # tmp = {
-    #   cleanOnBoot = true;
-    #   useTmpfs = false;
-    # };
+    tmp = {
+      cleanOnBoot = true;
+      useTmpfs = false;
+    };
     # Some kernel parameters, I don't remember what half of this shit does but who cares
-    # consoleLogLevel = mkDefault 0;
-    # initrd.verbose = false;
-    # kernelPackages = mkDefault pkgs.linuxPackages_latest;
-    # kernelParams = [
-    #   "psmouse.synaptics_intertouch=1"
-    #   "intel_pstate=disable"
-    # ];
-    # extraModprobeConfig = ''
-    #   options i915 enable_fbc=1 enable_guc=2
-    #   options snd_hda_intel enable=0,1 power_save=1 power_save_controller=Y
-    # '';
+    consoleLogLevel = mkDefault 0;
+    initrd.verbose = false;
+    kernelPackages = mkDefault pkgs.linuxPackages_latest;
+    kernelParams = [
+      "psmouse.synaptics_intertouch=1"
+      "intel_pstate=disable"
+    ];
+    extraModprobeConfig = ''
+      options i915 enable_fbc=1 enable_guc=2
+      options snd_hda_intel enable=0,1 power_save=1 power_save_controller=Y
+    '';
 
-    # bootspec.enable = mkDefault true;
-    # loader = {
-    #   systemd-boot.enable = mkDefault true;
-    #   # spam space to get to boot menu
-    #   timeout = 0;
-    #   efi.canTouchEfiVariables = true;
-    # };
+    bootspec.enable = mkDefault true;
+    loader = {
+      systemd-boot.enable = mkDefault true;
+      # spam space to get to boot menu
+      timeout = 0;
+      efi.canTouchEfiVariables = true;
+    };
   };
 }

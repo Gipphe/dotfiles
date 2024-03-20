@@ -1,6 +1,9 @@
 { pkgs, ... }:
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./configuration.nix
+    ./hardware-configuration.nix
+  ];
 
   hardware.opengl = {
     driSupport = true;
