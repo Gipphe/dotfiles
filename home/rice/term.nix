@@ -1,4 +1,4 @@
-{ pkgs, hteme, ... }:
+{ pkgs, theme, ... }:
 {
   home.packages = with pkgs; [
     # For displaying images
