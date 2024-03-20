@@ -79,6 +79,7 @@
   users.users.gipphe = {
     isNormalUser = true;
     description = "Victor Nascimento Bakke";
+    home = "/home/gipphe";
     extraGroups = [
       "networkmanager"
       "wheel"
