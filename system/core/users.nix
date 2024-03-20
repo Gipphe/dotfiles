@@ -20,6 +20,7 @@
     users = {
       root.hashedPasswordFile = "/persist/secrets/root";
       gipphe = {
+        home = "/home/gipphe";
         isNormalUser = true;
         hashedPasswordFile = "/persist/secrets/gipphe";
         extraGroups = [
