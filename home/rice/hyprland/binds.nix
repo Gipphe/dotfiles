@@ -2,7 +2,7 @@
 let
   mod = "SUPER";
   modshift = "${mod}SHIFT";
-  mouse_lbm = 272;
+  mouse_lmb = 272;
   mouse_rmb = 273;
   # binds $mod + [shift +] {1..10} to [move to] workspace {1..10} (stolen from fufie) (re-stolen from sioodmy)
   workspaces = builtins.concatLists (
