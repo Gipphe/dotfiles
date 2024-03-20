@@ -8,13 +8,12 @@ in
     pkgs.sbctl
   ];
 
-  # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
-
   boot = {
     binfmt.emulatedSystems = [ "aarch64-linux" ];
+    # Bootloader.
+    loader.grub.enable = true;
+    loader.grub.device = "/dev/sda";
+    loader.grub.useOSProber = true;
     # tmp = {
     #   cleanOnBoot = true;
     #   useTmpfs = false;
@@ -33,11 +32,11 @@ in
     # '';
 
     # bootspec.enable = mkDefault true;
-    loader = {
-      # systemd-boot.enable = mkDefault true;
-      # # spam space to get to boot menu
-      # timeout = 0;
-      # efi.canTouchEfiVariables = true;
-    };
+    # loader = {
+    #   systemd-boot.enable = mkDefault true;
+    #   # spam space to get to boot menu
+    #   timeout = 0;
+    #   efi.canTouchEfiVariables = true;
+    # };
   };
 }
