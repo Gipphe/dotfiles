@@ -85,7 +85,7 @@
     '';
     settings = {
       flake-registry = "/etc/nix/registry.json";
-      auto-optimize-store = true;
+      auto-optimise-store = true;
       # use binary cache, its not gentoo
       builders-use-substitutes = true;
       # allow sudo users to mark the following values as trusted
