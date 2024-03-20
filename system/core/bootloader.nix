@@ -11,7 +11,7 @@ in
     binfmt.emulatedSystems = [ "aarch64-linux" ];
     tmp = {
       cleanOnBoot = true;
-      usertmpfs = false;
+      useTmpfs = false;
     };
     # Some kernel parameters, I don't remember what half of this shit does but who cares
     consoleLogLevel = mkDefault 0;
