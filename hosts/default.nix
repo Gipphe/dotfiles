@@ -46,13 +46,13 @@ in
       modules = [
         { networking.hostName = "nixos-vm"; }
         ./nixos-vm
-        nvidia
-        bootloader
+        # nvidia
+        # bootloader
         # impermanence
-        wayland
+        # wayland
         hmModule
         { inherit home-manager; }
-      ] ++ shared;
+      ]; # ++ shared;
       specialArgs = {
         inherit inputs;
       };
