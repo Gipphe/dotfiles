@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   services.xserver.videoDrivers = [ "nvidia" ];
-  enviroment.variables = {
+  environment.variables = {
     GBM_BACKEND = "nvidia-drm";
     WLR_NO_HARDWARE_CURSORS = "1";
     LIBVA_DRIVER_NAME = "nvidia";
