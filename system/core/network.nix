@@ -63,7 +63,7 @@ in
     };
   };
 
-  virtualization.docker.enable = true;
+  virtualisation.docker.enable = true;
 
   # slows down boot time
   systemd.services.NetworkManager-wait-online.enable = false;
