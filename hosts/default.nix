@@ -2,7 +2,7 @@
 let
   inherit (self) inputs;
   core = ../system/core;
-  bootloader = ../system/core/bootloader;
+  bootloader = ../system/core/bootloader.nix;
   impermanence = ../system/core/impermanence.nix;
   nvidia = ../system/nvidia;
   server = ../system/server;
