@@ -48,7 +48,7 @@ in
         ./nixos-vm
         nvidia
         bootloader
-        impermanence
+        # impermanence
         wayland
         hmModule
         { inherit home-manager; }
