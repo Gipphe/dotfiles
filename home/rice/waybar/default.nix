@@ -16,7 +16,7 @@ in
   home.packages = [ waybar-wttr ];
   programs.waybar = {
     enable = true;
-    style = impot ./style.nix;
+    style = import ./style.nix;
     systemd = {
       enable = true;
       target = "hyprland-session.target";
