@@ -116,6 +116,6 @@
       ];
     };
   };
-  system.autoUpdate.enable = false;
+  system.autoUpgrade.enable = false;
   system.stateVersion = "23.11"; # DON'T TOUCH THIS
 }
