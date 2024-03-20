@@ -1,7 +1,7 @@
 { inputs, pkgs, ... }:
 {
   home.packages = with pkgs; [
-    inputs.nh.packages."x86_64-linux".default
+    inputs.nh.packages.${pkgs.system}.default
     xdg-utils
   ];
   home.sessionVariables = {

@@ -2,10 +2,10 @@
 {
   imports = [
     ./tofi
-    ./foot.nix
+    ./term.nix
     ./zathura.nix
-    ./dunst.nix
-    ./gtk.nix
+    ./notification.nix
+    ./gui-widgets.nix
     ./hyprland
     ./waybar
   ];
