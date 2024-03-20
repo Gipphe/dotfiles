@@ -94,7 +94,7 @@
   systemd =
     let
       extraConfig = ''
-        DefaultTimeoutStopSec=15s
+        DefaultTimeoutStopSec=16s
       '';
     in
     {
