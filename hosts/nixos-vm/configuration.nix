@@ -81,10 +81,12 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.groups.gipphe = { };
   users.users.gipphe = {
     isNormalUser = true;
     description = "Victor Nascimento Bakke";
     home = lib.mkDefault "/home/gipphe";
+    group = "gipphe";
     extraGroups = [
       "networkmanager"
       "wheel"
