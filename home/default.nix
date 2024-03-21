@@ -1,17 +1,17 @@
 { inputs, ... }:
 {
   imports = [
-    inputs.barbie.homeManagerModule
+    # inputs.barbie.homeManagerModule
     # inputs.impermanence.nixosModules.home-manager.impermanence
-    inputs.hyprlock.homeManagerModules.default
-    inputs.hypridle.homeManagerModules.default
+    # inputs.hyprlock.homeManagerModules.default
+    # inputs.hypridle.homeManagerModules.default
 
     # ./impermanence.nix
-    ./packages.nix
+    # ./packages.nix
 
     ./base.nix
-    ./rice
-    ./scripts
-    ./misc
+    # ./rice
+    # ./scripts
+    # ./misc
   ];
 }

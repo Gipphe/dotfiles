@@ -50,8 +50,8 @@ in
         # bootloader
         # impermanence
         # wayland
-        # hmModule
-        # { inherit home-manager; }
+        hmModule
+        { inherit home-manager; }
       ]; # ++ shared;
       specialArgs = {
         inherit inputs;
