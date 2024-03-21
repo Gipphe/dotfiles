@@ -36,4 +36,26 @@
   #     libvdpau-va-gl
   #   ];
   # };
+
+
+  age.secrets = let 
+    user = {
+      user = "gipphe";
+      group = "gipphe";
+      mode = "400";
+    };
+  in {
+    "nixos-vm-github.ssh.age" = {
+      file = ../../secrets/nixos-vm-github.ssh.age;
+      path = "/home/gipphe/.ssh/github.ssh";
+    } // user;
+    "nixos-vm-gitlab.ssh.age" = {
+      file = ../../secrets/nixos-vm-gitlab.ssh.age;
+      path = "/home/gipphe/.ssh/gitlab.ssh";
+    } // user;
+    "nixos-vm-codeberg.ssh.age" = {
+      file = ../../secrets/nixos-vm-codeberg.ssh.age;
+      path = "/home/gipphe/.ssh/codeberg.ssh";
+    } // user;
+  };
 }

@@ -20,7 +20,7 @@ let
       nh = {
         enable = true;
         clean.enable = true;
-        clean.extraArgs = "--keep-since 30d";
+        clean.extraArgs = "--keep-since 10d";
       };
     }
   ];
@@ -52,6 +52,8 @@ in
         # wayland
         hmModule
         { inherit home-manager; }
+	{ home-manager.users.gipphe.imports = [../home/hosts/nixos-vm]; }
+	agenix
       ]; # ++ shared;
       specialArgs = {
         inherit inputs;
