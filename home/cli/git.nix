@@ -7,7 +7,7 @@
     ignores = [ ".vscode" "**/*Zone.Identifier" ];
     signing = {
       key = "23723701395B436C";
-      signByDefault = true;
+      signByDefault = false;
     };
     extraConfig = {
       "url \"git@github.com:\"" = { insteadOf = "https://github.com/"; };
