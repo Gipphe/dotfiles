@@ -50,7 +50,7 @@
     # Enable the X11 windowing system.
     enable = true;
 
-    displayManager.sddm.enable = true;
+    # displayManager.sddm.enable = true;
     desktopManager.plasma5.enable = true;
 
     # Configure keymap in X11
