@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   imports = [
     ./configuration.nix
@@ -44,18 +44,39 @@
       group = "gipphe";
       mode = "400";
     };
-  in {
-    "nixos-vm-github.ssh.age" = {
-      file = ../../secrets/nixos-vm-github.ssh.age;
-      path = "/home/gipphe/.ssh/github.ssh";
-    } // user;
-    "nixos-vm-gitlab.ssh.age" = {
-      file = ../../secrets/nixos-vm-gitlab.ssh.age;
-      path = "/home/gipphe/.ssh/gitlab.ssh";
-    } // user;
-    "nixos-vm-codeberg.ssh.age" = {
-      file = ../../secrets/nixos-vm-codeberg.ssh.age;
-      path = "/home/gipphe/.ssh/codeberg.ssh";
-    } // user;
-  };
+    hosts = ["nixos-vm"];
+    keys = ["github" "gitlab" "codeberg"];
+    suffixes = [".ssh" ".ssh.pub"];
+    keyNames = lib.lists.crossLists (x: y: "${x}${y}") keys suffixes;
+    inherit (builtins) foldl';
+    secrets = foldl'
+      (l: r: l // (
+        foldl'
+	  (l': r': l' // {
+	    "${r'}-${r}" = {
+	      file = ../../secrets/${r'}-${r}.age; 
+	      path = "/home/gipphe/.ssh/${r}"; 
+	    } // user; 
+	  })
+	  {}
+	  hosts
+      ))
+      {}
+      keyNames;
+  in secrets;
+  #{
+
+    # "nixos-vm-github.ssh.age" = {
+    #   file = ../../secrets/nixos-vm-github.ssh.age;
+    #   path = "/home/gipphe/.ssh/github.ssh";
+    # } // user;
+    # "nixos-vm-gitlab.ssh.age" = {
+    #   file = ../../secrets/nixos-vm-gitlab.ssh.age;
+    #   path = "/home/gipphe/.ssh/gitlab.ssh";
+    # } // user;
+    # "nixos-vm-codeberg.ssh.age" = {
+    #   file = ../../secrets/nixos-vm-codeberg.ssh.age;
+    #   path = "/home/gipphe/.ssh/codeberg.ssh";
+    # } // user;
+  #};
 }

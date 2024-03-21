@@ -4,6 +4,9 @@ let
   nixos-vm = [nixos-vm-host nixos-vm-user];
 in {
   "nixos-vm-github.ssh.age".publicKeys = nixos-vm;
+  "nixos-vm-github.ssh.pub.age".publicKeys = nixos-vm;
   "nixos-vm-gitlab.ssh.age".publicKeys = nixos-vm;
+  "nixos-vm-gitlab.ssh.pub.age".publicKeys = nixos-vm;
   "nixos-vm-codeberg.ssh.age".publicKeys = nixos-vm;
+  "nixos-vm-codeberg.ssh.pub.age".publicKeys = nixos-vm;
 }
