@@ -7,7 +7,7 @@
     # inputs.hypridle.homeManagerModules.default
 
     # ./impermanence.nix
-    # ./packages.nix
+    ./packages.nix
 
     ./base.nix
     # ./rice
