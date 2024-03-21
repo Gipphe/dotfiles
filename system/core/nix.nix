@@ -31,10 +31,6 @@
     config = {
       allowUnfree = true;
       allowBroken = false;
-      # permittedInsecurePackages = [
-      #   "openssl-1.1.1u"
-      #   "electron-25.9.0"
-      # ];
 
       overlays = [
         # workaround for: https://github.com/NixOS/nixpkgs/issues/154163
@@ -59,7 +55,7 @@
     gc = {
       automatic = true;
       dates = "daily";
-      options = "--delete-older-than 30d";
+      options = "--delete-older-than 10d";
     };
     package = pkgs.nixUnstable;
 
