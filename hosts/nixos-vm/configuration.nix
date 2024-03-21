@@ -41,18 +41,17 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
 
+  programs.hyprland.enable = true;
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
   # Enable the KDE Plasma Desktop Environment.
   services.xserver = {
 
     # Enable the X11 windowing system.
     enable = true;
 
-    # displayManager.sddm.enable = true;
-    # desktopManager.plasma5.enable = true;
-    windowManager.default = "i3";
-    desktopManager.default = "none";
-    displayManager.lightdm.enable = true;
-    windowManager.i3.enable = true;
+    displayManager.sddm.enable = true;
+    desktopManager.plasma5.enable = true;
 
     # Configure keymap in X11
     layout = "no";
