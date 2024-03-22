@@ -1,23 +1,10 @@
-local theme = "catppuccin"
-local colorschemes = {
-  tokyonight = {
-    name = "tokyonight",
-    lazy = {
-      "folke/tokyonight.nvim",
-      lazy = true,
-      opts = {
-        style = "night",
-      },
-    },
-  },
-  catppuccin = {
-    name = "catppuccin",
-    lazy = {
+return {
+  {
       "catppuccin/nvim",
       lazy = true,
       name = "catppuccin",
       opts = {
-        flavour = "mocha",
+        flavour = "frappe",
         term_colors = true,
         dim_inactive = {
           enabled = true,
@@ -66,17 +53,10 @@ local colorschemes = {
         },
       },
     },
-  },
-}
-
-local selected_theme = colorschemes[theme]
-
-return {
-  selected_theme.lazy,
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = selected_theme.name,
+      colorscheme = "catppuccin",
     },
   },
 }
