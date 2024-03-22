@@ -47,22 +47,15 @@
     hosts = ["nixos-vm"];
     keys = ["github" "gitlab" "codeberg"];
     suffixes = [".ssh" ".ssh.pub"];
-    keyNames = lib.lists.crossLists (x: y: "${x}${y}") keys suffixes;
-    inherit (builtins) foldl';
-    secrets = foldl'
-      (l: r: l // (
-        foldl'
-	  (l': r': l' // {
-	    "${r'}-${r}" = {
-	      file = ../../secrets/${r'}-${r}.age; 
-	      path = "/home/gipphe/.ssh/${r}"; 
-	    } // user; 
-	  })
-	  {}
-	  hosts
-      ))
-      {}
-      keyNames;
+    combinations = lib.attrsets.cartesianProductOfSets {host = hosts; key = keys; suffix = suffixes;};
+    secretsList = map ({host, key, suffix}: {
+      name = "${host}-${key}${suffix}"; 
+      value = {
+        file = ../../secrets/${host}-${key}${suffix}.age;
+	path = "/home/gipphe/.ssh/${key}${suffix}";
+      } // user;
+    }) combinations;
+    secrets = builtins.listToAttrs secretsList;
   in secrets;
   #{
 
