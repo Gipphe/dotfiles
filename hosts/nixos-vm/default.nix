@@ -1,22 +1,20 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 {
   imports = [
     ./hardware-configuration.nix
-    ./hyprland.nix
-    ./nvidia.nix
+    ../modules/hyprland.nix
+    ../modules/nvidia.nix
+    ../modules/agenix.nix
+    ../modules/nix.nix
   ];
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.networkmanager.enable = true;
-
-  # Enable flakes and nix-command features to use Nix in the modern age
-  nix.settings.extra-experimental-features = [
-    "flakes"
-    "nix-command"
-  ];
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.groups.gipphe = { };
@@ -35,7 +33,6 @@
       #  thunderbird
     ];
   };
-
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -70,7 +67,10 @@
     xkbVariant = "";
 
     # Attempt to set the screen resolution
-    virtualScreen = { x = 1920; y = 940; };
+    virtualScreen = {
+      x = 1920;
+      y = 940;
+    };
 
     # Add custom screen resolution that works nicely in VirtualBox
     monitorSection = ''
@@ -110,8 +110,6 @@
     #media-session.enable = true;
   };
 
-  services.openssh.enable = true;
-
   # hardware.opengl = {
   #   driSupport = true;
   #   driSupport32Bit = true;
@@ -120,42 +118,6 @@
   #     libvdpau-va-gl
   #   ];
   # };
-
-
-  age.secrets = let 
-    user = {
-      owner = "gipphe";
-      group = "gipphe";
-      mode = "400";
-    };
-    hosts = ["nixos-vm"];
-    keys = ["github" "gitlab" "codeberg"];
-    suffixes = [".ssh" ".ssh.pub"];
-    combinations = lib.attrsets.cartesianProductOfSets {host = hosts; key = keys; suffix = suffixes;};
-    secretsList = map ({host, key, suffix}: {
-      name = "${host}-${key}${suffix}"; 
-      value = {
-        file = ../../secrets/${host}-${key}${suffix}.age;
-	path = "/home/gipphe/.ssh/${key}${suffix}";
-      } // user;
-    }) combinations;
-    secrets = builtins.listToAttrs secretsList;
-  in secrets;
-  #{
-
-    # "nixos-vm-github.ssh.age" = {
-    #   file = ../../secrets/nixos-vm-github.ssh.age;
-    #   path = "/home/gipphe/.ssh/github.ssh";
-    # } // user;
-    # "nixos-vm-gitlab.ssh.age" = {
-    #   file = ../../secrets/nixos-vm-gitlab.ssh.age;
-    #   path = "/home/gipphe/.ssh/gitlab.ssh";
-    # } // user;
-    # "nixos-vm-codeberg.ssh.age" = {
-    #   file = ../../secrets/nixos-vm-codeberg.ssh.age;
-    #   path = "/home/gipphe/.ssh/codeberg.ssh";
-    # } // user;
-  #};
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
