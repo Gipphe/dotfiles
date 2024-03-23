@@ -1,33 +1,17 @@
 { config, lib, ... }:
+let
+  cfg = config.secrets.agenix;
+in
 {
-
-  config = {
+  options.secrets.agenix = {
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+    };
+  };
+  config = lib.mkIf cfg.enable {
     # Necessary for agenix to use ssh host key
     services.openssh.enable = true;
-
-    age.secrets =
-      let
-        user = {
-
-          owner = "gipphe";
-          group = "gipphe";
-          mode = "400";
-        };
-        homeDir = config.users.users.gipphe.home;
-        mkSecrets =
-          { host, service }:
-          {
-            "${host}-${service}.ssh.age" = {
-              file = ../../secrets/${host}-${service}.ssh.age;
-              path = "${homeDir}/.ssh/${service}.ssh";
-            } // user;
-            "${host}-${service}.ssh.pub.age" = {
-              file = ../../secrets/${host}-${service}.ssh.pub.age;
-              path = "${homeDir}/.ssh/${service}.ssh.pub";
-            } // user;
-          };
-      in
-      mkSecrets config.networking.hostName;
 
     #   # Actual secrets
     #   age.secrets =
@@ -72,5 +56,33 @@
     #       secrets = builtins.listToAttrs secretsList;
     #     in
     #     secrets;
+
+    age.secrets =
+      let
+        user = {
+
+          owner = "gipphe";
+          group = "gipphe";
+          mode = "400";
+        };
+        homeDir = config.users.users.gipphe.home;
+        mkSecrets = host: service: {
+          "${host}-${service}.ssh.age" = {
+            file = ../../secrets/${host}-${service}.ssh.age;
+            path = "${homeDir}/.ssh/${service}.ssh";
+          } // user;
+          "${host}-${service}.ssh.pub.age" = {
+            file = ../../secrets/${host}-${service}.ssh.pub.age;
+            path = "${homeDir}/.ssh/${service}.ssh.pub";
+          } // user;
+        };
+      in
+      lib.mkIf cfg.importSecrets (
+        builtins.foldl' (acc: curr: acc // mkSecrets config.networking.hostName curr) [
+          "github"
+          "gitlab"
+          "codeberg"
+        ]
+      );
   };
 }
