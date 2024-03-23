@@ -52,8 +52,8 @@ in
         # wayland
         hmModule
         { inherit home-manager; }
-	{ home-manager.users.gipphe.imports = [../home/hosts/nixos-vm]; }
-	agenix
+        { home-manager.users.gipphe.imports = [ ../home/hosts/nixos-vm ]; }
+        agenix
       ]; # ++ shared;
       specialArgs = {
         inherit inputs;
@@ -66,13 +66,17 @@ in
       modules = [
         { networking.hostName = "trond-arne"; }
         ./trond-arne
-        bootloader
-        impermanence
-        wayland
+        # bootloader
+        # impermanence
+        # wayland
+        # hw.lenovo-ideapad-z510
         hmModule
-        hw.lenovo-ideapad-z510
         { inherit home-manager; }
-      ] ++ shared;
+        { home-manager.users.gipphe.imports = [ ../home/hosts/trond-arne ]; }
+      ]; # ++ shared;
+      specialArgs = {
+        inherit inputs;
+      };
     };
 
     # Raspberry Pi 4
