@@ -1,10 +1,14 @@
-{ pkgs, system }:
+{
+  pkgs,
+  lib,
+  config,
+  system,
+  ...
+}:
 let
   appImages = {
-    "x86_64-linux" =
-      "https://cdn.filen.io/desktop/release/filen_x86_64.AppImage";
-    "aarch64-linux" =
-      "https://cdn.filen.io/desktop/release/filen_arm64.AppImage";
+    "x86_64-linux" = "https://cdn.filen.io/desktop/release/filen_x86_64.AppImage";
+    "aarch64-linux" = "https://cdn.filen.io/desktop/release/filen_arm64.AppImage";
   };
   dmgs = {
     "x86_64-darwin" = "https://cdn.filen.io/desktop/release/filen_x64.dmg";
@@ -24,4 +28,15 @@ let
       sha256 = pkgs.lib.fakeSha256;
     };
   };
-in if builtins.match "darwin" system then mac else linux
+  package = if lib.isDarwin then mac else linux;
+
+  cfg = config.filen;
+in
+{
+  options = {
+    filen = {
+      enable = lib.mkEnableOption { name = "filen"; };
+    };
+  };
+  config = lib.mkIf cfg.enable { home.packages = [ package ]; };
+}
