@@ -73,6 +73,7 @@ in
         hmModule
         { inherit home-manager; }
         { home-manager.users.gipphe.imports = [ ../home/hosts/trond-arne ]; }
+        agenix
       ]; # ++ shared;
       specialArgs = {
         inherit inputs;

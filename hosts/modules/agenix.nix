@@ -8,6 +8,10 @@ in
       type = lib.types.bool;
       default = true;
     };
+    importSecrets = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+    };
   };
   config = lib.mkIf cfg.enable {
     # Necessary for agenix to use ssh host key
@@ -78,7 +82,7 @@ in
         };
       in
       lib.mkIf cfg.importSecrets (
-        builtins.foldl' (acc: curr: acc // mkSecrets config.networking.hostName curr) [
+        builtins.foldl' (acc: curr: acc // mkSecrets config.networking.hostName curr) { } [
           "github"
           "gitlab"
           "codeberg"

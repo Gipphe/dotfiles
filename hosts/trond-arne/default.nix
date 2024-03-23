@@ -8,10 +8,8 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    # ../modules/agenix.nix
+    ../modules/agenix.nix
   ];
-
-  services.openssh.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
