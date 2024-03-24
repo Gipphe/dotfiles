@@ -1,4 +1,5 @@
-{ pkgs, ...}: {
+{ pkgs, ... }:
+{
   config = {
     services.xserver.videoDrivers = [ "nvidia" ];
     environment.variables = {
@@ -17,6 +18,8 @@
       nvidia = {
         open = true;
         powerManagement.enable = true;
+
+        # Most wayland compositors need this
         modesetting.enable = true;
       };
       opengl.extraPackages = with pkgs; [ nvidia-vaapi-driver ];
