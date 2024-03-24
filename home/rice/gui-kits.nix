@@ -1,5 +1,27 @@
 { pkgs, ... }:
 {
+  home = {
+    packages = with pkgs; [
+      qt5.qttools
+      qt6Packages.qtstyleplugin-kvantum
+      libsForQt5.qtstyleplugin-kvantum
+      libsForQt5.qt5ct
+      breeze-icons
+    ];
+    pointerCursor = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Classic";
+      size = 16;
+      gtk.enable = true;
+      x11.enable = true;
+    };
+
+    sessionVariables = {
+      XCURSOR_SIZE = "16";
+      GTK_USE_PORTAL = "1";
+    };
+  };
+
   gtk = {
     enable = true;
     theme = {
@@ -33,28 +55,6 @@
       gtk-xfg-hintstyle="hintslight"
       gtk-xfg-rgba="rgb"
     '';
-  };
-
-  home = {
-    packages = with pkgs; [
-      qt5.qttools
-      qt6Packages.qtstyleplugin-kvantum
-      libsForQt5.qtstyleplugin-kvantum
-      libsForQt5.qt5ct
-      breeze-icons
-    ];
-    pointerCursor = {
-      package = pkgs.bibata-cursors;
-      name = "Bibata-Modern-Classic";
-      size = 16;
-      gtk.enable = true;
-      x11.enable = true;
-    };
-
-    sessionVariables = {
-      XCURSOR_SIZE = "16";
-      GTK_USE_PORTAL = "1";
-    };
   };
 
   qt = {

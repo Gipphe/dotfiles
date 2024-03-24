@@ -1,14 +1,10 @@
-{
-  config,
-  theme,
-  lib,
-  ...
-}:
+{ config, theme, ... }:
 let
   pointer = config.home.pointerCursor;
 in
 {
   wayland.windowManager.hyprland = with theme.colors; {
+    enable = true;
     settings = {
       exec-once = [
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDK_CURRENT_DESKTOP"
@@ -35,11 +31,11 @@ in
         follow_mouse = 1;
         sensitivity = 0.0;
         touchpad = {
-          clickfinger_behaviour = true;
+          clickfinger_behavior = true;
           tap-to-click = true;
-          scrol_factor = 0.5;
+          scroll_factor = 0.5;
+          drag_lock = true;
         };
-        drag_lock = true;
       };
 
       general = {
@@ -57,16 +53,16 @@ in
         apply_sens_to_raw = 0;
       };
 
-      decorations = {
+      decoration = {
         # fancy corners
         rounding = 7;
 
         blur = {
-          enable = true;
+          enabled = true;
           size = 3;
           passes = 3;
           ignore_opacity = false;
-          new_optimization = 1;
+          new_optimizations = 1;
           xray = true;
           contrast = 0.7;
           brightness = 0.8;

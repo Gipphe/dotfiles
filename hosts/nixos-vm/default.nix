@@ -2,15 +2,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../modules/agenix.nix
-    ../modules/audio.nix
-    ../modules/core
-    ../modules/desktop.nix
-    ../modules/desktop.nix
-    ../modules/hyprland.nix
-    ../modules/nix.nix
-    ../modules/nvidia.nix
-    ../modules/user.nix
+    ../common.nix
   ];
 
   # List packages installed in system profile. To search, run:

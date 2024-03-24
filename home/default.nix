@@ -8,10 +8,10 @@
 
     # ./impermanence.nix
     ./packages.nix
-    ./modules/desktop.nix
+    # ./modules/desktop.nix
 
     ./base.nix
-    # ./rice
+    ./rice
     # ./scripts
     # ./misc
   ];

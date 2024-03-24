@@ -1,5 +1,4 @@
-{ pkgs, lib, ... }:
-with lib;
+{ pkgs, ... }:
 let
   waybar-wttr = pkgs.stdenv.mkDerivation {
     name = "waybar-wttr";
@@ -16,7 +15,7 @@ in
   home.packages = [ waybar-wttr ];
   programs.waybar = {
     enable = true;
-    style = import ./style.nix;
+    style = builtins.readFile ./style.css;
     systemd = {
       enable = true;
       target = "hyprland-session.target";
