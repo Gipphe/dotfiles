@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, lib, ... }:
 {
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -7,6 +7,35 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   networking.networkmanager.enable = true;
+
+  systemd =
+    let
+      extraConfig = ''
+        DefaultTimeoutStopSec=16s
+      '';
+    in
+    {
+      inherit extraConfig;
+      user = {
+        inherit extraConfig;
+      };
+      services = {
+        "getty@tty1".enable = false;
+        "autovt@tty1".enable = false;
+        "getty@tty7".enable = false;
+        "autovt@tty7".enable = false;
+        # slows down boot time
+        NetworkManager-wait-online.enable = false;
+      };
+
+      # Systemd OOMd
+      # Fedora enables these options by deafult. See the 10-oomd-* files here:
+      # https://src.fedoraproject.org/rpms/systemd/tree/acb90c49c42276b06375a66c73673ac3510255
+      oomd.enableRootSlice = true;
+
+      # TODO: channels-to-flakes
+      tmpfiles.rules = [ "D /nix/var/nix/profiles/per-user/root 755 root root - -" ];
+    };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -23,24 +52,112 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Configure console keymap
-  console.keyMap = "no";
+  console =
+    let
+      variant = "u24n";
+    in
+    {
+      font = "${pkgs.terminus_font}/share/consolefonts/ter-${variant}.psf.gz";
+      earlySetup = true;
+      # Configure console keymap
+      keyMap = "no";
+    };
 
-  # Set your time zone.
-  time.timeZone = "Europe/Oslo";
+  time = {
+    # Set your time zone.
+    timeZone = "Europe/Oslo";
+    hardwareClockInLocalTime = true;
+  };
 
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_GB.UTF-8";
+  i18n =
+    let
+      defaultLocale = "en_US.UTF-8";
+      no = "nb_NO.UTF-8";
+    in
+    {
+      inherit defaultLocale;
+      extraLocaleSettings = {
+        LANG = defaultLocale;
+        LC_COLLATE = defaultLocale;
+        LC_CTYPE = defaultLocale;
+        LC_MESSAGES = defaultLocale;
 
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "nb_NO.UTF-8";
-    LC_IDENTIFICATION = "nb_NO.UTF-8";
-    LC_MEASUREMENT = "nb_NO.UTF-8";
-    LC_MONETARY = "nb_NO.UTF-8";
-    LC_NAME = "nb_NO.UTF-8";
-    LC_NUMERIC = "nb_NO.UTF-8";
-    LC_PAPER = "nb_NO.UTF-8";
-    LC_TELEPHONE = "nb_NO.UTF-8";
-    LC_TIME = "nb_NO.UTF-8";
+        LC_ADDRESS = no;
+        LC_IDENTIFICATION = no;
+        LC_MEASUREMENT = no;
+        LC_MONETARY = no;
+        LC_NAME = no;
+        LC_NUMERIC = no;
+        LC_PAPER = no;
+        LC_TELEPHONE = no;
+        LC_TIME = no;
+      };
+    };
+  services = {
+    dbus = {
+      packages = with pkgs; [
+        dconf
+        gcr
+        udisks2
+      ];
+      enable = true;
+    };
+    udev.packages = with pkgs; [
+      gnome.gnome-settings-daemon
+      android-udev-rules
+    ];
+    journald.extraConfig = ''
+      SystemMaxUse=50M
+      RuntimeMaxUse=10M
+    '';
+    udisks2.enable = true;
+    # profile-sync-daemon
+    psd = {
+      enable = true;
+      resyncTimer = "10m";
+    };
+  };
+
+  # compress half of the ram to use as swap
+  zramSwap = {
+    enable = lib.mkDefault false;
+    algorithm = "zstd";
+  };
+  environment.systemPackages = with pkgs; [
+    git
+    uutils-coreutils-noprefix
+    btrfs-progs
+    cifs-utils
+    appimage-run
+  ];
+
+  hardware.ledger.enable = true;
+
+  boot.binfmt.registrations =
+    lib.genAttrs
+      [
+        "appimage"
+        "AppImage"
+      ]
+      (ext: {
+        recognitionType = "extension";
+        magicOrExtension = ext;
+        interpreter = "/run/current-system/sw/bin/appimage-run";
+      });
+
+  programs = {
+    # allow users to mount fuse filesystems with allow_other
+    fuse.userAllowOther = true;
+
+    # help manage android devices via command line
+    adb.enable = true;
+
+    # Compatibility layer for dynamically linked binaries that expect FHS
+    nix-ld.enable = true;
+
+    java = {
+      enable = true;
+      package = pkgs.jre;
+    };
   };
 }
