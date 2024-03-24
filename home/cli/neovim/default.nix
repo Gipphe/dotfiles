@@ -11,6 +11,8 @@
     unzip
     gnutar
     curl
+    # Required by nil LSP
+    cargo
     (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
   programs.neovim = {
