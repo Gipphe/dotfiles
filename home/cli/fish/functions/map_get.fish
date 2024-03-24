@@ -1,5 +1,3 @@
-#!/usr/bin/env fish
-
 function map_get --argument-names dict key
     map_setup
     if map_contains $dict $key

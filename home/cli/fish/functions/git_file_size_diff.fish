@@ -1,5 +1,3 @@
-#!/usr/bin/env fish
-
 function git_file_size_diff
     set -l USAGE "[--cached] [<rev-list-options>...]\n\nShow file size changes between two commits or the index and a commit."
 

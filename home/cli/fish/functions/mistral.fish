@@ -1,5 +1,3 @@
-#!/usr/bin/env fish
-
 function mistral
     if not command -q mistral.llamafile
         echo "mistral.llamafile not in PATH" >&2

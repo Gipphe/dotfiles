@@ -1,5 +1,3 @@
-#!/usr/bin/env fish
-
 function llava
     if not command -q llava.llamafile
         echo "llava.llamafile not in PATH" >&2

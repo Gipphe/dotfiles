@@ -22,14 +22,14 @@ with lib.attrsets;
 
   programs.fish = {
     enable = true;
-    shellInit =
-      ''
-        set fish_greeting '''
-        if test -n "$TMUX"
-            set -x DISABLE_AUTO_TITLE true
-        end
-      ''
-      + readFile ./config.fish;
+    shellInit = ''
+      set fish_greeting '''
+      if test -n "$TMUX"
+          set -x DISABLE_AUTO_TITLE true
+      end
+
+      init_ssh_agent
+    '';
     package = pkgs.fish;
     functions =
       let

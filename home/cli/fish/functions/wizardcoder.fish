@@ -1,5 +1,3 @@
-#!/usr/bin/env fish
-
 function wizardcoder
     if not command -q wizardcoder.llamafile
         echo "wizardcoder.llamafile not in PATH" >&2
