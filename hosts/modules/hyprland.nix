@@ -1,45 +1,44 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   config = {
     programs.hyprland = {
       enable = true;
+      package = inputs.hyprland.packages."${pkgs.system}".hyprland;
 
       # Necessary to run X applications in wayland
-      xwayland.enable = true;
+      # xwayland.enable = true;
     };
 
     environment.systemPackages = with pkgs; [
       # The simple bar solution
-      (waybar.overrideAttrs (oldAttrs: {
-        # Workspaces might not display correctly without this.
-        # TODO: test without
-        mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-      }))
-
+      # (waybar.overrideAttrs (oldAttrs: {
+      #   # Workspaces might not display correctly without this.
+      #   # TODO: test without
+      #   mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+      # }))
       # The rabbit hole bar: Elkowar's Wacky Widgets
       # eww
 
       # Tried and tested notification manager
-      dunst
-
+      # dunst
       # New and wayland native notification manager
       # mako
 
       # Notification protocol layer between mako/dunst and the OS
-      libnotify
+      # libnotify
 
       # Wallpaper daemon:
       # hyprpaper
       # swaybg
       # wpaperd
       # mpvpaper
-      swww
+      # swww
 
       # hyprland's default terminal
-      kitty
+      # kitty
 
       # App launcher
-      rofi-wayland
+      # rofi-wayland
 
       # GTK rofi
       # wofi
@@ -49,8 +48,8 @@
       # fuzzel
       # tofi # used by sioodmy
 
-      neovim
-      firefox
+      # neovim
+      # firefox
 
       # qt5-wayland
       # qt5c
@@ -66,18 +65,18 @@
     #   ];
     # };
 
-    environment.sessionVariables = {
-      # If your cursor becomes invisible
-      # WLR_NO_HARDWARE_CURSORS = "1";
-      # Hint electron apps to use wayland. Black screen in electron apps is an
-      # indication that the app is not using wayland.
-      NIXOS_OZONE_WL = "1";
-      XDG_SESSION_TYPE = "wayland";
-    };
+    # environment.sessionVariables = {
+    #   # If your cursor becomes invisible
+    #   # WLR_NO_HARDWARE_CURSORS = "1";
+    #   # Hint electron apps to use wayland. Black screen in electron apps is an
+    #   # indication that the app is not using wayland.
+    #   NIXOS_OZONE_WL = "1";
+    #   XDG_SESSION_TYPE = "wayland";
+    # };
 
-    hardware = {
-      # Opengl
-      opengl.enable = true;
-    };
+    # hardware = {
+    #   # Opengl
+    #   opengl.enable = true;
+    # };
   };
 }
