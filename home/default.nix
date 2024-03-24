@@ -8,6 +8,7 @@
 
     # ./impermanence.nix
     ./packages.nix
+    ./modules/desktop.nix
 
     ./base.nix
     # ./rice

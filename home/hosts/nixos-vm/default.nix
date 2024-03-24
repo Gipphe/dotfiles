@@ -1,2 +1,4 @@
-{ config, ... }: {
+{ config, ... }:
+{
+  imports = [ ../../modules/nvidia.nix ];
 }
