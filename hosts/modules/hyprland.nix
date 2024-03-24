@@ -60,10 +60,10 @@
     # XDG stuff for tying all the stuff together
     xdg.portal = {
       enable = true;
-      extraPortals = [
-        pkgs.xdg-desktop-portal-gtk
-        pkgs.xdg-desktop-portal-hyprland
-      ];
+      # extraPortals = [
+      #   pkgs.xdg-desktop-portal-gtk
+      #   pkgs.xdg-desktop-portal-hyprland
+      # ];
     };
 
     sound.enable = lib.mkDefault true;
