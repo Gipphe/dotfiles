@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 {
   config = {
     programs.hyprland = {
@@ -58,23 +58,13 @@
     ];
 
     # XDG stuff for tying all the stuff together
-    xdg.portal = {
-      enable = true;
-      # extraPortals = [
-      #   pkgs.xdg-desktop-portal-gtk
-      #   pkgs.xdg-desktop-portal-hyprland
-      # ];
-    };
-
-    sound.enable = lib.mkDefault true;
-    security.rtkit.enable = lib.mkDefault true;
-    services.pipewire = {
-      enable = lib.mkDefault true;
-      alsa.enable = lib.mkDefault true;
-      alsa.support32Bit = lib.mkDefault true;
-      pulse.enable = lib.mkDefault true;
-      jack.enable = lib.mkDefault true;
-    };
+    # xdg.portal = {
+    #   enable = true;
+    #   extraPortals = [
+    #     pkgs.xdg-desktop-portal-gtk
+    #     pkgs.xdg-desktop-portal-hyprland
+    #   ];
+    # };
 
     environment.sessionVariables = {
       # If your cursor becomes invisible
