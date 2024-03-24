@@ -4,7 +4,7 @@
     ./hardware-configuration.nix
     ../modules/agenix.nix
     ../modules/audio.nix
-    ../modules/core.nix
+    ../modules/core
     ../modules/desktop.nix
     ../modules/desktop.nix
     ../modules/hyprland.nix
