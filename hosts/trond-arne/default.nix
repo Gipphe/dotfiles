@@ -13,6 +13,7 @@
     ../modules/core
     ../modules/desktop.nix
     ../modules/nix.nix
+    ../modules/steam.nix
     ../modules/user.nix
   ];
 
