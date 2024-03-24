@@ -1,38 +1,17 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}:
+{ pkgs, lib, ... }:
 {
   imports = [
     ./hardware-configuration.nix
-    ../modules/hyprland.nix
-    ../modules/nvidia.nix
     ../modules/agenix.nix
+    ../modules/audio.nix
+    ../modules/core.nix
+    ../modules/desktop.nix
+    ../modules/desktop.nix
+    ../modules/hyprland.nix
     ../modules/nix.nix
+    ../modules/nvidia.nix
+    ../modules/user.nix
   ];
-
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.groups.gipphe = { };
-  users.users.gipphe = {
-    isNormalUser = true;
-    description = "Victor Nascimento Bakke";
-    home = lib.mkDefault "/home/gipphe";
-    group = "gipphe";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ];
-    packages = with pkgs; [
-      firefox
-      kate
-      #  thunderbird
-    ];
-  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -51,21 +30,6 @@
   virtualisation.virtualbox.guest.x11 = true;
 
   services.xserver = {
-    # Enable the X11 windowing system.
-    enable = true;
-
-    # Enable the KDE Plasma Desktop Environment.
-    displayManager.sddm.enable = true;
-    desktopManager.plasma5.enable = true;
-
-    # Enable automatic login for the user.
-    displayManager.autoLogin.enable = true;
-    displayManager.autoLogin.user = "gipphe";
-
-    # Configure keymap in X11
-    layout = "no";
-    xkbVariant = "";
-
     # Attempt to set the screen resolution
     virtualScreen = {
       x = 1920;
@@ -79,35 +43,6 @@
     deviceSection = ''
       Option "ModeValidation"
     '';
-  };
-
-  # Set your time zone.
-  time.timeZone = "Europe/Oslo";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_GB.UTF-8";
-
-  # Configure console keymap
-  console.keyMap = "no";
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
   # hardware.opengl = {
@@ -131,12 +66,6 @@
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
