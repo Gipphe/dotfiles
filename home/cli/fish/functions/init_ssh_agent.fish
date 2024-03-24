@@ -16,5 +16,6 @@ function init_ssh_agent
     else
         __start_agent
     end
-    ssh-add (find ~/.ssh -type f -name '*.ssh') &>/dev/null
+
+    add_ssh_keys_to_agent
 end
