@@ -8,6 +8,6 @@
     ./neovim
     ./kitty
     ./tmux
-    # ./run-as-service.nix
+    ./run-as-service.nix
   ];
 }
