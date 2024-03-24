@@ -12,6 +12,7 @@
     ../modules/audio.nix
     ../modules/core
     ../modules/desktop.nix
+    ../modules/hyprland.nix
     ../modules/nix.nix
     ../modules/steam.nix
     ../modules/user.nix
