@@ -110,7 +110,7 @@ in
     # > use pretty much same libs so memory usage is comparable
     # It is disabled in sioodmy's config, so it's likely he changed back to
     # waybar.
-    barbie.enable = false;
+    # barbie.enable = false;
     wlsunset = {
       # TODO: fix opaque red screen issue
       enable = true;

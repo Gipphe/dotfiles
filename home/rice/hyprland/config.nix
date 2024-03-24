@@ -16,7 +16,7 @@ in
         "hyprctl setcursor ${pointer.name} ${toString pointer.size}"
 
         # foot terminal server
-        "${lib.optionalString config.programs.foot.server.enable ''run-as-service 'foot --server''}"
+        # "${lib.optionalString config.programs.foot.server.enable ''run-as-service 'foot --server''}"
       ];
 
       gestures = {
