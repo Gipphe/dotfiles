@@ -9,7 +9,6 @@
     ledger_agent
     discord
     cool-retro-term
-    lutris
     betterdiscord-installer
 
     # Utils
