@@ -34,11 +34,12 @@
     # this fixes emoji stuff
     fontconfig.defaultFonts = {
       monospace = [
+        "Fira Code Nerd Font Mono"
+        "Fira Code Nerd Font"
+        "Fira Code"
         "Iosevka Term"
         "Iosevka Term Nerd Font Complete Mono"
         "Iosevka Nerd Font"
-        "Fira Code"
-        "Fira Code Nerd Font"
         "Noto Color Emoji"
       ];
       sansSerif = [

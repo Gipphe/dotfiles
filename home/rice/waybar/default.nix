@@ -15,7 +15,7 @@ in
   home.packages = [ waybar-wttr ];
   programs.waybar = {
     enable = true;
-    style = builtins.readFile ./style.css;
+    style = import ./style.nix;
     systemd = {
       enable = true;
       target = "hyprland-session.target";

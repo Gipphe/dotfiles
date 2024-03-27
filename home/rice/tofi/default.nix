@@ -17,7 +17,7 @@ in
     horizontal = false
     font-size = 14
     prompt-text = "Run "
-    font = monospace
+    font = Fira Code Nerd Font
     ascii-input = false
     outline-width = 5
     outline-color = #${surface0}

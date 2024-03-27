@@ -15,9 +15,9 @@ let
 in
 {
   imports = [
-    ./config.nix
-    ./binds.nix
-    ./rules.nix
+    # ./config.nix
+    # ./binds.nix
+    # ./rules.nix
   ];
   home.packages =
     with pkgs;

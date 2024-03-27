@@ -1,12 +1,12 @@
 { ... }:
 {
   imports = [
-    ./gui-kits.nix
+    # ./gui-kits.nix
     ./hyprland
-    ./notification.nix
+    # ./notification.nix
     # ./term.nix
     ./tofi
     ./waybar
-    ./zathura.nix
+    # ./zathura.nix
   ];
 }

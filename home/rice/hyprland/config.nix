@@ -4,10 +4,9 @@ let
 in
 {
   wayland.windowManager.hyprland = with theme.colors; {
-    enable = true;
     settings = {
       exec-once = [
-        "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDK_CURRENT_DESKTOP"
+        "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
         # set cursor for HL itself
         "hyprctl setcursor ${pointer.name} ${toString pointer.size}"
 
@@ -20,14 +19,17 @@ in
         workspace_swipe_forever = true;
       };
 
-      xwayland = {
-        force_zero_scaling = true;
-      };
+      # Force Xorg to not scale on HiDPI screens.
+      # See https://wiki.hyprland.org/Configuring/XWayland/
+      # xwayland = {
+      #   force_zero_scaling = true;
+      # };
 
       input = {
         # keyboard layout
         kb_layout = "no";
         kb_options = "caps:escape";
+        numlock_by_default = true;
         follow_mouse = 1;
         sensitivity = 0.0;
         touchpad = {
@@ -43,19 +45,21 @@ in
         gaps_in = 6;
         gaps_out = 11;
 
-        border_size = 2;
+        border_size = 1;
 
         # active border color
         "col.active_border" = "rgb(${accent})";
         "col.inactive_border" = "rgb(${surface0})";
 
         # whether to apply the sensitivity to raw input (e.g. used by games where you aim using your mouse)
-        apply_sens_to_raw = 0;
+        # Really not recommended, according to the docs
+        # apply_sens_to_raw = 0;
+        apply_sens_to_raw = false;
       };
 
       decoration = {
         # fancy corners
-        rounding = 7;
+        rounding = 5;
 
         blur = {
           enabled = true;
@@ -84,7 +88,7 @@ in
 
         # window swallowing
         enable_swallow = true; # hide windows that spawn other windows
-        swallow_regex = "^(foot)$";
+        swallow_regex = "^(kitty)$";
 
         # dpms
         mouse_move_enables_dpms = true; # enable dpms when mouse is moved
@@ -115,28 +119,28 @@ in
 
       dwindle = {
         pseudotile = false;
-        preserve_split = "yes";
-        no_gaps_when_only = false;
+        preserve_split = true;
+        no_gaps_when_only = 1;
       };
 
       "$kw" = "dwindle:no_gaps_when_only";
 
-      workspace = [
-        "1, monitor:eDP-1"
-        "2, monitor:eDP-1"
-        "3, monitor:eDP-1"
-        "4, monitor:eDP-1"
-        "5, monitor:eDP-1"
-        "6, monitor:DP-2"
-        "7, monitor:DP-2"
-        "8, monitor:DP-2"
-        "9, monitor:DP-2"
-      ];
-      monitor = [
-        ",highrr,auto,1"
-        "eDP-1,1920x1080,0x0,1"
-        "DP-2,1920x1080,0x-1080,1"
-      ];
+      # workspace = [
+      #   "1, monitor:eDP-1"
+      #   "2, monitor:eDP-1"
+      #   "3, monitor:eDP-1"
+      #   "4, monitor:eDP-1"
+      #   "5, monitor:eDP-1"
+      #   "6, monitor:DP-2"
+      #   "7, monitor:DP-2"
+      #   "8, monitor:DP-2"
+      #   "9, monitor:DP-2"
+      # ];
+      # monitor = [
+      #   ",highrr,auto,1"
+      #   "eDP-1,1920x1080,0x0,1"
+      #   "DP-2,1920x1080,0x-1080,1"
+      # ];
     };
   };
 }
