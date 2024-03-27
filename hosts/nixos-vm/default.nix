@@ -1,8 +1,9 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
     ../common.nix
+    ../modules/nvidia.nix
   ];
 
   # List packages installed in system profile. To search, run:

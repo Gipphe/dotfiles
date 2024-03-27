@@ -5,9 +5,9 @@
     ./modules/audio.nix
     ./modules/core
     ./modules/desktop.nix
-    ./modules/hyprland.nix
+    # ./modules/hyprland.nix
     ./modules/nix.nix
-    ./modules/nvidia.nix
+    # ./modules/nvidia.nix
     ./modules/user.nix
   ];
 }
