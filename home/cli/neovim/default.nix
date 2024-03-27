@@ -4,6 +4,8 @@
     ripgrep
     fzf
     fd
+    # Required by Marksman LSP
+    icu
     # Required by treesitter
     gcc_multi
     libgcc
