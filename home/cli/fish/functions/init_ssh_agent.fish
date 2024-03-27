@@ -16,6 +16,4 @@ function init_ssh_agent
     else
         __start_agent
     end
-
-    add_ssh_keys_to_agent
 end
