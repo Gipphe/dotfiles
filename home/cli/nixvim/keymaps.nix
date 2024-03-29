@@ -1,4 +1,4 @@
-{ ... }:
+{ helpers, ... }:
 {
   programs.nixvim.keymaps =
     let
