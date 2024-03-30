@@ -13,4 +13,5 @@
   ];
 
   gipphe.nixvim.enable = true;
+  gipphe.neovim.enable = false;
 }

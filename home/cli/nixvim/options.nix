@@ -330,7 +330,7 @@ in
             fillchars = "fold: ";
           }
         else
-          { foldmethod = "indent"; }
+          { foldmethod = lib.mkDefault "indent"; }
       )
       // {
         formatexpr = "v:lua.require'conform'.formatexpr()";

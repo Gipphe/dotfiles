@@ -1,6 +1,7 @@
 { config, ... }:
 let
   inherit (config.nixvim) helpers;
+  icons = import ../icons.nix;
 in
 {
   programs.nixvim.plugins.lualine = {
@@ -15,12 +16,25 @@ in
       lualine_a = [ "mode" ];
       lualine_b = [ "branch" ];
       lualine_c = [
-        "diagnostics"
+        (
+          helpers.listToUnkeyedAttrs [ "diagnostics" ]
+          // {
+            symbols = {
+              error = icons.diagnostics.Error;
+              warn = icons.diagnostics.Warn;
+              info = icons.diagnostics.Info;
+              hint = icons.diagostics.Hint;
+            };
+          }
+        )
         (
           helpers.listToUnkeyedAttrs [ "filetype" ]
           // {
             icon_only = true;
-            separator = "";
+            separator = {
+              left = "";
+              right = "";
+            };
             padding = {
               left = 1;
               right = 0;

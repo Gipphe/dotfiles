@@ -19,7 +19,7 @@ in
           reutrn math.floor(vim.o.columns * 0.75)
         end
       '';
-      onOpen = helpers.mkRaw ''
+      onOpen = ''
         function(win)
           vim.api.nvim_win_set_config(win, { zindex = 100 })
         end
