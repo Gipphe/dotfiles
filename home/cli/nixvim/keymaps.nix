@@ -1,18 +1,11 @@
-{ helpers, ... }:
+{ config, ... }:
+let
+  inherit (config.nixvim) helpers;
+in
 {
   programs.nixvim.keymaps =
     let
-      k = mode: key: action: options: {
-        inherit key action;
-        options = {
-          silent = true;
-        } // options;
-        mode = if builtins.isList mode then mode else [ mode ];
-      };
-
-      kv =
-        mode: key: action: options:
-        (k mode key action options) // { lua = true; };
+      inherit (import ./util.nix) k kv;
     in
     [
       # better up/down
@@ -175,7 +168,7 @@
         # diagnostic
         diagnostic_goto =
           next: severity:
-          helpers.raw ''
+          helpers.mkRaw ''
             function()
               local go = ${if next then "vim.diagnostic.goto_next" else "vim.diagnostic.goto_prev"}
               severity = ${if severity then "vim.diagnostic.severity[${severity}]" else "nil"}

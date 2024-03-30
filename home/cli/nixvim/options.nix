@@ -1,18 +1,19 @@
 {
   lib,
   pkgs,
-  helpers,
   config,
   ...
 }:
 let
   cfg = config.gipphe.nixvim;
   icons = import ./icons.nix;
+  inherit (config.nixvim) helpers;
 in
 {
   programs.nixvim = {
     withNodeJs = true;
-    globalsOptions = {
+    editorconfig.enable = true;
+    globalOpts = {
       mapleader = " ";
       maplocalleader = "\\\\";
 
@@ -28,8 +29,8 @@ in
       ];
 
       markdown_recommended_style = 0;
-
-      editorconfig = true;
+    };
+    globals = {
       clipboard = lib.mkIf cfg.is_wsl {
         name = "WslClipboard";
         copy = {
@@ -203,7 +204,7 @@ in
         return table.concat(components, "")
       end
     '';
-    options =
+    opts =
       {
         autowrite = true;
 
@@ -360,7 +361,7 @@ in
         # Optimal for undotree
         swapfile = false;
         backup = false;
-        undodir = helpers.raw ''os.getenv("HOME") .. "/.vim/undodir"'';
+        undodir = helpers.mkRaw ''os.getenv("HOME") .. "/.vim/undodir"'';
         undofile = true;
         undolevels = 10000;
       };

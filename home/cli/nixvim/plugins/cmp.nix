@@ -1,6 +1,9 @@
-{ helpers, ... }:
+{ config, ... }:
+let
+  inherit (config.nixvim) helpers;
+in
 {
-  plugins = {
+  programs.nixvim.plugins = {
     cmp-nvim-lsp.enable = true;
     cmp-buffer.enable = true;
     cmp-path.enable = true;
@@ -10,7 +13,7 @@
         completion = {
           completeopt = "menu,menuone,noinsert";
         };
-        mapping = helpers.raw ''
+        mapping = helpers.mkRaw ''
           cmp.mapping.preset.insert({
               ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
               ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
@@ -31,7 +34,7 @@
               end,
             })
         '';
-        sources = helpers.raw ''
+        sources = helpers.mkRaw ''
           cmp.config.sources({
             { name = 'nvim_lsp' },
             { name = 'path' },

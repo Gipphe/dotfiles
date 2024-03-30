@@ -1,12 +1,7 @@
-{
-  pkgs,
-  lib,
-  config,
-  helpers,
-  ...
-}:
+{ lib, config, ... }:
 let
   cfg = config.gipphe.nixvim;
+  inherit (config.nixvim) helpers;
 in
 {
   imports = [
@@ -26,7 +21,6 @@ in
     };
   };
   config = lib.mkIf cfg.enable {
-    imports = [ ./plugins ];
     programs.nixvim = {
       enable = true;
       colorscheme = "catppuccin";
@@ -35,49 +29,35 @@ in
         flavour = "mocha";
         showBufferEnd = true;
       };
-      autoCmd =
-        let
-          fileMappings = {
-            hurl = [ "*.hurl" ];
-            sql = [ "*.sqlx" ];
-            terraform = [
-              "*.tf"
-              "tf"
-            ];
-          };
-          fileTypes = lib.attrsets.mapAttrsToList (ft: pattern: {
-            inherit pattern;
-            group = "file_mapping";
-            callback = helpers.raw ''
-              function(event)
-                vim.b[event.buf].filetype = ${ft}
-              end
-            '';
-          }) fileMappings;
-        in
-        [
-          {
-            event = "FileType";
-            group = "nvim-metals";
-            pattern = [
-              "scala"
-              "sbt"
-              "java"
-            ];
-            callback = helpers.raw ''
-              function()
-                local metals = require('metals')
-                local config = metals.bare_config()
-                config.settings = {
-                  showImplicitArguments = true,
-                }
-                config.init_options.statusBarProvider = "on"
-                metals.initialize_or_attach(config)
-              end
-            '';
-          }
-        ]
-        ++ fileTypes;
+      filetype = {
+        extension = {
+          "hurl" = "hurl";
+          "sqlx" = "sql";
+          "tf" = "terraform";
+        };
+      };
+      autoCmd = [
+        {
+          event = "FileType";
+          group = "nvim-metals";
+          pattern = [
+            "scala"
+            "sbt"
+            "java"
+          ];
+          callback = helpers.mkRaw ''
+            function()
+              local metals = require('metals')
+              local config = metals.bare_config()
+              config.settings = {
+                showImplicitArguments = true,
+              }
+              config.init_options.statusBarProvider = "on"
+              metals.initialize_or_attach(config)
+            end
+          '';
+        }
+      ];
     };
   };
 }

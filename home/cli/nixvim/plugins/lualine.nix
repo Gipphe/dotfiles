@@ -1,9 +1,12 @@
-{ helpers, ... }:
+{ config, ... }:
+let
+  inherit (config.nixvim) helpers;
+in
 {
-  plugins.lualine = {
+  programs.nixvim.plugins.lualine = {
     enable = true;
     globalstatus = true;
-    disableFiletypes.statusline = [
+    disabledFiletypes.statusline = [
       "dashboard"
       "alpha"
       "starter"
@@ -28,38 +31,38 @@
       lualine_x = [
         (
           helpers.listToUnkeyedAttrs [
-            helpers.raw
+            helpers.mkRaw
             ''function() return require("noice").api.status.command.get() end''
           ]
           // {
-            cond = helpers.raw ''function() return package.loaded["noice"] and require("noice").api.status.command.has() end'';
+            cond = helpers.mkRaw ''function() return package.loaded["noice"] and require("noice").api.status.command.has() end'';
             color = "#f00";
           }
         )
         (
           helpers.listToUnkeyedAttrs [
-            helpers.raw
+            helpers.mkRaw
             ''function() return require("noice").api.status.mode.get() end''
           ]
           // {
-            cond = helpers.raw ''function() return package.loaded["noice"] and require("noice").api.status.mode.has() end'';
+            cond = helpers.mkRaw ''function() return package.loaded["noice"] and require("noice").api.status.mode.has() end'';
             color = "#0f0";
           }
         )
         (
           helpers.listToUnkeyedAttrs [
-            helpers.raw
+            helpers.mkRaw
             ''function() return "  " .. require("dap").status() end''
           ]
           // {
-            cond = helpers.raw ''function() return package.loaded["dap"] and require("dap").status() ~= "" end'';
+            cond = helpers.mkRaw ''function() return package.loaded["dap"] and require("dap").status() ~= "" end'';
             color = "#404";
           }
         )
         (
           helpers.listToUnkeyedAttrs [ "diff" ]
           // {
-            source = helpers.raw ''
+            source = helpers.mkRaw ''
               function()
                 local gitsigns = vim.b.gitsigns_status_dict
                 if gitsigns then
@@ -98,7 +101,7 @@
       lualine_z = [
         helpers.listToUnkeyedAttrs
         [
-          helpers.raw
+          helpers.mkRaw
           ''function() return " " .. os.date("%R") end''
         ]
       ];

@@ -1,6 +1,6 @@
 { ... }:
 {
-  plugins.navic = {
+  programs.nixvim.plugins.navic = {
     enable = true;
     separator = " ";
     highlight = true;
