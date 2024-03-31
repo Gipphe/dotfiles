@@ -5,9 +5,11 @@ let
 in
 {
   imports = [
+    ./autocommands.nix
     ./plugins
     ./options.nix
     ./keymaps.nix
+    ./colorscheme.nix
   ];
   options.gipphe.nixvim = {
     enable = lib.mkOption {
@@ -23,12 +25,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.nixvim = {
       enable = true;
-      colorscheme = "catppuccin";
-      colorschemes.catppuccin = {
-        enable = true;
-        flavour = "mocha";
-        showBufferEnd = true;
-      };
+      defaultEditor = true;
       filetype = {
         extension = {
           "hurl" = "hurl";
@@ -36,28 +33,6 @@ in
           "tf" = "terraform";
         };
       };
-      autoCmd = [
-        {
-          event = "FileType";
-          group = "nvim-metals";
-          pattern = [
-            "scala"
-            "sbt"
-            "java"
-          ];
-          callback = helpers.mkRaw ''
-            function()
-              local metals = require('metals')
-              local config = metals.bare_config()
-              config.settings = {
-                showImplicitArguments = true,
-              }
-              config.init_options.statusBarProvider = "on"
-              metals.initialize_or_attach(config)
-            end
-          '';
-        }
-      ];
     };
   };
 }

@@ -16,66 +16,54 @@ in
       lualine_a = [ "mode" ];
       lualine_b = [ "branch" ];
       lualine_c = [
-        (
-          helpers.listToUnkeyedAttrs [ "diagnostics" ]
-          // {
+        {
+          name = "diagnostics";
+          extraConfig = {
             symbols = {
               error = icons.diagnostics.Error;
               warn = icons.diagnostics.Warn;
               info = icons.diagnostics.Info;
-              hint = icons.diagostics.Hint;
+              hint = icons.diagnostics.Hint;
             };
-          }
-        )
-        (
-          helpers.listToUnkeyedAttrs [ "filetype" ]
-          // {
+          };
+        }
+        {
+          name = "filetype";
+          extraConfig = {
             icon_only = true;
-            separator = {
-              left = "";
-              right = "";
-            };
-            padding = {
-              left = 1;
-              right = 0;
-            };
-          }
-        )
+            separator = "";
+          };
+          padding = {
+            left = 1;
+            right = 0;
+          };
+        }
       ];
       lualine_x = [
-        (
-          helpers.listToUnkeyedAttrs [
-            helpers.mkRaw
-            ''function() return require("noice").api.status.command.get() end''
-          ]
-          // {
+        {
+          name = helpers.mkRaw ''function() return require("noice").api.status.command.get() end'';
+          extraConfig = {
             cond = helpers.mkRaw ''function() return package.loaded["noice"] and require("noice").api.status.command.has() end'';
             color = "#f00";
-          }
-        )
-        (
-          helpers.listToUnkeyedAttrs [
-            helpers.mkRaw
-            ''function() return require("noice").api.status.mode.get() end''
-          ]
-          // {
+          };
+        }
+        {
+          name = helpers.mkRaw ''function() return require("noice").api.status.mode.get() end'';
+          extraConfig = {
             cond = helpers.mkRaw ''function() return package.loaded["noice"] and require("noice").api.status.mode.has() end'';
             color = "#0f0";
-          }
-        )
-        (
-          helpers.listToUnkeyedAttrs [
-            helpers.mkRaw
-            ''function() return "  " .. require("dap").status() end''
-          ]
-          // {
+          };
+        }
+        {
+          name = helpers.mkRaw ''function() return "  " .. require("dap").status() end'';
+          extraConfig = {
             cond = helpers.mkRaw ''function() return package.loaded["dap"] and require("dap").status() ~= "" end'';
             color = "#404";
-          }
-        )
-        (
-          helpers.listToUnkeyedAttrs [ "diff" ]
-          // {
+          };
+        }
+        {
+          name = "diff";
+          extraConfig = {
             source = helpers.mkRaw ''
               function()
                 local gitsigns = vim.b.gitsigns_status_dict
@@ -88,37 +76,29 @@ in
                 end
               end
             '';
-          }
-        )
+          };
+        }
       ];
       lualine_y = [
-        (
-          helpers.listToUnkeyedAttrs [ "progress" ]
-          // {
+        ({
+          name = "progress";
+          extraConfig = {
             separator = " ";
-            padding = {
-              left = 1;
-              right = 0;
-            };
-          }
-        )
-        (
-          helpers.listToUnkeyedAttrs [ "location" ]
-          // {
-            padding = {
-              left = 0;
-              right = 1;
-            };
-          }
-        )
+          };
+          padding = {
+            left = 1;
+            right = 0;
+          };
+        })
+        ({
+          name = "location";
+          padding = {
+            left = 0;
+            right = 1;
+          };
+        })
       ];
-      lualine_z = [
-        helpers.listToUnkeyedAttrs
-        [
-          helpers.mkRaw
-          ''function() return " " .. os.date("%R") end''
-        ]
-      ];
+      lualine_z = [ { name = helpers.mkRaw ''function() return " " .. os.date("%R") end''; } ];
     };
   };
 }

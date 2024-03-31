@@ -16,7 +16,7 @@ in
       '';
       maxWidth = helpers.mkRaw ''
         function()
-          reutrn math.floor(vim.o.columns * 0.75)
+          return math.floor(vim.o.columns * 0.75)
         end
       '';
       onOpen = ''

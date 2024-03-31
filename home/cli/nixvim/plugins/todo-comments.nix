@@ -8,8 +8,10 @@ in
       enable = true;
     };
     keymaps = [
-      (kv "n" "function() require('todo-comments').jump_next() end" { desc = "Next todo comment"; })
-      (kv "n" "function() require('todo-comments').jump_prev() end" { desc = "Previous todo comment"; })
+      (kv "n" "]t" "function() require('todo-comments').jump_next() end" { desc = "Next todo comment"; })
+      (kv "n" "[t" "function() require('todo-comments').jump_prev() end" {
+        desc = "Previous todo comment";
+      })
       (k "n" "<leader>xt" "<cmd>TodoTrouble<cr>" { desc = "Todo (Trouble)"; })
       (k "n" "<leader>xT" "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>" {
         desc = "Todo/Fix/Fixme (Trouble)";

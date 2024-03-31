@@ -1,6 +1,6 @@
 { ... }:
 let
-  inherit (import ../utils) k;
+  inherit (import ../util.nix) k;
 in
 {
   programs.nixvim = {
@@ -15,7 +15,7 @@ in
           keymaps = {
             initSelection = "<C-space>";
             nodeIncremental = "<C-space";
-            scopeIncremental = false;
+            scopeIncremental = "<M-space>";
             nodeDecremental = "<bs>";
           };
         };

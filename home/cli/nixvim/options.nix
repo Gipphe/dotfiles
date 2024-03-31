@@ -13,12 +13,10 @@ in
   programs.nixvim = {
     withNodeJs = true;
     editorconfig.enable = true;
-    globalOpts = {
+    globals = {
       mapleader = " ";
       maplocalleader = "\\\\";
-
       autoformat = true;
-
       root_spec = [
         "lsp"
         [
@@ -27,10 +25,7 @@ in
         ]
         "cwd"
       ];
-
       markdown_recommended_style = 0;
-    };
-    globals = {
       clipboard = lib.mkIf cfg.is_wsl {
         name = "WslClipboard";
         copy = {
@@ -46,8 +41,8 @@ in
     };
     extraConfigLuaPre = ''
       local M = {}
-      local M.skip_foldexpr = {}
-      local M.skip_check = assert(vim.uv.new_check())
+      M.skip_foldexpr = {}
+      local skip_check = assert(vim.uv.new_check())
       function M.foldexpr()
         local buf = vim.api.nvim_get_current_buf()
 
@@ -75,10 +70,11 @@ in
         -- no parser available, so mark it as skip
         -- in the next tick, all skip marks will be reset
         M.skip_foldexpr[buf] = true
-        M.skip_check:start(function()
+        skip_check:start(function()
           M.skip_foldexpr = {}
-          M.skip_check:stop()
+          skip_check:stop()
         end)
+        return "0"
       end
 
       function M.foldtext()
@@ -283,7 +279,7 @@ in
         # Insert indents automatically
         smartindent = true;
 
-        spellang = [ "end" ];
+        # spellang = [ "end" ];
 
         # Put new windows below current
         splitbelow = true;
@@ -314,11 +310,11 @@ in
           diff = "╱";
           eob = " ";
         };
-        smoothscroll = true;
+        # smoothscroll = true;
 
         foldlevel = 99;
 
-        statuscolumns = "%!v:lua.M.statuscolumn()";
+        statuscolumn = "%!v:lua.M.statuscolumn()";
         foldtext = "v:lua.M.foldtext()";
       }
       // (

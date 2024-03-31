@@ -20,7 +20,7 @@ in
       '';
       diagnostics = "nvim_lsp";
       alwaysShowBufferline = false;
-      diagnosticsIndicator = helpers.mkRaw ''
+      diagnosticsIndicator = ''
         function(_, _, diag)
           local ret = (diag.error and "${icons.diagnostics.Error}" .. diag.error .. " " or "")
             .. (diag.warning and "${icons.diagnostics.Warn}" .. diag.warning or "")

@@ -1,12 +1,10 @@
 { config, ... }:
 let
   inherit (config.nixvim) helpers;
+  inherit (import ./util.nix) k kv;
 in
 {
   programs.nixvim.keymaps =
-    let
-      inherit (import ./util.nix) k kv;
-    in
     [
       # better up/down
       (k
@@ -166,22 +164,20 @@ in
       let
 
         # diagnostic
-        diagnostic_goto =
-          next: severity:
-          helpers.mkRaw ''
-            function()
-              local go = ${if next then "vim.diagnostic.goto_next" else "vim.diagnostic.goto_prev"}
-              severity = ${if severity then "vim.diagnostic.severity[${severity}]" else "nil"}
-              return function()
-                go({ severity = severity })
-              end
+        diagnostic_goto = next: severity: ''
+          function()
+            local go = ${if next then "vim.diagnostic.goto_next" else "vim.diagnostic.goto_prev"}
+            severity = ${if builtins.isString severity then "vim.diagnostic.severity[${severity}]" else "nil"}
+            return function()
+              go({ severity = severity })
             end
-          '';
+          end
+        '';
       in
       [
         (kv "n" "<leader>cd" "vim.diagnostic.open_float" { desc = "Line diagnostics"; })
-        (kv "n" "]d" (diagnostic_goto true) { desc = "Next Diagnostic"; })
-        (kv "n" "[d" (diagnostic_goto false) { desc = "Prev Diagnostic"; })
+        (kv "n" "]d" (diagnostic_goto true null) { desc = "Next Diagnostic"; })
+        (kv "n" "[d" (diagnostic_goto false null) { desc = "Prev Diagnostic"; })
         (kv "n" "]e" (diagnostic_goto true "ERROR") { desc = "Next Error"; })
         (kv "n" "[e" (diagnostic_goto false "ERROR") { desc = "Prev Error"; })
         (kv "n" "]w" (diagnostic_goto true "WARN") { desc = "Next Warning"; })

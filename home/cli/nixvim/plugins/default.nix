@@ -1,11 +1,29 @@
 { ... }:
 {
-  imports =
-    let
-      inherit (builtins) readDir filter attrNames;
-      files = filter (n: n != "default.nix") (attrNames (readDir ./.));
-    in
-    map (f: ./${f}) files;
+  imports = [
+    ./bufferline.nix
+    ./cmp.nix
+    ./conform.nix
+    ./dressing.nix
+    ./flash.nix
+    ./haskell-tools.nix
+    ./lint.nix
+    ./lsp.nix
+    ./lualine.nix
+    ./luasnip.nix
+    ./mini.nix
+    ./navic.nix
+    ./neoconf.nix
+    ./neodev.nix
+    ./notify.nix
+    ./oil.nix
+    ./telescope.nix
+    ./todo-comments.nix
+    ./treesitter.nix
+    ./ts-context-commentstring.nix
+    ./vim-matchup.nix
+    ./which-key.nix
+  ];
   programs.nixvim.plugins = {
     copilot-lua.enable = true;
     haskell-scope-highlighting.enable = true;
