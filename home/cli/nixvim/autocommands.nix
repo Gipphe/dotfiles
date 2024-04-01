@@ -3,6 +3,11 @@ let inherit (config.nixvim) helpers;
 in
 {
   programs.nixvim = {
+    autoGroups = {
+      nvim-metals = {
+        clear = true;
+      };
+    };
     autoCmd = [
       {
         event = "FileType";

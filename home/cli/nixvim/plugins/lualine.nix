@@ -44,21 +44,21 @@ in
           name = helpers.mkRaw ''function() return require("noice").api.status.command.get() end'';
           extraConfig = {
             cond = helpers.mkRaw ''function() return package.loaded["noice"] and require("noice").api.status.command.has() end'';
-            color = "#f00";
+            color = helpers.mkRaw ''M.fg("Statement")'';
           };
         }
         {
           name = helpers.mkRaw ''function() return require("noice").api.status.mode.get() end'';
           extraConfig = {
             cond = helpers.mkRaw ''function() return package.loaded["noice"] and require("noice").api.status.mode.has() end'';
-            color = "#0f0";
+            color = helpers.mkRaw ''M.fg("Constant")'';
           };
         }
         {
           name = helpers.mkRaw ''function() return "  " .. require("dap").status() end'';
           extraConfig = {
             cond = helpers.mkRaw ''function() return package.loaded["dap"] and require("dap").status() ~= "" end'';
-            color = "#404";
+            color = helpers.mkRaw ''M.fg("Debug")'';
           };
         }
         {

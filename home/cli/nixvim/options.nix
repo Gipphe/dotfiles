@@ -41,41 +41,67 @@ in
     };
     extraConfigLuaPre = ''
       local M = {}
-      M.skip_foldexpr = {}
-      local skip_check = assert(vim.uv.new_check())
-      function M.foldexpr()
-        local buf = vim.api.nvim_get_current_buf()
+      -- M.skip_foldexpr = {}
+      -- local skip_check = assert(vim.uv.new_check())
+      -- function M.foldexpr()
+      --   local buf = vim.api.nvim_get_current_buf()
 
-        -- Still in the same tick and no parser
-        if M.skip_foldexpr[buf] then
-          return "0"
-        end
+      --   -- Still in the same tick and no parser
+      --   if M.skip_foldexpr[buf] then
+      --     return "0"
+      --   end
 
-        -- Don't use treesitter folds for non-file buffers
-        if vim.bo[buf].buftype ~= "" then
-          return "0"
-        end
+      --   -- Don't use treesitter folds for non-file buffers
+      --   if vim.bo[buf].buftype ~= "" then
+      --     return "0"
+      --   end
 
-        -- As long as we don't have a filetype, don't bother
-        -- checking if treesitter is availale (it won't)
-        if vim.bo[buf].filetype == "" then
-          return "0"
-        end
+      --   -- As long as we don't have a filetype, don't bother
+      --   -- checking if treesitter is availale (it won't)
+      --   if vim.bo[buf].filetype == "" then
+      --     return "0"
+      --   end
 
-        local ok = pcall(vim.treesitter.get_parser, buf)
-        if ok then
-          return vim.treesitter.foldexpr()
-        end
+      --   local ok = pcall(vim.treesitter.get_parser, buf)
+      --   if ok then
+      --     return vim.treesitter.foldexpr()
+      --   end
 
-        -- no parser available, so mark it as skip
-        -- in the next tick, all skip marks will be reset
-        M.skip_foldexpr[buf] = true
-        skip_check:start(function()
-          M.skip_foldexpr = {}
-          skip_check:stop()
-        end)
-        return "0"
+      --   -- no parser available, so mark it as skip
+      --   -- in the next tick, all skip marks will be reset
+      --   M.skip_foldexpr[buf] = true
+      --   skip_check:start(function()
+      --     M.skip_foldexpr = {}
+      --     skip_check:stop()
+      --   end)
+      --   return "0"
+
+      ---@return {fg?:string}?
+      function M.fg(name)
+        local color = M.color(name)
+        return color and { fg = color } or nil
       end
+
+      ---@param name string
+      ---@param bg? boolean
+      ---@return string?
+      function M.color(name, bg)
+        ---@type {foreground?:number}?
+        ---@diagnostic disable-next-line: deprecated
+        local hl = vim.api.nvim_get_hl and vim.api.nvim_get_hl(0, { name = name, link = false })
+          or vim.api.nvim_get_hl_by_name(name, true)
+        ---@diagnostic disable-next-line: undefined-field
+        ---@type string?
+        local color = nil
+        if hl then
+          if bg then
+            color = hl.bg or hl.background
+          else
+            color = hl.fg or hl.foreground
+          end
+        end
+        return color and string.format("#%06x", color) or nil
+      end     -- end
 
       function M.foldtext()
         local ok = pcall(vim.treesitter.get_parser, vim.api.nvim_get_current_buf())
@@ -200,166 +226,165 @@ in
         return table.concat(components, "")
       end
     '';
-    opts =
-      {
-        autowrite = true;
-
-        # Sync with system clipboard
-        clipboard = "unnamedplus";
-
-        # Confirm to save changes before leaving modified buffer
-        confirm = true;
-
-        # Highlight current line of cursor
-        cursorline = true;
-
-        # Use spaces instead of tabs
-        expandtab = true;
-
-        # tcqj
-        formatoptions = "jcroqlnt";
-
-        grepformat = "%f:%l:%c:%m";
-        # Usr ripgrep for searching
-        grepprg = "rg --vimgrep";
-
-        ignorecase = true;
-        # Preview incremental substitute
-        inccommand = "nosplit";
-
-        # Global statusline
-        laststatus = 3;
-
-        mouse = "a";
-
-        # Show line numbers
-        number = true;
-        # Use relative line numbers
-        relativenumber = true;
-
-        # Popup blend
-        pumblend = 10;
-
-        # Maximum number of entries in a popup
-        pumheight = 10;
-
-        # Lines of context
-        scrolloff = 8;
-
-        sessionoptions = [
-          "buffers"
-          "curdir"
-          "tabpages"
-          "winsizes"
-          "help"
-          "globals"
-          "skiprtp"
-          "folds"
-        ];
-
-        # Round indent
-        shiftround = true;
-
-        # Indent size
-        shiftwidth = 2;
-
-        shortmess = "CnfoTOxcIWlitF";
-
-        # Hide mode since we have a statusline
-        showmode = false;
-
-        # Columns of context
-        sidescrolloff = 8;
-
-        signcolumn = "yes";
-
-        # Don't ignore case with capitals
-        smartcase = true;
-
-        # Insert indents automatically
-        smartindent = true;
-
-        # spellang = [ "end" ];
-
-        # Put new windows below current
-        splitbelow = true;
-
-        splitkeep = "screen";
-
-        # Put new windows to the right
-        splitright = true;
-
-        tabstop = 2;
-
-        # True color support
-        termguicolors = true;
-
-        # Allow cursor to move where there is no text in visual block mode
-        virtualedit = "block";
-
-        # Command line completion
-        wildmode = "longest:full,full";
-
-        winminwidth = 5;
-
-        fillchars = {
-          foldopen = "";
-          foldclose = "";
-          fold = " ";
-          foldsep = " ";
-          diff = "╱";
-          eob = " ";
-        };
-        # smoothscroll = true;
-
-        foldlevel = 99;
-
-        statuscolumn = "%!v:lua.M.statuscolumn()";
-        foldtext = "v:lua.M.foldtext()";
-      }
-      // (
-        if lib.strings.hasPrefix "10" config.programs.nixvim.package.version && false then
-          {
-            foldmethod = "expr";
-            foldexpr = "v:lua.M.foldexpr()";
-            foldtext = "";
-            fillchars = "fold: ";
-          }
-        else
-          { foldmethod = lib.mkDefault "indent"; }
-      )
-      // {
-        formatexpr = "v:lua.require'conform'.formatexpr()";
-
-        # Set bash as default shell for commands
-        shell = "${pkgs.bash}/bin/bash -i";
-
-        updatetime = 50;
-        colorcolumn = "80";
-        wrap = true;
-        title = true;
-        titlestring = "%t %h%m%r%w (%{v:progname})";
-        list = true;
-        conceallevel = 0;
-        listchars = {
-          tab = ">-";
-          trail = "~";
-          extends = ">";
-          precedes = "<";
-        };
-        completeopt = [
-          "menuone"
-          "preview"
-          "noinsert"
-          "noselect"
-        ];
-
-        # Optimal for undotree
-        swapfile = false;
-        backup = false;
-        undodir = helpers.mkRaw ''os.getenv("HOME") .. "/.vim/undodir"'';
-        undofile = true;
-        undolevels = 10000;
-      };
+    opts = {
+#         autowrite = true;
+# 
+#         # Sync with system clipboard
+#         clipboard = "unnamedplus";
+# 
+#         # Confirm to save changes before leaving modified buffer
+#         confirm = true;
+# 
+#         # Highlight current line of cursor
+#         cursorline = true;
+# 
+#         # Use spaces instead of tabs
+#         expandtab = true;
+# 
+#         # tcqj
+#         formatoptions = "jcroqlnt";
+# 
+#         grepformat = "%f:%l:%c:%m";
+#         # Usr ripgrep for searching
+#         grepprg = "rg --vimgrep";
+# 
+#         ignorecase = true;
+#         # Preview incremental substitute
+#         inccommand = "nosplit";
+# 
+#         # Global statusline
+#         laststatus = 3;
+# 
+#         mouse = "a";
+# 
+#         # Show line numbers
+#         number = true;
+#         # Use relative line numbers
+#         relativenumber = true;
+# 
+#         # Popup blend
+#         pumblend = 10;
+# 
+#         # Maximum number of entries in a popup
+#         pumheight = 10;
+# 
+#         # Lines of context
+#         scrolloff = 8;
+# 
+#         sessionoptions = [
+#           "buffers"
+#           "curdir"
+#           "tabpages"
+#           "winsizes"
+#           "help"
+#           "globals"
+#           "skiprtp"
+#           "folds"
+#         ];
+# 
+#         # Round indent
+#         shiftround = true;
+# 
+#         # Indent size
+#         shiftwidth = 2;
+# 
+#         shortmess = "CnfoTOxcIWlitF";
+# 
+#         # Hide mode since we have a statusline
+#         showmode = false;
+# 
+#         # Columns of context
+#         sidescrolloff = 8;
+# 
+#         signcolumn = "yes";
+# 
+#         # Don't ignore case with capitals
+#         smartcase = true;
+# 
+#         # Insert indents automatically
+#         smartindent = true;
+# 
+#         # spellang = [ "end" ];
+# 
+#         # Put new windows below current
+#         splitbelow = true;
+# 
+#         splitkeep = "screen";
+# 
+#         # Put new windows to the right
+#         splitright = true;
+# 
+#         tabstop = 2;
+# 
+#         # True color support
+#         termguicolors = true;
+# 
+#         # Allow cursor to move where there is no text in visual block mode
+#         virtualedit = "block";
+# 
+#         # Command line completion
+#         wildmode = "longest:full,full";
+# 
+#         winminwidth = 5;
+# 
+#         fillchars = {
+#           foldopen = "";
+#           foldclose = "";
+#           fold = " ";
+#           foldsep = " ";
+#           diff = "╱";
+#           eob = " ";
+#         };
+#         # smoothscroll = true;
+# 
+         foldlevel = 99;
+# 
+#         statuscolumn = "%!v:lua.M.statuscolumn()";
+#         foldtext = "v:lua.M.foldtext()";
+#       }
+#       // (
+#         if lib.strings.hasPrefix "10" config.programs.nixvim.package.version && false then
+#           {
+#             foldmethod = "expr";
+#             foldexpr = "v:lua.M.foldexpr()";
+#             foldtext = "";
+#             fillchars = "fold: ";
+#           }
+#         else
+#           { foldmethod = lib.mkDefault "indent"; }
+#       )
+#       // {
+#         formatexpr = "v:lua.require'conform'.formatexpr()";
+# 
+#         # Set bash as default shell for commands
+#         shell = "${pkgs.bash}/bin/bash -i";
+# 
+#         updatetime = 50;
+#         colorcolumn = "80";
+#         wrap = true;
+#         title = true;
+#         titlestring = "%t %h%m%r%w (%{v:progname})";
+#         list = true;
+#         conceallevel = 0;
+#         listchars = {
+#           tab = ">-";
+#           trail = "~";
+#           extends = ">";
+#           precedes = "<";
+#         };
+#         completeopt = [
+#           "menuone"
+#           "preview"
+#           "noinsert"
+#           "noselect"
+#         ];
+# 
+#         # Optimal for undotree
+#         swapfile = false;
+#         backup = false;
+#         undodir = helpers.mkRaw ''os.getenv("HOME") .. "/.vim/undodir"'';
+#         undofile = true;
+#         undolevels = 10000;
+       };
   };
 }
