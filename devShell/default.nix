@@ -13,6 +13,12 @@
       category = "build";
     }
     {
+      help = "Rebuild nix-darwin using darwin-rebuild switch";
+      name = "dw";
+      command = "darwin-rebuild switch --flake $(pwd)";
+      category = "build";
+    }
+    {
       help = "Format the source tree with treefmt";
       name = "fmt";
       command = "treefmt";
