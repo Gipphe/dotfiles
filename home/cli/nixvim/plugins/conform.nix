@@ -9,7 +9,10 @@ in
         enable = true;
         sources.formatting = {
           black.enable = true;
-          prettier.enable = true;
+          prettier = {
+            enable = true;
+            disableTsServerFormatter = true;
+          };
         };
       };
       conform-nvim = {

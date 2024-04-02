@@ -1,15 +1,11 @@
 {
   inputs,
   pkgs,
-  config,
   lib,
   ...
 }:
 {
   environment = {
-    # Set default flake path for nh
-    sessionVariables.FLAKE = "/home/gipphe/projects/dotfiles";
-
     # set channels (backwards compatibility)
     etc = {
       "nix/flake-channels/nixpkgs".source = inputs.nixpkgs;
@@ -21,21 +17,12 @@
     # Clear out the store periodically of old generations
     gc = {
       automatic = true;
-      dates = "daily";
       options = "--delete-older-than 10d";
     };
     package = pkgs.nixUnstable;
 
-    # Make builds run with low priority so my system stays responsive
-    daemonCPUSchedPolicy = "idle";
-    daemonIOSchedClass = "idle";
-
     # pin the registry to avoid downloading and evaling a new nixpkgs version every time
     registry = lib.mapAttrs (_: v: { flake = v; }) inputs;
-
-    # This will additionally add your inputs to the system's legacy channels
-    # Making legacy nix commands consistent as well, awesome!
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
     # Free up to 1GiB whenever there is less than 100MiB left
     # extraOptions = ''
@@ -91,7 +78,6 @@
     enable = true;
     doc.enable = false;
     man.enable = true;
-    dev.enable = false;
   };
 
   nixpkgs.config = {
@@ -105,9 +91,4 @@
       })
     ];
   };
-
-  # Auto-upgrading with nixos-unstable is risky
-  system.autoUpgrade.enable = false;
-
-  system.stateVersion = lib.mkDefault "23.11"; # DON'T TOUCH THIS
 }

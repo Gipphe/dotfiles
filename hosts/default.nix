@@ -101,7 +101,7 @@ in
     "VNB-MB-Pro" = inputs.darwin.lib.darwinSystem {
       modules = [
         { networking.hostName = "VNB-MB-Pro"; }
-        ./VNB-MB-Pro/darwin.nix
+        ./VNB-MB-Pro
         inputs.home-manager.darwinModules.home-manager
         {
           home-manager = {

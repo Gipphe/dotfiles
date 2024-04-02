@@ -2,11 +2,15 @@
   inputs,
   config,
   lib,
+  pkgs,
   ...
 }:
+let
+  inherit (pkgs.stdenv) isDarwin;
+in
 {
   config.nixpkgs.config.allowUnfree = true;
-  config.fonts.fontconfig.enable = true;
+  config.fonts.fontconfig.enable = lib.mkIf (!isDarwin) true;
   config.home = {
     stateVersion = "23.11"; # Please read the comment before changing.
     username = "gipphe";

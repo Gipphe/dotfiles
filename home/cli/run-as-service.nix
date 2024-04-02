@@ -29,5 +29,5 @@ let
   '';
 in
 {
-  home.packages = [ run-as-service ];
+  config = lib.mkIf (!pkgs.stdenv.isDarwin) { home.packages = [ run-as-service ]; };
 }

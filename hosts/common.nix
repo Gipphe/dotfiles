@@ -6,7 +6,7 @@
     ./modules/core
     ./modules/desktop.nix
     # ./modules/hyprland.nix
-    ./modules/nix.nix
+    ./modules/nix
     # ./modules/nvidia.nix
     ./modules/user.nix
   ];

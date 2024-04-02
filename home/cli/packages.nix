@@ -1,84 +1,83 @@
 { pkgs, ... }:
 {
-  home.packages = with pkgs; [
+  home.packages =
+    with pkgs;
+    [
 
-    # Make
-    gnumake
+      # Make
+      gnumake
 
-    # grep replacement
-    ripgrep
+      # grep replacement
+      ripgrep
 
-    # image tooling
-    imagemagick
+      # image tooling
+      imagemagick
 
-    # video tooling
-    ffmpeg-full
+      # video tooling
+      ffmpeg-full
 
-    # iamge preview in terminal
-    catimg
+      # iamge preview in terminal
+      catimg
 
-    # better find
-    fd
+      # better find
+      fd
 
-    # swiss army knife for JSON
-    jq
+      # swiss army knife for JSON
+      jq
 
-    # used by a lot of things
-    unzip
+      # used by a lot of things
+      unzip
 
-    # mosh
+      # mosh
 
-    # rclone
+      # rclone
 
-    # probably pre-installed, but included just in case
-    gnused
-    # probably pre-installed, but included just in case
-    gnutar
+      # probably pre-installed, but included just in case
+      gnused
+      # probably pre-installed, but included just in case
+      gnutar
 
-    # obvious
-    curl
+      # obvious
+      curl
 
-    # pv
+      # pv
 
-    # watch
+      # watch
 
-    # run commands when files change
-    entr
+      # run commands when files change
+      entr
 
-    # make JSON greppable
-    fastgron
+      # make JSON greppable
+      fastgron
 
-    # password manager
-    _1password
+      # password manager
+      _1password
 
-    # containers
-    # docker
+      # containers
+      # docker
 
-    # openssh
-    openssl
+      # openssh
+      openssl
 
-    # communication
-    slack
-    discord
+      # communication
+      slack
+      discord
 
-    # Programming tools
-    glab
-    python3Full
+      # Programming tools
+      glab
+      python3Full
 
-    # Libraries
-    libgcc
-    gcc-unwrapped
+      # Language servers
+      shellcheck
+      vale
 
-    # Language servers
-    shellcheck
-    vale
+      # System and network tools
+      # bandwhich
+      # httpie
+      # netcat
 
-    # System and network tools
-    # bandwhich
-    # httpie
-    # netcat
-
-    # Fonts
-    (nerdfonts.override { fonts = [ "FiraCode" ]; })
-  ];
+      # Fonts
+      (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    ]
+    ++ (if pkgs.stdenv.isDarwin then [ ] else [ libgcc ]);
 }
