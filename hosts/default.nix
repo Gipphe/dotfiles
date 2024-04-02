@@ -100,21 +100,21 @@ in
     # Work Macbook Pro
     "VNB-MB-Pro" = inputs.darwin.lib.darwinSystem {
       modules = [
-        # { networking.hostName = "VNB-MB-Pro"; }
-        ./VNB-MB-Pro/darwin.nix
-        # inputs.home-manager.darwinModules.home-manager
-        # {
-        #   home-manager = {
-        #     useUserPackages = true;
-        #     useGlobalPkgs = true;
-        #     extraSpecialArgs = {
-        #       inherit inputs;
-        #       inherit self;
-        #     };
-        #     users.gipphe.imports = [ ../home/base.nix ];
-        #   };
-        # }
-        # agenix
+        { networking.hostName = "VNB-MB-Pro"; }
+        ./VNB-MB-Pro
+        inputs.home-manager.darwinModules.home-manager
+        {
+          home-manager = {
+            useUserPackages = true;
+            useGlobalPkgs = true;
+            extraSpecialArgs = {
+              inherit inputs;
+              inherit self;
+            };
+            users.victor.imports = [ ../home/hosts/VNB-MB-Pro ];
+          };
+        }
+        agenix
       ];
       specialArgs = {
         inherit inputs;

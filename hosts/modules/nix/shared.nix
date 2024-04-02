@@ -46,7 +46,7 @@
       # allow sudo users to mark the following values as trusted
       allowed-users = [ "@wheel" ];
       trusted-users = [ "@wheel" ];
-      sandbox = true;
+      sandbox = lib.mkDefault true;
       max-jobs = "auto";
       # continue building derivations if one fails
       keep-going = true;
