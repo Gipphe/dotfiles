@@ -5,10 +5,11 @@ in
 {
   imports = [
     ./autocommands.nix
-    ./plugins
-    ./options.nix
-    ./keymaps.nix
     ./colorscheme.nix
+    ./keymaps.nix
+    ./modules
+    ./options.nix
+    ./plugins
   ];
   options.gipphe.nixvim = {
     enable = lib.mkOption {

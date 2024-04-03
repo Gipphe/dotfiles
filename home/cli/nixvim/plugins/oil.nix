@@ -21,7 +21,18 @@ in
         };
       };
     };
-    keymaps = [ (k "n" "fe" "<cmd>Oil<cr>" { desc = "Open Oil"; }) ];
+    keymaps = [
+      (k "n" "<leader>fe" "<cmd>Oil<cr>" { desc = "Open Oil (parent dir)"; })
+      (k "n" "<leader>fE" "<cmd>Oil .<cr>" { desc = "Open Oil (cwd)"; })
+      (k "n" "<leader>e" "<leader>fe" {
+        desc = "Open Oil (parent dir)";
+        remap = true;
+      })
+      (k "n" "<leader>E" "<leader>fE" {
+        desc = "Open Oil (cwd)";
+        remap = true;
+      })
+    ];
     extraPlugins = [ pkgs.vimPlugins.nvim-web-devicons ];
   };
 }
