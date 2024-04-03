@@ -226,165 +226,168 @@ in
         return table.concat(components, "")
       end
     '';
+    extraConfigLua = ''
+      vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
+    '';
     opts = {
-#         autowrite = true;
-# 
-#         # Sync with system clipboard
-#         clipboard = "unnamedplus";
-# 
-#         # Confirm to save changes before leaving modified buffer
-#         confirm = true;
-# 
-#         # Highlight current line of cursor
-#         cursorline = true;
-# 
-#         # Use spaces instead of tabs
-#         expandtab = true;
-# 
-#         # tcqj
-#         formatoptions = "jcroqlnt";
-# 
-#         grepformat = "%f:%l:%c:%m";
-#         # Usr ripgrep for searching
-#         grepprg = "rg --vimgrep";
-# 
-#         ignorecase = true;
-#         # Preview incremental substitute
-#         inccommand = "nosplit";
-# 
-#         # Global statusline
-#         laststatus = 3;
-# 
-#         mouse = "a";
-# 
-#         # Show line numbers
-#         number = true;
-#         # Use relative line numbers
-#         relativenumber = true;
-# 
-#         # Popup blend
-#         pumblend = 10;
-# 
-#         # Maximum number of entries in a popup
-#         pumheight = 10;
-# 
-#         # Lines of context
-#         scrolloff = 8;
-# 
-#         sessionoptions = [
-#           "buffers"
-#           "curdir"
-#           "tabpages"
-#           "winsizes"
-#           "help"
-#           "globals"
-#           "skiprtp"
-#           "folds"
-#         ];
-# 
-#         # Round indent
-#         shiftround = true;
-# 
-#         # Indent size
-#         shiftwidth = 2;
-# 
-#         shortmess = "CnfoTOxcIWlitF";
-# 
-#         # Hide mode since we have a statusline
-#         showmode = false;
-# 
-#         # Columns of context
-#         sidescrolloff = 8;
-# 
-#         signcolumn = "yes";
-# 
-#         # Don't ignore case with capitals
-#         smartcase = true;
-# 
-#         # Insert indents automatically
-#         smartindent = true;
-# 
-#         # spellang = [ "end" ];
-# 
-#         # Put new windows below current
-#         splitbelow = true;
-# 
-#         splitkeep = "screen";
-# 
-#         # Put new windows to the right
-#         splitright = true;
-# 
-#         tabstop = 2;
-# 
-#         # True color support
-#         termguicolors = true;
-# 
-#         # Allow cursor to move where there is no text in visual block mode
-#         virtualedit = "block";
-# 
-#         # Command line completion
-#         wildmode = "longest:full,full";
-# 
-#         winminwidth = 5;
-# 
-#         fillchars = {
-#           foldopen = "";
-#           foldclose = "";
-#           fold = " ";
-#           foldsep = " ";
-#           diff = "╱";
-#           eob = " ";
-#         };
-#         # smoothscroll = true;
-# 
-         foldlevel = 99;
-# 
-#         statuscolumn = "%!v:lua.M.statuscolumn()";
-#         foldtext = "v:lua.M.foldtext()";
-#       }
-#       // (
-#         if lib.strings.hasPrefix "10" config.programs.nixvim.package.version && false then
-#           {
-#             foldmethod = "expr";
-#             foldexpr = "v:lua.M.foldexpr()";
-#             foldtext = "";
-#             fillchars = "fold: ";
-#           }
-#         else
-#           { foldmethod = lib.mkDefault "indent"; }
-#       )
-#       // {
-#         formatexpr = "v:lua.require'conform'.formatexpr()";
-# 
-#         # Set bash as default shell for commands
-#         shell = "${pkgs.bash}/bin/bash -i";
-# 
-#         updatetime = 50;
-#         colorcolumn = "80";
-#         wrap = true;
-#         title = true;
-#         titlestring = "%t %h%m%r%w (%{v:progname})";
-#         list = true;
-#         conceallevel = 0;
-#         listchars = {
-#           tab = ">-";
-#           trail = "~";
-#           extends = ">";
-#           precedes = "<";
-#         };
-#         completeopt = [
-#           "menuone"
-#           "preview"
-#           "noinsert"
-#           "noselect"
-#         ];
-# 
-#         # Optimal for undotree
-#         swapfile = false;
-#         backup = false;
-#         undodir = helpers.mkRaw ''os.getenv("HOME") .. "/.vim/undodir"'';
-#         undofile = true;
-#         undolevels = 10000;
-       };
+      autowrite = true;
+
+      # Sync with system clipboard
+      clipboard = "unnamedplus";
+
+      # Confirm to save changes before leaving modified buffer
+      confirm = true;
+
+      # Highlight current line of cursor
+      cursorline = true;
+
+      # Use spaces instead of tabs
+      expandtab = true;
+
+      # tcqj
+      formatoptions = "jcroqlnt";
+
+      grepformat = "%f:%l:%c:%m";
+      # Usr ripgrep for searching
+      grepprg = "rg --vimgrep";
+
+      ignorecase = true;
+      # Preview incremental substitute
+      inccommand = "nosplit";
+
+      # Global statusline
+      laststatus = 3;
+
+      mouse = "a";
+
+      # Show line numbers
+      number = true;
+      # Use relative line numbers
+      relativenumber = true;
+
+      # Popup blend
+      pumblend = 10;
+
+      # # Maximum number of entries in a popup
+      pumheight = 10;
+
+      # Lines of context
+      scrolloff = 8;
+
+      # sessionoptions = [
+      #   "buffers"
+      #   "curdir"
+      #   "tabpages"
+      #   "winsizes"
+      #   "help"
+      #   "globals"
+      #   "skiprtp"
+      #   "folds"
+      # ];
+
+      # Round indent
+      shiftround = true;
+
+      # Indent size
+      shiftwidth = 2;
+
+      # shortmess = "CnfoTOxcIWlitF";
+
+      # Hide mode since we have a statusline
+      showmode = false;
+
+      # Columns of context
+      sidescrolloff = 8;
+
+      signcolumn = "yes";
+
+      # Don't ignore case with capitals
+      smartcase = true;
+
+      # Insert indents automatically
+      smartindent = true;
+
+      spelllang = [ "end" ];
+
+      # Put new windows below current
+      splitbelow = true;
+
+      splitkeep = "screen";
+
+      # Put new windows to the right
+      splitright = true;
+
+      tabstop = 2;
+
+      # True color support
+      termguicolors = true;
+
+      # Allow cursor to move where there is no text in visual block mode
+      virtualedit = "block";
+
+      # Command line completion
+      wildmode = "longest:full,full";
+
+      winminwidth = 5;
+
+      fillchars = {
+        foldopen = "";
+        foldclose = "";
+        fold = " ";
+        foldsep = " ";
+        diff = "╱";
+        eob = " ";
+      };
+      # smoothscroll = true;
+
+      foldlevel = 99;
+
+      # statuscolumn = "%!v:lua.M.statuscolumn()";
+      # foldtext = "v:lua.M.foldtext()";
+      # }
+      # // (
+      #   if lib.strings.hasPrefix "10" config.programs.nixvim.package.version && false then
+      #     {
+      #       foldmethod = "expr";
+      #       foldexpr = "v:lua.M.foldexpr()";
+      #       foldtext = "";
+      #       fillchars = "fold: ";
+      #     }
+      #   else
+      #     { foldmethod = lib.mkDefault "indent"; }
+      # )
+      # // {
+      formatexpr = "v:lua.require'conform'.formatexpr()";
+
+      # Set bash as default shell for commands
+      shell = "${pkgs.bash}/bin/bash -i";
+
+      updatetime = 50;
+      colorcolumn = "80";
+      wrap = true;
+      title = true;
+      titlestring = "%t %h%m%r%w (%{v:progname})";
+      list = true;
+      conceallevel = 0;
+      listchars = {
+        tab = ">-";
+        trail = "~";
+        extends = ">";
+        precedes = "<";
+      };
+      completeopt = [
+        "menuone"
+        "preview"
+        "noinsert"
+        "noselect"
+      ];
+
+      # Optimal for undotree
+      swapfile = false;
+      backup = false;
+      undodir = helpers.mkRaw ''os.getenv("HOME") .. "/.vim/undodir"'';
+      undofile = true;
+      undolevels = 10000;
+    };
   };
 }
