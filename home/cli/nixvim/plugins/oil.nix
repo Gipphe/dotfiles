@@ -1,4 +1,7 @@
 { pkgs, ... }:
+let
+  inherit (import ../util.nix) k;
+in
 {
   programs.nixvim = {
     plugins.oil = {
@@ -14,7 +17,7 @@
         };
       };
     };
-    keymaps = [ ];
+    keymaps = [ (k "n" "fe" "<cmd>Oil<cr>" { desc = "Open Oil"; }) ];
     extraPlugins = [ pkgs.vimPlugins.nvim-web-devicons ];
   };
 }
