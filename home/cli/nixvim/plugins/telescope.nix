@@ -20,6 +20,12 @@ in
         };
       };
     };
+    extraConfigLuaPre = ''
+      function get_cwd()
+        local cwd = vim.fn.expand('%:p:h:~:.')
+        return cwd:gsub("^oil://", "")
+      end
+    '';
     keymaps = [
       (k "n" "<leader>," "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>" {
         desc = "Switch Buffer";
@@ -37,6 +43,9 @@ in
       # (kv "n" "<leader>fF" "LazyVim.telescope('files' { cwd = false })" { desc = "Find Files (cwd)"; })
       (k "n" "<leader>fg" "<cmd>Telescope git_files<cr>" { desc = "Find Files (git-files)"; })
       (k "n" "<leader>fr" "<cmd>Telescope oldfiles<cr>" { desc = "Recent"; })
+      (kv "n" "<leader>fR" "function() require('telescope').oldfiles({ cwd = get_cwd() }) end" {
+        desc = "Recent (cwd)";
+      })
       # (kv "n" "<leader>fR" LazyVim.telescope("oldfiles" { cwd = vim.uv.cwd() }) { desc = "Recent (cwd)"; })
 
       # git
@@ -51,7 +60,13 @@ in
       (k "n" "<leader>sC" "<cmd>Telescope commands<cr>" { desc = "Commands"; })
       (k "n" "<leader>sd" "<cmd>Telescope diagnostics bufnr=0<cr>" { desc = "Document Diagnostics"; })
       (k "n" "<leader>sD" "<cmd>Telescope diagnostics<cr>" { desc = "Workspace Diagnostics"; })
+      (kv "n" "<leader>sg" ''
+        function()
+          require('telescope.builtin').live_grep({ cwd = get_cwd() })
+        end
+      '' { desc = "Grep (current dir)"; })
       # (k "n" "<leader>sg" LazyVim.telescope("live_grep") {desc = "Grep (Root Dir)"; })
+      (k "n" "<leader>sG" "<cmd>Telescope live_grep<cr>" { desc = "Grep (cwd)"; })
       # (k "n" "<leader>sG", LazyVim.telescope("live_grep" { cwd = false }) {desc = "Grep (cwd)"; })
       (k "n" "<leader>sh" "<cmd>Telescope help_tags<cr>" { desc = "Help Pages"; })
       (k "n" "<leader>sH" "<cmd>Telescope highlights<cr>" { desc = "Search Highlight Groups"; })
