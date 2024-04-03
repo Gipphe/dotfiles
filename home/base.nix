@@ -9,16 +9,20 @@ let
   inherit (pkgs.stdenv) isDarwin;
 in
 {
-  config.nixpkgs.config.allowUnfree = true;
-  config.fonts.fontconfig.enable = lib.mkIf (!isDarwin) true;
-  config.home = {
+  fonts.fontconfig.enable = lib.mkIf (!isDarwin) true;
+  home = {
     stateVersion = "23.11"; # Please read the comment before changing.
     username = "gipphe";
     homeDirectory = lib.mkForce "/home/gipphe";
     sessionVariables.PAGER = "less -FXR";
     sessionVariables.FLAKE = "${config.home.homeDirectory}/projects/dotfiles";
   };
-  config.programs.home-manager.enable = true;
+  programs.home-manager.enable = true;
+
+  nixpkgs = {
+    config.allowUnfree = true;
+    overlays = [ inputs.neovim-overlay.overlay ];
+  };
 
   imports = [
     inputs.nix-index-db.hmModules.nix-index

@@ -133,6 +133,14 @@
       };
     };
 
+    neovim-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+      };
+    };
+
     schizosearch = {
       url = "github:sioodmy/schizosearch";
       inputs = {
