@@ -7,6 +7,10 @@ in
     plugins.oil = {
       enable = true;
       settings = {
+        columns = [
+          "icon"
+          "size"
+        ];
         viewOptions = {
           show_hidden = true;
           is_always_hidden = ''
