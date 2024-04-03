@@ -15,4 +15,6 @@
 
   gipphe.nixvim.enable = true;
   gipphe.neovim.enable = false;
+  gipphe.programs.tmux.enable = false;
+  gipphe.programs.zellij.enable = true;
 }
