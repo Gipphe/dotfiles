@@ -1,29 +1,14 @@
-{ ... }:
+{ lib, ... }:
+let
+  files = lib.attrsets.foldlAttrs (
+    l: k: v:
+    l ++ (if v == "regular" && k != "default.nix" then [ k ] else [ ])
+  ) [ ] (builtins.readDir ./.);
+  imports = builtins.map (f: ./${f}) files;
+in
 {
-  imports = [
-    ./bufferline.nix
-    ./cmp.nix
-    ./conform.nix
-    ./dressing.nix
-    ./flash.nix
-    ./haskell-tools.nix
-    ./lint.nix
-    ./lsp.nix
-    ./lualine.nix
-    ./luasnip.nix
-    ./mini.nix
-    ./navic.nix
-    ./neoconf.nix
-    ./neodev.nix
-    ./notify.nix
-    ./oil.nix
-    ./telescope.nix
-    ./todo-comments.nix
-    ./treesitter.nix
-    ./ts-context-commentstring.nix
-    ./vim-matchup.nix
-    ./which-key.nix
-  ];
+  inherit imports;
+
   programs.nixvim.plugins = {
     copilot-lua.enable = true;
     haskell-scope-highlighting.enable = true;
