@@ -41,7 +41,7 @@ in
   #   (import ../../home/packages/filen { inherit pkgs system; })
   # ];
   #
-  # protrams.barrier.client = {
+  # programs.barrier.client = {
   #   enable = true;
   #   enableDragDrop = true;
   #   machine.name = "VNB-MB-Pro";
