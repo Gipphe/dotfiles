@@ -7,7 +7,6 @@ in
     ./autocommands.nix
     ./colorscheme.nix
     ./keymaps.nix
-    ./modules
     ./options.nix
     ./plugins
   ];
