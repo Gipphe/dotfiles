@@ -2,7 +2,7 @@
 
 ./setup/install-nix.sh
 
-source ./setup/vars.sh
+. ./setup/vars.sh
 
 if [ -n "$IS_MAC" ]; then
 	echo "Installing nix-darwin"
