@@ -26,15 +26,6 @@ in
     ../../cli
     ../../services.nix
   ];
-  # homebrew = {
-  #   enable = true;
-  #   casks = [
-  #     "openvpn-connect"
-  #     "notion"
-  #     "logi-options-plus"
-  #     "barrier"
-  #   ];
-  # };
   # home.packages = with pkgs; [
   #   kubectx
   #   (google-cloud-sdk.withExtraComponents {
