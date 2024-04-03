@@ -1,13 +1,15 @@
 { pkgs, ... }:
 let
-  inherit (import ../util.nix) k;
+  inherit (import ../util.nix) kv;
 in
 {
   programs.nixvim = {
     extraPlugins = [ pkgs.vimPlugins.nvim-spectre ];
     extraConfigLua = "require('spectre').setup({ open_cmd = 'noswapfile vnew' })";
     keymaps = [
-      (k "n" "<leader>sr" "<lua>require'spectre'.open()" { desc = "Replace in Files (Spectre)"; })
+      (kv "n" "<leader>sr" "function() require('spectre').open() end" {
+        desc = "Replace in Files (Spectre)";
+      })
     ];
   };
 }
