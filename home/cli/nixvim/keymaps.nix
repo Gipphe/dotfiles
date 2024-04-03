@@ -157,7 +157,7 @@ in
       (kv [
         "n"
         "v"
-      ] "<leader>cf" ''function() LazyVim.format({ force = true }) end'' { desc = "Format"; })
+      ] "<leader>cf" ''function() require('conform').format({ bufnr = vim.fn.bufnr() }) end'' { desc = "Format"; })
     ]
     ++ (
       let
