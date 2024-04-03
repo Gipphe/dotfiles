@@ -1,5 +1,9 @@
 # Dotfiles
 
+This is my _attempt_ at configuring all my various machines using Nix. This
+whole repo is a mess, and will probably remain a mess for the forseeable
+future.
+
 ## Prerequisites
 
 ### WSL
@@ -24,6 +28,7 @@ article].
   get something along these lines:
 
   <!-- markdownlint-disable MD013 -->
+
   ```text
   systemd-logind.service - User Login Management
        Loaded: loaded (/lib/systemd/system/systemd-logind.service; static)
@@ -35,9 +40,10 @@ article].
                man:systemd-logind.service(8)
                man:logind.conf(5)
                man:org.freedesktop.login1(5)
-  
+
   Jul 12 19:36:02 UserName systemd[1]: systemd-logind.service - User Login Management was skipped because no trigger condi>
   ```
+
   <!-- markdownlint-enable MD013 -->
 
 - Install `dbus-user-session`
@@ -57,6 +63,7 @@ article].
   something along these lines:
 
   <!-- markdownlint-disable MD013 -->
+
   ```text
   systemd-logind.service - User Login Management
        Loaded: loaded (/lib/systemd/system/systemd-logind.service; static)
@@ -72,10 +79,11 @@ article].
        CGroup: /system.slice/systemd-logind.service
                └─130 /lib/systemd/systemd-logind
   ```
+
   <!-- markdownlint-enable MD013 -->
 
 #### Fix shutdown command
-  
+
 - Run `sudo apt-get install --reinstall dbus`
 - Run `sudo systemctl start dbus`
 
@@ -96,7 +104,7 @@ article].
   -rw-r--r-- 1 root root 0 Mar 24 11:35 python3.11
   --w------- 1 root root 0 Mar 24 11:35 register
   -rw-r--r-- 1 root root 0 Mar 24 11:35 status
-  
+
   $ sudo cat /proc/sys/fs/binfmt_misc/WSLInterop
   enabled
   interpreter /init
