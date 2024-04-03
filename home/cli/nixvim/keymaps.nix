@@ -1,6 +1,5 @@
-{ config, ... }:
+{ ... }:
 let
-  inherit (config.nixvim) helpers;
   inherit (import ./util.nix) k kv;
 in
 {

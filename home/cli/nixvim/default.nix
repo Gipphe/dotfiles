@@ -1,7 +1,6 @@
 { lib, config, ... }:
 let
   cfg = config.gipphe.nixvim;
-  inherit (config.nixvim) helpers;
 in
 {
   imports = [
