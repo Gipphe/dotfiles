@@ -29,6 +29,9 @@ in
       man_unlisted = {
         clear = true;
       };
+      wrap_spell = {
+        clear = true;
+      };
     };
     autoCmd = [
       {
@@ -87,6 +90,22 @@ in
         callback = helpers.mkRaw ''
           function(event)
             vim.bo[event.buf].buflisted = false
+          end
+        '';
+      }
+
+      # Enable wrapping and spell check in text
+      {
+        event = "FileType";
+        group = "wrap_spell";
+        pattern = [
+          "gitcommit"
+          "markdown"
+        ];
+        callback = helpers.mkRaw ''
+          function()
+            vim.opt_local.wrap = true
+            vim.opt_local.spell = true
           end
         '';
       }
