@@ -296,7 +296,7 @@ in
       # Insert indents automatically
       smartindent = true;
 
-      spelllang = [ "end" ];
+      spelllang = [ "en" ];
 
       # Put new windows below current
       splitbelow = true;
