@@ -17,6 +17,9 @@ in
       json_conceal = {
         clear = true;
       };
+      resize_splits = {
+        clear = true;
+      };
     };
     autoCmd = [
       {
@@ -75,6 +78,19 @@ in
             if mark[1] > 0 and mark[1] <= lcount then
               pcall(vim.api.nvim_win_set_cursor, 0, mark)
             end
+          end
+        '';
+      }
+
+      # Resize splits if window resizes
+      {
+        event = "VimResized";
+        group = "resize_splits";
+        callback = helpers.mkRaw ''
+          function()
+            local current_tab = vim.fn.tabpagenr()
+            vim.cmd("tabdo wincmd =")
+            vim.cmd("tabnext " .. current_tab)
           end
         '';
       }
