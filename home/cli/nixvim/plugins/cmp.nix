@@ -39,14 +39,6 @@ in
           { name = "path"; }
           { name = "buffer"; }
         ];
-        # sources = helpers.mkRaw ''
-        #   cmp.config.sources({
-        #     { name = 'nvim_lsp' },
-        #     { name = 'path' },
-        #   }, {
-        #     { name = 'buffer' },
-        #   })
-        # '';
         experimental.ghost_text.hl_group = "CmpGhostText";
       };
     };
