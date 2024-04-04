@@ -14,6 +14,9 @@ in
       nvim-metals = {
         clear = true;
       };
+      json_conceal = {
+        clear = true;
+      };
     };
     autoCmd = [
       {
@@ -33,6 +36,24 @@ in
             }
             config.init_options.statusBarProvider = "on"
             metals.initialize_or_attach(config)
+          end
+        '';
+      }
+
+      # Fix JSON conceallevel
+      {
+        event = "FileType";
+        group = "json_conceal";
+        pattern = [
+          "json"
+          "jsonc"
+          "json5"
+          "ndjson"
+          "jsonl"
+        ];
+        callback = helpers.mkRaw ''
+          function()
+            vim.opt_local.conceallevel = 0
           end
         '';
       }
