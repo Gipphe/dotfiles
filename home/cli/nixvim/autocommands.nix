@@ -168,7 +168,7 @@ in
         group = "highlight_yank";
         callback = helpers.mkRaw ''
           function()
-            vim.hightlight.on_yank()
+            vim.highlight.on_yank()
           end
         '';
       }
