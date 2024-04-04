@@ -20,6 +20,9 @@ in
       resize_splits = {
         clear = true;
       };
+      checktime = {
+        clear = true;
+      };
     };
     autoCmd = [
       {
@@ -102,6 +105,23 @@ in
         callback = helpers.mkRaw ''
           function()
             vim.hightlight.on_yank()
+          end
+        '';
+      }
+
+      # Check if we need to reload the file when it changed
+      {
+        event = [
+          "FocusGained"
+          "TermClose"
+          "TermLeave"
+        ];
+        group = "checktime";
+        callback = helpers.mkRaw ''
+          function()
+            if vim.o.buftype ~= "nofile" then
+              vim.cmd("checktime")
+            end
           end
         '';
       }
