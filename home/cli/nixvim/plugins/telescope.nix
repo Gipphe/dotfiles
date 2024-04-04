@@ -9,6 +9,10 @@ in
       extensions = {
         fzf-native.enable = true;
       };
+      defaults = {
+        prompt_prefix = " ";
+        selection_caret = " ";
+      };
       keymaps = {
         "<leader>ff" = {
           action = "git_files";
