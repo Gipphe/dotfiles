@@ -274,17 +274,6 @@ in
       # Lines of context
       scrolloff = 8;
 
-      # sessionoptions = [
-      #   "buffers"
-      #   "curdir"
-      #   "tabpages"
-      #   "winsizes"
-      #   "help"
-      #   "globals"
-      #   "skiprtp"
-      #   "folds"
-      # ];
-
       # Round indent
       shiftround = true;
 
