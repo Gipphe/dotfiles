@@ -26,6 +26,9 @@ in
       close_with_q = {
         clear = true;
       };
+      man_unlisted = {
+        clear = true;
+      };
     };
     autoCmd = [
       {
@@ -72,6 +75,18 @@ in
           function(event)
             vim.bo[event.buf].buflisted = false
             vim.keymap.set("n", "q", "<cmd>close<cr>", {buffer = event.buf, silent = true})
+          end
+        '';
+      }
+
+      # Make inline man pages easier to close
+      {
+        event = "FileType";
+        group = "man_unlisted";
+        pattern = [ "man" ];
+        callback = helpers.mkRaw ''
+          function(event)
+            vim.bo[event.buf].buflisted = false
           end
         '';
       }
