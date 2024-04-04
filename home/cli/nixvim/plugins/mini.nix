@@ -1,29 +1,47 @@
 { ... }:
+let
+  inherit (import ../util.nix) kv;
+in
 {
   programs.nixvim = {
     keymaps = [
-      {
-        key = "<leader>up";
-        action = ''
-          function()
-            vim.g.minipairs_disable = not vim.g.minipairs_disable
-            if vim.g.minipairs_disable then
-              print("Disabled auto pairs")
-            else
-              print("Enable auto pairs")
-            end
+      (kv "n" "<leader>up" ''
+        function()
+          vim.g.minipairs_disable = not vim.g.minipairs_disable
+          if vim.g.minipairs_disable then
+            print("Disabled auto pairs")
+          else
+            print("Enable auto pairs")
           end
-        '';
-        options = {
-          desc = "Toggle Auto Pairs";
-        };
-      }
+        end
+      '' { desc = "Toggle Auto Pairs"; })
+
+      (kv "n" "<leader>bd" ''
+        function()
+          local bd = require('mini.bufremove').delete
+          if vim.bo.modified then
+            local choice = vim.fn.confirm(("Save changes to %q?"):format(vim.fn.bufname()), "&Yes\n&No\n&Cancel")
+            if choice == 1 then -- Yes
+              vim.cmd.write()
+              bd(0)
+            elseif choice == 2 then
+              bd(0, true)
+            end
+          else
+            bd(0)
+          end
+        end
+      '' { desc = "Delete buffer"; })
+      (kv "n" "<leader>bD" "function() require('mini.bufremove').delete(0, true) end" {
+        desc = "Delete buffer (force)";
+      })
     ];
     plugins.mini = {
       enable = true;
       modules = {
         # Configured in `mini.ai.nix`
         # ai = {}
+        bufremove = { };
         indentscope = {
           symbol = "|";
           options = {
@@ -31,7 +49,6 @@
           };
         };
         pairs = { };
-        bufremove.enable = true;
         surround = {
           mappings = {
             add = "gsa";
