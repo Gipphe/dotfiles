@@ -23,6 +23,9 @@ in
       checktime = {
         clear = true;
       };
+      close_with_q = {
+        clear = true;
+      };
     };
     autoCmd = [
       {
@@ -42,6 +45,33 @@ in
             }
             config.init_options.statusBarProvider = "on"
             metals.initialize_or_attach(config)
+          end
+        '';
+      }
+
+      # Close some windows with 'q'
+      {
+        event = "FileType";
+        group = "close_with_q";
+        pattern = [
+          "PlenaryTestPopup"
+          "help"
+          "lspinfo"
+          "notify"
+          "qf"
+          "query"
+          "spectre_panel"
+          "startuptime"
+          "tsplayground"
+          "neotest-output"
+          "checkhealth"
+          "neotest-summary"
+          "neotest-output-panel"
+        ];
+        callback = helpers.mkRaw ''
+          function(event)
+            vim.bo[event.buf].buflisted = false
+            vim.keymap.set("n", "q", "<cmd>close<cr>", {buffer = event.buf, silent = true})
           end
         '';
       }
