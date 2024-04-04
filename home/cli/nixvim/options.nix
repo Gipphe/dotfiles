@@ -298,6 +298,8 @@ in
 
       spelllang = [ "en" ];
 
+      timeoutlen = 300;
+
       # Put new windows below current
       splitbelow = true;
 
