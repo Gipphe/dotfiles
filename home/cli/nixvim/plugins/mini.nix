@@ -22,7 +22,8 @@
     plugins.mini = {
       enable = true;
       modules = {
-        ai = { };
+        # Configured in `mini.ai.nix`
+        # ai = {}
         indentscope = {
           symbol = "|";
           options = {
