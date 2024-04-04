@@ -1,6 +1,7 @@
-{ ... }:
+{ config, ... }:
 let
   inherit (import ../util.nix) kv;
+  inherit (config.nixvim) helpers;
 in
 {
   programs.nixvim = {
@@ -78,7 +79,11 @@ in
           "toggleterm"
           "lazyterm"
         ];
-        callback = ''function() vim.b.miniindentscope_disable = true end'';
+        callback = helpers.mkRaw ''
+          function()
+            vim.b.miniindentscope_disable = true
+          end
+        '';
       }
     ];
   };
