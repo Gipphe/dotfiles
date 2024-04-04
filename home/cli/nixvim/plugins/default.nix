@@ -16,7 +16,6 @@ in
     nvim-ufo.enable = true;
     sleuth.enable = true;
     tmux-navigator.enable = true;
-    trouble.enable = true;
     ts-autotag.enable = true;
     undotree.enable = true;
     vim-css-color.enable = true;
