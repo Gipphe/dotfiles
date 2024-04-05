@@ -40,14 +40,14 @@ in
       };
     };
     extraConfigLuaPre = ''
-      local M = {}
-      -- M.skip_foldexpr = {}
+      local utils = {}
+      -- utils.skip_foldexpr = {}
       -- local skip_check = assert(vim.uv.new_check())
-      -- function M.foldexpr()
+      -- function utils.foldexpr()
       --   local buf = vim.api.nvim_get_current_buf()
 
       --   -- Still in the same tick and no parser
-      --   if M.skip_foldexpr[buf] then
+      --   if utils.skip_foldexpr[buf] then
       --     return "0"
       --   end
 
@@ -69,23 +69,23 @@ in
 
       --   -- no parser available, so mark it as skip
       --   -- in the next tick, all skip marks will be reset
-      --   M.skip_foldexpr[buf] = true
+      --   utils.skip_foldexpr[buf] = true
       --   skip_check:start(function()
-      --     M.skip_foldexpr = {}
+      --     utils.skip_foldexpr = {}
       --     skip_check:stop()
       --   end)
       --   return "0"
 
       ---@return {fg?:string}?
-      function M.fg(name)
-        local color = M.color(name)
+      function utils.fg(name)
+        local color = utils.color(name)
         return color and { fg = color } or nil
       end
 
       ---@param name string
       ---@param bg? boolean
       ---@return string?
-      function M.color(name, bg)
+      function utils.color(name, bg)
         ---@type {foreground?:number}?
         ---@diagnostic disable-next-line: deprecated
         local hl = vim.api.nvim_get_hl and vim.api.nvim_get_hl(0, { name = name, link = false })
@@ -103,7 +103,7 @@ in
         return color and string.format("#%06x", color) or nil
       end     -- end
 
-      function M.foldtext()
+      function utils.foldtext()
         local ok = pcall(vim.treesitter.get_parser, vim.api.nvim_get_current_buf())
         local ret = ok and vim.treesitter.foldtext and vim.treesitter.foldtext()
         if not ret or type(ret) == "string" then
@@ -122,7 +122,7 @@ in
         return ret
       end
 
-      function M.get_signs(buf, lnum)
+      function utils.get_signs(buf, lnum)
         -- Get regular signs
         ---@type Sign[]
         local signs = {}
@@ -166,7 +166,7 @@ in
 
       ---@param sign? Sign
       ---@param len? number
-      function M.icon(sign, len)
+      function utils.icon(sign, len)
         sign = sign or {}
         len = len or 2
         local text = vim.fn.strcharpart(sign.text or "", 0, len) ---@type string
@@ -174,7 +174,7 @@ in
         return sign.texthl and ("%#" .. sign.texthl .. "#" .. text .. "%*") or text
       end
 
-      function M.statuscolumn()
+      function utils.statuscolumn()
         local win = vim.g.statusline_winid
         local buf = vim.api.nvim_win_get_buf(win)
         local is_file = vim.bo[buf].buftype == ""
@@ -185,7 +185,7 @@ in
         if show_signs then
           ---@type Sign?,Sign?,Sign?
           local left, right, fold
-          for _, s in ipairs(M.get_signs(buf, vim.v.lnum)) do
+          for _, s in ipairs(utils.get_signs(buf, vim.v.lnum)) do
             if s.name and (s.name:find("GitSign") or s.name:find("MiniDiffSign")) then
               right = s
             else
@@ -201,9 +201,9 @@ in
             end
           end)
           -- Left: mark or non-git sign
-          components[1] = M.icon(M.get_mark(buf, vim.v.lnum) or left)
+          components[1] = utils.icon(utils.get_mark(buf, vim.v.lnum) or left)
           -- Right: fold icon or git sign (only if file)
-          components[3] = is_file and M.icon(fold or right) or ""
+          components[3] = is_file and utils.icon(fold or right) or ""
         end
 
         -- Numbers in Neovim are weird
@@ -225,9 +225,27 @@ in
 
         return table.concat(components, "")
       end
+
+      ---@return Sign?
+      ---@param buf number
+      ---@param lnum number
+      function utils.get_mark(buf, lnum)
+        local marks = vim.fn.getmarklist(buf)
+        vim.list_extend(marks, vim.fn.getmarklist())
+        for _, mark in ipairs(marks) do
+          if mark.pos[1] == buf and mark.pos[2] == lnum and mark.mark:match("[a-zA-Z]") then
+            return { text = mark.mark:sub(2), texthl = "DiagnosticHint" }
+          end
+        end
+      end
+
+      _G.utils = utils
     '';
     extraConfigLua = ''
       vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
+    '';
+    extraConfigLuaPost = ''
+      vim.opt.statuscolumn = "%!v:lua.utils.statuscolumn()"
     '';
     opts = {
       autowrite = true;
@@ -333,14 +351,13 @@ in
 
       foldlevel = 99;
 
-      # statuscolumn = "%!v:lua.M.statuscolumn()";
-      # foldtext = "v:lua.M.foldtext()";
+      foldtext = "v:lua.utils.foldtext()";
       # }
       # // (
       #   if lib.strings.hasPrefix "10" config.programs.nixvim.package.version && false then
       #     {
       #       foldmethod = "expr";
-      #       foldexpr = "v:lua.M.foldexpr()";
+      #       foldexpr = "v:lua.utils.foldexpr()";
       #       foldtext = "";
       #       fillchars = "fold: ";
       #     }
@@ -351,7 +368,7 @@ in
       formatexpr = "v:lua.require'conform'.formatexpr()";
 
       # Set bash as default shell for commands
-      shell = "${pkgs.bash}/bin/bash -i";
+      shell = "${pkgs.bash}/bin/bash";
 
       updatetime = 50;
       colorcolumn = "80";
