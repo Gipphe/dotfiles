@@ -13,6 +13,7 @@ in
     copilot-lua.enable = true;
     haskell-scope-highlighting.enable = true;
     indent-blankline.enable = true;
+    navbuddy.enable = true;
     nvim-ufo.enable = true;
     sleuth.enable = true;
     tmux-navigator.enable = true;
