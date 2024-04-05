@@ -1,16 +1,17 @@
 { pkgs, lib, ... }:
 with builtins;
-with lib.attrsets; {
-  home.file = let
-    tmuxinator_dir_entries = readDir ./tmuxinator;
-    tmuxinator_files =
-      filterAttrs (name: type: type == "regular") tmuxinator_dir_entries;
-    tmuxinator_file_names = attrNames tmuxinator_files;
-    tmuxinator_configs = foldl' (acc: name:
-      acc // {
-        ".config/tmuxinator/${name}".source = ./tmuxinator/${name};
-      }) { } tmuxinator_file_names;
-  in tmuxinator_configs;
+with lib.attrsets;
+{
+  home.file =
+    let
+      tmuxinator_dir_entries = readDir ./tmuxinator;
+      tmuxinator_files = filterAttrs (name: type: type == "regular") tmuxinator_dir_entries;
+      tmuxinator_file_names = attrNames tmuxinator_files;
+      tmuxinator_configs = foldl' (
+        acc: name: acc // { ".config/tmuxinator/${name}".source = ./tmuxinator/${name}; }
+      ) { } tmuxinator_file_names;
+    in
+    tmuxinator_configs;
   programs.tmux = {
     enable = true;
     baseIndex = 1;
