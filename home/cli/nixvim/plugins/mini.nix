@@ -43,6 +43,13 @@ in
         # Configured in `mini.ai.nix`
         # ai = {}
         bufremove = { };
+        comment = {
+          custom_commentstring = ''
+            function()
+              return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
+            end
+          '';
+        };
         indentscope = {
           symbol = "|";
           options = {

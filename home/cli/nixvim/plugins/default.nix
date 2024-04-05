@@ -17,6 +17,12 @@ in
     sleuth.enable = true;
     tmux-navigator.enable = true;
     ts-autotag.enable = true;
+    ts-context-commentstring = {
+      enable = true;
+      extraOptions = {
+        enable_autocmd = false;
+      };
+    };
     undotree.enable = true;
     vim-css-color.enable = true;
     virt-column.enable = true;
