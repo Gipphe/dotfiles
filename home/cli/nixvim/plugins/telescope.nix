@@ -57,7 +57,11 @@ in
           require('telescope.builtin').oldfiles({ cwd = get_current_dir() }) 
         end
       '' { desc = "Recent (current dir)"; })
-      (k "n" "<leader>fR" "<cmd>Telescope oldfiles<cr>" { desc = "Recent (cwd)"; })
+      (kv "n" "<leader>fR" ''
+        function()
+          require('telescope.builtin').oldfiles({ cwd = vim.fn.getcwd() })
+        end
+      '' { desc = "Recent (cwd)"; })
 
       # git
       (k "n" "<leader>gc" "<cmd>Telescope git_commits<cr>" { desc = "Commits"; })
