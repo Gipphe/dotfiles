@@ -4,7 +4,7 @@
     colorscheme = "catppuccin";
     colorschemes.catppuccin = {
       enable = true;
-      flavour = "mocha";
+      flavour = "macchiato";
       showBufferEnd = true;
       integrations = {
         illuminate.enabled = true;
