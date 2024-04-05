@@ -8,7 +8,13 @@
     };
   };
 
-  programs.direnv.enable = true;
+  programs.direnv = {
+    enable = true;
+    config = {
+      hide_env_dirr = true;
+    };
+    nix-direnv.enable = true;
+  };
 
   programs.eza = {
     enable = true;
