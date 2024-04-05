@@ -1,16 +1,22 @@
-{ ... }: {
+{ ... }:
+{
   programs.git = {
     enable = true;
     userName = "Victor Nascimento Bakke";
     userEmail = "gipphe@gmail.com";
     difftastic.enable = true;
-    ignores = [ ".vscode" "**/*Zone.Identifier" ];
+    ignores = [
+      ".vscode"
+      "**/*Zone.Identifier"
+    ];
     signing = {
       key = "23723701395B436C";
-      signByDefault = false;
+      signByDefault = true;
     };
     extraConfig = {
-      "url \"git@github.com:\"" = { insteadOf = "https://github.com/"; };
+      "url \"git@github.com:\"" = {
+        insteadOf = "https://github.com/";
+      };
       push = {
         default = "upstream";
         followTags = true;
@@ -25,26 +31,34 @@
         whitespace = "fix,-indent-with-non-tab,trailing-space,cr-at-eol";
       };
       repack.usedeltabaseoffset = "true";
-      rebase = { autoSquash = "true"; };
+      rebase = {
+        autoSquash = "true";
+      };
       merge.stat = "true";
       branch.autosetupmerge = "true";
-      credential = { credentialStore = "gpg"; };
-      init = { defaultBranch = "main"; };
+      credential = {
+        credentialStore = "gpg";
+      };
+      init = {
+        defaultBranch = "main";
+      };
       rerere = {
         enabled = true;
         autoUpdate = true;
       };
     };
-    includes = [{
-      condition = "gitdir:**/strise/**/.git";
-      contents = {
-        user = {
-          name = "Victor Nascimento Bakke";
-          email = "victor@strise.ai";
-          signingkey = "B4C7E23DDC6AE725";
+    includes = [
+      {
+        condition = "gitdir:**/strise/**/.git";
+        contents = {
+          user = {
+            name = "Victor Nascimento Bakke";
+            email = "victor@strise.ai";
+            signingkey = "B4C7E23DDC6AE725";
+          };
         };
-      };
-    }];
+      }
+    ];
     aliases = {
       last = "log -1 HEAD";
       st = "status";
@@ -56,17 +70,14 @@
       ci = "commit";
       cp = "cherry-pick";
       pp = "pull --prune";
-      gr = ''
-        log --graph --full-history --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s"'';
+      gr = ''log --graph --full-history --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s"'';
       lol = "log --decorate --oneline --graph --all";
       lof = "log --oneline --decorate --all --graph --first-parent";
       loa = "log --decorate --oneline --graph";
       lob = "log --decorate --oneline --graph --first-parent";
-      lolb = ''
-        log --graph --pretty=format:"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset"'';
+      lolb = ''log --graph --pretty=format:"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset"'';
       lola = "lolb --all";
-      lold = ''
-        log --graph --pretty=format:"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset"'';
+      lold = ''log --graph --pretty=format:"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset"'';
       loldr = "lold --date=short";
 
       stage = "add";
@@ -93,8 +104,7 @@
       # Delete a branch and recreate it from master — useful if you have, say,
       # a development branch and a master branch and they could conceivably go
       # out of sync
-      recreate = ''
-        !f() { [[ -n $@ ]] && git checkout "$@" && git unpublish && git checkout master && git branch -D "$@" && git checkout -b "$@" && git publish; }; f'';
+      recreate = ''!f() { [[ -n $@ ]] && git checkout "$@" && git unpublish && git checkout master && git branch -D "$@" && git checkout -b "$@" && git publish; }; f'';
       "rec" = "!git recreate";
 
       # Fire up your difftool (e.g. Kaleidescope) with all the changes that
@@ -104,8 +114,7 @@
 
       # Given a merge commit, find the span of commits that exist(ed) on that
       # branch. Again, not so useful in itself, but used by other aliases.
-      merge-span =
-        "!f() { echo $(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f1)$1$(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f2); }; f";
+      merge-span = "!f() { echo $(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f1)$1$(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f2); }; f";
 
       # Find the commits that were introduced by a merge
       merge-log = "!git log $(git merge-span .. $1)";
@@ -152,19 +161,15 @@
 
       # Delete any branches that have been merged into master
       # See also: https://gist.github.com/robmiller/5133264
-      delete-merged-branches =
-        "!git checkout master && git branch --merged | grep -v '\\\\*' | xargs -n 1 git branch -d";
+      delete-merged-branches = "!git checkout master && git branch --merged | grep -v '\\\\*' | xargs -n 1 git branch -d";
 
-      rm-merged = ''
-        !git branch --format '%(refname:short) %(upstream:track)' | awk '$2 == "[gone]" { print $1 }' | xargs -r git branch -D'';
+      rm-merged = ''!git branch --format '%(refname:short) %(upstream:track)' | awk '$2 == "[gone]" { print $1 }' | xargs -r git branch -D'';
 
       # Checkout a merge request locally
-      mr =
-        "!sh -c 'git fetch $1 merge-requests/$2/head:mr-$1-$2 && git checkout mr-$1-$2' -";
+      mr = "!sh -c 'git fetch $1 merge-requests/$2/head:mr-$1-$2 && git checkout mr-$1-$2' -";
 
       # Hide nix flakes from git history while allowing nix to execute the flake as normal
-      hide-flake =
-        "!git add --intent-to-add flake.nix flake.lock && git update-index --assume-unchanged flake.nix flake.lock";
+      hide-flake = "!git add --intent-to-add flake.nix flake.lock && git update-index --assume-unchanged flake.nix flake.lock";
     };
   };
 }
