@@ -8,6 +8,12 @@ in
       enable = true;
       settings = {
         columns = [ "icon" ];
+        keymaps = {
+          "<C-h>" = false;
+          "<C-l>" = false;
+          "<C-n>" = "actions.select_split";
+          "<C-m>" = "actions.refresh";
+        };
         view_options = {
           show_hidden = true;
           is_always_hidden = ''
