@@ -17,6 +17,7 @@ in
       enable = true;
       defaultCacheTtl = 1800;
       grabKeyboardAndMouse = false;
+      pinentryPackage = pkgs.pinentry-curses;
       # enableSshSupport = true;
     };
   };
