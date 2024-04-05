@@ -12,7 +12,7 @@ in
           show_hidden = true;
           is_always_hidden = ''
             function(name)
-              return name == ".git" or name == ".jj"
+              return name == ".git" or name == ".jj" or name == ".direnv"
             end
           '';
         };
