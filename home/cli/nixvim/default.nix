@@ -1,6 +1,7 @@
 { lib, config, ... }:
 let
   cfg = config.gipphe.nixvim;
+  inherit (config.nixvim) helpers;
 in
 {
   imports = [
@@ -25,6 +26,7 @@ in
     programs.nixvim = {
       enable = true;
       defaultEditor = true;
+      extraConfigLuaPre = "local icons = ${helpers.toLuaObject (import ./icons.nix)}";
       filetype = {
         extension = {
           "hurl" = "hurl";
