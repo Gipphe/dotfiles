@@ -16,7 +16,7 @@
           lemminx.enable = true;
           lua-ls.enable = true;
           marksman.enable = true;
-          metals.enable = true;
+          # metals.enable = true;
           nil_ls.enable = true;
           pyright.enable = true;
           ruff-lsp.enable = true;

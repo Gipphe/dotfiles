@@ -11,9 +11,6 @@ in
       last_loc = {
         clear = true;
       };
-      nvim-metals = {
-        clear = true;
-      };
       json_conceal = {
         clear = true;
       };
@@ -34,27 +31,6 @@ in
       };
     };
     autoCmd = [
-      {
-        event = "FileType";
-        group = "nvim-metals";
-        pattern = [
-          "scala"
-          "sbt"
-          "java"
-        ];
-        callback = helpers.mkRaw ''
-          function()
-            local metals = require('metals')
-            local config = metals.bare_config()
-            config.settings = {
-              showImplicitArguments = true,
-            }
-            config.init_options.statusBarProvider = "on"
-            metals.initialize_or_attach(config)
-          end
-        '';
-      }
-
       # Close some windows with 'q'
       {
         event = "FileType";
