@@ -4,7 +4,6 @@ function init_ssh_agent
         return
     end
 
-    echo "ssh-agent: initializing..."
     # Source SSH settings, if applicable
     if test -f "$SSH_ENV"
         __read_ssh_env "$SSH_ENV"
