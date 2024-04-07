@@ -26,18 +26,6 @@ in
         "cwd"
       ];
       markdown_recommended_style = 0;
-      clipboard = lib.mkIf cfg.is_wsl {
-        name = "WslClipboard";
-        copy = {
-          "+" = "clip.exe";
-          "*" = "clip.exe";
-        };
-        paste = {
-          "+" = ''sowershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))'';
-          "*" = ''powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))'';
-        };
-        cache_enabled = 0;
-      };
     };
     extraConfigLuaPre = ''
       local utils = {}
