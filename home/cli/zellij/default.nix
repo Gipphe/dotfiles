@@ -35,7 +35,7 @@ in
       fish = lib.mkIf config.programs.zellij.enable {
         shellAbbrs = {
           tmux = "zellij";
-          "mux s" = "zellij --layout";
+          mux = "zellij --layout";
         };
       };
     };
