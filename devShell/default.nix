@@ -1,5 +1,6 @@
 {
   shellCommands = [
+    # Build
     {
       help = "Rebuild the system using nh os switch";
       name = "sw";
@@ -19,6 +20,14 @@
       category = "build";
     }
     {
+      help = "Rebuild the home environment using nh home switch";
+      name = "hms";
+      command = "nh home switch $(pwd)";
+      category = "build";
+    }
+
+    # Formatting
+    {
       help = "Format the source tree with treefmt";
       name = "fmt";
       command = "treefmt";
@@ -30,17 +39,39 @@
       package = "nixfmt-rfc-style";
       category = "formatter";
     }
+
+    # Utils
     {
       help = "Update lake inputs and commit changes";
       name = "update";
       command = ''nix flake update && git commit flake.lock -n "flake: bump inputs"'';
       category = "utils";
     }
+
+    # Linting
     {
-      help = "Rebuild the home environment using nh home switch";
-      name = "hms";
-      command = "nh home switch $(pwd)";
-      category = "build";
+      help = "Check .nix files with statix";
+      name = "lint-statix";
+      command = "statix check";
+      category = "lint";
+    }
+    {
+      help = "Check .nix files with statix, watching";
+      name = "lint-statix-watch";
+      command = "find . -type f | entr static check";
+      category = "lint";
+    }
+    {
+      help = "Check .nix files with deadnix";
+      name = "lint-deadnix";
+      command = "deadnix";
+      category = "lint";
+    }
+    {
+      help = "Check .nix files with deadnix, watching";
+      name = "lint-deadnix-watch";
+      command = "find . -type f | entr deadnix";
+      category = "lint";
     }
   ];
 
