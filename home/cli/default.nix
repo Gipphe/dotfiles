@@ -6,7 +6,7 @@
     ./fish
     ./neovim
     ./nixvim
-    ./kitty
+    ./kitty.nix
     ./tmux
     ./zellij
     ./run-as-service.nix
