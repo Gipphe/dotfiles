@@ -14,6 +14,6 @@
       strip_trailing_spaces = "smart";
       allow_remote_control = "password";
     };
-    theme = "Arthur";
+    theme = "Catppuccin-Macchiato";
   };
 }
