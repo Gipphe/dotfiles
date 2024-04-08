@@ -73,16 +73,14 @@
               projectRootFile = "flake.nix";
 
               programs = {
-                nixfmt.enable = true;
-                nixfmt.package = pkgs.nixfmt-rfc-style;
+                nixfmt-rfc-style.enable = true;
                 black.enable = true;
                 deadnix.enable = false;
                 shellcheck.enable = true;
-                shfmt = {
-                  enable = true;
-                  indent_size = 4;
-                };
+                shfmt.enable = true;
               };
+
+              settings.formatter.nixfmt-rfc-style.excludes = [ "hardware-configuration.nix" ];
             };
           };
 
