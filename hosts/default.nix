@@ -2,11 +2,11 @@
 let
   inherit (self) inputs;
   core = ../system/core;
-  bootloader = ../system/core/bootloader.nix;
-  impermanence = ../system/core/impermanence.nix;
-  nvidia = ../system/nvidia;
+  # bootloader = ../system/core/bootloader.nix;
+  # impermanence = ../system/core/impermanence.nix;
+  # nvidia = ../system/nvidia;
   server = ../system/server;
-  wayland = ../system/wayland;
+  # wayland = ../system/wayland;
   nh = inputs.nh.nixosModules.default;
   hw = inputs.nixos.hardware.nixosModules;
   agenix = inputs.agenix.nixosModules.age;
