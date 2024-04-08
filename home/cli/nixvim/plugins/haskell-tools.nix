@@ -1,5 +1,12 @@
-{ config, pkgs, lib, ... }:
-let cfg = config.gipphe.nixvim.haskell-tools; in
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+let
+  cfg = config.gipphe.nixvim.haskell-tools;
+in
 {
   options.gipphe.nixvim.haskell-tools = {
     enable = lib.mkEnableOption "haskell-tools";

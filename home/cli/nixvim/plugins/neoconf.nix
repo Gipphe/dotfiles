@@ -1,5 +1,11 @@
-{ lib, config, pkgs, ... }:
-let cfg = config.gipphe.nixvim.neoconf;
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+let
+  cfg = config.gipphe.nixvim.neoconf;
 in
 {
   options.gipphe.nixvim.neoconf = {
