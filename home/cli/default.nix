@@ -9,6 +9,7 @@
     ./nixvim
     ./kitty
     ./tmux
+    ./zellij
     ./run-as-service.nix
   ];
 
