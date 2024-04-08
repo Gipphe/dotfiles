@@ -1,144 +1,146 @@
 { config, pkgs, ... }:
 {
-  programs.bat = {
-    enable = true;
-    config = {
-      pager = "less -FXR";
-      theme = "TwoDark";
-    };
-  };
-
-  programs.direnv = {
-    enable = true;
-    config = {
-      hide_env_diff = true;
-    };
-    nix-direnv.enable = true;
-  };
-
-  programs.eza = {
-    enable = true;
-    icons = true;
-    git = true;
-  };
-
-  programs.gh = {
-    enable = true;
-    settings = {
-      editor = "";
-      prompt = "enabled";
-      pager = "";
-      http_unix_socket = "";
-      browser = "";
-      git_protocol = "https";
-      aliases = {
-        co = "pr checkout";
-        prc = "pr create -df";
-        prm = "pr merge --auto -sd";
+  programs = {
+    bat = {
+      enable = true;
+      config = {
+        pager = "less -FXR";
+        theme = "TwoDark";
       };
     };
-  };
 
-  programs.gpg.enable = true;
-
-  programs.htop.enable = true;
-
-  programs.jq.enable = true;
-
-  programs.jujutsu = {
-    enable = true;
-    settings = {
-      user = {
-        name = "Victor Nascimento Bakke";
-        email = "gipphe@gmail.com";
+    direnv = {
+      enable = true;
+      config = {
+        hide_env_diff = true;
       };
-      ui = {
-        editor = "nvim";
-        default-command = "lol";
-      };
-      git = {
-        auto-local-branch = true;
-      };
-      aliases = {
-        lol = [
-          "log"
-          "-r"
-          "all()"
-        ];
-        sync = [
-          "branch"
-          "set"
-          "-r"
-          "@-"
-        ];
+      nix-direnv.enable = true;
+    };
+
+    eza = {
+      enable = true;
+      icons = true;
+      git = true;
+    };
+
+    gh = {
+      enable = true;
+      settings = {
+        editor = "";
+        prompt = "enabled";
+        pager = "";
+        http_unix_socket = "";
+        browser = "";
+        git_protocol = "https";
+        aliases = {
+          co = "pr checkout";
+          prc = "pr create -df";
+          prm = "pr merge --auto -sd";
+        };
       };
     };
-  };
 
-  programs.lazygit.enable = true;
+    gpg.enable = true;
 
-  programs.less.enable = true;
+    htop.enable = true;
 
-  programs.nnn.enable = true;
+    jq.enable = true;
 
-  programs.ssh = {
-    enable = true;
-    package = pkgs.openssh;
-    addKeysToAgent = "yes";
-    matchBlocks = {
-      "github.com" = {
-        user = "git";
-        identityFile = "${config.home.homeDirectory}/.ssh/github.ssh";
-        identitiesOnly = true;
-      };
-      "gitlab.com" = {
-        user = "git";
-        identityFile = "${config.home.homeDirectory}/.ssh/gitlab.ssh";
-        identitiesOnly = true;
-      };
-      "codeberg.com" = {
-        user = "git";
-        identityFile = "${config.home.homeDirectory}/.ssh/codeberg.ssh";
-        identitiesOnly = true;
+    jujutsu = {
+      enable = true;
+      settings = {
+        user = {
+          name = "Victor Nascimento Bakke";
+          email = "gipphe@gmail.com";
+        };
+        ui = {
+          editor = "nvim";
+          default-command = "lol";
+        };
+        git = {
+          auto-local-branch = true;
+        };
+        aliases = {
+          lol = [
+            "log"
+            "-r"
+            "all()"
+          ];
+          sync = [
+            "branch"
+            "set"
+            "-r"
+            "@-"
+          ];
+        };
       };
     };
-  };
 
-  programs.thefuck.enable = true;
+    lazygit.enable = true;
 
-  programs.zoxide = {
-    enable = true;
-    options = [
-      "--cmd"
-      "cd"
-    ];
-  };
+    less.enable = true;
 
-  programs.vim = {
-    enable = false;
-    settings = {
-      # Size of a hard tabstop
-      tabstop = 4;
-      # Size of an 'indent'
-      shiftwidth = 4;
-      # always use tabs instead of spaces
-      expandtab = false;
+    nnn.enable = true;
+
+    ssh = {
+      enable = true;
+      package = pkgs.openssh;
+      addKeysToAgent = "yes";
+      matchBlocks = {
+        "github.com" = {
+          user = "git";
+          identityFile = "${config.home.homeDirectory}/.ssh/github.ssh";
+          identitiesOnly = true;
+        };
+        "gitlab.com" = {
+          user = "git";
+          identityFile = "${config.home.homeDirectory}/.ssh/gitlab.ssh";
+          identitiesOnly = true;
+        };
+        "codeberg.com" = {
+          user = "git";
+          identityFile = "${config.home.homeDirectory}/.ssh/codeberg.ssh";
+          identitiesOnly = true;
+        };
+      };
     };
-    extraConfig = ''
-      scriptencoding utf-8
-      set encoding=utf-8
 
-      " A combination of spaces and tabs are used to simulate tab stops at a width
-      " other than the (hard)tabstop
-      set softtabstop=0
+    thefuck.enable = true;
 
-      set list listchars=tab:▸\ ,trail:·,precedes:←,extends:→
+    zoxide = {
+      enable = true;
+      options = [
+        "--cmd"
+        "cd"
+      ];
+    };
 
-      if exists('+colorcolumn')
-        set colorcolumn=100
-      else
-        au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>100v.\+', -1)
-      endif
-    '';
+    vim = {
+      enable = false;
+      settings = {
+        # Size of a hard tabstop
+        tabstop = 4;
+        # Size of an 'indent'
+        shiftwidth = 4;
+        # always use tabs instead of spaces
+        expandtab = false;
+      };
+      extraConfig = ''
+        scriptencoding utf-8
+        set encoding=utf-8
+
+        " A combination of spaces and tabs are used to simulate tab stops at a width
+        " other than the (hard)tabstop
+        set softtabstop=0
+
+        set list listchars=tab:▸\ ,trail:·,precedes:←,extends:→
+
+        if exists('+colorcolumn')
+          set colorcolumn=100
+        else
+          au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>100v.\+', -1)
+        endif
+      '';
+    };
   };
 }

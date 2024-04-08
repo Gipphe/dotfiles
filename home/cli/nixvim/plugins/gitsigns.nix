@@ -1,9 +1,8 @@
-{ ... }:
 {
   programs.nixvim = {
     plugins.gitsigns = {
       enable = true;
-      extraOptions = {
+      settings = {
         signs = {
           add.text = "▎";
           change.text = "▎";

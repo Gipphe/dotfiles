@@ -1,4 +1,3 @@
-{ ... }:
 let
   inherit (import ../util.nix) kv k;
 in

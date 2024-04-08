@@ -1,4 +1,3 @@
-{ ... }:
 let
   inherit (import ./util.nix) k kv;
 in
@@ -154,10 +153,15 @@ in
       (kv "n" "]q" "vim.cmd.cnext" { desc = "Next Quickfix"; })
 
       # formatting
-      (kv [
-        "n"
-        "v"
-      ] "<leader>cf" ''function() require('conform').format({ bufnr = vim.fn.bufnr() }) end'' { desc = "Format"; })
+      (kv
+        [
+          "n"
+          "v"
+        ]
+        "<leader>cf"
+        ''function() require('conform').format({ bufnr = vim.fn.bufnr() }) end''
+        { desc = "Format"; }
+      )
     ]
     ++ (
       let

@@ -166,9 +166,11 @@
 
     agenix = {
       url = "github:ryantm/agenix";
-      inputs.home-manager.follows = "home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.darwin.follows = "darwin";
+      inputs = {
+        home-manager.follows = "home-manager";
+        nixpkgs.follows = "nixpkgs";
+        darwin.follows = "darwin";
+      };
     };
 
     hyprland = {

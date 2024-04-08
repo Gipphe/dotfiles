@@ -1,4 +1,3 @@
-{ ... }:
 {
   programs.nixvim = {
     colorscheme = "catppuccin";

@@ -30,14 +30,16 @@
       tmpfiles.rules = [ "D /nix/var/nix/profiles/per-user/root 755 root root - -" ];
     };
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "no";
-    variant = "";
-  };
+  services = {
+    # Configure keymap in X11
+    xserver.xkb = {
+      layout = "no";
+      variant = "";
+    };
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
+    # Enable CUPS to print documents.
+    printing.enable = true;
+  };
 
   console =
     let

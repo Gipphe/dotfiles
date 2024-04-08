@@ -80,7 +80,7 @@ in
         }
       ];
       lualine_y = [
-        ({
+        {
           name = "progress";
           extraConfig = {
             separator = " ";
@@ -89,14 +89,14 @@ in
             left = 1;
             right = 0;
           };
-        })
-        ({
+        }
+        {
           name = "location";
           padding = {
             left = 0;
             right = 1;
           };
-        })
+        }
       ];
       lualine_z = [ { name = helpers.mkRaw ''function() return " " .. os.date("%R") end''; } ];
     };

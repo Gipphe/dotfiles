@@ -14,9 +14,11 @@
   ];
 
   # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
+  boot.loader.grub = {
+    enable = true;
+    device = "/dev/sda";
+    useOSProber = true;
+  };
 
   # Enable VirtualBox additions to make shared clipboard and other niceties work
   virtualisation.virtualbox.guest.enable = true;
