@@ -17,9 +17,9 @@ in
         copy_on_select true
         theme "catppuccin-macchiato"
         keybinds {
+          unbind "Ctrl q"
           shared_except "locked" {
-            bind "Ctrl q" {}
-            bind "Ctrl Alt q" { Quit; }
+            bind "Alt Q" { Quit; }
           }
         }
         ui {
