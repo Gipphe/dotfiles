@@ -8,18 +8,24 @@ in
       extensions = {
         fzf-native.enable = true;
       };
-      defaults = {
-        prompt_prefix = " ";
-        selection_caret = " ";
+      settings = {
+        defaults = {
+          prompt_prefix = " ";
+          selection_caret = " ";
+        };
       };
       keymaps = {
         "<leader>ff" = {
           action = "git_files";
-          desc = "Telescope git files";
+          options = {
+            desc = "Telescope git files";
+          };
         };
         "<leader>fg" = {
           action = "live_grep";
-          desc = "Telescope live grep";
+          options = {
+            desc = "Telescope live grep";
+          };
         };
       };
     };
