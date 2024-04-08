@@ -60,13 +60,12 @@
                   inputs'.catppuccinifier.packages.cli
                   inputs'.nh.packages.default # better nix CLI
                   config.treefmt.build.wrapper # treewide formatter
-                  nil # nix ls
+                  entr
                   nixfmt-rfc-style # nix formatter
                   git # flake requires git
                   glow # markdown viewer
                   statix # lints and suggestions
                   deadnix # clean up unused nix code
-                  # some python stuff for waybar scripting
                 ];
               };
 
