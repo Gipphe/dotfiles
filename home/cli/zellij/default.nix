@@ -10,24 +10,33 @@ in
     };
   };
   config = lib.mkIf cfg.enable {
-    xdg.configFile."zellij/layouts".source = ./layouts;
-    programs.zellij = {
-      enable = true;
-      settings = {
-        copy_command = "xclip -in -sel clip";
-        copy_on_select = true;
-        theme = "catppuccin-macchiato";
-        ui = {
-          pane_frames = {
-            rounded_corners = false;
-          };
-        };
-      };
+    xdg.configFile = {
+      "zellij/layouts".source = ./layouts;
+      "zellij/config.kdl".text = ''
+        copy_command "xclip -in -sel clip"
+        copy_on_select true
+        theme "catppuccin-macchiato"
+        keybinds {
+          shared_except "locked" {
+            bind "Ctrl q" {}
+            bind "Ctrl Alt q" { Quit; }
+          }
+        }
+        ui {
+          pane_frames {
+            rounded_corners false
+          }
+        }
+      '';
     };
+    programs = {
+      zellij.enable = true;
 
-    programs.fish = lib.mkIf config.programs.zellij.enable {
-      shellAbbrs = {
-        tmux = "zellij";
+      fish = lib.mkIf config.programs.zellij.enable {
+        shellAbbrs = {
+          tmux = "zellij";
+          "mux s" = "zellij --layout";
+        };
       };
     };
   };

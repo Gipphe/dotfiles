@@ -58,5 +58,15 @@ with lib.attrsets;
       extraConfig = readFile ./tmux.conf;
       tmuxinator.enable = true;
     };
+    programs.fish = {
+      shellInit = ''
+        if test -n "$TMUX"
+            set -x DISABLE_AUTO_TITLE true
+        end
+      '';
+      shellAbbrs = {
+        mux = "tmuxinator";
+      };
+    };
   };
 }

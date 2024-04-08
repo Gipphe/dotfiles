@@ -24,8 +24,7 @@ in
       bash = {
         enable = !pkgs.stdenv.isDarwin;
         initExtra = ''
-          if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
-          then
+          if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]; then
             shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
             exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
           fi
@@ -34,27 +33,20 @@ in
       zsh = {
         enable = pkgs.stdenv.isDarwin;
         initExtra = ''
-                  if [[ $(${pkgs.procps}/bin/ps -p $PPID -o comm | tail -n +2) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
-                  then
-          	  LOGIN_OPTION=""
-          	  if [[ -o login ]]; then
-          	    LOGIN_OPTION='--login'
-          	  fi
-                    exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
-                  fi
+          if [[ $(${pkgs.procps}/bin/ps -p $PPID -o comm | tail -n +2) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]; then
+            LOGIN_OPTION=""
+            if [[ -o login ]]; then
+              LOGIN_OPTION='--login'
+            fi
+            exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
+          fi
         '';
       };
 
       fish = {
         enable = true;
-        shellInit = ''
-          #!/usr/bin/env fish
-
-          set fish_greeting '''
-          if test -n "$TMUX"
-              set -x DISABLE_AUTO_TITLE true
-          end
-
+        shellInit = lib.mkBefore ''
+          set fish_greeting ""
           set -gx SSH_ENV "$HOME/.ssh/agent-environment"
 
           init_ssh_agent
@@ -68,7 +60,6 @@ in
           kcx = "kubectx";
           vim = "nvim";
           tf = "terraform";
-          mux = "tmuxinator";
           gron = "fastgron";
           rmz = "find . -name '*Zone.Identifier' -type f -delete";
           reload_shell = "source ~/.config/fish/config.fish";
