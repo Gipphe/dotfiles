@@ -33,12 +33,6 @@
       command = "treefmt";
       category = "formatter";
     }
-    {
-      help = "Format nix files with nixfmt-rfc-style";
-      name = "nixfmt";
-      package = "nixfmt-rfc-style";
-      category = "formatter";
-    }
 
     # Utils
     {
