@@ -361,6 +361,7 @@ in
       updatetime = 50;
       colorcolumn = "80";
       wrap = true;
+      linebreak = true;
       title = true;
       titlestring = "%t %h%m%r%w (%{v:progname})";
       list = true;
