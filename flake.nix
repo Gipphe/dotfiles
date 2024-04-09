@@ -118,6 +118,7 @@
     devshell = {
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "pre-commit-hooks/flake-utils";
     };
 
     neovim-overlay = {
@@ -125,6 +126,7 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";
+        flake-compat.follows = "pre-commit-hooks/flake-compat";
       };
     };
 
@@ -170,12 +172,19 @@
 
     hyprland = {
       url = "github:hyprwm/Hyprland/";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        hyprlang.follows = "hyprlang";
+      };
     };
 
     xdg-portal-hyprland = {
       url = "github:hyprwm/xdg-desktop-portal-hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        hyprlang.follows = "hyprlang";
+        hyprland-protocols.follows = "hyprland/hyprland-protocols";
+      };
     };
 
     hyprpicker = {
@@ -185,11 +194,15 @@
 
     hyprlock = {
       url = "github:hyprwm/hyprlock";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        hyprlang.follows = "hyprlang";
+      };
     };
 
     hypridle = {
       url = "github:hyprwm/hypridle";
+      inputs.hyprlang.follows = "hyprlang";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -201,6 +214,13 @@
     hyprcontrib = {
       url = "github:hyprwm/contrib";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hyprlang = {
+      url = "github:hyprwm/hyprlang";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
     };
 
     nix-index-db = {
@@ -221,6 +241,7 @@
     catppuccinifier = {
       url = "github:lighttigerXIV/catppuccinifier";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "pre-commit-hooks/flake-utils";
     };
 
     nh = {
@@ -230,7 +251,15 @@
 
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        devshell.follows = "devshell";
+        flake-compat.follows = "pre-commit-hooks/flake-compat";
+        flake-parts.follows = "flake-parts";
+        nix-darwin.follows = "darwin";
+        home-manager.follows = "home-manager";
+        pre-commit-hooks.follows = "pre-commit-hooks";
+      };
     };
   };
 }
