@@ -48,6 +48,44 @@ in
         shellInit = lib.mkBefore ''
           set fish_greeting ""
           set -gx SSH_ENV "$HOME/.ssh/agent-environment"
+          set -gx tide_left_prompt_items \
+            os \
+            pwd \
+            git \
+            newline \
+            character
+          set -gx tide_right_prompt_items \
+            status \
+            cmd_duration \
+            context \
+            jobs \
+            direnv \
+            bun \
+            node \
+            python \
+            rustc \
+            java \
+            php \
+            pulumi \
+            ruby \
+            go \
+            distrobox \
+            toolbox \
+            terraform \
+            aws \
+            nix_shell \
+            crystal \
+            elixir \
+            zig \
+            time
+
+          # Disabled:
+          # ...
+          # go \
+          #  gcloud \
+          #  kubectl \
+          # distrobox \
+          # ...
 
           init_ssh_agent
           add_ssh_keys_to_agent
