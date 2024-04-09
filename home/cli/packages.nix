@@ -5,7 +5,7 @@
     [
       fswatch
       xclip
-      temurin-jre-bin
+      temurin-bin
 
       # Make
       gnumake
