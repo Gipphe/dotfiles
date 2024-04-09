@@ -87,6 +87,8 @@ in
           # distrobox \
           # ...
 
+          set -gx JAVA_HOME "${pkgs.temurin-jre-bin}"
+
           init_ssh_agent
           add_ssh_keys_to_agent
         '';
