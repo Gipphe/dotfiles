@@ -26,7 +26,7 @@ in
           show_hidden = true;
           is_always_hidden = ''
             function(name)
-              return oil_always_hidden_names[name] ~≈ nil
+              return oil_always_hidden_names[name] ~= nil
             end
           '';
         };
