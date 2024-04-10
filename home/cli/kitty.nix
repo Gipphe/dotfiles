@@ -13,7 +13,6 @@
       mouse_hide_wait = 3;
       strip_trailing_spaces = "smart";
       allow_remote_control = "password";
-      macos_option_as_alt = true;
     };
     theme = "Catppuccin-Macchiato";
   };
