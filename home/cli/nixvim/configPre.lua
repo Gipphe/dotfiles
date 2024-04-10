@@ -1,3 +1,59 @@
+      local Set = {}
+
+      function Set.union(a, b)
+        Set.verify(a)
+        Set.verify(b)
+        local res = Set.new()
+        for k in pairs(a) do res[k] = true end
+        for k in pairs(b) do res[k] = true end
+        return res
+      end
+
+      function Set.intersection(a, b)
+        Set.verify(a)
+        Set.verify(b)
+        local res = Set.new()
+        for k in pairs(a) do
+          res[k] = b[k]
+        end
+        return res
+      end
+
+      function Set.empty()
+        local set = {}
+        setmetatable(set, Set.mt)
+        return set
+      end
+
+      function Set.contains(set, key)
+        Set.verify(set)
+        return set[key] ~= nil
+      end
+
+      function Set.verify(a)
+        if getmetatable(a) ~= Set.mt then
+          error("not a set")
+        end
+      end
+
+      function Set.tostring(set)
+        local s = "{"
+        local sep = ""
+        for e in pairs(set) do
+          s = s .. sep .. e
+          sep = ", "
+        end
+        return s .. "}"
+      end
+
+      function Set.print(set)
+        print(Set.tostring(set))
+      end
+
+      Set.mt = {}
+      Set.mt.__add = Set.union
+      Set.mt.__mul = Set.intersection
+
       local utils = {}
       -- utils.skip_foldexpr = {}
       -- local skip_check = assert(vim.uv.new_check())
