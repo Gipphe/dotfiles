@@ -4,6 +4,14 @@ let
 in
 {
   programs.nixvim = {
+    extraConfigLuaPre = ''
+      local oil_always_hidden_names = {
+        ".git" = true,
+        ".jj" = true,
+        ".direnv" = true,
+        ".DS_Store" = true,
+      }
+    '';
     plugins.oil = {
       enable = true;
       settings = {
@@ -18,7 +26,7 @@ in
           show_hidden = true;
           is_always_hidden = ''
             function(name)
-              return name == ".git" or name == ".jj" or name == ".direnv"
+              return oil_always_hidden_names[name] ~≈ nil
             end
           '';
         };
