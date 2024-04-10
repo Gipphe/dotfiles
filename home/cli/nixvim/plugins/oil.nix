@@ -6,10 +6,10 @@ in
   programs.nixvim = {
     extraConfigLuaPre = ''
       local oil_always_hidden_names = {
-        ".git" = true,
-        ".jj" = true,
-        ".direnv" = true,
-        ".DS_Store" = true,
+        [".git"] = true,
+        [".jj"] = true,
+        [".direnv"] = true,
+        [".DS_Store"] = true,
       }
     '';
     plugins.oil = {
