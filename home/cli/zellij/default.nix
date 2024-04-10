@@ -12,22 +12,7 @@ in
   config = lib.mkIf cfg.enable {
     xdg.configFile = {
       "zellij/layouts".source = ./layouts;
-      "zellij/config.kdl".text = ''
-        copy_command "xclip -in -sel clip"
-        copy_on_select true
-        theme "catppuccin-macchiato"
-        keybinds {
-          unbind "Ctrl q"
-          shared_except "locked" {
-            bind "Alt Q" { Quit; }
-          }
-        }
-        ui {
-          pane_frames {
-            rounded_corners false
-          }
-        }
-      '';
+      "zellij/config.kdl".source = ./config.kdl;
     };
     programs = {
       zellij.enable = true;
