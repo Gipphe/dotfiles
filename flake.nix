@@ -60,7 +60,8 @@
                   inputs'.catppuccinifier.packages.cli
                   inputs'.nh.packages.default # better nix CLI
                   config.treefmt.build.wrapper # treewide formatter
-                  entr
+                  nix-output-monitor # pretty nix output
+                  entr # run commands on file changes
                   nixfmt-rfc-style # nix formatter
                   git # flake requires git
                   glow # markdown viewer
