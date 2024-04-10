@@ -1,7 +1,7 @@
 copy_command "xclip -in -sel clip"
 copy_on_select true
 theme "catppuccin-macchiato"
-keybinds {
+keybinds clear-defaults=true {
   normal {
     // uncomment this and adjust key if using copy_on_select=false
     // bind "Alt c" { Copy; }
@@ -49,7 +49,7 @@ keybinds {
     bind "l" "Right" { MovePane "Right"; }
   }
   tab {
-    bind "Ctrl T" { SwitchToMode "Normal"; }
+    bind "Ctrl t" { SwitchToMode "Normal"; }
     bind "r" { SwitchToMode "RenameTab"; TabNameInput 0; }
     bind "h" "Left" "Up" "k" { GoToPreviousTab; }
     bind "l" "Right" "Down" "j" { GoToNextTab; }
@@ -85,7 +85,7 @@ keybinds {
     // bind "Alt c" { Copy; }
   }
   search {
-    bind "Ctrl s" { SwitchToMode "Normal"; }
+    bind "Ctrl S" { SwitchToMode "Normal"; }
     bind "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
     bind "j" "Down" { ScrollDown; }
     bind "k" "Up" { ScrollUp; }
@@ -112,11 +112,11 @@ keybinds {
     bind "Esc" { UndoRenamePane; SwitchToMode "Pane"; }
   }
   session {
-    bind "Ctrl o" { SwitchToMode "Normal"; }
+    bind "Ctrl O" { SwitchToMode "Normal"; }
     bind "Ctrl s" { SwitchToMode "Scroll"; }
     bind "d" { Detach; }
     bind "w" {
-      LaunchOrFocusPlugin "session-manager" {
+      LaunchOrFocusPlugin "zellij:session-manager" {
         floating true
         move_to_focused_tab true
       };
@@ -148,18 +148,16 @@ keybinds {
   }
   shared_except "locked" {
     bind "Ctrl G" { SwitchToMode "Locked"; }
-    bind "Ctrl q" { Quit; }
+    // bind "Ctrl <" { Quit; }
     bind "Ctrl n" { NewPane; }
-    bind "Ctrl i" { MoveTab "Left"; }
-    bind "Ctrl o" { MoveTab "Right"; }
-    bind "Ctrl h" "Ctrl Left" { MoveFocusOrTab "Left"; }
-    bind "Ctrl l" "Ctrl Right" { MoveFocusOrTab "Right"; }
-    bind "Ctrl j" "Ctrl Down" { MoveFocus "Down"; }
-    bind "Ctrl k" "Ctrl Up" { MoveFocus "Up"; }
+    bind "Ctrl h" { MoveFocusOrTab "Left"; }
+    bind "Ctrl l" { MoveFocusOrTab "Right"; }
+    bind "Ctrl j" { MoveFocus "Down"; }
+    bind "Ctrl k" { MoveFocus "Up"; }
     bind "Ctrl =" "Ctrl +" { Resize "Increase"; }
     bind "Ctrl -" { Resize "Decrease"; }
-    bind "Ctrl [" { PreviousSwapLayout; }
-    bind "Ctrl ]" { NextSwapLayout; }
+    bind "Alt [" { PreviousSwapLayout; }
+    bind "Alt ]" { NextSwapLayout; }
   }
   shared_except "normal" "locked" {
     bind "Enter" "Esc" { SwitchToMode "Normal"; }
@@ -177,7 +175,7 @@ keybinds {
     bind "Ctrl O" { SwitchToMode "Session"; }
   }
   shared_except "tab" "locked" {
-    bind "Ctrl T" { SwitchToMode "Tab"; }
+    bind "Ctrl t" { SwitchToMode "Tab"; }
   }
   shared_except "move" "locked" {
     bind "Ctrl H" { SwitchToMode "Move"; }

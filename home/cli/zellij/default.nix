@@ -21,6 +21,7 @@ in
         shellAbbrs = {
           tmux = "zellij";
           mux = "zellij --layout";
+          zq = "zellij kill-session $ZELLIJ_SESSION_NAME";
         };
       };
     };
