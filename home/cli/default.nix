@@ -5,6 +5,7 @@
     ./tools.nix
     ./fish
     ./neovim
+    ./nix.nix
     ./nixvim
     ./kitty.nix
     ./tmux
