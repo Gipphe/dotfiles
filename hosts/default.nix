@@ -68,6 +68,21 @@ in
       };
     };
 
+    Jarle = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        { networking.hostName = "Jarle"; }
+        ./Jarle
+        hmModule
+	{ home-manager = hmtty; }
+        { home-manager.users.gipphe.imports = [../home/hosts/Jarle]; }
+        # agenix
+      ];
+      specialArgs = {
+        inherit inputs;
+      };
+    };
+
     # Ideapad laptop
     trond-arne = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
