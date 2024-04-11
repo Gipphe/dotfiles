@@ -752,6 +752,7 @@
         "nixvim": "nixvim",
         "pre-commit-hooks": "pre-commit-hooks",
         "treefmt-nix": "treefmt-nix",
+        "wsl": "wsl",
         "xdg-portal-hyprland": "xdg-portal-hyprland"
       }
     },
@@ -954,6 +955,34 @@
         "repo": "wlroots",
         "rev": "50eae512d9cecbf0b3b1898bb1f0b40fa05fe19b",
         "type": "gitlab"
+      }
+    },
+    "wsl": {
+      "inputs": {
+        "flake-compat": [
+          "pre-commit-hooks",
+          "flake-compat"
+        ],
+        "flake-utils": [
+          "pre-commit-hooks",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1710519878,
+        "narHash": "sha256-0dbc10OBFUVYyXC+C+N6vRUd8xyBSRxkcZ4Egipbx0M=",
+        "owner": "nix-community",
+        "repo": "NixOS-WSL",
+        "rev": "aef95bdb6800a3a2af7aa7083d6df03067da6592",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "NixOS-WSL",
+        "type": "github"
       }
     },
     "xdg-portal-hyprland": {

@@ -259,5 +259,14 @@
         pre-commit-hooks.follows = "pre-commit-hooks";
       };
     };
+
+    wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs = {
+      	nixpkgs.follows = "nixpkgs";
+	flake-utils.follows = "pre-commit-hooks/flake-utils";
+	flake-compat.follows = "pre-commit-hooks/flake-compat";
+      };
+    };
   };
 }
