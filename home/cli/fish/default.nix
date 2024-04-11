@@ -137,7 +137,7 @@ in
     };
     xdg.configFile =
       let
-        function_files = filterAttrs (f: t: t == "regular") (readDir ./functions);
+        function_files = filterAttrs (_: t: t == "regular") (readDir ./functions);
         function_list = attrNames function_files;
         functions = foldl' (
           fs: fname:

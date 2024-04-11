@@ -1,4 +1,1 @@
-{ config, ... }:
-{
-  imports = [ ../../modules/nvidia.nix ];
-}
+{ imports = [ ../../modules/nvidia.nix ]; }

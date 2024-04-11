@@ -8,94 +8,91 @@
       flake-parts,
       ...
     }:
-    flake-parts.lib.mkFlake { inherit inputs; } (
-      { withSystem, ... }:
-      {
-        systems = [
-          "aarch64-darwin"
-          "aarch64-linux"
-          "x86_64-linux"
-        ];
+    flake-parts.lib.mkFlake { inherit inputs; } (_: {
+      systems = [
+        "aarch64-darwin"
+        "aarch64-linux"
+        "x86_64-linux"
+      ];
 
-        imports = [
-          {
-            config._module.args._inputs = inputs // {
-              inherit (inputs) self;
-            };
-          }
+      imports = [
+        {
+          config._module.args._inputs = inputs // {
+            inherit (inputs) self;
+          };
+        }
 
-          inputs.flake-parts.flakeModules.easyOverlay
-          inputs.pre-commit-hooks.flakeModule
-          inputs.treefmt-nix.flakeModule
-        ];
+        inputs.flake-parts.flakeModules.easyOverlay
+        inputs.pre-commit-hooks.flakeModule
+        inputs.treefmt-nix.flakeModule
+      ];
 
-        perSystem =
-          {
-            inputs',
-            config,
-            pkgs,
-            ...
-          }:
-          {
-            formatter = pkgs.nixfmt-rfc-style;
+      perSystem =
+        {
+          inputs',
+          config,
+          pkgs,
+          ...
+        }:
+        {
+          formatter = pkgs.nixfmt-rfc-style;
 
-            pre-commit = {
-              settings.excludes = [ "flake.lock" ];
+          pre-commit = {
+            settings.excludes = [ "flake.lock" ];
 
-              settings.hooks = {
-                nixfmt.enable = true;
-                prettier.enable = true;
-              };
-            };
-            devShells.default =
-              let
-                extra = import ./devShell;
-              in
-              inputs'.devshell.legacyPackages.mkShell {
-                name = "dotfiles";
-                commands = extra.shellCommands;
-                env = extra.shellEnv;
-                packages = with pkgs; [
-                  inputs'.agenix.packages.default # agenix CLI in flake shell
-                  inputs'.catppuccinifier.packages.cli
-                  inputs'.nh.packages.default # better nix CLI
-                  config.treefmt.build.wrapper # treewide formatter
-                  nix-output-monitor # pretty nix output
-                  entr # run commands on file changes
-                  nixfmt-rfc-style # nix formatter
-                  git # flake requires git
-                  glow # markdown viewer
-                  statix # lints and suggestions
-                  deadnix # clean up unused nix code
-                ];
-              };
-
-            treefmt = {
-              projectRootFile = "flake.nix";
-
-              programs = {
-                nixfmt-rfc-style.enable = true;
-                black.enable = true;
-                deadnix.enable = false;
-                shellcheck.enable = true;
-                shfmt.enable = true;
-              };
-
-              settings.formatter.nixfmt-rfc-style.excludes = [ "hardware-configuration.nix" ];
+            settings.hooks = {
+              nixfmt.enable = true;
+              prettier.enable = true;
             };
           };
-
-        flake = {
-          inherit (import ./hosts inputs) nixosConfigurations darwinConfigurations homeConfigurations;
-          images.iapetus =
-            (self.nixosConfigurations.iapetus.extendModules {
-              modules = [
-                "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel-no-zfs-installer.nix"
+          devShells.default =
+            let
+              extra = import ./devShell;
+            in
+            inputs'.devshell.legacyPackages.mkShell {
+              name = "dotfiles";
+              commands = extra.shellCommands;
+              env = extra.shellEnv;
+              packages = with pkgs; [
+                inputs'.agenix.packages.default # agenix CLI in flake shell
+                inputs'.catppuccinifier.packages.cli
+                inputs'.nh.packages.default # better nix CLI
+                config.treefmt.build.wrapper # treewide formatter
+                nix-output-monitor # pretty nix output
+                entr # run commands on file changes
+                nixfmt-rfc-style # nix formatter
+                git # flake requires git
+                glow # markdown viewer
+                statix # lints and suggestions
+                deadnix # clean up unused nix code
               ];
-            }).config.system.build.sdImage;
+            };
+
+          treefmt = {
+            projectRootFile = "flake.nix";
+
+            programs = {
+              nixfmt-rfc-style.enable = true;
+              black.enable = true;
+              deadnix.enable = false;
+              shellcheck.enable = true;
+              shfmt.enable = true;
+            };
+
+            settings.formatter.nixfmt-rfc-style.excludes = [ "hardware-configuration.nix" ];
+          };
         };
-      }
-    );
+
+      flake = {
+        inherit (import ./hosts inputs) nixosConfigurations darwinConfigurations homeConfigurations;
+        images.iapetus =
+          (self.nixosConfigurations.iapetus.extendModules {
+            modules = [
+              "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel-no-zfs-installer.nix"
+            ];
+          }).config.system.build.sdImage;
+      };
+    });
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";

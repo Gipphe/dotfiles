@@ -20,7 +20,7 @@ with lib.attrsets;
     home.file =
       let
         tmuxinator_dir_entries = readDir ./tmuxinator;
-        tmuxinator_files = filterAttrs (name: type: type == "regular") tmuxinator_dir_entries;
+        tmuxinator_files = filterAttrs (_: type: type == "regular") tmuxinator_dir_entries;
         tmuxinator_file_names = attrNames tmuxinator_files;
         tmuxinator_configs = foldl' (
           acc: name: acc // { ".config/tmuxinator/${name}".source = ./tmuxinator/${name}; }
