@@ -25,16 +25,24 @@ let
     }
   ];
 
-  home-manager = {
+  basehm = {
     useUserPackages = true;
     useGlobalPkgs = true;
     extraSpecialArgs = {
       inherit inputs;
       inherit self;
     };
+  };
+  home-manager = basehm // {
     users.gipphe = {
       imports = [ ../home ];
       _module.args.theme = import ../theme;
+    };
+  };
+
+  hmtty = basehm // {
+    users.gipphe = {
+      imports = [ ../home/base.nix ];
     };
   };
 in

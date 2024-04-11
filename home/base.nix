@@ -19,11 +19,6 @@ in
   };
   programs.home-manager.enable = true;
 
-  nixpkgs = {
-    config.allowUnfree = true;
-    overlays = [ inputs.neovim-overlay.overlay ];
-  };
-
   imports = [
     inputs.nix-index-db.hmModules.nix-index
     inputs.nixvim.homeManagerModules.nixvim
