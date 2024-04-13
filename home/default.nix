@@ -9,7 +9,7 @@
     # ./impermanence.nix
     ./packages.nix
 
-    ./hmOnly.nix
+    ./base.nix
     ./rice
     # ./modules/desktop.nix
     ./scripts
