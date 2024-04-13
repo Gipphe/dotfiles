@@ -5,6 +5,7 @@
     [
       fswatch
       xclip
+      # Recommended jdk
       temurin-bin
 
       # Make
