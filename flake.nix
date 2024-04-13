@@ -59,6 +59,7 @@
                 inputs'.nh.packages.default # better nix CLI
                 config.treefmt.build.wrapper # treewide formatter
                 nix-output-monitor # pretty nix output
+                nix-tree
                 entr # run commands on file changes
                 nixfmt-rfc-style # nix formatter
                 git # flake requires git
@@ -263,9 +264,9 @@
     wsl = {
       url = "github:nix-community/NixOS-WSL";
       inputs = {
-      	nixpkgs.follows = "nixpkgs";
-	flake-utils.follows = "pre-commit-hooks/flake-utils";
-	flake-compat.follows = "pre-commit-hooks/flake-compat";
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "pre-commit-hooks/flake-utils";
+        flake-compat.follows = "pre-commit-hooks/flake-compat";
       };
     };
   };
