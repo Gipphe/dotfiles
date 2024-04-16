@@ -1,15 +1,16 @@
 {
   lib,
   config,
-  pkgs,
+  # pkgs,
   ...
 }:
 let
   cfg = config.gipphe.programs.starship;
-  flavour = "macchiato";
-  catppuccinPalette = import ./catppuccinPalette { inherit pkgs flavour; };
-  nerdfontSymbols = import ./nerdfontSymbols;
-  bracketedSegments = import ./bracketedSegments;
+  # flavour = "macchiato";
+  # catppuccinPalette = import ./catppuccinPalette { inherit pkgs flavour; };
+  # nerdfontSymbols = import ./nerdfontSymbols;
+  # bracketedSegments = import ./bracketedSegments;
+  tokyoNight = import ./tokyoNight;
 in
 {
   options.gipphe.programs.starship = {
@@ -21,12 +22,13 @@ in
       enableTransience = true;
       settings = lib.mkMerge [
         {
-          format = "$all";
-          palette = "catppuccin_${flavour}";
+          # format = "$all";
+          # palette = "catppuccin_${flavour}";
         }
-        catppuccinPalette
-        nerdfontSymbols
-        bracketedSegments
+        # catppuccinPalette
+        # nerdfontSymbols
+        # bracketedSegments
+        tokyoNight
       ];
     };
     programs.fish.shellInit = lib.mkAfter ''
