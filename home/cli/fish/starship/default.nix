@@ -10,7 +10,8 @@ let
   # catppuccinPalette = import ./catppuccinPalette { inherit pkgs flavour; };
   # nerdfontSymbols = import ./nerdfontSymbols;
   # bracketedSegments = import ./bracketedSegments;
-  tokyoNight = import ./tokyoNight;
+  # tokyoNight = import ./tokyoNight;
+  pastelPowerline = import ./pastelPowerline;
 in
 {
   options.gipphe.programs.starship = {
@@ -28,7 +29,8 @@ in
         # catppuccinPalette
         # nerdfontSymbols
         # bracketedSegments
-        tokyoNight
+        # tokyoNight
+        pastelPowerline
       ];
     };
     programs.fish.shellInit = lib.mkAfter ''
