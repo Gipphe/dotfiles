@@ -7,6 +7,7 @@ $ErrorActionPreference = "Stop"
 . "$Dirname\stamp.ps1"
 . "$Dirname\programs\choco.ps1"
 . "$Dirname\programs\scoop.ps1"
+. "$Dirname\programs\config\main.ps1"
 
 Function Install-Programs
 {
@@ -17,6 +18,8 @@ Function Install-Programs
 
   Install-ChocoApps
   Install-ScoopApps
+
+  Set-ProgramConfiguration
 
   Register-Stamp "install-1password" {
     Install-FromWeb "1password" "https://downloads.1password.com/win/1PasswordSetup-latest.exe"

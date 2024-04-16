@@ -68,6 +68,7 @@ function Install-ChocoApps
     @('vivaldi'),
     @('voicemeeter'),
     @('vscode', '/NoDesktopIcon /NoQuicklaunchIcon'), # TODO replace with vscodium
+    @('wezterm'),
     @('windirstat')
   )
 
