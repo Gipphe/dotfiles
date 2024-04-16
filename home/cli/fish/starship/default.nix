@@ -7,9 +7,9 @@
 let
   cfg = config.gipphe.programs.starship;
   flavour = "macchiato";
-  catppuccinPalette = import ./catppuccinPalette.nix { inherit pkgs flavour; };
-  nerdfontSymbols = import ./nerdfontSymbols.nix;
-  bracketedSegments = import ./bracketedSegments.nix;
+  catppuccinPalette = import ./catppuccinPalette { inherit pkgs flavour; };
+  nerdfontSymbols = import ./nerdfontSymbols;
+  bracketedSegments = import ./bracketedSegments;
 in
 {
   options.gipphe.programs.starship = {
