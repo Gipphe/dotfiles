@@ -4,10 +4,7 @@ let
 in
 {
   options.gipphe.programs.zellij = {
-    enable = lib.mkOption {
-      type = lib.types.bool;
-      default = !config.programs.tmux.enable;
-    };
+    enable = lib.mkEnableOption "zellij";
   };
   config = lib.mkIf cfg.enable {
     xdg.configFile = {

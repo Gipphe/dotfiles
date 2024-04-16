@@ -11,9 +11,8 @@ with builtins;
 with lib.attrsets;
 {
   options.gipphe.programs.tmux = {
-    enable = lib.mkOption {
+    enable = lib.mkEnableOption "tmux" // {
       default = true;
-      type = lib.types.bool;
     };
   };
   config = lib.mkIf cfg.enable {
