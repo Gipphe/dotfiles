@@ -19,7 +19,7 @@ Function Install-Programs
   Install-ChocoApps
   Install-ScoopApps
 
-  Set-ProgramConfiguration
+  Set-ProgramConfigurations
 
   Register-Stamp "install-1password" {
     Install-FromWeb "1password" "https://downloads.1password.com/win/1PasswordSetup-latest.exe"
