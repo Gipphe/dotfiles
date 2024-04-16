@@ -19,10 +19,15 @@ in
     programs.starship = {
       enable = true;
       enableTransience = true;
-      settings = {
-        format = "$all";
-        palette = "catppuccin_${flavour}";
-      } // catppuccinPalette // nerdfontSymbols // bracketedSegments;
+      settings = lib.mkMerge [
+        {
+          format = "$all";
+          palette = "catppuccin_${flavour}";
+        }
+        catppuccinPalette
+        nerdfontSymbols
+        bracketedSegments
+      ];
     };
     programs.fish.shellInit = lib.mkAfter ''
       ${config.programs.starship.package}/bin/starship init fish | source
