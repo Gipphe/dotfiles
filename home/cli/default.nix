@@ -19,6 +19,9 @@
     programs = {
       tmux.enable = false;
       zellij.enable = true;
+
+      tide.enable = false;
+      starship.enable = true;
     };
   };
 }
