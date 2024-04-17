@@ -36,7 +36,7 @@
 
     # Utils
     {
-      help = "Update lake inputs and commit changes";
+      help = "Update flake inputs and commit changes";
       name = "update";
       command = ''nix flake update && git commit flake.lock -n "flake: bump inputs"'';
       category = "utils";
