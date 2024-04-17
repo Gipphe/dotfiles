@@ -1,4 +1,10 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 let
   cfg = config.gipphe.programs.zellij;
 in
@@ -12,7 +18,10 @@ in
       "zellij/config.kdl".source = ./config.kdl;
     };
     programs = {
-      zellij.enable = true;
+      zellij = {
+        enable = true;
+        package = inputs.nixpkgs-master.legacyPackages.${pkgs.system}.zellij;
+      };
 
       fish = lib.mkIf config.programs.zellij.enable {
         shellAbbrs = {

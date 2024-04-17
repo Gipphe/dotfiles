@@ -650,6 +650,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-master": {
+      "locked": {
+        "lastModified": 1713342801,
+        "narHash": "sha256-eA/OGNFwhOrxIWdFOM/b1ZueQ0MEi5Bh+Iy2WarJx8Q=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "0be3590f8a5ec1c82754ae458ab73152814aa9a5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1710695816,
@@ -749,6 +765,7 @@
         "nix-index-db": "nix-index-db",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-master": "nixpkgs-master",
         "nixvim": "nixvim",
         "pre-commit-hooks": "pre-commit-hooks",
         "treefmt-nix": "treefmt-nix",
