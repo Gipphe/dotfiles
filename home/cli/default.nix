@@ -17,8 +17,8 @@
     nixvim.enable = true;
     neovim.enable = false;
     programs = {
-      tmux.enable = true;
-      zellij.enable = false;
+      tmux.enable = false;
+      zellij.enable = true;
 
       tide.enable = false;
       starship.enable = true;
