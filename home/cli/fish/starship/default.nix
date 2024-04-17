@@ -11,7 +11,8 @@ let
   # nerdfontSymbols = import ./nerdfontSymbols;
   # bracketedSegments = import ./bracketedSegments;
   # tokyoNight = import ./tokyoNight;
-  pastelPowerline = import ./pastelPowerline;
+  # pastelPowerline = import ./pastelPowerline;
+  p3rception = import ./p3rception;
 in
 {
   options.gipphe.programs.starship = {
@@ -30,7 +31,8 @@ in
         # nerdfontSymbols
         # bracketedSegments
         # tokyoNight
-        pastelPowerline
+        # pastelPowerline
+        p3rception
       ];
     };
     programs.fish.shellInit = lib.mkAfter ''
