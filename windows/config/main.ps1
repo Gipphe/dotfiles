@@ -8,7 +8,12 @@ Function Install-Config
   [CmdletBinding()]
   Param ()
 
-  # Copy-Item -Path "$Dirname\config\.vimrc" -Destination "$HOME\.vimrc"
-  Copy-Item -Path "$Dirname\config\.wezterm.lua" -Destination "$Env:HOME\.wezterm.lua"
-  Copy-Item "$Dirname\config\wsl.conf" "$Env:HOME\wsl.conf"
+  $D = "$Dirname\config"
+  $Items = @(
+    @("$D\.vimrc", "$HOME\.vimrc"),
+    @("$D\.wezterm.lua", "$HOME\.wezterm.lua"),
+    @("$D\wsl.conf", "$HOME\wsl.conf")
+  )
+
+  $Items | ForEach-Object { Copy-Item -Path $_[0] -Destination $_[1] }
 }
