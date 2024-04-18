@@ -5,17 +5,10 @@
   ...
 }:
 let
-  inherit (import ../../../../util.nix) recursiveMap;
+  util = import ../../../../util.nix { inherit lib; };
   cfg = config.gipphe.programs.starship;
   flavour = "macchiato";
-  catppuccinPalette = import ./catppuccinPalette { inherit pkgs flavour; };
-  nerdfontSymbols = recursiveMap lib.mkForce (import ./nerdfontSymbols);
-
-  # bracketedSegments = import ./bracketedSegments;
-  # tokyoNight = import ./tokyoNight;
-  pastelPowerline = import ./pastelPowerline;
 in
-# p3rception = import ./p3rception;
 {
   options.gipphe.programs.starship = {
     enable = lib.mkEnableOption "starship";
@@ -29,16 +22,15 @@ in
           # format = "$all";
           palette = "catppuccin_${flavour}";
         }
-        # bracketedSegments
-        # tokyoNight
-        pastelPowerline
-        # p3rception
-        catppuccinPalette
-        nerdfontSymbols
+        (import ./presets {
+          inherit pkgs flavour util;
+          enable = [
+            "catppuccinPalette"
+            "bracketedSegments"
+            "nerdfontSymbols"
+          ];
+        })
       ];
     };
-    programs.fish.shellInit = lib.mkAfter ''
-      ${config.programs.starship.package}/bin/starship init fish | source
-    '';
   };
 }

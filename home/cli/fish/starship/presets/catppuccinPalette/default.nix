@@ -1,4 +1,4 @@
-{ pkgs, flavour, ... }:
+{ pkgs, flavour }:
 builtins.fromTOML (
   builtins.readFile (
     pkgs.fetchFromGitHub {

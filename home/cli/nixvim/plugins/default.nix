@@ -1,13 +1,9 @@
 { lib, ... }:
 let
-  files = lib.attrsets.foldlAttrs (
-    l: k: v:
-    l ++ (if v == "regular" && k != "default.nix" then [ k ] else [ ])
-  ) [ ] (builtins.readDir ./.);
-  imports = builtins.map (f: ./${f}) files;
+  inherit (import ../../../../util.nix { inherit lib; }) importSiblings;
 in
 {
-  inherit imports;
+  imports = importSiblings ./.;
 
   programs.nixvim.plugins = {
     copilot-lua.enable = true;

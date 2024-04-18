@@ -1,3 +1,4 @@
+{ lib, ... }:
 let
   inherit (builtins)
     isList
@@ -25,7 +26,20 @@ let
       recurseAttrs x
     else
       f x;
+
+  importSiblings =
+    let
+      go =
+        l: k: v:
+        l ++ (if k != "default.nix" then [ k ] else [ ]);
+    in
+    dir:
+    lib.pipe dir [
+      builtins.readDir
+      (lib.attrsets.foldlAttrs go [ ])
+      (builtins.map (f: ./${f}))
+    ];
 in
 {
-  inherit recursiveMap;
+  inherit recursiveMap importSiblings;
 }
