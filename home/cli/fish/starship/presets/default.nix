@@ -3,17 +3,18 @@
   flavour,
   util,
   enable,
+  pkgs,
   ...
 }:
 let
   id = x: x;
   presets = {
     bracketedSegments = id;
-    catppuccinPalette = f: (f { inherit flavour; }) // { palette = "catppuccin_${flavour}"; };
+    catppuccinPalette = f: (f { inherit flavour pkgs; }) // { palette = "catppuccin_${flavour}"; };
     nerdfontSymbols = util.recursiveMap lib.mkForce;
     p3rception = id;
     pastelPowerline = id;
     tokyoNight = id;
   };
 in
-lib.mkMerge (builtins.map (p: presets.${p}) enable)
+builtins.map (p: presets.${p} (import ./${p})) enable

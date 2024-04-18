@@ -3,7 +3,7 @@ let
   inherit (import ../../../../util.nix { inherit lib; }) importSiblings;
 in
 {
-  imports = importSiblings ./.;
+  imports = builtins.map (x: ./${x}) (importSiblings ./.);
 
   programs.nixvim.plugins = {
     copilot-lua.enable = true;

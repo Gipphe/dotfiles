@@ -5,9 +5,7 @@
   ...
 }:
 let
-  util = import ../../../../util.nix { inherit lib; };
   cfg = config.gipphe.programs.starship;
-  flavour = "macchiato";
 in
 {
   options.gipphe.programs.starship = {
@@ -17,20 +15,7 @@ in
     programs.starship = {
       enable = true;
       enableTransience = true;
-      settings = lib.mkMerge [
-        {
-          # format = "$all";
-          palette = "catppuccin_${flavour}";
-        }
-        (import ./presets {
-          inherit pkgs flavour util;
-          enable = [
-            "catppuccinPalette"
-            "bracketedSegments"
-            "nerdfontSymbols"
-          ];
-        })
-      ];
+      settings = import ./presets/preset.nix { inherit pkgs lib; };
     };
   };
 }

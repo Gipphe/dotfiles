@@ -37,7 +37,7 @@ let
     lib.pipe dir [
       builtins.readDir
       (lib.attrsets.foldlAttrs go [ ])
-      (builtins.map (f: ./${f}))
+      (builtins.map (f: "./${f}"))
     ];
 in
 {
