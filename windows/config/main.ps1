@@ -9,5 +9,6 @@ Function Install-Config
   Param ()
 
   # Copy-Item -Path "$Dirname\config\.vimrc" -Destination "$HOME\.vimrc"
-  Copy-Item -Path "$Dirname\config\.wezterm.lua" -Destination "$Env:HOME\.wezterm.lua" -Force
+  Copy-Item -Path "$Dirname\config\.wezterm.lua" -Destination "$Env:HOME\.wezterm.lua"
+  Copy-Item "$Dirname\config\wsl.conf" "$Env:HOME\wsl.conf"
 }
