@@ -350,7 +350,10 @@ in
       smartcase = true;
 
       # Insert indents automatically
-      smartindent = true;
+      # Currently having issues where the closing bracket of a {} pair is
+      # incorrectly idented.
+      # smartindent = true;
+      # autoindent = true;
 
       spelllang = [ "en" ];
 
