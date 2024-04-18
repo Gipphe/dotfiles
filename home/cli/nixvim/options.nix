@@ -280,7 +280,7 @@ in
       _G.utils = utils
     '';
     extraConfigLua = ''
-      vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
+      vim.opt.shortmess:append({ F = true, W = true, I = true, c = true, C = true })
     '';
     extraConfigLuaPost = ''
       vim.opt.statuscolumn = "%!v:lua.utils.statuscolumn()"

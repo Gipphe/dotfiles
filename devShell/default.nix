@@ -2,27 +2,30 @@
   shellCommands = [
     # Build
     {
-      help = "Rebuild the system using nh os switch";
+      help = "Rebuild the system using nixos-rebuild, darwin-rebuild or home-manager, whichever is applicable";
       name = "sw";
-      command = "nh os switch";
+      command = ''
+        if command -v nixos-rebuild &>/dev/null; then
+          nh os switch
+        elif command -v darwin-rebuild &>/dev/null; then
+          darwin-rebuild switch --flake $(pwd)
+        elif command -v home-manager &>/dev/null; then
+          nh home switch
+        fi
+      '';
       category = "build";
     }
     {
       help = "Rebuild the system using nh os boot";
       name = "boot";
-      command = "nh os boot";
-      category = "build";
-    }
-    {
-      help = "Rebuild nix-darwin using darwin-rebuild switch";
-      name = "dw";
-      command = "darwin-rebuild switch --flake $(pwd)";
-      category = "build";
-    }
-    {
-      help = "Rebuild the home environment using nh home switch";
-      name = "hms";
-      command = "nh home switch $(pwd)";
+      command = ''
+        if command -v nixos-rebuild &> /dev/null; then
+          nh os boot
+        else
+          echo "This is not a NixOS system" >&2
+          exit 1
+        fi
+      '';
       category = "build";
     }
 
