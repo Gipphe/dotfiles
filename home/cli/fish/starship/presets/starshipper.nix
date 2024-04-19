@@ -3,7 +3,13 @@ with lib.lists;
 with builtins;
 let
 
-  mimicBackground = k: x: if hasAttr "background" x then { ${k} = x.background; } else { };
+  isNonEmptyStringAttr = attr: set: hasAttr attr set && isString set.${attr} && set.${attr} != "";
+  mimicBackground =
+    k: x:
+    if hasAttr "background" x && isString x.background && x.background != "" then
+      { ${k} = x.background; }
+    else
+      { };
 
   enrichBeginning =
     {
@@ -70,9 +76,37 @@ let
       }
     ) segmentsWithIdx;
 
-  formatBeginning = segment: "[${segment.beginning}](fg:${segment.toColor})";
-  formatEnd = segment: "[${segment.end}](fg:${segment.fromColor})";
-  formatDivider = segment: "[${segment.divider}](fg:${segment.fromColor} bg:${segment.toColor})";
+  mkStyleString =
+    { bg, fg }:
+    section:
+    let
+      foreground = if isNonEmptyStringAttr fg section then [ "fg:${section.${fg}}" ] else [ ];
+      background = if isNonEmptyStringAttr bg section then [ "bg:${section.${bg}}" ] else [ ];
+      style = concatStringsSep " " (foreground ++ background);
+    in
+    style;
+
+  formatBeginning =
+    segment:
+    if isNonEmptyStringAttr "toColor" segment then
+      "[${segment.beginning}](fg:${segment.toColor})"
+    else
+      segment.beginning;
+  formatEnd =
+    segment:
+    if isNonEmptyStringAttr "fromColor" segment then
+      "[${segment.end}](fg:${segment.fromColor})"
+    else
+      segment.end;
+  formatDivider =
+    segment:
+    let
+      style = mkStyleString {
+        fg = "fromColor";
+        bg = "toColor";
+      } segment;
+    in
+    if style != "" then "[${segment.divider}](${style})" else segment.divider;
   formatSection =
     segment:
     lib.pipe segment.modules [
@@ -110,13 +144,11 @@ let
   mkSectionSettings =
     section:
     let
-
-      isNonEmptyStringAttr = attr: set: hasAttr attr set && isString set.${attr} && set.${attr} != "";
-      foreground = [ ]; # if isNonEmptyStringAttr "foreground" section then [ "fg:${section.foreground}" ] else [ ];
-      background =
-        if isNonEmptyStringAttr "background" section then [ "bg:${section.background}" ] else [ ];
-      style = "${concatStringsSep " " (foreground ++ background)}";
-      inherit (section) shared;
+      style = mkStyleString {
+        fg = "foreground";
+        bg = "background";
+      } section;
+      shared = section.shared or { };
       modules = listToAttrs (
         map (module: {
           inherit (module) name;
@@ -148,11 +180,11 @@ in
   };
   section =
     {
-      description,
+      description ? "",
       modules,
-      shared,
-      background,
-      foreground,
+      shared ? { },
+      background ? null,
+      foreground ? null,
     }:
     {
       type = "section";

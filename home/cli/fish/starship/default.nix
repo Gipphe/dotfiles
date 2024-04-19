@@ -15,7 +15,7 @@ in
     programs.starship = {
       enable = true;
       enableTransience = true;
-      settings = import ./presets/preset.nix { inherit pkgs lib; };
+      settings = import ./presets { inherit pkgs lib; };
     };
   };
 }

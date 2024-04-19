@@ -1,13 +1,10 @@
 { lib, ... }:
 let
   starshipper = import ./starshipper.nix { inherit lib; };
-  divider = starshipper.divider "";
 in
 [
-  (starshipper.beginning "")
   (starshipper.section {
     description = "core";
-    background = "#9A348E";
     foreground = "#FFFFFF";
     shared = { };
     modules = [
@@ -76,18 +73,22 @@ in
         disabled = false;
         symbol = "󰍛 ";
       }
+      {
+        name = "shlvl";
+        threshold = 5;
+        format = "[$shlvl ]($style)";
+        disabled = false;
+      }
     ];
   })
-  divider
   (starshipper.section {
     description = "dir";
-    background = "#D54E6C";
-    foreground = "#FFFFFF";
+    foreground = "blue";
     shared = { };
     modules = [
       {
         name = "directory";
-        format = "[ $path ]($style)";
+        format = "[$path ]($style)";
         truncation_length = 3;
         truncation_symbol = "…/";
         read_only = " 󰌾";
@@ -100,31 +101,29 @@ in
       }
     ];
   })
-  divider
   (starshipper.section {
     description = "VCS";
-    background = "#FB7D4B";
-    foreground = "#FFFFFF";
-    shared = { };
+    foreground = "green";
+    shared = {
+      format = "[$symbol$branch ]($style)";
+    };
     modules = [
       {
         name = "fossil_branch";
         symbol = " ";
-        format = "[ $symbol $branch ]($style)";
       }
       {
         name = "hg_branch";
         symbol = " ";
-        format = "[ $symbol $branch ]($style)";
       }
       {
         name = "git_branch";
         symbol = " ";
-        format = "[ $symbol $branch ]($style)";
       }
       {
         name = "pijul_channel";
         symbol = " ";
+        format = "[$symbol$channel ]($style)";
       }
       {
         name = "git_status";
@@ -132,13 +131,12 @@ in
       }
     ];
   })
-  divider
+  (starshipper.divider " ")
   (starshipper.section {
     description = "tool";
-    background = "#4C9AC5";
-    foreground = "#FFFFFF";
+    foreground = "peach";
     shared = {
-      format = "[ $symbol ($version) ]($style)";
+      format = "[$symbol($version) ]($style)";
     };
     modules = [
       {
@@ -260,47 +258,76 @@ in
       }
     ];
   })
-  divider
   (starshipper.section {
-    description = "context";
-    background = "#057E81";
-    foreground = "#FFFFFF";
+    description = "separator line";
+    foreground = "surface1";
     shared = { };
     modules = [
       {
+        name = "fill";
+        symbol = "-";
+      }
+    ];
+  })
+  (starshipper.section {
+    description = "status";
+    modules = [
+      {
+        name = "status";
+        format = "[$symbol$status ]($style)";
+        disabled = false;
+      }
+    ];
+  })
+  (starshipper.section {
+    description = "context";
+    foreground = "mauve";
+    shared = { };
+    modules = [
+      {
+        name = "direnv";
+        symbol = " ";
+        format = "[$symbol$loaded/$allowed ]($style)";
+        allowed_msg = "";
+        not_allowed_msg = "";
+        denied_msg = "";
+        loaded_msg = "";
+        unloaded_msg = "";
+        disabled = false;
+      }
+      {
         name = "docker_context";
         symbol = " ";
-        format = "[ $symbol $context ]($style)";
+        format = "[$symbol$context ]($style)";
       }
       {
         name = "guix_shell";
         symbol = " ";
+        format = "[$symbol]($style)";
       }
       {
         name = "meson";
         symbol = "󰔷 ";
+        format = "[$symbol$project ]($style)";
       }
       {
         name = "nix_shell";
-        format = "[ $symbol$state ]($style)";
+        format = "[$symbol$state ]($style)";
         symbol = " ";
       }
     ];
   })
-  divider
   (starshipper.section {
     description = "time";
-    background = "#33658A";
-    foreground = "#FFFFFF";
+    foreground = "overlay1";
     shared = { };
     modules = [
       {
         name = "time";
         disabled = false;
         time_format = "%R"; # Hour:Minute Format
-        format = "[ $time ]($style)";
+        format = "[$time ]($style)";
       }
     ];
   })
-  (starshipper.end " ")
 ]
