@@ -314,8 +314,7 @@ let
 in
 {
   format = "${format}\n$character";
-
-  palette = "catppuccin_macchiato";
+  palette = "catppuccin_${flavour}";
 }
 // (builtins.fromTOML (
   builtins.readFile (
