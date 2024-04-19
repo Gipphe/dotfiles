@@ -20,6 +20,7 @@
       "cyberduck"
       "docker"
       "filen"
+      "gimp"
       "jetbrains-toolbox"
       "karabiner-elements"
       "linearmouse"
