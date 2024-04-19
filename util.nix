@@ -30,8 +30,8 @@ let
   importSiblings =
     let
       go =
-        l: k: v:
-        l ++ (if k != "default.nix" then [ k ] else [ ]);
+        acc: fileName: _:
+        acc ++ (if fileName != "default.nix" then [ fileName ] else [ ]);
     in
     dir:
     lib.pipe dir [
