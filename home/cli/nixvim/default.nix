@@ -1,6 +1,6 @@
 { lib, config, ... }:
 let
-  cfg = config.gipphe.nixvim;
+  cfg = config.gipphe.programs.nixvim;
   inherit (config.nixvim) helpers;
 in
 {
@@ -11,15 +11,9 @@ in
     ./options.nix
     ./plugins
   ];
-  options.gipphe.nixvim = {
-    enable = lib.mkOption {
+  options.gipphe.programs.nixvim = {
+    enable = lib.mkEnableOption "nixvim" // {
       default = !config.programs.neovim.enable;
-      type = lib.types.bool;
-    };
-
-    is_wsl = lib.mkOption {
-      default = builtins.getEnv "WSL_INTEROP" != "";
-      type = lib.types.bool;
     };
   };
   config = lib.mkIf cfg.enable {

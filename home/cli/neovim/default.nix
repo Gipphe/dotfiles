@@ -5,10 +5,10 @@
   ...
 }:
 let
-  cfg = config.gipphe.neovim;
+  cfg = config.gipphe.programs.neovim;
 in
 {
-  options.gipphe.neovim = {
+  options.gipphe.programs.neovim = {
     enable = lib.mkOption {
       default = true;
       type = lib.types.bool;

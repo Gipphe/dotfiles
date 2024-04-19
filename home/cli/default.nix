@@ -14,9 +14,10 @@
   ];
 
   gipphe = {
-    nixvim.enable = true;
-    neovim.enable = false;
     programs = {
+      nixvim.enable = true;
+      neovim.enable = false;
+
       tmux.enable = false;
       zellij.enable = true;
 
