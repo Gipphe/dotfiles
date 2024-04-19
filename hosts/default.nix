@@ -74,8 +74,8 @@ in
         { networking.hostName = "Jarle"; }
         ./Jarle
         hmModule
-	{ home-manager = hmtty; }
-        { home-manager.users.gipphe.imports = [../home/hosts/Jarle]; }
+        { home-manager = hmtty; }
+        { home-manager.users.gipphe.imports = [ ../home/hosts/Jarle ]; }
         # agenix
       ];
       specialArgs = {
