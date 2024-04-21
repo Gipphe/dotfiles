@@ -118,7 +118,7 @@
     devshell = {
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "pre-commit-hooks/flake-utils";
+      inputs.flake-utils.follows = "flake-utils";
     };
 
     neovim-overlay = {
@@ -126,7 +126,7 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";
-        flake-compat.follows = "pre-commit-hooks/flake-compat";
+        flake-compat.follows = "flake-compat";
       };
     };
 
@@ -236,12 +236,14 @@
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.flake-compat.follows = "flake-compat";
     };
 
     catppuccinifier = {
       url = "github:lighttigerXIV/catppuccinifier";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "pre-commit-hooks/flake-utils";
+      inputs.flake-utils.follows = "flake-utils";
     };
 
     nh = {
@@ -254,7 +256,7 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
         devshell.follows = "devshell";
-        flake-compat.follows = "pre-commit-hooks/flake-compat";
+        flake-compat.follows = "flake-compat";
         flake-parts.follows = "flake-parts";
         nix-darwin.follows = "darwin";
         home-manager.follows = "home-manager";
@@ -266,9 +268,14 @@
       url = "github:nix-community/NixOS-WSL";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "pre-commit-hooks/flake-utils";
-        flake-compat.follows = "pre-commit-hooks/flake-compat";
+        flake-utils.follows = "flake-utils";
+        flake-compat.follows = "flake-compat";
       };
     };
+
+    flake-compat.url = "github:edolstra/flake-compat";
+    flake-utils.url = "github:numtide/flake-utils";
+    sys-default-linux.url = "github:nix-systems/default-linux";
+    sys-default.url = "github:nix-systems/default";
   };
 }
