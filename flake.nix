@@ -108,13 +108,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # impermanence.url = "github:nix-community/impermanence";
-
-    # nixpak = {
-    #   url = "github:nixpak/nixpak";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-
     devshell = {
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -129,32 +122,6 @@
         flake-compat.follows = "flake-compat";
       };
     };
-
-    # schizofox = {
-    #   url = "github:schizofox/schizofox";
-    #   inputs = {
-    #     nixpkgs.follows = "nixpkgs";
-    #     flake-parts.follows = "flake-parts";
-    #     nixpak.follows = "nixpak";
-    #   };
-    # };
-    #
-    # schizosearch = {
-    #   url = "github:sioodmy/schizosearch";
-    #   inputs = {
-    #     nixpkgs.follows = "nixpkgs";
-    #     flake-parts.follows = "flake-parts";
-    #     home-manager.follows = "home-manager";
-    #   };
-    # };
-    #
-    # barbie = {
-    #   url = "github:sioodmy/barbie";
-    #   inputs = {
-    #     nixpkgs.follows = "nixpkgs";
-    #     flake-parts.follows = "flake-parts";
-    #   };
-    # };
 
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
