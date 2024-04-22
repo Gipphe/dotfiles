@@ -162,7 +162,8 @@
       # See also: https://gist.github.com/robmiller/5133264
       delete-merged-branches = "!git checkout master && git branch --merged | grep -v '\\\\*' | xargs -n 1 git branch -d";
 
-      rm-merged = ''!git branch --format '%(refname:short) %(upstream:track)' | awk '$2 == "[gone]" { print $1 }' | xargs -r git branch -D'';
+      rm-merged = ''!echo "Deprecated. Use 'git gone' instead."; git gone'';
+      gone = ''!git branch --format '%(refname:short) %(upstream:track)' | awk '$2 == "[gone]" { print $1 }' | xargs -r git branch -D'';
 
       # Checkout a merge request locally
       mr = "!sh -c 'git fetch $1 merge-requests/$2/head:mr-$1-$2 && git checkout mr-$1-$2' -";
