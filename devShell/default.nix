@@ -41,7 +41,7 @@
     {
       help = "Update flake inputs and commit changes";
       name = "update";
-      command = ''nix flake update && git commit flake.lock -n "flake: bump inputs"'';
+      command = ''nix flake update && git commit flake.lock -m "chore: update flake inputs"'';
       category = "utils";
     }
 
