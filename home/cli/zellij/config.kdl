@@ -3,6 +3,14 @@ copy_on_select true
 theme "catppuccin-macchiato"
 keybinds {
   unbind "Ctrl q"
+
+  shared_except "locked" {
+    bind "Ctrl y" {
+      LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
+        floating true
+      }
+    }
+  }
 }
 //  keybinds clear-defaults=true {
 //    normal {
