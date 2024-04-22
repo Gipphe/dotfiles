@@ -927,11 +927,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1710519878,
-        "narHash": "sha256-0dbc10OBFUVYyXC+C+N6vRUd8xyBSRxkcZ4Egipbx0M=",
+        "lastModified": 1713528946,
+        "narHash": "sha256-IBQta+xrEaI2S5UmYrXcgV7Tu7rGLQu2V3TeJseLPSg=",
         "owner": "nix-community",
         "repo": "NixOS-WSL",
-        "rev": "aef95bdb6800a3a2af7aa7083d6df03067da6592",
+        "rev": "63c1247e12f269396ed2df8cdec3aed1f0f3928c",
         "type": "github"
       },
       "original": {
