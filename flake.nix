@@ -167,6 +167,7 @@
         home-manager.follows = "home-manager";
         nixpkgs.follows = "nixpkgs";
         darwin.follows = "darwin";
+        systems.follows = "sys-default";
       };
     };
 
@@ -175,6 +176,7 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
         hyprlang.follows = "hyprlang";
+        systems.follows = "sys-default-linux";
       };
     };
 
@@ -184,6 +186,7 @@
         nixpkgs.follows = "nixpkgs";
         hyprlang.follows = "hyprlang";
         hyprland-protocols.follows = "hyprland/hyprland-protocols";
+        systems.follows = "sys-default-linux";
       };
     };
 
@@ -197,13 +200,17 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
         hyprlang.follows = "hyprlang";
+        systems.follows = "sys-default-linux";
       };
     };
 
     hypridle = {
       url = "github:hyprwm/hypridle";
-      inputs.hyprlang.follows = "hyprlang";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        hyprlang.follows = "hyprlang";
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "sys-default-linux";
+      };
     };
 
     hyprland-plugins = {
@@ -220,6 +227,7 @@
       url = "github:hyprwm/hyprlang";
       inputs = {
         nixpkgs.follows = "nixpkgs";
+        systems.follows = "sys-default-linux";
       };
     };
 
@@ -275,6 +283,7 @@
 
     flake-compat.url = "github:edolstra/flake-compat";
     flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.inputs.systems.follows = "sys-default";
     sys-default-linux.url = "github:nix-systems/default-linux";
     sys-default.url = "github:nix-systems/default";
   };
