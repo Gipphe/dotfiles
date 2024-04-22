@@ -35,28 +35,22 @@ in
     keymaps = [
       (k "n" "<leader>cl" "<cmd>LspInfo<cr>" { desc = "Lsp info"; })
       (kv "n" "gd" ''
-      function()
-        require('telescope.builtin').lsp_definitions({ reuse_win = true })
-      end
-      '' {
-        desc = "Goto Definition";
-      })
+        function()
+          require('telescope.builtin').lsp_definitions({ reuse_win = true })
+        end
+      '' { desc = "Goto Definition"; })
       (k "n" "gr" "<cmd>Telescope lsp_references<cr>" { desc = "References"; })
       (kv "n" "gD" "vim.lsp.buf.declaration" { desc = "Goto Declaration"; })
       (k "n" "gI" ''
         function()
           require('telescope.builtin').lsp_implementations({ reuse_win = true })
         end
-        ''
-        { desc = "Goto Implementation"; }
-      )
+      '' { desc = "Goto Implementation"; })
       (k "n" "gy" ''
-      function()
-        require('telescope.builtin').lsp_type_definitions({ reuse_win = true })
-      end
-      ''
-        { desc = "Goto T[y]pe Definition"; }
-      )
+        function()
+          require('telescope.builtin').lsp_type_definitions({ reuse_win = true })
+        end
+      '' { desc = "Goto T[y]pe Definition"; })
       (kv "n" "K" "vim.lsp.buf.hover" { desc = "Hover"; })
       (kv "n" "gK" "vim.lsp.buf.signature_help" { desc = "Signature Help"; })
       (kv "i" "<c-k>" "vim.lsp.buf.signature_help" { desc = "Signature Help"; })
@@ -69,14 +63,11 @@ in
         "v"
       ] "<leader>cc" "vim.lsp.codelens.run" { desc = "Run Codelens"; })
       (kv "n" "<leader>cC" "vim.lsp.codelens.refresh" { desc = "Refresh & Display Codelens"; })
-      (kv "n" "<leader>cA"
-        ''
+      (kv "n" "<leader>cA" ''
         function()
           vim.lsp.buf.code_action({ context = { only = { 'source' }, diagnostics = {} } })
         end
-        ''
-        { desc = "Source Action"; }
-      )
+      '' { desc = "Source Action"; })
       (kv "n" "<leader>cr" "vim.lsp.buf.rename" { desc = "Rename"; })
     ];
   };

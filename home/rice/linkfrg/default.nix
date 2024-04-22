@@ -14,7 +14,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-# https://github.com/linkfrg/dotfiles/wiki/Installation
+    # https://github.com/linkfrg/dotfiles/wiki/Installation
     home.packages = with pkgs; [ ];
 
     wayland.windowManager.hyprland = {
