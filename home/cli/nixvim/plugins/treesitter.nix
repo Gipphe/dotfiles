@@ -46,6 +46,13 @@ in
           };
         };
       };
+      ts-context-commentstring = {
+        enable = true;
+        extraOptions = {
+          enable_autocmd = false;
+        };
+      };
+      ts-autotag.enable = true;
     };
     keymaps = [
       (k "n" "<leader>ut" "<cmd>TSContextToggle<cr>" { desc = "Toggle Treesitter context"; })

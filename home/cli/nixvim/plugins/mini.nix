@@ -44,11 +44,13 @@ in
         # ai = {}
         bufremove = { };
         comment = {
-          # custom_commentstring = ''
-          #   function()
-          #     return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
-          #   end
-          # '';
+          options = {
+            custom_commentstring = helpers.mkRaw ''
+              function()
+                return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
+              end
+            '';
+          };
         };
         indentscope = {
           symbol = "|";
