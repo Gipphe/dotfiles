@@ -3,9 +3,9 @@ class Scoop {
 
   Scoop() {
     $Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-    Using module "$Dirname\..\Utils.psm1"
+    . "$Dirname\..\Utils.ps1"
 
-    $this.Utils = [Utils]::new()
+    $this.Utils = New-Utils
 
     $this.EnsureInstalled()
   }
@@ -59,4 +59,8 @@ class Scoop {
       $this.Utils.InvokeNative({ scoop install @ScoopArgs $PackageName @Params })
     }
   }
+}
+
+Function New-Scoop {
+  [Scoop]::new()
 }

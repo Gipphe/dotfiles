@@ -43,3 +43,7 @@ class Utils {
     }
   }
 }
+
+Function New-Utils {
+  [Utils]::new()
+}

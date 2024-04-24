@@ -4,9 +4,9 @@ class SD {
 
   SD() {
     $this.Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-    Using module "$($this.Dirname)\..\Utils.psm1"
+    . "$($this.Dirname)\..\Utils.ps1"
 
-    $this.Utils = [Utils]::new()
+    $this.Utils = New-Utils
   }
 
   [void] Install() {
@@ -18,3 +18,6 @@ class SD {
   }
 }
 
+Function New-SD {
+  [SD]::new()
+}

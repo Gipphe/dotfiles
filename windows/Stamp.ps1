@@ -31,3 +31,7 @@ class Stamp {
     New-Item -ItemType File $StampPath
   }
 }
+
+Function New-Stamp {
+  return [Stamp]::new()
+}

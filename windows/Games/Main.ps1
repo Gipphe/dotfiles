@@ -4,12 +4,16 @@ class Games {
 
   Games() {
     $Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-    Using module "$Dirname\FS22.psm1"
+    . "$Dirname\FS22.ps1"
 
-    $this.FS22 = [FS22]::new()
+    $this.FS22 = New-FS22
   }
 
   [void] Install() {
     $this.FS22.InstallMods()
   }
+}
+
+Function New-Games {
+  [Games]::new()
 }

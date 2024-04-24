@@ -6,15 +6,15 @@ class Programs {
 
   Programs() {
     $Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-    Using module "$Dirname\..\Utils.psm1"
-    Using module "$Dirname\..\Stamp.psm1"
-    Using module "$Dirname\Choco.psm1"
-    Using module "$Dirname\Scoop.psm1"
+    . "$Dirname\..\Utils.ps1"
+    . "$Dirname\..\Stamp.ps1"
+    . "$Dirname\Choco.ps1"
+    . "$Dirname\Scoop.ps1"
 
-    $this.Stamp = [Stamp]::new()
-    $this.Utils = [Utils]::new()
-    $this.Choco = [Choco]::new()
-    $this.Scoop = [Scoop]::new()
+    $this.Stamp = New-Stamp
+    $this.Utils = New-Utils
+    $this.Choco = New-Choco
+    $this.Scoop = New-Scoop
   }
 
   [void] Install() {
@@ -34,4 +34,8 @@ class Programs {
       $this.Utils.InstallFromWeb("VisiPics", "https://altushost-swe.dl.sourceforge.net/project/visipics/VisiPics-1-31.exe")
     })
   }
+}
+
+Function New-Programs {
+  [Programs]::new()
 }

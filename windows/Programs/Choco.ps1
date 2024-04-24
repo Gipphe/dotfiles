@@ -3,9 +3,9 @@ class Choco {
 
   Choco() {
     $Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-    Using module "$Dirname\..\Utils.psm1"
+    . "$Dirname\..\Utils.ps1"
 
-    $this.Util = [Utils]::new()
+    $this.Util = New-Utils
 
     $this.EnsureInstalled()
   }
@@ -18,7 +18,7 @@ class Choco {
     {
       Set-ExecutionPolicy Bypass -Scope Process -Force
       [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-      Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.psm1'))
+      Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
     }
   }
 
@@ -92,4 +92,8 @@ class Choco {
       $this.Utils.InvokeNative({ choco install @ChocoArgs $PackageName @params })
     }
   }
+}
+
+Function New-Choco {
+  [Choco]::new()
 }

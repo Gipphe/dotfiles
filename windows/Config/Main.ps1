@@ -14,3 +14,6 @@ class Config {
     $Items | ForEach-Object { Copy-Item -Path $_[0] -Destination $_[1] }
   }
 }
+Function New-Config {
+  [Config]::new()
+}

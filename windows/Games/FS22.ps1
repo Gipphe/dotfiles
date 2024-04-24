@@ -104,3 +104,7 @@ class FS22 {
     }
   }
 }
+
+Function New-FS22 {
+  [FS22]::new()
+}
