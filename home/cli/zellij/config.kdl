@@ -4,7 +4,19 @@ theme "catppuccin-macchiato"
 keybinds {
   unbind "Ctrl q"
 
+  move {
+    bind "Ctrl u" { SwitchToMode "Normal"; }
+  }
+  shared_except "move" "locked" {
+    bind "Ctrl u" { SwitchToMode "Move"; }
+  }
+
   shared_except "locked" {
+    bind "Ctrl h" { MoveFocusOrTab "Left"; }
+    bind "Ctrl l" { MoveFocusOrTab "Right"; }
+    bind "Ctrl j" { MoveFocusOrTab "Down"; }
+    bind "Ctrl k" { MoveFocusOrTab "Up"; }
+
     bind "Ctrl y" {
       LaunchOrFocusPlugin "file:~/zellij-plugins/zellij_forgot.wasm" {
         floating true
