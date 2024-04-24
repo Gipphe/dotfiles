@@ -1,0 +1,95 @@
+class Choco {
+  [PSCustomObject]$Utils
+
+  Choco() {
+    $Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
+    . "$Dirname\..\Utils.ps1"
+
+    $this.Util = [Utils]::new()
+
+    $this.EnsureInstalled()
+  }
+
+  [void] EnsureInstalled() {
+    try
+    {
+      Get-Command "choco" -ErrorAction Stop | Out-Null
+    } catch
+    {
+      Set-ExecutionPolicy Bypass -Scope Process -Force
+      [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+      Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+    }
+  }
+
+  [void] InstallApps() {
+    $ChocoArgs = @('-y')
+    $Installed = $($this.Utils.InvokeNative({ choco list --id-only }))
+
+    $ChocoApps = @(
+      @('7zip'),
+      @('barrier'),
+      @('cyberduck'),
+      @('discord'),
+      @('docker-desktop'),
+      @('dropbox'),
+      @('epicgameslauncher'),
+      @('filen'),
+      @('firacodenf'),
+      @('gdlauncher'),
+      @('geforce-experience'),
+      @('git'),
+      @('greenshot'),
+      @('humble-app'),
+      @('irfanview'),
+      @('irfanview-languages'),
+      @('irfanviewplugins'),
+      @('k-litecodecpack-standard'),
+      @('lghub'),
+      @('microsoft-windows-terminal'),
+      @('msiafterburner'),
+      @('notion'),
+      @('nvidia-broadcast'),
+      @('obsidian'),
+      @('openssh'),
+      @('paint.net'),
+      @('powershell-core'),
+      @('powertoys'),
+      @('qbittorrent'),
+      @('restic'),
+      @('rsync'),
+      @('slack'),
+      @('spotify'),
+      @('start10'),
+      @('steam'),
+      @('sumatrapdf'),
+      @('sunshine'),
+      @('teamviewer'),
+      @('virtualbox'),
+      @('virtualbox-guest-additions-guest.install'),
+      @('vivaldi'),
+      @('voicemeeter'),
+      @('vscode', '/NoDesktopIcon /NoQuicklaunchIcon'), # TODO replace with vscodium
+      @('wezterm'),
+      @('windirstat')
+    )
+
+    $ChocoApps | ForEach-Object {
+      $PackageName = $_[0]
+      $PackageArgs = $_[1]
+      if ($Installed.Contains($PackageName))
+      {
+        Write-Output "$PackageName is already installed"
+        return
+      }
+
+      $params = ""
+      if ($Null -ne $PackageArgs)
+      {
+        $params = @("--params", $PackageArgs)
+      }
+
+      $this.Utils.InvokeNative({ choco install @ChocoArgs $PackageName @params })
+    }
+  }
+}
