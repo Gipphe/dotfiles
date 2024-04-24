@@ -4,7 +4,7 @@ class Games {
 
   Games() {
     $Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-    . "$Dirname\FS22.ps1"
+    Using module "$Dirname\FS22.psm1"
 
     $this.FS22 = [FS22]::new()
   }

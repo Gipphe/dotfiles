@@ -13,12 +13,12 @@ class Main {
 
   Main() {
     $Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-    . "$Dirname\Config\Main.ps1"
-    . "$Dirname\Games\Main.ps1"
-    . "$Dirname\Programs\Main.ps1"
-    . "$Dirname\Registry\Main.ps1"
-    . "$Dirname\SD\Main.ps1"
-    . "$Dirname\WSL\Main.ps1"
+    Using module "$Dirname\Config\Main.psm1"
+    Using module "$Dirname\Games\Main.psm1"
+    Using module "$Dirname\Programs\Main.psm1"
+    Using module "$Dirname\Registry\Main.psm1"
+    Using module "$Dirname\SD\Main.psm1"
+    Using module "$Dirname\WSL\Main.psm1"
 
     $this.Config = [Config]::new()
     $this.Games = [Games]::new()

@@ -6,10 +6,10 @@ class Programs {
 
   Programs() {
     $Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-    . "$Dirname\..\Utils.ps1"
-    . "$Dirname\..\Stamp.ps1"
-    . "$Dirname\Choco.ps1"
-    . "$Dirname\Scoop.ps1"
+    Using module "$Dirname\..\Utils.psm1"
+    Using module "$Dirname\..\Stamp.psm1"
+    Using module "$Dirname\Choco.psm1"
+    Using module "$Dirname\Scoop.psm1"
 
     $this.Stamp = [Stamp]::new()
     $this.Utils = [Utils]::new()

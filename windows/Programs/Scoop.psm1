@@ -3,7 +3,7 @@ class Scoop {
 
   Scoop() {
     $Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-    . "$Dirname\..\Utils.ps1"
+    Using module "$Dirname\..\Utils.psm1"
 
     $this.Utils = [Utils]::new()
 

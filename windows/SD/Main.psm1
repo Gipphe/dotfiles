@@ -4,7 +4,7 @@ class SD {
 
   SD() {
     $this.Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-    . "$($this.Dirname)\..\Utils.ps1"
+    Using module "$($this.Dirname)\..\Utils.psm1"
 
     $this.Utils = [Utils]::new()
   }

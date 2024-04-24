@@ -4,8 +4,8 @@ class Registry {
 
   Registry() {
     $Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-    . "$Dirname\..\Utils.ps1"
-    . "$Dirname\..\Stamp.ps1"
+    Using module "$Dirname\..\Utils.psm1"
+    Using module "$Dirname\..\Stamp.psm1"
 
     $this.Utils = [Utils]::new()
     $this.Stamp = [Stamp]::new()
