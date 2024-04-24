@@ -1,27 +1,32 @@
 layout {
-  default_tab_template {
+  new_tab_template {
     // the default zellij tab-bar and status bar plugins
     pane size=1 borderless=true {
       plugin location="zellij:tab-bar"
     }
-    children
+    pane split_direction="vertical" {
+      pane focus=true
+    }
     pane size=2 borderless=true {
-      plugin location="zellij:compact-bar"
+      plugin location="zellij:status-bar"
     }
   }
 
-  tab_template name="split-tab" {
+  default_tab_template {
+    pane size=1 borderless=true {
+      plugin location="zellij:tab-bar"
+    }
     pane split_direction="vertical" {
       pane size="60%"
       pane
     }
-    pane size=1 borderless=true {
-      plugin location="zellij:compact-bar"
+    pane size=2 borderless=true {
+      plugin location="zellij:status-bar"
     }
   }
 
-  split-tab name="terrahoff" cwd="~/projects/strise/terrahoff" focus=true
-  split-tab name="auth0" cwd="~/projects/strise/auth0"
-  split-tab name="mito" cwd="~/projects/strise/mito"  
-  split-tab name="prefect" cwd="~/projects/strise/prefect"
+  tab name="terrahoff" cwd="~/projects/strise/terrahoff" focus=true
+  tab name="auth0" cwd="~/projects/strise/auth0"
+  tab name="mito" cwd="~/projects/strise/mito"
+  tab name="prefect" cwd="~/projects/strise/prefect"
 }
