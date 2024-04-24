@@ -1,10 +1,10 @@
+$Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
+. "$Dirname\..\Utils.ps1"
+
 class Choco {
   [PSCustomObject]$Utils
 
   Choco() {
-    $Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-    . "$Dirname\..\Utils.ps1"
-
     $this.Util = New-Utils
 
     $this.EnsureInstalled()

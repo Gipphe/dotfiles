@@ -1,11 +1,11 @@
+$this.Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
+. "$($this.Dirname)\..\Utils.ps1"
+
 class SD {
   [PSCustomObject]$Utils
   [String]$Dirname
 
   SD() {
-    $this.Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-    . "$($this.Dirname)\..\Utils.ps1"
-
     $this.Utils = New-Utils
   }
 

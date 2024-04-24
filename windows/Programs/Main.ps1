@@ -1,3 +1,9 @@
+$Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
+. "$Dirname\..\Utils.ps1"
+. "$Dirname\..\Stamp.ps1"
+. "$Dirname\Choco.ps1"
+. "$Dirname\Scoop.ps1"
+
 class Programs {
   [PSCustomObject]$Stamp
   [PSCustomObject]$Utils
@@ -5,11 +11,6 @@ class Programs {
   [PSCustomObject]$Scoop
 
   Programs() {
-    $Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-    . "$Dirname\..\Utils.ps1"
-    . "$Dirname\..\Stamp.ps1"
-    . "$Dirname\Choco.ps1"
-    . "$Dirname\Scoop.ps1"
 
     $this.Stamp = New-Stamp
     $this.Utils = New-Utils

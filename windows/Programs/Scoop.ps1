@@ -1,10 +1,10 @@
+$Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
+. "$Dirname\..\Utils.ps1"
+
 class Scoop {
   [PSCustomObject]$Utils
 
   Scoop() {
-    $Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-    . "$Dirname\..\Utils.ps1"
-
     $this.Utils = New-Utils
 
     $this.EnsureInstalled()

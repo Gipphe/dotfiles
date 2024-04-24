@@ -1,12 +1,12 @@
+$Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
+. "$Dirname\..\Utils.ps1"
+. "$Dirname\..\Stamp.ps1"
+
 class Registry {
   [PSCustomObject]$Stamp
   [PSCustomObject]$Utils
 
   Registry() {
-    $Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-    . "$Dirname\..\Utils.ps1"
-    . "$Dirname\..\Stamp.ps1"
-
     $this.Utils = New-Utils
     $this.Stamp = New-Stamp
   }

@@ -1,12 +1,12 @@
+$Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
+. "$Dirname\..\Utils.ps1"
+. "$Dirname\..\Stamp.ps1"
+
 class WSL {
   [PSCustomObject]$Utils
   [PSCustomObject]$Stamp
 
   WSL() {
-    $Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-    . "$Dirname\..\Utils.ps1"
-    . "$Dirname\..\Stamp.ps1"
-
     $this.Utils = New-Utils
     $this.Stamp = New-Stamp
   }
