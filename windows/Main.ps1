@@ -12,7 +12,7 @@ $Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
 . "$Dirname\WSL\Main.ps1"
 
 class Main {
-  [Config]$Config
+  [PSCustomObject]$Config
   [PSCustomObject]$Games
   [PSCustomObject]$Programs
   [PSCustomObject]$Registry
