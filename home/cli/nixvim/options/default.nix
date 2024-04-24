@@ -1,9 +1,15 @@
 { pkgs, config, ... }:
 let
-  icons = import ./icons.nix;
+  icons = import ../icons.nix;
   inherit (config.nixvim) helpers;
 in
 {
+  imports = [
+    ./lsp.nix
+    ./root.nix
+    ./ui.nix
+    ./util.nix
+  ];
   programs.nixvim = {
     withNodeJs = true;
     editorconfig.enable = true;

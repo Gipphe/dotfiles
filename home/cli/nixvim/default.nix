@@ -8,7 +8,7 @@ in
     ./autocommands.nix
     ./colorscheme.nix
     ./keymaps.nix
-    ./options.nix
+    ./options
     ./plugins
   ];
   options.gipphe.programs.nixvim = {
