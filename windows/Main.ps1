@@ -30,11 +30,11 @@ class Main {
 
   [void] Setup() {
     $this.Programs.Install()
-    $this.Config.Install()
-    $this.Registry.SetEntries()
-    $this.Games.Install()
-    $this.SD.Install()
-    $this.WSL.Install()
+    # $this.Config.Install()
+    # $this.Registry.SetEntries()
+    # $this.Games.Install()
+    # $this.SD.Install()
+    # $this.WSL.Install()
   }
 }
 
