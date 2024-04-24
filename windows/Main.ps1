@@ -29,7 +29,7 @@ class Main {
   }
 
   [void] Setup() {
-    $this.Programs.Install()
+    # $this.Programs.Install()
     # $this.Config.Install()
     # $this.Registry.SetEntries()
     # $this.Games.Install()
