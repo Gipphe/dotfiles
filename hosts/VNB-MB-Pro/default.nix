@@ -1,7 +1,7 @@
 {
   imports = [
     ../modules/nix/darwin.nix
-    ./yabai.nix
+    ./rice.nix
   ];
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
