@@ -8,9 +8,12 @@
   #   ''
   #     ${username} ALL=(root) NOPASSWD: sha256:${hash} ${yabai} --load-sa
   #   '';
-  # system.defaults = {
-  #   ".GlobalPreferences"."com.apple.mouse.scaling" = 1;
-  # };
+  system.defaults = {
+    # ".GlobalPreferences"."com.apple.mouse.scaling" = 1;
+    CustomUserPreferences = {
+      "com.apple.dock"."workspaces-swoosh-animation-off" = true;
+    };
+  };
   services.yabai = {
     enable = true;
     enableScriptingAddition = true;
