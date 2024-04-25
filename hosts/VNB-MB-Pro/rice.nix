@@ -17,5 +17,13 @@
   services.yabai = {
     enable = true;
     enableScriptingAddition = true;
+    config = {
+      layout = "bsp";
+      window_gap = 10;
+      window_shadow = "float";
+      window_opacity = "on";
+      active_window_opacity = 1.0;
+      normal_window_opacity = 0.9;
+    };
   };
 }
