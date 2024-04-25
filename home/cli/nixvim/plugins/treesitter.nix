@@ -21,8 +21,10 @@ in
       };
       treesitter-context = {
         enable = true;
-        maxLines = 3;
-        mode = "cursor";
+        settings = {
+          mode = "cursor";
+          maxLines = 3;
+        };
       };
       treesitter-textobjects.enable = true;
       treesitter-refactor = {
