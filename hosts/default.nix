@@ -143,7 +143,10 @@ in
                   username
                   ;
               };
-              users.${username}.imports = [ ../home/base.nix ];
+              users.${username}.imports = [
+                ../home/base.nix
+                ../home/hosts/VNB-MB-Pro
+              ];
             };
           }
           agenix
