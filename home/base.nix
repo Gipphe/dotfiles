@@ -3,6 +3,8 @@
   config,
   lib,
   pkgs,
+  username ? "gipphe",
+  homeDirectory ? "/home/gipphe",
   ...
 }:
 let
@@ -11,9 +13,9 @@ in
 {
   fonts.fontconfig.enable = lib.mkIf (!isDarwin) true;
   home = {
+    inherit username;
     stateVersion = "23.11"; # Please read the comment before changing.
-    username = "gipphe";
-    homeDirectory = lib.mkForce "/home/gipphe";
+    homeDirectory = lib.mkForce homeDirectory;
     sessionVariables.PAGER = "less -FXR";
     sessionVariables.FLAKE = "${config.home.homeDirectory}/projects/dotfiles";
   };
