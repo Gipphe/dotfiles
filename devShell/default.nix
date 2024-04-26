@@ -48,25 +48,25 @@
     # Linting
     {
       help = "Check .nix files with statix";
-      name = "lint-statix";
+      name = "lint:statix";
       command = "statix check";
       category = "lint";
     }
     {
       help = "Check .nix files with statix, watching";
-      name = "lint-statix-watch";
+      name = "lint:statix:watch";
       command = "find . -type f | entr static check";
       category = "lint";
     }
     {
       help = "Check .nix files with deadnix";
-      name = "lint-deadnix";
+      name = "lint:deadnix";
       command = "deadnix --exclude ./hosts/*/hardware-configuration.nix";
       category = "lint";
     }
     {
       help = "Check .nix files with deadnix, watching";
-      name = "lint-deadnix-watch";
+      name = "lint:deadnix:watch";
       command = "find . -type f | entr deadnix --exclude ./hosts/*/hardware-configuration.nix";
       category = "lint";
     }
