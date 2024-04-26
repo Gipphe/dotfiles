@@ -25,5 +25,9 @@
       active_window_opacity = 1.0;
       normal_window_opacity = 0.9;
     };
+    extraConfig = ''
+      yabai -m rule --add app="IntelliJ IDEA" manage=off
+      yabai -m rule --add app="IntelliJ IDEA" title=".*\[(.*)\].*" manage=on
+    '';
   };
 }
