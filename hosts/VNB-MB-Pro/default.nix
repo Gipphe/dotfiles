@@ -34,6 +34,7 @@
       "notion"
       "obsidian"
       "openvpn-connect"
+      "phoenix-slides"
       "slack"
       "spotify"
       "vscodium"
