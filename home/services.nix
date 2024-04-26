@@ -28,6 +28,7 @@ in
       '';
 
       home.file.".gnupg/gpg-agent.conf".text = ''
+        default-cache-ttl 1800
         pinentry-program ${pkgs.pinentry-curses}/bin/pinentry
       '';
     })
