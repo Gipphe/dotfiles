@@ -121,28 +121,42 @@ in
 
   darwinConfigurations = {
     # Work Macbook Pro
-    "VNB-MB-Pro" = inputs.darwin.lib.darwinSystem {
-      modules = [
-        { networking.hostName = "VNB-MB-Pro"; }
-        ./VNB-MB-Pro
-        inputs.home-manager.darwinModules.home-manager
-        {
-          home-manager = {
-            useUserPackages = true;
-            useGlobalPkgs = true;
-            extraSpecialArgs = {
-              inherit inputs;
-              inherit self;
+    "VNB-MB-Pro" =
+      let
+        username = "victor";
+        homeDirectory = "/Users/victor";
+      in
+      inputs.darwin.lib.darwinSystem {
+        modules = [
+          { networking.hostName = "VNB-MB-Pro"; }
+          ./VNB-MB-Pro
+          inputs.home-manager.darwinModules.home-manager
+          {
+            home-manager = {
+              useUserPackages = true;
+              useGlobalPkgs = true;
+              extraSpecialArgs = {
+                inherit
+                  homeDirectory
+                  inputs
+                  self
+                  username
+                  ;
+              };
+              users.${username}.imports = [ ../home/base.nix ];
             };
-            users.victor.imports = [ ../home/hosts/VNB-MB-Pro ];
-          };
-        }
-        agenix
-      ];
-      specialArgs = {
-        inherit inputs;
+          }
+          agenix
+        ];
+        specialArgs = {
+          inherit
+            homeDirectory
+            inputs
+            self
+            username
+            ;
+        };
       };
-    };
   };
 
   homeConfigurations = {
