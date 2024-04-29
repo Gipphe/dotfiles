@@ -33,7 +33,7 @@
 
   services.skhd = {
     enable = true;
-    config = ''
+    skhdConfig = ''
       # float / unfloat window and center on screen
       cmd + alt - t : yabai -m window --toggle float; \
                       yabai -m window --grid 4:4:1:1:2:2
