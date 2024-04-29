@@ -1,30 +1,27 @@
-$Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-. "$Dirname\..\Utils.ps1"
+#Requires -Version 7.3
+
+Import-Module $PSScriptRoot/Utils.psm1
+
+$ErrorActionPreference = "Stop"
 
 class Scoop {
-  [PSCustomObject]$Utils
-
   Scoop() {
-    $this.Utils = New-Utils
-
     $this.EnsureInstalled()
   }
 
-  [void] EnsureInstalled() {
-    try
-    {
+  [Void] EnsureInstalled() {
+    try {
       Get-Command "scoop" -ErrorAction Stop
-    } catch
-    {
+    } catch {
       Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
       Invoke-RestMethod -Uri "https://get.scoop.sh" | Invoke-Expression
     }
   }
 
-  [void] InstallApps() {
+  [Void] InstallApps() {
     $ScoopArgs = @('-y')
-    $InstalledBuckets = $this.Utils.InvokeNative({ scoop bucket list } | ForEach-Object { $_.Name })
-    $InstalledApps = $this.Utils.InvokeNative({ scoop list } | ForEach-Object { $_.Name })
+    $InstalledBuckets = Invoke-Native { scoop bucket list } | ForEach-Object { $_.Name }
+    $InstalledApps = Invoke-Native { scoop list } | ForEach-Object { $_.Name }
 
     $RequiredBuckets = @(
       @('extras')
@@ -34,11 +31,11 @@ class Scoop {
       @('ffmpeg')
     )
 
-    $RequiredBuckets | Where-Object { -Not ($InstalledBuckets.Contains($_)) } | ForEach-Object {
+    $RequiredBuckets | Where-Object { -not ($InstalledBuckets.Contains($_)) } | ForEach-Object {
       $BucketName = $_[0]
       $BucketRepo = $_[1]
       $Repo = ""
-      if ($Null -Ne $BucketRepo)
+      if ($null -ne $BucketRepo)
       {
         $Repo = $BucketRepo
       }
@@ -46,12 +43,12 @@ class Scoop {
       $this.Utils.InvokeNative({ scoop bucket add $BucketName $Repo })
     }
 
-    $RequiredApps | Where-Object { -Not ($InstalledApps.Contains($_)) } | ForEach-Object {
+    $RequiredApps | Where-Object { -not ($InstalledApps.Contains($_)) } | ForEach-Object {
       $PackageName = $_[0]
       $PackageArgs = $_[1]
 
       $Params = ""
-      if ($Null -ne $PackageArgs)
+      if ($null -ne $PackageArgs)
       {
         $Params = @("--params", $PackageArgs)
       }
@@ -61,6 +58,8 @@ class Scoop {
   }
 }
 
-Function New-Scoop {
+function New-Scoop {
   [Scoop]::new()
 }
+
+Export-ModuleMember -Function New-Scoop

@@ -1,9 +1,13 @@
+#Requires -Version 7.3
+
+$ErrorActionPreference = "Stop"
+
 class Config {
-  Config() {
-    $this.Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
+  Config([String]$Dirname) {
+    $this.Dirname = "$Dirname/../Config"
   }
 
-  [void] Install() {
+  [Void] Install() {
     $D = "$($this.Dirname)\config"
     $Items = @(
       @("$D\.vimrc", "$HOME\.vimrc"),
@@ -14,6 +18,9 @@ class Config {
     $Items | ForEach-Object { Copy-Item -Path $_[0] -Destination $_[1] }
   }
 }
-Function New-Config {
-  [Config]::new()
+
+function New-Config {
+  [Config]::new($PSScriptRoot)
 }
+
+Export-ModuleMember -Function New-Config

@@ -1,30 +1,27 @@
-$Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-. "$Dirname\..\Utils.ps1"
+#Requires -Version 7.3
+
+Import-Module $PSScriptRoot/Utils.psm1
+
+$ErrorActionPreference = "Stop"
 
 class Choco {
-  [PSCustomObject]$Utils
-
-  Choco() {
-    $this.Util = New-Utils
-
+  Choco([PSCustomObject]$Utils) {
     $this.EnsureInstalled()
   }
 
-  [void] EnsureInstalled() {
-    try
-    {
+  [Void] EnsureInstalled() {
+    try {
       Get-Command "choco" -ErrorAction Stop | Out-Null
-    } catch
-    {
+    } catch {
       Set-ExecutionPolicy Bypass -Scope Process -Force
       [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
       Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
     }
   }
 
-  [void] InstallApps() {
+  [Void] InstallApps() {
     $ChocoArgs = @('-y')
-    $Installed = $($this.Utils.InvokeNative({ choco list --id-only }))
+    $Installed = $(Invoke-Native { choco list --id-only })
 
     $ChocoApps = @(
       @('7zip'),
@@ -77,23 +74,23 @@ class Choco {
     $ChocoApps | ForEach-Object {
       $PackageName = $_[0]
       $PackageArgs = $_[1]
-      if ($Installed.Contains($PackageName))
-      {
-        Write-Output "$PackageName is already installed"
+      if ($Installed.Contains($PackageName)) {
+        Write-Information "$PackageName is already installed"
         return
       }
 
       $params = ""
-      if ($Null -ne $PackageArgs)
-      {
+      if ($Null -ne $PackageArgs) {
         $params = @("--params", $PackageArgs)
       }
 
-      $this.Utils.InvokeNative({ choco install @ChocoArgs $PackageName @params })
+      Invoke-Native { choco install @ChocoArgs $PackageName @params }
     }
   }
 }
 
-Function New-Choco {
+function New-Choco {
   [Choco]::new()
 }
+
+Export-ModuleMember -Function New-Choco

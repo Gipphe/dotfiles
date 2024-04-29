@@ -1,11 +1,15 @@
-class FS22 {
-  [String]$ModDir
-  [String[]]$Mods
+#Requires -Version 7.3
 
-  FS22() {
-    $this.ModDir = "$HOME/Documents/My Games/FarmingSimulator2022/mods"
+$ErrorActionPreference = "Stop"
 
-    $this.Mods = @(
+class Games {
+  [String]$FS22ModDir
+  [String[]]$FS22Mods
+
+  Games() {
+    $this.FS22ModDir = "$HOME/Documents/My Games/FarmingSimulator2022/mods"
+
+    $this.FS22Mods = @(
       "https://cdn10.giants-software.com/modHub/storage/00225543/FS22_additionalCurrencies.zip",
       "https://cdn10.giants-software.com/modHub/storage/00226183/FS22_DeutzSeries7_8.zip",
       "https://cdn10.giants-software.com/modHub/storage/00227409/FS22_viconAndex1304Pro.zip",
@@ -80,31 +84,31 @@ class FS22 {
     )
   }
 
-  [void] InstallMod([String]$URI) {
+  [Void] InstallFS22Mod([String]$URI) {
     $FileName = $URI.Substring($URI.LastIndexOf("/") + 1)
-    $DestPath = "$($this.ModDir)/$FileName"
+    $DestPath = "$($this.FS22ModDir)/$FileName"
 
-    If (Test-Path -Path $DestPath)
-    {
-      Return
+    if (Test-Path -Path $DestPath) {
+      return
     }
 
     Invoke-WebRequest -Uri -OutFile $DestPath
   }
 
-  [void] InstallMods() {
-    If (-Not (Test-Path -Path $this.ModDir))
-    {
-      Write-Host "FS22 mods folder is missing. Skipping mod installation."
-      Return
+  [Void] InstallFS22Mods() {
+    if (-not (Test-Path -Path $this.FS22ModDir)) {
+      Write-Information "FS22 mods folder is missing. Skipping mod installation."
+      return
     }
-    Foreach ($Mod in $this.Mods)
-    {
-      $this.InstallMod($Mod)
+
+    foreach ($Mod in $this.FS22Mods) {
+      $this.InstallFS22Mod($Mod)
     }
   }
 }
 
-Function New-FS22 {
-  [FS22]::new()
+function New-Games {
+  [Games]::new()
 }
+
+Export-ModuleMember -Function New-Games

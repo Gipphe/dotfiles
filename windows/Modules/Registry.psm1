@@ -1,23 +1,23 @@
-$Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-. "$Dirname\..\Utils.ps1"
-. "$Dirname\..\Stamp.ps1"
+#Requires -Version 7.3
+
+Import-Module $PSScriptRoot/Stamp.psm1
+
+$ErrorActionPreference = "Stop"
 
 class Registry {
   [PSCustomObject]$Stamp
-  [PSCustomObject]$Utils
 
   Registry() {
-    $this.Utils = New-Utils
     $this.Stamp = New-Stamp
   }
 
-  [void] StampEntry([String]$Stamp, [String]$Path, [String]$Entry, [String]$Type, [String]$Data) {
+  [Void] StampEntry([String]$Stamp, [String]$Path, [String]$Entry, [String]$Type, [String]$Data) {
     $this.Stamp.Register($Stamp, {
       reg add "$Path" /v "$Entry" /t "$Type" /d $Data /f
     })
   }
 
-  [void] SetEntries() {
+  [Void] SetEntries() {
     # Use checkboxes for selecting files
     $this.StampEntry(
       "register-checkboxes",
@@ -178,18 +178,14 @@ class Registry {
     )
 
     $AutoLoginEnabled = $False
-    try
-    {
+    try {
       $Prop = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'AutoAdminLogon'
       $Prop
       $AutoLoginEnabled = $Prop.AutoAdminLogon -eq '1'
       $AutoLoginEnabled
-    } catch
-    {
-    }
+    } catch { }
 
-    If (-Not $AutoLoginEnabled)
-    {
+    if (-not $AutoLoginEnabled) {
       $Username = Read-Host "Enter username for auto-login"
       $Password = Read-Host "Enter password for auto-login" -AsSecureString
 
@@ -208,6 +204,8 @@ class Registry {
   }
 }
 
-Function New-Registry {
+function New-Registry {
   [Registry]::new()
 }
+
+Export-ModuleMember -Function New-Registry

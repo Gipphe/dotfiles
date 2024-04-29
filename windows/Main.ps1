@@ -1,42 +1,31 @@
-[CmdletBinding()]
-Param()
+#Requires -Version 7.3
+
+param()
 
 $ErrorActionPreference = "Stop"
 
-$Dirname = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
-. "$Dirname\Config\Main.ps1"
-. "$Dirname\Games\Main.ps1"
-. "$Dirname\Programs\Main.ps1"
-. "$Dirname\Registry\Main.ps1"
-. "$Dirname\SD\Main.ps1"
-. "$Dirname\WSL\Main.ps1"
+$Mod = "$PSScriptRoot/Modules"
+Import-Module $Mod/Config.psm1
+Import-Module $Mod/Games.psm1
+Import-Module $Mod/Programs.psm1
+Import-Module $Mod/Registry.psm1
+Import-Module $Mod/SD.psm1
+Import-Module $Mod/WSL.psm1
 
-class Main {
-  [PSCustomObject]$Config
-  [PSCustomObject]$Games
-  [PSCustomObject]$Programs
-  [PSCustomObject]$Registry
-  [PSCustomObject]$SD
-  [PSCustomObject]$WSL
+function Initialize-Main {
+  $Config = New-Config
+  $Games = New-Games
+  $Programs = New-Programs
+  $Registry = New-Registry
+  $SD = New-SD
+  $WSL = New-WSL
 
-  Main() {
-    $this.Config = New-Config
-    $this.Games = New-Games
-    $this.Programs = New-Programs
-    $this.Registry = New-Registry
-    $this.SD = New-SD
-    $this.WSL = New-WSL
-  }
-
-  [void] Setup() {
-    # $this.Programs.Install()
-    # $this.Config.Install()
-    # $this.Registry.SetEntries()
-    # $this.Games.Install()
-    # $this.SD.Install()
-    # $this.WSL.Install()
-  }
+  $Programs.Install()
+  $Config.Install()
+  $Registry.SetEntries()
+  $Games.InstallFS22Mods()
+  $SD.Install()
+  $WSL.Install()
 }
 
-$Main = [Main]::new()
-$Main.Setup()
+Initialize-Main
