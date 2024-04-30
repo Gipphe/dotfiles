@@ -3,6 +3,7 @@
 Import-Module $PSScriptRoot/Utils.psm1
 
 $ErrorActionPreference = "Stop"
+$InformationPreference = "Continue"
 
 class SD {
   [String]$Dirname

@@ -6,6 +6,7 @@ Import-Module $PSScriptRoot/Scoop.psm1
 Import-Module $PSScriptRoot/Stamp.psm1
 
 $ErrorActionPreference = "Stop"
+$InformationPreference = "Continue"
 
 class Programs {
   [PSCustomObject]$Stamp

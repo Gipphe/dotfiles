@@ -3,6 +3,7 @@
 Import-Module $PSScriptRoot/Utils.psm1
 
 $ErrorActionPreference = "Stop"
+$InformationPreference = "Continue"
 
 class Choco {
   Choco([PSCustomObject]$Utils) {

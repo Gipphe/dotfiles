@@ -3,6 +3,7 @@
 Import-Module $PSScriptRoot/Stamp.psm1
 
 $ErrorActionPreference = "Stop"
+$InformationPreference = "Continue"
 
 class Registry {
   [PSCustomObject]$Stamp

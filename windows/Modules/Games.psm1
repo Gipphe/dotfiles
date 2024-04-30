@@ -1,6 +1,7 @@
 #Requires -Version 5.1
 
 $ErrorActionPreference = "Stop"
+$InformationPreference = "Continue"
 
 class Games {
   [String]$FS22ModDir
