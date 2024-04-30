@@ -3,6 +3,7 @@
 param ()
 
 $ErrorActionPreference = "Stop"
+$InformationPreference = "Continue"
 
 $Mod = "$PSScriptRoot/Modules"
 Import-Module $Mod/Config.psm1
