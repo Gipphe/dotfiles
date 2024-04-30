@@ -26,6 +26,8 @@ function Install-FromWeb {
   Write-Information "Installed $Name"
 }
 
+$Programs = $null
+
 function Test-IsInstalledInWinget {
   [CmdletBinding()]
   param (
@@ -33,8 +35,18 @@ function Test-IsInstalledInWinget {
     [String]$Name
   )
 
-  winget list --name $Name > $Null
-  return $LASTEXITCODE -eq 0
+  if ($null -eq $Programs) {
+    $Programs = $($(winget list).ToLower() -split "`n")
+  }
+
+  $Name = $Name.ToLower()
+
+  foreach ($line in $Programs) {
+    if ($line.StartsWith($Name)) {
+      return $true
+    }
+  }
+  return $false
 }
 
 function New-Shortcut {

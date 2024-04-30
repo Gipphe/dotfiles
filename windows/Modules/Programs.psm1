@@ -24,7 +24,7 @@ class Programs {
     $this.Scoop.InstallApps
 
     $this.Stamp.Register("install-1password", {
-      Install-FromWeb "1password" "https://downloads.1password.com/win/1PasswordSetup-latest.exe"
+      Install-FromWeb "1Password" "https://downloads.1password.com/win/1PasswordSetup-latest.exe"
     })
     $this.Stamp.Register("install-firefox-developer-edition", {
       Install-FromWeb "Firefox Developer Edition" "https://download-installer.cdn.mozilla.net/pub/devedition/releases/120.0b4/win32/en-US/Firefox%20Installer.exe"
