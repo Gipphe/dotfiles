@@ -20,7 +20,7 @@ function Initialize-Main {
   # $SD = New-SD
   # $WSL = New-WSL
 
-  # $Config.Install()
+  $Config.Install()
   # $Games.InstallFS22Mods()
   # $Programs.Install()
   # $Registry.SetEntries()

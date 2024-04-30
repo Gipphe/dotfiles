@@ -9,15 +9,15 @@ class Config {
     $this.CfgDir = "$Dirname/../Config"
   }
 
-  # [Void] Install() {
-  #   $Items = @(
-  #     @("$($this.cfgDir)\.vimrc", "$HOME\.vimrc"),
-  #     @("$($this.cfgDir)\.wezterm.lua", "$HOME\.wezterm.lua"),
-  #     @("$($this.cfgDir)\wsl.conf", "$HOME\wsl.conf")
-  #   )
-  #
-  #   $Items | ForEach-Object { Copy-Item -Path $_[0] -Destination $_[1] }
-  # }
+  [Void] Install() {
+    $Items = @(
+      @("$($this.cfgDir)\.vimrc", "$HOME\.vimrc"),
+      @("$($this.cfgDir)\.wezterm.lua", "$HOME\.wezterm.lua"),
+      @("$($this.cfgDir)\wsl.conf", "$HOME\wsl.conf")
+    )
+
+    $Items | ForEach-Object { Copy-Item -Path $_[0] -Destination $_[1] }
+  }
 }
 
 function New-Config {
