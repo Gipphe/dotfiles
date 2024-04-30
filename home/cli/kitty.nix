@@ -3,8 +3,19 @@
   programs.kitty = {
     enable = true;
     font = {
-      package = pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; };
-      name = "FiraCode Nerd Font Mono";
+      package = pkgs.nerdfonts.override {
+        fonts = [
+          "FiraCode"
+          "Iosevka"
+          "JetBrainsMono"
+          "Hack"
+        ];
+      };
+      name = "FiraCode Nerd Font";
+      # name = "FiraCode Nerd Font Mono";
+      # name = "JetBrainsMono Nerd Font";
+      # name = "Hack Nerd Font";
+      # name = "Iosevka Nerd Font";
     };
     settings = {
       scrollback_lines = 4000;
