@@ -6,7 +6,7 @@ $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 
 class Choco {
-  Choco([PSCustomObject]$Utils) {
+  Choco() {
     $this.EnsureInstalled()
   }
 
