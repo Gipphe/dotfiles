@@ -10,7 +10,7 @@ Import-Module $Mod/Config.psm1
 Import-Module $Mod/Games.psm1
 Import-Module $Mod/Programs.psm1
 Import-Module $Mod/Registry.psm1
-# Import-Module $Mod/SD.psm1
+Import-Module $Mod/SD.psm1
 # Import-Module $Mod/WSL.psm1
 
 function Initialize-Main {
@@ -18,14 +18,14 @@ function Initialize-Main {
   $Games = New-Games
   $Programs = New-Programs
   $Registry = New-Registry
-  # $SD = New-SD
+  $SD = New-SD
   # $WSL = New-WSL
 
   $Config.Install()
   $Games.InstallFS22Mods()
   $Programs.Install()
   $Registry.SetEntries()
-  # $SD.Install()
+  $SD.Install()
   # $WSL.Install()
 }
 
