@@ -1,6 +1,12 @@
 { pkgs, ... }:
 let
   inherit (import ../util.nix) kv;
+  prettier = [
+    [
+      "prettierd"
+      "prettier"
+    ]
+  ];
 in
 {
   home.packages = [ pkgs.haskellPackages.fourmolu ];
@@ -28,22 +34,22 @@ in
           nix = [ "nixfmt" ];
           haskell = [ "fourmolu" ];
           python = [ "black" ];
-          javascript = [ "prettier" ];
-          javascriptreact = [ "prettier" ];
-          typescript = [ "prettier" ];
-          typescriptreact = [ "prettier" ];
-          vue = [ "prettier" ];
-          css = [ "prettier" ];
-          scss = [ "prettier" ];
-          less = [ "prettier" ];
-          html = [ "prettier" ];
-          json = [ "prettier" ];
-          jsonc = [ "prettier" ];
-          yaml = [ "prettier" ];
-          markdown = [ "prettier" ];
-          "markdown.mdx" = [ "prettier" ];
-          graphql = [ "prettier" ];
-          handlebars = [ "prettier" ];
+          javascript = prettier;
+          javascriptreact = prettier;
+          typescript = prettier;
+          typescriptreact = prettier;
+          vue = prettier;
+          css = prettier;
+          scss = prettier;
+          less = prettier;
+          html = prettier;
+          json = prettier;
+          jsonc = prettier;
+          yaml = prettier;
+          markdown = prettier;
+          "markdown.mdx" = prettier;
+          graphql = prettier;
+          handlebars = prettier;
         };
         formatters = {
           injected.options.ignore_errors = true;
