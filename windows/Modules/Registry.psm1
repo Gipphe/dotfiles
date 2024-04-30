@@ -14,6 +14,7 @@ class Registry {
 
   [Void] StampEntry([String]$Stamp, [String]$Path, [String]$Entry, [String]$Type, [String]$Data) {
     $this.Stamp.Register($Stamp, {
+      Write-Information "Setting $Path/$Entry"
       reg add "$Path" /v "$Entry" /t "$Type" /d $Data /f
     })
   }
