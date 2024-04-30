@@ -26,7 +26,7 @@ function Install-FromWeb {
   Write-Information "Installed $Name"
 }
 
-$script:Programs = $null
+$script:WingetPrograms = $null
 
 function Test-IsInstalledInWinget {
   [CmdletBinding()]
@@ -35,13 +35,13 @@ function Test-IsInstalledInWinget {
     [String]$Name
   )
 
-  if ($null -eq $script:Programs) {
-    $script:Programs = $($(winget list).ToLower() -split "`n")
+  if ($null -eq $script:WingetPrograms) {
+    $script:WingetPrograms = $($(winget list).ToLower() -split "`n")
   }
 
   $Name = $Name.ToLower()
 
-  foreach ($line in $script:Programs) {
+  foreach ($line in $script:WingetPrograms) {
     if ($line.StartsWith($Name)) {
       return $true
     }
