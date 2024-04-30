@@ -3,10 +3,12 @@
 $ErrorActionPreference = "Stop"
 
 class Config {
+  [String]$Dirname
+
   Config([String]$Dirname) {
     $this.Dirname = "$Dirname/../Config"
   }
-  
+
   # [Void] Install() {
   #   $cfgdir = "$($this.Dirname)\config"
   #   $Items = @(
