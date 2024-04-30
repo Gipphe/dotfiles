@@ -35,6 +35,7 @@ function Test-IsInstalledInWinget {
     [String]$Name
   )
 
+  Write-Information "$Programs"
   if ($null -eq $Programs) {
     $Programs = $($(winget list).ToLower() -split "`n")
   }
