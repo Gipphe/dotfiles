@@ -22,7 +22,7 @@ class Config {
 }
 
 function New-Config {
-  Write-Host $PSScriptRoot
+  Write-Host "PSScriptRoot: $PSScriptRoot"
   [Config]::new($PSScriptRoot)
 }
 
