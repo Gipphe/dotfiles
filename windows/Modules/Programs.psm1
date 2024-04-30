@@ -1,4 +1,4 @@
-#Requires -Version 7.3
+#Requires -Version 5.1
 
 Import-Module $PSScriptRoot/Utils.psm1
 Import-Module $PSScriptRoot/Choco.psm1
