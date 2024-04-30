@@ -8,11 +8,11 @@ class Config {
   }
 
   [Void] Install() {
-    $D = "$($this.Dirname)\config"
+    $cfgdir = "$($this.Dirname)\config"
     $Items = @(
-      @("$D\.vimrc", "$HOME\.vimrc"),
-      @("$D\.wezterm.lua", "$HOME\.wezterm.lua"),
-      @("$D\wsl.conf", "$HOME\wsl.conf")
+      @("$cfgDir\.vimrc", "$HOME\.vimrc"),
+      @("$cfgDir\.wezterm.lua", "$HOME\.wezterm.lua"),
+      @("$cfgDir\wsl.conf", "$HOME\wsl.conf")
     )
 
     $Items | ForEach-Object { Copy-Item -Path $_[0] -Destination $_[1] }
@@ -20,6 +20,7 @@ class Config {
 }
 
 function New-Config {
+  Write-Information $PSScriptRoot
   [Config]::new($PSScriptRoot)
 }
 
