@@ -3,12 +3,12 @@
   config,
   lib,
   pkgs,
-  username ? "gipphe",
-  homeDirectory ? "/home/gipphe",
   ...
-}:
+}@args:
 let
   inherit (pkgs.stdenv) isDarwin;
+  username = args.username or "gipphe";
+  homeDirectory = args.homeDirectory or "/home/gipphe";
 in
 {
   fonts.fontconfig.enable = lib.mkIf (!isDarwin) true;
