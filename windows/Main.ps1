@@ -13,7 +13,7 @@ Import-Module $Mod/Config.psm1
 # Import-Module $Mod/WSL.psm1
 
 function Initialize-Main {
-  # $Config = New-Config
+  $Config = New-Config
   # $Games = New-Games
   # $Programs = New-Programs
   # $Registry = New-Registry
