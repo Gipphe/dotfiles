@@ -18,17 +18,17 @@
     enable = true;
     enableScriptingAddition = true;
     config = {
-      layout = "bsp";
+      layout = "float";
       window_gap = 5;
       window_shadow = "float";
       window_opacity = "on";
       active_window_opacity = 1.0;
       normal_window_opacity = 0.9;
     };
-    extraConfig = ''
-      yabai -m rule --add app="IntelliJ IDEA" manage=off
-      yabai -m rule --add app="IntelliJ IDEA" title=".*\[(.*)\].*" manage=on
-    '';
+    # extraConfig = ''
+    #   yabai -m rule --add app="IntelliJ IDEA" manage=off
+    #   yabai -m rule --add app="IntelliJ IDEA" title=".*\[(.*)\].*" manage=on
+    # '';
   };
 
   services.skhd = {
