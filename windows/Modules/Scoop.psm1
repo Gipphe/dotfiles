@@ -28,8 +28,9 @@ class Scoop {
       @('extras')
     )
     $RequiredApps = @(
-      @('stash'),
-      @('ffmpeg')
+      @('ffmpeg'),
+      @('neovide'),
+      @('stash')
     )
 
     $RequiredBuckets | Where-Object { -not ($InstalledBuckets.Contains($_)) } | ForEach-Object {
