@@ -30,6 +30,7 @@ class Scoop {
     $RequiredApps = @(
       @('ffmpeg'),
       @('neovide'),
+      @('neovim'),
       @('stash')
     )
 
