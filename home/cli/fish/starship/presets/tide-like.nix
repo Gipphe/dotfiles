@@ -72,6 +72,7 @@ in
         name = "memory_usage";
         disabled = false;
         symbol = "󰍛 ";
+        format = "$symbol [$ram( | $swap) ]($style)";
       }
       {
         name = "shlvl";
