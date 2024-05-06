@@ -64,7 +64,8 @@ with lib.attrsets;
         end
       '';
       shellAbbrs = {
-        mux = "tmuxinator";
+        mux = "tmuxinator s";
+        zq = "tmux kill-session";
       };
     };
   };
