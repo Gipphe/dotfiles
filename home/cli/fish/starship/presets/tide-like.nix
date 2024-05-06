@@ -82,26 +82,35 @@ in
       }
     ];
   })
-  (starshipper.section {
-    description = "dir";
-    foreground = "blue";
-    shared = { };
-    modules = [
-      {
-        name = "directory";
-        format = "[$path ]($style)";
-        truncation_length = 3;
-        truncation_symbol = "…/";
-        read_only = " 󰌾";
-        substitutions = {
-          "Documents" = "󰈙 ";
-          "Downloads" = " ";
-          "Music" = " ";
-          "Pictures" = " ";
-        };
-      }
-    ];
-  })
+  (starshipper.section (
+    let
+      foreground = "blue";
+    in
+    {
+      inherit foreground;
+      description = "dir";
+      shared = { };
+      modules = [
+        {
+          name = "directory";
+          format = "[$path ]($style)[$read_only]($read_only_style)";
+          fish_style_pwd_dir_length = 1;
+          truncation_length = 3;
+          truncation_symbol = "…/";
+          read_only = " 󰌾";
+          before_repo_root_style = "dimmed ${foreground}";
+          repo_root_style = "underline ${foreground}";
+          read_only_style = "red";
+          substitutions = {
+            "Documents" = "󰈙 ";
+            "Downloads" = " ";
+            "Music" = " ";
+            "Pictures" = " ";
+          };
+        }
+      ];
+    }
+  ))
   (starshipper.section {
     description = "VCS";
     foreground = "green";
