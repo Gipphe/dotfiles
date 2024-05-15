@@ -95,9 +95,10 @@ in
           name = "directory";
           format = "[$path ]($style)[$read_only]($read_only_style)";
           fish_style_pwd_dir_length = 1;
-          truncation_length = 3;
-          truncation_symbol = "…/";
+          # truncation_length = 3;
+          # truncation_symbol = "…/";
           read_only = " 󰌾";
+          truncate_to_repo = false;
           before_repo_root_style = "dimmed ${foreground}";
           repo_root_style = "underline ${foreground}";
           read_only_style = "red";
