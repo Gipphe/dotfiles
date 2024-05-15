@@ -148,6 +148,7 @@
         nixpkgs.follows = "nixpkgs";
         hyprlang.follows = "hyprlang";
         systems.follows = "sys-default-linux";
+        hyprland-protocols.follows = "hyprland-protocols";
       };
     };
 
@@ -156,7 +157,7 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
         hyprlang.follows = "hyprlang";
-        hyprland-protocols.follows = "hyprland/hyprland-protocols";
+        hyprland-protocols.follows = "hyprland-protocols";
         systems.follows = "sys-default-linux";
       };
     };
@@ -254,6 +255,13 @@
       };
     };
 
+    hyprland-protocols = {
+      url = "github:hyprwm/hyprland-protocols";
+      inputs = {
+        systems.follows = "sys-default-linux";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
     flake-compat.url = "github:edolstra/flake-compat";
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "sys-default";
