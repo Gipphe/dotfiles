@@ -36,22 +36,6 @@ with lib.attrsets;
       plugins = with pkgs; [
         { plugin = tmuxPlugins.sensible; }
         { plugin = tmuxPlugins.vim-tmux-navigator; }
-        {
-          plugin = pkgs.tmuxPlugins.mkTmuxPlugin {
-            pluginName = "tmux-tokyo-night";
-            version = "unstable-2024-03-11";
-            rtpFilePath = "tmux-tokyo-night.tmux";
-            src = pkgs.fetchFromGitHub {
-              owner = "fabioluciano";
-              repo = "tmux-tokyo-night";
-              rev = "ee73d4a9ba6222d7d51492a4e0e797c9249a879c";
-              sha256 = "sha256-wWWxO6XNcfKO1TRxBhxd8lJLn7wIxyX4Fm1Nd2Rhbkw=";
-            };
-          };
-          extraConfig = ''
-            set -g @theme_plugin_datetime_format '%a %F %k:%M:%S %Z'
-          '';
-        }
         { plugin = tmuxPlugins.yank; }
       ];
       extraConfig = readFile ./tmux.conf;
