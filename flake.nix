@@ -148,7 +148,6 @@
         nixpkgs.follows = "nixpkgs";
         hyprlang.follows = "hyprlang";
         systems.follows = "sys-default-linux";
-        hyprland-protocols.follows = "hyprland-protocols";
       };
     };
 
