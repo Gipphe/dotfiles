@@ -114,6 +114,10 @@
       inputs.flake-utils.follows = "flake-utils";
     };
 
+    catppuccin = {
+      url = "github:catppuccin/nix";
+    };
+
     neovim-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
       inputs = {

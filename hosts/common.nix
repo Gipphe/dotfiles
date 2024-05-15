@@ -2,6 +2,7 @@
 {
   imports = [
     ./modules/agenix.nix
+    ./modules/catppuccin.nix
     ./modules/audio.nix
     ./modules/core
     ./modules/desktop.nix

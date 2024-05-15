@@ -19,6 +19,7 @@
     inputs.wsl.nixosModules.default
     ../modules/nix
     ../modules/user.nix
+    ../modules/catppuccin.nix
   ];
 
   wsl = {

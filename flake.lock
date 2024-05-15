@@ -29,6 +29,21 @@
         "type": "github"
       }
     },
+    "catppuccin": {
+      "locked": {
+        "lastModified": 1715659881,
+        "narHash": "sha256-emodPGTXLVqlcOkqbJiOUkf5vo8WWujgzKxms1B+iBs=",
+        "owner": "catppuccin",
+        "repo": "nix",
+        "rev": "d6344610c04af0f8e315fef45dd3b854014b119e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "nix",
+        "type": "github"
+      }
+    },
     "catppuccinifier": {
       "inputs": {
         "crane": "crane",
@@ -785,6 +800,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "catppuccin": "catppuccin",
         "catppuccinifier": "catppuccinifier",
         "darwin": "darwin",
         "devshell": "devshell",

@@ -4,6 +4,7 @@
     ./hardware-configuration.nix
     ../common.nix
     ../modules/hyprland.nix
+    ../modules/catppuccin.nix
   ];
 
   # Bootloader.

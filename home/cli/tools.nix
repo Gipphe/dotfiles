@@ -5,7 +5,6 @@
       enable = true;
       config = {
         pager = "less -FXR";
-        theme = "TwoDark";
       };
     };
 

@@ -20,6 +20,11 @@ in
     sessionVariables.FLAKE = "${config.home.homeDirectory}/projects/dotfiles";
   };
   programs.home-manager.enable = true;
+  catppuccin = {
+    enable = true;
+    flavour = "macchiato";
+  };
+  xdg.enable = true;
 
   imports = [
     inputs.nix-index-db.hmModules.nix-index

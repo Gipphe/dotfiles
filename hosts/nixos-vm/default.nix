@@ -4,6 +4,7 @@
     ./hardware-configuration.nix
     ../common.nix
     ../modules/nvidia.nix
+    ../modules/catppuccin.nix
   ];
 
   # List packages installed in system profile. To search, run:

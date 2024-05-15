@@ -11,6 +11,8 @@ let
   hw = inputs.nixos.hardware.nixosModules;
   agenix = inputs.agenix.nixosModules.age;
   hmModule = inputs.home-manager.nixosModules.home-manager;
+  catppuccinNixos = inputs.catppuccin.nixosModules.catppuccin;
+  catppuccinHm = inputs.catppuccin.homeManagerModules.catppuccin;
 
   shared = [
     core
@@ -32,6 +34,7 @@ let
       inherit inputs;
       inherit self;
     };
+    users.gipphe.imports = [ catppuccinHm ];
   };
   home-manager = basehm // {
     users.gipphe = {
@@ -58,6 +61,7 @@ in
         # bootloader
         # impermanence
         # wayland
+        catppuccinNixos
         hmModule
         { inherit home-manager; }
         { home-manager.users.gipphe.imports = [ ../home/hosts/nixos-vm ]; }
@@ -73,6 +77,7 @@ in
       modules = [
         { networking.hostName = "Jarle"; }
         ./Jarle
+        catppuccinNixos
         hmModule
         { home-manager = hmtty; }
         { home-manager.users.gipphe.imports = [ ../home/hosts/Jarle ]; }
@@ -89,6 +94,7 @@ in
       modules = [
         { networking.hostName = "trond-arne"; }
         ./trond-arne
+        catppuccinNixos
         # bootloader
         # impermanence
         # wayland
@@ -144,6 +150,7 @@ in
                   ;
               };
               users.${username}.imports = [
+                catppuccinHm
                 ../home/base.nix
                 ../home/hosts/VNB-MB-Pro
               ];
@@ -167,6 +174,7 @@ in
     "gipphe@Jarle" = inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages."x86_64-linux";
       modules = [
+        catppuccinHm
         ../home/base.nix
         ../home/hosts/Jarle
       ];
