@@ -5,6 +5,7 @@
     userEmail = "gipphe@gmail.com";
     difftastic.enable = true;
     ignores = [
+      ".DS_Store"
       ".vscode"
       "**/*Zone.Identifier"
     ];
