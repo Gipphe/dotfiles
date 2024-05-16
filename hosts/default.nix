@@ -34,18 +34,20 @@ let
       inherit inputs;
       inherit self;
     };
-    users.gipphe.imports = [ catppuccinHm ];
+    users.gipphe = {
+      imports = [ catppuccinHm ];
+      _module.args.theme = import ../theme;
+    };
   };
   home-manager = basehm // {
     users.gipphe = {
-      imports = [ ../home ];
-      _module.args.theme = import ../theme;
+      imports = basehm.users.gipphe.imports ++ [ ../home ];
     };
   };
 
   hmtty = basehm // {
     users.gipphe = {
-      imports = [ ../home/base.nix ];
+      imports = basehm.users.gipphe.imports ++ [ ../home/base.nix ];
     };
   };
 in
