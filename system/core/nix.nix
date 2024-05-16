@@ -55,7 +55,7 @@
       dates = "daily";
       options = "--delete-older-than 10d";
     };
-    package = pkgs.nixUnstable;
+    package = pkgs.nixVersions.git;
 
     # Make builds run with low priority so my system stays responsive
     daemonCPUSchedPolicy = "idle";

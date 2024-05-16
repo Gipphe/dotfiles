@@ -19,7 +19,7 @@
       automatic = true;
       options = "--delete-older-than 10d";
     };
-    package = pkgs.nixUnstable;
+    package = pkgs.nixVersions.git;
 
     # pin the registry to avoid downloading and evaling a new nixpkgs version every time
     registry = lib.mapAttrs (_: v: { flake = v; }) inputs;
