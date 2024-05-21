@@ -49,6 +49,13 @@ in
           #   end
           # '';
           experimental.ghost_text.hl_group = "CmpGhostText";
+          snippet = {
+            expand = ''
+              function(args)
+                require('luasnip').lsp_expand(args.body)
+              end
+            '';
+          };
         };
       };
     };
