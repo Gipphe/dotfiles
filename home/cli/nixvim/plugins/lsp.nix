@@ -20,8 +20,6 @@ in
           marksman.enable = true;
           # metals.enable = true;
           nil_ls.enable = true;
-          pyright.enable = true;
-          ruff-lsp.enable = true;
           sqls.enable = true;
           tailwindcss.enable = true;
           terraformls.enable = true;
