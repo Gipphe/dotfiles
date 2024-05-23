@@ -1,15 +1,12 @@
 { lib, ... }:
 with builtins;
 let
-  inherit (lib.attrsets) filterAttrs;
-  inherit (import ../../../../util.nix { inherit lib; }) importSiblings;
-  dirs = lib.pipe ./. [
+  imports = lib.pipe ./. [
     readDir
-    (filterAttrs (_: type: type == "directory"))
+    (lib.attrsets.filterAttrs (name: _: name != "default.nix"))
     attrNames
     (map (x: ./${x}))
   ];
-  imports = map (x: ./${x}) (importSiblings ./.) ++ dirs;
 in
 {
   inherit imports;

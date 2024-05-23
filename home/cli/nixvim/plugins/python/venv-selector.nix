@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  inherit (import ../util.nix) k;
+  inherit (import ../../util.nix) k;
 in
 {
   programs.nixvim = {
