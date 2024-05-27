@@ -9,9 +9,8 @@ let
 in
 {
   options.gipphe.programs.neovim = {
-    enable = lib.mkOption {
+    enable = lib.mkEnableOption "neovim" // {
       default = true;
-      type = lib.types.bool;
     };
   };
   config = lib.mkIf cfg.enable {
@@ -37,19 +36,19 @@ in
       defaultEditor = true;
       withNodeJs = true;
       withPython3 = true;
-    };
-    home.file = {
-      ".config/nvim/after".source = ./after;
-      ".config/nvim/lua".source = ./lua;
-      ".config/nvim/lazyvim.json".source = ./lazyvim.json;
-      ".config/nvim/stylua.toml".source = ./stylua.toml;
-      ".config/nvim/init.lua".text = ''
+      extraLuaConfig = ''
         vim.g.lazy_lockfile = "${config.home.homeDirectory}/projects/dotfiles/home/cli/neovim/lazy-lock.json"
         vim.opt.shell = "${pkgs.bash}/bin/bash -i"
 
         -- bootstrap lazy.nvim, LazyVim and your plugins
         require("config.lazy")
       '';
+    };
+    home.file = {
+      ".config/nvim/after".source = ./after;
+      ".config/nvim/lua".source = ./lua;
+      ".config/nvim/lazyvim.json".source = ./lazyvim.json;
+      ".config/nvim/stylua.toml".source = ./stylua.toml;
     };
   };
 }
