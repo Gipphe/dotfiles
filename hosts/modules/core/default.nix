@@ -1,6 +1,9 @@
 { pkgs, lib, ... }:
 {
-  imports = [ ./network.nix ];
+  imports = [
+    ./network.nix
+    ./time-and-localization.nix
+  ];
   systemd =
     let
       extraConfig = ''
@@ -52,38 +55,6 @@
       keyMap = "no";
     };
 
-  time = {
-    # Set your time zone.
-    timeZone = "Europe/Oslo";
-    hardwareClockInLocalTime = true;
-  };
-  # The above timezone setting does not add the TZ env var.
-  environment.sessionVariables.TZ = "Europe/Oslo";
-
-  i18n =
-    let
-      defaultLocale = "en_US.UTF-8";
-      no = "nb_NO.UTF-8";
-    in
-    {
-      inherit defaultLocale;
-      extraLocaleSettings = {
-        LANG = defaultLocale;
-        LC_COLLATE = defaultLocale;
-        LC_CTYPE = defaultLocale;
-        LC_MESSAGES = defaultLocale;
-
-        LC_ADDRESS = no;
-        LC_IDENTIFICATION = no;
-        LC_MEASUREMENT = no;
-        LC_MONETARY = no;
-        LC_NAME = no;
-        LC_NUMERIC = no;
-        LC_PAPER = no;
-        LC_TELEPHONE = no;
-        LC_TIME = no;
-      };
-    };
   services = {
     dbus = {
       packages = with pkgs; [

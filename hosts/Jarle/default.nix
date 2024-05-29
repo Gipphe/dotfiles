@@ -20,6 +20,7 @@
     ../modules/nix
     ../modules/user.nix
     ../modules/catppuccin.nix
+    ../modules/core/time-and-localization.nix
   ];
 
   wsl = {
