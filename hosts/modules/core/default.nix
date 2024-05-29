@@ -57,6 +57,8 @@
     timeZone = "Europe/Oslo";
     hardwareClockInLocalTime = true;
   };
+  # The above timezone setting does not add the TZ env var.
+  environment.sessionVariables.TZ = "Europe/Oslo";
 
   i18n =
     let
