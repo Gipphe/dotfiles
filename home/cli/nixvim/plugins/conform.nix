@@ -33,7 +33,6 @@ in
           sh = [ "shfmt" ];
           nix = [ "nixfmt" ];
           haskell = [ "fourmolu" ];
-          python = [ "black" ];
           javascript = prettier;
           javascriptreact = prettier;
           typescript = prettier;
