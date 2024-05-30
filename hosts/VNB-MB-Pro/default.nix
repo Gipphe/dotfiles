@@ -25,12 +25,12 @@
       "linearmouse"
       "logi-options-plus"
       "neo4j"
+      "neovide"
       "notion"
       "obsidian"
       "openvpn-connect"
       "slack"
       "spotify"
-      "vscodium"
       "xnviewmp"
     ];
   };
