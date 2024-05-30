@@ -7,4 +7,9 @@
     "linearmouse/linearmouse.json".source = ./linearmouse.json;
     "karabiner/karabiner.json".source = ./karabiner.json;
   };
+  home.activation = {
+    set-wallpaper = ''
+      run /usr/bin/automator -i "${../../../theme/minimal_forest/dynamic.heic}" "${./automator/set_desktop_wallpaper.workflow}"
+    '';
+  };
 }
