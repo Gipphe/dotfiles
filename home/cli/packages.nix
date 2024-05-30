@@ -54,18 +54,11 @@
       # make JSON greppable
       fastgron
 
-      # password manager
-      _1password
-
       # containers
       # docker
 
       # openssh
       openssl
-
-      # communication
-      slack
-      discord
 
       # Programming tools
       glab

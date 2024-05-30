@@ -1,16 +1,15 @@
 {
   imports = [
-    ./git.nix
-    ./packages.nix
-    ./tools.nix
     ./fish
+    ./git.nix
     ./neovim
-    ./nix.nix
     ./nixvim
-    ./kitty.nix
-    ./tmux
-    ./zellij
+    ./packages.nix
     ./run-as-service.nix
+    ./term.nix
+    ./tmux
+    ./tools.nix
+    ./zellij
   ];
 
   gipphe = {

@@ -85,7 +85,7 @@
         };
 
       flake = {
-        inherit (import ./hosts inputs) nixosConfigurations darwinConfigurations homeConfigurations;
+        inherit (import ./hosts.nix inputs) nixosConfigurations darwinConfigurations homeConfigurations;
         images.iapetus =
           (self.nixosConfigurations.iapetus.extendModules {
             modules = [

@@ -75,8 +75,6 @@
       };
     };
 
-    lazygit.enable = true;
-
     less.enable = true;
 
     nnn.enable = true;

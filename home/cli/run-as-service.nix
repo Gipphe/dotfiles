@@ -29,5 +29,5 @@ let
   '';
 in
 {
-  config = lib.mkIf (!pkgs.stdenv.isDarwin) { home.packages = [ run-as-service ]; };
+  config = lib.mkIf config.gipphe.machine.systemd { home.packages = [ run-as-service ]; };
 }
