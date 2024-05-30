@@ -4,18 +4,17 @@
   pkgs,
   ...
 }:
-let
-  cfg = config.gipphe.machine;
-in
 {
-  config = lib.mkIf cfg.gui {
+  config = lib.mkIf config.gipphe.flags.gui {
+    imports = [ ./filen.nix ];
     home.packages = with pkgs; [
-      # password manager
-      _1password
-
-      # communication
-      slack
+      _1password-gui
+      ledger-live-desktop
+      ledger_agent
       discord
+      cool-retro-term
+      betterdiscord-installer
+      slack
     ];
   };
 }

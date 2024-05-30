@@ -34,7 +34,7 @@
       default = pkgs.stdenv.isLinux;
     };
     desktop = lib.mkEnableOption "Custom desktop" // {
-      default = true;
+      default = config.gipphe.flags.gui;
     };
     gui = lib.mkEnableOption "GUI stuff" // {
       default = true;
@@ -42,12 +42,22 @@
     cli = lib.mkEnableOption "CLI stuff" // {
       default = true;
     };
+    audio = lib.mkEnableOption "Manage audio" // {
+      default = pkgs.stdenv.isLinux;
+    };
     systemd = lib.mkEnableOption "Has systemd" // {
       default = pkgs.stdenv.isDarwin;
     };
     wayland = lib.mkEnableOption "Use Wayland" // {
       default = true;
     };
+    hyprland = lib.mkEnableOption "Use Hyprland";
     nvidia = lib.mkEnableOption "Machine has Nvidia GPU";
+    global-nix = lib.mkEnableOption "Global Nix config" // {
+      default = true;
+    };
+    homeFonts = lib.mkEnableOption "Manage fonts with home-manager" // {
+      default = !pkgs.stdenv.isDarwin;
+    };
   };
 }

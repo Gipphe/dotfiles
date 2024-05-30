@@ -1,5 +1,7 @@
+{ inputs, ... }:
 {
   imports = [
+    inputs.nix-index-db.hmModules.nix-index
     ./fish
     ./git.nix
     ./neovim
@@ -11,6 +13,8 @@
     ./tools.nix
     ./zellij
   ];
+
+  sessionVariables.PAGER = "less -FXR";
 
   gipphe = {
     programs = {

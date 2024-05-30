@@ -11,7 +11,42 @@ let
   # agenix = inputs.agenix.nixosModules.age;
   # hmModule = inputs.home-manager.nixosModules.home-manager;
   # catppuccinNixos = inputs.catppuccin.nixosModules.catppuccin;
-  catppuccinHm = inputs.catppuccin.homeManagerModules.catppuccin;
+  # catppuccinHm = inputs.catppuccin.homeManagerModules.catppuccin;
+  # shared = [
+  #   core
+  #   agenix
+  #   nh
+  #   {
+  #     nh = {
+  #       enable = true;
+  #       clean.enable = true;
+  #       clean.extraArgs = "--keep-since 10d";
+  #     };
+  #   }
+  # ];
+  # basehm = {
+  #   useUserPackages = true;
+  #   useGlobalPkgs = true;
+  #   extraSpecialArgs = {
+  #     inherit inputs;
+  #     inherit self;
+  #   };
+  #   users.gipphe = {
+  #     imports = [ catppuccinHm ];
+  #     _module.args.theme = import ./theme;
+  #   };
+  # };
+  # home-manager = basehm // {
+  #   users.gipphe = {
+  #     imports = basehm.users.gipphe.imports ++ [ ./home ];
+  #   };
+  # };
+  #
+  # hmtty = basehm // {
+  #   users.gipphe = {
+  #     imports = basehm.users.gipphe.imports ++ [ ./home/base.nix ];
+  #   };
+  # };
   nixosConfigs = {
     Jarle = {
       flags = {
@@ -67,47 +102,11 @@ let
       };
       modules = [
         ./system
-        ./flags.nix
         { gipphe.flags.hostname = nixpkgs.lib.mkDefault hostname; }
         { gipphe.flags = config.flags or { }; }
       ];
     };
 in
-# shared = [
-#   core
-#   agenix
-#   nh
-#   {
-#     nh = {
-#       enable = true;
-#       clean.enable = true;
-#       clean.extraArgs = "--keep-since 10d";
-#     };
-#   }
-# ];
-# basehm = {
-#   useUserPackages = true;
-#   useGlobalPkgs = true;
-#   extraSpecialArgs = {
-#     inherit inputs;
-#     inherit self;
-#   };
-#   users.gipphe = {
-#     imports = [ catppuccinHm ];
-#     _module.args.theme = import ./theme;
-#   };
-# };
-# home-manager = basehm // {
-#   users.gipphe = {
-#     imports = basehm.users.gipphe.imports ++ [ ./home ];
-#   };
-# };
-#
-# hmtty = basehm // {
-#   users.gipphe = {
-#     imports = basehm.users.gipphe.imports ++ [ ./home/base.nix ];
-#   };
-# };
 {
   inherit nixosConfigurations;
   inherit darwinConfigurations;
@@ -207,7 +206,7 @@ in
     "gipphe@Jarle" = inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages."x86_64-linux";
       modules = [
-        catppuccinHm
+        # catppuccinHm
         ./home/base.nix
         ./home/hosts/Jarle
       ];

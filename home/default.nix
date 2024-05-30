@@ -1,18 +1,18 @@
-# { inputs, ... }:
 {
   imports = [
     # inputs.barbie.homeManagerModule
     # inputs.impermanence.nixosModules.home-manager.impermanence
-    # inputs.hyprlock.homeManagerModules.default
-    # inputs.hypridle.homeManagerModules.default
 
-    # ./impermanence.nix
-    ./packages.nix
-
-    ./base.nix
+    ./audio
+    ./cli
+    ./core
+    ./desktop
+    ./gui
     ./rice
+    ./services
+    ./theme
+    # ./impermanence.nix
     # ./modules/desktop.nix
-    ./scripts
     # ./misc
   ];
 }

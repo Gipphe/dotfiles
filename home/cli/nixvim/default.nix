@@ -1,10 +1,16 @@
-{ lib, config, ... }:
+{
+  inputs,
+  lib,
+  config,
+  ...
+}:
 let
   cfg = config.gipphe.programs.nixvim;
   inherit (config.nixvim) helpers;
 in
 {
   imports = [
+    inputs.nixvim.homeManagerModules.nixvim
     ./autocommands.nix
     ./colorscheme.nix
     ./keymaps.nix

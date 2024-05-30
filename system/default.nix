@@ -10,18 +10,18 @@ let
 in
 {
   imports = [
+    ../flags.nix
     {
       home-manager = {
         useUserPackages = true;
         useGlobalPkgs = true;
         extraSpecialArgs = {
-          inherit (flags) username homeDirectory;
           inherit self inputs;
         };
         users.${flags.username}.imports = [
-          inputs.catppuccin.homeManagerModules.catppuccin
-          ./home/base.nix
-          ./home/hosts/VNB-MB-Pro
+          ./home
+          ../flags.nix
+          { gipphe.flags = flags; }
         ];
       };
     }
