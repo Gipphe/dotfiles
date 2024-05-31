@@ -81,7 +81,7 @@ let
   nixosConfigurations = nixpkgs.lib.attrsets.mapAttrs (mkMachine nixpkgs.lib.nixosSystem) nixosMachines;
 
   darwinConfigurations = mapAttrs (
-    config: mkMachine inputs.darwin.lib.darwinSystem (filterAttrs (k: _: k != "system"))
+    config: mkMachine inputs.darwin.lib.darwinSystem (filterAttrs (k: _: k != "system" config))
   ) darwinMachines;
 
   mkMachine =

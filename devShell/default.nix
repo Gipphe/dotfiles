@@ -61,13 +61,13 @@
     {
       help = "Check .nix files with deadnix";
       name = "lint:deadnix";
-      command = "deadnix --exclude ./hosts/*/hardware-configuration.nix";
+      command = "deadnix --exclude ./system/*/hardware-configuration/*.nix";
       category = "lint";
     }
     {
       help = "Check .nix files with deadnix, watching";
       name = "lint:deadnix:watch";
-      command = "find . -type f | entr deadnix --exclude ./hosts/*/hardware-configuration.nix";
+      command = "find . -type f | entr deadnix --exclude ./system/*/hardware-configuration/*.nix";
       category = "lint";
     }
   ];

@@ -2,12 +2,7 @@
   description = "Home Manager configuration of gipphe";
 
   outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      flake-parts,
-      ...
-    }:
+    inputs@{ self, flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } (_: {
       systems = [
         "aarch64-darwin"
