@@ -5,8 +5,8 @@
   ...
 }:
 {
+  imports = lib.optionals flags.gui [ ./filen.nix ];
   config = lib.mkIf flags.gui {
-    imports = [ ./filen.nix ];
     home.packages = with pkgs; [
       _1password-gui
       ledger-live-desktop

@@ -14,7 +14,7 @@
     ./zellij
   ];
 
-  sessionVariables.PAGER = "less -FXR";
+  home.sessionVariables.PAGER = "less -FXR";
 
   gipphe = {
     programs = {

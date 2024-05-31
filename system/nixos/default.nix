@@ -8,12 +8,12 @@
     ./boot
     ./core
     ./desktop
-    # ./hardware-configuration
+    ./hardware-configuration
     # ./nix
     # ./secrets
     # ./theme
     # ./user
     # ./virtualbox
-    # ./wsl
+    ./wsl
   ];
 }

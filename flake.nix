@@ -85,13 +85,7 @@
         };
 
       flake = {
-        inherit (import ./hosts.nix inputs) nixosConfigurations darwinConfigurations homeConfigurations;
-        images.iapetus =
-          (self.nixosConfigurations.iapetus.extendModules {
-            modules = [
-              "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-new-kernel-no-zfs-installer.nix"
-            ];
-          }).config.system.build.sdImage;
+        inherit (import ./hosts.nix inputs) nixosConfigurations darwinConfigurations;
       };
     });
 

@@ -76,6 +76,8 @@
       # Fonts
       (nerdfonts.override { fonts = [ "FiraCode" ]; })
 
+      _1password
+
       # Utils
       dconf
       git

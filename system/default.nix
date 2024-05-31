@@ -1,30 +1,26 @@
 {
   inputs,
+  lib,
   self,
-  config,
   flags,
   ...
 }:
-let
-  system = if flags.nixos then [ ./nixos ] else [ ./nix-darwin ];
-in
-#system = [ ./nixos ];
 {
-  imports = [
-    # {
-    #   home-manager = {
-    #     useUserPackages = true;
-    #     useGlobalPkgs = true;
-    #     extraSpecialArgs = {
-    #       inherit self inputs;
-    #     };
-    #     users.${flags.username}.imports = [
-    #       ./home
-    #       ../flags.nix
-    #       { gipphe.flags = flags; }
-    #     ];
-    #   };
-    # }
-    # ./common
-  ] ++ system;
+  imports =
+    [
+      inputs.home-manager.nixosModules.default
+      {
+        home-manager = {
+          useUserPackages = true;
+          useGlobalPkgs = true;
+          extraSpecialArgs = {
+            inherit self inputs flags;
+          };
+          users.${flags.username}.imports = [ ../home ];
+        };
+      }
+      ./common
+    ]
+    ++ lib.optionals (flags.system == "nixos") [ ./nixos ]
+    ++ lib.optionals (flags.system == "nix-darwin") [ ./nix-darwin ];
 }

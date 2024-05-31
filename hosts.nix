@@ -1,81 +1,45 @@
 { nixpkgs, self, ... }@inputs:
 let
-  # core = ./system/core;
-  # bootloader = ./system/core/bootloader.nix;
-  # impermanence = ./system/core/impermanence.nix;
-  # nvidia = ./system/nvidia;
-  # server = ./system/server;
-  # wayland = ./system/wayland;
-  # nh = inputs.nh.nixosModules.default;
-  # hw = inputs.nixos.hardware.nixosModules;
-  # agenix = inputs.agenix.nixosModules.age;
-  # hmModule = inputs.home-manager.nixosModules.home-manager;
-  # catppuccinNixos = inputs.catppuccin.nixosModules.catppuccin;
-  # catppuccinHm = inputs.catppuccin.homeManagerModules.catppuccin;
-  # shared = [
-  #   core
-  #   agenix
-  #   nh
-  #   {
-  #     nh = {
-  #       enable = true;
-  #       clean.enable = true;
-  #       clean.extraArgs = "--keep-since 10d";
-  #     };
-  #   }
-  # ];
-  # basehm = {
-  #   useUserPackages = true;
-  #   useGlobalPkgs = true;
-  #   extraSpecialArgs = {
-  #     inherit inputs;
-  #     inherit self;
-  #   };
-  #   users.gipphe = {
-  #     imports = [ catppuccinHm ];
-  #     _module.args.theme = import ./theme;
-  #   };
-  # };
-  # home-manager = basehm // {
-  #   users.gipphe = {
-  #     imports = basehm.users.gipphe.imports ++ [ ./home ];
-  #   };
-  # };
-  #
-  # hmtty = basehm // {
-  #   users.gipphe = {
-  #     imports = basehm.users.gipphe.imports ++ [ ./home/base.nix ];
-  #   };
-  # };
   nixosConfigs = {
     Jarle = {
       system = "x86_64-linux";
       flags = {
-        nixos = true;
+        username = "gipphe";
+        homeDirectory = "/home/gipphe";
+        system = "nixos";
+        homeFonts = true;
+        gaming = false;
         gui = false;
         wsl = true;
+        desktop = false;
+        audio = false;
+        systemd = true;
       };
     };
     nixos-vm = {
       system = "x86_64-linux";
       flags = {
+        username = "gipphe";
+        homeDirectory = "/home/gipphe";
+        system = "nixos";
         gui = false;
-        grub = true;
-        efi = false;
+        bootloader = "grub";
         virtualbox = true;
       };
     };
     trond-arne = {
       system = "x86_64-linux";
       flags = {
+        username = "gipphe";
+        homeDirectory = "/home/gipphe";
+        system = "nixos";
+        gui = true;
+        cli = true;
+        desktop = true;
         hyprland = true;
+        plasma = true;
         wayland = true;
-      };
-    };
-    hydrogen = {
-      system = "aarch64-linux";
-      flags = {
-        gui = false;
+        bootloader = "efi";
       };
     };
     VNB-MB-Pro = {
@@ -84,6 +48,7 @@ let
         username = "victor";
         homeDirectory = "/Users/victor";
         hostname = "VNB-MB-Pro";
+        system = "nixos";
         gui = false;
         audio = false;
         homeFonts = false;
@@ -93,8 +58,8 @@ let
     };
   };
   inherit (nixpkgs.lib.attrsets) filterAttrs mapAttrs;
-  nixosMachines = filterAttrs (_: config: config.system != "aarch64-darwin") nixosConfigs;
-  darwinMachines = filterAttrs (_: config: config.system == "aarch64-darwin") nixosConfigs;
+  nixosMachines = filterAttrs (_: config: config.flags.system == "nixos") nixosConfigs;
+  darwinMachines = filterAttrs (_: config: config.flags.system == "nix-darwin") nixosConfigs;
   machineOptions = nixpkgs.lib.attrsets.mapAttrs (
     hostname: config:
     nixpkgs.lib.nixosSystem {
@@ -126,109 +91,4 @@ in
 {
   inherit nixosConfigurations;
   inherit darwinConfigurations;
-  # nixosConfigurations = {
-  #   # Test VM for tinkering with NixOS
-  #   nixos-vm = nixpkgs.lib.nixosSystem {
-  #     system = "x86_64-linux";
-  #     modules = [
-  #       ./system
-  #       {
-  #         gipphe.flags = {
-  #           hostname = "nixos-vm";
-  #           gui = false;
-  #           grub = true;
-  #           efi = false;
-  #         };
-  #       }
-  #     ];
-  #     specialArgs = {
-  #       inherit inputs self;
-  #     };
-  #   };
-  #
-  #   Jarle = nixpkgs.lib.nixosSystem {
-  #     system = "x86_64-linux";
-  #     modules = [
-  #       ./system
-  #       ./flags.nix
-  #       {
-  #         gipphe.flags = {
-  #           hostname = "Jarle";
-  #           gui = false;
-  #         };
-  #       }
-  #     ];
-  #     specialArgs = {
-  #       inherit inputs self;
-  #     };
-  #   };
-  #
-  #   # Ideapad laptop
-  #   trond-arne = nixpkgs.lib.nixosSystem {
-  #     system = "x86_64-linux";
-  #     modules = [
-  #       ./system
-  #       {
-  #         gipphe.flags = {
-  #           hostname = "trond-arne";
-  #         };
-  #       }
-  #     ];
-  #     specialArgs = {
-  #       inherit inputs self;
-  #     };
-  #   };
-  #
-  #   # Raspberry Pi 4
-  #   hydrogen = nixpkgs.lib.nixosSystem {
-  #     system = "aarch64";
-  #     modules = [
-  #       ./system
-  #       {
-  #         gipphe.flags = {
-  #           hostname = "hydrogen";
-  #         };
-  #       }
-  #     ];
-  #     specialArgs = {
-  #       inherit inputs self;
-  #     };
-  #   };
-  # };
-
-  # darwinConfigurations = {
-  #   # Work Macbook Pro
-  #   "VNB-MB-Pro" = inputs.darwin.lib.darwinSystem {
-  #     modules = [
-  #       ./flags.nix
-  #       ./system
-  #       {
-  #         gipphe.flags = {
-  #           username = "victor";
-  #           homeDirectory = "/Users/victor";
-  #           hostname = "VNB-MB-Pro";
-  #           gui = false;
-  #         };
-  #       }
-  #     ];
-  #     specialArgs = {
-  #       inherit inputs self;
-  #     };
-  #   };
-  # };
-
-  homeConfigurations = {
-    # Non-NixOS home-manager configuration
-    "gipphe@Jarle" = inputs.home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages."x86_64-linux";
-      modules = [
-        # catppuccinHm
-        ./home/base.nix
-        ./home/hosts/Jarle
-      ];
-      extraSpecialArgs = {
-        inherit inputs;
-      };
-    };
-  };
 }

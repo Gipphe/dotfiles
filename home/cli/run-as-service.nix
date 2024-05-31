@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  flags,
   ...
 }:
 let
@@ -29,5 +30,5 @@ let
   '';
 in
 {
-  config = lib.mkIf config.gipphe.machine.systemd { home.packages = [ run-as-service ]; };
+  config = lib.mkIf flags.systemd { home.packages = [ run-as-service ]; };
 }

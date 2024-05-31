@@ -1,4 +1,5 @@
-{
+{ lib, flags, ... }:
+lib.optionalAttrs (flags.system == "nix-darwin") {
   home.file.".ideavimrc".text = ''
     set number
     set relativenumber

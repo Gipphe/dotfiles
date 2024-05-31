@@ -1,5 +1,14 @@
 { lib, config, ... }:
 {
+  programs.nh = {
+    enable = true;
+    flake = "/home/gipphe/projects/dotfiles";
+    clean = {
+      enable = true;
+      extraArgs = "--keep 5 --keep-since 3d";
+    };
+  };
+
   environment.sessionVariables = {
     # Set default flake path for nh
     FLAKE = "/home/gipphe/projects/dotfiles";

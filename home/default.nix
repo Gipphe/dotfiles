@@ -1,18 +1,17 @@
+{ inputs, ... }:
 {
   imports = [
-    # inputs.barbie.homeManagerModule
-    # inputs.impermanence.nixosModules.home-manager.impermanence
+    inputs.catppuccin.homeManagerModules.catppuccin
 
     ./audio
     ./cli
     ./core
     ./desktop
     ./gui
-    ./rice
+    ./fonts.nix
+    ./gaming.nix
+    ./gui
     ./services
     ./theme
-    # ./impermanence.nix
-    # ./modules/desktop.nix
-    # ./misc
   ];
 }

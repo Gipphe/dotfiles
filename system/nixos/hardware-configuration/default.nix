@@ -7,8 +7,5 @@ let
   };
 in
 {
-  imports = [
-    configs.${hostname} or throw
-    "No hardware config found for ${hostname}"
-  ];
+  imports = [ (configs.${hostname} or throw "No hardware config found for ${hostname}") ];
 }

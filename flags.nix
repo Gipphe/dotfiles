@@ -1,63 +1,52 @@
 { lib, config, ... }:
+let
+  mkRequired =
+    desc: mkOption: opts:
+    mkOption opts // { default = throw "${desc} is a required flag"; };
+in
 {
   options.gipphe.flags = {
-    username = lib.mkOption {
-      default = "gipphe";
+    username = mkRequired "username" lib.mkOption {
       type = lib.types.string;
       description = "Username for the user";
     };
-    homeDirectory = lib.mkOption {
-      default = "/home/${config.gipphe.flags.username}";
+    homeDirectory = mkRequired "homeDirectory" lib.mkOption {
       type = lib.types.string;
       description = "Home directory for the user";
     };
-    hostname = lib.mkOption {
-      default = throw "gipphe.flags.hostname is required";
+    hostname = mkRequired "hostname" lib.mkOption {
       type = lib.types.string;
       description = "Hostname for the machine";
     };
 
-    nixos = lib.mkEnableOption "Is NixOS" // {
-      default = true;
-    };
-    nix-darwin = lib.mkEnableOption "Is nix-darwin";
-
-    gui = lib.mkEnableOption "GUI stuff" // {
-      default = true;
-    };
-    cli = lib.mkEnableOption "CLI stuff" // {
-      default = true;
+    system = mkRequired "system" lib.mkOption {
+      description = "System type";
+      type = lib.types.enum [
+        "nixos"
+        "nix-darwin"
+      ];
+      example = "nixos";
     };
 
-    audio = lib.mkEnableOption "Manage audio" // {
-      default = true;
-    };
-    systemd = lib.mkEnableOption "Has systemd" // {
-      default = true;
-    };
+    gui = mkRequired "gui" lib.mkEnableOption "GUI stuff";
+    cli = mkRequired "cli" lib.mkEnableOption "CLI stuff";
 
-    desktop = lib.mkEnableOption "Custom desktop" // {
-      default = config.gipphe.flags.gui;
-    };
-    wayland = lib.mkEnableOption "Use Wayland" // {
-      default = config.gipphe.flags.desktop;
-    };
-    hyprland = lib.mkEnableOption "Use Hyprland";
-    plasma = lib.mkEnableOption "Use KDE Plasma" // {
-      default = true;
-    };
+    audio = mkRequired "audio" lib.mkEnableOption "audio management";
+    systemd = mkRequired "systemd" lib.mkEnableOption "systemd stuff";
 
-    nvidia = lib.mkEnableOption "Machine has Nvidia GPU";
+    desktop = mkRequired "desktop" lib.mkEnableOption "custom desktop";
+    wayland = mkRequired "wayland" lib.mkEnableOption "Wayland";
+    hyprland = mkRequired "hyprland" lib.mkEnableOption "Hyprland";
+    plasma = mkRequired "plasma" lib.mkEnableOption "KDE Plasma";
 
-    global-nix = lib.mkEnableOption "Global Nix config" // {
-      default = true;
-    };
-    homeFonts = lib.mkEnableOption "Manage fonts with home-manager" // {
-      default = true;
-    };
+    gaming = mkRequired "gaming" lib.mkEnableOption "gaming stuff";
+    nvidia = mkRequired "nvidia" lib.mkEnableOption "Nvidia GPU drivers";
 
-    virtualbox = lib.mkEnableOption "Machine is a Virtualbox guest";
-    wsl = lib.mkEnableOption "Machine is in WSL";
+    global-nix = mkRequired "global-nix" lib.mkEnableOption "global Nix config";
+    homeFonts = mkRequired "homeFonts" lib.mkEnableOption "fonts management with home-manager";
+
+    virtualbox = mkRequired "virtualbox" lib.mkEnableOption "Virtualbox guest options";
+    wsl = mkRequired "wsl" lib.mkEnableOption "WSL stuff";
 
     bootloader = lib.mkOption {
       description = "Bootloader to use";
@@ -65,7 +54,12 @@
         "grub"
         "efi"
       ];
-      default = "efi";
+      example = "grub";
+      default =
+        if config.gipphe.flags.wsl then
+          "efi"
+        else
+          throw "bootloader is a required option (unless wsl is true)";
     };
   };
 }

@@ -2,6 +2,7 @@
   pkgs,
   lib,
   inputs,
+  flags,
   theme,
   ...
 }:
@@ -13,7 +14,7 @@ let
     Install.WantedBy = [ "graphical-session.target" ];
   };
 in
-{
+lib.optionalAttrs flags.hyprland {
   imports = [
     # ./config.nix
     # ./binds.nix

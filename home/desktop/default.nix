@@ -4,15 +4,14 @@
   flags,
   ...
 }:
-{
+lib.optionalAttrs flags.desktop {
   imports = [
     inputs.hyprlock.homeManagerModules.default
     inputs.hypridle.homeManagerModules.default
+    ./rice
   ];
-  config = lib.mkIf flags.desktop {
-    wayland.windowManager.hyprland = {
-      enable = true;
-      extraConfig = builtins.readFile ./hyprland.conf;
-    };
+  wayland.windowManager.hyprland = {
+    enable = true;
+    extraConfig = builtins.readFile ./hyprland.conf;
   };
 }
