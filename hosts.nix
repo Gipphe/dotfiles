@@ -11,9 +11,11 @@ let
         gaming = false;
         gui = false;
         wsl = true;
+        virtualbox = false;
         desktop = false;
         audio = false;
         systemd = true;
+        secrets = false;
       };
     };
     nixos-vm = {
@@ -25,6 +27,7 @@ let
         gui = false;
         bootloader = "grub";
         virtualbox = true;
+        secrets = true;
       };
     };
     trond-arne = {
@@ -40,6 +43,7 @@ let
         plasma = true;
         wayland = true;
         bootloader = "efi";
+        secrets = true;
       };
     };
     VNB-MB-Pro = {
@@ -54,6 +58,7 @@ let
         homeFonts = false;
         systemd = false;
         desktop = false;
+        secrets = true;
       };
     };
   };

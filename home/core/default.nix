@@ -6,8 +6,9 @@
 }:
 {
   imports = [
-    ./xdg.nix
     ./darwin
+    ./fonts.nix
+    ./xdg.nix
   ];
   # NO TOUCHY!
   home = {

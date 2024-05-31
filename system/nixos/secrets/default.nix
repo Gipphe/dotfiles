@@ -1,8 +1,15 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  flags,
+  inputs,
+  ...
+}:
 let
   cfg = config.secrets.agenix;
 in
 {
+  imports = [ inputs.agenix.nixosModules.age ];
   options.secrets.agenix = {
     enable = lib.mkOption {
       type = lib.types.bool;
@@ -10,7 +17,7 @@ in
     };
     importSecrets = lib.mkOption {
       type = lib.types.bool;
-      default = true;
+      default = flags.secrets;
     };
   };
   config = lib.mkIf cfg.enable {
@@ -72,11 +79,11 @@ in
         homeDir = config.users.users.gipphe.home;
         mkSecrets = host: service: {
           "${host}-${service}.ssh.age" = {
-            file = ../../secrets/${host}-${service}.ssh.age;
+            file = ../../../secrets/${host}-${service}.ssh.age;
             path = "${homeDir}/.ssh/${service}.ssh";
           } // user;
           "${host}-${service}.ssh.pub.age" = {
-            file = ../../secrets/${host}-${service}.ssh.pub.age;
+            file = ../../../secrets/${host}-${service}.ssh.pub.age;
             path = "${homeDir}/.ssh/${service}.ssh.pub";
           } // user;
         };

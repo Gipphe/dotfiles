@@ -8,9 +8,6 @@
     ./core
     ./desktop
     ./gui
-    ./fonts.nix
-    ./gaming.nix
-    ./gui
     ./services
     ./theme
   ];

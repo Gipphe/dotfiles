@@ -1,11 +1,12 @@
 { flags, ... }:
 let
-  hostname = flags.hostname;
+  inherit (flags) hostname;
   configs = {
     "trond-arne" = ./trond-arne.nix;
     "nixos-vm" = ./nixos-vm.nix;
+    "Jarle" = ./Jarle.nix;
   };
 in
 {
-  imports = [ (configs.${hostname} or throw "No hardware config found for ${hostname}") ];
+  imports = [ (configs.${hostname} or (throw "No hardware config found for ${hostname}")) ];
 }

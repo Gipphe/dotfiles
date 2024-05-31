@@ -1,1 +1,8 @@
-{ imports = [ ./catppuccin.nix ]; }
+{ inputs, ... }:
+{
+  imports = [ inputs.catppuccin.nixosModules.catppuccin ];
+  catppuccin = {
+    enable = true;
+    flavour = "macchiato";
+  };
+}
