@@ -15,7 +15,7 @@ let
         desktop = false;
         audio = false;
         systemd = true;
-        secrets = false;
+        secrets = true;
         networkmanager = false;
         printer = false;
       };
