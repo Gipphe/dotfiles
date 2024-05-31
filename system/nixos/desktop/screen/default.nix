@@ -5,5 +5,5 @@ let
   };
 in
 {
-  imports = systems.${config.gipphe.flags.hostname} or [ ];
+  imports = systems.${config.networking.hostname} or [ ];
 }

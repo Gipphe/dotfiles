@@ -1,11 +1,11 @@
 {
   inputs,
   lib,
-  config,
+  flags,
   ...
 }:
 {
-  config = lib.optionalAttrs config.gipphe.flags.nix-darwin {
+  config = lib.optionalAttrs flags.nix-darwin {
     import = [
       inputs.home-manager.darwinModules.home-manager
       ./rice.nix

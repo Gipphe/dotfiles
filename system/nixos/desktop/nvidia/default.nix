@@ -1,11 +1,11 @@
 {
   lib,
-  config,
+  flags,
   pkgs,
   ...
 }:
 {
-  config = lib.mkIf config.gipphe.flags.nvidia {
+  config = lib.mkIf flags.nvidia {
     services.xserver.videoDrivers = [ "nvidia" ];
     environment.variables = {
       GBM_BACKEND = "nvidia-drm";

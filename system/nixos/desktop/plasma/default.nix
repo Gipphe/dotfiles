@@ -1,11 +1,11 @@
 {
   lib,
-  config,
+  flags,
   pkgs,
   ...
 }:
 {
-  config = lib.mkIf config.gipphe.flags.plasma {
+  config = lib.mkIf flags.plasma {
     services.xserver = {
       # Enable the X11 windowing system.
       enable = true;

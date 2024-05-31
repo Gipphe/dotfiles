@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, flags, ... }:
 {
-  config = lib.mkIf config.gipphe.flags.homeFonts { fonts.fontconfig.enable = true; };
+  config = lib.mkIf flags.homeFonts { fonts.fontconfig.enable = true; };
 }

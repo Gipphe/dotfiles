@@ -1,7 +1,4 @@
-{ config, ... }:
-let
-  flags = config.gipphe.flags;
-in
+{ config, flags, ... }:
 {
   imports = [ ./xdg.nix ];
   # NO TOUCHY!

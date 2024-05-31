@@ -1,6 +1,6 @@
-{ lib, config, ... }:
+{ lib, flags, ... }:
 {
-  config = lib.mkIf config.gipphe.flags.efi {
+  config = lib.mkIf (flags.bootloader == "efi") {
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
   };

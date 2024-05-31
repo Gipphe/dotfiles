@@ -1,6 +1,6 @@
 {
   lib,
-  config,
+  flags,
   pkgs,
   ...
 }:
@@ -10,7 +10,7 @@
     ./services.nix
     ./pipewire.nix
   ];
-  config = lib.mkIf config.gipphe.flags.wayland {
+  config = lib.mkIf flags.wayland {
     environment.etc."greetd/environments".text = ''
       Hyprland
     '';

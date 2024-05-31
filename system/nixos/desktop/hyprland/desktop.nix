@@ -3,10 +3,11 @@
   config,
   pkgs,
   inputs,
+  flags,
   ...
 }:
 {
-  config = lib.mkIf config.gipphe.flags.hyprland {
+  config = lib.mkIf flags.hyprland {
     programs.hyprland = {
       enable = true;
       package = inputs.hyprland.packages."${pkgs.system}".hyprland;

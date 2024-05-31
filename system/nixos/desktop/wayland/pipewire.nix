@@ -1,6 +1,6 @@
-{ lib, config, ... }:
+{ lib, flags, ... }:
 {
-  config = lib.mkIf config.gipphe.flags.wayland {
+  config = lib.mkIf flags.wayland {
     services.pipewire = {
       enable = true;
       alsa = {

@@ -1,7 +1,7 @@
 {
   inputs,
   lib,
-  config,
+  flags,
   ...
 }:
 {
@@ -9,7 +9,7 @@
     inputs.hyprlock.homeManagerModules.default
     inputs.hypridle.homeManagerModules.default
   ];
-  config = lib.mkIf config.gipphe.flags.desktop {
+  config = lib.mkIf flags.desktop {
     wayland.windowManager.hyprland = {
       enable = true;
       extraConfig = builtins.readFile ./hyprland.conf;

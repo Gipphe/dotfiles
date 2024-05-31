@@ -1,12 +1,14 @@
-{ lib, config, ... }:
+{ flags, ... }:
 {
-  config = lib.mkIf config.gipphe.flags.gui {
-    imports = [
-      ./audio
-      ./hyprland
-      ./nvidia
-      ./plasma
-      ./wayland
-    ];
-  };
+  imports =
+    if flags.desktop then
+      [
+        ./audio
+        ./hyprland
+        ./nvidia
+        ./plasma
+        ./wayland
+      ]
+    else
+      [ ];
 }

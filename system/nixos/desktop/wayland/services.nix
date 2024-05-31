@@ -1,11 +1,11 @@
 {
   lib,
-  config,
+  flags,
   pkgs,
   ...
 }:
 {
-  config = lib.mkIf config.gipphe.flags.wayland {
+  config = lib.mkIf flags.wayland {
     systemd.services = {
       seatd = {
         enable = true;

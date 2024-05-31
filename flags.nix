@@ -1,9 +1,4 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ lib, config, ... }:
 {
   options.gipphe.flags = {
     username = lib.mkOption {
@@ -21,43 +16,56 @@
       type = lib.types.string;
       description = "Hostname for the machine";
     };
+
     nixos = lib.mkEnableOption "Is NixOS" // {
-      default = pkgs.stdenv.isLinux;
+      default = true;
     };
-    nix-darwin = lib.mkEnableOption "Is nix-darwin" // {
-      default = pkgs.stdenv.isDarwin;
-    };
-    isDarwin = lib.mkEnableOption "Is Darwin machine" // {
-      default = pkgs.stdenv.isDarwin;
-    };
-    isLinux = lib.mkEnableOption "Is Linux machine" // {
-      default = pkgs.stdenv.isLinux;
-    };
-    desktop = lib.mkEnableOption "Custom desktop" // {
-      default = config.gipphe.flags.gui;
-    };
+    nix-darwin = lib.mkEnableOption "Is nix-darwin";
+
     gui = lib.mkEnableOption "GUI stuff" // {
       default = true;
     };
     cli = lib.mkEnableOption "CLI stuff" // {
       default = true;
     };
+
     audio = lib.mkEnableOption "Manage audio" // {
-      default = pkgs.stdenv.isLinux;
-    };
-    systemd = lib.mkEnableOption "Has systemd" // {
-      default = pkgs.stdenv.isDarwin;
-    };
-    wayland = lib.mkEnableOption "Use Wayland" // {
       default = true;
     };
+    systemd = lib.mkEnableOption "Has systemd" // {
+      default = true;
+    };
+
+    desktop = lib.mkEnableOption "Custom desktop" // {
+      default = config.gipphe.flags.gui;
+    };
+    wayland = lib.mkEnableOption "Use Wayland" // {
+      default = config.gipphe.flags.desktop;
+    };
     hyprland = lib.mkEnableOption "Use Hyprland";
+    plasma = lib.mkEnableOption "Use KDE Plasma" // {
+      default = true;
+    };
+
     nvidia = lib.mkEnableOption "Machine has Nvidia GPU";
+
     global-nix = lib.mkEnableOption "Global Nix config" // {
       default = true;
     };
     homeFonts = lib.mkEnableOption "Manage fonts with home-manager" // {
-      default = !pkgs.stdenv.isDarwin;
+      default = true;
+    };
+
+    virtualbox = lib.mkEnableOption "Machine is a Virtualbox guest";
+    wsl = lib.mkEnableOption "Machine is in WSL";
+
+    bootloader = lib.mkOption {
+      description = "Bootloader to use";
+      type = lib.types.enum [
+        "grub"
+        "efi"
+      ];
+      default = "efi";
     };
   };
 }

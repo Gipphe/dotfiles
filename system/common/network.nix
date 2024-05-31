@@ -1,4 +1,4 @@
-{ config, ... }:
+{ flags, ... }:
 {
-  networking.hostName = config.gipphe.flags.hostname;
+  networking.hostName = flags.hostname;
 }

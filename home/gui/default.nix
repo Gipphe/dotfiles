@@ -1,11 +1,11 @@
 {
   lib,
-  config,
+  flags,
   pkgs,
   ...
 }:
 {
-  config = lib.mkIf config.gipphe.flags.gui {
+  config = lib.mkIf flags.gui {
     imports = [ ./filen.nix ];
     home.packages = with pkgs; [
       _1password-gui

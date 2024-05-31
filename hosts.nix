@@ -49,8 +49,11 @@ let
   # };
   nixosConfigs = {
     Jarle = {
+      system = "x86_64-linux";
       flags = {
+        nixos = true;
         gui = false;
+        wsl = true;
       };
     };
     nixos-vm = {
@@ -59,6 +62,7 @@ let
         gui = false;
         grub = true;
         efi = false;
+        virtualbox = true;
       };
     };
     trond-arne = {
@@ -81,12 +85,27 @@ let
         homeDirectory = "/Users/victor";
         hostname = "VNB-MB-Pro";
         gui = false;
+        audio = false;
+        homeFonts = false;
+        systemd = false;
+        desktop = false;
       };
     };
   };
   inherit (nixpkgs.lib.attrsets) filterAttrs mapAttrs;
   nixosMachines = filterAttrs (_: config: config.system != "aarch64-darwin") nixosConfigs;
   darwinMachines = filterAttrs (_: config: config.system == "aarch64-darwin") nixosConfigs;
+  machineOptions = nixpkgs.lib.attrsets.mapAttrs (
+    hostname: config:
+    nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        ./flags.nix
+        { gipphe.flags.hostname = nixpkgs.lib.mkDefault hostname; }
+        { gipphe.flags = config.flags; }
+      ];
+    }
+  ) nixosConfigs;
   nixosConfigurations = nixpkgs.lib.attrsets.mapAttrs (mkMachine nixpkgs.lib.nixosSystem) nixosMachines;
 
   darwinConfigurations = mapAttrs (
@@ -99,12 +118,9 @@ let
       inherit (config) system;
       specialArgs = {
         inherit inputs self;
+        inherit (machineOptions.${hostname}.config.gipphe) flags;
       };
-      modules = [
-        ./system
-        { gipphe.flags.hostname = nixpkgs.lib.mkDefault hostname; }
-        { gipphe.flags = config.flags or { }; }
-      ];
+      modules = [ ./system ];
     };
 in
 {

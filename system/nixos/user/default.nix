@@ -2,11 +2,9 @@
   pkgs,
   lib,
   config,
+  flags,
   ...
 }:
-let
-  flags = config.gipphe.flags;
-in
 {
   config = {
     imports = [ ./programs.nix ];

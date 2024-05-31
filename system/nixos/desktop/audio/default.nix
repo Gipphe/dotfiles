@@ -1,6 +1,6 @@
-{ lib, config, ... }:
+{ lib, flags, ... }:
 {
-  config = lib.mkIf config.gipphe.flags.audio {
+  config = lib.mkIf flags.audio {
     # Enable sound with pipewire.
     sound.enable = true;
     hardware.pulseaudio.enable = false;

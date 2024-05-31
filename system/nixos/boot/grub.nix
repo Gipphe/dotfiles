@@ -1,6 +1,6 @@
-{ lib, config, ... }:
+{ lib, flags, ... }:
 {
-  config = lib.mkIf config.gipphe.flags.grub {
+  config = lib.mkIf (flags.bootloader == "grub") {
     # Bootloader.
     boot.loader.grub = {
       enable = true;

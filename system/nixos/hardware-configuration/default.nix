@@ -1,6 +1,6 @@
-{ config, ... }:
+{ flags, ... }:
 let
-  hostname = config.gipphe.flags.hostname;
+  hostname = flags.hostname;
   configs = {
     "trond-arne" = ./trond-arne.nix;
     "nixos-vm" = ./nixos-vm.nix;
