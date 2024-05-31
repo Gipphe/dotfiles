@@ -8,6 +8,7 @@ lib.optionalAttrs flags.gui {
   imports = [
     ./filen.nix
     ./gaming.nix
+    ./term.nix
   ];
   home.packages = with pkgs; [
     _1password-gui
@@ -17,5 +18,11 @@ lib.optionalAttrs flags.gui {
     cool-retro-term
     betterdiscord-installer
     slack
+
+    xflux
+    gnome.nautilus
+    gnome.zenity
+    gnome.gnome-tweaks
+    gnome.eog
   ];
 }

@@ -1,6 +1,12 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  flags,
+  ...
+}:
 {
   imports = [
+    ./appimage.nix
     ./network.nix
     ./time-and-localization.nix
     ./utilities.nix
@@ -12,7 +18,7 @@
         DefaultTimeoutStopSec=16s
       '';
     in
-    {
+    lib.optionalAttrs flags.systemd {
       inherit extraConfig;
       user = {
         inherit extraConfig;
@@ -23,8 +29,7 @@
         "getty@tty7".enable = false;
         "autovt@tty7".enable = false;
         # slows down boot time
-        NetworkManager-wait-online.enable = false;
-      };
+      } // lib.optionalAttrs flags.networkmanager { NetworkManager-wait-online.enable = false; };
 
       # Systemd OOMd
       # Fedora enables these options by deafult. See the 10-oomd-* files here:
@@ -43,7 +48,7 @@
     };
 
     # Enable CUPS to print documents.
-    printing.enable = true;
+    printing.enable = flags.printer;
   };
 
   console =
@@ -59,70 +64,59 @@
 
   services = {
     dbus = {
-      packages = with pkgs; [
-        dconf
-        gcr
-        udisks2
-      ];
+      packages = lib.optionals flags.desktop (
+        with pkgs;
+        [
+          dconf
+          udisks2
+          gcr
+        ]
+      );
       enable = true;
     };
-    udev.packages = with pkgs; [
-      gnome.gnome-settings-daemon
-      android-udev-rules
-    ];
+    # udev.packages = with pkgs; [
+    #   gnome.gnome-settings-daemon
+    #   android-udev-rules
+    # ];
     journald.extraConfig = ''
       SystemMaxUse=50M
       RuntimeMaxUse=10M
     '';
-    udisks2.enable = true;
+    # udisks2.enable = flags.desktop;
     # profile-sync-daemon
-    psd = {
-      enable = true;
-      resyncTimer = "10m";
-    };
+    # psd = {
+    #   enable = true;
+    #   resyncTimer = "10m";
+    # };
   };
 
   # compress half of the ram to use as swap
-  zramSwap = {
-    enable = lib.mkDefault false;
-    algorithm = "zstd";
-  };
+  # zramSwap = {
+  #   enable = lib.mkDefault false;
+  #   algorithm = "zstd";
+  # };
 
-  environment.systemPackages = with pkgs; [
-    git
-    uutils-coreutils-noprefix
-    btrfs-progs
-    cifs-utils
-    appimage-run
-  ];
+  # environment.systemPackages = with pkgs; [
+  #   uutils-coreutils-noprefix
+  #   # btrfs-progs
+  #   # cifs-utils
+  # ];
 
   hardware.ledger.enable = true;
 
-  boot.binfmt.registrations =
-    lib.genAttrs
-      [
-        "appimage"
-        "AppImage"
-      ]
-      (ext: {
-        recognitionType = "extension";
-        magicOrExtension = ext;
-        interpreter = "/run/current-system/sw/bin/appimage-run";
-      });
-
   programs = {
     # allow users to mount fuse filesystems with allow_other
-    fuse.userAllowOther = true;
+    # fuse.userAllowOther = true;
 
     # help manage android devices via command line
-    adb.enable = true;
+    # adb.enable = true;
 
     # Compatibility layer for dynamically linked binaries that expect FHS
     nix-ld.enable = true;
 
-    java = {
-      enable = true;
-      package = pkgs.jre;
-    };
+    # java = {
+    #   enable = true;
+    #   package = pkgs.temurin-jre-bin;
+    # };
   };
 }

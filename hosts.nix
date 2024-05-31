@@ -16,6 +16,8 @@ let
         audio = false;
         systemd = true;
         secrets = false;
+        networkmanager = false;
+        printer = false;
       };
     };
     nixos-vm = {

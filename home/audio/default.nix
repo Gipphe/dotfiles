@@ -1,1 +1,13 @@
-{ lib, flags, ... }: lib.optionalAttrs flags.audio { imports = [ ./bcn.nix ]; }
+{
+  lib,
+  flags,
+  pkgs,
+  ...
+}:
+lib.optionalAttrs flags.audio {
+  imports = [ ./bcn.nix ];
+  home.packages = with pkgs; [
+    mpc-cli
+    cava
+  ];
+}

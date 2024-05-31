@@ -45,6 +45,8 @@ in
     global-nix = mkRequired "global-nix" lib.mkEnableOption "global Nix config";
     homeFonts = mkRequired "homeFonts" lib.mkEnableOption "fonts management with home-manager";
     secrets = mkRequired "secrets" lib.mkEnableOption "secret handling with agenix";
+    networkmanager = mkRequired "networkmanager" lib.mkEnableOption "networkmanager";
+    printer = mkRequired "printer" lib.mkEnableOption "printer services and options";
 
     virtualbox = mkRequired "virtualbox" lib.mkEnableOption "Virtualbox guest options";
     wsl = mkRequired "wsl" lib.mkEnableOption "WSL stuff";

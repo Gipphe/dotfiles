@@ -6,7 +6,7 @@
       fswatch
       xclip
       # Recommended jdk
-      temurin-bin
+      # temurin-bin
 
       # Make
       gnumake
@@ -18,7 +18,7 @@
       imagemagick
 
       # video tooling
-      ffmpeg-full
+      # ffmpeg-full
 
       # iamge preview in terminal
       catimg
@@ -80,19 +80,9 @@
 
       # Utils
       dconf
-      git
-      catimg
-      curl
-      xflux
 
       # Misc
-      cava
       neofetch
-      mpc-cli
-      gnome.nautilus
-      gnome.zenity
-      gnome.gnome-tweaks
-      gnome.eog
     ]
     ++ (if pkgs.stdenv.isDarwin then [ ] else [ libgcc ]);
 }

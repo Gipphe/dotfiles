@@ -37,10 +37,6 @@ lib.optionalAttrs flags.hyprland {
       # Pulseaudio mixer for terminal
       pamixer
 
-      # TODO: figure out whether this one is necessary
-      # HTTP requests library
-      python39Packages.requests
-
       # Select screen region
       slurp
 

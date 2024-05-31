@@ -8,7 +8,6 @@
     ./nixvim
     ./packages.nix
     ./run-as-service.nix
-    ./term.nix
     ./tmux
     ./tools.nix
     ./zellij
