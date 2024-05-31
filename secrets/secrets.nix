@@ -16,6 +16,13 @@ let
   VNB-MB-Pro-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAvkGogV7sRBoR8XhCspJPNXpDPTAedNij+CoT/gqfNU victor@VNB-MB-Pro.local";
   VNB-MB-Pro = [ VNB-MB-Pro-user ];
 
+  Jarle-host = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFAcsfSTqXBF7E5mIpAKGk6JDVg8cZEwxa+ysUUy+JJN root@Jarle";
+  Jarle-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILtYQ119Fz/wXHvgVcOeCsnECQYAhmrJ7Wzon1zBV1PZ gipphe@Jarle";
+  Jarle = [
+    Jarle-host
+    Jarle-user
+  ];
+
   services = [
     "github"
     "gitlab"
@@ -25,6 +32,7 @@ let
     "nixos-vm" = nixos-vm;
     "trond-arne" = trond-arne;
     "VNB-MB-Pro" = VNB-MB-Pro;
+    "Jarle" = Jarle;
   };
   extensions = [
     ".ssh"

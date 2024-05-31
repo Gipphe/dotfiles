@@ -71,7 +71,6 @@ in
     age.secrets =
       let
         user = {
-
           owner = "gipphe";
           group = "gipphe";
           mode = "400";
