@@ -1,7 +1,34 @@
 #!/usr/bin/env -S nix shell nixpkgs#openssh nixpkgs#fish --command fish
 
-argparse --name=setup_keys n/hostname= -- $argv
-or return
+set -l host_public_key /etc/ssh/ssh_host_ed25519_key.pub
+set -l user_public_key $HOME/.ssh/id_ed25519.pub
+set -l dir (dirname -- (status --current-filename))
+
+if ! grep -q "$(hostname)" $dir/secrets.nix
+    if ! test -e $host_public_key
+        echo "Missing host public key at $host_public_key"
+        echo "You have to set services.ssh-agent.enable to true, enabling the"
+        echo "ssh-agent and creating a host key."
+        exit 1
+    end
+
+    if ! test -e $user_public_key
+        echo "No user key found at $user_public_key"
+        echo "Generating new user key"
+        ssh-keygen -f ~/.ssh/id_ed25519
+    end
+
+    echo "Add the following public keys to $dir/secrets.nix for host $(hostname)"
+    echo ""
+    echo "Host public key:"
+    echo ""
+    cat $host_public_key
+    echo ""
+    echo "User public key:"
+    echo ""
+    cat $user_public_key
+    exit 0
+end
 
 set -l services github gitlab codeberg
 set -l extensions .ssh .ssh.pub
@@ -9,30 +36,39 @@ set -l extensions .ssh .ssh.pub
 set -l keys
 for s in $services
     for e in $extensions
-        set -a keys $s$e
+        set -a keys "$s$e"
     end
 end
 
 # Generate SSH keys
-for key in $keys
-    if test -f ~/.ssh/$key.ssh
-        echo "SSH key pair for $key already exists"
+for service in $services
+    set -l key_path "$HOME/.ssh/$service.ssh"
+    echo "Checking for $service's key at $key_path"
+    if test -e $key_path
+        echo "SSH key pair for $service already exists"
         continue
     end
 
-    echo "Generating SSH key pair for $key"
-    ssh-keygen -t rsa -b 4096 -C $key -f ~/.ssh/$key.ssh
-    done
+    echo "Generating SSH key pair for $service"
+    ssh-keygen -t rsa -b 4096 -C $service -f ~/.ssh/$service.ssh
 end
 
-set -l dir (dirname -- (status --current-filename))
 
 # Encrypt keys with agenix
+pushd $dir
 for k in $keys
-    set -l f VNB-MB-Pro-$k.age
-    if test -f $f
+    set -l secret_name "$(hostname)-$k.age"
+    set -l encrypted_dest "$dir/$secret_name"
+    echo "Encrypting $k to $encrypted_dest"
+    if test -f $encrypted_dest
+        Encrypted file already exists
         continue
     end
     set -lx EDITOR "cp /dev/stdin"
-    agenix -e $dir/$f <~/.ssh/$k
+    agenix -e $secret_name <$HOME/.ssh/$k
+    or begin
+        echo "Failed to encrypt secret"
+        exit 1
+    end
 end
+popd
