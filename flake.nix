@@ -75,7 +75,10 @@
               shfmt.enable = true;
             };
 
-            settings.formatter.nixfmt-rfc-style.excludes = [ "hardware-configuration.nix" ];
+            settings.formatter.nixfmt-rfc-style.excludes = [
+              "system/nixos/hardware-configuration/*.nix"
+              "hardware-configuration.nix"
+            ];
           };
         };
 

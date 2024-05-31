@@ -96,12 +96,12 @@ in
           icon = "󱉭 ",
           color = Ui.fg("Special"),
         }, opts or {})
-      
+
         local function get()
           local cwd = Root.cwd()
           local root = Root.get({ normalize = true })
           local name = vim.fs.basename(root)
-      
+
           if root == cwd then
             -- root is cwd
             return opts.cwd and name
@@ -116,7 +116,7 @@ in
             return opts.other and name
           end
         end
-      
+
         return {
           function()
             return (opts.icon and opts.icon .. " ") .. get()
@@ -142,7 +142,13 @@ in
         lualine_a = [ "mode" ];
         lualine_b = [ "branch" ];
         lualine_c = [
-          { name = helpers.mkRaw "lualine_root_dir[1]"; extraConfig = {cond = helpers.mkRaw "lualine_root_dir.cond"; color = helpers.mkRaw "lualine_root_dir.color"; };}
+          {
+            name = helpers.mkRaw "lualine_root_dir[1]";
+            extraConfig = {
+              cond = helpers.mkRaw "lualine_root_dir.cond";
+              color = helpers.mkRaw "lualine_root_dir.color";
+            };
+          }
           {
             name = "diagnostics";
             extraConfig = {
