@@ -18,6 +18,7 @@ lib.optionalAttrs flags.gui {
     cool-retro-term
     betterdiscord-installer
     slack
+    vivaldi
 
     xflux
     gnome.nautilus

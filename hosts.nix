@@ -41,11 +41,20 @@ let
         gui = true;
         cli = true;
         desktop = true;
-        hyprland = true;
+        hyprland = false;
+        homeFonts = true;
         plasma = true;
-        wayland = true;
+        wayland = false;
         bootloader = "efi";
         secrets = true;
+        wsl = false;
+        networkmanager = true;
+        gaming = true;
+        systemd = true;
+        audio = true;
+        printer = false;
+        virtualbox = false;
+        nvidia = false;
       };
     };
     VNB-MB-Pro = {
