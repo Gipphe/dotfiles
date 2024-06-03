@@ -29,4 +29,5 @@ layout {
   tab name="auth0" cwd="~/projects/strise/auth0"
   tab name="mito" cwd="~/projects/strise/mito"
   tab name="prefect" cwd="~/projects/strise/prefect"
+  tab name="milkyway" cwd="~/projects/strise/milkyway"
 }
