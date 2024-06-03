@@ -58,7 +58,6 @@
                 entr # run commands on file changes
                 nixfmt-rfc-style # nix formatter
                 git # flake requires git
-                glow # markdown viewer
                 statix # lints and suggestions
                 deadnix # clean up unused nix code
               ];
