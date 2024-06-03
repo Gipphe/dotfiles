@@ -207,7 +207,6 @@
       url = "github:cachix/pre-commit-hooks.nix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
         flake-compat.follows = "flake-compat";
       };
     };
@@ -232,7 +231,6 @@
         flake-parts.follows = "flake-parts";
         nix-darwin.follows = "darwin";
         home-manager.follows = "home-manager";
-        pre-commit-hooks.follows = "pre-commit-hooks";
       };
     };
 
