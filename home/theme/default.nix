@@ -1,6 +1,6 @@
 {
   catppuccin = {
     enable = true;
-    flavour = "macchiato";
+    flavor = "macchiato";
   };
 }

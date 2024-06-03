@@ -3,6 +3,6 @@
   imports = [ inputs.catppuccin.nixosModules.catppuccin ];
   catppuccin = {
     enable = true;
-    flavour = "macchiato";
+    flavor = "macchiato";
   };
 }
