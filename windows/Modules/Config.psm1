@@ -16,12 +16,18 @@ class Config {
     }
     $HOME = $Env:HOME
     $Items = @(
-      @("$($this.cfgDir)\.vimrc", "$HOME\.vimrc"),
-      @("$($this.cfgDir)\.wezterm.lua", "$HOME\.wezterm.lua"),
-      @("$($this.cfgDir)\wsl.conf", "$HOME\wsl.conf")
+      ".vimrc",
+      ".wezterm.lua",
+      ".wslconfig"
     )
 
-    $Items | ForEach-Object { Copy-Item -Path $_[0] -Destination $_[1] }
+    $Items | ForEach-Object {
+      if ($_.GetType().Name -eq "String") {
+        Copy-Item -Path "$($this.cfgDir)\$_" -Destination "$HOME\$_"
+      } else {
+        Copy-Item -Path $_[0] -Destination $_[1]
+      }
+    }
   }
 }
 
