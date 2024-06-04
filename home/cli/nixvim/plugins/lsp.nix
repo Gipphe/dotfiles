@@ -22,6 +22,12 @@ in
           sqls.enable = true;
           terraformls.enable = true;
           yamlls.enable = true;
+          yamlls.extraOptions = {
+            capabilities.textDocument.foldingRange = {
+              dynamicRegistration = false;
+              lineFoldingOnly = true;
+            };
+          };
         };
       };
       lsp-lines.enable = true;
