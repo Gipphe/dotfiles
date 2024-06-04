@@ -9,7 +9,6 @@ in
         servers = {
           bashls.enable = true;
           dockerls.enable = true;
-          eslint.enable = true;
           jsonls.enable = true;
           html.enable = true;
           # Uses haskell-tools instead
@@ -21,9 +20,7 @@ in
           # metals.enable = true;
           nil_ls.enable = true;
           sqls.enable = true;
-          tailwindcss.enable = true;
           terraformls.enable = true;
-          tsserver.enable = true;
           yamlls.enable = true;
         };
       };
