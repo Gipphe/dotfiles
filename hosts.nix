@@ -11,6 +11,7 @@ let
         gaming = false;
         gui = false;
         wsl = true;
+        vscode = true;
         virtualbox = false;
         desktop = false;
         audio = false;
