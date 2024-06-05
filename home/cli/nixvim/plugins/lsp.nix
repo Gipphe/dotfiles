@@ -30,7 +30,6 @@ in
           };
         };
       };
-      lsp-lines.enable = true;
       lspkind.enable = true;
     };
     keymaps = [
