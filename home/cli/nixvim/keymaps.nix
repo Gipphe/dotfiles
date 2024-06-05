@@ -141,7 +141,7 @@ in
       (k "v" ">" ">gv" { })
 
       # lazy
-      (k "n" "<leader>l" "<cmd>Lazy<cr>" { desc = "Lazy"; })
+      # (k "n" "<leader>l" "<cmd>Lazy<cr>" { desc = "Lazy"; })
 
       # new file
       (k "n" "<leader>fn" "<cmd>enew<cr>" { desc = "New File"; })
