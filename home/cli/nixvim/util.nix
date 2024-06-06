@@ -9,5 +9,5 @@ rec {
 
   kv =
     mode: key: action: options:
-    (k mode key action options) // { lua = true; };
+    (k mode key ({ __raw = action; }) options);
 }

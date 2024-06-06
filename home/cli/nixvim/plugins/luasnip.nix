@@ -1,3 +1,7 @@
+{ config, ... }:
+let
+  inherit (config.nixvim) helpers;
+in
 {
   programs.nixvim = {
     plugins = {
@@ -13,8 +17,11 @@
     keymaps = [
       {
         key = "<tab>";
-        action = ''function() return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>" end'';
-        lua = true;
+        action = helpers.mkRaw ''
+          function()
+            return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
+          end
+        '';
         mode = [ "i" ];
         options = {
           expr = true;
@@ -23,14 +30,12 @@
       }
       {
         key = "<tab>";
-        action = ''function() return require("luasnip").jump(1) end'';
-        lua = true;
+        action = helpers.mkRaw ''function() return require("luasnip").jump(1) end'';
         mode = [ "s" ];
       }
       {
         key = "<s-tab>";
-        action = ''function() return require("luasnip").jump(-1) end'';
-        lua = true;
+        action = helpers.mkRaw ''function() return require("luasnip").jump(-1) end'';
         mode = [ "s" ];
       }
     ];
