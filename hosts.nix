@@ -75,11 +75,13 @@ let
     };
   };
   inherit (nixpkgs.lib.attrsets) filterAttrs mapAttrs;
+  inherit (nixpkgs.lib) nixosSystem;
+  inherit (inputs.darwin.lib) darwinSystem;
   nixosMachines = filterAttrs (_: config: config.flags.system == "nixos") nixosConfigs;
   darwinMachines = filterAttrs (_: config: config.flags.system == "nix-darwin") nixosConfigs;
-  machineOptions = nixpkgs.lib.attrsets.mapAttrs (
+  machineOptions = mapAttrs (
     hostname: config:
-    nixpkgs.lib.nixosSystem {
+    nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./flags.nix
@@ -88,11 +90,9 @@ let
       ];
     }
   ) nixosConfigs;
-  nixosConfigurations = nixpkgs.lib.attrsets.mapAttrs (mkMachine nixpkgs.lib.nixosSystem) nixosMachines;
+  nixosConfigurations = mapAttrs (mkMachine nixosSystem) nixosMachines;
 
-  darwinConfigurations = mapAttrs (
-    config: mkMachine inputs.darwin.lib.darwinSystem (filterAttrs (k: _: k != "system" config))
-  ) darwinMachines;
+  darwinConfigurations = mapAttrs (mkMachine darwinSystem) darwinMachines;
 
   mkMachine =
     mkSystem: hostname: config:
