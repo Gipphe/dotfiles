@@ -7,15 +7,15 @@ in
 {
   options.gipphe.flags = {
     username = mkRequired "username" lib.mkOption {
-      type = lib.types.string;
+      type = lib.types.str;
       description = "Username for the user";
     };
     homeDirectory = mkRequired "homeDirectory" lib.mkOption {
-      type = lib.types.string;
+      type = lib.types.str;
       description = "Home directory for the user";
     };
     hostname = mkRequired "hostname" lib.mkOption {
-      type = lib.types.string;
+      type = lib.types.str;
       description = "Hostname for the machine";
     };
 
