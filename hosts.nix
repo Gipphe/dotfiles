@@ -63,14 +63,14 @@ let
       flags = {
         username = "victor";
         homeDirectory = "/Users/victor";
-        hostname = "VNB-MB-Pro";
-        system = "nixos";
+        system = "nix-darwin";
         gui = false;
         audio = false;
         homeFonts = false;
         systemd = false;
         desktop = false;
         secrets = true;
+        wsl = false;
       };
     };
   };
