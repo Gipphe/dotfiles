@@ -108,4 +108,5 @@ in
 {
   inherit nixosConfigurations;
   inherit darwinConfigurations;
+  inherit machineOptions;
 }
