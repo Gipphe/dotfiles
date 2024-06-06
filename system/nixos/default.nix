@@ -1,5 +1,12 @@
 {
+  inputs,
+  lib,
+  flags,
+  ...
+}:
+lib.optionalAttrs (flags.system == "nixos") {
   imports = [
+    inputs.home-manager.nixosModules.default
     ./boot
     ./core
     ./desktop
