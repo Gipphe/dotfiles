@@ -9,6 +9,7 @@ lib.optionalAttrs flags.gui {
     ./filen.nix
     ./gaming.nix
     ./term.nix
+    ./idea.nix
   ];
   home.packages = with pkgs; [
     _1password-gui
