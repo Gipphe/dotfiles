@@ -9,7 +9,7 @@ let
         system = "nixos";
         homeFonts = true;
         gaming = false;
-        gui = false;
+        gui = true;
         wsl = true;
         vscode = true;
         virtualbox = false;
