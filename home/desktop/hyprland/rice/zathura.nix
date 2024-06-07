@@ -2,7 +2,7 @@ _: {
   programs.zathura = {
     enable = true;
     options = {
-      font = "Iosevka 15";
+      font = "Fira Code";
 
       default-fg = "#CDD6F4";
       default-bg = "rgba(30, 30, 46, 0.8)";

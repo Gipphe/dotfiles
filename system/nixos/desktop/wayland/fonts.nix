@@ -26,13 +26,7 @@
         noto-fonts-cjk
         noto-fonts-emoji
         jetbrains-mono
-        (nerdfonts.override {
-          fonts = [
-            "Iosevka"
-            "JetBrainsMono"
-            "FiraCode"
-          ];
-        })
+        (nerdfonts.override { fonts = [ "FiraCode" ]; })
       ];
 
       enableDefaultPackages = false;
@@ -43,9 +37,6 @@
           "Fira Code Nerd Font Mono"
           "Fira Code Nerd Font"
           "Fira Code"
-          "Iosevka Term"
-          "Iosevka Term Nerd Font Complete Mono"
-          "Iosevka Nerd Font"
           "Noto Color Emoji"
         ];
         sansSerif = [
