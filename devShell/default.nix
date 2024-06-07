@@ -16,6 +16,18 @@
       category = "build";
     }
     {
+      help = "Rebuild the system using nh os switch --ask";
+      name = "swa";
+      command = ''
+        if command -v nixos-rebuild &> /dev/null; then
+          nh os switch --ask
+        else
+          echo "This is not a NixOS system" >&2
+          exit 1
+        fi
+      '';
+    }
+    {
       help = "Rebuild the system using nh os boot";
       name = "boot";
       command = ''
