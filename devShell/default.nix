@@ -2,7 +2,7 @@
   shellCommands = [
     # Build
     {
-      help = "Rebuild the system using nixos-rebuild, darwin-rebuild or home-manager, whichever is applicable";
+      help = "Rebuild the system using nh, darwin-rebuild or home-manager, whichever is applicable";
       name = "sw";
       command = ''
         if command -v nixos-rebuild &>/dev/null; then
