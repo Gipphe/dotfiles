@@ -50,5 +50,11 @@ let
 in
 {
   home.packages = with pkgs; [ (jetbrains.plugins.addPlugins jetbrains.idea-ultimate plugins) ];
+  home = {
+    file.".ideavimrc".text = ''
+      set number
+      set relativenumber
+    '';
+  };
   programs.fish.shellAbbrs.idea = "idea-ultimate";
 }
