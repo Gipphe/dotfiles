@@ -3,7 +3,6 @@ let
   inherit (import ../util.nix) kv;
 in
 {
-  home.packages = [ pkgs.haskellPackages.fourmolu ];
   programs.nixvim = {
     plugins = {
       none-ls = {
@@ -22,7 +21,6 @@ in
           fish = [ "fish_indent" ];
           sh = [ "shfmt" ];
           nix = [ "nixfmt" ];
-          haskell = [ "fourmolu" ];
         };
         formatters = {
           injected.options.ignore_errors = true;
