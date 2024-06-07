@@ -4,7 +4,7 @@
   flags,
   ...
 }:
-lib.optionalAttrs flags.gui {
+lib.optionalAttrs flags.desktop {
   environment.systemPackages = with pkgs; [ appimage-run ];
   boot.binfmt.registrations =
     lib.genAttrs
