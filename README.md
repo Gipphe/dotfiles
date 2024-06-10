@@ -42,8 +42,7 @@ WSL-specific manual steps are required to enable `systemd`:
 ### Debian
 
 Debian does not enable `systemd` correctly by default. The following steps are
-required to enable it. These steps are taken from [this
-article].
+required to enable it. These steps are taken from [this article].
 
 #### User instance of systemd
 
