@@ -5,8 +5,10 @@
   ...
 }:
 {
-  home = {
-    packages = with pkgs; lib.optionals (!flags.system.isNixDarwin) [ jetbrains.idea-ultimate ];
+  config = lib.mkIf (!flags.system.isNixDarwin) {
+    home = {
+      packages = with pkgs; [ jetbrains.idea-ultimate ];
+    };
+    programs.fish.shellAbbrs.idea = "idea-ultimate";
   };
-  programs.fish.shellAbbrs.idea = "idea-ultimate";
 }
