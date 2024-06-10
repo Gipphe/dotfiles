@@ -4,6 +4,29 @@ This is my _attempt_ at configuring all my various machines using Nix. This
 whole repo is a mess, and will probably remain a mess for the forseeable
 future.
 
+## Machines
+
+### Jarle
+
+NixOS in WSL on Windows. Supports GUI programs through WSLg.
+
+### VNB-MB-Pro
+
+Mac with nix-darwin.
+
+### nixos-vm
+
+Sandbox VM for testing NixOS. Resides on Jarle.
+
+### trond-erik
+
+Lenovo Ideapad laptop running NixOS.
+
+### hydrogen
+
+Raspberry PI 4 that I have yet to install NixOS on. It also proves how bad I am
+at naming things consistently.
+
 ## Prerequisites
 
 ### WSL
