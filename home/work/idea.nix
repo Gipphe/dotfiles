@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  flags,
+  pkgs,
+  ...
+}:
 let
   inherit (lib) hasSuffix pipe mapAttrsToList;
   inherit (pkgs) fetchzip stdenv;
@@ -72,7 +77,7 @@ let
       src = fetchPluginSrc file.url file.hash;
     };
 in
-{
+lib.optionalAttrs (!flags.system.isNixDarwin) {
   home = {
     packages = with pkgs; [ jetbrains.idea-ultimate ];
     file.".ideavimrc".text = ''
