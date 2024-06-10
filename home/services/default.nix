@@ -1,6 +1,1 @@
-{
-  imports = [
-    ./linux.nix
-    ./darwin.nix
-  ];
-}
+{ imports = [ ./gpg ]; }

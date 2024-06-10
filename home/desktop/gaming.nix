@@ -5,5 +5,5 @@
   ...
 }:
 {
-  config = lib.mkIf flags.gaming { home.packages = with pkgs; [ lutris ]; };
+  config = lib.mkIf flags.use-case.gaming { home.packages = with pkgs; [ lutris ]; };
 }

@@ -5,7 +5,7 @@
   ...
 }:
 {
-  config = lib.mkIf flags.nvidia {
+  config = lib.mkIf (flags.desktop.enable && flags.aux.nvidia) {
     services.xserver.videoDrivers = [ "nvidia" ];
     environment.variables = {
       GBM_BACKEND = "nvidia-drm";

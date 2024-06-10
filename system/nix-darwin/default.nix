@@ -4,7 +4,7 @@
   flags,
   ...
 }:
-lib.optionalAttrs (flags.system == "nix-darwin") {
+lib.optionalAttrs flags.system.isNixDarwin {
   imports = [
     inputs.home-manager.darwinModules.home-manager
     ./rice.nix

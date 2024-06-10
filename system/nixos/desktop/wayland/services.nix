@@ -5,7 +5,7 @@
   ...
 }:
 {
-  config = lib.mkIf flags.wayland {
+  config = lib.mkIf (flags.desktop.enable && flags.wayland) {
     systemd.services = {
       seatd = {
         enable = true;

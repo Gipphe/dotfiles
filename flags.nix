@@ -1,68 +1,89 @@
 { lib, config, ... }:
 let
+  inherit (lib) types;
   mkRequired =
     desc: mkOption: opts:
     mkOption opts // { default = throw "${desc} is a required flag"; };
+
+  alias = val: lib.mkOption { default = val; };
 in
 {
   options.gipphe.flags = {
-    username = mkRequired "username" lib.mkOption {
-      type = lib.types.str;
-      description = "Username for the user";
-    };
-    homeDirectory = mkRequired "homeDirectory" lib.mkOption {
-      type = lib.types.str;
-      description = "Home directory for the user";
-    };
-    hostname = mkRequired "hostname" lib.mkOption {
-      type = lib.types.str;
-      description = "Hostname for the machine";
+    user = {
+      username = mkRequired "username" lib.mkOption {
+        type = types.str;
+        description = "Username for the user";
+      };
+      homeDirectory = mkRequired "homeDirectory" lib.mkOption {
+        type = types.str;
+        description = "Home directory for the user";
+      };
     };
 
-    system = mkRequired "system" lib.mkOption {
-      description = "System type";
-      type = lib.types.enum [
-        "nixos"
-        "nix-darwin"
-      ];
-      example = "nixos";
+    system = {
+      hostname = mkRequired "system.hostname" lib.mkOption {
+        type = types.str;
+        description = "Hostname for the machine";
+      };
+      type = mkRequired "system.type" lib.mkOption {
+        description = "System environment type";
+        type = types.enum [
+          "nixos"
+          "nix-darwin"
+        ];
+        example = "nixos";
+      };
+      global-nix = mkRequired "system.global-nix" lib.mkEnableOption "global Nix config";
+      systemd = mkRequired "system.systemd" lib.mkEnableOption "systemd stuff";
+      homeFonts = mkRequired "system.homeFonts" lib.mkEnableOption "fonts management with home-manager";
+      secrets = mkRequired "system.secrets" lib.mkEnableOption "secret handling with agenix";
+
+      isNixos = alias (config.gipphe.flags.system.type == "nixos");
+      isNixDarwin = alias (config.gipphe.flags.system.type == "nix-darwin");
     };
 
-    work = mkRequired "work" lib.mkEnableOption "work stuff";
-    cli = mkRequired "cli" lib.mkEnableOption "CLI stuff";
+    aux = {
+      audio = mkRequired "aux.audio" lib.mkEnableOption "audio management";
+      nvidia = mkRequired "aux.nvidia" lib.mkEnableOption "Nvidia GPU drivers";
+      printer = mkRequired "aux.printer" lib.mkEnableOption "printer services and options";
+      networkmanager = mkRequired "aux.networkmanager" lib.mkEnableOption "networkmanager";
+    };
 
-    audio = mkRequired "audio" lib.mkEnableOption "audio management";
-    systemd = mkRequired "systemd" lib.mkEnableOption "systemd stuff";
+    desktop = {
+      enable = mkRequired "desktop.enable" lib.mkEnableOption "custom desktop";
+      wayland = mkRequired "desktop.wayland" lib.mkEnableOption "Wayland";
+      hyprland = mkRequired "desktop.hyprland" lib.mkEnableOption "Hyprland";
+      plasma = mkRequired "desktop.plasma" lib.mkEnableOption "KDE Plasma";
+    };
 
-    desktop = mkRequired "desktop" lib.mkEnableOption "custom desktop";
-    wayland = mkRequired "wayland" lib.mkEnableOption "Wayland";
-    hyprland = mkRequired "hyprland" lib.mkEnableOption "Hyprland";
-    plasma = mkRequired "plasma" lib.mkEnableOption "KDE Plasma";
+    use-case = {
+      cli = mkRequired "use-case.cli" lib.mkEnableOption "CLI stuff";
+      work = mkRequired "use-case.work" lib.mkEnableOption "features and stuff for work";
+      gaming = mkRequired "use-case.gaming" lib.mkEnableOption "gaming stuff";
+    };
 
-    gaming = mkRequired "gaming" lib.mkEnableOption "gaming stuff";
-    nvidia = mkRequired "nvidia" lib.mkEnableOption "Nvidia GPU drivers";
+    virtualisation = {
+      virtualbox = mkRequired "virtualbox" lib.mkEnableOption "Virtualbox guest options";
+      wsl = mkRequired "wsl" lib.mkEnableOption "WSL stuff";
+    };
 
-    global-nix = mkRequired "global-nix" lib.mkEnableOption "global Nix config";
-    homeFonts = mkRequired "homeFonts" lib.mkEnableOption "fonts management with home-manager";
-    secrets = mkRequired "secrets" lib.mkEnableOption "secret handling with agenix";
-    networkmanager = mkRequired "networkmanager" lib.mkEnableOption "networkmanager";
-    printer = mkRequired "printer" lib.mkEnableOption "printer services and options";
-
-    virtualbox = mkRequired "virtualbox" lib.mkEnableOption "Virtualbox guest options";
-    wsl = mkRequired "wsl" lib.mkEnableOption "WSL stuff";
-
-    bootloader = lib.mkOption {
-      description = "Bootloader to use";
-      type = lib.types.enum [
-        "grub"
-        "efi"
-      ];
-      example = "grub";
-      default =
-        if config.gipphe.flags.wsl then
+    bootloader = {
+      bootloader = lib.mkOption {
+        description = "Bootloader to use";
+        type = types.enum [
+          "grub"
           "efi"
-        else
-          throw "bootloader is a required option (unless wsl is true)";
+        ];
+        example = "grub";
+        default =
+          if config.gipphe.flags.virtualisation.wsl then
+            "efi"
+          else
+            throw "bootloader.type is a required option (unless virtualisation.wsl is true)";
+      };
+
+      isEfi = alias (config.gipphe.flags.bootloader.type == "efi");
+      isGrub = alias (config.gipphe.flags.bootloader.type == "grub");
     };
   };
 }

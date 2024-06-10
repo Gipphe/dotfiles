@@ -4,7 +4,7 @@
   pkgs,
   ...
 }:
-lib.optionalAttrs flags.desktop {
+lib.optionalAttrs flags.desktop.enable {
   imports = [
     ./hyprland
     ./gaming.nix

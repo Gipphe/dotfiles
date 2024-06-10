@@ -4,7 +4,7 @@
   pkgs,
   ...
 }:
-lib.optionalAttrs flags.wayland {
+lib.optionalAttrs (flags.desktop.enable && flags.desktop.wayland) {
   imports = [
     ./fonts.nix
     ./services.nix

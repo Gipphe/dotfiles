@@ -1,5 +1,6 @@
 {
   pkgs,
+  flags,
   lib,
   config,
   system,
@@ -32,7 +33,7 @@ let
 
   cfg = config.filen;
 in
-{
+lib.optionalAttrs (flags.desktop.enable && !flags.system.isNixDarwin) {
   options = {
     filen = {
       enable = lib.mkEnableOption { name = "filen"; };

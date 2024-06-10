@@ -4,18 +4,18 @@
   flags,
   ...
 }:
-lib.optionalAttrs (flags.system == "nixos") {
+lib.optionalAttrs flags.system.isNixos {
   imports = [
     inputs.home-manager.nixosModules.default
     ./boot
     ./core
     ./desktop
     ./hardware-configuration
-    ./nix
-    ./secrets
-    ./theme
+    ./nix.nix
+    ./secrets.nix
+    ./theme.nix
     ./user
-    ./virtualbox
-    ./wsl
+    ./virtualbox.nix
+    ./wsl.nix
   ];
 }

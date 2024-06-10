@@ -4,7 +4,7 @@
   pkgs,
   ...
 }:
-lib.optionalAttrs flags.audio {
+lib.optionalAttrs flags.aux.audio {
   imports = [ ./bcn.nix ];
   home.packages = with pkgs; [
     mpc-cli

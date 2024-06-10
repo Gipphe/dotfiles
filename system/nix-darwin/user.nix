@@ -1,6 +1,6 @@
 { flags, ... }:
 {
-  users.users.${flags.username} = {
-    home = flags.homeDirectory;
+  users.users.${flags.user.username} = {
+    home = flags.user.homeDirectory;
   };
 }

@@ -8,7 +8,7 @@
   flags,
   ...
 }:
-lib.optionalAttrs flags.wsl {
+lib.optionalAttrs flags.virtualisation.wsl {
   imports = [
     # include NixOS-WSL modules
     inputs.wsl.nixosModules.default

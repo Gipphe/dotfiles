@@ -6,7 +6,6 @@
 }:
 {
   imports = [
-    ./appimage.nix
     ./network.nix
     ./time-and-localization.nix
     ./utilities.nix
@@ -18,7 +17,7 @@
         DefaultTimeoutStopSec=16s
       '';
     in
-    lib.optionalAttrs flags.systemd {
+    lib.optionalAttrs flags.system.systemd {
       inherit extraConfig;
       user = {
         inherit extraConfig;

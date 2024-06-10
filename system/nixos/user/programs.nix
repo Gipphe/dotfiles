@@ -1,5 +1,5 @@
 { lib, flags, ... }:
-lib.optionalAttrs flags.gaming {
+lib.optionalAttrs flags.use-case.gaming {
   programs.steam = {
     enable = true;
   };

@@ -5,7 +5,7 @@
   ...
 }:
 {
-  config = lib.mkIf flags.plasma {
+  config = lib.mkIf (flags.dekstop.enable && flags.desktop.plasma) {
     services.xserver = {
       # Enable the X11 windowing system.
       enable = true;

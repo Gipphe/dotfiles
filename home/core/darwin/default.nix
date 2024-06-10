@@ -1,5 +1,5 @@
 { lib, flags, ... }:
-lib.optionalAttrs (flags.system == "nix-darwin") {
+lib.optionalAttrs flags.system.isNixDarwin {
   xdg.configFile = {
     "linearmouse/linearmouse.json".source = ./linearmouse.json;
     "karabiner/karabiner.json".source = ./karabiner.json;

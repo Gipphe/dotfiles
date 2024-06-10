@@ -17,7 +17,7 @@ in
     };
     importSecrets = lib.mkOption {
       type = lib.types.bool;
-      default = flags.secrets;
+      default = flags.system.secrets;
     };
   };
   config = lib.mkIf cfg.enable {

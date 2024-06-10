@@ -4,7 +4,7 @@
   flags,
   ...
 }:
-lib.optionalAttrs flags.hyprland {
+lib.optionalAttrs (flags.desktop.enable && flags.desktop.hyprland) {
   imports = [
     inputs.hyprlock.homeManagerModules.default
     inputs.hypridle.homeManagerModules.default

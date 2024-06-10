@@ -30,5 +30,5 @@ let
   '';
 in
 {
-  config = lib.mkIf flags.systemd { home.packages = [ run-as-service ]; };
+  config = lib.mkIf flags.system.systemd { home.packages = [ run-as-service ]; };
 }

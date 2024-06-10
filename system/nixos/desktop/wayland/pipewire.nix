@@ -1,6 +1,6 @@
 { lib, flags, ... }:
 {
-  config = lib.mkIf flags.wayland {
+  config = lib.mkIf (flags.desktop.enable && flags.wayland) {
     services.pipewire = {
       enable = true;
       alsa = {

@@ -4,26 +4,29 @@
   flags,
   ...
 }:
+let
+  inherit (flags.user) username homeDirectory;
+in
 {
   imports = [ ./programs.nix ];
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.${flags.username} = {
+  users.users.${username} = {
     isNormalUser = true;
     description = "Victor Nascimento Bakke";
-    home = lib.mkDefault flags.homeDirectory;
-    group = flags.username;
+    home = lib.mkDefault homeDirectory;
+    group = username;
     extraGroups = [
       "networkmanager"
       "wheel"
     ];
   };
 
-  users.groups.${flags.username} = { };
+  users.groups.${username} = { };
 
   # Enable automatic login for the user.
   services.xserver.displayManager.autoLogin = lib.mkIf config.services.xserver.enable {
     enable = true;
-    user = flags.username;
+    user = username;
   };
 
   # Workaround for GNOME autologin issue

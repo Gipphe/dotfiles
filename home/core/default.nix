@@ -12,7 +12,7 @@
   ];
   # NO TOUCHY!
   home = {
-    inherit (flags) username homeDirectory;
+    inherit (flags.user) username homeDirectory;
     stateVersion = "23.11";
     sessionVariables = {
       FLAKE = "${config.home.homeDirectory}/projects/dotfiles";

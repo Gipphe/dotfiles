@@ -7,8 +7,8 @@
     ./cli
     ./core
     ./desktop
-    ./gui
     ./services
     ./theme
+    ./work
   ];
 }

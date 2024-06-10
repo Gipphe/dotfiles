@@ -1,6 +1,6 @@
 { lib, flags, ... }:
 {
-  config = lib.mkIf flags.audio {
+  config = lib.mkIf (flags.desktop.enable && flags.aux.audio) {
     # Enable sound with pipewire.
     sound.enable = true;
     hardware.pulseaudio.enable = false;

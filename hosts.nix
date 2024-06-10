@@ -4,87 +4,135 @@ let
     Jarle = {
       system = "x86_64-linux";
       flags = {
-        username = "gipphe";
-        homeDirectory = "/home/gipphe";
-        system = "nixos";
-        homeFonts = true;
-        gaming = false;
-        work = true;
-        wsl = true;
-        virtualbox = false;
-        desktop = false;
-        audio = false;
-        systemd = true;
-        secrets = true;
-        networkmanager = false;
-        printer = false;
+        user = {
+          username = "gipphe";
+          homeDirectory = "/home/gipphe";
+        };
+        system = {
+          type = "nixos";
+          homeFonts = true;
+          systemd = true;
+          secrets = true;
+        };
+        use-case = {
+          cli = true;
+          gaming = false;
+          work = true;
+        };
+        virtualisation = {
+          wsl = true;
+          virtualbox = false;
+        };
+        desktop = {
+          enable = false;
+        };
+        aux = {
+          audio = false;
+          networkmanager = false;
+          printer = false;
+        };
       };
     };
     nixos-vm = {
       system = "x86_64-linux";
       flags = {
-        username = "gipphe";
-        homeDirectory = "/home/gipphe";
-        system = "nixos";
-        work = false;
+        user = {
+          username = "gipphe";
+          homeDirectory = "/home/gipphe";
+        };
+        system = {
+          type = "nixos";
+          secrets = true;
+        };
+        use-case = {
+          work = false;
+        };
         bootloader = "grub";
-        virtualbox = true;
-        secrets = true;
+        virtualisation = {
+          virtualbox = true;
+        };
       };
     };
     trond-arne = {
       system = "x86_64-linux";
       flags = {
-        username = "gipphe";
-        homeDirectory = "/home/gipphe";
-        system = "nixos";
-        work = true;
-        cli = true;
-        desktop = true;
-        hyprland = false;
-        homeFonts = true;
-        plasma = true;
-        wayland = false;
+        user = {
+          username = "gipphe";
+          homeDirectory = "/home/gipphe";
+        };
+        system = {
+          type = "nixos";
+          homeFonts = true;
+          secrets = true;
+        };
+        use-case = {
+          work = true;
+          cli = true;
+          gaming = true;
+        };
+        desktop = {
+          enable = true;
+          hyprland = false;
+          plasma = true;
+          wayland = false;
+        };
+        virtualisation = {
+          wsl = false;
+          virtualbox = false;
+        };
         bootloader = "efi";
-        secrets = true;
-        wsl = false;
-        networkmanager = true;
-        gaming = true;
-        systemd = true;
-        audio = true;
-        printer = false;
-        virtualbox = false;
-        nvidia = false;
+        aux = {
+          networkmanager = true;
+          systemd = true;
+          audio = true;
+          printer = false;
+          nvidia = false;
+        };
       };
     };
     VNB-MB-Pro = {
       system = "aarch64-darwin";
       flags = {
-        username = "victor";
-        homeDirectory = "/Users/victor";
-        system = "nix-darwin";
-        work = true;
-        audio = false;
-        homeFonts = false;
-        systemd = false;
-        desktop = false;
-        secrets = true;
-        wsl = false;
+        user = {
+          username = "victor";
+          homeDirectory = "/Users/victor";
+        };
+        system = {
+          type = "nix-darwin";
+          homeFonts = false;
+          systemd = false;
+          secrets = true;
+        };
+        use-case = {
+          work = true;
+        };
+        aux = {
+          audio = false;
+        };
+        desktop = {
+          enable = false;
+        };
+        virtualisation = {
+          wsl = false;
+        };
       };
     };
   };
   inherit (nixpkgs.lib.attrsets) filterAttrs mapAttrs;
-  inherit (nixpkgs.lib) nixosSystem;
+  inherit (nixpkgs.lib) pipe nixosSystem;
   inherit (inputs.darwin.lib) darwinSystem;
-  nixosMachines = filterAttrs (_: config: config.flags.system == "nixos") nixosConfigs;
-  darwinMachines = filterAttrs (_: config: config.flags.system == "nix-darwin") nixosConfigs;
+  nixosMachines = filterAttrs (_: config: config.flags.system.type == "nixos") nixosConfigs;
+  darwinMachines = pipe nixosConfigs [
+    (filterAttrs (_: config: config.flags.system.type == "nix-darwin"))
+    (mapAttrs (_: c: filterAttrs (k: _: k == "system") c))
+  ];
   machineOptions = mapAttrs (
     hostname: config:
     nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./flags.nix
-        { gipphe.flags.hostname = nixpkgs.lib.mkDefault hostname; }
+        { gipphe.flags.system.hostname = nixpkgs.lib.mkDefault hostname; }
         { gipphe.flags = config.flags; }
       ];
     }

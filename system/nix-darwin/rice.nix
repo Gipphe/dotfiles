@@ -23,7 +23,7 @@
       window_shadow = "float";
       window_opacity = "on";
       active_window_opacity = 1.0;
-      normal_window_opacity = 0.9;
+      normal_window_opacity = 1.0;
     };
     # extraConfig = ''
     #   yabai -m rule --add app="IntelliJ IDEA" manage=off
