@@ -9,7 +9,10 @@
       "docker"
       "filen"
       "gimp"
-      "intellij-idea"
+      {
+        name = "intellij-idea";
+        args.no_binaries = true;
+      }
       "karabiner-elements"
       "linearmouse"
       "logi-options-plus"
