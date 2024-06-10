@@ -10,5 +10,6 @@
     ./services
     ./theme
     ./work
+    ./term.nix
   ];
 }

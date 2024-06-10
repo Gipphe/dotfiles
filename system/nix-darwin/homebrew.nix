@@ -9,7 +9,7 @@
       "docker"
       "filen"
       "gimp"
-      "jetbrains-toolbox"
+      "intellij-idea"
       "karabiner-elements"
       "linearmouse"
       "logi-options-plus"

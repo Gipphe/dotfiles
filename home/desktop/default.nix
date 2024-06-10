@@ -9,7 +9,6 @@ lib.optionalAttrs flags.desktop.enable {
     ./hyprland
     ./gaming.nix
     ./filen.nix
-    ./term.nix
   ];
   home.packages = with pkgs; [
     _1password-gui

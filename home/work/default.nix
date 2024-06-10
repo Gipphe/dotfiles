@@ -1,1 +1,1 @@
-{ lib, flags, ... }: lib.optionalAttrs flags.use-case.work { imports = [ ./idea.nix ]; }
+{ lib, flags, ... }: lib.optionalAttrs flags.use-case.work { imports = [ ./idea ]; }
