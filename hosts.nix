@@ -1,6 +1,6 @@
 { nixpkgs, self, ... }@inputs:
 let
-  nixosConfigs = {
+  machines = {
     Jarle = {
       system = "x86_64-linux";
       flags = {
@@ -119,13 +119,10 @@ let
     };
   };
   inherit (nixpkgs.lib.attrsets) filterAttrs mapAttrs;
-  inherit (nixpkgs.lib) pipe nixosSystem;
+  inherit (nixpkgs.lib) nixosSystem hasSuffix;
   inherit (inputs.darwin.lib) darwinSystem;
-  nixosMachines = filterAttrs (_: config: config.flags.system.type == "nixos") nixosConfigs;
-  darwinMachines = pipe nixosConfigs [
-    (filterAttrs (_: config: config.flags.system.type == "nix-darwin"))
-    (mapAttrs (_: c: filterAttrs (k: _: k == "system") c))
-  ];
+  nixosMachines = filterAttrs (_: config: !(hasSuffix "darwin" config.system)) machines;
+  darwinMachines = filterAttrs (_: config: hasSuffix "darwin" config.system) machines;
   machineOptions = mapAttrs (
     hostname: config:
     nixosSystem {
@@ -136,7 +133,7 @@ let
         { gipphe.flags = config.flags; }
       ];
     }
-  ) nixosConfigs;
+  ) machines;
   nixosConfigurations = mapAttrs (mkMachine nixosSystem) nixosMachines;
 
   darwinConfigurations = mapAttrs (mkMachine darwinSystem) darwinMachines;
