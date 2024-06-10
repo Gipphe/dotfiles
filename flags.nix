@@ -28,7 +28,7 @@ in
       example = "nixos";
     };
 
-    gui = mkRequired "gui" lib.mkEnableOption "GUI stuff";
+    work = mkRequired "work" lib.mkEnableOption "work stuff";
     cli = mkRequired "cli" lib.mkEnableOption "CLI stuff";
 
     audio = mkRequired "audio" lib.mkEnableOption "audio management";

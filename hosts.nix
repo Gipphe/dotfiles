@@ -9,7 +9,7 @@ let
         system = "nixos";
         homeFonts = true;
         gaming = false;
-        gui = true;
+        work = true;
         wsl = true;
         virtualbox = false;
         desktop = false;
@@ -26,7 +26,7 @@ let
         username = "gipphe";
         homeDirectory = "/home/gipphe";
         system = "nixos";
-        gui = false;
+        work = false;
         bootloader = "grub";
         virtualbox = true;
         secrets = true;
@@ -38,7 +38,7 @@ let
         username = "gipphe";
         homeDirectory = "/home/gipphe";
         system = "nixos";
-        gui = true;
+        work = true;
         cli = true;
         desktop = true;
         hyprland = false;
@@ -63,7 +63,7 @@ let
         username = "victor";
         homeDirectory = "/Users/victor";
         system = "nix-darwin";
-        gui = true;
+        work = true;
         audio = false;
         homeFonts = false;
         systemd = false;
