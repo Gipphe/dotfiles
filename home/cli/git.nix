@@ -6,7 +6,6 @@
     difftastic.enable = true;
     ignores = [
       ".DS_Store"
-      ".vscode"
       "**/*Zone.Identifier"
     ];
     signing = {

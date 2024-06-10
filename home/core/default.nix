@@ -8,7 +8,6 @@
   imports = [
     ./darwin
     ./fonts.nix
-    ./wsl
     ./xdg.nix
   ];
   # NO TOUCHY!

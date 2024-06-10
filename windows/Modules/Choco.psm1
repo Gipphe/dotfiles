@@ -67,7 +67,6 @@ class Choco {
       @('virtualbox-guest-additions-guest.install'),
       @('vivaldi'),
       @('voicemeeter'),
-      @('vscode', '/NoDesktopIcon /NoQuicklaunchIcon'), # TODO replace with vscodium
       @('wezterm'),
       @('windirstat')
     )

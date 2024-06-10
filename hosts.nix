@@ -11,7 +11,6 @@ let
         gaming = false;
         gui = true;
         wsl = true;
-        vscode = true;
         virtualbox = false;
         desktop = false;
         audio = false;
@@ -64,7 +63,7 @@ let
         username = "victor";
         homeDirectory = "/Users/victor";
         system = "nix-darwin";
-        gui = false;
+        gui = true;
         audio = false;
         homeFonts = false;
         systemd = false;

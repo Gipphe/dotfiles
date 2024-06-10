@@ -31,8 +31,6 @@ in
     gui = mkRequired "gui" lib.mkEnableOption "GUI stuff";
     cli = mkRequired "cli" lib.mkEnableOption "CLI stuff";
 
-    vscode = lib.mkEnableOption "VSCode";
-
     audio = mkRequired "audio" lib.mkEnableOption "audio management";
     systemd = mkRequired "systemd" lib.mkEnableOption "systemd stuff";
 
