@@ -47,6 +47,9 @@ in
       nvidia = mkRequired "aux.nvidia" lib.mkEnableOption "Nvidia GPU drivers";
       printer = mkRequired "aux.printer" lib.mkEnableOption "printer services and options";
       networkmanager = mkRequired "aux.networkmanager" lib.mkEnableOption "networkmanager";
+      terminal = lib.mkEnableOption "terminal" // {
+        default = true;
+      };
     };
 
     desktop = {

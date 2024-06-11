@@ -30,6 +30,7 @@ let
           audio = false;
           networkmanager = false;
           printer = false;
+          terminal = false;
         };
       };
     };
