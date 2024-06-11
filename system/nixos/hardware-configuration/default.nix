@@ -1,6 +1,6 @@
 { flags, ... }:
 let
-  inherit (flags.sys) hostname;
+  inherit (flags.system) hostname;
   configs = {
     "trond-arne" = ./trond-arne.nix;
     "nixos-vm" = ./nixos-vm.nix;
