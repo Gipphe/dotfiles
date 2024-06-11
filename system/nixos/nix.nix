@@ -5,7 +5,7 @@
     flake = "/home/gipphe/projects/dotfiles";
     clean = {
       enable = true;
-      extraArgs = "--keep 5 --keep-since 3d";
+      extraArgs = "--keep 5 --keep-since 5d";
     };
   };
 
