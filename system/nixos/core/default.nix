@@ -28,7 +28,7 @@
         "getty@tty7".enable = false;
         "autovt@tty7".enable = false;
         # slows down boot time
-      } // lib.optionalAttrs flags.networkmanager { NetworkManager-wait-online.enable = false; };
+      } // lib.optionalAttrs flags.aux.networkmanager { NetworkManager-wait-online.enable = false; };
 
       # Systemd OOMd
       # Fedora enables these options by deafult. See the 10-oomd-* files here:
@@ -47,7 +47,7 @@
     };
 
     # Enable CUPS to print documents.
-    printing.enable = flags.printer;
+    printing.enable = flags.aux.printer;
   };
 
   console =
@@ -63,7 +63,7 @@
 
   services = {
     dbus = {
-      packages = lib.optionals flags.desktop (
+      packages = lib.optionals flags.desktop.enable (
         with pkgs;
         [
           dconf

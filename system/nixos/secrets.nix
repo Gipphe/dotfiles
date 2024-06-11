@@ -78,11 +78,11 @@ in
         homeDir = config.users.users.gipphe.home;
         mkSecrets = host: service: {
           "${host}-${service}.ssh.age" = {
-            file = ../../../secrets/${host}-${service}.ssh.age;
+            file = ../../secrets/${host}-${service}.ssh.age;
             path = "${homeDir}/.ssh/${service}.ssh";
           } // user;
           "${host}-${service}.ssh.pub.age" = {
-            file = ../../../secrets/${host}-${service}.ssh.pub.age;
+            file = ../../secrets/${host}-${service}.ssh.pub.age;
             path = "${homeDir}/.ssh/${service}.ssh.pub";
           } // user;
         };
