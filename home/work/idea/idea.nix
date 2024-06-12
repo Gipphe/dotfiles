@@ -8,9 +8,13 @@
   config = lib.mkMerge [
     (lib.mkIf (!flags.system.isNixDarwin) {
       home = {
-        packages = with pkgs; [ jetbrains.idea-ultimate ];
+        packages = with pkgs; [
+          jetbrains.idea-ultimate
+          (writeShellScriptBin "idea" ''
+            ${pkgs.jetbrains.idea-ultimate}/bin/idea-ultimate "$@" &>/dev/null &
+          '')
+        ];
       };
-      programs.fish.shellAbbrs.idea = "idea-ultimate";
     })
 
     (lib.mkIf flags.system.isNixDarwin {
