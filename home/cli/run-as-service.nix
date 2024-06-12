@@ -12,7 +12,7 @@ let
     ''}
     ${builtins.concatStringsSep "\n" (
       lib.mapAttrsToList (k: v: ''
-        export ${k}=${v}
+        export ${k}=${builtins.toString v}
       '') config.home.sessionVariables
     )}
     ${config.home.sessionVariablesExtra}

@@ -8,7 +8,7 @@
     ./core
     ./desktop
     ./services
-    ./theme
+    ./theme.nix
     ./work
     ./term.nix
   ];

@@ -1,6 +1,7 @@
+{ flags, ... }:
 {
   catppuccin = {
-    enable = true;
+    enable = !flags.aux.stylix;
     flavor = "macchiato";
   };
 }

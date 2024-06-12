@@ -50,6 +50,9 @@ in
       terminal = lib.mkEnableOption "terminal" // {
         default = true;
       };
+      stylix = lib.mkEnableOption "stylix" // {
+        default = true;
+      };
     };
 
     desktop = {

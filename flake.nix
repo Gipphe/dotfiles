@@ -260,6 +260,14 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+    stylix = {
+      url = "github:danth/stylix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        home-manager.follows = "home-manager";
+        flake-compat.follows = "flake-compat";
+      };
+    };
     flake-compat.url = "github:edolstra/flake-compat";
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "sys-default";

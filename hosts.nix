@@ -109,6 +109,7 @@ let
         };
         aux = {
           audio = false;
+          stylix = false;
         };
         desktop = {
           enable = false;
