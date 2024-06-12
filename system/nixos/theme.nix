@@ -1,8 +1,8 @@
-{ inputs, ... }:
+{ flags, inputs, ... }:
 {
-  imports = [ inputs.catppuccin.nixosModules.default ];
+  imports = [ inputs.catppuccin.nixosModules.catppuccin ];
   catppuccin = {
-    enable = false;
+    enable = !flags.aux.stylix;
     flavor = "macchiato";
   };
 }
