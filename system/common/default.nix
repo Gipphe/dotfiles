@@ -1,7 +1,8 @@
 {
   imports = [
+    ./home-manager.nix
     ./network.nix
     ./nix.nix
-    ./home-manager.nix
+    ./rice.nix
   ];
 }
