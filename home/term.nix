@@ -8,7 +8,7 @@
   config = lib.mkIf flags.aux.terminal {
     programs.kitty = {
       enable = true;
-      font = {
+      font = lib.mkIf (!flags.stylix.enable) {
         package = pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; };
         name = "FiraCode Nerd Font";
       };
@@ -20,7 +20,7 @@
         strip_trailing_spaces = "smart";
         allow_remote_control = "password";
       };
-      theme = "Catppuccin-Macchiato";
+      theme = lib.mkIf (!flags.stylix.enable) "Catppuccin-Macchiato";
     };
   };
 }
