@@ -1,9 +1,9 @@
 { lib, flags, ... }:
 lib.optionalAttrs flags.system.isNixDarwin {
-  xdg.configFile = {
-    "linearmouse/linearmouse.json".source = ./linearmouse.json;
-    "karabiner/karabiner.json".source = ./karabiner.json;
-  };
+  imports = [
+    ./karabiner.nix
+    ./linearmouse.nix
+  ];
   home.activation = {
     set-wallpaper = ''
       run /usr/bin/automator -i "${../../../theme/minimal_forest/dynamic.heic}" "${./automator/set_desktop_wallpaper.workflow}"
