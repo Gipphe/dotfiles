@@ -50,7 +50,13 @@ in
       terminal = lib.mkEnableOption "terminal" // {
         default = true;
       };
-      stylix = lib.mkEnableOption "stylix" // {
+    };
+
+    stylix = {
+      enable = lib.mkEnableOption "stylix" // {
+        default = true;
+      };
+      cursor = lib.mkEnableOption "cursor" // {
         default = true;
       };
     };

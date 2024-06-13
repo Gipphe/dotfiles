@@ -110,6 +110,9 @@ let
         aux = {
           audio = false;
         };
+        stylix = {
+          cursor = false;
+        };
         desktop = {
           enable = false;
         };
