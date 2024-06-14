@@ -36,5 +36,12 @@
         }
       '';
     };
+
+    home.activation."copy-wezterm-config-to-repo" = ''
+      dir="$HOME/projects/dotfiles/windows/Config/wezterm"
+      rm -rf "$dir"
+      mkdir -p $(dirname -- "$dir")
+      cp -rL "$HOME/.config/wezterm" "$dir"
+    '';
   };
 }

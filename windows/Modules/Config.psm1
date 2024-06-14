@@ -17,7 +17,7 @@ class Config {
     $HOME = $Env:HOME
     $Items = @(
       ".vimrc",
-      ".wezterm.lua",
+      "wezterm",
       ".wslconfig"
     )
 
