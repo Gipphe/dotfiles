@@ -22,5 +22,19 @@
       };
       theme = lib.mkIf (!flags.stylix.enable) "Catppuccin-Macchiato";
     };
+
+    programs.wezterm = {
+      enable = true;
+      extraConfig = ''
+        return {
+          hide_tab_bar_if_only_one_tab = true,
+          send_composed_key_when_left_alt_is_pressed = true,
+          send_composed_key_When_right_alt_is_pressed = false,
+          default_cursor_style = 'BlinkingBar',
+          -- Disable easing for cursor, blinking text and visual bell
+          animation_fps = 1,
+        }
+      '';
+    };
   };
 }
