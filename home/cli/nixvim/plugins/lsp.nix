@@ -7,7 +7,7 @@ in
       lsp = {
         enable = true;
         servers = {
-          bashls.enable = true;
+          # bashls.enable = true;
           dockerls.enable = true;
           jsonls.enable = true;
           html.enable = true;

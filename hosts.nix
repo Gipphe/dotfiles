@@ -48,7 +48,7 @@ let
         use-case = {
           work = false;
         };
-        bootloader = "grub";
+        bootloader.type = "grub";
         virtualisation = {
           virtualbox = true;
         };
@@ -65,6 +65,7 @@ let
           type = "nixos";
           homeFonts = true;
           secrets = true;
+          systemd = true;
         };
         use-case = {
           work = true;
@@ -81,10 +82,9 @@ let
           wsl = false;
           virtualbox = false;
         };
-        bootloader = "efi";
+        bootloader.type = "efi";
         aux = {
           networkmanager = true;
-          systemd = true;
           audio = true;
           printer = false;
           nvidia = false;

@@ -4,8 +4,9 @@
   pkgs,
   ...
 }:
+let cfg = flags.desktop; in
 {
-  config = lib.mkIf (flags.dekstop.enable && flags.desktop.plasma) {
+  config = lib.mkIf (cfg.enable && cfg.plasma) {
     services.xserver = {
       # Enable the X11 windowing system.
       enable = true;

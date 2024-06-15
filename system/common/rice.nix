@@ -15,15 +15,6 @@
     )
   ];
 
-  # Stylix' darwin module does not correctly import opacity module, but the
-  # kitty stylix module uses it regardless. Here we can just manually define
-  # the option ourselves.
-  options.stylix.opacity.terminal = lib.mkOption {
-    description = "The opacity of the windows of terminals, this works across all terminals supported by stylix";
-    type = lib.types.float;
-    default = 1.0;
-  };
-
   config.stylix =
     {
       enable = flags.stylix.enable;

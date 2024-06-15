@@ -80,7 +80,7 @@ in
     };
 
     bootloader = {
-      bootloader = lib.mkOption {
+      type = lib.mkOption {
         description = "Bootloader to use";
         type = types.enum [
           "grub"
