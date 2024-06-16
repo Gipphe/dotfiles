@@ -26,6 +26,7 @@
           exit 1
         fi
       '';
+      category = "build";
     }
     {
       help = "Rebuild the system using nh os boot";
