@@ -233,6 +233,7 @@
         home-manager.follows = "home-manager";
       };
     };
+    nixpkgs-bashls-fix.url = "github:NixOS/nixpkgs/91a7822b04fe5e15f1604f9ca0fb81eff61b4143";
 
     wsl = {
       url = "github:nix-community/NixOS-WSL";

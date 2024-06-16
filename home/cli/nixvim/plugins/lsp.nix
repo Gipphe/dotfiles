@@ -1,13 +1,21 @@
+{ inputs, ... }:
 let
   inherit (import ../util.nix) k kv;
 in
 {
+  nixpkgs.overlays = [
+    (final: prev: {
+      nodePackages = prev.nodePackages // {
+        inherit (inputs.nixpkgs-bashls-fix.legacyPackages.${prev.system}.nodePackages) bash-language-server;
+      };
+    })
+  ];
   programs.nixvim = {
     plugins = {
       lsp = {
         enable = true;
         servers = {
-          # bashls.enable = true;
+          bashls.enable = true;
           dockerls.enable = true;
           jsonls.enable = true;
           html.enable = true;
