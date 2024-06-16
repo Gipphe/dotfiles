@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 let
   inherit (builtins)
     isList
@@ -42,4 +42,10 @@ let
 in
 {
   inherit recursiveMap importSiblings;
+  mkCopyActivationScript =
+    fromDir: toDir:
+    pkgs.writeShellScriptBin "script" ''
+      rm -rf "${toDir}"
+      cp -rL "${fromDir}" "${toDir}"
+    '';
 }

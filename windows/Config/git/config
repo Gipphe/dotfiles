@@ -1,0 +1,125 @@
+[alias]
+	ass = "!git assume"
+	assd = "!git assumed"
+	assume = "update-index --assume-unchanged"
+	assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+	b = "branch"
+	ba = "branch -a"
+	bn = "!git branch-name"
+	branch-name = "!git rev-parse --abbrev-ref HEAD"
+	ci = "commit"
+	co = "checkout"
+	code-review = "difftool origin/master..."
+	cp = "cherry-pick"
+	cr = "!git code-review"
+	delete-merged-branches = "!git checkout master && git branch --merged | grep -v '\\\\*' | xargs -n 1 git branch -d"
+	dft = "difftool"
+	diffc = "diff --cached"
+	dlog = "!f() { GIT_EXTERNAL_DIFF=difft git log -p --ext-diff $@; }; f"
+	fa = "fetch --all --prune"
+	gone = "!git branch --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" { print $1 }' | xargs -r git branch -D"
+	gr = "log --graph --full-history --all --color --pretty=format:\"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s\""
+	hide-flake = "!git add --intent-to-add flake.nix flake.lock && git update-index --assume-unchanged flake.nix flake.lock"
+	last = "log -1 HEAD"
+	loa = "log --decorate --oneline --graph"
+	lob = "log --decorate --oneline --graph --first-parent"
+	lof = "log --oneline --decorate --all --graph --first-parent"
+	lol = "log --decorate --oneline --graph --all"
+	lola = "lolb --all"
+	lolb = "log --graph --pretty=format:\"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset\""
+	lold = "log --graph --pretty=format:\"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset\""
+	loldr = "lold --date=short"
+	md = "!git merge-diff"
+	mdt = "!git merge-difftool"
+	merge-diff = "!git diff $(git merge-span ... $1)"
+	merge-difftool = "!git difftool $(git merge-span ... $1)"
+	merge-log = "!git log $(git merge-span .. $1)"
+	merge-span = "!f() { echo $(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f1)$1$(git log -1 $2 --merges --pretty=format:%P | cut -d' ' -f2); }; f"
+	ml = "!git merge-log"
+	mr = "!sh -c 'git fetch $1 merge-requests/$2/head:mr-$1-$2 && git checkout mr-$1-$2' -"
+	ours = "!f() { git checkout --ours $@ && git add $@; }; f"
+	pp = "pull --prune"
+	pub = "!git publish"
+	publish = "!git push -u origin $(git branch-name)"
+	rb = "!git rebase-branch"
+	rebase-branch = "!git rebase -i $(git merge-base master HEAD)"
+	rec = "!git recreate"
+	recreate = "!f() { [[ -n $@ ]] && git checkout \"$@\" && git unpublish && git checkout master && git branch -D \"$@\" && git checkout -b \"$@\" && git publish; }; f"
+	rm-merged = "!echo \"Deprecated. Use 'git gone' instead.\"; git gone"
+	st = "status"
+	stage = "add"
+	sw = "switch"
+	theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
+	unass = "!git unassume"
+	unassume = "update-index --no-assume-unchanged"
+	unpub = "!git unpublish"
+	unpublish = "!git push origin :$(git branch-name)"
+	unst = "!git unstage"
+	unstage = "restore --staged"
+	unstage-all = "reset HEAD"
+
+[branch]
+	autosetupmerge = "true"
+
+[commit]
+	gpgSign = true
+
+[core]
+	autocrlf = false
+	editor = "nvim"
+	eol = "lf"
+	pager = "less -FXR"
+	safecrlf = false
+	whitespace = "fix,-indent-with-non-tab,trailing-space,cr-at-eol"
+
+[credential]
+	credentialStore = "gpg"
+
+[credential "https://gist.github.com"]
+	helper = "/nix/store/biinwbg4g09i66nnrj2gp2blx23xv3kf-gh-2.50.0/bin/gh auth git-credential"
+
+[credential "https://github.com"]
+	helper = "/nix/store/biinwbg4g09i66nnrj2gp2blx23xv3kf-gh-2.50.0/bin/gh auth git-credential"
+
+[diff]
+	external = "/nix/store/kpqp6lha96mc9addaqz0rz6k1p5nnc0g-difftastic-0.58.0/bin/difft --color auto --background light --display side-by-side"
+
+[gpg]
+	program = "/nix/store/94sh4d6iv54y6zwdqjzdrs77zj1pzsq1-gnupg-2.4.5/bin/gpg2"
+
+[init]
+	defaultBranch = "main"
+
+[merge]
+	stat = "true"
+
+[pull]
+	ff = "only"
+
+[push]
+	default = "upstream"
+	followTags = true
+
+[rebase]
+	autoSquash = "true"
+
+[repack]
+	usedeltabaseoffset = "true"
+
+[rerere]
+	autoUpdate = true
+	enabled = true
+
+[tag]
+	gpgSign = true
+
+[url "git@github.com:"]
+	insteadOf = "https://github.com/"
+
+[user]
+	email = "gipphe@gmail.com"
+	name = "Victor Nascimento Bakke"
+	signingKey = "23723701395B436C"
+
+[includeIf "gitdir:**/strise/**/.git"]
+	path = "/nix/store/cim7yi7jk1jggnl0351i114s3jlz8izf-hm_gitconfig"

@@ -1,4 +1,10 @@
 {
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
   programs.git = {
     enable = true;
     userName = "Victor Nascimento Bakke";
@@ -172,4 +178,10 @@
       hide-flake = "!git add --intent-to-add flake.nix flake.lock && git update-index --assume-unchanged flake.nix flake.lock";
     };
   };
+  home.activation.copy-git-config-for-windows =
+    let
+      inherit (import ../../util.nix { inherit pkgs lib; }) mkCopyActivationScript;
+      script = mkCopyActivationScript "${config.xdg.configHome}/git" "${config.home.homeDirectory}/projects/dotfiles/windows/Config/git";
+    in
+    "run ${script}/bin/script";
 }
