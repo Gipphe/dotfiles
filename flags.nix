@@ -31,7 +31,8 @@ in
           "nixos"
           "nix-darwin"
         ];
-        example = "nixos";
+        example = "nix-darwin";
+        default = "nixos";
       };
       global-nix = mkRequired "system.global-nix" lib.mkEnableOption "global Nix config";
       systemd = mkRequired "system.systemd" lib.mkEnableOption "systemd stuff";
