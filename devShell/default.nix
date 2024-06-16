@@ -57,6 +57,21 @@
       category = "utils";
     }
 
+    # Nix utils
+    {
+      help = "Track distribution of PR";
+      name = "nix:pr";
+      command = ''
+        if test -z "$1"; then
+          echo "Usage: nix:pr <pr number>"
+          exit 1
+        fi
+        prg=$(command -v open || command -v xdg-open)
+        eval "$prg 'https://nixpk.gs/pr-tracker.html?pr=$1'"
+      '';
+      category = "nix utils";
+    }
+
     # Linting
     {
       help = "Check .nix files with statix";
