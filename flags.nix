@@ -43,6 +43,13 @@ in
       isNixDarwin = alias (config.gipphe.flags.system.type == "nix-darwin");
     };
 
+    display.terminal.font.size = lib.mkOptions {
+      description = "Terminal font size";
+      type = types.int;
+      default = 11;
+      example = 12;
+    };
+
     aux = {
       audio = mkRequired "aux.audio" lib.mkEnableOption "audio management";
       nvidia = mkRequired "aux.nvidia" lib.mkEnableOption "Nvidia GPU drivers";
