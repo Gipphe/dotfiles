@@ -68,7 +68,7 @@ let
           systemd = true;
         };
         use-case = {
-          work = true;
+          work = false;
           cli = true;
           gaming = true;
         };
