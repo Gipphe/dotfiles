@@ -1,12 +1,12 @@
 {
   lib,
+  config,
   flags,
   pkgs,
   ...
 }:
 let
-  inherit (import ./paths.nix { inherit lib flags pkgs; }) darwinOptionsDir linuxOptionsDir;
-  inherit (import ./plugins.nix { inherit lib flags pkgs; }) plugins;
+  inherit (import ./utils.nix { inherit lib flags pkgs; }) darwinOptionsDir linuxOptionsDir;
   mkConfig = optionsDir: {
     "${optionsDir}/colors.scheme.xml".text = ''
       <application>
@@ -43,12 +43,24 @@ let
     '';
   };
   darwinConfig = lib.mkIf flags.system.isNixDarwin { home.file = mkConfig darwinOptionsDir; };
-  linuxConfig = lib.mkIf (!flags.system.isNixDarwin) {
-    xdg.dataFile = plugins;
-    xdg.configFile = mkConfig linuxOptionsDir;
-  };
+  linuxConfig = lib.mkIf (!flags.system.isNixDarwin) { xdg.configFile = mkConfig linuxOptionsDir; };
 in
-lib.mkMerge [
-  darwinConfig
-  linuxConfig
-]
+{
+  config = lib.mkIf config.programs.idea-ultimate.enable (
+    lib.mkMerge [
+      darwinConfig
+      linuxConfig
+      {
+        home.file.".ideavimrc".text = ''
+          set number
+          set relativenumber
+
+          set scrolloff=8
+
+          set visualbell
+          set noerrorbells
+        '';
+      }
+    ]
+  );
+}
