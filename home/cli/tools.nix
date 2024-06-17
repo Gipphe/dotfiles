@@ -33,7 +33,7 @@
         git_protocol = "https";
         aliases = {
           co = "pr checkout";
-          prc = "pr create -df";
+          prc = "pr create -d --fill-first";
           prm = "pr merge --auto -sd";
         };
       };
