@@ -75,6 +75,7 @@
       ci = "commit";
       cp = "cherry-pick";
       pp = "pull --prune";
+      puf = "push --force-with-lease";
       gr = ''log --graph --full-history --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s"'';
       lol = "log --decorate --oneline --graph --all";
       lof = "log --oneline --decorate --all --graph --first-parent";
