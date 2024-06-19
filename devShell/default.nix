@@ -72,6 +72,12 @@
       '';
       category = "nix utils";
     }
+    {
+      help = "View store path sizes";
+      name = "nix:du";
+      comamnd = "nix path-info -rS /run/current-system | sort -nk2";
+      category = "nix utils";
+    }
 
     # Linting
     {
