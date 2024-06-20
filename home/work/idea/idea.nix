@@ -1,4 +1,5 @@
 {
+  inputs,
   lib,
   flags,
   pkgs,
@@ -29,9 +30,10 @@ in
 
       (lib.mkIf flags.system.isNixDarwin {
         home.packages = [
-          (pkgs.writeShellScriptBin "idea" ''
-            open -na "IntelliJ IDEA.app" --args "$@"
-          '')
+          # (pkgs.writeShellScriptBin "idea" ''
+          #   open -na "IntelliJ IDEA.app" --args "$@"
+          # '')
+          inputs.brew-nix.packages.${pkgs.system}.intellij-idea
         ];
       })
     ]

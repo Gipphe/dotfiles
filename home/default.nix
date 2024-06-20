@@ -9,12 +9,14 @@
     inputs.catppuccin.homeManagerModules.catppuccin
 
     ./audio
+    ./programs
     ./cli
     ./core
+    ./darwin.nix
     ./desktop
     ./services
+    ./term.nix
     ./theme.nix
     ./work
-    ./term.nix
   ] ++ (lib.optionals flags.system.isNixDarwin [ inputs.mac-app-util.homeManagerModules.default ]);
 }

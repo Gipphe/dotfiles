@@ -79,7 +79,10 @@ in
     use-case = {
       cli = mkRequired "use-case.cli" lib.mkEnableOption "CLI stuff";
       work = mkRequired "use-case.work" lib.mkEnableOption "features and stuff for work";
-      gaming = mkRequired "use-case.gaming" lib.mkEnableOption "gaming stuff";
+      personal = {
+        enable = mkRequired "use-case.personal.enable" lib.mkEnableOption "personal";
+        gaming = mkRequired "use-case.gaming" lib.mkEnableOption "gaming stuff";
+      };
     };
 
     virtualisation = {

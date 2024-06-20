@@ -16,8 +16,8 @@ let
         };
         use-case = {
           cli = true;
-          gaming = false;
           work = true;
+          personal.enable = false;
         };
         virtualisation = {
           wsl = true;
@@ -47,6 +47,7 @@ let
         };
         use-case = {
           work = false;
+          personal.enable = false;
         };
         bootloader.type = "grub";
         virtualisation = {
@@ -70,7 +71,10 @@ let
         use-case = {
           work = false;
           cli = true;
-          gaming = true;
+          personal = {
+            enable = true;
+            gaming = true;
+          };
         };
         desktop = {
           enable = true;
@@ -106,6 +110,7 @@ let
         };
         use-case = {
           work = true;
+          personal.enable = false;
         };
         aux = {
           audio = false;

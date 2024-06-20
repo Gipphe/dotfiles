@@ -272,6 +272,16 @@
 
     mac-app-util.url = "github:hraban/mac-app-util";
 
+    brew-nix = {
+      url = "github:BatteredBunny/brew-nix";
+      inputs.brew-api.follows = "brew-api";
+    };
+
+    brew-api = {
+      url = "github:BatteredBunny/brew-api";
+      flake = false;
+    };
+
     flake-compat.url = "github:edolstra/flake-compat";
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "sys-default";
