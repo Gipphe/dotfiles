@@ -1,16 +1,8 @@
 { inputs, ... }:
 {
   imports = [
-    inputs.nix-index-db.hmModules.nix-index
-    ./fish
-    ./git.nix
-    ./neovim
-    ./nixvim
-    ./packages.nix
     ./run-as-service.nix
-    ./tmux
     ./tools.nix
-    ./zellij
   ];
 
   home.sessionVariables.PAGER = "less -FXR";

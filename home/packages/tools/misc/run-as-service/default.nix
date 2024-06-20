@@ -30,5 +30,15 @@ let
   '';
 in
 {
-  config = lib.mkIf flags.system.systemd { home.packages = [ run-as-service ]; };
+  options.gipphe.programs.run-as-service.enable = lib.mkEnableOption "run-as-service";
+  config = lib.mkIf config.gipphe.programs.run-as-service.enable {
+    home.packages = [
+      (
+        if flags.system.isNixDarwin then
+          throw "run-as-service is not available on nix-darwin since darwin does not use systemd."
+        else
+          run-as-service
+      )
+    ];
+  };
 }
