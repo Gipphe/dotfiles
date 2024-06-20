@@ -18,9 +18,7 @@ in
     ./plugins
   ];
   options.gipphe.programs.nixvim = {
-    enable = lib.mkEnableOption "nixvim" // {
-      default = !config.programs.neovim.enable;
-    };
+    enable = lib.mkEnableOption "nixvim";
   };
   config = lib.mkIf cfg.enable {
     programs.nixvim = {

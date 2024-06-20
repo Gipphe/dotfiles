@@ -9,9 +9,7 @@ let
   cfg = config.gipphe.programs.zellij;
 in
 {
-  options.gipphe.programs.zellij = {
-    enable = lib.mkEnableOption "zellij";
-  };
+  options.gipphe.programs.zellij.enable = lib.mkEnableOption "zellij";
   config = lib.mkIf cfg.enable {
     home.file = {
       "zellij-plugins/zellij_forgot.wasm".source = pkgs.fetchurl {
@@ -33,12 +31,10 @@ in
         package = inputs.nixpkgs-master.legacyPackages.${pkgs.system}.zellij;
       };
 
-      fish = lib.mkIf config.programs.zellij.enable {
-        shellAbbrs = {
-          tmux = "zellij";
-          mux = "zellij --layout";
-          zq = "zellij kill-session $ZELLIJ_SESSION_NAME";
-        };
+      fish.shellAbbrs = {
+        tmux = "zellij";
+        mux = "zellij --layout";
+        zq = "zellij kill-session $ZELLIJ_SESSION_NAME";
       };
     };
   };

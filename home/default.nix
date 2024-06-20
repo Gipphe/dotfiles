@@ -8,6 +8,7 @@
   imports = [
     inputs.catppuccin.homeManagerModules.catppuccin
 
+    ./packages
     ./audio
     ./programs
     ./cli

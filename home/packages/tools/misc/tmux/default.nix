@@ -6,15 +6,16 @@
 }:
 let
   cfg = config.gipphe.programs.tmux;
+  inherit (lib.attrsets) filterAttrs;
+  inherit (builtins)
+    readDir
+    attrNames
+    foldl'
+    readFile
+    ;
 in
-with builtins;
-with lib.attrsets;
 {
-  options.gipphe.programs.tmux = {
-    enable = lib.mkEnableOption "tmux" // {
-      default = true;
-    };
-  };
+  options.gipphe.programs.tmux.enable = lib.mkEnableOption "tmux";
   config = lib.mkIf cfg.enable {
     home.file =
       let
@@ -33,10 +34,10 @@ with lib.attrsets;
       escapeTime = 10;
       mouse = true;
       keyMode = "vi";
-      plugins = with pkgs; [
-        { plugin = tmuxPlugins.sensible; }
-        { plugin = tmuxPlugins.vim-tmux-navigator; }
-        { plugin = tmuxPlugins.yank; }
+      plugins = with pkgs.tmuxPlugins; [
+        { plugin = sensible; }
+        { plugin = vim-tmux-navigator; }
+        { plugin = yank; }
       ];
       extraConfig = readFile ./tmux.conf;
       tmuxinator.enable = true;

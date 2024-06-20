@@ -9,9 +9,7 @@ let
 in
 {
   options.gipphe.programs.neovim = {
-    enable = lib.mkEnableOption "neovim" // {
-      default = true;
-    };
+    enable = lib.mkEnableOption "neovim";
   };
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
