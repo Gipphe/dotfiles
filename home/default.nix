@@ -1,4 +1,9 @@
-{ inputs, ... }:
+{
+  flags,
+  lib,
+  inputs,
+  ...
+}:
 {
   imports = [
     inputs.catppuccin.homeManagerModules.catppuccin
@@ -11,5 +16,5 @@
     ./theme.nix
     ./work
     ./term.nix
-  ];
+  ] ++ (lib.optionals flags.system.isNixDarwin [ inputs.mac-app-util.homeManagerModules.default ]);
 }

@@ -269,6 +269,9 @@
         flake-compat.follows = "flake-compat";
       };
     };
+
+    mac-app-util.url = "github:hraban/mac-app-util";
+
     flake-compat.url = "github:edolstra/flake-compat";
     flake-utils.url = "github:numtide/flake-utils";
     flake-utils.inputs.systems.follows = "sys-default";
