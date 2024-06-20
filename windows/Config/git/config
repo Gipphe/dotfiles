@@ -41,6 +41,7 @@
 	pp = "pull --prune"
 	pub = "!git publish"
 	publish = "!git push -u origin $(git branch-name)"
+	puf = "push --force-with-lease"
 	rb = "!git rebase-branch"
 	rebase-branch = "!git rebase -i $(git merge-base master HEAD)"
 	rec = "!git recreate"
@@ -76,16 +77,16 @@
 	credentialStore = "gpg"
 
 [credential "https://gist.github.com"]
-	helper = "/nix/store/biinwbg4g09i66nnrj2gp2blx23xv3kf-gh-2.50.0/bin/gh auth git-credential"
+	helper = "/nix/store/l55ps1jsnaqzc05nr09r7w4zb6zdk6wx-gh-2.50.0/bin/gh auth git-credential"
 
 [credential "https://github.com"]
-	helper = "/nix/store/biinwbg4g09i66nnrj2gp2blx23xv3kf-gh-2.50.0/bin/gh auth git-credential"
+	helper = "/nix/store/l55ps1jsnaqzc05nr09r7w4zb6zdk6wx-gh-2.50.0/bin/gh auth git-credential"
 
 [diff]
-	external = "/nix/store/kpqp6lha96mc9addaqz0rz6k1p5nnc0g-difftastic-0.58.0/bin/difft --color auto --background light --display side-by-side"
+	external = "/nix/store/b9p74avahzfb92wyjwhzmz55m0kmmc5i-difftastic-0.58.0/bin/difft --color auto --background light --display side-by-side"
 
 [gpg]
-	program = "/nix/store/94sh4d6iv54y6zwdqjzdrs77zj1pzsq1-gnupg-2.4.5/bin/gpg2"
+	program = "/nix/store/v36k6iamlkf7ib87w4fp337k9v44dp53-gnupg-2.4.5/bin/gpg2"
 
 [init]
 	defaultBranch = "main"
@@ -122,4 +123,4 @@
 	signingKey = "23723701395B436C"
 
 [includeIf "gitdir:**/strise/**/.git"]
-	path = "/nix/store/cim7yi7jk1jggnl0351i114s3jlz8izf-hm_gitconfig"
+	path = "/nix/store/xdi755wsqgj8p6xpf9srl8dkac732hxn-hm_gitconfig"
