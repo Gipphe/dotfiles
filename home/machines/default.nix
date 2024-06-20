@@ -1,0 +1,4 @@
+{ util, ... }:
+{
+  import = util.importSiblingDirs ./.;
+}

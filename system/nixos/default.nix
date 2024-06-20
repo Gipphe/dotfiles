@@ -17,5 +17,6 @@ lib.optionalAttrs flags.system.isNixos {
     ./user
     ./virtualbox.nix
     ./wsl.nix
+    ../../home/nixos.nix
   ];
 }

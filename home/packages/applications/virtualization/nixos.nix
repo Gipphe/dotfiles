@@ -1,0 +1,4 @@
+{ util, ... }:
+{
+  imports = util.importSiblingNixOSDirs ./.;
+}

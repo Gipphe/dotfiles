@@ -26,6 +26,9 @@ let
       recurseAttrs x
     else
       f x;
+in
+{
+  inherit recursiveMap;
 
   importSiblings =
     let
@@ -39,13 +42,16 @@ let
       (lib.attrsets.foldlAttrs go [ ])
       (builtins.map (f: "./${f}"))
     ];
-in
-{
-  inherit recursiveMap importSiblings;
   mkCopyActivationScript =
     fromDir: toDir:
     pkgs.writeShellScriptBin "script" ''
       rm -rf "${toDir}"
       cp -rL "${fromDir}" "${toDir}"
     '';
+
+  setCaskHash =
+    cask: hash:
+    cask.overrideAttrs (c: {
+      src = cask.src.overrideAttrs { outputHash = hash; };
+    });
 }

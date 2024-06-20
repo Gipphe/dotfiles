@@ -12,6 +12,7 @@ lib.optionalAttrs flags.system.isNixDarwin {
     ./homebrew.nix
     ./nix.nix
     ./user.nix
+    ../../home/nix-darwin.nix
   ];
 
   programs.zsh.enable = true;
