@@ -9,7 +9,7 @@
       desktop = {
         work.enable = true;
       };
-      libraries.fontconfig = true;
+      libraries.fonts = true;
     };
   };
 }

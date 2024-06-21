@@ -1,104 +1,91 @@
 { utils, ... }:
 {
-  imports = utils.importHmModules ./.;
-  # imports = [
-  #   ./machines/Jarle/default.nix
-  #   ./machines/VNB-MB-Pro/default.nix
-  #   ./machines/default.nix
-  #   ./machines/nixos-vm/default.nix
-  #   ./machines/trond-arne/default.nix
-  #   ./packages/applications/audio/spotify-player/default.nix
-  #   ./packages/applications/editors/idea/default.nix
-  #   ./packages/applications/editors/neovim/default.nix
-  #   ./packages/applications/editors/nixvim/default.nix
-  #   ./packages/applications/editors/nixvim/options/default.nix
-  #   ./packages/applications/editors/nixvim/plugins/default.nix
-  #   ./packages/applications/editors/nixvim/plugins/haskell/default.nix
-  #   ./packages/applications/editors/nixvim/plugins/jsts/default.nix
-  #   ./packages/applications/editors/nixvim/plugins/python/default.nix
-  #   ./packages/applications/editors/vim/default.nix
-  #   ./packages/applications/file-managers/nnn/default.nix
-  #   ./packages/applications/graphics/gimp/default.nix
-  #   ./packages/applications/graphics/imagemagick/default.nix
-  #   ./packages/applications/graphics/xnviewmp/default.nix
-  #   ./packages/applications/misc/1password/default.nix
-  #   ./packages/applications/misc/1password-gui/default.nix
-  #   ./packages/applications/misc/barrier/default.nix
-  #   ./packages/applications/misc/lutris/default.nix
-  #   ./packages/applications/misc/neo4j-desktop/default.nix
-  #   ./packages/applications/misc/notion/default.nix
-  #   ./packages/applications/misc/obsidian/default.nix
-  #   ./packages/applications/networking/browsers/vivaldi/default.nix
-  #   ./packages/applications/networking/cyberduck/default.nix
-  #   ./packages/applications/networking/discord/default.nix
-  #   ./packages/applications/networking/filen/default.nix
-  #   ./packages/applications/networking/slack/default.nix
-  #   ./packages/applications/terminal-emulators/cool-retro-term/default.nix
-  #   ./packages/applications/terminal-emulators/kitty/default.nix
-  #   ./packages/applications/terminal-emulators/wezterm/default.nix
-  #   ./packages/applications/version-management/gh/default.nix
-  #   ./packages/applications/version-management/git/default.nix
-  #   ./packages/applications/version-management/glab/default.nix
-  #   ./packages/applications/version-management/jujutsu/default.nix
-  #   ./packages/applications/virtualization/docker/default.nix
-  #   ./packages/audio/bcn/default.nix
-  #   ./packages/audio/cava/default.nix
-  #   ./packages/audio/mpc-cli/default.nix
-  #   ./packages/core/default.nix
-  #   ./packages/development/compilers/libgcc/default.nix
-  #   ./packages/development/libraries/fontconfig/default.nix
-  #   ./packages/development/tools/fastgron/default.nix
-  #   ./packages/development/tools/jq/default.nix
-  #   ./packages/environment/desktop/hyprland/default.nix
-  #   ./packages/environment/desktop/hyprland/rice/default.nix
-  #   ./packages/environment/desktop/hyprland/rice/hyprland/default.nix
-  #   ./packages/environment/small-memory-wallpaper/default.nix
-  #   ./packages/environment/theme/catppuccin/default.nix
-  #   ./packages/os-specific/darwin/alt-tab/default.nix
-  #   ./packages/os-specific/darwin/karabiner-elements/default.nix
-  #   ./packages/os-specific/darwin/linearmouse/default.nix
-  #   ./packages/os-specific/darwin/logi-options-plus/default.nix
-  #   ./packages/os-specific/darwin/openvpn-connect/default.nix
-  #   ./packages/shells/fish/default.nix
-  #   ./packages/shells/fish/starship/default.nix
-  #   ./packages/shells/fish/starship/presets/bracketedSegments/default.nix
-  #   ./packages/shells/fish/starship/presets/catppuccinPalette/default.nix
-  #   ./packages/shells/fish/starship/presets/default.nix
-  #   ./packages/shells/fish/starship/presets/nerdfontSymbols/default.nix
-  #   ./packages/shells/fish/starship/presets/p3rception/default.nix
-  #   ./packages/shells/fish/starship/presets/pastelPowerline/default.nix
-  #   ./packages/shells/fish/starship/presets/tokyoNight/default.nix
-  #   ./packages/tools/admin/google-cloud-sdk/default.nix
-  #   ./packages/tools/filesystem/bat/default.nix
-  #   ./packages/tools/filesystem/eza/default.nix
-  #   ./packages/tools/misc/direnv/default.nix
-  #   ./packages/tools/misc/entr/default.nix
-  #   ./packages/tools/misc/fd/default.nix
-  #   ./packages/tools/misc/run-as-service/default.nix
-  #   ./packages/tools/misc/thefuck/default.nix
-  #   ./packages/tools/misc/tmux/default.nix
-  #   ./packages/tools/misc/xclip/default.nix
-  #   ./packages/tools/misc/zellij/default.nix
-  #   ./packages/tools/misc/zoxide/default.nix
-  #   ./packages/tools/networking/curl/default.nix
-  #   ./packages/tools/networking/ssh/default.nix
-  #   ./packages/tools/package-management/homebrew/default.nix
-  #   ./packages/tools/package-management/nix-index/default.nix
-  #   ./packages/tools/security/gpg/default.nix
-  #   ./packages/tools/text/fzf/default.nix
-  #   ./packages/tools/text/gnused/default.nix
-  #   ./packages/tools/text/gnutar/default.nix
-  #   ./packages/tools/text/less/default.nix
-  #   ./packages/tools/text/ripgrep/default.nix
-  #   ./profiles/core/audio/default.nix
-  #   ./profiles/core/default.nix
-  #   ./profiles/core/systemd/default.nix
-  #   ./profiles/desktop/darwin/default.nix
-  #   ./profiles/desktop/darwin/logitech/default.nix
-  #   ./profiles/desktop/default.nix
-  #   ./profiles/desktop/gaming/default.nix
-  #   ./profiles/desktop/kvm/default.nix
-  #   ./profiles/desktop/work/default.nix
-  #   ./profiles/libraries/fontconfig/default.nix
-  # ];
+  # imports = utils.importSubdirs "default.nix" ./.;
+  imports = [
+    ./machines
+    ./machines/Jarle
+    ./machines/VNB-MB-Pro
+    ./machines/nixos-vm
+    ./machines/trond-arne
+    ./packages/applications/audio/spotify-player
+    ./packages/applications/editors/idea
+    ./packages/applications/editors/neovim
+    ./packages/applications/editors/nixvim
+    ./packages/applications/editors/vim
+    ./packages/applications/file-managers/nnn
+    ./packages/applications/graphics/gimp
+    ./packages/applications/graphics/imagemagick
+    ./packages/applications/graphics/xnviewmp
+    ./packages/applications/misc/1password
+    ./packages/applications/misc/1password-gui
+    ./packages/applications/misc/barrier
+    ./packages/applications/misc/lutris
+    ./packages/applications/misc/neo4j-desktop
+    ./packages/applications/misc/notion
+    ./packages/applications/misc/obsidian
+    ./packages/applications/networking/browsers/vivaldi
+    ./packages/applications/networking/cyberduck
+    ./packages/applications/networking/discord
+    ./packages/applications/networking/filen
+    ./packages/applications/networking/slack
+    ./packages/applications/terminal-emulators/cool-retro-term
+    ./packages/applications/terminal-emulators/kitty
+    ./packages/applications/terminal-emulators/wezterm
+    ./packages/applications/version-management/gh
+    ./packages/applications/version-management/git
+    ./packages/applications/version-management/glab
+    ./packages/applications/version-management/jujutsu
+    ./packages/applications/virtualization/docker
+    ./packages/audio/bcn
+    ./packages/audio/cava
+    ./packages/audio/mpc-cli
+    ./packages/core
+    ./packages/development/compilers/libgcc
+    ./packages/development/libraries/fontconfig
+    ./packages/development/tools/fastgron
+    ./packages/development/tools/jq
+    ./packages/environment/desktop/hyprland
+    ./packages/environment/desktop/hyprland/rice
+    ./packages/environment/desktop/hyprland/rice/hyprland
+    ./packages/environment/small-memory-wallpaper
+    ./packages/environment/theme/catppuccin
+    ./packages/os-specific/darwin/alt-tab
+    ./packages/os-specific/darwin/karabiner-elements
+    ./packages/os-specific/darwin/linearmouse
+    ./packages/os-specific/darwin/logi-options-plus
+    ./packages/os-specific/darwin/openvpn-connect
+    ./packages/shells/fish
+    ./packages/tools/admin/google-cloud-sdk
+    ./packages/tools/filesystem/bat
+    ./packages/tools/filesystem/eza
+    ./packages/tools/misc/direnv
+    ./packages/tools/misc/entr
+    ./packages/tools/misc/fd
+    ./packages/tools/misc/run-as-service
+    ./packages/tools/misc/thefuck
+    ./packages/tools/misc/tmux
+    ./packages/tools/misc/xclip
+    ./packages/tools/misc/zellij
+    ./packages/tools/misc/zoxide
+    ./packages/tools/networking/curl
+    ./packages/tools/networking/ssh
+    ./packages/tools/package-management/homebrew
+    ./packages/tools/package-management/nix-index
+    ./packages/tools/security/gpg
+    ./packages/tools/text/fzf
+    ./packages/tools/text/gnused
+    ./packages/tools/text/gnutar
+    ./packages/tools/text/less
+    ./packages/tools/text/ripgrep
+    ./profiles/core
+    ./profiles/core/audio
+    ./profiles/core/systemd
+    ./profiles/desktop
+    ./profiles/desktop/darwin
+    ./profiles/desktop/darwin/logitech
+    ./profiles/desktop/gaming
+    ./profiles/desktop/kvm
+    ./profiles/desktop/work
+    ./profiles/libraries/fonts
+  ];
 }

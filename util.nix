@@ -7,10 +7,11 @@ let
     isAttrs
     listToAttrs
     readDir
+    flatten
     attrNames
     ;
   inherit (lib.filesystem) listFilesRecursive;
-  inherit (lib.attrsets) foldlAttrs;
+  inherit (lib.attrsets) foldlAttrs filterAttrs;
 
   recursiveMap =
     f: x:
@@ -71,6 +72,14 @@ let
 
   recurseFirstMatching =
     file: dir:
+    lib.pipe dir [
+      readDir
+      (filterAttrs (name: _: name != file))
+      (map (recurseFirstMatching' file))
+      flatten
+    ];
+  recurseFirstMatching' =
+    file: dir:
     let
       items = readDir dir;
     in
@@ -79,7 +88,7 @@ let
     else
       foldlAttrs (
         acc: name: type:
-        if type == "directory" then acc ++ importModules file /.${dir}/${name} else acc
+        if type == "directory" then acc ++ recurseFirstMatching' file /.${dir}/${name} else acc
       ) [ ] items;
 
   importHmModules = recurseFirstMatching "default.nix";
