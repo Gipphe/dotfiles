@@ -12,6 +12,6 @@
     extraSpecialArgs = {
       inherit self inputs flags;
     };
-    users.${flags.user.username}.imports = [ ../../home ];
+    users.${flags.user.username}.imports = [ ../../../default.nix ];
   };
 }
