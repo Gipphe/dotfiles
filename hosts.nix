@@ -3,6 +3,7 @@ let
   machines = {
     Jarle = {
       system = "x86_64-linux";
+      gipphe.machine = "Jarle";
       flags = {
         user = {
           username = "gipphe";
@@ -36,6 +37,7 @@ let
     };
     nixos-vm = {
       system = "x86_64-linux";
+      gipphe.machine = "nixos-vm";
       flags = {
         user = {
           username = "gipphe";
@@ -57,6 +59,7 @@ let
     };
     trond-arne = {
       system = "x86_64-linux";
+      gipphe.machine = "trond-arne";
       flags = {
         user = {
           username = "gipphe";
@@ -97,6 +100,7 @@ let
     };
     VNB-MB-Pro = {
       system = "aarch64-darwin";
+      gipphe.machine = "VNB-MB-Pro";
       flags = {
         user = {
           username = "victor";
@@ -150,14 +154,20 @@ let
 
   mkMachine =
     mkSystem: extraModules: hostname: config:
+    let
+      inherit (machineOptions.${hostname}.config.gipphe) flags;
+    in
     mkSystem {
       inherit (config) system;
       specialArgs = {
         inherit inputs self;
-        inherit (machineOptions.${hostname}.config.gipphe) flags;
+        inherit flags;
         utils = import ./util.nix { inherit (utilPkgs) writeShellScriptBin lib system; };
       };
-      modules = extraModules ++ [ ./system ];
+      modules = extraModules ++ [
+        { home-manager.users.${flags.user.username}.gipphe = config.gipphe; }
+        ./system
+      ];
     };
 in
 {

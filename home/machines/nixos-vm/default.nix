@@ -10,7 +10,7 @@
       desktop = {
         enable = true;
       };
-      libraries.fonts = true;
+      libraries.fonts.enable = true;
     };
   };
 }
