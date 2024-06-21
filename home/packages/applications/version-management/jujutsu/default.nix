@@ -1,7 +1,7 @@
 { lib, config, ... }:
 {
   options.gipphe.programs.jujutsu.enable = lib.mkEnableOption "jujutsu";
-  config = lib.mkIf config.giphe.programs.jujutsu.enable {
+  config = lib.mkIf config.gipphe.programs.jujutsu.enable {
     programs.jujutsu = {
       enable = true;
       settings = {

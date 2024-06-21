@@ -1,11 +1,5 @@
 { lib, config, ... }:
 {
-  imports = [
-    ./work
-    ./gaming
-    ./darwin
-    ./kvm
-  ];
   options.gipphe.profiles.desktop.enable = lib.mkEnableOption "desktop profile";
   config = lib.mkIf config.gipphe.profiles.desktop.enable {
     gipphe = {

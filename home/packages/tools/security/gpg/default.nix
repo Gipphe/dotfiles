@@ -19,7 +19,7 @@
         };
       })
 
-      (lib.mkIF flags.system.isNixDarwin {
+      (lib.mkIf flags.system.isNixDarwin {
         programs.fish.shellInit = ''
           set -gx GPG_TTY $(tty)
         '';

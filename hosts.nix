@@ -143,19 +143,21 @@ let
       ];
     }
   ) machines;
-  nixosConfigurations = mapAttrs (mkMachine nixosSystem) nixosMachines;
+  nixosConfigurations = mapAttrs (mkMachine nixosSystem [ ./home/nixos.nix ]) nixosMachines;
 
-  darwinConfigurations = mapAttrs (mkMachine darwinSystem) darwinMachines;
+  darwinConfigurations = mapAttrs (mkMachine darwinSystem [ ./home/nix-darwin.nix ]) darwinMachines;
+  utilPkgs = nixpkgs.legacyPackages."x86_64-linux";
 
   mkMachine =
-    mkSystem: hostname: config:
+    mkSystem: extraModules: hostname: config:
     mkSystem {
       inherit (config) system;
       specialArgs = {
         inherit inputs self;
         inherit (machineOptions.${hostname}.config.gipphe) flags;
+        utils = import ./util.nix { inherit (utilPkgs) writeShellScriptBin lib system; };
       };
-      modules = [ ./system ];
+      modules = extraModules ++ [ ./system ];
     };
 in
 {

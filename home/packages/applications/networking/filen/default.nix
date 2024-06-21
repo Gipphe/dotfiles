@@ -5,7 +5,7 @@
   inputs,
   config,
   system,
-  util,
+  utils,
   ...
 }:
 let
@@ -40,7 +40,7 @@ in
       (lib.mkIf flags.system.isNixos { home.packages = [ package ]; })
       (lib.mkIf flags.system.isNixDarwin {
         home.packages = [
-          (util.setCaskHash inputs.brew-nix.packages.${system}.filen
+          (utils.setCaskHash inputs.brew-nix.packages.${system}.filen
             "sha256-ewoPrA8HuYftz9tvp7OUgDqikKhPZ7WOVyWH83oADJQ="
           )
         ];

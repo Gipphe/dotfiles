@@ -46,7 +46,7 @@ let
   linuxConfig = lib.mkIf (!flags.system.isNixDarwin) { xdg.configFile = mkConfig linuxOptionsDir; };
 in
 {
-  config = lib.mkIf config.programs.idea-ultimate.enable (
+  config = lib.mkIf config.gipphe.programs.idea-ultimate.enable (
     lib.mkMerge [
       darwinConfig
       linuxConfig

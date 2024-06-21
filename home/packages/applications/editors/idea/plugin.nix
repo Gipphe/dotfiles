@@ -10,7 +10,7 @@ let
   inherit (lib) hasSuffix pipe;
   inherit (pkgs) fetchzip stdenv;
   inherit (builtins) fetchurl listToAttrs;
-  cfg = config.programs.idea-ultimate;
+  cfg = config.gipphe.programs.idea-ultimate;
 
   mkPluginEntry = id: plugin: {
     name = "${ideaDir}/${plugin.name}";

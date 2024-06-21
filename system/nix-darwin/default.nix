@@ -9,7 +9,6 @@ lib.optionalAttrs flags.system.isNixDarwin {
     inputs.home-manager.darwinModules.home-manager
     inputs.mac-app-util.darwinModules.default
     ./rice.nix
-    ./homebrew.nix
     ./nix.nix
     ./user.nix
     ../../home/nix-darwin.nix

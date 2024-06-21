@@ -2,7 +2,7 @@
 {
   options.gipphe.programs.vim.enable = lib.mkEnableOption "vim";
   config = lib.mkIf config.gipphe.programs.vim.enable {
-    progras.vim = {
+    programs.vim = {
       enable = false;
       settings = {
         # Size of a hard tabstop

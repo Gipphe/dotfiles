@@ -6,11 +6,8 @@
   config,
   ...
 }:
-let
-  cfg = config.programs.idea-ultimate;
-in
 {
-  config = lib.mkIf cfg.enable (
+  config = lib.mkIf config.gipphe.programs.idea-ultimate.enable (
     lib.mkMerge [
       (lib.mkIf (!flags.system.isNixDarwin) {
         home = {

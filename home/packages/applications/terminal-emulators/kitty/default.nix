@@ -6,7 +6,7 @@
   ...
 }:
 {
-  options.gipphe.programs.kitty.enable = lib.mkEnable "kitty";
+  options.gipphe.programs.kitty.enable = lib.mkEnableOption "kitty";
   config = lib.mkIf config.gipphe.programs.kitty.enable {
     programs.kitty = {
       enable = true;
