@@ -77,16 +77,16 @@
 	credentialStore = "gpg"
 
 [credential "https://gist.github.com"]
-	helper = "/nix/store/l55ps1jsnaqzc05nr09r7w4zb6zdk6wx-gh-2.50.0/bin/gh auth git-credential"
+	helper = "/nix/store/flq1szdy6pvm50f348ik03x8058kf0b6-gh-2.50.0/bin/gh auth git-credential"
 
 [credential "https://github.com"]
-	helper = "/nix/store/l55ps1jsnaqzc05nr09r7w4zb6zdk6wx-gh-2.50.0/bin/gh auth git-credential"
+	helper = "/nix/store/flq1szdy6pvm50f348ik03x8058kf0b6-gh-2.50.0/bin/gh auth git-credential"
 
 [diff]
-	external = "/nix/store/b9p74avahzfb92wyjwhzmz55m0kmmc5i-difftastic-0.58.0/bin/difft --color auto --background light --display side-by-side"
+	external = "/nix/store/9c204ipyhya66vk27zr7m1f9c1php5xv-difftastic-0.58.0/bin/difft --color auto --background light --display side-by-side"
 
 [gpg]
-	program = "/nix/store/v36k6iamlkf7ib87w4fp337k9v44dp53-gnupg-2.4.5/bin/gpg2"
+	program = "/nix/store/h7qn6nl04qplrsnqlgwxp72rsg4cil9r-gnupg-2.4.5/bin/gpg2"
 
 [init]
 	defaultBranch = "main"
@@ -123,4 +123,4 @@
 	signingKey = "23723701395B436C"
 
 [includeIf "gitdir:**/strise/**/.git"]
-	path = "/nix/store/xdi755wsqgj8p6xpf9srl8dkac732hxn-hm_gitconfig"
+	path = "/nix/store/2kw7q4kbp55apnah7hk41mzampgkwv4d-hm_gitconfig"
