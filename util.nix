@@ -2,14 +2,15 @@
 let
   inherit (builtins)
     filter
+    hasAttr
     map
     isList
     isAttrs
     listToAttrs
     readDir
-    flatten
     attrNames
     ;
+  inherit (lib) flatten;
   inherit (lib.filesystem) listFilesRecursive;
   inherit (lib.attrsets) foldlAttrs filterAttrs;
 
@@ -74,7 +75,9 @@ let
     file: dir:
     lib.pipe dir [
       readDir
-      (filterAttrs (name: _: name != file))
+      (filterAttrs (_: type: type == "directory"))
+      attrNames
+      (map (d: /.${dir}/${d}))
       (map (recurseFirstMatching' file))
       flatten
     ];
@@ -83,7 +86,7 @@ let
     let
       items = readDir dir;
     in
-    if items ? ${file} && items.${file} == "regular" then
+    if hasAttr file items && items.${file} == "regular" then
       [ /.${dir}/${file} ]
     else
       foldlAttrs (
