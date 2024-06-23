@@ -1,5 +1,4 @@
-{ lib, config, ... }:
+{ lib, flags, ... }:
 {
-  options.gipphe.programs.nnn.enable = lib.mkEnableOption "nnn";
-  config = lib.mkIf config.gipphe.programs.nnn.enable { programs.nnn.enable = true; };
+  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
 }

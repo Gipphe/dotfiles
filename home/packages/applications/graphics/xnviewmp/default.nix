@@ -8,7 +8,7 @@
   ...
 }:
 {
-  options.gipphe.programs.xnviewmp.enable = lib.mkEnableOption "xnviewmp";
+  imports = [ ./options.nix ];
   config = lib.mkIf (config.gipphe.programs.xnviewmp.enable && flags.system.isNixDarwin) {
     home.packages = [
       (utils.setCaskHash inputs.brew-nix.packages.${system}.xnviewmp
