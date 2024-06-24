@@ -1,11 +1,6 @@
+{ lib, config, ... }:
 {
-  lib,
-  config,
-  hmConfig,
-  ...
-}:
-{
-  config = lib.mkIf (config.homebrew.enable && hmConfig.gipphe.programs._1password.enable) {
+  config = lib.mkIf (config.homebrew.enable && config.gipphe.programs._1password.enable) {
     homebrew.casks = [ "1password" ];
   };
 }

@@ -4,14 +4,8 @@
   pkgs,
   ...
 }:
-let
-  cfg = config.gipphe.programs.starship;
-in
 {
-  options.gipphe.programs.starship = {
-    enable = lib.mkEnableOption "starship";
-  };
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf config.gipphe.programs.fish.enable {
     programs.starship = {
       enable = true;
       enableTransience = true;

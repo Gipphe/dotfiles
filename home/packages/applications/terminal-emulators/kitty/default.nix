@@ -1,28 +1,4 @@
+{ lib, flags, ... }:
 {
-  lib,
-  config,
-  flags,
-  pkgs,
-  ...
-}:
-{
-  options.gipphe.programs.kitty.enable = lib.mkEnableOption "kitty";
-  config = lib.mkIf config.gipphe.programs.kitty.enable {
-    programs.kitty = {
-      enable = true;
-      font = lib.mkIf (!flags.stylix.enable) {
-        package = pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; };
-        name = "FiraCode Nerd Font";
-      };
-      settings = {
-        scrollback_lines = 4000;
-        show_hyperlink_targets = "yes";
-        paste_actions = "quote-urls-at-prompt";
-        mouse_hide_wait = 3;
-        strip_trailing_spaces = "smart";
-        allow_remote_control = "password";
-      };
-      theme = lib.mkIf (!flags.stylix.enable) "Catppuccin-Macchiato";
-    };
-  };
+  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
 }

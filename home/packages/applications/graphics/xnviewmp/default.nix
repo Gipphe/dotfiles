@@ -1,19 +1,4 @@
+{ lib, flags, ... }:
 {
-  lib,
-  config,
-  inputs,
-  system,
-  utils,
-  flags,
-  ...
-}:
-{
-  imports = [ ./options.nix ];
-  config = lib.mkIf (config.gipphe.programs.xnviewmp.enable && flags.system.isNixDarwin) {
-    home.packages = [
-      (utils.setCaskHash inputs.brew-nix.packages.${system}.xnviewmp
-        "sha256-TE87nserf+7TJRfuD1pKdEBg9QHNxyet06jrGlGRPGc="
-      )
-    ];
-  };
+  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
 }

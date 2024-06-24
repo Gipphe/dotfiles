@@ -1,14 +1,6 @@
+{ lib, config, ... }:
 {
-  lib,
-  config,
-  flags,
-  ...
-}:
-let
-  hmConfig = config.home-manager.users.${flags.user.username};
-in
-{
-  config = lib.mkIf (config.homebrew.enable && hmConfig.gipphe.virtualisation.docker.enable) {
+  config = lib.mkIf (config.homebrew.enable && config.gipphe.virtualisation.docker.enable) {
     homebrew.casks = [ "docker" ];
   };
 }

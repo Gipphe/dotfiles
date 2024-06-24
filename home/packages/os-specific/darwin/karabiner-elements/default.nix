@@ -1,6 +1,6 @@
-{ lib, ... }:
+{ lib, flags, ... }:
 {
-  imports = [ ./config.nix ];
-  # Handled by nix-darwin
-  options.gipphe.programs.karabiner-elements.enable = lib.mkEnableOption "karabiner-elements";
+  imports =
+    [ ./options.nix ]
+    ++ lib.optional flags.isHm ./home-manager.nix ++ lib.optional flags.isNixDarwin ./system-darwin.nix;
 }

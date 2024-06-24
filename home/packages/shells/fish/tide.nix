@@ -4,17 +4,8 @@
   pkgs,
   ...
 }:
-let
-  cfg = config.gipphe.programs.tide;
-in
 {
-  options.gipphe.programs.tide = {
-    enable = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-    };
-  };
-  config = lib.mkIf (config.programs.fish.enable && cfg.enable) {
+  config = lib.mkIf config.gipphe.programs.fish.enable {
     programs.fish = {
       shellInit = ''
         set -gx tide_left_prompt_items \

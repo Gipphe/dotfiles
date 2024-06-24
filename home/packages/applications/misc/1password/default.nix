@@ -1,12 +1,4 @@
+{ lib, flags, ... }:
 {
-  lib,
-  config,
-  pkgs,
-  ...
-}:
-{
-  imports = [ ./options.nix ];
-  config = lib.mkIf config.gipphe.programs._1password.enable {
-    home.packages = with pkgs; [ _1password ];
-  };
+  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
 }

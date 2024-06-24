@@ -1,5 +1,7 @@
-{ lib, ... }:
+{ lib, flags, ... }:
 {
-  # Managed by NixOS and nix-darwin
-  options.gipphe.virtualisation.docker.enable = lib.mkEnableOption "docker";
+  imports =
+    [ ./options.nix ]
+    ++ lib.optional flags.isNixos ./system-nixos.nix
+    ++ lib.optional flags.isNixDarwin ./system-darwin.nix;
 }

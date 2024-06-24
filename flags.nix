@@ -9,6 +9,12 @@ let
 in
 {
   options.gipphe.flags = {
+    isNixos = mkRequired "isNixos" lib.mkEnableOption "nixos";
+    isNixDarwin = mkRequired "isNixDarwin" lib.mkEnableOption "nix-darwin";
+    isHm = mkRequired "isHm" lib.mkEnableOption "home-manager";
+    isSystem = lib.mkEnableOption "system config" // {
+      default = config.gipphe.flags.isNixos || config.gipphe.flags.isNixDarwin;
+    };
     user = {
       username = mkRequired "username" lib.mkOption {
         type = types.str;

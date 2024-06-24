@@ -1,5 +1,4 @@
-{ lib, config, ... }:
+{ lib, flags, ... }:
 {
-  options.gipphe.core.fontconfig.enable = lib.mkEnableOption "fontconfig";
-  config = lib.mkIf config.gipphe.core.fontconfig.enable { fonts.fontconfig.enable = true; };
+  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
 }

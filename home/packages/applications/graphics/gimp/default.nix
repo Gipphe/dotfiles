@@ -1,20 +1,4 @@
+{ lib, flags, ... }:
 {
-  lib,
-  config,
-  inputs,
-  pkgs,
-  flags,
-  ...
-}:
-{
-  imports = [ ./options.nix ];
-  config = lib.mkIf config.gipphe.programs.gimp.enable (
-    lib.mkMerge [
-      # Temporarily force use of the nixpkgs version of gimp on Macos
-      (lib.mkIf (true || flags.system.isNixos) { home.packages = with pkgs; [ gimp-with-plugins ]; })
-      (lib.mkIf (false && flags.system.isNixDarwin) {
-        home.packages = [ inputs.brew-nix.packages.${pkgs.system}.gimp ];
-      })
-    ]
-  );
+  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
 }

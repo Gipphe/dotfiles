@@ -1,5 +1,4 @@
-{ lib, config, ... }:
+{ lib, flags, ... }:
 {
-  options.gipphe.programs.jq.enable = lib.mkEnableOption "jq";
-  config = lib.mkIf config.gipphe.programs.jq.enable { programs.jq.enable = true; };
+  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
 }
