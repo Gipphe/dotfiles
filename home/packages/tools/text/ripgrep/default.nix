@@ -1,5 +1,4 @@
-{ lib, config, ... }:
+{ lib, flags, ... }:
 {
-  options.gipphe.programs.ripgrep.enable = lib.mkEnableOption "ripgrep";
-  config = lib.mkIf config.gipphe.programs.ripgrep.enable { programs.ripgrep.enable = true; };
+  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
 }

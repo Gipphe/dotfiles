@@ -1,10 +1,4 @@
+{ lib, flags, ... }:
 {
-  lib,
-  config,
-  pkgs,
-  ...
-}:
-{
-  options.gipphe.programs.entr.enable = lib.mkEnableOption "entr";
-  config = lib.mkIf config.gipphe.programs.entr.enable { home.packages = with pkgs; [ entr ]; };
+  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
 }

@@ -2,12 +2,11 @@
   inputs,
   pkgs,
   lib,
-  flags,
   config,
   ...
 }:
 {
-  config = lib.mkIf config.home-manager.users.${flags.user.username}.gipphe.prorams.nix.enable {
+  config = lib.mkIf config.gipphe.prorams.nix.enable {
     environment = {
       # set channels (backwards compatibility)
       etc = {

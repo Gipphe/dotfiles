@@ -3,11 +3,10 @@
   pkgs,
   lib,
   config,
-  flags,
   ...
 }:
 {
-  config = lib.mkIf config.home-manager.users.${flags.user.username}.gipphe.prorams.nix.enable {
+  config = lib.mkIf config.gipphe.programs.nix.enable {
     environment = {
       # set channels (backwards compatibility)
       etc = {

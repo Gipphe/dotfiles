@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, flags, ... }:
 {
-  options.gipphe.programs.homebrew.enable = lib.mkEnableOption "homebrew";
+  imports = [ ./options.nix ] ++ lib.optional flags.isNixDarwin ./system-darwin.nix;
 }

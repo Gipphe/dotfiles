@@ -1,13 +1,4 @@
-{ lib, config, ... }:
+{ lib, flags, ... }:
 {
-  options.gipphe.programs.zoxide.enable = lib.mkEnableOption "zoxide";
-  config = lib.mkIf config.gipphe.programs.zoxide.enable {
-    programs.zoxide = {
-      enable = true;
-      options = [
-        "--cmd"
-        "cd"
-      ];
-    };
-  };
+  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
 }

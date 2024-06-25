@@ -1,5 +1,4 @@
-{ lib, config, ... }:
+{ lib, flags, ... }:
 {
-  options.gipphe.programs.fd.enable = lib.mkEnableOption "fd";
-  config = lib.mkIf config.gipphe.programs.fd.enable { programs.fd.enable = true; };
+  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
 }

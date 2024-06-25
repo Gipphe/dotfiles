@@ -2,11 +2,10 @@
   inputs,
   lib,
   config,
-  flags,
   ...
 }:
 {
-  config = lib.mkIf config.home-manager.users.${flags.user.username}.gipphe.prorams.nix.enable {
+  config = lib.mkIf config.gipphe.programs.nix.enable {
     environment.variables = {
       FLAKE = "/Users/victor/projects/dotfiles";
     };
