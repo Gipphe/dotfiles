@@ -1,16 +1,4 @@
-{
-  inputs,
-  flags,
-  lib,
-  config,
-  ...
-}:
+{ inputs, ... }:
 {
   imports = [ inputs.catppuccin.homeManagerModules.catppuccin ];
-  config = lib.mkIf config.gipphe.environment.theme.catppuccin.enable {
-    catppuccin = {
-      enable = !flags.stylix.enable;
-      flavor = "macchiato";
-    };
-  };
 }

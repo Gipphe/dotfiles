@@ -42,8 +42,8 @@ let
       </application>
     '';
   };
-  darwinConfig = lib.mkIf flags.system.isNixDarwin { home.file = mkConfig darwinOptionsDir; };
-  linuxConfig = lib.mkIf (!flags.system.isNixDarwin) { xdg.configFile = mkConfig linuxOptionsDir; };
+  darwinConfig = lib.mkIf lib.isDarwin { home.file = mkConfig darwinOptionsDir; };
+  linuxConfig = lib.mkIf lib.isLinux { xdg.configFile = mkConfig linuxOptionsDir; };
 in
 {
   config = lib.mkIf config.gipphe.programs.idea-ultimate.enable (

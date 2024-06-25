@@ -1,0 +1,10 @@
+{ lib, config, ... }:
+{
+  config = lib.mkIf config.gipphe.boot.grub.enable {
+    boot.loader.grub = {
+      enable = true;
+      device = "/dev/sda";
+      useOSProber = true;
+    };
+  };
+}

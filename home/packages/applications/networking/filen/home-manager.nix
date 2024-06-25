@@ -1,6 +1,5 @@
 {
   pkgs,
-  flags,
   lib,
   inputs,
   config,
@@ -36,8 +35,8 @@ in
 {
   config = lib.mkIf config.gipphe.programs.filen.enable (
     lib.mkMerge [
-      (lib.mkIf flags.system.isNixos { home.packages = [ package ]; })
-      (lib.mkIf flags.system.isNixDarwin {
+      (lib.mkIf lib.isLinux { home.packages = [ package ]; })
+      (lib.mkIf lib.isDarwin {
         home.packages = [
           (utils.setCaskHash inputs.brew-nix.packages.${system}.filen
             "sha256-ewoPrA8HuYftz9tvp7OUgDqikKhPZ7WOVyWH83oADJQ="

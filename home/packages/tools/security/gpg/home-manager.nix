@@ -2,13 +2,12 @@
   lib,
   config,
   pkgs,
-  flags,
   ...
 }:
 {
   config = lib.mkIf config.gipphe.programs.gpg.enable (
     lib.mkMerge [
-      (lib.mkIf flags.system.isNixos {
+      (lib.mkIf lib.isLinux {
         programs.gpg.enable = true;
         services.gpg-agent = {
           enable = true;
@@ -18,7 +17,7 @@
         };
       })
 
-      (lib.mkIf flags.system.isNixDarwin {
+      (lib.mkIf lib.isDarwin {
         programs.fish.shellInit = ''
           set -gx GPG_TTY $(tty)
         '';
