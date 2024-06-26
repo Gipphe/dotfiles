@@ -4,6 +4,6 @@
   inputs,
   ...
 }:
-lib.optionalAttrs flags.system.isNixDarwin {
+lib.optionalAttrs flags.isNixDarwin {
   imports = [ inputs.mac-app-util.homeManagerModules.default ];
 }

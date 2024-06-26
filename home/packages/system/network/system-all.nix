@@ -1,4 +1,4 @@
 { flags, ... }:
 {
-  networking.hostName = flags.system.hostname;
+  networking.hostName = flags.hostname;
 }

@@ -4,36 +4,6 @@ let
     Jarle = {
       system = "x86_64-linux";
       gipphe.machine = "Jarle";
-      flags = {
-        user = {
-          username = "gipphe";
-          homeDirectory = "/home/gipphe";
-        };
-        system = {
-          type = "nixos";
-          homeFonts = true;
-          systemd = true;
-          secrets = true;
-        };
-        use-case = {
-          cli = true;
-          work = true;
-          personal.enable = false;
-        };
-        virtualisation = {
-          wsl = true;
-          virtualbox = false;
-        };
-        desktop = {
-          enable = false;
-        };
-        aux = {
-          audio = false;
-          networkmanager = false;
-          printer = false;
-          terminal = false;
-        };
-      };
     };
     nixos-vm = {
       system = "x86_64-linux";
@@ -142,32 +112,28 @@ let
       system = "x86_64-linux";
       modules = [
         ./flags.nix
-        { gipphe.flags.system.hostname = nixpkgs.lib.mkDefault hostname; }
-        { gipphe.flags = config.flags; }
+        {
+          gipphe.flags = {
+            system = config.system;
+          } // (config.flags or { });
+        }
       ];
     }
   ) machines;
-  nixosConfigurations = mapAttrs (mkMachine nixosSystem [ ./home/nixos.nix ]) nixosMachines;
-
-  darwinConfigurations = mapAttrs (mkMachine darwinSystem [ ./home/nix-darwin.nix ]) darwinMachines;
+  nixosConfigurations = mapAttrs (mkMachine nixosSystem) nixosMachines;
+  darwinConfigurations = mapAttrs (mkMachine darwinSystem) darwinMachines;
   utilPkgs = nixpkgs.legacyPackages."x86_64-linux";
 
   mkMachine =
-    mkSystem: extraModules: hostname: config:
-    let
-      inherit (machineOptions.${hostname}.config.gipphe) flags;
-    in
+    mkSystem: hostname: config:
     mkSystem {
       inherit (config) system;
       specialArgs = {
         inherit inputs self;
-        inherit flags;
+        inherit (machineOptions.${hostname}.config.gipphe) flags;
         utils = import ./util.nix { inherit (utilPkgs) writeShellScriptBin lib system; };
       };
-      modules = extraModules ++ [
-        { home-manager.users.${flags.user.username}.gipphe = config.gipphe; }
-        ./system
-      ];
+      modules = [ ./home ];
     };
 in
 {

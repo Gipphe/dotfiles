@@ -1,21 +1,17 @@
 {
   inputs,
   lib,
+  config,
   flags,
   pkgs,
   ...
 }:
 {
   imports = [
-    (
-      if flags.system.isNixos then
-        inputs.stylix.nixosModules.stylix
-      else
-        inputs.stylix.darwinModules.stylix
-    )
+    (if flags.isNixos then inputs.stylix.nixosModules.stylix else inputs.stylix.darwinModules.stylix)
   ];
 
-  config.stylix =
+  config.stylix = lib.mkIf config.gipphe.environment.rice.enable (
     {
       enable = flags.stylix.enable;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
@@ -42,5 +38,6 @@
         name = "Bibata-Modern-Ice";
         size = 24;
       };
-    });
+    })
+  );
 }

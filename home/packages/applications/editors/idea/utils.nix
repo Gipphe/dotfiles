@@ -13,10 +13,7 @@ let
       _name = "IntelliJIdea";
       _version = majorMinor (getVersion name);
     in
-    if flags.system.isNixDarwin then
-      "JetBrains/IntelliJIdea2024.1"
-    else
-      "JetBrains/${_name}${_version}";
+    if flags.isNixDarwin then "JetBrains/IntelliJIdea2024.1" else "JetBrains/${_name}${_version}";
   linuxOptionsDir = "JetBrains/${ideaDir}/options";
   darwinOptionsDir = "Library/Application Support/JetBrains/${ideaDir}/options";
 in

@@ -1,4 +1,4 @@
 { lib, flags, ... }:
 {
-  imports = lib.optionals flags.isNixos ./system-nixos.nix;
+  imports = lib.optional flags.isNixos ./system-nixos.nix;
 }

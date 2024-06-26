@@ -33,7 +33,7 @@ in
   config = lib.mkIf config.gipphe.programs.run-as-service.enable {
     home.packages = [
       (
-        if flags.system.isNixDarwin then
+        if flags.isNixDarwin then
           throw "run-as-service is not available on nix-darwin since darwin does not use systemd."
         else
           run-as-service

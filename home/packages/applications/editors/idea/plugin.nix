@@ -46,7 +46,7 @@ let
   ];
 in
 {
-  config = lib.mkIf (cfg.enable && builtins.length cfg.plugins > 0 && flags.system.isNixos) {
+  config = lib.mkIf (cfg.enable && builtins.length cfg.plugins > 0 && flags.isNixos) {
     xdg.dataFile = plugins;
   };
 }

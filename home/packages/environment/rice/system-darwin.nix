@@ -1,10 +1,12 @@
 {
   lib,
-  # config,
+  config,
+  inputs,
   # username,
   ...
 }:
 {
+  imports = [ inputs.stylix.darwinModules.stylix ];
 
   # Stylix' darwin module does not correctly import opacity module, but the
   # kitty stylix module uses it regardless. Here we can just manually define
@@ -15,7 +17,7 @@
     default = 1.0;
   };
 
-  config = {
+  config = lib.mkIf config.gipphe.environment.rice.enable {
 
     # environment.etc."sudoers.d/yabai".text =
     #   let

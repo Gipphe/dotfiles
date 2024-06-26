@@ -1,7 +1,7 @@
 { lib, flags, ... }:
 {
   imports =
-    [
+    lib.optionals flags.isHm [
       ./xdg.nix
       ./home.nix
       ./darwin.nix

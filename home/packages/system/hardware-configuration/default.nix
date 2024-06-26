@@ -1,6 +1,11 @@
-{ flags, lib, ... }:
+{
+  config,
+  lib,
+  flags,
+  ...
+}:
 let
-  inherit (flags.system) hostname;
+  inherit (config.networking) hostname;
   configs = {
     "trond-arne" = ./trond-arne.nix;
     "nixos-vm" = ./nixos-vm.nix;

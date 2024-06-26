@@ -1,118 +1,24 @@
 { lib, config, ... }:
 let
-  inherit (lib) types;
   mkRequired =
     desc: mkOption: opts:
     mkOption opts // { default = throw "${desc} is a required flag"; };
-
-  alias = val: lib.mkOption { default = val; };
 in
 {
   options.gipphe.flags = {
-    isNixos = mkRequired "isNixos" lib.mkEnableOption "nixos";
-    isNixDarwin = mkRequired "isNixDarwin" lib.mkEnableOption "nix-darwin";
-    isHm = mkRequired "isHm" lib.mkEnableOption "home-manager";
+    system = mkRequired "system" lib.mkOption {
+      description = "system";
+      type = lib.types.str;
+    };
+    isNixos = lib.mkEnableOption "nixos" // {
+      default = lib.hasSuffix "linux" config.gipphe.flags.system;
+    };
+    isNixDarwin = lib.mkEnableOption "nix-darwin" // {
+      default = lib.hasSuffix "darwin" config.gipphe.flags.system;
+    };
+    isHm = lib.mkEnableOption "home-manager";
     isSystem = lib.mkEnableOption "system config" // {
       default = config.gipphe.flags.isNixos || config.gipphe.flags.isNixDarwin;
-    };
-    user = {
-      username = mkRequired "username" lib.mkOption {
-        type = types.str;
-        description = "Username for the user";
-      };
-      homeDirectory = mkRequired "homeDirectory" lib.mkOption {
-        type = types.str;
-        description = "Home directory for the user";
-      };
-    };
-
-    system = {
-      hostname = mkRequired "system.hostname" lib.mkOption {
-        type = types.str;
-        description = "Hostname for the machine";
-      };
-      type = mkRequired "system.type" lib.mkOption {
-        description = "System environment type";
-        type = types.enum [
-          "nixos"
-          "nix-darwin"
-        ];
-        example = "nix-darwin";
-        default = "nixos";
-      };
-      global-nix = mkRequired "system.global-nix" lib.mkEnableOption "global Nix config";
-      systemd = mkRequired "system.systemd" lib.mkEnableOption "systemd stuff";
-      homeFonts = mkRequired "system.homeFonts" lib.mkEnableOption "fonts management with home-manager";
-      secrets = mkRequired "system.secrets" lib.mkEnableOption "secret handling with agenix";
-
-      isNixos = alias (config.gipphe.flags.system.type == "nixos");
-      isNixDarwin = alias (config.gipphe.flags.system.type == "nix-darwin");
-    };
-
-    display.terminal.font.size = lib.mkOptions {
-      description = "Terminal font size";
-      type = types.int;
-      default = 11;
-      example = 12;
-    };
-
-    aux = {
-      audio = mkRequired "aux.audio" lib.mkEnableOption "audio management";
-      nvidia = mkRequired "aux.nvidia" lib.mkEnableOption "Nvidia GPU drivers";
-      printer = mkRequired "aux.printer" lib.mkEnableOption "printer services and options";
-      networkmanager = mkRequired "aux.networkmanager" lib.mkEnableOption "networkmanager";
-      terminal = lib.mkEnableOption "terminal" // {
-        default = true;
-      };
-    };
-
-    stylix = {
-      enable = lib.mkEnableOption "stylix" // {
-        default = true;
-      };
-      cursor = lib.mkEnableOption "cursor" // {
-        default = true;
-      };
-    };
-
-    desktop = {
-      enable = mkRequired "desktop.enable" lib.mkEnableOption "custom desktop";
-      wayland = mkRequired "desktop.wayland" lib.mkEnableOption "Wayland";
-      hyprland = mkRequired "desktop.hyprland" lib.mkEnableOption "Hyprland";
-      plasma = mkRequired "desktop.plasma" lib.mkEnableOption "KDE Plasma";
-    };
-
-    use-case = {
-      cli = mkRequired "use-case.cli" lib.mkEnableOption "CLI stuff";
-      work = mkRequired "use-case.work" lib.mkEnableOption "features and stuff for work";
-      personal = {
-        enable = mkRequired "use-case.personal.enable" lib.mkEnableOption "personal";
-        gaming = mkRequired "use-case.gaming" lib.mkEnableOption "gaming stuff";
-      };
-    };
-
-    virtualisation = {
-      virtualbox = mkRequired "virtualbox" lib.mkEnableOption "Virtualbox guest options";
-      wsl = mkRequired "wsl" lib.mkEnableOption "WSL stuff";
-    };
-
-    bootloader = {
-      type = lib.mkOption {
-        description = "Bootloader to use";
-        type = types.enum [
-          "grub"
-          "efi"
-        ];
-        example = "grub";
-        default =
-          if config.gipphe.flags.virtualisation.wsl then
-            "efi"
-          else
-            throw "bootloader.type is a required option (unless virtualisation.wsl is true)";
-      };
-
-      isEfi = alias (config.gipphe.flags.bootloader.type == "efi");
-      isGrub = alias (config.gipphe.flags.bootloader.type == "grub");
     };
   };
 }

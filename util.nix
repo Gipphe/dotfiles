@@ -1,7 +1,6 @@
 { lib, writeShellScriptBin, ... }:
 let
   inherit (builtins)
-    filter
     hasAttr
     map
     isList
@@ -11,7 +10,6 @@ let
     attrNames
     ;
   inherit (lib) flatten;
-  inherit (lib.filesystem) listFilesRecursive;
   inherit (lib.attrsets) foldlAttrs filterAttrs;
 
   recursiveMap =
@@ -44,8 +42,9 @@ let
     lib.pipe dir [
       readDir
       (lib.attrsets.foldlAttrs go [ ])
-      (map (f: "./${f}"))
+      (map (f: /.${dir}/${f}))
     ];
+
   mkCopyActivationScript =
     fromDir: toDir:
     writeShellScriptBin "script" ''
@@ -58,18 +57,6 @@ let
     cask.overrideAttrs (c: {
       src = cask.src.overrideAttrs { outputHash = hash; };
     });
-
-  importSiblingNixDarwinDirs = importSubdirs "nix-darwin.nix";
-
-  importSiblingNixosDirs = importSubdirs "nixos.nix";
-
-  importSubdirs =
-    file: dir:
-    lib.pipe dir [
-      listFilesRecursive
-      (filter (path: baseNameOf path == "${file}"))
-      (filter (path: path != /.${dir}/${file}))
-    ];
 
   recurseFirstMatching =
     file: dir:
@@ -93,24 +80,13 @@ let
         acc: name: type:
         if type == "directory" then acc ++ recurseFirstMatching' file /.${dir}/${name} else acc
       ) [ ] items;
-
-  importHmModules = recurseFirstMatching "default.nix";
-  importNixosModules = recurseFirstMatching "nixos.nix";
-  importNixDarwinModules = recurseFirstMatching "nix-darwin.nix";
 in
 {
   inherit
-    importHmModules
-    importNixDarwinModules
-    importNixosModules
-    importSiblingNixDarwinDirs
-    importSiblingNixosDirs
     importSiblings
-    importSubdirs
     mkCopyActivationScript
     recurseFirstMatching
     recursiveMap
     setCaskHash
     ;
-
 }
