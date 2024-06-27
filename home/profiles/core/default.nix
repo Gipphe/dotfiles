@@ -25,6 +25,7 @@
       less.enable = true;
       neovim.enable = false;
       nix-index.enable = true;
+      nix.enable = true;
       nixvim.enable = true;
       nnn.enable = true;
       ripgrep.enable = true;

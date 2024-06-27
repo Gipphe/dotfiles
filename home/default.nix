@@ -5,5 +5,7 @@
     ./packages/core
     # ./packages/system/systemd
     # ./packages/system/hardware-configuration
+    ./packages/tools/package-management/nix
+    ./machines
   ];
 }
