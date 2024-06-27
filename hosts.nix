@@ -71,34 +71,6 @@ let
     VNB-MB-Pro = {
       system = "aarch64-darwin";
       gipphe.machine = "VNB-MB-Pro";
-      flags = {
-        user = {
-          username = "victor";
-          homeDirectory = "/Users/victor";
-        };
-        system = {
-          type = "nix-darwin";
-          homeFonts = false;
-          systemd = false;
-          secrets = true;
-        };
-        use-case = {
-          work = true;
-          personal.enable = false;
-        };
-        aux = {
-          audio = false;
-        };
-        stylix = {
-          cursor = false;
-        };
-        desktop = {
-          enable = false;
-        };
-        virtualisation = {
-          wsl = false;
-        };
-      };
     };
   };
   inherit (nixpkgs.lib.attrsets) filterAttrs mapAttrs;

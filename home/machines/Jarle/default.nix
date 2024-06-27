@@ -18,11 +18,7 @@
         secrets.enable = true;
         virtualization.vm-guest.enable = true;
         virtualization.containers.enable = true;
-
-        user = {
-          username = "gipphe";
-          homeDirectory = "/home/gipphe";
-        };
+        rice.enable = true;
       };
     };
 
