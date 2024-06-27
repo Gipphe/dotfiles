@@ -70,7 +70,6 @@ let
     };
     VNB-MB-Pro = {
       system = "aarch64-darwin";
-      gipphe.machine = "VNB-MB-Pro";
     };
   };
   inherit (nixpkgs.lib.attrsets) filterAttrs mapAttrs;
@@ -84,11 +83,7 @@ let
       system = "x86_64-linux";
       modules = [
         ./flags.nix
-        {
-          gipphe.flags = {
-            system = config.system;
-          } // (config.flags or { });
-        }
+        { gipphe.flags.system = config.system; }
       ];
     }
   ) machines;
@@ -105,7 +100,10 @@ let
         inherit (machineOptions.${hostname}.config.gipphe) flags;
         utils = import ./util.nix { inherit (utilPkgs) writeShellScriptBin lib system; };
       };
-      modules = [ ./home ];
+      modules = [
+        ./home
+        { gipphe.machine = hostname; }
+      ];
     };
 in
 {

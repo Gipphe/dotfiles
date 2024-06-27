@@ -5,23 +5,21 @@
       username = "gipphe";
       homeDirectory = "/home/gipphe";
       profiles = {
-        core = {
-          enable = true;
-          systemd.enable = true;
+        containers.enable = true;
+        core.enable = true;
+        fonts.enable = true;
+        nixos = {
+          system.enable = true;
+          wsl.enable = true;
         };
-        desktop = {
-          work.enable = true;
-        };
-        libraries.fonts.enable = true;
-        system.nixos.enable = true;
-        system.nixos.wsl.enable = true;
-        secrets.enable = true;
-        virtualization.vm-guest.enable = true;
-        virtualization.containers.enable = true;
         rice.enable = true;
+        secrets.enable = true;
+        systemd.enable = true;
+        vm-guest.enable = true;
+        work.enable = true;
       };
     };
 
-    networking.hostname = "Jarle";
+    networking.hostName = "Jarle";
   };
 }

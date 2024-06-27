@@ -2,16 +2,12 @@
 {
   config = lib.mkIf (config.gipphe.machine == "trond-arne") {
     gipphe.profiles = {
-      core = {
-        enable = true;
-        systemd.enable = true;
-        audio.enable = true;
-      };
-      desktop = {
-        enable = true;
-        gaming.enable = true;
-      };
-      libraries.fonts.enable = true;
+      core.enable = true;
+      systemd.enable = true;
+      audio.enable = true;
+      desktop.enable = true;
+      gaming.enable = true;
+      fonts.enable = true;
     };
   };
 }
