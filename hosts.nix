@@ -3,7 +3,6 @@ let
   machines = {
     Jarle = {
       system = "x86_64-linux";
-      gipphe.machine = "Jarle";
     };
     nixos-vm = {
       system = "x86_64-linux";
@@ -89,7 +88,6 @@ let
   ) machines;
   nixosConfigurations = mapAttrs (mkMachine nixosSystem) nixosMachines;
   darwinConfigurations = mapAttrs (mkMachine darwinSystem) darwinMachines;
-  utilPkgs = nixpkgs.legacyPackages."x86_64-linux";
 
   mkMachine =
     mkSystem: hostname: config:
@@ -98,11 +96,15 @@ let
       specialArgs = {
         inherit inputs self;
         inherit (machineOptions.${hostname}.config.gipphe) flags;
-        utils = import ./util.nix { inherit (utilPkgs) writeShellScriptBin lib system; };
+        utils =
+          let
+            utilPkgs = nixpkgs.legacyPackages.${config.system};
+          in
+          import ./util.nix { inherit (utilPkgs) writeShellScriptBin lib system; };
       };
       modules = [
         ./home
-        { gipphe.machine = hostname; }
+        { gipphe.machines.${hostname}.enable = true; }
       ];
     };
 in

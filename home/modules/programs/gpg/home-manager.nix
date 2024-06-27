@@ -7,7 +7,7 @@
 {
   config = lib.mkIf config.gipphe.programs.gpg.enable (
     lib.mkMerge [
-      (lib.mkIf lib.isLinux {
+      (lib.mkIf pkgs.stdenv.isLinux {
         programs.gpg.enable = true;
         services.gpg-agent = {
           enable = true;
@@ -17,7 +17,7 @@
         };
       })
 
-      (lib.mkIf lib.isDarwin {
+      (lib.mkIf pkgs.stdenv.isDarwin {
         programs.fish.shellInit = ''
           set -gx GPG_TTY $(tty)
         '';

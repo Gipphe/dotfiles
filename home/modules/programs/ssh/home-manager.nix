@@ -8,7 +8,7 @@
   config = lib.mkIf config.gipphe.programs.ssh.enable {
     programs.ssh = {
       enable = true;
-      package = pkgs.ssh;
+      package = pkgs.openssh;
       addKeysToAgent = "yes";
       matchBlocks = {
         "github.com" = {

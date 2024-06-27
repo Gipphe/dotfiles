@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  flags,
   pkgs,
   ...
 }:
@@ -9,7 +8,7 @@
   config = lib.mkIf config.gipphe.programs.kitty.enable {
     programs.kitty = {
       enable = true;
-      font = lib.mkIf (!flags.stylix.enable) {
+      font = lib.mkIf (!config.gipphe.environment.rice.enable) {
         package = pkgs.nerdfonts.override { fonts = [ "FiraCode" ]; };
         name = "FiraCode Nerd Font";
       };
@@ -21,7 +20,7 @@
         strip_trailing_spaces = "smart";
         allow_remote_control = "password";
       };
-      theme = lib.mkIf (!flags.stylix.enable) "Catppuccin-Macchiato";
+      theme = lib.mkIf (!config.gipphe.environment.rice.enable) "Catppuccin-Macchiato";
     };
   };
 }

@@ -3,7 +3,6 @@
   lib,
   inputs,
   config,
-  system,
   utils,
   ...
 }:
@@ -15,15 +14,15 @@ let
   linuxPackage = pkgs.lib.appimageTools.wrapType2 {
     name = "filen";
     src = builtins.fetchurl {
-      url = appImages.${system};
+      url = appImages.${pkgs.system};
       sha256 = pkgs.lib.fakeSha256;
     };
   };
-  linux = lib.mkIf lib.isLinux { home.packages = [ linuxPackage ]; };
+  linux = lib.mkIf pkgs.stdenv.isLinux { home.packages = [ linuxPackage ]; };
   darwin = (
-    lib.mkIf lib.isDarwin {
+    lib.mkIf pkgs.stdenv.isDarwin {
       home.packages = [
-        (utils.setCaskHash inputs.brew-nix.packages.${system}.filen
+        (utils.setCaskHash inputs.brew-nix.packages.${pkgs.system}.filen
           "sha256-ewoPrA8HuYftz9tvp7OUgDqikKhPZ7WOVyWH83oADJQ="
         )
       ];

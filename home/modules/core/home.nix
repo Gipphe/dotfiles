@@ -1,12 +1,7 @@
-{
-  config,
-  flags,
-  pkgs,
-  ...
-}:
+{ config, pkgs, ... }:
 {
   home = {
-    inherit (flags.user) username homeDirectory;
+    inherit (config.gipphe) username homeDirectory;
     # NO TOUCHY!
     stateVersion = "23.11";
     sessionVariables = {

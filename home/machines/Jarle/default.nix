@@ -1,6 +1,13 @@
-{ lib, config, ... }:
 {
-  config = lib.mkIf (config.gipphe.machine == "Jarle") {
+  lib,
+  config,
+  flags,
+  ...
+}:
+{
+  imports = lib.optional flags.isSystem ./system-all.nix;
+  options.gipphe.machines.Jarle.enable = lib.mkEnableOption "Jarle machine config";
+  config = lib.mkIf config.gipphe.machines.Jarle.enable {
     gipphe = {
       username = "gipphe";
       homeDirectory = "/home/gipphe";
@@ -19,7 +26,5 @@
         work.enable = true;
       };
     };
-
-    networking.hostName = "Jarle";
   };
 }

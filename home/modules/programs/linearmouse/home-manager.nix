@@ -2,7 +2,7 @@
   lib,
   config,
   inputs,
-  system,
+  pkgs,
   ...
 }:
 {
@@ -42,6 +42,6 @@
         "$schema" = "https://schema.linearmouse.app/0.9.5";
       };
     };
-    home.packages = [ inputs.brew-nix.packages.${system}.linearmouse ];
+    home.packages = [ inputs.brew-nix.packages.${pkgs.system}.linearmouse ];
   };
 }

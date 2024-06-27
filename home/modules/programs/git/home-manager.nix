@@ -1,7 +1,7 @@
 {
-  pkgs,
   lib,
   config,
+  utils,
   ...
 }:
 {
@@ -182,13 +182,7 @@
     };
     home.activation.copy-git-config-for-windows =
       let
-        inherit
-          (import ../../../../../util.nix {
-            inherit lib;
-            inherit (pkgs) writeShellScriptBin;
-          })
-          mkCopyActivationScript
-          ;
+        inherit (utils) mkCopyActivationScript;
         script = mkCopyActivationScript "${config.xdg.configHome}/git" "${config.home.homeDirectory}/projects/dotfiles/windows/Config/git";
       in
       "run ${script}/bin/script";

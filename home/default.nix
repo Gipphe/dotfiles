@@ -7,11 +7,12 @@
     # ./modules/system/systemd
     # ./modules/system/hardware-configuration
     ./modules/core
+    ./modules/environment/desktop/plasma
+    ./modules/environment/desktop/hyprland
     ./modules/environment/secrets
     ./modules/environment/theme/catppuccin
     ./modules/environment/wallpaper/small-memory-wallpaper
     ./modules/environment/rice
-    ./modules/virtualization/docker
 
     ./modules/programs/_1password
     ./modules/programs/_1password-gui
@@ -81,32 +82,59 @@
 
     ./modules/system/audio
     ./modules/system/console
+    ./modules/system/dbus
+    ./modules/system/hardware-configuration
+    ./modules/system/home-manager
     ./modules/system/journald
     ./modules/system/keyboard
     ./modules/system/localization
     ./modules/system/nix-ld
+    ./modules/system/nvidia
+    ./modules/system/printer
     ./modules/system/systemd
+    ./modules/system/udisks2
     ./modules/system/user
     ./modules/system/wsl
+    ./modules/system/zramswap
+
+    # ./modules/system/audio
+    # ./modules/system/console
+    # ./modules/system/journald
+    # ./modules/system/keyboard
+    # ./modules/system/localization
+    # ./modules/system/nix-ld
+    # ./modules/system/systemd
+    # ./modules/system/user
+    # ./modules/system/wsl
+    # ./modules/system/udisks2
+    # ./modules/system/zramswap
+    # ./modules/system/home-manager
 
     ./modules/virtualization/virtualbox-guest
+    ./modules/virtualization/docker
+
+    ./modules/boot/grub
+    ./modules/boot/systemd-boot
 
     ./machines
 
-    ./profiles/core.nix
-    ./profiles/audio.nix
-    ./profiles/containers.nix
-    ./profiles/desktop.nix
-    ./profiles/fonts.nix
-    ./profiles/gaming.nix
-    ./profiles/nixos/audio.nix
-    ./profiles/nixos/system.nix
-    ./profiles/nixos/wsl.nix
-    ./profiles/rice.nix
-    ./profiles/secrets.nix
-    ./profiles/systemd.nix
-    ./profiles/vm-guest.nix
-    ./profiles/work.nix
-    ./profiles/nixos/wsl.nix
-  ];
+    # ./profiles/core.nix
+    # ./profiles/audio.nix
+    # ./profiles/containers.nix
+    # ./profiles/desktop.nix
+    # ./profiles/fonts.nix
+    # ./profiles/gaming.nix
+    # ./profiles/nixos/audio.nix
+    # ./profiles/nixos/system.nix
+    # ./profiles/nixos/wsl.nix
+    # ./profiles/rice.nix
+    # ./profiles/secrets.nix
+    # ./profiles/systemd.nix
+    # ./profiles/vm-guest.nix
+    # ./profiles/work.nix
+    # ./profiles/nixos/wsl.nix
+    # ./profiles/darwin.nix
+    # ./profiles/logitech.nix
+    # ./profiles/kvm.nix
+  ] ++ lib.filesystem.listFilesRecursive ./profiles;
 }
