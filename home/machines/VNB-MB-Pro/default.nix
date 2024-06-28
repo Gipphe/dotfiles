@@ -20,6 +20,7 @@
         kvm.enable = true;
         logitech.enable = true;
         music.enable = true;
+        rice.enable = true;
         secrets.enable = true;
         work.enable = true;
       };

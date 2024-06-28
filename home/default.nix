@@ -2,7 +2,8 @@
 {
   imports =
     utils.recurseFirstMatching "default.nix" ./.
-    ++ lib.filesystem.listFilesRecursive ./profiles;
+    ++ lib.filesystem.listFilesRecursive ./profiles
+    ++ [ ./modules/environment/theme/catppuccin ];
   # imports = [
   #   # ./modules/system/systemd
   #   # ./modules/system/hardware-configuration

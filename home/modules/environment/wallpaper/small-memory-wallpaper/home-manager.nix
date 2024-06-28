@@ -5,16 +5,12 @@
   ...
 }:
 {
-  config = lib.mkIf config.gipphe.environment.wallpaper.small-memory.enable (
-    lib.mkMerge [
-      (lib.mkIf pkgs.stdenv.isLinux { stylix.image = ./wallpaper/Macchiato-hald8-wall.png; })
-      (lib.mkIf pkgs.stdenv.isDarwin {
-        home.activation = {
-          set-wallpaper = ''
-            run /usr/bin/automator -i "${./wallpaper/dynamic.heic}" "${./automator/set_desktop_wallpaper.workflow}"
-          '';
-        };
-      })
-    ]
-  );
+  config = lib.mkIf config.gipphe.environment.wallpaper.small-memory.enable {
+    stylix.image = lib.mkIf config.gipphe.environment.rice.enable ./wallpaper/Macchiato-hald8-wall.png;
+    home.activation = lib.mkIf pkgs.stdenv.isDarwin {
+      set-wallpaper = ''
+        run /usr/bin/automator -i "${./wallpaper/dynamic.heic}" "${./automator/set_desktop_wallpaper.workflow}"
+      '';
+    };
+  };
 }
