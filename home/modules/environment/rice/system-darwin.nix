@@ -19,6 +19,8 @@
 
   config = lib.mkIf config.gipphe.environment.rice.enable {
 
+    stylix.targets.plymouth.enable = false;
+
     # environment.etc."sudoers.d/yabai".text =
     #   let
     #     yabai = config.services.yabai.package;
