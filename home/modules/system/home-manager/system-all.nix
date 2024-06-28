@@ -13,6 +13,7 @@
     backupFileExtension = "backup-before-nix";
     extraSpecialArgs = {
       inherit self inputs utils;
+      osConfig = config;
       flags = flags // {
         isNixos = false;
         isNixDarwin = false;
