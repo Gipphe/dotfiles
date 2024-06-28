@@ -7,7 +7,6 @@
 {
   config.stylix = lib.mkIf config.gipphe.environment.rice.enable {
     enable = true;
-    autoEnable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
     image = lib.mkDefault ../wallpaper/small-memory-wallpaper/wallpaper/wall.png;
 
