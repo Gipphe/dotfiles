@@ -1,4 +1,4 @@
-{ lib, flags, ... }:
+{ utils, pkgs, ... }:
 {
-  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
+  imports = [ (utils.mkSimpleProgram "curl" pkgs.curlFull) ];
 }

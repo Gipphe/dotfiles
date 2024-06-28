@@ -80,13 +80,34 @@ let
         acc: name: type:
         if type == "directory" then acc ++ recurseFirstMatching' file /.${dir}/${name} else acc
       ) [ ] items;
+
+  mkSimpleProgram =
+    name: package:
+    {
+      lib,
+      config,
+      flags,
+      ...
+    }:
+    {
+      options.gipphe.programs.${name}.enable = lib.mkEnableOption name;
+    }
+    // (lib.optionalAttrs flags.isHm {
+      config = lib.mkIf config.gipphe.programs.${name}.enable { home.packages = [ package ]; };
+    });
+
+  mkSimpleProgramByName = name: { pkgs, ... }@args: mkSimpleProgram name pkgs.${name} args;
+  mkSimpleProgramImports = name: [ (mkSimpleProgramByName name) ];
 in
 {
   inherit
     importSiblings
     mkCopyActivationScript
+    mkSimpleProgram
     recurseFirstMatching
     recursiveMap
     setCaskHash
+    mkSimpleProgramByName
+    mkSimpleProgramImports
     ;
 }

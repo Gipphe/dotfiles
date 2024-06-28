@@ -1,4 +1,4 @@
-{ lib, flags, ... }:
+{ utils, ... }:
 {
-  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
+  imports = utils.mkSimpleProgramImports "cool-retro-term";
 }

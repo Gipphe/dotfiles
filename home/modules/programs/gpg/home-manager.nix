@@ -7,8 +7,9 @@
 {
   config = lib.mkIf config.gipphe.programs.gpg.enable (
     lib.mkMerge [
+      { programs.gpg.enable = true; }
+
       (lib.mkIf pkgs.stdenv.isLinux {
-        programs.gpg.enable = true;
         services.gpg-agent = {
           enable = true;
           defaultCacheTtl = 1800;
