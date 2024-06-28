@@ -16,10 +16,6 @@
         vivaldi.enable = true;
         wezterm.enable = true;
       };
-      environment = {
-        theme.catppuccin.enable = true;
-        wallpaper.small-memory.enable = true;
-      };
     };
   };
 }
