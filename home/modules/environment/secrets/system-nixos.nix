@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.gipphe.environment.secrets;
+  inherit (config.gipphe) username;
 in
 {
   imports = [ inputs.agenix.nixosModules.age ];
@@ -61,11 +62,11 @@ in
     age.secrets =
       let
         user = {
-          owner = flags.user.username;
-          group = flags.user.username;
+          owner = username;
+          group = username;
           mode = "400";
         };
-        homeDir = config.users.users.${flags.user.username}.home;
+        homeDir = config.users.users.${username}.home;
         mkSecrets = host: service: {
           "${host}-${service}.ssh.age" = {
             file = ../../../../secrets/${host}-${service}.ssh.age;
