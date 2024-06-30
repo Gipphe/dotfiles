@@ -2,14 +2,13 @@
   lib,
   pkgs,
   config,
-  flags,
   ...
 }@args:
 let
   inherit (import ./utils.nix args) ideaDir;
   inherit (lib) hasSuffix pipe;
   inherit (pkgs) fetchzip stdenv;
-  inherit (builtins) fetchurl listToAttrs;
+  inherit (builtins) fetchurl listToAttrs length;
   cfg = config.gipphe.programs.idea-ultimate;
 
   mkPluginEntry = id: plugin: {
@@ -46,7 +45,7 @@ let
   ];
 in
 {
-  config = lib.mkIf (cfg.enable && builtins.length cfg.plugins > 0 && flags.isNixos) {
+  config = lib.mkIf (pkgs.stdenv.isLinux && cfg.enable && length cfg.plugins > 0) {
     xdg.dataFile = plugins;
   };
 }
