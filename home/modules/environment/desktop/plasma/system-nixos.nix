@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  flags,
   pkgs,
   ...
 }:
@@ -22,7 +21,7 @@
       # Enable automatic login for the user.
       xserver.displayManager.autoLogin = {
         enable = true;
-        user = flags.user.username;
+        user = config.gipphe.username;
       };
     };
     # Workaround for GNOME autologin issue
