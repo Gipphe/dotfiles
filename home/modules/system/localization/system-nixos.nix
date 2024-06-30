@@ -3,7 +3,7 @@ let
   tz = "Europe/Oslo";
 in
 {
-  config = lib.mkIf config.gipphe.system.time.enable {
+  config = lib.mkIf config.gipphe.system.localization.enable {
     time = {
       # Set your time zone.
       timeZone = tz;
