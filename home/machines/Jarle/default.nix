@@ -12,18 +12,19 @@
       username = "gipphe";
       homeDirectory = "/home/gipphe";
       profiles = {
-        containers.enable = true;
-        core.enable = true;
-        fonts.enable = true;
         nixos = {
           system.enable = true;
           wsl.enable = true;
         };
+        cli.enable = true;
+        containers.enable = true;
+        core.enable = true;
+        fonts.enable = true;
         rice.enable = true;
         secrets.enable = true;
         systemd.enable = true;
         vm-guest.enable = true;
-        work.enable = true;
+        work-slim.enable = true;
       };
     };
   };
