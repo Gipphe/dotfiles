@@ -101,13 +101,14 @@ let
 
   mkSimpleProgramByName = name: { pkgs, ... }@args: mkSimpleProgram name pkgs.${name} args;
   mkSimpleProgramImports = name: [ (mkSimpleProgramByName name) ];
-  mkProfile =
+  mkProfileSet =
     name: cfg:
     { lib, config, ... }:
     {
       options.gipphe.profiles.${name}.enable = lib.mkEnableOption "${name} profile";
       config = lib.mkIf config.gipphe.profiles.${name}.enable cfg;
     };
+  mkProfile = name: cfg: { imports = [ (mkProfileSet name cfg) ]; };
 in
 {
   inherit
@@ -120,6 +121,7 @@ in
     setCaskHash
     mkSimpleProgramByName
     mkSimpleProgramImports
+    mkProfileSet
     mkProfile
     ;
 }

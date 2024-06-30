@@ -1,7 +1,1 @@
-{ lib, config, ... }:
-{
-  options.gipphe.profiles.vm-guest.enable = lib.mkEnableOption "vm-guest";
-  config = lib.mkIf config.gipphe.profiles.vm-guest.enable {
-    gipphe.virtualisation.virtualbox-guest.enable = true;
-  };
-}
+{ util, ... }: util.mkProfile "vm-guest" { gipphe.virtualisation.virtualbox-guest.enable = true; }

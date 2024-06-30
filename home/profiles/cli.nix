@@ -1,41 +1,38 @@
-{ lib, config, ... }:
-{
-  options.gipphe.profiles.cli.enable = lib.mkEnableOption "cli profile";
-  config = lib.mkIf config.gipphe.profiles.cli.enable {
-    gipphe.programs = {
-      _1password.enable = true;
-      bat.enable = true;
-      btop.enable = true;
-      curl.enable = true;
-      direnv.enable = true;
-      entr.enable = true;
-      eza.enable = true;
-      fastgron.enable = true;
-      fd.enable = true;
-      fish.enable = true;
-      fzf.enable = true;
-      gh.enable = true;
-      git.enable = true;
-      glab.enable = true;
-      gnused.enable = true;
-      gnutar.enable = true;
-      gpg.enable = true;
-      imagemagick.enable = true;
-      jq.enable = true;
-      jujutsu.enable = true;
-      less.enable = true;
-      make.enable = true;
-      nixvim.enable = true;
-      nh.enable = true;
-      nnn.enable = true;
-      ripgrep.enable = true;
-      ssh.enable = true;
-      thefuck.enable = true;
-      unzip.enable = true;
-      vim.enable = true;
-      xclip.enable = true;
-      zellij.enable = true;
-      zoxide.enable = true;
-    };
+{ util, ... }:
+util.mkProfile "cli" {
+  gipphe.programs = {
+    _1password.enable = true;
+    bat.enable = true;
+    btop.enable = true;
+    curl.enable = true;
+    direnv.enable = true;
+    entr.enable = true;
+    eza.enable = true;
+    fastgron.enable = true;
+    fd.enable = true;
+    fish.enable = true;
+    fzf.enable = true;
+    gh.enable = true;
+    git.enable = true;
+    glab.enable = true;
+    gnused.enable = true;
+    gnutar.enable = true;
+    gpg.enable = true;
+    imagemagick.enable = true;
+    jq.enable = true;
+    jujutsu.enable = true;
+    less.enable = true;
+    make.enable = true;
+    nixvim.enable = true;
+    nh.enable = true;
+    nnn.enable = true;
+    ripgrep.enable = true;
+    ssh.enable = true;
+    thefuck.enable = true;
+    unzip.enable = true;
+    vim.enable = true;
+    xclip.enable = true;
+    zellij.enable = true;
+    zoxide.enable = true;
   };
 }
