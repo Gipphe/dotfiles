@@ -4,8 +4,11 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.gipphe.programs.fish;
+in
 {
-  config = lib.mkIf config.gipphe.programs.fish.enable {
+  config = lib.mkIf (cfg.enable && cfg.prompt == "starship") {
     programs.starship = {
       enable = true;
       enableTransience = true;
