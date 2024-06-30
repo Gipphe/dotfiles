@@ -5,7 +5,6 @@
   lib,
   config,
   pkgs,
-  flags,
   ...
 }:
 {
@@ -17,7 +16,7 @@
   config = lib.mkIf config.gipphe.system.wsl.enable {
     wsl = {
       enable = true;
-      defaultUser = flags.user.username;
+      defaultUser = config.gipphe.username;
       docker-desktop.enable = false;
       interop = {
         includePath = true;
