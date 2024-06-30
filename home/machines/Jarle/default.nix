@@ -21,6 +21,7 @@
         core.enable = true;
         fonts.enable = true;
         rice.enable = true;
+        gc.enable = true;
         secrets.enable = true;
         systemd.enable = true;
         vm-guest.enable = true;
