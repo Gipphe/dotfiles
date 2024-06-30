@@ -1,4 +1,4 @@
-{ utils, pkgs, ... }:
+{ util, pkgs, ... }:
 {
-  imports = [ (utils.mkSimpleProgram "curl" pkgs.curlFull) ];
+  imports = [ (util.mkSimpleProgram "curl" pkgs.curlFull) ];
 }

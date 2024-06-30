@@ -1,4 +1,4 @@
-{ utils, pkgs, ... }:
+{ util, pkgs, ... }:
 {
-  imports = [ (utils.mkSimpleProgram "unzip" pkgs.unzip) ];
+  imports = [ (util.mkSimpleProgram "unzip" pkgs.unzip) ];
 }

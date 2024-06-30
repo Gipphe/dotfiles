@@ -1,7 +1,7 @@
 {
   lib,
   config,
-  utils,
+  util,
   ...
 }:
 {
@@ -22,7 +22,7 @@
 
     home.activation."copy-wezterm-config-to-repo" =
       let
-        inherit (utils) mkCopyActivationScript;
+        inherit (util) mkCopyActivationScript;
         script = mkCopyActivationScript "${config.xdg.configHome}/wezterm" "${config.home.homeDirectory}/projects/dotfiles/windows/Config/wezterm";
       in
       "run ${script}/bin/script";

@@ -2,7 +2,7 @@
   lib,
   config,
   flags,
-  utils,
+  util,
   inputs,
   pkgs,
   ...
@@ -10,7 +10,7 @@
 {
   config = lib.mkIf (config.gipphe.programs.xnviewmp.enable && flags.isNixDarwin) {
     home.packages = [
-      (utils.setCaskHash inputs.brew-nix.packages.${pkgs.system}.xnviewmp
+      (util.setCaskHash inputs.brew-nix.packages.${pkgs.system}.xnviewmp
         "sha256-TE87nserf+7TJRfuD1pKdEBg9QHNxyet06jrGlGRPGc="
       )
     ];

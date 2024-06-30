@@ -3,7 +3,7 @@
   lib,
   inputs,
   config,
-  utils,
+  util,
   ...
 }:
 let
@@ -22,7 +22,7 @@ let
   darwin = (
     lib.mkIf pkgs.stdenv.isDarwin {
       home.packages = [
-        (utils.setCaskHash inputs.brew-nix.packages.${pkgs.system}.filen
+        (util.setCaskHash inputs.brew-nix.packages.${pkgs.system}.filen
           "sha256-ewoPrA8HuYftz9tvp7OUgDqikKhPZ7WOVyWH83oADJQ="
         )
       ];

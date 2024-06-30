@@ -3,7 +3,8 @@
   inputs,
   config,
   flags,
-  utils,
+  util,
+  hostname,
   ...
 }:
 {
@@ -12,7 +13,12 @@
     useGlobalPkgs = true;
     backupFileExtension = "backup-before-nix";
     extraSpecialArgs = {
-      inherit self inputs utils;
+      inherit
+        self
+        inputs
+        util
+        hostname
+        ;
       osConfig = config;
       flags = flags // {
         isNixos = false;

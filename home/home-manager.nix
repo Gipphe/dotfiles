@@ -1,6 +1,6 @@
-{ utils, ... }:
+{ util, ... }:
 {
-  # imports = utils.importSubdirs "default.nix" ./.;
+  # imports = util.importSubdirs "default.nix" ./.;
   imports = [
     ./machines
     ./machines/Jarle

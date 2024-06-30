@@ -1,6 +1,6 @@
-{ utils, ... }:
+{ util, ... }:
 {
-  # imports = utils.importSubdirs "system-darwin.nix" ./. ++ utils.importSubdirs "system-all.nix" ./.;
+  # imports = util.importSubdirs "system-darwin.nix" ./. ++ utils.importSubdirs "system-all.nix" ./.;
   imports = [
     ./modules/applications/misc/1password-gui/system-darwin.nix
     ./modules/applications/virtualization/docker/system-darwin.nix

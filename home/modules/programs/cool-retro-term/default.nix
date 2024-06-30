@@ -1,4 +1,4 @@
-{ utils, ... }:
+{ util, ... }:
 {
-  imports = utils.mkSimpleProgramImports "cool-retro-term";
+  imports = util.mkSimpleProgramImports "cool-retro-term";
 }

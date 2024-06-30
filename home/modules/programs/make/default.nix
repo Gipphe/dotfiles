@@ -1,4 +1,4 @@
-{ utils, pkgs, ... }:
+{ util, pkgs, ... }:
 {
-  imports = [ (utils.mkSimpleProgram "make" pkgs.gnumake) ];
+  imports = [ (util.mkSimpleProgram "make" pkgs.gnumake) ];
 }

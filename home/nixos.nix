@@ -1,4 +1,4 @@
-{ utils, ... }:
+{ util, ... }:
 {
-  # imports = utils.importSubdirs "system-nixos.nix" ./. ++ utils.importSubdirs "system-all.nix" ./.;
+  # imports = util.importSubdirs "system-nixos.nix" ./. ++ utils.importSubdirs "system-all.nix" ./.;
 }

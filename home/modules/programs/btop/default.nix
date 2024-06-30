@@ -1,4 +1,4 @@
-{ utils, ... }:
+{ util, ... }:
 {
-  imports = utils.mkSimpleProgramImports "btop";
+  imports = util.mkSimpleProgramImports "btop";
 }

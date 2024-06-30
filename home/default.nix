@@ -1,7 +1,7 @@
-{ utils, lib, ... }:
+{ util, lib, ... }:
 {
   imports =
-    utils.recurseFirstMatching "default.nix" ./.
+    util.recurseFirstMatching "default.nix" ./.
     ++ lib.filesystem.listFilesRecursive ./profiles;
   # imports = [
   #   # ./modules/system/systemd

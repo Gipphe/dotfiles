@@ -96,7 +96,7 @@ let
       specialArgs = {
         inherit inputs self;
         inherit (machineOptions.${hostname}.config.gipphe) flags;
-        utils =
+        util =
           let
             utilPkgs = nixpkgs.legacyPackages.${config.system};
           in
