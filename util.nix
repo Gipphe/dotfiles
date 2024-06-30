@@ -65,10 +65,10 @@ let
       (filterAttrs (_: type: type == "directory"))
       attrNames
       (map (d: /.${dir}/${d}))
-      (map (recurseFirstMatching' file))
+      (map (recurseFirstMatchingIncludingSibling file))
       flatten
     ];
-  recurseFirstMatching' =
+  recurseFirstMatchingIncludingSibling =
     file: dir:
     let
       items = readDir dir;
@@ -78,7 +78,10 @@ let
     else
       foldlAttrs (
         acc: name: type:
-        if type == "directory" then acc ++ recurseFirstMatching' file /.${dir}/${name} else acc
+        if type == "directory" then
+          acc ++ recurseFirstMatchingIncludingSibling file /.${dir}/${name}
+        else
+          acc
       ) [ ] items;
 
   mkSimpleProgram =
@@ -105,6 +108,7 @@ in
     mkCopyActivationScript
     mkSimpleProgram
     recurseFirstMatching
+    recurseFirstMatchingIncludingSibling
     recursiveMap
     setCaskHash
     mkSimpleProgramByName
