@@ -26,6 +26,7 @@
       less.enable = true;
       make.enable = true;
       nixvim.enable = true;
+      nh.enable = true;
       nnn.enable = true;
       ripgrep.enable = true;
       ssh.enable = true;
