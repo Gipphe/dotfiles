@@ -94,7 +94,7 @@ let
     mkSystem {
       inherit (config) system;
       specialArgs = {
-        inherit inputs self;
+        inherit inputs self hostname;
         inherit (machineOptions.${hostname}.config.gipphe) flags;
         util =
           let
