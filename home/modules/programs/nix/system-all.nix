@@ -18,7 +18,7 @@
     nix = {
       # Clear out the store periodically of old generations
       gc = {
-        automatic = true;
+        #   automatic = true;
         options = "--delete-older-than 10d";
       };
       package = pkgs.nixVersions.git;
