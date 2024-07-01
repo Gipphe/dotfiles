@@ -23,7 +23,7 @@
       command = ''
         if command -v nixos-rebuild &> /dev/null; then
           nh os switch --ask
-        elif command -v darwin-rebuild &>/dev/nul; then
+        elif command -v darwin-rebuild &>/dev/null; then
           darwin-rebuild build --flake $(pwd)
 
           nvd diff /run/current-system result
