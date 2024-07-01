@@ -31,7 +31,8 @@
 
             nvd diff /run/current-system result
 
-            read -p "Apply these changes? (y/N) " -n 1 REPLY
+            echo "Apply the config?"
+            read -p "[y/N]" -n 1 REPLY
             echo
 
             case "$REPLY" in
