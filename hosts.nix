@@ -9,28 +9,36 @@ let
   inherit (nixpkgs.lib.attrsets) filterAttrs mapAttrs;
   inherit (nixpkgs.lib) nixosSystem hasSuffix;
   inherit (inputs.darwin.lib) darwinSystem;
+
   nixosMachines = filterAttrs (_: config: !(hasSuffix "darwin" config.system)) machines;
   darwinMachines = filterAttrs (_: config: hasSuffix "darwin" config.system) machines;
-  machineOptions = mapAttrs (
-    hostname: config:
-    nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./flags.nix
-        { gipphe.flags.system = config.system; }
-      ];
-    }
-  ) machines;
-  nixosConfigurations = mapAttrs (mkMachine nixosSystem) nixosMachines;
-  darwinConfigurations = mapAttrs (mkMachine darwinSystem) darwinMachines;
+
+  nixosFlags = {
+    isNixos = true;
+    isNixDarwin = false;
+    isHm = false;
+    isSystem = true;
+  };
+  darwinFlags = {
+    isNixos = false;
+    isNixDarwin = true;
+    isHm = false;
+    isSystem = true;
+  };
+  nixosConfigurations = mapAttrs (mkMachine nixosFlags nixosSystem) nixosMachines;
+  darwinConfigurations = mapAttrs (mkMachine darwinFlags darwinSystem) darwinMachines;
 
   mkMachine =
-    mkSystem: hostname: config:
+    flags: mkSystem: hostname: config:
     mkSystem {
       inherit (config) system;
       specialArgs = {
-        inherit inputs self hostname;
-        inherit (machineOptions.${hostname}.config.gipphe) flags;
+        inherit
+          inputs
+          self
+          hostname
+          flags
+          ;
         util =
           let
             utilPkgs = nixpkgs.legacyPackages.${config.system};
@@ -46,5 +54,4 @@ in
 {
   inherit nixosConfigurations;
   inherit darwinConfigurations;
-  inherit machineOptions;
 }
