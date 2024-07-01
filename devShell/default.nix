@@ -12,6 +12,7 @@
             darwin-rebuild build --flake $(pwd)
             nvd diff /run/current-system result
             darwin-rebuild switch --flake $(pwd)
+            rm -f result
           elif command -v home-manager &>/dev/null; then
             nh home switch
           fi
@@ -36,6 +37,7 @@
             case "$REPLY" in
               y|Y) darwin-rebuild switch --flake $(pwd) ;;
             esac
+            rm -f result
           else
             echo "This is not a NixOS system" >&2
             exit 1
