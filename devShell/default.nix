@@ -10,7 +10,9 @@
             nh os switch
           elif command -v darwin-rebuild &>/dev/null; then
             darwin-rebuild build --flake $(pwd)
+            echo
             nvd diff /run/current-system result
+            echo
             darwin-rebuild switch --flake $(pwd)
             rm -f result
           elif command -v home-manager &>/dev/null; then
@@ -29,7 +31,9 @@
           elif command -v darwin-rebuild &>/dev/null; then
             darwin-rebuild build --flake $(pwd)
 
+            echo
             nvd diff /run/current-system result
+            echo
 
             echo "Apply the config?"
             read -p "[y/N]" -n 1 REPLY
