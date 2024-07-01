@@ -8,6 +8,8 @@
         if command -v nixos-rebuild &>/dev/null; then
           nh os switch
         elif command -v darwin-rebuild &>/dev/null; then
+          darwin-rebuild build --flake $(pwd)
+          nvd diff /run/current-system result
           darwin-rebuild switch --flake $(pwd)
         elif command -v home-manager &>/dev/null; then
           nh home switch
@@ -21,6 +23,17 @@
       command = ''
         if command -v nixos-rebuild &> /dev/null; then
           nh os switch --ask
+        elif command -v darwin-rebuild &>/dev/nul; then
+          darwin-rebuild build --flake $(pwd)
+
+          nvd diff /run/current-system result
+
+          read -p "Apply these changes? (y/N) " -n 1 REPLY
+          echo
+
+          case "$REPLY" in
+            y|Y) darwin-rebuild switch --flake $(pwd) ;;
+          esac
         else
           echo "This is not a NixOS system" >&2
           exit 1
