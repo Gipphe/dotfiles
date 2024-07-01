@@ -4,6 +4,7 @@
   config = lib.mkIf config.gipphe.profiles.nixos.system.enable {
     gipphe.system = {
       console.enable = true;
+      dconf.enable = true;
       journald.enable = true;
       keyboard.enable = true;
       localization.enable = true;

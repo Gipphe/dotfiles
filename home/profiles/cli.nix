@@ -23,8 +23,8 @@ util.mkProfile "cli" {
     jujutsu.enable = true;
     less.enable = true;
     make.enable = true;
-    nixvim.enable = true;
     nh.enable = true;
+    nixvim.enable = true;
     nnn.enable = true;
     ripgrep.enable = true;
     ssh.enable = true;
