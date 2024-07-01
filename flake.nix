@@ -60,6 +60,7 @@
                 git # flake requires git
                 statix # lints and suggestions
                 deadnix # clean up unused nix code
+                nvd # Diff nix results
               ];
             };
 
