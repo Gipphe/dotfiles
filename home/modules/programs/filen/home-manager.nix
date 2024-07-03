@@ -11,11 +11,11 @@ let
     "x86_64-linux" = "https://cdn.filen.io/desktop/release/filen_x86_64.AppImage";
     "aarch64-linux" = "https://cdn.filen.io/desktop/release/filen_arm64.AppImage";
   };
-  linuxPackage = pkgs.lib.appimageTools.wrapType2 {
+  linuxPackage = pkgs.appimageTools.wrapType2 {
     name = "filen";
     src = builtins.fetchurl {
       url = appImages.${pkgs.system};
-      sha256 = pkgs.lib.fakeSha256;
+      sha256 = "0xcypk8h8w8k89y1q988xlcc0cq2vyjgilnwa5gwvzsm7xsjgyg6";
     };
   };
   linux = lib.mkIf pkgs.stdenv.isLinux { home.packages = [ linuxPackage ]; };
