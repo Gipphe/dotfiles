@@ -45,22 +45,28 @@
   imports = lib.optional flags.isSystem ./system-all.nix;
   options.gipphe.machines.trond-arne.enable = lib.mkEnableOption "trond-arne machine config";
   config = lib.mkIf config.gipphe.machines.trond-arne.enable {
-    gipphe.profiles = {
-      nixos = {
+    gipphe = {
+      username = "gipphe";
+      homeDirectory = "/home/gipphe";
+      profiles = {
+        nixos = {
+          audio.enable = true;
+          boot-efi.enable = true;
+          devices.enable = true;
+          system.enable = true;
+        };
         audio.enable = true;
-        boot-efi.enable = true;
-        devices.enable = true;
-        system.enable = true;
+        cli.enable = true;
+        core.enable = true;
+        desktop-normal.enable = true;
+        desktop.enable = true;
+        fonts.enable = true;
+        gaming.enable = true;
+        gc.enable = true;
+        rice.enable = true;
+        secrets.enable = true;
+        systemd.enable = true;
       };
-      audio.enable = true;
-      cli.enable = true;
-      core.enable = true;
-      desktop-normal.enable = true;
-      desktop.enable = true;
-      fonts.enable = true;
-      gaming.enable = true;
-      secrets.enable = true;
-      systemd.enable = true;
     };
   };
 }
