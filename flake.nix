@@ -50,7 +50,7 @@
               env = extra.shellEnv;
               packages = with pkgs; [
                 inputs'.agenix.packages.default # agenix CLI in flake shell
-                inputs'.catppuccinifier.packages.cli
+                # inputs'.catppuccinifier.packages.cli
                 inputs'.nh.packages.default # better nix CLI
                 config.treefmt.build.wrapper # treewide formatter
                 nix-output-monitor # pretty nix output
