@@ -63,6 +63,7 @@
         fonts.enable = true;
         gaming.enable = true;
         gc.enable = true;
+        networkmanager.enable = true;
         rice.enable = true;
         secrets.enable = true;
         systemd.enable = true;
