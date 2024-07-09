@@ -20,6 +20,7 @@ util.mkProfile "cli" {
     gnused.enable = true;
     gnutar.enable = true;
     gpg.enable = true;
+    gum.enable = true;
     imagemagick.enable = true;
     jq.enable = true;
     jujutsu.enable = true;
