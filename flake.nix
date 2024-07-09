@@ -30,7 +30,7 @@
           ...
         }:
         {
-          formatter = pkgs.nixfmt-rfc-style;
+          formatter = pkgs.nixfmt;
 
           pre-commit = {
             settings.excludes = [ "flake.lock" ];
