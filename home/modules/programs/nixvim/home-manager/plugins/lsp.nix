@@ -1,15 +1,7 @@
-{ inputs, ... }:
 let
   inherit (import ../util.nix) k kv;
 in
 {
-  nixpkgs.overlays = [
-    (final: prev: {
-      nodePackages = prev.nodePackages // {
-        inherit (inputs.nixpkgs-bashls-fix.legacyPackages.${prev.system}.nodePackages) bash-language-server;
-      };
-    })
-  ];
   programs.nixvim = {
     plugins = {
       lsp = {

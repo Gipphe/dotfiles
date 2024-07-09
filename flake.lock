@@ -1596,22 +1596,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-bashls-fix": {
-      "locked": {
-        "lastModified": 1718398788,
-        "narHash": "sha256-w1/JTve3RwrhS1D02LAzH2Fo33esT+iAV/xyOKX9+gk=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "91a7822b04fe5e15f1604f9ca0fb81eff61b4143",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "91a7822b04fe5e15f1604f9ca0fb81eff61b4143",
-        "type": "github"
-      }
-    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1717284937,
@@ -1870,7 +1854,6 @@
         "nix-index-db": "nix-index-db",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_6",
-        "nixpkgs-bashls-fix": "nixpkgs-bashls-fix",
         "nixpkgs-master": "nixpkgs-master",
         "nixvim": "nixvim",
         "pre-commit-hooks": "pre-commit-hooks",
