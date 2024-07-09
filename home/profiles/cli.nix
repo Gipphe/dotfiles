@@ -30,7 +30,6 @@ util.mkProfile "cli" {
     mprocs.enable = true;
     nh.enable = true;
     nixvim.enable = true;
-    nnn.enable = true;
     procs.enable = true;
     ripgrep.enable = true;
     serpl.enable = true;
