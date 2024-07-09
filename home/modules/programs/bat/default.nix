@@ -1,4 +1,1 @@
-{ util, ... }:
-{
-  imports = util.mkSimpleProgramImports "bat";
-}
+{ util, ... }: util.mkSimpleProgramModule "bat"
