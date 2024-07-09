@@ -1,13 +1,13 @@
 { lib, writeShellScriptBin, ... }:
 let
   inherit (builtins)
-    hasAttr
-    map
-    isList
-    isAttrs
-    listToAttrs
-    readDir
     attrNames
+    hasAttr
+    isAttrs
+    isList
+    listToAttrs
+    map
+    readDir
     ;
   inherit (lib) flatten;
   inherit (lib.attrsets) foldlAttrs filterAttrs;
@@ -101,6 +101,8 @@ let
 
   mkSimpleProgramByName = name: { pkgs, ... }@args: mkSimpleProgram name pkgs.${name} args;
   mkSimpleProgramImports = name: [ (mkSimpleProgramByName name) ];
+  mkSimpleProgramModule = name: { imports = mkSimpleProgramImports name; };
+
   mkProfileSet =
     name: cfg:
     { lib, config, ... }:
@@ -109,19 +111,67 @@ let
       config = lib.mkIf config.gipphe.profiles.${name}.enable cfg;
     };
   mkProfile = name: cfg: { imports = [ (mkProfileSet name cfg) ]; };
+
+  smartImport =
+    path:
+    { lib, flags, ... }:
+    let
+      mkCond =
+        filename: cond:
+        lib.optional (lib.pathIsRegularFile /.${path}/${filename} && cond) /.${path}/${filename};
+      options = mkCond "options.nix" (_: true);
+      hm = mkCond "home-manager.nix" flags.isHm;
+      nixos = mkCond "system-nixos.nix" flags.isNixos;
+      nix-darwin = mkCond "system-darwin.nix" flags.isNixDarwin;
+      system-all = mkCond "system-all.nix" flags.isSystem;
+    in
+    {
+      imports = options ++ hm ++ nixos ++ nix-darwin ++ system-all;
+    };
+
+  mkModule =
+    {
+      options ? { },
+      hm ? { },
+      system-nixos ? { },
+      system-darwin ? { },
+      system-all ? { },
+      shared ? { },
+    }:
+    {
+      imports = [
+        (
+          { lib, flags, ... }:
+          {
+            imports =
+              [
+                { inherit options; }
+                shared
+              ]
+              ++ lib.optional flags.isHm hm
+              ++ lib.optional flags.isNixos system-nixos
+              ++ lib.optional flags.isNixDarwin system-darwin
+              ++ lib.optional flags.isSystem system-all;
+          }
+        )
+      ];
+    };
 in
 {
   inherit
     importSiblings
     mkCopyActivationScript
+    mkModule
+    mkProfile
+    mkProfileSet
     mkSimpleProgram
+    mkSimpleProgramByName
+    mkSimpleProgramImports
+    mkSimpleProgramModule
     recurseFirstMatching
     recurseFirstMatchingIncludingSibling
     recursiveMap
     setCaskHash
-    mkSimpleProgramByName
-    mkSimpleProgramImports
-    mkProfileSet
-    mkProfile
+    smartImport
     ;
 }
