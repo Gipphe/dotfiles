@@ -2,7 +2,7 @@
   description = "Home Manager configuration of gipphe";
 
   outputs =
-    inputs@{ self, flake-parts, ... }:
+    inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } (_: {
       systems = [
         "aarch64-darwin"
@@ -48,20 +48,23 @@
               name = "dotfiles";
               commands = extra.shellCommands;
               env = extra.shellEnv;
-              packages = with pkgs; [
-                inputs'.agenix.packages.default # agenix CLI in flake shell
-                # inputs'.catppuccinifier.packages.cli
-                inputs'.nh.packages.default # better nix CLI
-                config.treefmt.build.wrapper # treewide formatter
-                nix-output-monitor # pretty nix output
-                nix-tree
-                entr # run commands on file changes
-                nixfmt-rfc-style # nix formatter
-                git # flake requires git
-                statix # lints and suggestions
-                deadnix # clean up unused nix code
-                nvd # Diff nix results
-              ];
+              packages =
+                [
+                  inputs'.agenix.packages.default # agenix CLI in flake shell
+                  # inputs'.catppuccinifier.packages.cli
+                  inputs'.nh.packages.default # better nix CLI
+                  config.treefmt.build.wrapper # treewide formatter
+                ]
+                ++ (with pkgs; [
+                  nix-output-monitor # pretty nix output
+                  nix-tree
+                  entr # run commands on file changes
+                  nixfmt-rfc-style # nix formatter
+                  git # flake requires git
+                  statix # lints and suggestions
+                  deadnix # clean up unused nix code
+                  nvd # Diff nix results
+                ]);
             };
 
           treefmt = {
