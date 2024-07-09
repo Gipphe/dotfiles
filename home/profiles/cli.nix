@@ -31,6 +31,7 @@ util.mkProfile "cli" {
     nh.enable = true;
     nixvim.enable = true;
     nnn.enable = true;
+    procs.enable = true;
     ripgrep.enable = true;
     serpl.enable = true;
     ssh.enable = true;
