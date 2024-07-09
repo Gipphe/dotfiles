@@ -274,7 +274,11 @@
 
     brew-nix = {
       url = "github:BatteredBunny/brew-nix";
-      inputs.brew-api.follows = "brew-api";
+      inputs = {
+        brew-api.follows = "brew-api";
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
     };
 
     brew-api = {
