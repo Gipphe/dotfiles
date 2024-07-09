@@ -7,15 +7,17 @@ in
       treesitter = {
         enable = true;
         folding = true;
-        indent = true;
         nixvimInjections = true;
-        incrementalSelection = {
-          enable = true;
-          keymaps = {
-            initSelection = "<C-space>";
-            nodeIncremental = "<C-space";
-            scopeIncremental = "<M-space>";
-            nodeDecremental = "<bs>";
+        settings = {
+          indent.enable = true;
+          incrementalSelection = {
+            enable = true;
+            keymaps = {
+              initSelection = "<C-space>";
+              nodeIncremental = "<C-space";
+              scopeIncremental = "<M-space>";
+              nodeDecremental = "<bs>";
+            };
           };
         };
       };
