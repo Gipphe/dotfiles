@@ -7,6 +7,7 @@ util.mkProfile "cli" {
     btop.enable = true;
     clipboard-jh.enable = true;
     curl.enable = true;
+    curlie.enable = true;
     direnv.enable = true;
     entr.enable = true;
     eza.enable = true;
