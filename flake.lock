@@ -1620,22 +1620,6 @@
         "url": "https://github.com/NixOS/nixpkgs/archive/5daf0514482af3f97abaefc78a6606365c9108e2.tar.gz"
       }
     },
-    "nixpkgs-master": {
-      "locked": {
-        "lastModified": 1720563545,
-        "narHash": "sha256-IODJfuIkOK9zLsLzvIspqWMdew1QaxJNRBNLrl7+isU=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "6befe6d3c462aff83db7c0a4d9350affbbd33a4b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "master",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1718811006,
@@ -1854,7 +1838,6 @@
         "nix-index-db": "nix-index-db",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_6",
-        "nixpkgs-master": "nixpkgs-master",
         "nixvim": "nixvim",
         "pre-commit-hooks": "pre-commit-hooks",
         "stylix": "stylix",

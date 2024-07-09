@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  inputs,
   ...
 }:
 let
@@ -25,10 +24,7 @@ in
       "zellij/config.kdl".source = ./config.kdl;
     };
     programs = {
-      zellij = {
-        enable = true;
-        package = inputs.nixpkgs-master.legacyPackages.${pkgs.system}.zellij;
-      };
+      zellij.enable = true;
 
       fish.shellAbbrs = {
         tmux = "zellij";
