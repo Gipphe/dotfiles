@@ -30,6 +30,7 @@ util.mkProfile "cli" {
     nixvim.enable = true;
     nnn.enable = true;
     ripgrep.enable = true;
+    serpl.enable = true;
     ssh.enable = true;
     thefuck.enable = true;
     unzip.enable = true;
