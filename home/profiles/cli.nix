@@ -38,6 +38,7 @@ util.mkProfile "cli" {
     serpl.enable = true;
     ssh.enable = true;
     thefuck.enable = true;
+    timg.enable = true;
     unzip.enable = true;
     vhs.enable = true;
     vim.enable = true;
