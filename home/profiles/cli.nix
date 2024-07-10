@@ -32,6 +32,7 @@ util.mkProfile "cli" {
     nixvim.enable = true;
     procs.enable = true;
     ripgrep.enable = true;
+    sd.enable = true;
     serpl.enable = true;
     ssh.enable = true;
     thefuck.enable = true;
