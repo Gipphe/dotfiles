@@ -39,6 +39,7 @@ util.mkProfile "cli" {
     ssh.enable = true;
     thefuck.enable = true;
     unzip.enable = true;
+    vhs.enable = true;
     vim.enable = true;
     xclip.enable = true;
     yazi.enable = true;
