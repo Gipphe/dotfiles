@@ -17,6 +17,7 @@
         core.enable = true;
         darwin.enable = true;
         desktop.enable = true;
+        k8s.enable = true;
         kvm.enable = true;
         logitech.enable = true;
         music.enable = true;
