@@ -26,6 +26,7 @@ util.mkProfile "cli" {
     gpg.enable = true;
     gum.enable = true;
     imagemagick.enable = true;
+    jnv.enable = true;
     jq.enable = true;
     jujutsu.enable = true;
     kondo.enable = true;
