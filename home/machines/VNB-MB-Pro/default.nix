@@ -12,6 +12,7 @@
       username = "victor";
       homeDirectory = "/Users/victor";
       profiles = {
+        ai.enable = true;
         cli.enable = true;
         containers.enable = true;
         core.enable = true;

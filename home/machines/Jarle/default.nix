@@ -16,12 +16,13 @@
           system.enable = true;
           wsl.enable = true;
         };
+        ai.enable = true;
         cli.enable = true;
         containers.enable = true;
         core.enable = true;
         fonts.enable = true;
-        rice.enable = true;
         gc.enable = true;
+        rice.enable = true;
         secrets.enable = true;
         systemd.enable = true;
         vm-guest.enable = true;
