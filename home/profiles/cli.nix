@@ -10,6 +10,7 @@ util.mkProfile "cli" {
     curl.enable = true;
     curlie.enable = true;
     direnv.enable = true;
+    dua.enable = true;
     entr.enable = true;
     eza.enable = true;
     fastgron.enable = true;
