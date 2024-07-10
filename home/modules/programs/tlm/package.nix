@@ -11,17 +11,19 @@ buildGoModule rec {
     owner = "yusufcanb";
     repo = pname;
     rev = version;
-    hash = "";
+    hash = "sha256-bVo2rumMrrJrFFvmpbrfHANmn3FfwjcJ8bT8svBbI8A=";
   };
 
-  vendorHash = "";
+  vendorHash = "sha256-hd/xj/PX0p7Ol0zan420QQzXbZLoDZRI1VQmcraeOTc=";
+
+  doCheck = false;
 
   meta = {
     description = "Local CLI Copilot, powered by CodeLLaMa.";
     mainProgram = "tlm";
     homepage = "https://github.com/yusufcanb/tlm";
     changelog = "https://github.com/yusufcanb/tlm/releases/tag/${src.rev}";
-    license = lib.licenses.as120;
+    license = lib.licenses.asl20;
     maintainers = [ ];
   };
 }

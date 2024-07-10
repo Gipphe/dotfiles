@@ -22,7 +22,7 @@ util.mkModule {
     };
   };
   hm = lib.mkIf cfg.enable {
-    gipphe.programs.ollama.enable = true;
+    gipphe.programs.ollama.enable = lib.mkForce true;
     home.packages = [ (pkgs.callPackage ./package.nix { }) ];
     home.file.".tlm".text = # yaml
       ''
