@@ -25,6 +25,7 @@ util.mkProfile "cli" {
     imagemagick.enable = true;
     jq.enable = true;
     jujutsu.enable = true;
+    kondo.enable = true;
     less.enable = true;
     make.enable = true;
     mprocs.enable = true;
