@@ -5,6 +5,7 @@ util.mkProfile "cli" {
     atuin.enable = true;
     bat.enable = true;
     btop.enable = true;
+    charm-freeze.enable = true;
     clipboard-jh.enable = true;
     curl.enable = true;
     curlie.enable = true;
