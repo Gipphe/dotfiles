@@ -16,6 +16,7 @@ util.mkProfile "cli" {
     fastgron.enable = true;
     fd.enable = true;
     fish.enable = true;
+    fx.enable = true;
     fzf.enable = true;
     gh.enable = true;
     git.enable = true;
