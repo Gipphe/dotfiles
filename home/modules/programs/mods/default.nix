@@ -1,6 +1,5 @@
 {
   util,
-  inputs,
   lib,
   config,
   pkgs,
@@ -13,7 +12,7 @@ util.mkModule {
     home.packages = [ pkgs.mods ];
     xdg.configFile."mods/mods.yaml".source = ./mods.yaml;
     programs.fish.shellInit = ''
-      set -gx OPENAI_API_KEY ''$(''$XDG_CONFIG_HOME/mods/key)
+      set -gx OPENAI_API_KEY ''$(cat ''$XDG_CONFIG_HOME/mods/key)
     '';
   };
 
