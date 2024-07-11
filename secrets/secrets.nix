@@ -55,8 +55,9 @@ let
     acc: curr:
     acc // (foldl' (acc': curr': acc' // { "${curr'}".publicKeys = curr.keys; }) { } curr.keyNames)
   ) { } (attrValues hostKeys);
+  all = Jarle ++ VNB-MB-Pro ++ trond-arne ++ nixos-vm;
 in
-entries
+entries // { "mods-cli-openai-api-key.age".publicKeys = all; }
 # {
 #   "nixos-vm-github.ssh.age".publicKeys = nixos-vm;
 #   "nixos-vm-github.ssh.pub.age".publicKeys = nixos-vm;
