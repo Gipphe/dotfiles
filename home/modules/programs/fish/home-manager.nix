@@ -62,6 +62,9 @@
           docker_pull_images = "docker images --format '{{.Repository}}:{{.Tag}}' | xargs -n 1 -P 1 docker pull";
           # Taken from https://discourse.nixos.org/t/list-and-delete-nixos-generations/29637/6
           prune-gens = "sudo nix profile wipe-history --profile /nix/var/nix/profiles/sytem --older-than";
+          "?" = "mods --role shell -q";
+          "rm -rf" = "rm -rfi";
+          "rm -fr" = "rm -fri";
         };
         plugins = with pkgs; [
           {
