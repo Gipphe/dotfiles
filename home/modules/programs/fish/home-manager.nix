@@ -66,10 +66,10 @@
           "rm -rf" = "rm -rfi";
           "rm -fr" = "rm -fri";
         };
-        plugins = with pkgs; [
+        plugins = [
           {
             name = "bass";
-            inherit (fishPlugins.bass) src;
+            inherit (pkgs.fishPlugins.bass) src;
           }
           {
             name = "nix";
