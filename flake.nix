@@ -84,7 +84,10 @@
             ];
           };
 
-          packages.tlm = pkgs.callPackage ./home/modules/programs/tlm/package.nix { };
+          packages = {
+            tlm = pkgs.callPackage ./home/modules/programs/tlm/package.nix { };
+            dataform = pkgs.callPackage ./packages/dataform { };
+          };
         };
 
       flake = {
