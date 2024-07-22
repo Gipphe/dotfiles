@@ -44,11 +44,6 @@
 
           init_ssh_agent
           add_ssh_keys_to_agent
-
-          # Must be declared in shellInit because shellAbbrs does not escape "?"
-          abbr --add -- '?' 'mods --role shell -q'
-          abbr --add -- "rm -rf" "rm -rfi";
-          abbr --add -- "rm -fr" "rm -fri";
         '';
         package = pkgs.fish;
         shellAbbrs = {
@@ -67,6 +62,7 @@
           docker_pull_images = "docker images --format '{{.Repository}}:{{.Tag}}' | xargs -n 1 -P 1 docker pull";
           # Taken from https://discourse.nixos.org/t/list-and-delete-nixos-generations/29637/6
           prune-gens = "sudo nix profile wipe-history --profile /nix/var/nix/profiles/sytem --older-than";
+          rm = "rm -i";
         };
         plugins = [
           {
