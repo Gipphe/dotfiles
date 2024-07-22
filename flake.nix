@@ -59,7 +59,7 @@
                   nix-output-monitor # pretty nix output
                   nix-tree
                   entr # run commands on file changes
-                  nixfmt # nix formatter
+                  nixfmt-rfc-style # nix formatter
                   git # flake requires git
                   statix # lints and suggestions
                   deadnix # clean up unused nix code
@@ -71,7 +71,7 @@
             projectRootFile = "flake.nix";
 
             programs = {
-              nixfmt.enable = true;
+              nixfmt-rfc-style.enable = true;
               black.enable = true;
               deadnix.enable = false;
               shellcheck.enable = true;
