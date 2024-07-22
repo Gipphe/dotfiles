@@ -44,6 +44,8 @@
 
           init_ssh_agent
           add_ssh_keys_to_agent
+
+          abbr --add "?" -- mods --role shell -q
         '';
         package = pkgs.fish;
         shellAbbrs = {
