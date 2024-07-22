@@ -6,17 +6,17 @@ keybinds {
   unbind "Ctrl o"
 
   move {
-    bind "Ctrl u" { SwitchToMode "Normal"; }
+    bind "Ctrl e" { SwitchToMode "Normal"; }
   }
   shared_except "move" "locked" {
-    bind "Ctrl u" { SwitchToMode "Move"; }
+    bind "Ctrl e" { SwitchToMode "Move"; }
   }
 
   session {
-    bind "Ctrl p" { SwitchToMode "Normal"; }
+    bind "Ctrl x" { SwitchToMode "Normal"; }
   }
   shared_except "session" "locked" {
-    bind "Ctrl p" { SwitchToMode "Session"; }
+    bind "Ctrl x" { SwitchToMode "Session"; }
   }
 
   shared_except "locked" {
