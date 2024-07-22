@@ -19,7 +19,7 @@ util.mkModule {
     '';
   };
 
-  system-nixos = lib.mkIf config.gipphe.programs.mods.enable {
+  system-all = lib.mkIf config.gipphe.programs.mods.enable {
     age.secrets = lib.mkIf (with config.gipphe.environment.secrets; enable && importSecrets) {
       "mods-cli-openai-api-key.age" = {
         file = ../../../../secrets/mods-cli-openai-api-key.age;
