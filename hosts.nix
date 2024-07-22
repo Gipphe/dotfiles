@@ -30,6 +30,9 @@ let
 
   mkMachine =
     flags: mkSystem: hostname: config:
+    let
+      util = nixpkgs.legacyPackages.${config.system}.callPackage ./util.nix { };
+    in
     mkSystem {
       inherit (config) system;
       specialArgs = {
@@ -38,12 +41,8 @@ let
           self
           hostname
           flags
+          util
           ;
-        util =
-          let
-            utilPkgs = nixpkgs.legacyPackages.${config.system};
-          in
-          import ./util.nix { inherit (utilPkgs) writeShellScriptBin lib system; };
       };
       modules = [
         ./home

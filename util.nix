@@ -1,4 +1,10 @@
-{ lib, writeShellScriptBin, ... }:
+{
+  lib,
+  gnused,
+  writeShellScriptBin,
+  writeShellApplication,
+  ...
+}:
 let
   inherit (builtins)
     attrNames
@@ -46,11 +52,31 @@ let
     ];
 
   mkCopyActivationScript =
-    fromDir: toDir:
-    writeShellScriptBin "script" ''
-      rm -rf "${toDir}"
-      cp -rL "${fromDir}" "${toDir}"
-    '';
+    name: fromDir: toDir:
+    writeShellApplication {
+      inherit name;
+      text = ''
+        rm -rf "${toDir}"
+        cp -rL "${fromDir}" "${toDir}"
+      '';
+    };
+
+  copyFileFixingPaths =
+    name: from: to:
+    writeShellApplication {
+      inherit name;
+      runtimeInputs = [ gnused ];
+      runtimeEnv = {
+        inherit to from;
+      };
+      text = ''
+        toDir="$(dirname -- $to)"
+        mkdir -p "$toDir"
+        rm -f "$to"
+        sed -r 's!/nix/store/.*/bin/(\S+)!\1!' "$from" \
+        | tee "$to" >/dev/null
+      '';
+    };
 
   setCaskHash =
     cask: hash:
@@ -177,6 +203,7 @@ let
 in
 {
   inherit
+    copyFileFixingPaths
     importSiblings
     mkCopyActivationScript
     mkHmProgramModule

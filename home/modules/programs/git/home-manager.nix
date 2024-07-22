@@ -2,6 +2,7 @@
   lib,
   config,
   util,
+  pkgs,
   ...
 }:
 {
@@ -182,9 +183,37 @@
     };
     home.activation.copy-git-config-for-windows =
       let
-        inherit (util) mkCopyActivationScript;
-        script = mkCopyActivationScript "${config.xdg.configHome}/git" "${config.home.homeDirectory}/projects/dotfiles/windows/Config/git";
+        script = pkgs.writeShellApplication {
+          name = "copy-git-config";
+          runtimeInputs = with pkgs; [
+            gnused
+            gnugrep
+          ];
+          runtimeEnv = {
+            toDir = "${config.home.homeDirectory}/projects/dotfiles/windows/Config/git";
+            fromDir = "${config.xdg.configHome}/git";
+          };
+          text = ''
+            to_config="$toDir/config"
+            to_ignore="$toDir/ignore"
+            to_strise="$toDir/strise"
+
+            from_config="$fromDir/config"
+            from_ignore="$fromDir/ignore"
+            from_strise=$(grep -Eo '/nix/store/.*-hm_gitconfig' "$from_config" | xargs)
+
+            rm -rf "$toDir"
+            mkdir -p "$toDir"
+
+            cp -rL "$from_strise" "$to_strise"
+            cp -rL "$from_ignore" "$to_ignore"
+
+            sed -r 's!/nix/store/.*/(\S+)!\1!' "$from_config" \
+            | sed "s!/nix/store/.*-hm_gitconfig!./strise!" \
+            | tee "$to_config" >/dev/null
+          '';
+        };
       in
-      "run ${script}/bin/script";
+      "run ${script}/bin/copy-git-config";
   };
 }

@@ -2,6 +2,7 @@
   lib,
   config,
   util,
+  pkgs,
   ...
 }:
 {
@@ -22,9 +23,25 @@
 
     home.activation."copy-wezterm-config-to-repo" =
       let
-        inherit (util) mkCopyActivationScript;
-        script = mkCopyActivationScript "${config.xdg.configHome}/wezterm" "${config.home.homeDirectory}/projects/dotfiles/windows/Config/wezterm";
+        inherit (util) copyFileFixingPaths mkCopyActivationScript;
+        fromDir = "${config.xdg.configHome}/wezterm";
+        toDir = "${config.home.homeDirectory}/projects/dotfiles/windows/Config/wezterm";
+        cfg =
+          copyFileFixingPaths "fix-wezterm-config-paths" "${fromDir}/wezterm.lua"
+            "${toDir}/wezterm.lua";
+        dir = mkCopyActivationScript "copy-wezterm-config-dir" fromDir toDir;
+        script = pkgs.writeShellApplication {
+          name = "copy-wezterm-config";
+          runtimeInputs = [
+            cfg
+            dir
+          ];
+          text = ''
+            copy-wezterm-config-dir
+            fix-wezterm-config-paths
+          '';
+        };
       in
-      "run ${script}/bin/script";
+      "run ${script}/bin/copy-wezterm-config";
   };
 }
