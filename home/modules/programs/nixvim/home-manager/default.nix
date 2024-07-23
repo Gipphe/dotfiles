@@ -25,7 +25,6 @@ in
       filetype = {
         extension = {
           "hurl" = "hurl";
-          "sqlx" = "sql";
           "tf" = "terraform";
         };
       };
