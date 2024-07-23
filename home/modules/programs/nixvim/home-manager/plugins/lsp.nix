@@ -18,8 +18,6 @@ in
           lua-ls.enable = true;
           marksman.enable = true;
           # metals.enable = true;
-          nixd.enable = true;
-          nil-ls.enable = true;
           sqls.enable = true;
           terraformls.enable = true;
           yamlls.enable = true;
