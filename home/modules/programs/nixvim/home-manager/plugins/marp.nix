@@ -41,7 +41,7 @@ in
         group = "marp";
         callback = helpers.mkRaw ''
           function()
-            require('marp').ServerStop()
+            require('marp.nvim').ServerStop()
           end
         '';
       }
