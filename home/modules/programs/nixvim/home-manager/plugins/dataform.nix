@@ -2,13 +2,14 @@
   pkgs,
   config,
   lib,
-  self,
+  # self,
   ...
 }:
 {
   config = lib.mkIf (config.gipphe.programs.dataform.enable && config.gipphe.programs.gcloud.enable) {
     programs.nixvim = {
-      extraPackages = [ self.packages.${pkgs.system}.dataform ];
+      # Rely on repo's dataform instead
+      # extraPackages = [ self.packages.${pkgs.system}.dataform ];
       extraPlugins = [
         (pkgs.vimUtils.buildVimPlugin {
           name = "dataform.nvim";
