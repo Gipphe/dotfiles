@@ -36,7 +36,7 @@ in
         min-free = toString (mb 100);
         max-free = toString (mb 1024);
 
-        # flake-registry = "/etc/nix/registry.json";
+        flake-registry = "/etc/nix/registry.json";
         auto-optimise-store = true;
 
         # allow sudo users to mark the following values as trusted
