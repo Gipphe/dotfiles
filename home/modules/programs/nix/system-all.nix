@@ -10,14 +10,6 @@ let
 in
 {
   config = lib.mkIf config.gipphe.programs.nix.enable {
-    environment = {
-      # set channels (backwards compatibility)
-      etc = {
-        "nix/flake-channels/nixpkgs".source = inputs.nixpkgs;
-        "nix/flake-channels/home-manager".source = inputs.home-manager;
-      };
-    };
-
     nix = {
       package = pkgs.nixVersions.git;
 
