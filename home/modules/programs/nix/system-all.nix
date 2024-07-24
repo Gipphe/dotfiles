@@ -5,6 +5,9 @@
   config,
   ...
 }:
+let
+  mb = x: x * 1024 * 1024;
+in
 {
   config = lib.mkIf config.gipphe.programs.nix.enable {
     environment = {
@@ -38,8 +41,8 @@
         keep-outputs = true;
         warn-dirty = false;
         keep-derivations = true;
-        min-free = toString (100 * 1024 * 1024);
-        max-free = toString (1024 * 1024 * 1024);
+        min-free = toString (mb 100);
+        max-free = toString (mb 1024);
 
         # flake-registry = "/etc/nix/registry.json";
         auto-optimise-store = true;
