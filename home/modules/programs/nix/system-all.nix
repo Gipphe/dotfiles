@@ -16,11 +16,6 @@
     };
 
     nix = {
-      # Clear out the store periodically of old generations
-      gc = {
-        #   automatic = true;
-        options = "--delete-older-than 10d";
-      };
       package = pkgs.nixVersions.git;
 
       # pin the registry to avoid downloading and evaling a new nixpkgs version every time

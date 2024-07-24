@@ -5,6 +5,11 @@
       enable = true;
       extraArgs = "--keep 5 --keep-since 5d";
     };
-    nix.gc.dates = "daily";
+
+    nix.gc = lib.mkIf (!config.gipphe.programs.nh.enable) {
+      automatic = true;
+      options = "--delete-older-than 10d";
+      dates = "daily";
+    };
   };
 }
