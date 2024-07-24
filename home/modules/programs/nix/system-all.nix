@@ -28,14 +28,6 @@ in
       # Making legacy nix commands consistent as well, awesome!
       nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
-      # Free up to 1GiB whenever there is less than 100MiB left
-      # extraOptions = ''
-      #   keep-outputs = true
-      #   warn-dirty = false
-      #   keep-derivations = true
-      #   min-free = ${toString (100 * 1024 * 1024)}
-      #   max-free = ${toString (1024 * 1024 * 1024)}
-      # '';
       settings = {
         # Free up to 1GiB whenever there is less than 100MiB left
         keep-outputs = true;
