@@ -11,6 +11,7 @@
     gipphe = {
       username = "gipphe";
       homeDirectory = "/home/gipphe";
+      hostName = "trond-arne";
       profiles = {
         nixos = {
           audio.enable = true;

@@ -13,6 +13,7 @@
     gipphe = {
       username = "gipphe";
       homeDirectory = "/home/gipphe";
+      hostName = "Jarle";
       profiles = {
         nixos = {
           system.enable = true;

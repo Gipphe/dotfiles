@@ -11,6 +11,7 @@
     gipphe = {
       username = "victor";
       homeDirectory = "/Users/victor";
+      hostName = "VNB-MB-Pro";
       profiles = {
         ai.enable = true;
         cli.enable = true;

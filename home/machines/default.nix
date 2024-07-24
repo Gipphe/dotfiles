@@ -17,6 +17,11 @@
       type = lib.types.str;
       default = builtins.throw "gipphe.homeDirectory is required";
     };
+    hostName = lib.mkOption {
+      description = "HostName";
+      type = lib.types.str;
+      default = builtins.throw "gipphe.hostName is required";
+    };
     flags = lib.mkOption {
       description = "For debugging";
       type = lib.types.anything;

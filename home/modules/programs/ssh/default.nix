@@ -5,12 +5,9 @@
   pkgs,
   ...
 }:
-let
-  cfg = config.gipphe.environment.secrets;
-  inherit (config.gipphe) username;
-in
 util.mkModule {
   options.gipphe.programs.ssh.enable = lib.mkEnableOption "ssh";
+
   hm = lib.mkIf config.gipphe.programs.ssh.enable {
     programs.ssh = {
       enable = true;
@@ -34,32 +31,32 @@ util.mkModule {
         };
       };
     };
-  };
-  system-nixos = lib.mkIf config.gipphe.programs.ssh.enable { programs.ssh.startAgent = true; };
-  system-all = lib.mkIf (config.gipphe.programs.ssh.enable && cfg.importSecrets) {
+
     age.secrets =
-      let
-        user = {
-          owner = username;
-          group = username;
-          mode = "400";
-        };
-        homeDir = config.users.users.${username}.home;
-        mkSecrets = host: service: {
-          "${host}-${service}.ssh.age" = {
-            file = ../../../../secrets/${host}-${service}.ssh.age;
-            path = "${homeDir}/.ssh/${service}.ssh";
-          } // user;
-          "${host}-${service}.ssh.pub.age" = {
-            file = ../../../../secrets/${host}-${service}.ssh.pub.age;
-            path = "${homeDir}/.ssh/${service}.ssh.pub";
-          } // user;
-        };
-      in
-      builtins.foldl' (acc: curr: acc // mkSecrets config.networking.hostName curr) { } [
-        "github"
-        "gitlab"
-        "codeberg"
-      ];
+      lib.mkIf (config.gipphe.programs.ssh.enable && config.gipphe.environment.secrets.enable)
+        (
+          let
+            homeDir = config.home.homeDirectory;
+            mkSecrets = host: service: {
+              "${host}-${service}.ssh.age" = {
+                file = ../../../../secrets/${host}-${service}.ssh.age;
+                path = "${homeDir}/.ssh/${service}.ssh";
+                mode = "400";
+              };
+              "${host}-${service}.ssh.pub.age" = {
+                file = ../../../../secrets/${host}-${service}.ssh.pub.age;
+                path = "${homeDir}/.ssh/${service}.ssh.pub";
+                mode = "400";
+              };
+            };
+          in
+          builtins.foldl' (acc: curr: acc // mkSecrets config.gipphe.hostName curr) { } [
+            "github"
+            "gitlab"
+            "codeberg"
+          ]
+        );
   };
+
+  system-nixos = lib.mkIf config.gipphe.programs.ssh.enable { programs.ssh.startAgent = true; };
 }
