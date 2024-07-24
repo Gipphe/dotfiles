@@ -4,7 +4,7 @@
   config,
   ...
 }:
-{
-  imports = [ (util.mkSimpleProgramModule "bat") ];
-  config = lib.mkIf (config.gipphe.programs.bat.enable) { programs.fish.shellAbbrs.cat = "bat"; };
+util.mkModule {
+  shared.imports = [ (util.mkSimpleProgramModule "bat") ];
+  hm = lib.mkIf (config.gipphe.programs.bat.enable) { programs.fish.shellAbbrs.cat = "bat"; };
 }
