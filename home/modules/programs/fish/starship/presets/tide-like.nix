@@ -264,6 +264,7 @@ in
         symbol = " ";
       }
       {
+        disabled = true;
         name = "package";
         symbol = "󰏗 ";
       }
