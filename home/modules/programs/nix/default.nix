@@ -54,6 +54,7 @@ in
               "nix-command"
               "recursive-nix"
               "ca-derivations"
+              "no-url-literals"
             ];
 
             # use binary cache, its not gentoo
