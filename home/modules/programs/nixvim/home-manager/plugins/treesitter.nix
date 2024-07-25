@@ -1,5 +1,7 @@
+{ config, ... }:
 let
   inherit (import ../util.nix) k;
+  inherit (config.nixvim) helpers;
 in
 {
   programs.nixvim = {
@@ -14,8 +16,8 @@ in
             enable = true;
             keymaps = {
               initSelection = "<C-space>";
-              nodeIncremental = "<C-space";
-              scopeIncremental = "<M-space>";
+              nodeIncremental = "<C-space>";
+              scopeIncremental = helpers.mkRaw "false";
               nodeDecremental = "<bs>";
             };
           };
