@@ -13,13 +13,13 @@ in
         settings = {
           highlight.enable = true;
           indent.enable = true;
-          incrementalSelection = {
+          incremental_selection = {
             enable = true;
             keymaps = {
-              initSelection = "<C-space>";
-              nodeIncremental = "<C-space>";
-              scopeIncremental = helpers.mkRaw "false";
-              nodeDecremental = "<bs>";
+              init_selection = "<C-space>";
+              node_incremental = "<C-space>";
+              scope_incremental = helpers.mkRaw "false";
+              node_decremental = "<bs>";
             };
           };
         };
