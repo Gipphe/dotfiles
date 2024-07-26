@@ -26,9 +26,9 @@ class Config {
 
     $Items | ForEach-Object {
       if ($_.GetType().Name -eq "String") {
-        Copy-Item -Recurse -Path "$($this.cfgDir)\$_" -Destination "$HOME\$_"
+        Copy-Item -Force -Recurse -Path "$($this.cfgDir)\$_" -Destination "$HOME\$_"
       } else {
-        Copy-Item -Recurse -Path $_[0] -Destination $_[1]
+        Copy-Item -Force -Recurse -Path $_[0] -Destination $_[1]
       }
     }
   }
