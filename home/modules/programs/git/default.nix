@@ -211,7 +211,7 @@ util.mkModule {
 
             sed -r 's!/nix/store/.*/(\S+)!\1!' "$from_config" \
             | sed "s!/nix/store/.*-hm_gitconfig!./.gitconfig_strise!" \
-            | sed "/credential.credentialstore/d" \
+            | sed "/credentialstore/d" \
             | tee "$to_config" >/dev/null
           '';
         };
