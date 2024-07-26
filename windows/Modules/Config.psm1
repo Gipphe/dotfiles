@@ -18,10 +18,10 @@ class Config {
     $Items = @(
       ".vimrc",
       ".wslconfig",
-      @("$($this.cfgDir)/git/ignore", "$HOME/.gitignore"),
-      @("$($this.cfgDir)/git/config", "$HOME/.gitconfig"),
-      @("$($this.cfgDir)/git/strise", "$HOME/.gitconfig_strise"),
-      @("$($this.cfgDir)/wezterm", "$HOME/.config/wezterm")
+      @("$($this.CfgDir)/git/ignore", "$HOME/.gitignore"),
+      @("$($this.CfgDir)/git/config", "$HOME/.gitconfig"),
+      @("$($this.CfgDir)/git/strise", "$HOME/.gitconfig_strise"),
+      @("$($this.CfgDir)/wezterm", "$HOME/.config/wezterm")
     )
 
     $Items | ForEach-Object {
