@@ -182,7 +182,7 @@ util.mkModule {
         hide-flake = "!git add --intent-to-add flake.nix flake.lock && git update-index --assume-unchanged flake.nix flake.lock";
       };
     };
-    home.activation.copy-git-config-for-windows =
+    home.activation.copy-git-config-for-windows = lib.hm.dag.entryAfter [ "writeBoundary" ] (
       let
         script = pkgs.writeShellApplication {
           name = "copy-git-config";
@@ -216,6 +216,7 @@ util.mkModule {
           '';
         };
       in
-      "run ${script}/bin/copy-git-config";
+      "run ${script}/bin/copy-git-config"
+    );
   };
 }
