@@ -25,11 +25,19 @@ class Config {
     )
 
     $Items | ForEach-Object {
+      $From = ''
+      $To = ''
       if ($_.GetType().Name -eq "String") {
-        Copy-Item -Force -Recurse -Path "$($this.cfgDir)\$_" -Destination "$HOME\$_"
+        $From = "$($this.cfgDir)\$_"
+        $To = "$HOME\$_"
       } else {
-        Copy-Item -Force -Recurse -Path $_[0] -Destination $_[1]
+        $From = $_[0]
+        $To = $_[1]
       }
+      if (Test-Path -PathType Container $To) {
+        Remove-Item -Recurse -Force $To
+      }
+      Copy-Item -Force -Recurse -Path $From -Destination $To
     }
   }
 }
