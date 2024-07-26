@@ -1,1 +1,3 @@
-Set-Alias -Name nixos -Value 'wsl -d NixOS --cd ~'
+function nixos {
+  wsl -d NixOS --cd ~
+}
