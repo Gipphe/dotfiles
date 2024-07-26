@@ -55,7 +55,7 @@ util.mkModule {
             return {
               default_prog = { pwsh },
               keys = {
-                { key = 'V', mods = 'CTRL', action = act.PasteFrom 'ClipBoard' },
+                { key = 'V', mods = 'CTRL', action = act.PasteFrom 'Clipboard' },
               }
             }
           end
