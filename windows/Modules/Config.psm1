@@ -17,15 +17,18 @@ class Config {
     $HOME = $Env:HOME
     $Items = @(
       ".vimrc",
-      "wezterm",
-      ".wslconfig"
+      ".wslconfig",
+      @("$($this.cfgDir)/git/ignore", "$HOME/.gitignore"),
+      @("$($this.cfgDir)/git/config", "$HOME/.gitconfig"),
+      @("$($this.cfgDir)/git/strise", "$HOME/.gitconfig_strise"),
+      @("$($this.cfgDir)/wezterm", "$HOME/.config/wezterm")
     )
 
     $Items | ForEach-Object {
       if ($_.GetType().Name -eq "String") {
-        Copy-Item -Path "$($this.cfgDir)\$_" -Destination "$HOME\$_"
+        Copy-Item -Recurse -Path "$($this.cfgDir)\$_" -Destination "$HOME\$_"
       } else {
-        Copy-Item -Path $_[0] -Destination $_[1]
+        Copy-Item -Recurse -Path $_[0] -Destination $_[1]
       }
     }
   }

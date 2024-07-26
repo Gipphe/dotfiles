@@ -123,4 +123,4 @@
 	signingKey = "23723701395B436C"
 
 [includeIf "gitdir:**/strise/**/.git"]
-	path = "./strise"
+	path = "./.gitconfig_strise"

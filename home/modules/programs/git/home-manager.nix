@@ -209,7 +209,7 @@
             cp -rL "$from_ignore" "$to_ignore"
 
             sed -r 's!/nix/store/.*/(\S+)!\1!' "$from_config" \
-            | sed "s!/nix/store/.*-hm_gitconfig!./strise!" \
+            | sed "s!/nix/store/.*-hm_gitconfig!./.gitconfig_strise!" \
             | tee "$to_config" >/dev/null
           '';
         };
