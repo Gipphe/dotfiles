@@ -14,18 +14,8 @@ util.mkModule {
         ''
           local M = {}
 
-          function M.getOS()
-            if jit then
-              return jit.os
-            end
-
-            local osname
-            local fh, err = assert(io.popen('uname -o 2>/dev/null', 'r'))
-            if fh then
-              osname = fh:read()
-            end
-
-            return osname or "Windows"
+          function M.isWindows()
+            return os.getenv("COMSPEC") ~= nil and os.getenv("USERPROFILE") ~= nil
           end
 
           return M
@@ -40,20 +30,12 @@ util.mkModule {
           local M = {}
 
           function M.config()
-            local os = OSUtils.getOS()
-
-            if os ~= 'Windows' then
+            if not OSUtils.isWindows() then
               return {}
             end
 
-            local fh, err = assert(io.popen('pwsh -Command "(Get-Command pwsh).Source"'))
-            local pwsh = 'C:\\Program Files\\PowerShell\\7\\pwsh.exe'
-            if fh then
-              pwsh = fh:read()
-            end
-
             return {
-              default_prog = { pwsh },
+              default_prog = { 'C:\\Program Files\\PowerShell\\7\\pwsh.exe' },
               keys = {
                 { key = 'V', mods = 'CTRL', action = act.PasteFrom 'Clipboard' },
               }
