@@ -29,7 +29,7 @@ util.mkModule {
 
           return M
         '';
-      "wezterm/windows-config".text =
+      "wezterm/windows-config.lua".text =
         # lua
         ''
           local wezterm = require 'wezterm'
