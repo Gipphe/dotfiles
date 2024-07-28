@@ -82,8 +82,6 @@
 [credential "https://github.com"]
 	helper = "gh auth git-credential"
 
-[diff]
-	external = "difft --color auto --background light --display side-by-side"
 
 [gpg]
 	program = "gpg2"
