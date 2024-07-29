@@ -1,7 +1,7 @@
 { config, ... }:
 let
   inherit (import ../util.nix) kv;
-  nixvim = config.lib.nixvim;
+  helpers = config.lib.nixvim;
 in
 {
   programs.nixvim = {

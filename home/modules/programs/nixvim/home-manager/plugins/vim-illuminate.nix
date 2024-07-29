@@ -1,7 +1,7 @@
 { config, ... }:
 let
   inherit (import ../util.nix) kv;
-  nixvim = config.lib.nixvim;
+  helpers = config.lib.nixvim;
   km = np: ''function() require('illuminate').goto_${np}_reference(false) end'';
 in
 {

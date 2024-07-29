@@ -1,6 +1,6 @@
 { config, ... }:
 let
-  nixvim = config.lib.nixvim;
+  helpers = config.lib.nixvim;
   icons = import ../icons.nix;
 in
 {

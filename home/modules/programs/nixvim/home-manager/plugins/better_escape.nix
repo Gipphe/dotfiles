@@ -1,6 +1,6 @@
 { config, ... }:
 let
-  nixvim = config.lib.nixvim;
+  helpers = config.lib.nixvim;
 in
 {
   programs.nixvim.plugins.better-escape = {

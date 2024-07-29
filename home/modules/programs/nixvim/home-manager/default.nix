@@ -6,7 +6,7 @@
 }:
 let
   cfg = config.gipphe.programs.nixvim;
-  nixvim = config.lib.nixvim;
+  helpers = config.lib.nixvim;
 in
 {
   imports = [
