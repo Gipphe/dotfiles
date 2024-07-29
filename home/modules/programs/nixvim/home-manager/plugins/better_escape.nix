@@ -5,7 +5,7 @@ in
 {
   programs.nixvim.plugins.better-escape = {
     enable = true;
-    extraOptions = {
+    settings = {
       timeout = 100;
       mappings =
         let
