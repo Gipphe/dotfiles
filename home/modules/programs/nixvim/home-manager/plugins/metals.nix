@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  inherit (config.nixvim) helpers;
+  nixvim = config.lib.nixvim;
 in
 {
   home.packages = [ pkgs.metals ];

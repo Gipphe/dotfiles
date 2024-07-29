@@ -1,7 +1,7 @@
 { pkgs, config, ... }:
 let
   icons = import ../icons.nix;
-  inherit (config.nixvim) helpers;
+  nixvim = config.lib.nixvim;
 in
 {
   imports = [
