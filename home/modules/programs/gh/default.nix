@@ -1,5 +1,10 @@
-{ lib, config, ... }:
-lib.mkModule {
+{
+  util,
+  lib,
+  config,
+  ...
+}:
+util.mkModule {
   options.gipphe.programs.gh.enable = lib.mkEnableOption "gh";
   hm = lib.mkIf config.gipphe.programs.gh.enable {
     programs.gh = {
