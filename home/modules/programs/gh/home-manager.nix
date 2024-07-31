@@ -14,6 +14,8 @@
           co = "pr checkout";
           prc = "pr create -d --fill-first";
           prm = "pr merge --auto -sd";
+          addme = "pr edit --add-assignee @me";
+          addrocks = "pr edit --add-reviewer strise/rocks";
         };
       };
     };
