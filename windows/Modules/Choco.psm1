@@ -25,62 +25,66 @@ class Choco {
     $Installed = $(Invoke-Native { choco list --id-only })
 
     $ChocoApps = @(
-      @('7zip'),
-      @('barrier'),
-      @('cyberduck'),
-      @('discord'),
-      @('docker-desktop'),
-      @('dropbox'),
-      @('epicgameslauncher'),
-      @('filen'),
-      @('firacodenf'),
-      @('gdlauncher'),
-      @('geforce-experience'),
-      @('git'),
-      @('greenshot'),
-      @('humble-app'),
-      @('irfanview'),
-      @('irfanview-languages'),
-      @('irfanviewplugins'),
-      @('k-litecodecpack-standard'),
-      @('lghub'),
-      @('microsoft-windows-terminal'),
-      @('msiafterburner'),
-      @('notion'),
-      @('nvidia-broadcast'),
-      @('obsidian'),
-      @('openssh'),
-      @('paint.net'),
-      @('powershell-core'),
-      @('powertoys'),
-      @('qbittorrent'),
-      @('restic'),
-      @('rsync'),
-      @('slack'),
-      @('spotify'),
-      @('start10'),
-      @('steam'),
-      @('sumatrapdf'),
-      @('sunshine'),
-      @('teamviewer'),
-      @('virtualbox'),
-      @('virtualbox-guest-additions-guest.install'),
-      @('vivaldi'),
-      @('voicemeeter'),
-      @('wezterm'),
-      @('windirstat')
+      '7zip',
+      'barrier',
+      'cyberduck',
+      'discord',
+      'docker-desktop',
+      'dropbox',
+      'epicgameslauncher',
+      'filen',
+      'firacodenf',
+      'gdlauncher',
+      'geforce-experience',
+      'git',
+      'greenshot',
+      'humble-app',
+      'irfanview',
+      'irfanview-languages',
+      'irfanviewplugins',
+      'k-litecodecpack-standard',
+      'lghub',
+      'microsoft-windows-terminal',
+      'msiafterburner',
+      'notion',
+      'nvidia-broadcast',
+      'obsidian',
+      'openssh',
+      'paint.net',
+      'powershell-core',
+      'powertoys',
+      'qbittorrent',
+      'restic',
+      'rsync',
+      'slack',
+      'spotify',
+      'start10',
+      'steam',
+      'sumatrapdf',
+      'sunshine',
+      'teamviewer',
+      'virtualbox',
+      'virtualbox-guest-additions-guest.install',
+      'vivaldi',
+      'voicemeeter',
+      'wezterm',
+      'windirstat'
     )
 
     $ChocoApps | ForEach-Object {
-      $PackageName = $_[0]
-      $PackageArgs = $_[1]
+      $PackageName = $_
+      $PackageArgs = $null
+      if ($PackageName -isnot [String]) {
+        $PackageName = $_[0]
+        $PackageArgs = $_[1]
+      }
       if ($Installed.Contains($PackageName)) {
         Write-Information "$PackageName is already installed"
         return
       }
 
       $params = ""
-      if ($Null -ne $PackageArgs) {
+      if ($null -ne $PackageArgs) {
         $params = @("--params", $PackageArgs)
       }
 
