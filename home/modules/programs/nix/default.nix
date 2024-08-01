@@ -47,7 +47,7 @@ in
             max-jobs = "auto";
 
             # continue building derivations if one fails
-            keep-going = true;
+            # keep-going = true;
             log-lines = 30;
             extra-experimental-features = [
               "flakes"
