@@ -31,6 +31,7 @@ class Choco {
       'discord',
       'docker-desktop',
       'dropbox',
+      'dust',
       'epicgameslauncher',
       'filen',
       'firacodenf',
