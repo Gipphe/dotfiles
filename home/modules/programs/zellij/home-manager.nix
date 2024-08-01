@@ -27,9 +27,8 @@ in
       zellij.enable = true;
 
       fish.shellAbbrs = {
-        tmux = "zellij";
-        mux = "zellij --layout";
         zq = "zellij kill-session $ZELLIJ_SESSION_NAME";
+        zj = "zellij";
       };
     };
   };
