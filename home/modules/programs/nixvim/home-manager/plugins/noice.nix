@@ -38,11 +38,12 @@ in
           };
         };
       };
-      which-key = {
-        registrations = {
-          "<leader>sn" = "+noice";
-        };
-      };
+      which-key.settings.spec = [
+        {
+          __unkeyed-1 = "<leader>sn";
+          desc = "+noice";
+        }
+      ];
     };
 
     keymaps = [
