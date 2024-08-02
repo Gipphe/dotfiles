@@ -135,9 +135,10 @@
     agenix = {
       url = "github:ryantm/agenix";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
+        nixpkgs.follows = "nixpkgs-agenix-not-broken";
       };
     };
+    nixpkgs-agenix-not-broken.url = "github:nixos/nixpkgs/c00d587b1a1afbf200b1d8f0b0e4ba9deb1c7f0e";
 
     hyprland = {
       url = "github:hyprwm/Hyprland/";
