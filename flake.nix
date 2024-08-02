@@ -135,10 +135,7 @@
     agenix = {
       url = "github:ryantm/agenix";
       inputs = {
-        home-manager.follows = "home-manager";
         nixpkgs.follows = "nixpkgs";
-        darwin.follows = "darwin";
-        systems.follows = "sys-default";
       };
     };
 
