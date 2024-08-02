@@ -1,7 +1,10 @@
 { util, ... }:
 util.mkProfile "secrets" {
-  gipphe.environment.secrets = {
-    enable = true;
-    importSecrets = true;
+  gipphe = {
+    programs.ssh.enable = true;
+    environment.secrets = {
+      enable = true;
+      importSecrets = true;
+    };
   };
 }
