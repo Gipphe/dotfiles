@@ -190,7 +190,10 @@ in
         name = "golang";
         symbol = " ";
       }
-      { name = "gradle"; }
+      {
+        name = "gradle";
+        symbol = " ";
+      }
       {
         name = "haskell";
         symbol = " ";
