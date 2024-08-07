@@ -5,6 +5,9 @@
   # self,
   ...
 }:
+let
+  inherit (import ../util.nix) k;
+in
 {
   config = lib.mkIf (config.gipphe.programs.dataform.enable && config.gipphe.programs.gcloud.enable) {
     programs.nixvim = {
@@ -25,6 +28,13 @@
         notify.enable = true;
         telescope.enable = true;
       };
+      keymaps = [
+        (k "n" "<leader>cpa" "<cmd>DataformRunAction<cr>" { desc = "Dataform run currently open action"; })
+        (k "n" "<leader>cpd" "<cmd>DataformGoToRef<cr>" { desc = "Go to Dataform ref"; })
+        (k "n" "<leader>cpb" "<cmd>DataformCompileFull<cr>" {
+          desc = "Compile current Dataform file and view result";
+        })
+      ];
     };
   };
 }
