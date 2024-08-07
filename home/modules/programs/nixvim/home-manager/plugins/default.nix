@@ -1,6 +1,6 @@
 { lib, ... }:
-with builtins;
 let
+  inherit (builtins) readDir attrNames map;
   imports = lib.pipe ./. [
     readDir
     (lib.attrsets.filterAttrs (name: _: name != "default.nix"))
