@@ -25,6 +25,7 @@
         core.enable = true;
         fonts.enable = true;
         gc.enable = true;
+        programming.haskell.enable = true;
         rice.enable = true;
         secrets.enable = true;
         systemd.enable = true;
