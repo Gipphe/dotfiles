@@ -38,15 +38,21 @@
 
       fish = {
         enable = true;
-        shellInit = lib.mkBefore ''
-          set fish_greeting ""
-          set -gx SSH_ENV "$HOME/.ssh/agent-environment"
+        shellInit =
+          lib.mkBefore # fish
+            ''
+              set fish_greeting ""
+              set -gx SSH_ENV "$HOME/.ssh/agent-environment"
 
-          init_ssh_agent
-          add_ssh_keys_to_agent
-
-          abbr --add "?" -- mods --role shell -q
-        '';
+              init_ssh_agent
+              add_ssh_keys_to_agent
+            '';
+        interactiveShellInit =
+          lib.mkAfter # fish
+            ''
+              abbr --add "?" -- mods --role shell -q
+              set -U fish_color_param 80869f
+            '';
         package = pkgs.fish;
         shellAbbrs = {
           k = "kubectl";
