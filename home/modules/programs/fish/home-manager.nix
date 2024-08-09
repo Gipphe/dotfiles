@@ -52,6 +52,7 @@
             ''
               abbr --add "?" -- mods --role shell -q
               set -U fish_color_param 80869f
+              set -U fish_color_autosuggestion 5b6078
             '';
         package = pkgs.fish;
         shellAbbrs = {
