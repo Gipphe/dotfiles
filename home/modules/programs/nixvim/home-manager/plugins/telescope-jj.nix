@@ -40,6 +40,12 @@ in
         ''
         { desc = "Find files (jj)"; }
       )
+      (kv "n" "<leader>jc" ''function(opts) require('telescope').extensions.jj.conflicts(opts) end'' {
+        desc = "Find conflicts (jj)";
+      })
+      (kv "n" "<leader>jd" "function(opts) require('telescope').extensions.jj.diff(opts) end" {
+        desc = "Find files with differences (jj)";
+      })
     ];
   };
 }
