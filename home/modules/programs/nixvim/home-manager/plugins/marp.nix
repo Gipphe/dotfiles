@@ -26,9 +26,12 @@ in
         desc = "Stop Marp server";
       })
     ];
-    plugins.which-key.registrations = {
-      "<leader>m" = "+marp";
-    };
+    plugins.which-key.settings.spec = [
+      {
+        __unkeyed-1 = "<leader>m";
+        desc = "marp";
+      }
+    ];
 
     autoGroups = {
       marp = {
