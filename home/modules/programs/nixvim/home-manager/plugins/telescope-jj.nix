@@ -22,7 +22,7 @@ in
       end
     '';
     keymaps = [
-      (kv "n" "<leader>jj" # lua
+      (kv "n" "<leader>tjj" # lua
         ''
           function(opts)
             local telescope = require("telescope")
@@ -40,10 +40,10 @@ in
         ''
         { desc = "Find files (jj)"; }
       )
-      (kv "n" "<leader>jc" ''function(opts) require('telescope').extensions.jj.conflicts(opts) end'' {
+      (kv "n" "<leader>tjc" ''function(opts) require('telescope').extensions.jj.conflicts(opts) end'' {
         desc = "Find conflicts (jj)";
       })
-      (kv "n" "<leader>jd" "function(opts) require('telescope').extensions.jj.diff(opts) end" {
+      (kv "n" "<leader>tjd" "function(opts) require('telescope').extensions.jj.diff(opts) end" {
         desc = "Find files with differences (jj)";
       })
     ];

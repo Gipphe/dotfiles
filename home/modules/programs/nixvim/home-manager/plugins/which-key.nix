@@ -28,6 +28,7 @@ in
       (group "<leader>u" "+ui")
       (group "<leader>w" "+windows")
       (group "<leader>x" "+diagnostics/quickfix")
+      (group "<leader>t" "+telescope")
     ];
   };
 }
