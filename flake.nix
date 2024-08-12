@@ -79,7 +79,7 @@
             };
 
             settings.formatter.nixfmt-rfc-style.excludes = [
-              "system/nixos/hardware-configuration/*.nix"
+              "home/modules/system/hardware-configuration/*.nix"
               "hardware-configuration.nix"
             ];
           };
