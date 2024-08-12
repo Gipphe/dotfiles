@@ -86,7 +86,6 @@
 
           packages = {
             tlm = pkgs.callPackage ./home/modules/programs/tlm/package.nix { };
-            dataform = pkgs.callPackage ./packages/dataform { };
             dtui = pkgs.callPackage ./packages/dtui { };
           };
         };
