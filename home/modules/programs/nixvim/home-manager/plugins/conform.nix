@@ -1,4 +1,3 @@
-{ pkgs, ... }:
 let
   inherit (import ../util.nix) kv;
 in

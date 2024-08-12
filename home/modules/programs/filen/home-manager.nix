@@ -19,15 +19,13 @@ let
     };
   };
   linux = lib.mkIf pkgs.stdenv.isLinux { home.packages = [ linuxPackage ]; };
-  darwin = (
-    lib.mkIf pkgs.stdenv.isDarwin {
-      home.packages = [
-        (util.setCaskHash inputs.brew-nix.packages.${pkgs.system}.filen
-          "sha256-ewoPrA8HuYftz9tvp7OUgDqikKhPZ7WOVyWH83oADJQ="
-        )
-      ];
-    }
-  );
+  darwin = lib.mkIf pkgs.stdenv.isDarwin {
+    home.packages = [
+      (util.setCaskHash inputs.brew-nix.packages.${pkgs.system}.filen
+        "sha256-ewoPrA8HuYftz9tvp7OUgDqikKhPZ7WOVyWH83oADJQ="
+      )
+    ];
+  };
 in
 {
   config = lib.mkIf config.gipphe.programs.filen.enable (

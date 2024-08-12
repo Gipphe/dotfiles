@@ -79,7 +79,7 @@ let
 
   setCaskHash =
     cask: hash:
-    cask.overrideAttrs (c: {
+    cask.overrideAttrs (_: {
       src = cask.src.overrideAttrs { outputHash = hash; };
     });
 

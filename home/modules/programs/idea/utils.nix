@@ -9,7 +9,7 @@ let
   inherit (lib.versions) majorMinor;
   ideaDir =
     let
-      name = pkgs.jetbrains.idea-ultimate.name;
+      inherit (pkgs.jetbrains.idea-ultimate) name;
       _name = "IntelliJIdea";
       _version = majorMinor (getVersion name);
     in
