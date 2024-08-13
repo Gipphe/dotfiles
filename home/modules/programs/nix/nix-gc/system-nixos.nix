@@ -3,13 +3,14 @@
   config = lib.mkIf config.gipphe.programs.nix.gc.enable {
     programs.nh.clean = {
       enable = true;
-      extraArgs = "--keep 5 --keep-since 5d";
+      extraArgs = "--keep 3 --keep-since 8d";
+      dates = "weekly";
     };
 
     nix.gc = lib.mkIf (!config.gipphe.programs.nh.enable) {
       automatic = true;
-      options = "--delete-older-than 10d";
-      dates = "daily";
+      options = "--delete-older-than 8d";
+      dates = "weekly";
     };
   };
 }
