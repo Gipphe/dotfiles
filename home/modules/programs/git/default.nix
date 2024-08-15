@@ -12,7 +12,7 @@ util.mkModule {
       enable = true;
       userName = "Victor Nascimento Bakke";
       userEmail = "gipphe@gmail.com";
-      difftastic.enable = true;
+      diff-so-fancy.enable = true;
       ignores = [
         ".DS_Store"
         "**/*Zone.Identifier"
@@ -22,9 +22,6 @@ util.mkModule {
         signByDefault = true;
       };
       extraConfig = {
-        "url \"git@github.com:\"" = {
-          insteadOf = "https://github.com/";
-        };
         push = {
           default = "upstream";
           followTags = true;
@@ -35,21 +32,14 @@ util.mkModule {
           autocrlf = false;
           eol = "lf";
           editor = "nvim";
-          pager = "less -FXR";
           whitespace = "fix,-indent-with-non-tab,trailing-space,cr-at-eol";
         };
         repack.usedeltabaseoffset = "true";
-        rebase = {
-          autoSquash = "true";
-        };
+        rebase.autoSquash = "true";
         merge.stat = "true";
         branch.autosetupmerge = "true";
-        credential = {
-          credentialStore = "gpg";
-        };
-        init = {
-          defaultBranch = "main";
-        };
+        credential.credentialStore = "gpg";
+        init.defaultBranch = "main";
         rerere = {
           enabled = true;
           autoUpdate = true;
@@ -150,7 +140,7 @@ util.mkModule {
         # Show changes that have been staged
         diffc = "diff --cached";
         dft = "difftool";
-        dlog = "!f() { GIT_EXTERNAL_DIFF=difft git log -p --ext-diff $@; }; f";
+        dlog = "!f() { GIT_EXTERNAL_DIFF=diff-so-fancy git log -p --ext-diff $@; }; f";
 
         # Mark a file as "assume unchanged", which means that Git will treat it
         # as though there are no changes to it even if there are. Useful for
@@ -214,8 +204,10 @@ util.mkModule {
             | sed "s!/nix/store/.*-hm_gitconfig!./.gitconfig_strise!" \
             | sed "/credentialStore/d" \
             | sed "/\[credential\]/d" \
-            | sed "/external = \"difft/d" \
+            | sed "/external = \"diff-so-fancy/d" \
             | sed "/\[diff\]/d" \
+            | sed "/diffFilter =/d" \
+            | sed "/\[interactive\]/d" \
             | tee "$to_config" >/dev/null
           '';
         };
