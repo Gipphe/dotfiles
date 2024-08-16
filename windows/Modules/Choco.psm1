@@ -34,6 +34,7 @@ class Choco {
       'epicgameslauncher',
       'filen',
       'firacodenf',
+      'fzf',
       'gdlauncher',
       'geforce-experience',
       'git',
