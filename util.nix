@@ -51,7 +51,11 @@ let
     ];
 
   mkCopyActivationScript =
-    name: fromDir: toDir:
+    {
+      name,
+      fromDir,
+      toDir,
+    }:
     writeShellApplication {
       inherit name;
       text = ''

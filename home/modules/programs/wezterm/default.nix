@@ -82,7 +82,10 @@ util.mkModule {
             fix-wezterm-config-paths =
               copyFileFixingPaths "fix-wezterm-config-paths" "${fromDir}/wezterm.lua"
                 "${toDir}/wezterm.lua";
-            copy-wezterm-config-dir = mkCopyActivationScript "copy-wezterm-config-dir" fromDir toDir;
+            copy-wezterm-config-dir = mkCopyActivationScript {
+              inherit fromDir toDir;
+              name = "copy-wezterm-config-dir";
+            };
             script = pkgs.writeShellApplication {
               name = "copy-wezterm-config";
               runtimeInputs = [
