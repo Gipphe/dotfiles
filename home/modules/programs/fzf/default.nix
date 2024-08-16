@@ -1,4 +1,5 @@
-{ lib, flags, ... }:
+{ lib, config, ... }:
 {
-  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
+  options.gipphe.programs.fzf.enable = lib.mkEnableOption "fzf";
+  config = lib.mkIf config.gipphe.programs.fzf.enable { programs.fzf.enable = true; };
 }
