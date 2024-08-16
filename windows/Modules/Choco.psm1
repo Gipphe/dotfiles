@@ -63,8 +63,6 @@ class Choco {
       'sumatrapdf',
       'sunshine',
       'teamviewer',
-      'virtualbox',
-      'virtualbox-guest-additions-guest.install',
       'vivaldi',
       'voicemeeter',
       'wezterm',
