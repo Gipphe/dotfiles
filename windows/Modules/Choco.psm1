@@ -58,6 +58,7 @@ class Choco {
       'rsync',
       'slack',
       'spotify',
+      'starship',
       'start10',
       'steam',
       'sumatrapdf',
