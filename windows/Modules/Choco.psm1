@@ -30,7 +30,6 @@ class Choco {
       'cyberduck',
       'discord',
       'docker-desktop',
-      'dropbox',
       'dust',
       'epicgameslauncher',
       'filen',
