@@ -20,8 +20,8 @@ class Programs {
   }
 
   [void] Install() {
-    $this.Choco.InstallApps
-    $this.Scoop.InstallApps
+    $this.Choco.InstallApps()
+    $this.Scoop.InstallApps()
 
     $this.Stamp.Register("install-1password", {
       Install-FromWeb "1Password" "https://downloads.1password.com/win/1PasswordSetup-latest.exe"
