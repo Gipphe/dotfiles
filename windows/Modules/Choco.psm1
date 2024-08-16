@@ -68,7 +68,8 @@ class Choco {
       'vivaldi',
       'voicemeeter',
       'wezterm',
-      'windirstat'
+      'windirstat',
+      'zoxide'
     )
 
     $ChocoApps | ForEach-Object {
