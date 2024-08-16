@@ -23,6 +23,7 @@ class Config {
       @("$($this.CfgDir)/git/strise", "$HOME/.gitconfig_strise"),
       @("$($this.CfgDir)/wezterm", "$HOME/.config/wezterm"),
       @("$($this.CfgDir)/PSProfile.ps1", "$HOME/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"),
+      @("$($this.CfgDir)/starship.toml", "$HOME/.config/starship.toml"),
       @("$($this.CfgDir)/zoxide.ps1", "$HOME/.config/zoxide.ps1")
     )
 
