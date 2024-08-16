@@ -1,5 +1,5 @@
 { lib, config, ... }:
 {
   options.gipphe.programs.fzf.enable = lib.mkEnableOption "fzf";
-  config = lib.mkIf config.gipphe.programs.fzf.enable { programs.fzf.enable = true; };
+  hm = lib.mkIf config.gipphe.programs.fzf.enable { programs.fzf.enable = true; };
 }
