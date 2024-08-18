@@ -26,6 +26,7 @@ class Choco {
 
     $ChocoApps = @(
       '7zip',
+      'XnViewMP',
       'barrier',
       'cyberduck',
       'discord',
