@@ -7,6 +7,7 @@ util.mkProfile "desktop" {
       cool-retro-term.enable = true;
       filen.enable = true;
       gimp.enable = true;
+      logseq.enable = true;
       obsidian.enable = true;
       slack.enable = true;
       vivaldi.enable = true;
