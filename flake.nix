@@ -219,8 +219,10 @@
 
     catppuccinifier = {
       url = "github:lighttigerXIV/catppuccinifier";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
     };
 
     nh = {
@@ -282,6 +284,7 @@
         brew-api.follows = "brew-api";
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "flake-utils";
+        nix-darwin.follows = "darwin";
       };
     };
 
