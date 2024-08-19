@@ -18,7 +18,7 @@ util.mkModule {
         git_protocol = "https";
         aliases = {
           co = "pr checkout";
-          prc = "pr create -d --fill-first";
+          prc = "pr create -d --fill-first --assignee @me --no-maintainer-edit";
           prm = "pr merge --auto -sd";
           addme = "pr edit --add-assignee @me";
           addrocks = "pr edit --add-reviewer strise/rocks";
