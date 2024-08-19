@@ -1,5 +1,6 @@
 {
   lib,
+  inputs,
   config,
   util,
   pkgs,
@@ -50,6 +51,7 @@ util.mkModule {
     };
     programs.wezterm = {
       enable = true;
+      package = inputs.nixpkgs-agenix-not-broken.legacyPackages.${pkgs.system}.wezterm;
       extraConfig = # lua
         ''
           local windowsConfig = require 'windows-config'
