@@ -6,7 +6,7 @@
 }:
 util.mkModule {
   options.gipphe.programs.nix.gc.enable = lib.mkEnableOption "nix.gc";
-  hm = lib.mkIf config.gipphe.programs.nix.gc.enable {
+  system-all = lib.mkIf config.gipphe.programs.nix.gc.enable {
     programs.nh.clean = {
       enable = true;
       extraArgs = "--keep 3 --keep-since 8d";
