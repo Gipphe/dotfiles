@@ -176,6 +176,39 @@ let
       imports = options ++ hm ++ nixos ++ nix-darwin ++ system-all;
     };
 
+  mkProgram =
+    {
+      name,
+      options ? { },
+      hm ? { },
+      system-nixos ? { },
+      system-darwin ? { },
+      system-all ? { },
+      shared ? { },
+    }:
+    {
+      imports = [
+        (mkModule {
+          options =
+            options
+            // lib.setAttrByPath (
+              [
+                "gipphe"
+                "programs"
+              ]
+              ++ (lib.splitString "." name)
+              ++ [ "enable" ]
+            ) (lib.mkEnableOption name);
+          inherit
+            hm
+            system-nixos
+            system-darwin
+            system-all
+            shared
+            ;
+        })
+      ];
+    };
   mkModule =
     {
       options ? { },
@@ -213,6 +246,7 @@ in
     mkModule
     mkProfile
     mkProfileSet
+    mkProgram
     mkSimpleProgram
     mkSimpleProgramByName
     mkSimpleProgramImports
