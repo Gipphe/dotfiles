@@ -36,7 +36,7 @@ class WSL {
           '&&' nixos-rebuild --extra-experimental-features 'flakes nix-command' switch --flake '"$(pwd)#Jarle"'
       }
     })
-    Write-Information "WSL instaled and set up."
+    Write-Information "WSL installed and set up."
   }
 }
 
