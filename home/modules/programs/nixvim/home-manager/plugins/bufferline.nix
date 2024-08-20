@@ -7,27 +7,25 @@ in
   programs.nixvim = {
     plugins.bufferline = {
       enable = true;
-      settings.options = {
-        close_command = helpers.mkRaw ''
-          function(n)
-            require('mini.bufremove').delete(n, false)
-          end
-        '';
-        right_mouse_command = helpers.mkRaw ''
-          function(n)
-            require('mini.bufremove').delete(n, false)
-          end
-        '';
-        diagnostics = "nvim_lsp";
-        always_show_bufferline = false;
-        diagnostics_indicator = ''
-          function(_, _, diag)
-            local ret = (diag.error and icons.diagnostics.Error .. diag.error .. " " or "")
-              .. (diag.warning and icons.diagnostics.Warn .. diag.warning or "")
-            return vim.trim(ret)
-          end
-        '';
-      };
+      closeCommand = helpers.mkRaw ''
+        function(n)
+          require('mini.bufremove').delete(n, false)
+        end
+      '';
+      rightMouseCommand = helpers.mkRaw ''
+        function(n)
+          require('mini.bufremove').delete(n, false)
+        end
+      '';
+      diagnostics = "nvim_lsp";
+      alwaysShowBufferline = false;
+      diagnosticsIndicator = ''
+        function(_, _, diag)
+          local ret = (diag.error and icons.diagnostics.Error .. diag.error .. " " or "")
+            .. (diag.warning and icons.diagnostics.Warn .. diag.warning or "")
+          return vim.trim(ret)
+        end
+      '';
     };
     keymaps = [
       (k "n" "<leader>bp" "<Cmd>BufferLineTogglePin<CR>" { desc = "Toggle Pin"; })
