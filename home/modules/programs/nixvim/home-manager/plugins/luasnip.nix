@@ -8,7 +8,7 @@ in
       friendly-snippets.enable = true;
       luasnip = {
         enable = true;
-        extraConfig = {
+        settings = {
           history = true;
           delete_check_events = "TextChanged";
         };

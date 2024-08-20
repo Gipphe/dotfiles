@@ -32,30 +32,24 @@ util.mkModule {
       };
     };
 
-    age.secrets =
-      lib.mkIf (config.gipphe.programs.ssh.enable && config.gipphe.environment.secrets.enable)
-        (
-          let
-            homeDir = config.home.homeDirectory;
-            mkSecrets = host: service: {
-              "${host}-${service}.ssh.age" = {
-                file = ../../../../secrets/${host}-${service}.ssh.age;
-                path = "${homeDir}/.ssh/${service}.ssh";
-                mode = "400";
-              };
-              "${host}-${service}.ssh.pub.age" = {
-                file = ../../../../secrets/${host}-${service}.ssh.pub.age;
-                path = "${homeDir}/.ssh/${service}.ssh.pub";
-                mode = "400";
-              };
-            };
-          in
-          builtins.foldl' (acc: curr: acc // mkSecrets config.gipphe.hostName curr) { } [
-            "github"
-            "gitlab"
-            "codeberg"
-          ]
-        );
+    sops.secrets = lib.mkIf config.gipphe.environment.secrets.enable (
+      let
+        homeDir = config.home.homeDirectory;
+        mkSecrets = host: service: {
+          "${host}-${service}.ssh" = {
+            sopsFile = ../../../../secrets/${host}-${service}.ssh;
+            path = "${homeDir}/.ssh/${service}.ssh";
+            mode = "400";
+            format = "binary";
+          };
+        };
+      in
+      builtins.foldl' (acc: curr: acc // mkSecrets config.gipphe.hostName curr) { } [
+        "github"
+        "gitlab"
+        "codeberg"
+      ]
+    );
   };
 
   system-nixos = lib.mkIf config.gipphe.programs.ssh.enable { programs.ssh.startAgent = true; };

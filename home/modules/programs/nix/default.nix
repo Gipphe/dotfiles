@@ -20,9 +20,7 @@ in
 
       system-all = lib.mkIf config.gipphe.programs.nix.enable {
         nix = {
-          # agenix is broken in later sets of nixpkgs. Pinning Nix to the last
-          # known working version as I try to resolve this.
-          package = inputs.nixpkgs-agenix-not-broken.legacyPackages.${pkgs.system}.nixVersions.git;
+          package = pkgs.nixVersions.latest;
 
           # pin the registry to avoid downloading and evaling a new nixpkgs version every time
           registry = lib.mapAttrs (_: v: { flake = v; }) inputs;

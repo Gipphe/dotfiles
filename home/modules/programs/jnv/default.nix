@@ -9,6 +9,6 @@
 util.mkProgram {
   name = "jnv";
   hm = lib.mkIf config.gipphe.programs.jnv.enable {
-    home.packages = [ inputs.nixpkgs-agenix-not-broken.legacyPackages.${pkgs.system}.jnv ];
+    home.packages = [ inputs.nixpkgs-before-rust-1-80-breaking.legacyPackages.${pkgs.system}.jnv ];
   };
 }

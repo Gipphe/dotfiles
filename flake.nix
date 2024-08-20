@@ -50,7 +50,6 @@
               env = extra.shellEnv;
               packages =
                 [
-                  inputs'.agenix.packages.default # agenix CLI in flake shell
                   # inputs'.catppuccinifier.packages.cli
                   inputs'.nh.packages.default # better nix CLI
                   config.treefmt.build.wrapper # treewide formatter
@@ -64,6 +63,7 @@
                   statix # lints and suggestions
                   deadnix # clean up unused nix code
                   nvd # Diff nix results
+                  sops
                 ]);
             };
 
@@ -131,13 +131,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs-agenix-not-broken";
-      };
+    nixpkgs-before-rust-1-80-breaking.url = "github:nixos/nixpkgs/c00d587b1a1afbf200b1d8f0b0e4ba9deb1c7f0e";
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs-agenix-not-broken.url = "github:nixos/nixpkgs/c00d587b1a1afbf200b1d8f0b0e4ba9deb1c7f0e";
 
     hyprland = {
       url = "github:hyprwm/Hyprland/";
@@ -219,8 +218,10 @@
 
     catppuccinifier = {
       url = "github:lighttigerXIV/catppuccinifier";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
     };
 
     nh = {
@@ -282,6 +283,7 @@
         brew-api.follows = "brew-api";
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "flake-utils";
+        nix-darwin.follows = "darwin";
       };
     };
 

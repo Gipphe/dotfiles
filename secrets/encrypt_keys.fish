@@ -1,4 +1,4 @@
-#!/usr/bin/env -S nix shell nixpkgs#openssh nixpkgs#fish --command fish
+#!/usr/bin/env -S nix shell nixpkgs#openssh nixpkgs#fish nixpkgs#sops --command fish
 
 set -l host_public_key /etc/ssh/ssh_host_ed25519_key.pub
 set -l user_public_key $HOME/.ssh/id_ed25519.pub
@@ -31,7 +31,7 @@ if ! grep -q "$(hostname)" $dir/secrets.nix
 end
 
 set -l services github gitlab codeberg
-set -l extensions .ssh .ssh.pub
+set -l extensions .ssh
 
 set -l keys
 for s in $services
@@ -54,18 +54,18 @@ for service in $services
 end
 
 
-# Encrypt keys with agenix
+# Encrypt keys with sops
 pushd $dir
 for k in $keys
-    set -l secret_name "$(hostname)-$k.age"
+    set -l secret_name "$(hostname)-$k"
     set -l encrypted_dest "$dir/$secret_name"
     echo "Encrypting $k to $encrypted_dest"
     if test -f $encrypted_dest
-        Encrypted file already exists
+        echo "Encrypted file already exists" >&2
         continue
     end
     set -lx EDITOR "cp /dev/stdin"
-    agenix -e $secret_name <$HOME/.ssh/$k
+    sops $secret_name <$HOME/.ssh/$k
     or begin
         echo "Failed to encrypt secret"
         exit 1
