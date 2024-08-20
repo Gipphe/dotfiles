@@ -101,7 +101,7 @@ class Games {
   }
 
   [Void] InstallFS22Mods() {
-    Write-Information "Downloading FS22 mods..."
+    Write-Information " Downloading FS22 mods..."
     if (-not (Test-Path -Path $this.FS22ModDir)) {
       Write-Information "FS22 mods folder is missing. Skipping mod installation."
       return
@@ -110,7 +110,7 @@ class Games {
     foreach ($Mod in $this.FS22Mods) {
       $this.InstallFS22Mod($Mod)
     }
-    Write-Information "FS22 mods downloaded."
+    Write-Information " FS22 mods downloaded."
   }
 }
 

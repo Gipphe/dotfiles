@@ -20,7 +20,7 @@ class Programs {
   }
 
   [void] Install() {
-    Write-Information "Installing programs..."
+    Write-Information " Installing programs..."
     $this.Choco.InstallApps()
     $this.Scoop.InstallApps()
 
@@ -37,7 +37,7 @@ class Programs {
       Install-FromWeb "VisiPics" "https://altushost-swe.dl.sourceforge.net/project/visipics/VisiPics-1-31.exe"
     })
 
-    Write-Information "Programs installed."
+    Write-Information " Programs installed."
   }
 }
 
