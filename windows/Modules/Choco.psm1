@@ -21,6 +21,7 @@ class Choco {
   }
 
   [Void] InstallApps() {
+    Write-Information "Installing Chocolatey programs..."
     $ChocoArgs = @('-y')
     $Installed = $(Invoke-Native { choco list --id-only })
 
@@ -91,6 +92,7 @@ class Choco {
       }
 
       Invoke-Native { choco install @ChocoArgs $PackageName @params }
+      Write-Information "Chocolatey programs installed."
     }
   }
 }

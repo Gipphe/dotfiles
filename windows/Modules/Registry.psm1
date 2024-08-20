@@ -20,6 +20,7 @@ class Registry {
   }
 
   [Void] SetEntries() {
+    Write-Information "Setting registry entries..."
     # Use checkboxes for selecting files
     $this.StampEntry(
       "register-checkboxes",
@@ -203,6 +204,8 @@ class Registry {
       # Cleanup
       [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($BSTR)
     }
+
+    Write-Information "Registry entries set."
   }
 }
 

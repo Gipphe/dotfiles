@@ -11,6 +11,7 @@ class Config {
   }
 
   [Void] Install() {
+    Write-Information "Copying config files..."
     if ($null -eq $Env:HOME) {
       $Env:HOME = $Env:USERPROFILE
     }
@@ -42,6 +43,8 @@ class Config {
       }
       Copy-Item -Force -Recurse -Path $From -Destination $To
     }
+
+    Write-Information "Config files copied."
   }
 }
 

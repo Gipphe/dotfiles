@@ -14,6 +14,7 @@ class WSL {
   }
 
   [Void] Install() {
+    Write-Information "Installing and setting up WSL..."
     $this.Stamp.Register("install-wsl", {
       Invoke-Native { wsl --install }
     })
@@ -35,6 +36,7 @@ class WSL {
           '&&' nixos-rebuild --extra-experimental-features 'flakes nix-command' switch --flake '"$(pwd)#Jarle"'
       }
     })
+    Write-Information "WSL instaled and set up."
   }
 }
 

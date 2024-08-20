@@ -5,6 +5,7 @@ $InformationPreference = "Continue"
 
 class Env {
   [Void] Install() {
+    Write-Information "Setting env vars..."
     $EnvVars = @{
       'HOME' = $Env:USERPROFILE
       'XDG_CONFIG_HOME' = "$Env:USERPROFILE/.config"
@@ -14,6 +15,7 @@ class Env {
       $val = $EnvVars[$_]
       [Environment]::SetEnvironmentVariable($key, $val, 'User')
     }
+    Write-Information "Env vars set."
   }
 }
 

@@ -13,6 +13,7 @@ class SD {
   }
 
   [Void] Install() {
+    Write-Information "Setting up SD..."
     $SDDir = "$($this.Dirname)\_temp"
     Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
     try {
@@ -23,6 +24,7 @@ class SD {
     } finally {
       Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
     }
+    Write-Information "SD set up."
   }
 }
 

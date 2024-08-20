@@ -20,6 +20,7 @@ class Scoop {
   }
 
   [Void] InstallApps() {
+    Write-Information "Installing scoop programs..."
     $ScoopArgs = @('-y')
     $InstalledBuckets = Invoke-Native { scoop bucket list } | ForEach-Object { $_.Name }
     $InstalledApps = Invoke-Native { scoop list } | ForEach-Object { $_.Name }
@@ -58,6 +59,7 @@ class Scoop {
 
       $this.Utils.InvokeNative({ scoop install @ScoopArgs $PackageName @Params })
     }
+    Write-Information "Scoop programs installed."
   }
 }
 
