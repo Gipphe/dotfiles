@@ -82,7 +82,7 @@ class Choco {
         $PackageArgs = $_[1]
       }
       if ($Installed.Contains($PackageName)) {
-        Write-Information "$PackageName is already installed"
+        Write-Information " $PackageName is already installed"
         return
       }
 
