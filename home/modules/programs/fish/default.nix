@@ -18,10 +18,7 @@
     };
   };
   hm = {
-    imports = [
-      ./tide.nix
-      ./starship
-    ];
+    imports = [ ./starship ];
 
     config = lib.mkIf config.gipphe.programs.fish.enable {
       home.packages = with pkgs; [ procps ];
