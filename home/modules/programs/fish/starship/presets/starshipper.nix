@@ -1,5 +1,6 @@
 { lib, ... }:
 let
+  inherit (lib.lists) zipLists;
   inherit (builtins)
     concatStringsSep
     elemAt
@@ -11,7 +12,6 @@ let
     length
     listToAttrs
     zipAttrsWith
-    zipLists
     ;
 
   isNonEmptyStringAttr = attr: set: hasAttr attr set && isString set.${attr} && set.${attr} != "";
