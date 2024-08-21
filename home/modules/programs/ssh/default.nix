@@ -19,7 +19,7 @@ let
   };
 
   ssh_secrets = lib.filterAttrs (k: _: lib.hasSuffix ".ssh" k) config.sops.secrets;
-  ssh_keys = builtins.concatStringsSep " " (lib.mapAttrstoList (_: v: v.path) ssh_secrets);
+  ssh_keys = builtins.concatStringsSep " " (lib.mapAttrsToList (_: v: v.path) ssh_secrets);
 in
 util.mkModule {
   options.gipphe.programs.ssh.enable = lib.mkEnableOption "ssh";
