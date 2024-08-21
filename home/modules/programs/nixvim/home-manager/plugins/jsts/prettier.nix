@@ -1,11 +1,14 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 let
-  prettier = [
-    [
+  helpers = config.lib.nixvim;
+  prettier =
+    helpers.listToUnkeyedAttrs [
       "prettierd"
       "prettier"
     ]
-  ];
+    // {
+      stop_after_first = true;
+    };
 in
 {
   home.packages = with pkgs; [ prettierd ];
