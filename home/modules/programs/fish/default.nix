@@ -2,9 +2,10 @@
   lib,
   config,
   pkgs,
+  util,
   ...
 }:
-{
+util.mkModule {
   options.gipphe.programs.fish = {
     enable = lib.mkEnableOption "fish";
     prompt = lib.mkOption {
