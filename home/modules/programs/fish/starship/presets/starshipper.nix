@@ -1,7 +1,18 @@
 { lib, ... }:
-with lib.lists;
-with builtins;
 let
+  inherit (builtins)
+    concatStringsSep
+    elemAt
+    filter
+    foldl'
+    genList
+    hasAttr
+    isString
+    length
+    listToAttrs
+    zipAttrsWith
+    zipLists
+    ;
 
   isNonEmptyStringAttr = attr: set: hasAttr attr set && isString set.${attr} && set.${attr} != "";
   mimicBackground =
