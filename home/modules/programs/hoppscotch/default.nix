@@ -1,6 +1,5 @@
 { util, pkgs, ... }:
 util.mkProgram {
-  hm = {
-    home.packages = [ pkgs.hoppscotch ];
-  };
+  name = "hoppscotch";
+  hm.home.packages = [ pkgs.hoppscotch ];
 }
