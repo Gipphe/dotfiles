@@ -21,10 +21,10 @@ let
   ssh_secrets = lib.filterAttrs (k: _: lib.hasSuffix ".ssh" k) config.sops.secrets;
   ssh_keys = builtins.concatStringsSep " " (lib.mapAttrsToList (_: v: v.path) ssh_secrets);
 in
-util.mkModule {
-  options.gipphe.programs.ssh.enable = lib.mkEnableOption "ssh";
+util.mkProgram {
+  name = "ssh";
 
-  hm = lib.mkIf config.gipphe.programs.ssh.enable {
+  hm = {
     programs.ssh = {
       enable = true;
       package = pkgs.openssh;
@@ -43,5 +43,5 @@ util.mkModule {
     programs.fish.functions.add_ssh_keys_to_agent = "ssh-add ${ssh_keys} &>/dev/null";
   };
 
-  system-nixos = lib.mkIf config.gipphe.programs.ssh.enable { programs.ssh.startAgent = true; };
+  system-nixos.programs.ssh.startAgent = true;
 }
