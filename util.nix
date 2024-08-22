@@ -188,25 +188,24 @@ let
     }:
     {
       imports = [
-        (mkModule {
-          options =
-            options
-            // lib.setAttrByPath (
-              [
-                "gipphe"
-                "programs"
-              ]
-              ++ (lib.splitString "." name)
-              ++ [ "enable" ]
-            ) (lib.mkEnableOption name);
-          inherit
-            hm
-            system-nixos
-            system-darwin
-            system-all
-            shared
-            ;
-        })
+        (
+          { lib, config, ... }:
+          let
+            optPath = [
+              "gipphe"
+              "programs"
+            ] ++ (lib.splitString "." name) ++ [ "enable" ];
+            isEnabled = lib.attrByPath optPath false config;
+          in
+          mkModule {
+            options = options // lib.setAttrByPath optPath (lib.mkEnableOption name);
+            hm = lib.mkIf isEnabled hm;
+            system-nixos = lib.mkIf isEnabled system-nixos;
+            system-darwin = lib.mkIf isEnabled system-darwin;
+            system-all = lib.mkIf isEnabled system-all;
+            shared = lib.mkIf isEnabled shared;
+          }
+        )
       ];
     };
   mkModule =
