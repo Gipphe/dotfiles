@@ -83,6 +83,9 @@ util.mkModule {
         stage = "add";
         unstage = "restore --staged";
 
+        first-branch-commit = ''!f() { git rev-list --reverse "$(git default-branch)".."$(git branch-name)" | head -n 1; }; f'';
+        default-branch = ''!basename -- "$(git symbolic-ref refs/remotes/origin/HEAD --short)"'';
+
         #
         # Aliases from robmiller's gist
         # See https://gist.github.com/robmiller/6018582
