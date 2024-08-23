@@ -5,10 +5,8 @@ if command -v nix >/dev/null; then
   exit 0
 fi
 
-. ./setup/vars.sh
-
 if ! command -v curl >/dev/null; then
-  if [ -f "$IS_MAC" ]; then
+  if test "$(uname)" = "Darwin"; then
     if command -v brew >/dev/null; then
       brew install curl
     else

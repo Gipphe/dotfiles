@@ -5,7 +5,12 @@ if ! grep -q debian /etc/os-release; then
   exit 1
 fi
 
-if ! ./utils/is_wsl.sh; then
+is_wsl() {
+  grep -qE 'microsoft|WSL' /proc/sys/kernel/osrelease 2>/dev/null
+  return $?
+}
+
+if ! is_wsl; then
   echo "Not in WSL. Exiting."
   exit 1
 fi
