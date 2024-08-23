@@ -50,7 +50,6 @@ class Choco {
       'logseq',
       'microsoft-windows-terminal',
       'msiafterburner',
-      'nomacs',
       'notion',
       'nvidia-broadcast',
       'openssh',
