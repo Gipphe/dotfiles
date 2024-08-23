@@ -6,7 +6,8 @@ IS_NIXOS="$(if test -d "/etc/nixos"; then echo "yes"; else echo ""; fi)"
 IS_MAC="$(if test "$(uname)" = 'Darwin'; then echo "yes"; else echo ""; fi)"
 
 if test -n "$IS_NIXOS"; then
-  echo "This machine is a NixOS machine. Nothing more to install."
+  echo "This machine is a NixOS machine. Running nixos-rebuild."
+  nixos-rebuild switch --flake "$(pwd)"
 elif test -n "$IS_MAC"; then
   echo "Installing nix-darwin"
   ./setup/install-nix-darwin.sh
