@@ -1,10 +1,18 @@
 # Dotfiles
 
-This is my _attempt_ at configuring all my various machines using Nix. This
-whole repo is a mess, and will probably remain a mess for the forseeable
-future.
+Nix configuration for NixOS, nix-darwin and nixos-wsl.
+
+## Getting started
+
+To start using this dotfiles repo on a machine of yours, run `./setup.sh` to
+ensure `nix` is installed, as well as `nix-darwin` or `home-manager`. After
+ensuring `nix` is available, it bootstraps the system using `nixos-rebuild`,
+`darwin-rebuild` or `home-manager`.
 
 ## Machines
+
+This dotfiles repo consists of NixOS configurations and nix-darwin
+configurations for a variety of machines.
 
 ### Jarle
 
@@ -12,11 +20,7 @@ NixOS in WSL on Windows. Supports GUI programs through WSLg.
 
 ### VNB-MB-Pro
 
-Mac with nix-darwin.
-
-### nixos-vm
-
-Sandbox VM for testing NixOS. Resides on Jarle.
+Corporate-issued Macbook Pro with nix-darwin.
 
 ### trond-erik
 
@@ -27,7 +31,53 @@ Lenovo Ideapad laptop running NixOS.
 Raspberry PI 4 that I have yet to install NixOS on. It also proves how bad I am
 at naming things consistently.
 
-## Prerequisites
+## Architecture
+
+To support NixOS, nix-darwin _and_ nixos-wsl, some choices have been made in
+these dotfiles that might be of interest to others.
+
+- Modules generally abstract over a feature.
+- A module _must_ not cause any errors when enabled on systems that do not
+  support it.
+- Modules are enabled through profiles.
+  - The only exception to this is the machine hostname, which is set in the
+    machine's config directly.
+- A profile can enable one or many modules.
+- A machine configuration enables one or more profiles.
+- Machine configurations are distinct based on the hostname of the machine.
+- Each machine I have uses one and only one machine config each.
+
+### Modules
+
+- A module abstracts over a feature, whether it be a program or a set of
+  settings.
+- A module must have only 1 entrypoint, its `default.nix` file.
+- Modules must be self-managing.
+  - It is up to the module to ensure that its dependencies are in place.
+  - It is up to the module to ensure the config as a whole is not invalid
+    because of it.
+  - Modules must account for being used in multiple different contexts: NixOS,
+    nix-darwin, nixos-wsl, home-manager, etc.
+- Modules should be toggleable. Listing a module in `imports` should not have
+  any effect unless the module is explicitly toggled as well.
+- Packages should be encapsulated in a separate module, as far as makes sense.
+  Even simple packages with no extra configuration. This means the module is
+  the smallest unit of abstraction in this dotfiles system.
+
+### Profiles
+
+- A profile can _only_ toggle modules, nothing else.
+- A profile can overlap with another profile.
+
+### Machine configuration
+
+- A machine configuration is unique to a single machine.
+- A machine configuration should only enable profiles.
+- A machine configuration may include extra machine-specific options if
+  necessary. Generally, this should be kept to a minimum, or preferrably
+  avoided entirely.
+
+## Legacy troubleshooting steps
 
 ### WSL
 
@@ -134,9 +184,5 @@ required to enable it. These steps are taken from [this article].
   offset 0
   magic 4d5a
   ```
-
-## Usage
-
-- Run `home-manager switch --flake $(pwd)` in this folder to apply the config.
 
 [this article]: https://avivarma1.medium.com/setting-up-debian-on-wsl2-with-systemd-fb4831dd7b82
