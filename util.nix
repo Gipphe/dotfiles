@@ -113,6 +113,8 @@ let
           acc
       ) [ ] items;
 
+  # Returns a module that merely consists of the package specified, using the
+  # passed name as the name for the module and the module options.
   mkSimpleProgram =
     name: package:
     {
@@ -128,9 +130,10 @@ let
       config = lib.mkIf config.gipphe.programs.${name}.enable { home.packages = [ package ]; };
     });
 
+  # Version of `mkSimpleProgrma` that uses the passed name to fetch the package
+  # from `pkgs`.
   mkSimpleProgramByName = name: { pkgs, ... }@args: mkSimpleProgram name pkgs.${name} args;
-  mkSimpleProgramImports = name: [ (mkSimpleProgramByName name) ];
-  mkSimpleProgramModule = name: { imports = mkSimpleProgramImports name; };
+
   mkHmProgramModule = name: {
     imports = [
       (
@@ -248,8 +251,6 @@ in
     mkProgram
     mkSimpleProgram
     mkSimpleProgramByName
-    mkSimpleProgramImports
-    mkSimpleProgramModule
     recurseFirstMatching
     recurseFirstMatchingIncludingSibling
     recursiveMap

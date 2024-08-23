@@ -1,1 +1,1 @@
-{ util, ... }: util.mkSimpleProgramModule "charm-freeze"
+{ util, ... }: util.mkSimpleProgramByName "charm-freeze"

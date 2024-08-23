@@ -5,6 +5,6 @@
   ...
 }:
 util.mkModule {
-  shared.imports = [ (util.mkSimpleProgramModule "bat") ];
+  shared.imports = [ (util.mkSimpleProgramByName "bat") ];
   hm = lib.mkIf config.gipphe.programs.bat.enable { programs.fish.shellAbbrs.cat = "bat"; };
 }

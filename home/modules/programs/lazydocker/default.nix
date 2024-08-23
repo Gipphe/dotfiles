@@ -1,1 +1,1 @@
-{ util, ... }: util.mkSimpleProgramModule "lazydocker"
+{ util, ... }: util.mkSimpleProgramByName "lazydocker"

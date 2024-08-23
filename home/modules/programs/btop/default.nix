@@ -1,4 +1,1 @@
-{ util, ... }:
-{
-  imports = util.mkSimpleProgramImports "btop";
-}
+{ util, ... }: util.mkSimpleProgramByName "btop"
