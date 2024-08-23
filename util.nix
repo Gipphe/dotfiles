@@ -138,23 +138,6 @@ let
     };
   mkProfile = name: cfg: { imports = [ (mkProfileSet name cfg) ]; };
 
-  smartImport =
-    path:
-    { lib, flags, ... }:
-    let
-      mkCond =
-        filename: cond:
-        lib.optional (lib.pathIsRegularFile /.${path}/${filename} && cond) /.${path}/${filename};
-      options = mkCond "options.nix" (_: true);
-      hm = mkCond "home-manager.nix" flags.isHm;
-      nixos = mkCond "system-nixos.nix" flags.isNixos;
-      nix-darwin = mkCond "system-darwin.nix" flags.isNixDarwin;
-      system-all = mkCond "system-all.nix" flags.isSystem;
-    in
-    {
-      imports = options ++ hm ++ nixos ++ nix-darwin ++ system-all;
-    };
-
   mkProgram =
     {
       name,
@@ -228,6 +211,5 @@ in
     recurseFirstMatching
     recurseFirstMatchingIncludingSibling
     setCaskHash
-    smartImport
     ;
 }
