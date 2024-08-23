@@ -112,31 +112,23 @@ let
   # passed name as the name for the module and the module options.
   mkSimpleProgram =
     name: package:
-    {
-      lib,
-      config,
-      flags,
-      ...
-    }:
-    {
+    { lib, config, ... }:
+    mkModule {
       options.gipphe.programs.${name}.enable = lib.mkEnableOption name;
-    }
-    // (lib.optionalAttrs flags.isHm {
-      config = lib.mkIf config.gipphe.programs.${name}.enable { home.packages = [ package ]; };
-    });
+      hm = lib.mkIf config.gipphe.programs.${name}.enable { home.packages = [ package ]; };
+    };
 
   # Version of `mkSimpleProgrma` that uses the passed name to fetch the package
   # from `pkgs`.
   mkSimpleProgramByName = name: { pkgs, ... }@args: mkSimpleProgram name pkgs.${name} args;
 
-  mkProfileSet =
+  mkProfile =
     name: cfg:
     { lib, config, ... }:
     {
       options.gipphe.profiles.${name}.enable = lib.mkEnableOption "${name} profile";
       config = lib.mkIf config.gipphe.profiles.${name}.enable cfg;
     };
-  mkProfile = name: cfg: { imports = [ (mkProfileSet name cfg) ]; };
 
   mkProgram =
     {
@@ -170,6 +162,7 @@ let
         )
       ];
     };
+
   mkModule =
     {
       options ? { },
@@ -204,7 +197,6 @@ in
     mkCopyActivationScript
     mkModule
     mkProfile
-    mkProfileSet
     mkProgram
     mkSimpleProgram
     mkSimpleProgramByName
