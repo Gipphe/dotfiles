@@ -8,34 +8,11 @@ let
   inherit (builtins)
     attrNames
     hasAttr
-    isAttrs
-    isList
-    listToAttrs
     map
     readDir
     ;
   inherit (lib) flatten;
   inherit (lib.attrsets) foldlAttrs filterAttrs;
-
-  recursiveMap =
-    f: x:
-    let
-      recurseAttrs =
-        set:
-        listToAttrs (
-          map (k: {
-            name = k;
-            value = recursiveMap f set.${k};
-          }) (attrNames set)
-        );
-      recurseList = list: map (recursiveMap f) list;
-    in
-    if isList x then
-      recurseList x
-    else if isAttrs x then
-      recurseAttrs x
-    else
-      f x;
 
   mkCopyActivationScript =
     {
@@ -270,7 +247,6 @@ in
     mkSimpleProgramByName
     recurseFirstMatching
     recurseFirstMatchingIncludingSibling
-    recursiveMap
     setCaskHash
     smartImport
     ;
