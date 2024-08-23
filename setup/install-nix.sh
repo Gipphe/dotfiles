@@ -21,10 +21,4 @@ if ! command -v curl >/dev/null; then
   fi
 fi
 
-if [ -f "$IS_MAC" ]; then
-  curl -L https://nixos.org/nix/install | sh -i
-elif [ -f "$IS_WSL" ]; then
-  curl -L https://nixos.org/nix/install | sh -i -- --daemon
-else
-  curl -L https://nixos.org/nix/install | sh -i -- --daemon
-fi
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
