@@ -87,6 +87,37 @@ let
       src = cask.src.overrideAttrs { outputHash = hash; };
     });
 
+  # Traverse down each subdirectory starting from `dir`, stopping at the first
+  # `default.nix` found for each subdirectory.
+  #
+  # Example:
+  #
+  # Given a file system like so:
+  #
+  # foo/
+  #   bar/
+  #     default.nix
+  #   baz/
+  #     quack/
+  #       default.nix
+  #   quux/
+  #     default.nix
+  #     one/
+  #       default.nix
+  #     two/
+  #       default.nix
+  #
+  # `recurseFirstMatching ./foo` will return the following list:
+  #
+  # [
+  #   ./foo/bar/default.nix
+  #   ./foo/baz/quack/default.nix
+  #   ./foo/quux/default.nix
+  # ]
+  #
+  # Notice the omission of `./foo/quux/one/default.nix` and
+  # `./foo/quux/two/default.nix`. Since we found a `default.nix` in
+  # `./foo/quux`, we do not traverse further down that part of the file tree.
   recurseFirstMatching =
     file: dir:
     lib.pipe dir [
