@@ -21,7 +21,6 @@ in
           java-language-server.enable = true;
           lemminx.enable = true;
           lua-ls.enable = true;
-          marksman.enable = true;
           # metals.enable = true;
           sqls.enable = true;
           terraformls.enable = true;
