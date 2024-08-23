@@ -129,25 +129,6 @@ let
   # from `pkgs`.
   mkSimpleProgramByName = name: { pkgs, ... }@args: mkSimpleProgram name pkgs.${name} args;
 
-  mkHmProgramModule = name: {
-    imports = [
-      (
-        {
-          lib,
-          config,
-          flags,
-          ...
-        }:
-        {
-          options.gipphe.programs.${name}.enable = lib.mkEnableOption name;
-        }
-        // (lib.optionalAttrs flags.isHm {
-          config = lib.mkIf config.gipphe.programs.${name}.enable { programs.${name}.enable = true; };
-        })
-      )
-    ];
-  };
-
   mkProfileSet =
     name: cfg:
     { lib, config, ... }:
@@ -238,7 +219,6 @@ in
   inherit
     copyFileFixingPaths
     mkCopyActivationScript
-    mkHmProgramModule
     mkModule
     mkProfile
     mkProfileSet
