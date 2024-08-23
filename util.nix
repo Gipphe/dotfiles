@@ -37,19 +37,6 @@ let
     else
       f x;
 
-  importSiblings =
-    let
-      go =
-        acc: fileName: _:
-        acc ++ (if fileName != "default.nix" then [ fileName ] else [ ]);
-    in
-    dir:
-    lib.pipe dir [
-      readDir
-      (lib.attrsets.foldlAttrs go [ ])
-      (map (f: /.${dir}/${f}))
-    ];
-
   mkCopyActivationScript =
     {
       name,
@@ -273,7 +260,6 @@ in
 {
   inherit
     copyFileFixingPaths
-    importSiblings
     mkCopyActivationScript
     mkHmProgramModule
     mkModule
