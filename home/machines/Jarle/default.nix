@@ -5,9 +5,7 @@
   ...
 }:
 {
-  imports =
-    lib.optional flags.isSystem ./system-all.nix
-    ++ lib.optional flags.isNixos ./system-nixos.nix;
+  imports = lib.optional flags.isNixos ./system-nixos.nix;
   options.gipphe.machines.Jarle.enable = lib.mkEnableOption "Jarle machine config";
   config = lib.mkIf config.gipphe.machines.Jarle.enable {
     gipphe = {
