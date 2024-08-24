@@ -62,7 +62,6 @@ class Choco {
       'slack',
       'spotify',
       'starship',
-      'start10',
       'steam',
       'sumatrapdf',
       'sunshine',
