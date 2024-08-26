@@ -1,4 +1,5 @@
-{ lib, flags, ... }:
-{
-  imports = [ ./options.nix ] ++ lib.optional flags.isNixDarwin ./system-darwin.nix;
+{ util, ... }:
+util.mkProgram {
+  name = "openvpn-connect";
+  system-darwin.homebrew.casks = [ "openvpn-connect" ];
 }
