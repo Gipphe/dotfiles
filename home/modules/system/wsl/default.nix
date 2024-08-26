@@ -1,4 +1,52 @@
-{ lib, flags, ... }:
 {
-  imports = [ ./options.nix ] ++ lib.optional flags.isNixos ./system-nixos.nix;
+  lib,
+  inputs,
+  pkgs,
+  config,
+  util,
+  ...
+}:
+util.mkToggledModule [ "system" ] {
+  name = "wsl";
+
+  system-nixos = {
+    imports = [
+      # include NixOS-WSL modules
+      inputs.wsl.nixosModules.default
+    ];
+
+    config = {
+      wsl = {
+        enable = true;
+        defaultUser = config.gipphe.username;
+        docker-desktop.enable = false;
+        interop = {
+          includePath = true;
+          # register = true;
+          # startMenuLaunchers = true;
+        };
+        extraBin = with pkgs; [
+          # Binaries for Docker Desktop wsl-distro-proxy
+          { src = "${coreutils}/bin/mkdir"; }
+          { src = "${coreutils}/bin/cat"; }
+          { src = "${coreutils}/bin/whoami"; }
+          { src = "${coreutils}/bin/ls"; }
+          { src = "${busybox}/bin/addgroup"; }
+          { src = "${su}/bin/groupadd"; }
+          { src = "${su}/bin/usermod"; }
+        ];
+      };
+
+      virtualisation.docker = lib.mkIf config.gipphe.virtualisation.docker.enable {
+        enable = true;
+        enableOnBoot = true;
+        autoPrune.enable = true;
+      };
+      systemd = lib.mkIf config.gipphe.system.systemd.enable {
+        services.docker-desktop-proxy.script = lib.mkForce ''
+          ${config.wsl.wslConf.automount.root}/wsl/docker-desktop/docker-desktop-user-distro proxy --docker-desktop-root ${config.wsl.wslConf.automount.root}/wsl/docker-desktop "C:\Program Files\Docker\Docker\resources"
+        '';
+      };
+    };
+  };
 }
