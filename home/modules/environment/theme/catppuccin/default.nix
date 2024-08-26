@@ -1,6 +1,18 @@
-{ lib, flags, ... }:
-{
-  imports = [
-    ./options.nix
-  ] ++ lib.optional flags.isHm ./home-manager.nix ++ lib.optional flags.isNixos ./system-nixos.nix;
-}
+{ inputs, util, ... }:
+util.mkToggledModule
+  [
+    "environment"
+    "theme"
+  ]
+  {
+    name = "catppuccin";
+
+    hm.imports = [ inputs.catppuccin.homeManagerModules.catppuccin ];
+
+    system-nixos.imports = [ inputs.catppuccin.nixosModules.catppuccin ];
+
+    shared.catppuccin = {
+      enable = true;
+      flavor = "macchiato";
+    };
+  }
