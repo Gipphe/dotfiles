@@ -1,4 +1,5 @@
-{ lib, flags, ... }:
-{
-  imports = [ ./options.nix ] ++ lib.optional flags.isNixDarwin ./system-darwin.nix;
+{ util, ... }:
+util.mkProgram {
+  name = "logi-options-plus";
+  system-darwin.homebrew.casks = [ "logi-options-plus" ];
 }
