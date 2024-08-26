@@ -1,6 +1,11 @@
-{ lib, flags, ... }:
 {
-  imports =
-    [ ./options.nix ]
-    ++ lib.optional flags.isHm ./home-manager.nix ++ lib.optional flags.isNixDarwin ./system-darwin.nix;
+  lib,
+  util,
+  pkgs,
+  ...
+}:
+util.mkProgram {
+  name = "vivaldi";
+  hm.home.packages = [ (lib.mkIf pkgs.stdenv.isLinux pkgs.vivaldi) ];
+  system-darwin.homebrew.casks = [ "vivaldi" ];
 }
