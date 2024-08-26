@@ -1,4 +1,9 @@
-{ lib, flags, ... }:
-{
-  imports = [ ./options.nix ] ++ lib.optional flags.isNixos ./system-nixos.nix;
+{ util, ... }:
+util.mkToggledModule [ "system" ] {
+  name = "zramswap";
+  # compress half of the ram to use as swap
+  system-nixos.zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+  };
 }
