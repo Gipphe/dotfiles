@@ -1,4 +1,5 @@
-{ lib, flags, ... }:
-{
-  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
+{ pkgs, util, ... }:
+util.mkProgram {
+  name = "gnused";
+  hm.home.packages = with pkgs; [ gnused ];
 }
