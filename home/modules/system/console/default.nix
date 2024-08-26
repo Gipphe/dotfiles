@@ -1,4 +1,8 @@
-{ lib, flags, ... }:
-{
-  imports = [ ./options.nix ] ++ lib.optional flags.isNixos ./system-nixos.nix;
+{ util, pkgs, ... }:
+util.mkToggledModule [ "system" ] {
+  name = "console";
+  system-nixos.console = {
+    font = "${pkgs.terminus_font}/share/consolefonts/ter-u24n.psf.gz";
+    earlySetup = true;
+  };
 }
