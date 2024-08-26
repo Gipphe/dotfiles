@@ -1,4 +1,12 @@
-{ lib, flags, ... }:
-{
-  imports = [ ./options.nix ] ++ lib.optional flags.isNixos ./system-nixos.nix;
+{ pkgs, util, ... }:
+util.mkToggledModule [ "system" ] {
+  name = "dbus";
+  system-nixos.services.dbus = {
+    enable = true;
+    packages = with pkgs; [
+      dconf
+      udisks2
+      gcr
+    ];
+  };
 }
