@@ -1,4 +1,10 @@
-{ lib, flags, ... }:
-{
-  imports = [ ./options.nix ] ++ lib.optional flags.isNixos ./system-nixos.nix;
+{ util, ... }:
+util.mkToggledModule [ "boot" ] {
+  name = "grub";
+
+  system-nixos.boot.loader.grub = {
+    enable = true;
+    device = "/dev/sda";
+    useOSProber = true;
+  };
 }
