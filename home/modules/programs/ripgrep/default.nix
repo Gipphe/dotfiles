@@ -1,4 +1,5 @@
-{ lib, flags, ... }:
-{
-  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
+{ util, ... }:
+util.mkProgram {
+  name = "ripgrep";
+  hm.programs.ripgrep.enable = true;
 }
