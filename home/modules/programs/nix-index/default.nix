@@ -1,4 +1,7 @@
-{ lib, flags, ... }:
-{
-  imports = lib.optional flags.isHm ./home-manager.nix;
+{ util, inputs, ... }:
+util.mkModule {
+  hm = {
+    imports = [ inputs.nix-index-db.hmModules.nix-index ];
+    programs.nix-index-database.comma.enable = true;
+  };
 }
