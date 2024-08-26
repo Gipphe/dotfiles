@@ -1,7 +1,6 @@
-{ lib, flags, ... }:
-{
-  imports =
-    [ ./options.nix ]
-    ++ lib.optional flags.isNixos ./system-nixos.nix
-    ++ lib.optional flags.isNixDarwin ./system-darwin.nix;
+{ util, ... }:
+util.mkToggledModule [ "virtualisation" ] {
+  name = "docker";
+  system-nixos.virtualisation.docker.enable = true;
+  system-darwin.homebrew.casks = [ "docker" ];
 }
