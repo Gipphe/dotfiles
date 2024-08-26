@@ -34,6 +34,8 @@ class Choco {
       'docker-desktop',
       'dust',
       'epicgameslauncher',
+      'everything',
+      'everythingpowertoys',
       'filen',
       'firacodenf',
       'fzf',

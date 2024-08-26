@@ -1,4 +1,38 @@
-{ lib, flags, ... }:
-{
-  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
+{ pkgs, util, ... }:
+util.mkProgram {
+  name = "bcn";
+  hm.home.packages = [
+    (pkgs.writeShellApplication {
+      name = "bcn";
+      runtimeInputs = with pkgs; [
+        bluez
+        libnotify
+        gnugrep
+        gawk
+      ];
+      text = ''
+        #bcn, Bluetooth Connect
+
+        device_amount=$(bluetoothctl devices | wc -l)
+
+        if [ "$device_amount" = "1" ]; then
+          MAC=$(bluetoothctl devices | awk '{"print $2"}')
+          [ -z "$MAC" ] && MAC=NoDeviceFound # Prevents accidental disconnect error
+        else
+          select=$(bluetoothctl devices | awk '{"print $3"}' | tofi --prompt-text "Select device ?? ")
+          MAC=$(bluetoothctl devices | grep "$select" | awk '{"print $2"}')
+          [ -z "$MAC" ] && MAC=NoDeviceFound # Prevents accidental disconnect error
+        fi
+
+        connect=$(bluetoothctl info "$MAC" | grep Connected: | awk '{print $2}')
+        if [ "$connect" = "no" ]; then
+          notify-send "Attempting to connect to $select"
+          bluetoothctl connect "$MAC" || notify-send "Failed to Connect"
+        elif [ "$connect" = "yes" ]; then
+          notify-send "Attempting to disconnect $select"
+          bluetoothctl disconnect "$MAC"
+        fi
+      '';
+    })
+  ];
 }

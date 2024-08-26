@@ -1,4 +1,9 @@
-{ lib, flags, ... }:
-{
-  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
+{ util, ... }:
+util.mkProgram {
+  name = "idea-ultimate";
+
+  hm.imports = [
+    ./idea.nix
+    ./config.nix
+  ];
 }

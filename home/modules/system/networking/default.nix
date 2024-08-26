@@ -1,4 +1,1 @@
-{ config, ... }:
-{
-  networking.hostName = config.gipphe.hostName;
-}
+{ config, util, ... }: util.mkModule { system-all.networking.hostName = config.gipphe.hostName; }

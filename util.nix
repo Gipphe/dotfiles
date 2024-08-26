@@ -120,17 +120,32 @@ let
 
   # Version of `mkSimpleProgrma` that uses the passed name to fetch the package
   # from `pkgs`.
-  mkSimpleProgramByName = name: { pkgs, ... }@args: mkSimpleProgram name pkgs.${name} args;
+  mkSimpleProgramByName = name: {
+    imports = [ ({ pkgs, ... }@args: mkSimpleProgram name pkgs.${name} args) ];
+  };
 
-  mkProfile =
-    name: cfg:
-    { lib, config, ... }:
-    {
-      options.gipphe.profiles.${name}.enable = lib.mkEnableOption "${name} profile";
-      config = lib.mkIf config.gipphe.profiles.${name}.enable cfg;
-    };
+  mkSimpleProgramModule = name: { imports = [ (mkSimpleProgramByName name) ]; };
 
-  mkProgram =
+  mkProfile = name: cfg: {
+    imports = [
+      (
+        { lib, config, ... }:
+        {
+          options.gipphe.profiles.${name}.enable = lib.mkEnableOption "${name} profile";
+          config = lib.mkIf config.gipphe.profiles.${name}.enable cfg;
+        }
+      )
+    ];
+  };
+
+  mkProgram = mkToggledModule [ "programs" ];
+
+  # Creates a module with an automatically created `enable` options for the
+  # given name, and injects an `lib.mkIf` into each of `hm`, `system-nixos`,
+  # `system-darwin`, `system-all` and `shared` that toggles the module based on
+  # said option.
+  mkToggledModule =
+    type:
     {
       name,
       options ? { },
@@ -147,17 +162,40 @@ let
           let
             optPath = [
               "gipphe"
-              "programs"
-            ] ++ (lib.splitString "." name) ++ [ "enable" ];
+
+            ] ++ type ++ (lib.splitString "." name) ++ [ "enable" ];
             isEnabled = lib.attrByPath optPath false config;
+            injectMkIf =
+              mod:
+              let
+                imports = if mod ? imports then mod.imports else [ ];
+                config =
+                  if mod ? config then
+                    mod.config
+                  else
+                    builtins.removeAttrs mod [
+                      "imports"
+                      "options"
+                    ];
+                options = if mod ? options then mod.options else { };
+                rest = builtins.intersectAttrs {
+                  _file = "";
+                  _module = "";
+                } mod;
+              in
+              rest
+              // {
+                inherit options imports;
+                config = lib.mkIf isEnabled config;
+              };
           in
           mkModule {
             options = options // lib.setAttrByPath optPath (lib.mkEnableOption name);
-            hm = lib.mkIf isEnabled hm;
-            system-nixos = lib.mkIf isEnabled system-nixos;
-            system-darwin = lib.mkIf isEnabled system-darwin;
-            system-all = lib.mkIf isEnabled system-all;
-            shared = lib.mkIf isEnabled shared;
+            hm = injectMkIf hm;
+            system-nixos = injectMkIf system-nixos;
+            system-darwin = injectMkIf system-darwin;
+            system-all = injectMkIf system-all;
+            shared = injectMkIf shared;
           }
         )
       ];
@@ -200,6 +238,8 @@ in
     mkProgram
     mkSimpleProgram
     mkSimpleProgramByName
+    mkSimpleProgramModule
+    mkToggledModule
     recurseFirstMatching
     recurseFirstMatchingIncludingSibling
     setCaskHash

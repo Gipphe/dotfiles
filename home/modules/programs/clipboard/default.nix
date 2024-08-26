@@ -1,1 +1,1 @@
-{ util, ... }: util.mkSimpleProgramByName "clipboard-jh"
+{ util, ... }: util.mkSimpleProgramModule "clipboard-jh"

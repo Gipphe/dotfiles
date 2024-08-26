@@ -1,4 +1,5 @@
-{ lib, flags, ... }:
-{
-  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
+{ util, pkgs, ... }:
+util.mkProgram {
+  name = "glab";
+  hm.home.packages = [ pkgs.glab ];
 }
