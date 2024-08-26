@@ -7,7 +7,6 @@
 let
   configs = {
     "trond-arne" = ./trond-arne.nix;
-    "nixos-vm" = ./nixos-vm.nix;
     "Jarle" = ./Jarle.nix;
   };
 in

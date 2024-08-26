@@ -1,11 +1,4 @@
 let
-  nixos-vm-host = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMxLKIK0m9fRx8HgC/zc/7tWO2f25MoeDsfSRP6wjlwI";
-  nixos-vm-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJHUbZTbdKdC0t5CMjSBv4/zZU2osa/Y+nLw3tLbBHrz";
-  nixos-vm = [
-    nixos-vm-host
-    nixos-vm-user
-  ];
-
   trond-arne-host = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIdsV3fQUBWw5IoU2SBVYsPT8LzDqe5/Yv+WOpsIqoeA root@trond-arne";
   trond-arne-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINiHCy+HvAtI0npM5rLZ+ZnCrfwLG06AO3sWuVjm7EgI gipphe@trond-arne";
   trond-arne = [
@@ -29,7 +22,6 @@ let
     "codeberg"
   ];
   hosts = {
-    "nixos-vm" = nixos-vm;
     "trond-arne" = trond-arne;
     "VNB-MB-Pro" = VNB-MB-Pro;
     "Jarle" = Jarle;
@@ -55,14 +47,6 @@ let
     acc: curr:
     acc // (foldl' (acc': curr': acc' // { "${curr'}".publicKeys = curr.keys; }) { } curr.keyNames)
   ) { } (attrValues hostKeys);
-  all = Jarle ++ VNB-MB-Pro ++ trond-arne ++ nixos-vm;
+  all = Jarle ++ VNB-MB-Pro ++ trond-arne;
 in
 entries // { "mods-cli-openai-api-key.age".publicKeys = all; }
-# {
-#   "nixos-vm-github.ssh.age".publicKeys = nixos-vm;
-#   "nixos-vm-github.ssh.pub.age".publicKeys = nixos-vm;
-#   "nixos-vm-gitlab.ssh.age".publicKeys = nixos-vm;
-#   "nixos-vm-gitlab.ssh.pub.age".publicKeys = nixos-vm;
-#   "nixos-vm-codeberg.ssh.age".publicKeys = nixos-vm;
-#   "nixos-vm-codeberg.ssh.pub.age".publicKeys = nixos-vm;
-# }

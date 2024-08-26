@@ -6,10 +6,7 @@
   ...
 }:
 util.mkModule {
-  shared.imports = [
-    ./fontconfig
-    ./screen
-  ];
+  shared.imports = [ ./fontconfig ];
 
   hm = {
     home = {

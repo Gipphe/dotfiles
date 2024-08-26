@@ -3,7 +3,6 @@
   imports = [
     ./Jarle
     ./VNB-MB-Pro
-    ./nixos-vm
     ./trond-arne
   ];
   options.gipphe = {
