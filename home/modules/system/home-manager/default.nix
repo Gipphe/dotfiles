@@ -3,6 +3,7 @@
   inputs,
   config,
   util,
+  lib,
   flags,
   hostname,
   ...
@@ -11,6 +12,7 @@ util.mkModule {
   hm =
     { osConfig, ... }:
     {
+      imports = lib.optional flags.isNixDarwin inputs.mac-app-util.homeManagerModules.default;
       # Copy config from OS to home-manager
       config.gipphe = osConfig.gipphe;
     };

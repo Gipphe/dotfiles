@@ -47,10 +47,6 @@ util.mkModule {
   system-darwin = {
     imports = [ inputs.mac-app-util.darwinModules.default ];
 
-    # home-manager.users.${config.gipphe.username}.imports = [
-    #   inputs.mac-app-util.homeManagerModules.default
-    # ];
-
     # Need to have zsh to do much on darwin
     programs.zsh.enable = true;
 
