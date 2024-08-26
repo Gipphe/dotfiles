@@ -1,4 +1,6 @@
-{ lib, flags, ... }:
-{
-  imports = [ ./options.nix ] ++ lib.optional flags.isNixos ./system-nixos.nix;
+{ util, ... }:
+util.mkToggledModule [ "services" ] {
+  name = "printer";
+  # Enable CUPS to print documents.
+  system-nixos.services.printing.enable = true;
 }
