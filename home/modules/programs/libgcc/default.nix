@@ -1,4 +1,6 @@
-{ lib, flags, ... }:
-{
-  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
+{ pkgs, util, ... }:
+util.mkProgram {
+  name = "libgcc";
+
+  hm.home.packages = with pkgs; [ libgcc ];
 }
