@@ -14,17 +14,15 @@ in
       };
       conform-nvim = {
         enable = true;
-        formatOnSave = { };
-        formattersByFt = {
-          lua = [ "stylua" ];
-          fish = [ "fish_indent" ];
-          sh = [ "shfmt" ];
-          nix = [ "nixfmt" ];
-        };
-        formatters = {
-          injected.options.ignore_errors = true;
-        };
-        extraOptions = {
+        settings = {
+          format_on_save = { };
+          formatters_by_ft = {
+            lua = [ "stylua" ];
+            fish = [ "fish_indent" ];
+            sh = [ "shfmt" ];
+            nix = [ "nixfmt" ];
+          };
+          formatters.injected.options.ignore_errors = true;
           format = {
             timeout_ms = 3000;
             async = false;

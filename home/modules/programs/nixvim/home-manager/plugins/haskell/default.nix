@@ -7,7 +7,7 @@
 
   config = lib.mkIf config.gipphe.programs.nixvim.plugins.haskell.enable {
     programs.nixvim.plugins = {
-      conform-nvim.formattersByFt = {
+      conform-nvim.settings.formatters_by_ft = {
         haskell = [ "fourmolu" ];
         cabal = [ "cabal-fmt" ];
       };

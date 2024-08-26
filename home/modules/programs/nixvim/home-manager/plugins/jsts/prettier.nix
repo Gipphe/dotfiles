@@ -17,7 +17,7 @@ in
       enable = true;
       disableTsServerFormatter = true;
     };
-    conform-nvim.formattersByFt = {
+    conform-nvim.settings.formatters_by_ft = {
       "markdown.mdx" = prettier;
       css = prettier;
       graphql = prettier;

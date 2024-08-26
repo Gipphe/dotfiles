@@ -1,2 +1,2 @@
-# { programs.nixvim.plugins.conform-nvim.formattersByFt.python = [ "ruff" ]; }
+# { programs.nixvim.plugins.conform-nvim.settings.formatters_by_ft.python = [ "ruff" ]; }
 { }
