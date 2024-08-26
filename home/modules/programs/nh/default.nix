@@ -1,4 +1,8 @@
-{ lib, flags, ... }:
-{
-  imports = [ ./options.nix ] ++ lib.optional flags.isNixos ./system-nixos.nix;
+{ util, ... }:
+util.mkProgram {
+  name = "nh";
+  system-nixos.programs.nh = {
+    enable = true;
+    flake = "/home/gipphe/projects/dotfiles";
+  };
 }
