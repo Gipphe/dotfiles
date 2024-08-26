@@ -1,7 +1,29 @@
-{ lib, flags, ... }:
 {
-  imports =
-    [ ./options.nix ]
-    ++ lib.optional flags.isNixDarwin ./system-darwin.nix
-    ++ lib.optional flags.isNixos ./system-nixos.nix;
+  lib,
+  config,
+  util,
+  ...
+}:
+let
+  inherit (config.gipphe) username homeDirectory;
+in
+util.mkToggledModule [ "system" ] {
+  name = "user";
+
+  system-nixos = {
+    users.users.${username} = {
+      isNormalUser = true;
+      description = "Victor Nascimento Bakke";
+      home = lib.mkDefault homeDirectory;
+      group = username;
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+      ];
+    };
+
+    users.groups.${username} = { };
+  };
+
+  system-darwin.users.users.${config.gipphe.username}.home = config.gipphe.homeDirectory;
 }
