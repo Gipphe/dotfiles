@@ -17,7 +17,7 @@ util.mkProgram {
         (ext: {
           recognitionType = "extension";
           magicOrExtension = ext;
-          interpreter = "/run/current-system/sw/bin/appimage-run";
+          interpreter = lib.getExe pkgs.appimage-run;
         });
   };
 }
