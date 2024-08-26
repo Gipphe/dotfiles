@@ -1,4 +1,6 @@
-{ lib, flags, ... }:
-{
-  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
+{ util, pkgs, ... }:
+util.mkProgram {
+  name = "gnutar";
+
+  hm.home.packages = with pkgs; [ gnutar ];
 }
