@@ -1,4 +1,10 @@
-{ lib, flags, ... }:
 {
-  imports = [ ./options.nix ] ++ lib.optional flags.isHm ./home-manager.nix;
+  util,
+  inputs,
+  pkgs,
+  ...
+}:
+util.mkProgram {
+  name = "barrier";
+  hm.home.packages = [ inputs.brew-nix.packages.${pkgs.system}.barrier ];
 }
