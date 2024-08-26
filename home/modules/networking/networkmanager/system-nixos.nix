@@ -14,5 +14,8 @@
     # networking.firewall.allowedUDPPorts = [ ... ];
     # Or disable the firewall altogether.
     # networking.firewall.enable = false;
+
+    # slows down boot time
+    systemd.services.NetworkManager-wait-online.enable = false;
   };
 }
