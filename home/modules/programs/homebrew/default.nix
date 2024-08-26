@@ -1,4 +1,5 @@
-{ lib, flags, ... }:
-{
-  imports = [ ./options.nix ] ++ lib.optional flags.isNixDarwin ./system-darwin.nix;
+{ util, ... }:
+util.mkProgram {
+  name = "homebrew";
+  system-darwin.homebrew.enable = true;
 }
