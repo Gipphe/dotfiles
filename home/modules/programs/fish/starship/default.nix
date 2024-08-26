@@ -15,7 +15,7 @@ in
       settings = import ./presets { inherit pkgs lib; };
     };
 
-    home.activation.copy-starship-config = lib.hm.dag.entryAfter [ "writeBoundary" ] (
+    home.activation.copy-starship-config = lib.hm.dag.entryAfter [ "onFilesChange" ] (
       let
         script = pkgs.writeShellApplication {
           name = "starship-config-copy";
