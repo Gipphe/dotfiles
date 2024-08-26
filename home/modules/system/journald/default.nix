@@ -1,4 +1,8 @@
-{ lib, flags, ... }:
-{
-  imports = [ ./options.nix ] ++ lib.optional flags.isNixos ./system-nixos.nix;
+{ util, ... }:
+util.mkToggledModule [ "system" ] {
+  name = "journald";
+  system-nixos.services.journald.extraConfig = ''
+    SystemMaxUse=50M
+    RuntimeMaxUse=10M
+  '';
 }
