@@ -1,4 +1,12 @@
 { inputs, util, ... }:
+let
+  config = {
+    catppuccin = {
+      enable = true;
+      flavor = "macchiato";
+    };
+  };
+in
 util.mkToggledModule
   [
     "environment"
@@ -7,12 +15,13 @@ util.mkToggledModule
   {
     name = "catppuccin";
 
-    hm.imports = [ inputs.catppuccin.homeManagerModules.catppuccin ];
+    hm = {
+      imports = [ inputs.catppuccin.homeManagerModules.catppuccin ];
+      inherit config;
+    };
 
-    system-nixos.imports = [ inputs.catppuccin.nixosModules.catppuccin ];
-
-    shared.catppuccin = {
-      enable = true;
-      flavor = "macchiato";
+    system-nixos = {
+      imports = [ inputs.catppuccin.nixosModules.catppuccin ];
+      inherit config;
     };
   }
