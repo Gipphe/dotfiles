@@ -39,7 +39,7 @@ util.mkProgram {
           };
         }
       ];
-      "$schema" = "https://schema.linearmouse.app/0.9.5";
+      "$schema" = "https://schema.linearmouse.app/0.10.0";
     };
   };
 }
