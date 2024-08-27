@@ -6,8 +6,9 @@
 }:
 util.mkProgram {
   name = "linearmouse";
-  hm.xdg.configFile = {
-    "linearmouse/linearmouse.json".text = builtins.toJSON {
+  hm = {
+    home.packages = [ inputs.brew-nix.packages.${pkgs.system}.linearmouse ];
+    xdg.configFile."linearmouse/linearmouse.json".text = builtins.toJSON {
       schemes = [
         {
           "if".device.category = "mouse";
@@ -40,6 +41,5 @@ util.mkProgram {
       ];
       "$schema" = "https://schema.linearmouse.app/0.9.5";
     };
-    home.packages = [ inputs.brew-nix.packages.${pkgs.system}.linearmouse ];
   };
 }
