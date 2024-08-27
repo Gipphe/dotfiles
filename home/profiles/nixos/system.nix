@@ -10,7 +10,6 @@
       localization.enable = true;
       nix-ld.enable = true;
       systemd.enable = true;
-      user.enable = true;
     };
   };
 }
