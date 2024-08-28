@@ -94,8 +94,10 @@ class Choco {
       }
 
       Invoke-Native { choco install @ChocoArgs $PackageName @params }
-      Write-Information " Chocolatey programs installed."
+      Write-Information " $PackageName installed."
     }
+
+    Write-Information " Chocolatey programs installed."
   }
 }
 
