@@ -68,6 +68,7 @@ class Choco {
       'sumatrapdf',
       'sunshine',
       'teamviewer',
+      'vcredist-all',
       'vivaldi',
       'voicemeeter',
       'wezterm',
