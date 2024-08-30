@@ -16,8 +16,6 @@ in
     (util.mkModule {
       options.gipphe.programs.nix.enable = lib.mkEnableOption "nix";
 
-      hm = lib.mkIf config.gipphe.programs.nix.enable { home.packages = [ pkgs.nixVersions.latest ]; };
-
       system-all = lib.mkIf config.gipphe.programs.nix.enable {
         nix = {
           package = pkgs.nixVersions.latest;
