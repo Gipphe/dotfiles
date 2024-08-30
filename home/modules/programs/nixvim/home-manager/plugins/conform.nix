@@ -1,5 +1,7 @@
+{ config, ... }:
 let
   inherit (import ../util.nix) kv;
+  helpers = config.lib.nixvim;
 in
 {
   programs.nixvim = {
@@ -15,7 +17,7 @@ in
       conform-nvim = {
         enable = true;
         settings = {
-          format_on_save = { };
+          format_on_save = helpers.emptyTable;
           formatters_by_ft = {
             lua = [ "stylua" ];
             fish = [ "fish_indent" ];
