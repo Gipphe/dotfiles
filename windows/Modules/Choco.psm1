@@ -72,6 +72,7 @@ class Choco {
       'vivaldi',
       'voicemeeter',
       'wezterm',
+      'windhawk',
       'windirstat',
       'zoxide'
     )
