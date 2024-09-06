@@ -135,66 +135,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland = {
-      url = "github:hyprwm/Hyprland/";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        hyprlang.follows = "hyprlang";
-        systems.follows = "sys-default-linux";
-      };
-    };
-
-    xdg-portal-hyprland = {
-      url = "github:hyprwm/xdg-desktop-portal-hyprland";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        hyprlang.follows = "hyprlang";
-        hyprland-protocols.follows = "hyprland-protocols";
-        systems.follows = "sys-default-linux";
-      };
-    };
-
-    hyprpicker = {
-      url = "github:hyprwm/hyprpicker";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprlock = {
-      url = "github:hyprwm/hyprlock";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        hyprlang.follows = "hyprlang";
-        systems.follows = "sys-default-linux";
-      };
-    };
-
-    hypridle = {
-      url = "github:hyprwm/hypridle";
-      inputs = {
-        hyprlang.follows = "hyprlang";
-        nixpkgs.follows = "nixpkgs";
-        systems.follows = "sys-default-linux";
-      };
-    };
-
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
-    };
-
-    hyprcontrib = {
-      url = "github:hyprwm/contrib";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprlang = {
-      url = "github:hyprwm/hyprlang";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        systems.follows = "sys-default-linux";
-      };
-    };
-
     nix-index-db = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -251,13 +191,6 @@
       };
     };
 
-    hyprland-protocols = {
-      url = "github:hyprwm/hyprland-protocols";
-      inputs = {
-        systems.follows = "sys-default-linux";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
     stylix = {
       url = "github:danth/stylix";
       inputs = {
