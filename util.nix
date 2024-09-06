@@ -169,10 +169,11 @@ let
               mod:
               let
                 imports = mod.imports or [ ];
-                config = mod.config or builtins.removeAttrs mod [
-                  "imports"
-                  "options"
-                ];
+                config =
+                  mod.config or (builtins.removeAttrs mod [
+                    "imports"
+                    "options"
+                  ]);
                 options = mod.options or { };
                 rest = builtins.intersectAttrs {
                   _file = "";
