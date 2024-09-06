@@ -41,7 +41,10 @@
           };
           devShells.default =
             let
-              extra = import ./devShell { inherit pkgs config; };
+              extra = import ./devShell {
+                inherit pkgs config;
+                inherit (pkgs) lib;
+              };
             in
             inputs'.devshell.legacyPackages.mkShell {
               name = "dotfiles";

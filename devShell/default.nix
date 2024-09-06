@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   shellApplicationAsCommand =
     {
@@ -7,7 +7,7 @@ let
       runtimeEnv ? { },
       text,
     }:
-    pkgs.getExe (
+    lib.getExe (
       pkgs.writeShellApplication {
         inherit
           name
@@ -32,11 +32,11 @@ in
             if command -v nixos-rebuild &>/dev/null; then
               nh os switch
             elif command -v darwin-rebuild &>/dev/null; then
-              darwin-rebuild build --flake $(pwd)
+              darwin-rebuild build --flake "$(pwd)"
               echo
               nvd diff /run/current-system result
               echo
-              darwin-rebuild switch --flake $(pwd)
+              darwin-rebuild switch --flake "$(pwd)"
               rm -f result
             elif command -v home-manager &>/dev/null; then
               nh home switch
@@ -59,18 +59,18 @@ in
             if command -v nixos-rebuild &> /dev/null; then
               nh os switch --ask
             elif command -v darwin-rebuild &>/dev/null; then
-              darwin-rebuild build --flake $(pwd)
+              darwin-rebuild build --flake "$(pwd)"
 
               echo
               nvd diff /run/current-system result
               echo
 
               echo "Apply the config?"
-              read -p "[y/N]" -n 1 REPLY
+              read -r -p "[y/N]" -n 1 REPLY
               echo
 
               case "$REPLY" in
-                y|Y) darwin-rebuild switch --flake $(pwd) ;;
+                y|Y) darwin-rebuild switch --flake "$(pwd)" ;;
               esac
               rm -f result
             else
@@ -139,7 +139,7 @@ in
         text =
           # bash
           ''
-            if (test "$#" = "0" || test "$1" = "--help"); then
+            if test "$#" = "0" || test "$1" = "--help"; then
               echo "Usage: nix:pr <pr number>"
               exit 1
             fi
