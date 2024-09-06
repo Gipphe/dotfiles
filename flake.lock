@@ -1704,26 +1704,6 @@
         "type": "github"
       }
     },
-    "nh": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1725287741,
-        "narHash": "sha256-ZxyB7BwxQjoMz5lUnsb+KuTWfRyPtJVqEjnlOoABSUE=",
-        "owner": "viperML",
-        "repo": "nh",
-        "rev": "5dd64eb04fddeac2eb08c018212cc58978934920",
-        "type": "github"
-      },
-      "original": {
-        "owner": "viperML",
-        "repo": "nh",
-        "type": "github"
-      }
-    },
     "nix-index-db": {
       "inputs": {
         "nixpkgs": [
@@ -2099,7 +2079,6 @@
         "hyprpicker": "hyprpicker",
         "mac-app-util": "mac-app-util",
         "neovim-overlay": "neovim-overlay",
-        "nh": "nh",
         "nix-index-db": "nix-index-db",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_6",

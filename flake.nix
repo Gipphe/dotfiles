@@ -49,12 +49,9 @@
               commands = extra.shellCommands;
               env = extra.shellEnv;
               packages =
-                [
-                  # inputs'.catppuccinifier.packages.cli
-                  inputs'.nh.packages.default # better nix CLI
-                  config.treefmt.build.wrapper # treewide formatter
-                ]
+                [ config.treefmt.build.wrapper ] # treewide formatter
                 ++ (with pkgs; [
+                  nh # better nix CLI
                   nix-output-monitor # pretty nix output
                   nix-tree
                   entr # run commands on file changes
@@ -222,11 +219,6 @@
         nixpkgs.follows = "nixpkgs";
         flake-utils.follows = "flake-utils";
       };
-    };
-
-    nh = {
-      url = "github:viperML/nh";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixvim = {
