@@ -153,14 +153,6 @@
       };
     };
 
-    catppuccinifier = {
-      url = "github:lighttigerXIV/catppuccinifier";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-      };
-    };
-
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs = {
