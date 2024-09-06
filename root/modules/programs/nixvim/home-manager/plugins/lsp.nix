@@ -1,4 +1,3 @@
-{ inputs, pkgs, ... }:
 let
   inherit (import ../util.nix) k kv;
 in
@@ -11,11 +10,7 @@ in
           bashls.enable = true;
           dockerls.enable = true;
           jsonls.enable = true;
-          # Awaiting this PR to hit nixos-unstable: https://github.com/NixOS/nixpkgs/pull/335559
-          jsonls.package = inputs.nixpkgs-master.legacyPackages.${pkgs.system}.vscode-langservers-extracted;
           html.enable = true;
-          # Awaiting this PR to hit nixos-unstable: https://github.com/NixOS/nixpkgs/pull/335559
-          html.package = inputs.nixpkgs-master.legacyPackages.${pkgs.system}.vscode-langservers-extracted;
           # Uses haskell-tools instead
           # hls.enable = true;
           java-language-server.enable = true;

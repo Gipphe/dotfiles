@@ -1270,22 +1270,6 @@
         "url": "https://github.com/NixOS/nixpkgs/archive/a5d394176e64ab29c852d03346c1fc9b0b7d33eb.tar.gz"
       }
     },
-    "nixpkgs-master": {
-      "locked": {
-        "lastModified": 1725610767,
-        "narHash": "sha256-kxUEmH4jIpgXEMhDKYHmSTcpDgPwO8nvdqX6kfDTQg4=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "f10ac08debb8b7ae099ff744879fc4c9e35ef6ee",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "master",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1720386169,
@@ -1549,7 +1533,6 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_6",
         "nixpkgs-before-rust-1-80-breaking": "nixpkgs-before-rust-1-80-breaking",
-        "nixpkgs-master": "nixpkgs-master",
         "nixvim": "nixvim",
         "pre-commit-hooks": "pre-commit-hooks",
         "sops-nix": "sops-nix",
