@@ -168,16 +168,12 @@ let
             injectMkIf =
               mod:
               let
-                imports = if mod ? imports then mod.imports else [ ];
-                config =
-                  if mod ? config then
-                    mod.config
-                  else
-                    builtins.removeAttrs mod [
-                      "imports"
-                      "options"
-                    ];
-                options = if mod ? options then mod.options else { };
+                imports = mod.imports or [ ];
+                config = mod.config or builtins.removeAttrs mod [
+                  "imports"
+                  "options"
+                ];
+                options = mod.options or { };
                 rest = builtins.intersectAttrs {
                   _file = "";
                   _module = "";
