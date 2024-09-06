@@ -14,22 +14,25 @@ ensuring `nix` is available, it bootstraps the system using `nixos-rebuild`,
 This dotfiles repo consists of NixOS configurations and nix-darwin
 configurations for a variety of machines.
 
+Machine configs are located in [`./root/machines`](./root/machines).
+
 ### Jarle
 
 NixOS in WSL on Windows. Supports GUI programs through WSLg.
+
+Located in [`./root/machines/Jarle`](./root/machines/Jarle).
 
 ### VNB-MB-Pro
 
 Corporate-issued Macbook Pro with nix-darwin.
 
-### trond-erik
+Located in [`./root/machines/VNB-MB-Pro`](./root/machines/VNB-MB-Pro).
+
+### trond-arne
 
 Lenovo Ideapad laptop running NixOS.
 
-### hydrogen
-
-Raspberry PI 4 that I have yet to install NixOS on. It also proves how bad I am
-at naming things consistently.
+Located in [`./root/machines/trond-arne`](./root/machines/trond-arne).
 
 ## Architecture
 
@@ -64,10 +67,15 @@ these dotfiles that might be of interest to others.
   Even simple packages with no extra configuration. This means the module is
   the smallest unit of abstraction in this dotfiles system.
 
+All modules are located in [`./root/modules`](./root/modules), and are loosely grouped based on
+their type.
+
 ### Profiles
 
 - A profile can _only_ toggle modules, nothing else.
 - A profile can overlap with another profile.
+
+All profiles are located in [`./root/profiles`](./root/profiles).
 
 ### Machine configuration
 
