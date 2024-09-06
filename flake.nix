@@ -76,13 +76,13 @@
             };
 
             settings.formatter.nixfmt-rfc-style.excludes = [
-              "home/modules/system/hardware-configuration/*.nix"
+              "root/modules/system/hardware-configuration/*.nix"
               "hardware-configuration.nix"
             ];
           };
 
           packages = {
-            tlm = pkgs.callPackage ./home/modules/programs/tlm/package.nix { };
+            tlm = pkgs.callPackage ./root/modules/programs/tlm/package.nix { };
             dtui = pkgs.callPackage ./packages/dtui { };
           };
         };

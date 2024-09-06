@@ -125,14 +125,14 @@
       help = "Check .nix files with deadnix";
       name = "lint:deadnix";
       command = # bash
-        "deadnix --exclude ./home/modules/system/hardware-configuration/*.nix";
+        "deadnix --exclude ./root/modules/system/hardware-configuration/*.nix";
       category = "lint";
     }
     {
       help = "Check .nix files with deadnix, watching";
       name = "lint:deadnix:watch";
       command = # bash
-        "find . -type f | entr deadnix --exclude ./home/modules/system/hardware-configuration/*.nix";
+        "find . -type f | entr deadnix --exclude ./root/modules/system/hardware-configuration/*.nix";
       category = "lint";
     }
   ];

@@ -44,7 +44,7 @@ let
           ;
       };
       modules = [
-        ./home
+        ./root
         { gipphe.machines.${hostname}.enable = true; }
       ];
     };
