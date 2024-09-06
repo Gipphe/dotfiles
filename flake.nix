@@ -17,7 +17,6 @@
           };
         }
 
-        inputs.flake-parts.flakeModules.easyOverlay
         inputs.pre-commit-hooks.flakeModule
         inputs.treefmt-nix.flakeModule
       ];
@@ -42,7 +41,7 @@
           };
           devShells.default =
             let
-              extra = import ./devShell;
+              extra = import ./devShell { inherit pkgs config; };
             in
             inputs'.devshell.legacyPackages.mkShell {
               name = "dotfiles";
@@ -93,7 +92,9 @@
     });
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # Awaiting this PR to hit nixos-unstable:
+    # https://github.com/NixOS/nixpkgs/pull/339641
+    nixpkgs.url = "github:nixos/nixpkgs/a6916c76a7d202e3c02134e620f6477b8600ce9d";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     darwin = {
       url = "github:LnL7/nix-darwin";
@@ -126,8 +127,6 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nixpkgs-before-rust-1-80-breaking.url = "github:nixos/nixpkgs/c00d587b1a1afbf200b1d8f0b0e4ba9deb1c7f0e";
 
     sops-nix = {
       url = "github:Mic92/sops-nix";

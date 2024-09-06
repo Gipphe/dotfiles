@@ -1,6 +1,5 @@
 {
   lib,
-  inputs,
   config,
   util,
   pkgs,
@@ -51,7 +50,6 @@ util.mkModule {
     };
     programs.wezterm = {
       enable = true;
-      package = inputs.nixpkgs-before-rust-1-80-breaking.legacyPackages.${pkgs.system}.wezterm;
       extraConfig = # lua
         ''
           local windowsConfig = require 'windows-config'

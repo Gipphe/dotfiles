@@ -1,9 +1,11 @@
 {
   programs.nixvim.plugins.navic = {
     enable = true;
-    separator = " ";
-    highlight = true;
-    depthLimit = 5;
-    lazyUpdateContext = true;
+    settings = {
+      separator = " ";
+      highlight = true;
+      depth_limit = 5;
+      lazy_update_context = true;
+    };
   };
 }

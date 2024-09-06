@@ -72,7 +72,7 @@
 	autocrlf = false
 	editor = "nvim"
 	eol = "lf"
-	pager = "less '--tabs=4' -RFX"
+	pager = "less '--tabs=4' '-RFX'"
 	safecrlf = false
 	whitespace = "fix,-indent-with-non-tab,trailing-space,cr-at-eol"
 
