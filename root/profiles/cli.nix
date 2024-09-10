@@ -2,6 +2,7 @@
 util.mkProfile "cli" {
   gipphe.programs = {
     _1password.enable = true;
+    asciinema.enable = true;
     atuin.enable = true;
     bat.enable = true;
     btop.enable = true;
