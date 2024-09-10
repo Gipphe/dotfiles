@@ -17,6 +17,7 @@ util.mkProfile "cli" {
     eza.enable = true;
     fastgron.enable = true;
     fd.enable = true;
+    ffmpeg.enable = true;
     fish.enable = true;
     fx.enable = true;
     fzf.enable = true;
