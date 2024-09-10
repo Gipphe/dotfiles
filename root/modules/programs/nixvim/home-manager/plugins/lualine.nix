@@ -132,74 +132,64 @@ in
 
     plugins.lualine = {
       enable = true;
-      globalstatus = true;
-      disabledFiletypes.statusline = [
-        "dashboard"
-        "alpha"
-        "starter"
-      ];
-      sections = {
-        lualine_a = [ "mode" ];
-        lualine_b = [ "branch" ];
-        lualine_c = [
-          {
-            name = helpers.mkRaw "lualine_root_dir[1]";
-            extraConfig = {
-              cond = helpers.mkRaw "lualine_root_dir.cond";
-              color = helpers.mkRaw "lualine_root_dir.color";
-            };
-          }
-          {
-            name = "diagnostics";
-            extraConfig = {
-              symbols = {
-                error = icons.diagnostics.Error;
-                warn = icons.diagnostics.Warn;
-                info = icons.diagnostics.Info;
-                hint = icons.diagnostics.Hint;
-              };
-            };
-          }
-          {
-            name = "filetype";
-            extraConfig = {
-              icon_only = true;
-              separator = "";
-            };
-            padding = {
-              left = 1;
-              right = 0;
-            };
-          }
-          { name = helpers.mkRaw "Lualine.pretty_path()"; }
-        ];
-        lualine_x = [
-          {
-            name = helpers.mkRaw ''function() return require("noice").api.status.command.get() end'';
-            extraConfig = {
-              cond = helpers.mkRaw ''function() return package.loaded["noice"] and require("noice").api.status.command.has() end'';
-              color = helpers.mkRaw ''utils.fg("Statement")'';
-            };
-          }
-          {
-            name = helpers.mkRaw ''function() return require("noice").api.status.mode.get() end'';
-            extraConfig = {
-              cond = helpers.mkRaw ''function() return package.loaded["noice"] and require("noice").api.status.mode.has() end'';
-              color = helpers.mkRaw ''utils.fg("Constant")'';
-            };
-          }
-          {
-            name = helpers.mkRaw ''function() return "  " .. require("dap").status() end'';
-            extraConfig = {
-              cond = helpers.mkRaw ''function() return package.loaded["dap"] and require("dap").status() ~= "" end'';
-              color = helpers.mkRaw ''utils.fg("Debug")'';
-            };
-          }
-          {
-            name = "diff";
-            extraConfig = {
-              source = helpers.mkRaw ''
-                function()
+      settings = {
+        sections = {
+          lualine_a = [ "mode" ];
+          lualine_b = [ "branch" ];
+          lualine_c = helpers.mkRaw ''
+            {
+              {
+                lualine_root_dir[1],
+                cond = lualine_root_dir.cond,
+                color = lualine_root_dir.color,
+              },
+              {
+                "diagnostics",
+                symbols = {
+                  error = "${icons.diagnostics.Error}",
+                  warn = "${icons.diagnostics.Warn}",
+                  info = "${icons.diagnostics.Info}",
+                  hint = "${icons.diagnostics.Hint}",
+                },
+              },
+              {
+                "filetype",
+                icon_only = true,
+                separator = "",
+                padding = {
+                  left = 1,
+                  right = 0,
+                },
+              },
+              { Lualine.pretty_path() },
+            }
+          '';
+          lualine_x = helpers.mkRaw ''
+            {
+              {
+                function() return require("noice").api.status.command.get() end,
+                cond = function()
+                  return package.loaded["noice"] and require("noice").api.status.command.has()
+                end,
+                color = utils.fg("Statement"),
+              },
+              {
+                function() return require("noice").api.status.mode.get() end,
+                cond = function()
+                  return package.loaded["noice"] and require("noice").api.status.mode.has()
+                end,
+                color = utils.fg("Constant"),
+              },
+              {
+                function() return "  " .. require("dap").status() end,
+                cond = function()
+                  return package.loaded["dap"] and require("dap").status() ~= ""
+                end,
+                color = utils.fg("Debug"),
+              },
+              {
+                "diff",
+                source = function()
                   local gitsigns = vim.b.gitsigns_status_dict
                   if gitsigns then
                     return {
@@ -208,31 +198,43 @@ in
                       removed = gitsigns.removed,
                     }
                   end
-                end
-              '';
-            };
-          }
-        ];
-        lualine_y = [
-          {
-            name = "progress";
-            extraConfig = {
-              separator = " ";
-            };
-            padding = {
-              left = 1;
-              right = 0;
-            };
-          }
-          {
-            name = "location";
-            padding = {
-              left = 0;
-              right = 1;
-            };
-          }
-        ];
-        lualine_z = [ { name = helpers.mkRaw ''function() return " " .. os.date("%R") end''; } ];
+                end,
+              },
+            }
+          '';
+          lualine_y = helpers.mkRaw ''
+            {
+              {
+                "progress",
+                separator = " ",
+                padding = {
+                  left = 1,
+                  right = 0,
+                },
+              },
+              {
+                "location",
+                padding = {
+                  left = 0,
+                  right = 1,
+                },
+              },
+            }
+          '';
+          lualine_z = helpers.mkRaw ''
+            {
+              { function() return " " .. os.date("%R") end }
+            }
+          '';
+        };
+        options = {
+          globalstatus = true;
+          disabledFiletypes.statusline = [
+            "dashboard"
+            "alpha"
+            "starter"
+          ];
+        };
       };
     };
   };
