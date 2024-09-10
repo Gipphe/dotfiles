@@ -95,9 +95,7 @@
     });
 
   inputs = {
-    # Awaiting this PR to hit nixos-unstable:
-    # https://github.com/NixOS/nixpkgs/pull/339641
-    nixpkgs.url = "github:nixos/nixpkgs/a6916c76a7d202e3c02134e620f6477b8600ce9d";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     darwin = {
       url = "github:LnL7/nix-darwin";
