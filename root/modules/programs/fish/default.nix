@@ -67,9 +67,6 @@ util.mkModule {
               '';
           package = pkgs.fish;
           shellAbbrs = {
-            k = "kubectl";
-            kn = "kubens";
-            kcx = "kubectx";
             vim = "nvim";
             tf = "terraform";
             gron = "fastgron";

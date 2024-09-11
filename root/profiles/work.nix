@@ -4,6 +4,8 @@ util.mkProfile "work" {
     cyberduck.enable = true;
     gcloud.enable = true;
     idea-ultimate.enable = true;
+    kubectl.enable = true;
+    kubectx.enable = true;
     neo4j-desktop.enable = true;
     notion.enable = true;
     openvpn-connect.enable = true;
