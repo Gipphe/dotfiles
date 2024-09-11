@@ -1,17 +1,28 @@
 {
   lib,
+  stdenv,
   gnused,
+  fish,
   writeShellApplication,
+  writeTextFile,
   ...
 }:
 let
   inherit (builtins)
     attrNames
+    isList
+    isAttrs
     hasAttr
     map
+    concatStringsSep
     readDir
     ;
-  inherit (lib) flatten;
+  inherit (lib)
+    flatten
+    isStringLike
+    escapeShellArg
+    isValidPosixName
+    ;
   inherit (lib.attrsets) foldlAttrs filterAttrs;
 
   mkCopyActivationScript =
@@ -225,6 +236,67 @@ let
         )
       ];
     };
+
+  toFishShellVar =
+    name: value:
+    lib.throwIfNot (isValidPosixName name) "toFishShellVar: ${name} is not a valid shell variable name"
+      (
+        if isAttrs value && !isStringLike value then
+          "set ${name} ${
+            concatStringsSep " " (lib.mapAttrsToList (n: v: "${escapeShellArg n}=${escapeShellArg v}"))
+          }"
+        else if isList value then
+          "set ${name} ${concatStringsSep " " (map (v: escapeShellArg v) value)}"
+        else
+          "set ${name} ${escapeShellArg value}"
+      );
+
+  writeFishApplication =
+    {
+      name,
+      text,
+      runtimeInputs ? [ ],
+      runtimeEnv ? null,
+      meta ? { },
+      checkPhase ? null,
+      derivationArgs ? { },
+    }:
+    writeTextFile {
+      inherit name meta derivationArgs;
+      executable = true;
+      destination = "/bin/${name}";
+      allowSubstitutes = true;
+      preferLocalBuild = false;
+      text =
+        ''
+          #!${fish}
+        ''
+        + lib.optionalString (runtimeEnv != null) (
+          lib.concatStrings (
+            lib.mapAttrsToList (name: value: ''
+              ${toFishShellVar name value}
+              set -gx ${name} ''$${name}
+            '') runtimeEnv
+          )
+        )
+        + lib.optionalString (runtimeInputs != [ ]) ''
+          set -xp PATH ${lib.makeBinPath runtimeInputs}
+        ''
+        + ''
+          ${text}
+        '';
+      checkPhase =
+        if checkPhase == null then
+          # bash
+          ''
+            runHook preCheck
+            ${stdenv.shellDryRun} "$target"
+            ${lib.getExe fish} --no-execute "$target"
+            runHook postCheck
+          ''
+        else
+          checkPhase;
+    };
 in
 {
   inherit
@@ -240,5 +312,6 @@ in
     recurseFirstMatching
     recurseFirstMatchingIncludingSibling
     setCaskHash
+    writeFishApplication
     ;
 }
