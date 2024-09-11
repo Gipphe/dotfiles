@@ -1,6 +1,7 @@
 { util, lib, ... }:
 {
   imports =
-    util.recurseFirstMatching "default.nix" ./.
+    util.recurseFirstMatchingIncludingSibling "default.nix" ./modules
+    ++ util.recurseFirstMatchingIncludingSibling "default.nix" ./machines
     ++ lib.filesystem.listFilesRecursive ./profiles;
 }
