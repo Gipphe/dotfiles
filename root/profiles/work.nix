@@ -2,7 +2,7 @@
 util.mkProfile "work" {
   gipphe.programs = {
     cyberduck.enable = true;
-    gcloud.enable = true;
+    google-cloud-sdk.enable = true;
     idea-ultimate.enable = true;
     kubectl.enable = true;
     kubectx.enable = true;
