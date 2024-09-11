@@ -5,9 +5,9 @@
   lib,
   ...
 }:
-util.mkModule {
-  options.gipphe.programs.mods.enable = lib.mkEnableOption "mods";
-  hm = lib.mkIf config.gipphe.programs.mods.enable {
+util.mkProgram {
+  name = "mods";
+  hm = {
     home.packages = [ pkgs.mods ];
     xdg.configFile."mods/mods.yml".source = ./mods.yaml;
     programs.fish.shellInit = # fish

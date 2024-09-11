@@ -1,27 +1,24 @@
 {
   lib,
-  config,
   pkgs,
   util,
   ...
 }:
-util.mkModule {
-  options.gipphe.programs.fish = {
-    enable = lib.mkEnableOption "fish";
-    prompt = lib.mkOption {
-      description = "Which prompt to use";
-      type = lib.types.enum [
-        "tide"
-        "starship"
-      ];
-      default = "starship";
-      example = "tide";
-    };
+util.mkProgram {
+  name = "fish";
+  options.gipphe.programs.fish.prompt = lib.mkOption {
+    description = "Which prompt to use";
+    type = lib.types.enum [
+      "tide"
+      "starship"
+    ];
+    default = "starship";
+    example = "tide";
   };
   hm = {
     imports = [ ./starship ];
 
-    config = lib.mkIf config.gipphe.programs.fish.enable {
+    config = {
       home.packages = with pkgs; [ procps ];
 
       programs = {

@@ -5,9 +5,9 @@
   pkgs,
   ...
 }:
-util.mkModule {
-  options.gipphe.programs.wezterm.enable = lib.mkEnableOption "wezterm";
-  hm = lib.mkIf config.gipphe.programs.wezterm.enable {
+util.mkProgram {
+  name = "wezterm";
+  hm = {
     xdg.configFile = {
       "wezterm/os-utils.lua".text =
         # lua

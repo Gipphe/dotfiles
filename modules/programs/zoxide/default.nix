@@ -4,9 +4,9 @@
   util,
   ...
 }:
-util.mkModule {
-  options.gipphe.programs.zoxide.enable = lib.mkEnableOption "zoxide";
-  hm = lib.mkIf config.gipphe.programs.zoxide.enable {
+util.mkProgram {
+  name = "zoxide";
+  hm = {
     programs.zoxide = {
       enable = true;
       options = [

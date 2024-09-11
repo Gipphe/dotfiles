@@ -5,9 +5,9 @@
   util,
   ...
 }:
-util.mkModule {
-  options.gipphe.programs.git.enable = lib.mkEnableOption "git";
-  hm = lib.mkIf config.gipphe.programs.git.enable {
+util.mkProgram {
+  name = "git";
+  hm = {
     programs.git = {
       enable = true;
       userName = "Victor Nascimento Bakke";

@@ -8,9 +8,9 @@
 let
   cfg = config.gipphe.programs.tlm;
 in
-util.mkModule {
+util.mkProgram {
+  name = "tlm";
   options.gipphe.programs.tlm = {
-    enable = lib.mkEnableOption "tlm";
     enableFishIntegration = lib.mkEnableOption "tlm fish integration" // {
       default = true;
     };
@@ -21,7 +21,7 @@ util.mkModule {
       example = "http://ollama.example.com";
     };
   };
-  hm = lib.mkIf cfg.enable {
+  hm = {
     gipphe.programs.ollama.enable = lib.mkForce true;
     home.packages = [ (pkgs.callPackage ./package.nix { }) ];
     home.file.".tlm".text = # yaml

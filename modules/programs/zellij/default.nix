@@ -1,7 +1,5 @@
 {
   util,
-  lib,
-  config,
   pkgs,
   ...
 }:
@@ -11,10 +9,10 @@ let
     hash = "sha256-JNQ4KXb6VzjSF0O4J8Tvq3FXUYBBabQb9ZitcR3kZFw=";
   };
 in
-util.mkModule {
-  options.gipphe.programs.zellij.enable = lib.mkEnableOption "zellij";
+util.mkProgram {
+  name = "zellij";
 
-  hm = lib.mkIf config.gipphe.programs.zellij.enable {
+  hm = {
     xdg.configFile = {
       "zellij/layouts".source = ./layouts;
       "zellij/config.kdl".text = # kdl
