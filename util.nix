@@ -171,10 +171,7 @@ let
         (
           { lib, config, ... }:
           let
-            optPath = [
-              "gipphe"
-
-            ] ++ type ++ (lib.splitString "." name) ++ [ "enable" ];
+            optPath = [ "gipphe" ] ++ type ++ (lib.splitString "." name) ++ [ "enable" ];
             isEnabled = lib.attrByPath optPath false config;
             injectMkIf =
               mod:
@@ -198,12 +195,17 @@ let
               };
           in
           mkModule {
-            options = options // lib.setAttrByPath optPath (lib.mkEnableOption name);
             hm = injectMkIf hm;
             system-nixos = injectMkIf system-nixos;
             system-darwin = injectMkIf system-darwin;
             system-all = injectMkIf system-all;
-            shared = injectMkIf shared;
+            shared = {
+              imports = [
+                { inherit options; }
+                { options = lib.setAttrByPath optPath (lib.mkEnableOption name); }
+                (injectMkIf shared)
+              ];
+            };
           }
         )
       ];
@@ -269,7 +271,7 @@ let
       preferLocalBuild = false;
       text =
         ''
-          #!${fish}
+          #!${lib.getExe fish}
         ''
         + lib.optionalString (runtimeEnv != null) (
           lib.concatStrings (
@@ -290,7 +292,6 @@ let
           # bash
           ''
             runHook preCheck
-            ${stdenv.shellDryRun} "$target"
             ${lib.getExe fish} --no-execute "$target"
             runHook postCheck
           ''
