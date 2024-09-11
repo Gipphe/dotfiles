@@ -54,9 +54,6 @@ util.mkModule {
               ''
                 set fish_greeting ""
                 set -gx SSH_ENV "$HOME/.ssh/agent-environment"
-
-                init_ssh_agent
-                add_ssh_keys_to_agent
               '';
           interactiveShellInit =
             lib.mkAfter # fish
