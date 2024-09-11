@@ -41,7 +41,7 @@ util.mkModule {
           isSystem = false;
         };
       };
-      users.${config.gipphe.username}.imports = [ ../../../default.nix ];
+      users.${config.gipphe.username}.imports = [ ../../../root.nix ];
     };
   };
 }

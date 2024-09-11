@@ -194,7 +194,7 @@ in
         runtimeInputs = [ pkgs.deadnix ];
         text =
           # bash
-          "deadnix --exclude ./root/modules/system/hardware-configuration/*.nix";
+          "deadnix --exclude ./modules/system/hardware-configuration/*.nix";
       };
       category = "lint";
     }
@@ -209,7 +209,7 @@ in
         ];
         text =
           # bash
-          "find . -type f | entr deadnix --exclude ./root/modules/system/hardware-configuration/*.nix";
+          "find . -type f | entr deadnix --exclude ./modules/system/hardware-configuration/*.nix";
       };
       category = "lint";
     }

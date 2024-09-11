@@ -13,7 +13,7 @@ let
   ];
   services = builtins.map (x: "${x}.ssh") raw_services;
   mkSecret = service: {
-    sopsFile = ../../../../secrets/${config.gipphe.hostName}-${service};
+    sopsFile = ../../../secrets/${config.gipphe.hostName}-${service};
     mode = "400";
     format = "binary";
   };

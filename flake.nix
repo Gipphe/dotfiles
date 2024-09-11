@@ -84,7 +84,7 @@
           };
 
           packages = {
-            tlm = pkgs.callPackage ./root/modules/programs/tlm/package.nix { };
+            tlm = pkgs.callPackage ./modules/programs/tlm/package.nix { };
             dtui = pkgs.callPackage ./packages/dtui { };
           };
         };
