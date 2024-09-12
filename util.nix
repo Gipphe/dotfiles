@@ -270,7 +270,7 @@ let
       preferLocalBuild = false;
       text =
         ''
-          #!${lib.getExe fish}
+          #!${lib.getExe fish} --no-config --private
         ''
         + lib.optionalString (runtimeEnv != null) (
           lib.concatStrings (
