@@ -113,10 +113,10 @@ util.mkProgram {
   };
   hm = {
     home = {
-      packages = [ gcloud ];
-      activation.google-cloud-sdk-credentials = lib.hm.dag.entryAfter [ "onFilesChange" ] ''
-        run ${lib.getExe addClusters}
-      '';
+      packages = [ gcloud addClusters ];
+      # activation.google-cloud-sdk-credentials = lib.hm.dag.entryAfter [ "onFilesChange" ] ''
+      #   run ${lib.getExe addClusters}
+      # '';
     };
   };
 }
