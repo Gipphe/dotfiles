@@ -110,9 +110,9 @@ util.mkProgram {
         gcloud
         addClusters
       ];
-      # activation.google-cloud-sdk-credentials = lib.hm.dag.entryAfter [ "onFilesChange" ] ''
-      #   run ${lib.getExe addClusters}
-      # '';
+      activation.google-cloud-sdk-credentials = lib.hm.dag.entryAfter [ "onFilesChange" ] ''
+        run ${lib.getExe addClusters}
+      '';
     };
   };
 }
