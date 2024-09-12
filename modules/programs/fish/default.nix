@@ -50,7 +50,6 @@ util.mkProgram {
             lib.mkBefore # fish
               ''
                 set fish_greeting ""
-                set -gx SSH_ENV "$HOME/.ssh/agent-environment"
               '';
           interactiveShellInit =
             lib.mkAfter # fish
