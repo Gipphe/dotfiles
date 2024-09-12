@@ -276,8 +276,7 @@ let
         + lib.optionalString (runtimeEnv != null) (
           lib.concatStrings (
             lib.mapAttrsToList (name: value: ''
-              ${toFishShellVar name value}
-              set -gx ${name} ''$${name}
+              ${toFishShellVar name value}; set -gx ${name} ''$${name};
             '') runtimeEnv
           )
         )
