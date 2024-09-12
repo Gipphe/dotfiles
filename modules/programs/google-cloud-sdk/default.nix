@@ -26,7 +26,6 @@ let
     "knowledge"
   ];
   cosmos = [
-    "strise-common"
     "strise-stage"
     "strise-prod"
   ];
