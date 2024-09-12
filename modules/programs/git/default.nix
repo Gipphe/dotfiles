@@ -8,6 +8,37 @@
 util.mkProgram {
   name = "git";
   hm = {
+    home.packages =
+      let
+        ci = util.writeFishApplication {
+          name = "ci";
+          runtimeInputs = [ pkgs.gum ];
+          text = # bash
+            ''
+              set -l type $(gum choose "fix" "feat" "refactor" "docs" "test" "style" "chore" "revert")
+              set -l scope $(gum input --placeholder "scope")
+
+              if test -n "$scope"
+                set scope "($scope)"
+              end
+
+              set -l summary $(gum input --value "$type$scope: " --placeholder "Summary of this change.")
+              set -l description $(gum write --placeholder "Details of this change.")
+
+              gum confirm "Commit changes?" && git commit -m "$summary" -m "$description"
+            '';
+        };
+        commit = pkgs.linkFarm "commit" [
+          {
+            name = "bin/commit";
+            path = lib.getExe ci;
+          }
+        ];
+      in
+      [
+        ci
+        commit
+      ];
     programs.git = {
       enable = true;
       userName = "Victor Nascimento Bakke";
