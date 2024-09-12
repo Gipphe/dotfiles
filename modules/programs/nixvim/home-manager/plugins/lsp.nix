@@ -18,7 +18,6 @@ in
           lua-ls.enable = true;
           # metals.enable = true;
           sqls.enable = true;
-          terraformls.enable = true;
           yamlls.enable = true;
           yamlls.extraOptions = {
             capabilities.textDocument.foldingRange = {
