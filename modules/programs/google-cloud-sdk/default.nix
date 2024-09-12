@@ -50,9 +50,7 @@ let
       pkgs.kubectx
       gcloud
     ];
-    runtimeEnv = {
-      script_name = name;
-    };
+    runtimeEnv.script_name = name;
     text = # fish
       ''
         argparse --name $script_name 'p/project=' 'n/name=' 'r/region=' 'a/alias=' -- $argv
@@ -67,14 +65,10 @@ let
       '';
   };
   addClusters = lib.pipe config.gipphe.programs.google-cloud-sdk.clusters [
-    (map (
-      cluster:
-      pkgs.writeShellScriptBin "add_${cluster.alias}_cluster" ''
-        ${lib.getExe addClusterIfMissing} --project '${cluster.project}' --name '${cluster.name}' --region '${cluster.region}' --alias '${cluster.alias}'
-      ''
-    ))
-    (map lib.getExe)
-    (lib.concatStringsSep "; ")
+    (map (cluster: ''
+      ${lib.getExe addClusterIfMissing} --project '${cluster.project}' --name '${cluster.name}' --region '${cluster.region}' --alias '${cluster.alias}'
+    ''))
+    (lib.concatStringsSep "\n")
     (pkgs.writeShellScriptBin "add_clusters")
   ];
 in
@@ -112,7 +106,10 @@ util.mkProgram {
   };
   hm = {
     home = {
-      packages = [ gcloud addClusters ];
+      packages = [
+        gcloud
+        addClusters
+      ];
       # activation.google-cloud-sdk-credentials = lib.hm.dag.entryAfter [ "onFilesChange" ] ''
       #   run ${lib.getExe addClusters}
       # '';
