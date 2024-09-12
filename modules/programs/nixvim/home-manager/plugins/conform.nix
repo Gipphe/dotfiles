@@ -9,7 +9,6 @@ in
       none-ls = {
         enable = true;
         sources.formatting = {
-          black.enable = true;
           shfmt.enable = true;
           stylua.enable = true;
         };
