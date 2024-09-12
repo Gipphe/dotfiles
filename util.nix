@@ -1,6 +1,5 @@
 {
   lib,
-  stdenv,
   gnused,
   fish,
   writeShellApplication,
@@ -281,7 +280,7 @@ let
           )
         )
         + lib.optionalString (runtimeInputs != [ ]) ''
-          set -xp PATH ${lib.makeBinPath runtimeInputs}
+          set -xp PATH ${concatStringsSep " " (map (p: "'${lib.getBin p}'") runtimeInputs)}
         ''
         + ''
           ${text}
