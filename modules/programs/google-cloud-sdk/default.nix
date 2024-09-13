@@ -56,6 +56,11 @@ let
         argparse --name $script_name 'p/project=' 'n/name=' 'r/region=' 'a/alias=' -- $argv
         or return
 
+        if test -z $_flag_project || test -z $_flag_name || test -z $_flag_region || test -z $_flag_alias
+          echo "Usage: ${name} --project <project> --name <name> --region <region> --alias <alias>" >&2
+          exit 1
+        end
+
         set -l aliases $(kubectx)
         string match -rq $_flag_alias $aliases
         if test $status != 0
@@ -108,6 +113,7 @@ util.mkProgram {
     home = {
       packages = [
         gcloud
+        addClusterIfMissing
         addClusters
       ];
       activation.google-cloud-sdk-credentials = lib.hm.dag.entryAfter [ "onFilesChange" ] ''

@@ -2,6 +2,7 @@
   lib,
   gnused,
   fish,
+  writeShellScriptBin,
   writeShellApplication,
   writeTextFile,
   ...
@@ -269,8 +270,13 @@ let
       allowSubstitutes = true;
       preferLocalBuild = false;
       text =
+        let
+          fishShell = writeShellScriptBin "fish-bare" ''
+            ${lib.getExe fish} --no-config --private "$@"
+          '';
+        in
         ''
-          #!${lib.getExe fish} --no-config --private
+          #!${lib.getExe fishShell}
         ''
         + lib.optionalString (runtimeEnv != null) (
           lib.concatStrings (
