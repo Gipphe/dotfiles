@@ -3,7 +3,7 @@
     <td align="center">
       <img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/master/logo/nix-snowflake-colours.svg" width="96px" height="96px" />
       <br>
-      Gipphe's dotfiles
+      <h1>Gipphe's dotfiles</h1>
     </td>
     <td>
       <a href="./LICENSE">
@@ -20,9 +20,12 @@
       <img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/palette/macchiato.png" width="600px" align="center">
     </td>
   </tr>
+  <tr>
+    <td colspan="2" align="center">
+      Nix configuration for NixOS, nix-darwin and nixos-wsl.
+    </td>
+  </tr>
 </table>
-
-Nix configuration for NixOS, nix-darwin and nixos-wsl.
 
 ## Getting started
 
