@@ -21,109 +21,12 @@ let
 
   ssh_secrets = lib.filterAttrs (k: _: lib.hasSuffix ".ssh" k) config.sops.secrets;
   ssh_keys = concatStringsSep " " (lib.mapAttrsToList (_: v: "'${v.path}'") ssh_secrets);
-
   ssh-env-path = "${config.home.homeDirectory}/.ssh/agent-environment";
-  read-ssh-env = util.writeFishApplication {
-    name = "read-ssh-env";
-    runtimeInputs = [ pkgs.coreutils ];
-    runtimeEnv.SSH_ENV = ssh-env-path;
-    text = # fish
-      ''
-        set -l lines $(cat $SSH_ENV | string split '\n')
-        for line in $lines
-          if string match -qr '^#'
-            continue
-          end
-          set -l assignment (
-            echo $line |
-              string split -f1 ';' |
-              string split '='
-          )
-          if test "$(count $assignment)" -lt 2
-            continue
-          end
-          set -l key $assignment[1]
-          set -l value $assignment[2]
-          eval "set -gx $key $value"
-        end
-      '';
-  };
-
-  start-ssh-agent = util.writeFishApplication {
-    name = "start-ssh-agent";
-    runtimeInputs =
-      (with pkgs; [
-        coreutils
-        gnused
-        procps
-      ])
-      ++ [ read-ssh-env ]
-      ++ lib.optional (!pkgs.stdenv.isDarwin) pkgs.openssh;
-    runtimeEnv.SSH_ENV = ssh-env-path;
-    text = # fish
-      ''
-        set -l old_pid (pgrep ssh-agent)
-        if test -n "$old_pid"
-          echo "ssh-agent: untracked agent already running. Killing it."
-          kill $old_pid
-        end
-        echo "ssh-agent: starting new agent..."
-        ssh-agent | sed 's/^echo/#echo/' >"$SSH_ENV"
-        chmod 600 "$SSH_ENV"
-        read-ssh-env "$SSH_ENV"
-        echo "ssh-agent: started"
-      '';
-  };
-
-  init-ssh-agent = util.writeFishApplication {
-    name = "init-ssh-agent";
-    runtimeInputs =
-      (with pkgs; [
-        procps
-        gnugrep
-      ])
-      ++ [
-        read-ssh-env
-        start-ssh-agent
-      ];
-    runtimeEnv.SSH_ENV = ssh-env-path;
-    text = # fish
-      ''
-        # If SSH_AUTH_SOCK is set, we do not need to do anything
-        if test -n "$SSH_SOCK_AUTH"
-            return
-        end
-
-        # Source SSH settings, if applicable
-        if test -f "$SSH_ENV"
-            read-ssh-env "$SSH_ENV"
-            ps -ef | grep $SSH_AGENT_PID | grep 'ssh-agent$' >/dev/null
-            if test "$status" != 0
-                start-ssh-agent
-            end
-        else
-            start-ssh-agent
-        end
-      '';
-  };
-  add-ssh-keys-to-agent = pkgs.writeShellApplication {
-    name = "add-ssh-keys-to-agent";
-    runtimeInputs = lib.optional (!pkgs.stdenv.isDarwin) config.programs.ssh.package;
-    text = ''
-      ssh-add ${ssh_keys} &>/dev/null
-    '';
-  };
 in
 util.mkProgram {
   name = "ssh";
 
   hm = {
-    home.packages = [
-      read-ssh-env
-      start-ssh-agent
-      init-ssh-agent
-      add-ssh-keys-to-agent
-    ];
     programs = {
       ssh = {
         enable = true;
@@ -138,9 +41,82 @@ util.mkProgram {
       fish = {
         shellInit = # fish
           ''
-            ${lib.getExe init-ssh-agent}
-            ${lib.getExe add-ssh-keys-to-agent}
+            init-ssh-agent
+            add-ssh-keys-to-agent
           '';
+        functions =
+          let
+            test = "${pkgs.coreutils}/bin/test";
+            pgrep = "${pkgs.procps}/bin/pgrep";
+            kill = "${pkgs.coreutils}/bin/kill";
+            sed = "${pkgs.gnused}/bin/sed";
+            chmod = "${pkgs.coreutils}/bin/chmod";
+            ps = "${pkgs.procps}/bin/ps";
+            grep = "${pkgs.gnugrep}/bin/grep";
+            ssh-add = if (!pkgs.stdenv.isDarwin) then "${pkgs.openssh}/bin/ssh-add" else "ssh-add";
+          in
+          {
+            read-ssh-env = # fish
+              ''
+                set -l lines $(${pkgs.coreutils}/bin/cat ${ssh-env-path} | string split '\n')
+                for line in $lines
+                  if string match -qr '^#'
+                    continue
+                  end
+                  set -l assignment (
+                    echo $line |
+                      string split -f1 ';' |
+                      string split '='
+                  )
+                  if ${test} "$(count $assignment)" -lt 2
+                    continue
+                  end
+                  set -l key $assignment[1]
+                  set -l value $assignment[2]
+                  eval "set -gx $key $value"
+                end
+              '';
+            start-ssh-agent =
+              let
+                ssh-agent = if (!pkgs.stdenv.isDarwin) then "${pkgs.openssh}/bin/ssh-agent" else "ssh-agent";
+              in
+              # fish
+              ''
+                set -l old_pid (${pgrep} 'ssh-agent')
+                if ${test} -n "$old_pid"
+                  echo "ssh-agent: untracked agent already running. Killing it."
+                  ${kill} $old_pid
+                end
+                echo "ssh-agent: starting new agent..."
+                ${ssh-agent} | ${sed} 's/^echo/#echo/' >"${ssh-env-path}"
+                ${chmod} 600 "${ssh-env-path}"
+                read-ssh-env "${ssh-env-path}"
+                echo "ssh-agent: started"
+              '';
+            init-ssh-agent = # fish
+              ''
+                # If SSH_AUTH_SOCK is set, we do not need to do anything
+                if ${test} -n "$SSH_SOCK_AUTH"
+                  return
+                end
+
+                # Source SSH settings, if applicable
+                if ${test} -f "${ssh-env-path}"
+                  read-ssh-env "${ssh-env-path}"
+                  ${ps} -ef | ${grep} $SSH_AGENT_PID | ${grep} 'ssh-agent$' >/dev/null
+                  if ${test} "$status" != 0
+                    start-ssh-agent
+                  end
+                else
+                  start-ssh-agent
+                end
+              '';
+            add-ssh-keys-to-agent =
+              # fish
+              ''
+                ${ssh-add} ${ssh_keys} &>/dev/null
+              '';
+          };
       };
     };
 
