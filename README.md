@@ -1,4 +1,26 @@
-# Dotfiles
+<table align="center" width="900px">
+  <tr>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/master/logo/nix-snowflake-colours.svg" width="96px" height="96px" />
+      <br>
+      Gipphe's dotfiles
+    </td>
+    <td>
+      <a href="./LICENSE">
+        <img src="https://img.shields.io/static/v1.svg?style=for-the-badge&label=License&message=ISC&logoColor=ca9ee6&colorA=313244&colorB=cba6f7"
+      </a>
+      <br>
+      <a href="https://nixos.org">
+        <img src="https://img.shields.io/badge/NixOS-unstable-blue.svg?style=for-the-badge&labelColor=303446&logo=NixOS&logoColor=white&color=91D7E3">
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">
+      <img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/palette/macchiato.png" width="600px" align="center">
+    </td>
+  </tr>
+</table>
 
 Nix configuration for NixOS, nix-darwin and nixos-wsl.
 
@@ -21,6 +43,8 @@ Machine configs are located in [`./machines`](./machines).
 NixOS in WSL on Windows. Supports GUI programs through WSLg.
 
 Located in [`./machines/Jarle`](./machines/Jarle).
+
+<img src="./assets/Jarle-neofetch.png" width="600px">
 
 ### VNB-MB-Pro
 
