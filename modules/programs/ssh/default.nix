@@ -58,7 +58,7 @@ let
         procps
       ])
       ++ [ read-ssh-env ]
-      ++ lib.optionals (!pkgs.stdenv.isDarwin) pkgs.openssh;
+      ++ lib.optional (!pkgs.stdenv.isDarwin) pkgs.openssh;
     runtimeEnv.SSH_ENV = ssh-env-path;
     text = # fish
       ''
@@ -108,7 +108,7 @@ let
   };
   add-ssh-keys-to-agent = pkgs.writeShellApplication {
     name = "add-ssh-keys-to-agent";
-    runtimeInputs = lib.optionals (!pkgs.stdenv.isDarwin) config.programs.ssh.package;
+    runtimeInputs = lib.optional (!pkgs.stdenv.isDarwin) config.programs.ssh.package;
     text = ''
       ssh-add ${ssh_keys} &>/dev/null
     '';
