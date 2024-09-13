@@ -44,38 +44,36 @@ let
     ]
   );
 
-  addClusterIfMissing = util.writeFishApplication rec {
-    name = "add_cluster_if_missing";
+  addClusters = pkgs.writeShellApplication {
+    name = "add-clusters";
     runtimeInputs = [
-      pkgs.kubectx
       gcloud
+      pkgs.kubectx
     ];
-    runtimeEnv.script_name = name;
-    text = # fish
-      ''
-        argparse --name $script_name 'p/project=' 'n/name=' 'r/region=' 'a/alias=' -- $argv
-        or return
-
-        if test -z $_flag_project || test -z $_flag_name || test -z $_flag_region || test -z $_flag_alias
-          echo "Usage: ${name} --project <project> --name <name> --region <region> --alias <alias>" >&2
+    text = ''
+      add-cluster-if-missing() {
+        project=$1
+        name=$2
+        region=$3
+        alias=$4
+        if test -z "$project" || test -z "$name" || test -z "$region" || test -z "$alias"; then
+          echo "Usage: add-cluster-if-missing <project> <name> <region> <alias>" >&2
           exit 1
-        end
+        fi
+        aliases=$(kubectx)
+        if [[ ! $aliases =~ $alias ]]; then
+          gcloud container clusters get-credentials "$name" --internal-ip --project "$project" --region "$region"
+          kubectx "$alias"=gke_"$project"_"$region"_"$name"
+        fi
+      }
 
-        set -l aliases $(kubectx)
-        string match -rq $_flag_alias $aliases
-        if test $status != 0
-          gcloud container clusters get-credentials "$_flag_name" --internal-ip --project "$_flag_project" --region "$_flag_region"
-          kubectx "$_flag_alias"=gke_"$_flag_project"_"$_flag_region"_"$_flag_name"
-        end
-      '';
+      ${lib.concatStringsSep "\n" (
+        map (cluster: ''
+          add-cluster-if-missing '${cluster.project}' '${cluster.name}' '${cluster.region}' '${cluster.alias}'
+        '') config.gipphe.programs.google-cloud-sdk.clusters
+      )}
+    '';
   };
-  addClusters = lib.pipe config.gipphe.programs.google-cloud-sdk.clusters [
-    (map (cluster: ''
-      ${lib.getExe addClusterIfMissing} --project '${cluster.project}' --name '${cluster.name}' --region '${cluster.region}' --alias '${cluster.alias}'
-    ''))
-    (lib.concatStringsSep "\n")
-    (pkgs.writeShellScriptBin "add_clusters")
-  ];
 in
 util.mkProgram {
   name = "google-cloud-sdk";
@@ -113,7 +111,6 @@ util.mkProgram {
     home = {
       packages = [
         gcloud
-        addClusterIfMissing
         addClusters
       ];
       activation.google-cloud-sdk-credentials = lib.hm.dag.entryAfter [ "onFilesChange" ] ''
