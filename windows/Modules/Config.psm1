@@ -39,9 +39,19 @@ class Config {
         $From = $_[0]
         $To = $_[1]
       }
+
+      # Ensure parent dir exists
+      $ToDir = Split-Path -Parent $To
+      if (-not (Test-Path -PathType Container $ToDir)) {
+        New-Item -Force -ItemType Directory $ToDir
+      }
+
+      # Clean out existing destination if it is a directory. Otherwise, we'll
+      # end up copying _into_ the existing directory.
       if (Test-Path -PathType Container $To) {
         Remove-Item -Recurse -Force $To
       }
+
       Copy-Item -Force -Recurse -Path $From -Destination $To
     }
 
