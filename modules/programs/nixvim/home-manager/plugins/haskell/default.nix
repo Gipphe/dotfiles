@@ -9,7 +9,7 @@
     programs.nixvim.plugins = {
       conform-nvim.settings.formatters_by_ft = {
         haskell = [ "fourmolu" ];
-        cabal = [ "cabal-fmt" ];
+        cabal = [ "cabal_fmt" ];
       };
       lsp.servers.hls.enable = true;
     };
