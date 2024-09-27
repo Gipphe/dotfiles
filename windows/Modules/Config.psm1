@@ -69,7 +69,7 @@ function New-Config {
     [Parameter(Mandatory)]
     [PSCustomObject]$Logger
   )
-  [Config]::new($PSScriptRoot)
+  [Config]::new($Logger, $PSScriptRoot)
 }
 
 Export-ModuleMember -Function New-Config
