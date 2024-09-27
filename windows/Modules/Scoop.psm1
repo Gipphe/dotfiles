@@ -26,8 +26,8 @@ class Scoop {
     $this.Logger.Info(" Installing scoop programs...")
     $ChildLogger = $this.Logger.ChildLogger()
     $ScoopArgs = @('-y')
-    $InstalledBuckets = Invoke-Native { scoop bucket list } | ForEach-Object { $_.Name }
-    $InstalledApps = Invoke-Native { scoop list } | ForEach-Object { $_.Name }
+    $InstalledBuckets = Invoke-Native { scoop bucket list 6>$Null } | ForEach-Object { $_.Name }
+    $InstalledApps = Invoke-Native { scoop list 6>$Null } | ForEach-Object { $_.Name }
 
     $RequiredBuckets = @(
       @('extras')
