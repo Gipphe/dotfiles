@@ -15,10 +15,10 @@ class Logger {
   }
 
   [Void] Info([String]$Message) {
-    Write-Information $($this.Indent($Message))
+    Write-Information "$($this.Indent($Message))"
   }
   [String] Indent([String]$Message) {
-    $lines = $Message -split "`n" | ForEach-Object { $_.PadLeft($this.IndentLevel * 2) }
+    $lines = $Message -split "`n" | ForEach-Object { "$(" " * $this.IndentLevel * 2)$_" }
     return $lines -join "`n"
   }
 
