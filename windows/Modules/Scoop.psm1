@@ -6,7 +6,10 @@ $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 
 class Scoop {
-  Scoop() {
+  [PSCustomObject]$Logger
+  
+  Scoop([PSCustomObject]$Logger) {
+    $this.Logger = $Logger
     $this.EnsureInstalled()
   }
 
@@ -20,7 +23,7 @@ class Scoop {
   }
 
   [Void] InstallApps() {
-    Write-Information " Installing scoop programs..."
+    $this.Logger.Info(" Installing scoop programs...")
     $ScoopArgs = @('-y')
     $InstalledBuckets = Invoke-Native { scoop bucket list } | ForEach-Object { $_.Name }
     $InstalledApps = Invoke-Native { scoop list } | ForEach-Object { $_.Name }
@@ -49,7 +52,7 @@ class Scoop {
         $this.Utils.InvokeNative({ scoop bucket add $BucketName $Repo })
       }
 
-      Write-Information " $BucketName bucket installed."
+      $this.Logger.Info(" $BucketName bucket installed.")
     }
 
     $RequiredApps | ForEach-Object {
@@ -66,15 +69,19 @@ class Scoop {
         $this.Utils.InvokeNative({ scoop install @ScoopArgs $PackageName @Params })
       }
 
-      Write-Information " $PackageName package installed."
+      $this.Logger.Info(" $PackageName package installed.")
     }
 
-    Write-Information " Scoop programs installed."
+    $this.Logger.Info(" Scoop programs installed.")
   }
 }
 
 function New-Scoop {
-  [Scoop]::new()
+  param (
+    [Parameter(Mandatory)]
+    [PSCustomObject]$Logger
+  )
+  [Scoop]::new($Logger)
 }
 
 Export-ModuleMember -Function New-Scoop

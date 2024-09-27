@@ -10,12 +10,15 @@ function Install-FromWeb {
     [String]$Name,
 
     [Parameter(Mandatory)]
-    [String]$URI
+    [String]$URI,
+
+    [Parameter(Mandatory)]
+    [PSCustomObject]$Logger
   )
 
   if (Test-IsInstalledInWinget $Name)
   {
-    Write-Information "$Name is already installed"
+    $this.Logger.Info("$Name is already installed")
     return
   }
 
@@ -23,7 +26,7 @@ function Install-FromWeb {
 
   Start-Process "$HOME/Downloads/temp.exe" -Wait
   Remove-Item "$HOME/Downloads/temp.exe"
-  Write-Information "Installed $Name"
+  $this.Logger.Info("Installed $Name")
 }
 
 $script:WingetPrograms = $null
@@ -60,7 +63,10 @@ function New-Shortcut {
     [String]$Destination,
 
     [Parameter(Mandatory)]
-    [String]$Arguments
+    [String]$Arguments,
+
+    [Parameter(Mandatory)]
+    [PSCustomObject]$Logger
   )
 
   $WshShell = New-Object -comObject WScript.Shell
@@ -68,7 +74,7 @@ function New-Shortcut {
   $Shortcut.TargetPath = $Source
   $Shortcut.Arguments = $Arguments
   $Shortcut.Save()
-  Write-Information "Created shortcut"
+  $this.Logger.Info("Created shortcut")
 }
 
 function Install-WithWinget {

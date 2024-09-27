@@ -6,30 +6,36 @@ $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 
 class SD {
+  [PSCustomObject]$Logger
   [String]$Dirname
 
-  SD([String]$Dirname) {
+  SD([PSCustomObject]$Logger, [String]$Dirname) {
+    $this.Logger = $Logger
     $this.Dirname = $Dirname
   }
 
   [Void] Install() {
-    Write-Information " Setting up SD..."
+    $this.Logger.Info(" Setting up SD...")
     $SDDir = "$($this.Dirname)\_temp"
     Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
     try {
       Invoke-Native { git clone "https://codeberg.org/Gipphe/sd.git" "$SDDir" }
       . "$SDDir\sd.ps1"
     } catch {
-      echo "Failed to setup SD"
+      $this.Logger.Info("Failed to setup SD")
     } finally {
       Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
     }
-    Write-Information " SD set up."
+    $this.Logger.Info(" SD set up.")
   }
 }
 
 Function New-SD {
-  [SD]::new($PSScriptRoot)
+  param (
+    [Parameter(Mandatory)]
+    [PSCustomObject]$Logger
+  )
+  [SD]::new($Logger, $PSScriptRoot)
 }
 
 Export-ModuleMember -Function New-SD

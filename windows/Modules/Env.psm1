@@ -4,8 +4,13 @@ $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 
 class Env {
+  [PSCustomObject]$Logger
+  
+  Env([PSCustomObject]$Logger) {
+    $this.Logger = $Logger
+  }
   [Void] Install() {
-    Write-Information " Setting env vars..."
+    $this.Logger.Info(" Setting env vars...")
     $EnvVars = @{
       'HOME' = $Env:USERPROFILE
       'XDG_CONFIG_HOME' = "$Env:USERPROFILE/.config"
@@ -15,12 +20,16 @@ class Env {
       $val = $EnvVars[$_]
       [Environment]::SetEnvironmentVariable($key, $val, 'User')
     }
-    Write-Information " Env vars set."
+    $this.Logger.Info(" Env vars set.")
   }
 }
 
 function New-Env {
-  [Env]::new()
+  param (
+    [Parameter(Mandatory)]
+    [PSCustomObject]$Logger
+  )
+  [Env]::new($Logger)
 }
 
 Export-ModuleMember -Function New-Env

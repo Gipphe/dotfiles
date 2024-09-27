@@ -6,21 +6,23 @@ $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 
 class Registry {
+  [PSCustomObject]$Logger
   [PSCustomObject]$Stamp
 
-  Registry() {
+  Registry([PSCustomObject]$Logger) {
+    $this.Logger = $Logger
     $this.Stamp = New-Stamp
   }
 
   [Void] StampEntry([String]$Stamp, [String]$Path, [String]$Entry, [String]$Type, [String]$Data) {
     $this.Stamp.Register($Stamp, {
-      Write-Information "Setting $Path\$Entry"
+      $this.Logger.Info("Setting $Path\$Entry")
       reg add "$Path" /v "$Entry" /t "$Type" /d $Data /f
     })
   }
 
   [Void] SetEntries() {
-    Write-Information " Setting registry entries..."
+    $this.Logger.Info(" Setting registry entries...")
     # Use checkboxes for selecting files
     $this.StampEntry(
       "register-checkboxes",
@@ -205,12 +207,16 @@ class Registry {
       [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($BSTR)
     }
 
-    Write-Information " Registry entries set."
+    $this.Logger.Info(" Registry entries set.")
   }
 }
 
 function New-Registry {
-  [Registry]::new()
+  param (
+    [Parameter(Mandatory)]
+    [PSCustomObject]$Logger
+  )
+  [Registry]::new($Logger)
 }
 
 Export-ModuleMember -Function New-Registry

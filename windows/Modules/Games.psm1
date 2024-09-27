@@ -7,7 +7,8 @@ class Games {
   [String]$FS22ModDir
   [String[]]$FS22Mods
 
-  Games() {
+  Games([PSCustomObject]$Logger) {
+    $this.Logger = $Logger
     if ($null -eq $Env:HOME) {
       $Env:HOME = $Env:USERPROFILE
     }
@@ -101,21 +102,25 @@ class Games {
   }
 
   [Void] InstallFS22Mods() {
-    Write-Information " Downloading FS22 mods..."
+    $this.Logger.Info(" Downloading FS22 mods...")
     if (-not (Test-Path -Path $this.FS22ModDir)) {
-      Write-Information " FS22 mods folder is missing. Skipping mod installation."
+      $this.Logger.Info(" FS22 mods folder is missing. Skipping mod installation.")
       return
     }
 
     foreach ($Mod in $this.FS22Mods) {
       $this.InstallFS22Mod($Mod)
     }
-    Write-Information " FS22 mods downloaded."
+    $this.Logger.Info(" FS22 mods downloaded.")
   }
 }
 
 function New-Games {
-  [Games]::new()
+  param (
+    [Parameter(Mandatory)]
+    [PSCustomObject]$Logger
+  )
+  [Games]::new($Logger)
 }
 
 Export-ModuleMember -Function New-Games

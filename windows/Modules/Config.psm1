@@ -4,14 +4,16 @@ $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 
 class Config {
+  [PSCustomObject]$Logger
   [String]$CfgDir
 
-  Config([String]$Dirname) {
+  Config([PSCustomObject]$Logger, [String]$Dirname) {
+    $this.Logger = $Logger
     $this.CfgDir = "$Dirname/../Config"
   }
 
   [Void] Install() {
-    Write-Information " Copying config files..."
+    $this.Logger.Info(" Copying config files...")
     if ($null -eq $Env:HOME) {
       $Env:HOME = $Env:USERPROFILE
     }
@@ -55,11 +57,15 @@ class Config {
       Copy-Item -Force -Recurse -Path $From -Destination $To
     }
 
-    Write-Information " Config files copied."
+    $this.Logger.Info(" Config files copied.")
   }
 }
 
 function New-Config {
+  param (
+    [Parameter(Mandatory)]
+    [PSCustomObject]$Logger
+  )
   [Config]::new($PSScriptRoot)
 }
 

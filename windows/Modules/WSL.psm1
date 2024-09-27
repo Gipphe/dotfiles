@@ -7,14 +7,16 @@ Import-Module $PSScriptRoot/Utils.psm1
 Import-Module $PSScriptRoot/Stamp.psm1
 
 class WSL {
+  [PSCustomObject]$Logger
   [PSCustomObject]$Stamp
 
-  WSL() {
+  WSL([PSCustomObject]$Logger) {
+    $this.Logger = $Logger
     $this.Stamp = New-Stamp
   }
 
   [Void] Install() {
-    Write-Information " Installing and setting up WSL..."
+    $this.Logger.Info(" Installing and setting up WSL...")
     $this.Stamp.Register("install-wsl", {
       Invoke-Native { wsl --install }
     })
@@ -36,12 +38,16 @@ class WSL {
           '&&' nixos-rebuild --extra-experimental-features 'flakes nix-command' switch --flake '"$(pwd)#Jarle"'
       }
     })
-    Write-Information " WSL installed and set up."
+    $this.Logger.Info(" WSL installed and set up.")
   }
 }
 
 function New-WSL {
-  [WSL]::new()
+  param (
+    [Parameter(Mandatory)]
+    [PSCustomObject]$Logger
+  )
+  [WSL]::new($Logger)
 }
 
 Export-ModuleMember -Function New-WSL

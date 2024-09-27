@@ -6,7 +6,10 @@ $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 
 class Choco {
-  Choco() {
+  [PSCustomObject]$Logger
+
+  Choco([PSCustomObject]$Logger) {
+    $this.Logger = $Logger
     $this.EnsureInstalled()
   }
 
@@ -21,7 +24,7 @@ class Choco {
   }
 
   [Void] InstallApps() {
-    Write-Information " Installing Chocolatey programs..."
+    $this.Logger.Info(" Installing Chocolatey programs...")
     $ChocoArgs = @('-y')
     $Installed = $(Invoke-Native { choco list --id-only })
 
@@ -85,7 +88,7 @@ class Choco {
         $PackageArgs = $_[1]
       }
       if ($Installed.Contains($PackageName)) {
-        Write-Information " $PackageName is already installed"
+        $this.Logger.Info(" $PackageName is already installed")
         return
       }
 
@@ -95,15 +98,19 @@ class Choco {
       }
 
       Invoke-Native { choco install @ChocoArgs $PackageName @params }
-      Write-Information " $PackageName installed."
+      $this.Logger.Info(" $PackageName installed.")
     }
 
-    Write-Information " Chocolatey programs installed."
+    $this.Logger.Info(" Chocolatey programs installed.")
   }
 }
 
 function New-Choco {
-  [Choco]::new()
+  param (
+    [Parameter(Mandatory)]
+    [PSCustomObject]$Logger
+  )
+  [Choco]::new($Logger)
 }
 
 Export-ModuleMember -Function New-Choco
