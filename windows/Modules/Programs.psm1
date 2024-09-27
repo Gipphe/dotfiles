@@ -1,9 +1,9 @@
 #Requires -Version 5.1
 
-Import-Module $PSScriptRoot/Utils.psm1
-Import-Module $PSScriptRoot/Choco.psm1
-Import-Module $PSScriptRoot/Scoop.psm1
-Import-Module $PSScriptRoot/Stamp.psm1
+Import-Module -Force $PSScriptRoot/Utils.psm1
+Import-Module -Force $PSScriptRoot/Choco.psm1
+Import-Module -Force $PSScriptRoot/Scoop.psm1
+Import-Module -Force $PSScriptRoot/Stamp.psm1
 
 $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"

@@ -3,8 +3,8 @@
 $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 
-Import-Module $PSScriptRoot/Utils.psm1
-Import-Module $PSScriptRoot/Stamp.psm1
+Import-Module -Force $PSScriptRoot/Utils.psm1
+Import-Module -Force $PSScriptRoot/Stamp.psm1
 
 class WSL {
   [PSCustomObject]$Logger

@@ -1,6 +1,6 @@
 #Requires -Version 5.1
 
-Import-Module $PSScriptRoot/Utils.psm1
+Import-Module -Force $PSScriptRoot/Utils.psm1
 
 $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
