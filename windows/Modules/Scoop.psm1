@@ -35,31 +35,40 @@ class Scoop {
       @('stash')
     )
 
-    $RequiredBuckets | Where-Object { -not ($InstalledBuckets.Contains($_)) } | ForEach-Object {
+    $RequiredBuckets |  ForEach-Object {
       $BucketName = $_[0]
       $BucketRepo = $_[1]
-      $Repo = ""
-      if ($null -ne $BucketRepo)
-      {
-        $Repo = $BucketRepo
+
+      if (-not ($InstalledBuckets.Contains($_))) {
+        $Repo = ""
+        if ($null -ne $BucketRepo)
+        {
+          $Repo = $BucketRepo
+        }
+
+        $this.Utils.InvokeNative({ scoop bucket add $BucketName $Repo })
       }
 
-      $this.Utils.InvokeNative({ scoop bucket add $BucketName $Repo })
+      Write-Information " $BucketName bucket installed."
     }
 
-    $RequiredApps | Where-Object { -not ($InstalledApps.Contains($_)) } | ForEach-Object {
+    $RequiredApps | ForEach-Object {
       $PackageName = $_[0]
       $PackageArgs = $_[1]
 
-      $Params = ""
-      if ($null -ne $PackageArgs)
-      {
-        $Params = @("--params", $PackageArgs)
+      if (-not ($InstalledApps.Contains($PackageName))) {
+        $Params = ""
+        if ($null -ne $PackageArgs)
+        {
+          $Params = @("--params", $PackageArgs)
+        }
+
+        $this.Utils.InvokeNative({ scoop install @ScoopArgs $PackageName @Params })
       }
 
-      $this.Utils.InvokeNative({ scoop install @ScoopArgs $PackageName @Params })
-      Write-Information " $PackageName installed."
+      Write-Information " $PackageName package installed."
     }
+
     Write-Information " Scoop programs installed."
   }
 }
