@@ -1,6 +1,9 @@
 #Requires -Version 5.1
 
-param ()
+[CmdletBinding()]
+param (
+  [Switch]$InstallSD
+)
 
 $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
@@ -30,7 +33,9 @@ function Initialize-Main {
   $Games.InstallFS22Mods()
   $Programs.Install()
   $Registry.SetEntries()
-  $SD.Install()
+  if ($InstallSD) {
+    $SD.Install()
+  }
   $WSL.Install()
 }
 
