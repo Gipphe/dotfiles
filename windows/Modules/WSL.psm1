@@ -37,9 +37,8 @@ class WSL {
           ! test -s '$HOME/projects/dotfiles' `
           '&&' nix-shell -p git --run '"git clone https://codeberg.org/Gipphe/dotfiles.git"' '"$HOME/projects/dotfiles"' `
           '&&' cd '$HOME/projects/dotfiles' `
-          '&&' nixos-rebuild --extra-experimental-features 'flakes nix-command' switch --flake '"$(pwd)#Jarle"' `
-        ))
-      }
+          '&&' nixos-rebuild --extra-experimental-features 'flakes nix-command' switch --flake '"$(pwd)#Jarle"'
+      }))
     })
     $this.Logger.Info(" WSL installed and set up.")
   }
