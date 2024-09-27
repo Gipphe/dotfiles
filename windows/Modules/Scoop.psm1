@@ -58,6 +58,7 @@ class Scoop {
       }
 
       $this.Utils.InvokeNative({ scoop install @ScoopArgs $PackageName @Params })
+      Write-Information " $PackageName installed."
     }
     Write-Information " Scoop programs installed."
   }
