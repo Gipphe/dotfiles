@@ -16,13 +16,13 @@ class SD {
 
   [Void] Install() {
     $this.Logger.Info(" Setting up SD...")
-    $Logger = $this.Logger.ChildLogger()
+    $ChildLogger = $this.Logger.ChildLogger()
     $SDDir = "$($this.Dirname)\_temp"
     Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
     try {
-      $Logger.Info($(Invoke-Native { git clone "https://codeberg.org/Gipphe/sd.git" "$SDDir" }))
+      $ChildLogger.Info($(Invoke-Native { git clone "https://codeberg.org/Gipphe/sd.git" "$SDDir" }))
       . "$SDDir\sd.ps1"
-      $Logger.Info(" SD repo downloaded and initialized.")
+      $ChildLogger.Info(" SD repo downloaded and initialized.")
     } catch {
       $this.Logger.ChildLogger().Info("Failed to setup SD")
     } finally {

@@ -80,7 +80,7 @@ class Choco {
       'zoxide'
     )
 
-    $Logger = $this.Logger.ChildLogger()
+    $ChildLogger = $this.Logger.ChildLogger()
 
     $ChocoApps | ForEach-Object {
       $PackageName = $_
@@ -90,7 +90,7 @@ class Choco {
         $PackageArgs = $_[1]
       }
       if ($Installed.Contains($PackageName)) {
-        $Logger.Info(" $PackageName is already installed")
+        $ChildLogger.Info(" $PackageName is already installed")
         return
       }
 
@@ -99,8 +99,8 @@ class Choco {
         $params = @("--params", $PackageArgs)
       }
 
-      $Logger.Info($(Invoke-Native { choco install @ChocoArgs $PackageName @params }))
-      $Logger.Info(" $PackageName installed.")
+      $ChildLogger.Info($(Invoke-Native { choco install @ChocoArgs $PackageName @params }))
+      $ChildLogger.Info(" $PackageName installed.")
     }
 
     $this.Logger.Info(" Chocolatey programs installed.")

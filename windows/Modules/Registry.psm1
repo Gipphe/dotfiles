@@ -14,20 +14,20 @@ class Registry {
     $this.Stamp = New-Stamp
   }
 
-  [Void] StampEntry([PSCustomObject]$Logger, [String]$Stamp, [String]$Path, [String]$Entry, [String]$Type, [String]$Data) {
+  [Void] StampEntry([PSCustomObject]$ChildLogger, [String]$Stamp, [String]$Path, [String]$Entry, [String]$Type, [String]$Data) {
     $this.Stamp.Register($Stamp, {
-      $Logger.Info("Setting $Path\$Entry")
+      $ChildLogger.Info("Setting $Path\$Entry")
       reg add "$Path" /v "$Entry" /t "$Type" /d $Data /f
     })
   }
 
   [Void] SetEntries() {
     $this.Logger.Info(" Setting registry entries...")
-    $Logger = $this.Logger.ChildLogger()
+    $ChildLogger = $this.Logger.ChildLogger()
 
     # Use checkboxes for selecting files
     $this.StampEntry(
-      $Logger,
+      $ChildLogger,
       "register-checkboxes",
       "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced",
       "AutoCheckSelect",
@@ -36,7 +36,7 @@ class Registry {
     )
     # Show hidden files
     $this.StampEntry(
-      $Logger,
+      $ChildLogger,
       "register-hidden-files",
       "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced",
       "Hidden",
@@ -45,7 +45,7 @@ class Registry {
     )
     # Always show file extensions
     $this.StampEntry(
-      $Logger,
+      $ChildLogger,
       "register-show-file-extensions",
       "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced",
       "HideFileExt",
@@ -54,7 +54,7 @@ class Registry {
     )
     # Search files and folders in the Start Menu
     $this.StampEntry(
-      $Logger,
+      $ChildLogger,
       "register-search-file-and-folders",
       "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced",
       "Start_SearchFiles",
@@ -63,7 +63,7 @@ class Registry {
     )
     # Disable UAC for all users
     $this.StampEntry(
-      $Logger,
+      $ChildLogger,
       "register-disable-uac",
       "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System",
       "EnableLUA",
@@ -73,7 +73,7 @@ class Registry {
 
     # Set window colors
     # $this.StampEntry(
-      $Logger,
+      $ChildLogger,
     #   "set-window-colors",
     #   "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent",
     #   "AccentColorMenu",
@@ -81,7 +81,7 @@ class Registry {
     #   "ffb86487"
     # )
     $this.StampEntry(
-      $Logger,
+      $ChildLogger,
       "register-window-accent-color-menu",
       "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent",
       "AccentColorMenu",
@@ -89,7 +89,7 @@ class Registry {
       4290274439
     )
     $this.StampEntry(
-      $Logger,
+      $ChildLogger,
       "register-window-accept-palette",
       "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent",
       "AcceptPalette",
@@ -97,7 +97,7 @@ class Registry {
       "d4b5ff00c096fa00a882dd008764b8005b3e83003c2759002b1c40008e8cd800"
     )
     # $this.StampEntry(
-      $Logger,
+      $ChildLogger,
     #   "set-window-accent-color",
     #   "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent",
     #   "StartColorMenu",
@@ -105,7 +105,7 @@ class Registry {
     #   "ff833e5b"
     # )
     $this.StampEntry(
-      $Logger,
+      $ChildLogger,
       "register-color-start-color-menu",
       "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent",
       "StartColorMenu",
@@ -115,7 +115,7 @@ class Registry {
 
     # Disable keyboard layout hotkeys
     $this.StampEntry(
-      $Logger,
+      $ChildLogger,
       "register-disable-keyboard-layout-hotkey-base",
       "HKCU\Keyboard Layout/Toggle",
       "Hotkey",
@@ -123,7 +123,7 @@ class Registry {
       3
     )
     $this.StampEntry(
-      $Logger,
+      $ChildLogger,
       "register-disable-keyboard-language-hotkey",
       "HKCU\Keyboard Layout/Toggle",
       "Language Hotkey",
@@ -131,7 +131,7 @@ class Registry {
       3
     )
     $this.StampEntry(
-      $Logger,
+      $ChildLogger,
       "register-disable-keyboard-layout-hotkey",
       "HKCU\Keyboard Layout/Toggle",
       "Layout Hotkey",
@@ -141,7 +141,7 @@ class Registry {
 
     # Disable Taskbar Search bar
     $this.StampEntry(
-      $Logger,
+      $ChildLogger,
       "register-disable-taskbar-search-bar",
       "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Search",
       "SearchboxTaskbarMode",
@@ -150,7 +150,7 @@ class Registry {
     )
     # Disable News and Interests from Start Menu
     $this.StampEntry(
-      $Logger,
+      $ChildLogger,
       "register-disable-news-and-interest-start-menu",
       "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Feeds",
       "ShellFeedsTaskbarViewMode",
@@ -159,7 +159,7 @@ class Registry {
     )
     # Hide Task View button from Taskbar
     $this.StampEntry(
-      $Logger,
+      $ChildLogger,
       "register-disable-taskbar-task-view",
       "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced",
       "ShowTaskViewButton",
@@ -168,7 +168,7 @@ class Registry {
     )
     # Use small icons in Taskbar
     $this.StampEntry(
-      $Logger,
+      $ChildLogger,
       "register-use-small-icons-taskbar",
       "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced",
       "TaskbarSmallIcons",
@@ -177,7 +177,7 @@ class Registry {
     )
     # Don't collapse taskbar items until taskbar is full
     $this.StampEntry(
-      $Logger,
+      $ChildLogger,
       "register-show-full-taskbar-items",
       "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced",
       "TaskbarGlomLevel",
@@ -186,7 +186,7 @@ class Registry {
     )
     # Lock taskbar
     $this.StampEntry(
-      $Logger,
+      $ChildLogger,
       "register-lock-taskbar",
       "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced",
       "TaskbarSizeMove",
@@ -196,7 +196,7 @@ class Registry {
     # TODO find a way to change the taskbar height with registry entries (or otherwise)
     # Show all icons in notification area
     $this.StampEntry(
-      $Logger,
+      $ChildLogger,
       "register-show-all-notification-area-icons",
       "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer",
       "EnableAutoTray",
