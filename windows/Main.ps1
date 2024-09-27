@@ -6,14 +6,14 @@ $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 
 $Mod = "$PSScriptRoot/Modules"
-Import-Module $Mod/Config.psm1
-Import-Module $Mod/Env.psm1
-Import-Module $Mod/Games.psm1
-Import-Module $Mod/Logger.psm1
-Import-Module $Mod/Programs.psm1
-Import-Module $Mod/Registry.psm1
-Import-Module $Mod/SD.psm1
-Import-Module $Mod/WSL.psm1
+Import-Module -Force $Mod/Config.psm1
+Import-Module -Force $Mod/Env.psm1
+Import-Module -Force $Mod/Games.psm1
+Import-Module -Force $Mod/Logger.psm1
+Import-Module -Force $Mod/Programs.psm1
+Import-Module -Force $Mod/Registry.psm1
+Import-Module -Force $Mod/SD.psm1
+Import-Module -Force $Mod/WSL.psm1
 
 function Initialize-Main {
   $Logger = New-Logger
