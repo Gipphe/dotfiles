@@ -6,7 +6,11 @@ $InformationPreference = "Continue"
 class Logger {
   [Int]$IndentLevel = 0
 
-  Logger([Int]$IndentLevel = 0) {
+  Logger() {
+    $this.IndentLevel = 0
+  }
+
+  Logger([Int]$IndentLevel) {
     $this.IndentLevel = $IndentLevel
   }
 
@@ -15,7 +19,7 @@ class Logger {
   }
 
   [Logger] ChildLogger() {
-    [Logger]::new($this.IndentLevel + 1)
+    return [Logger]::new($this.IndentLevel + 1)
   }
 }
 
