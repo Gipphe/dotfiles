@@ -21,7 +21,7 @@ class SD {
     Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
     try {
       $ChildLogger.Info($(Invoke-Native { git clone "https://codeberg.org/Gipphe/sd.git" "$SDDir" }))
-      . "$SDDir\sd.ps1"
+      $ChildLogger.Info($(. "$SDDir\sd.ps1"))
       $ChildLogger.Info(" SD repo downloaded and initialized.")
     } catch {
       $this.Logger.ChildLogger().Info("Failed to setup SD")
