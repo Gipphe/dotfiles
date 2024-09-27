@@ -26,17 +26,19 @@ class Programs {
     $this.Choco.InstallApps()
     $this.Scoop.InstallApps()
 
+    $Logger = $this.Logger.ChildLogger()
+
     $this.Stamp.Register("install-1password", {
-      Install-FromWeb "1Password" "https://downloads.1password.com/win/1PasswordSetup-latest.exe" $this.Logger.ChildLogger()
+      Install-FromWeb "1Password" "https://downloads.1password.com/win/1PasswordSetup-latest.exe" $Logger
     })
     $this.Stamp.Register("install-firefox-developer-edition", {
-      Install-FromWeb "Firefox Developer Edition" "https://download-installer.cdn.mozilla.net/pub/devedition/releases/120.0b4/win32/en-US/Firefox%20Installer.exe" $this.Logger.ChildLogger()
+      Install-FromWeb "Firefox Developer Edition" "https://download-installer.cdn.mozilla.net/pub/devedition/releases/120.0b4/win32/en-US/Firefox%20Installer.exe" $Logger
     })
     $this.Stamp.Register("install-ldplayer", {
-      Install-FromWeb "LDPlayer" "https://ldcdn.ldmnq.com/download/ldad/LDPlayer9.exe?n=LDPlayer9_ens_1001_ld.exe" $this.Logger.ChildLogger()
+      Install-FromWeb "LDPlayer" "https://ldcdn.ldmnq.com/download/ldad/LDPlayer9.exe?n=LDPlayer9_ens_1001_ld.exe" $Logger
     })
     $this.Stamp.Register("install-visipics", {
-      Install-FromWeb "VisiPics" "https://altushost-swe.dl.sourceforge.net/project/visipics/VisiPics-1-31.exe" $this.Logger.ChildLogger()
+      Install-FromWeb "VisiPics" "https://altushost-swe.dl.sourceforge.net/project/visipics/VisiPics-1-31.exe" $Logger
     })
 
     $this.Logger.Info(" Programs installed.")

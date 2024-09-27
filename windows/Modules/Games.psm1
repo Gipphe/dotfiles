@@ -90,7 +90,7 @@ class Games {
     )
   }
 
-  [Void] InstallFS22Mod([String]$URI) {
+  [Void] InstallFS22Mod([PSCustomObject]$Logger, [String]$URI) {
     $FileName = $URI.Substring($URI.LastIndexOf("/") + 1)
     $DestPath = "$($this.FS22ModDir)/$FileName"
 
@@ -98,7 +98,7 @@ class Games {
       return
     }
 
-    Invoke-WebRequest -Uri -OutFile $DestPath
+    $Logger.Info($(Invoke-WebRequest -Uri -OutFile $DestPath))
   }
 
   [Void] InstallFS22Mods() {
@@ -108,8 +108,11 @@ class Games {
       return
     }
 
+    $Logger = $this.Logger.ChildLogger()
     foreach ($Mod in $this.FS22Mods) {
-      $this.InstallFS22Mod($Mod)
+      $this.InstallFS22Mod($Logger, $Mod)
+      $ModName = Split-Path -Leaf $Mod
+      $Logger.Info(" $ModName FS22 mod installed")
     }
     $this.Logger.Info(" FS22 mods downloaded.")
   }

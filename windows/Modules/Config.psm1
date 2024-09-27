@@ -14,6 +14,7 @@ class Config {
 
   [Void] Install() {
     $this.Logger.Info(" Copying config files...")
+    $Logger = $this.Logger.ChildLogger()
     if ($null -eq $Env:HOME) {
       $Env:HOME = $Env:USERPROFILE
     }
@@ -55,6 +56,8 @@ class Config {
       }
 
       Copy-Item -Force -Recurse -Path $From -Destination $To
+      $FileName = Split-Path -Leaf $From
+      $Logger.Info(" $FileName copied")
     }
 
     $this.Logger.Info(" Config files copied.")

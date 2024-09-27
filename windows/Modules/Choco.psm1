@@ -26,7 +26,7 @@ class Choco {
   [Void] InstallApps() {
     $this.Logger.Info(" Installing Chocolatey programs...")
     $ChocoArgs = @('-y')
-    $Installed = $(Invoke-Native { choco list --id-only })
+    $Installed = Invoke-Native { choco list --id-only }
 
     $ChocoApps = @(
       '7zip',
@@ -80,6 +80,8 @@ class Choco {
       'zoxide'
     )
 
+    $Logger = $this.Logger.ChildLogger()
+
     $ChocoApps | ForEach-Object {
       $PackageName = $_
       $PackageArgs = $null
@@ -88,7 +90,7 @@ class Choco {
         $PackageArgs = $_[1]
       }
       if ($Installed.Contains($PackageName)) {
-        $this.Logger.Info(" $PackageName is already installed")
+        $Logger.Info(" $PackageName is already installed")
         return
       }
 
@@ -97,8 +99,8 @@ class Choco {
         $params = @("--params", $PackageArgs)
       }
 
-      Invoke-Native { choco install @ChocoArgs $PackageName @params }
-      $this.Logger.Info(" $PackageName installed.")
+      $Logger.Info($(Invoke-Native { choco install @ChocoArgs $PackageName @params }))
+      $Logger.Info(" $PackageName installed.")
     }
 
     $this.Logger.Info(" Chocolatey programs installed.")

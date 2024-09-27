@@ -24,6 +24,7 @@ class Scoop {
 
   [Void] InstallApps() {
     $this.Logger.Info(" Installing scoop programs...")
+    $Logger = $this.Logger.ChildLogger()
     $ScoopArgs = @('-y')
     $InstalledBuckets = Invoke-Native { scoop bucket list } | ForEach-Object { $_.Name }
     $InstalledApps = Invoke-Native { scoop list } | ForEach-Object { $_.Name }
@@ -49,10 +50,10 @@ class Scoop {
           $Repo = $BucketRepo
         }
 
-        $this.Utils.InvokeNative({ scoop bucket add $BucketName $Repo })
+        $Logger.Info($(InvokeNative { scoop bucket add $BucketName $Repo }))
       }
 
-      $this.Logger.Info(" $BucketName bucket installed.")
+      $Logger.Info(" $BucketName bucket installed.")
     }
 
     $RequiredApps | ForEach-Object {
@@ -66,10 +67,10 @@ class Scoop {
           $Params = @("--params", $PackageArgs)
         }
 
-        $this.Utils.InvokeNative({ scoop install @ScoopArgs $PackageName @Params })
+        $Logger.Info($(InvokeNative { scoop install @ScoopArgs $PackageName @Params }))
       }
 
-      $this.Logger.Info(" $PackageName package installed.")
+      $Logger.Info(" $PackageName package installed.")
     }
 
     $this.Logger.Info(" Scoop programs installed.")

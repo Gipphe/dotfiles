@@ -22,7 +22,7 @@ function Install-FromWeb {
     return
   }
 
-  Invoke-WebRequest -URI $URI -OutFile "$HOME/Downloads/temp.exe"
+  $this.Logger.Info(@(Invoke-WebRequest -URI $URI -OutFile "$HOME/Downloads/temp.exe"))
 
   Start-Process "$HOME/Downloads/temp.exe" -Wait
   Remove-Item "$HOME/Downloads/temp.exe"

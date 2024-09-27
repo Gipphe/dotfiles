@@ -11,6 +11,7 @@ class Env {
   }
   [Void] Install() {
     $this.Logger.Info(" Setting env vars...")
+    $Logger = $this.Logger.ChildLogger()
     $EnvVars = @{
       'HOME' = $Env:USERPROFILE
       'XDG_CONFIG_HOME' = "$Env:USERPROFILE/.config"
@@ -19,6 +20,7 @@ class Env {
       $key = $_
       $val = $EnvVars[$_]
       [Environment]::SetEnvironmentVariable($key, $val, 'User')
+      $Logger.Info(" $key env var set")
     }
     $this.Logger.Info(" Env vars set.")
   }
