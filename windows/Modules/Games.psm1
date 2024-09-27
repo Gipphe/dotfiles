@@ -4,6 +4,7 @@ $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 
 class Games {
+  [PSCustomObject]$Logger
   [String]$FS22ModDir
   [String[]]$FS22Mods
 
