@@ -20,9 +20,6 @@ end
 local stylix_base_config = wezterm.config_builder()
 local stylix_user_config = stylix_wrapped_config()
 stylix_base_config = {
-    -- Set due to the default fancy tabs not respecting colorschemes
-    -- See https://github.com/wez/wezterm/issues/2615
-    use_fancy_tab_bar = false,
     color_scheme = "stylix",
     font = wezterm.font_with_fallback {
         "FiraCode Nerd Font Mono",
@@ -45,6 +42,32 @@ stylix_base_config = {
         inactive_titlebar_bg = "#1e2030",
         inactive_titlebar_fg = "#cad3f5",
         inactive_titlebar_border_bottom = "#494d64",
+    },
+    colors = {
+      tab_bar = {
+        background = "#1e2030",
+        inactive_tab_edge = "#1e2030",
+        active_tab = {
+          bg_color = "#24273a",
+          fg_color = "#cad3f5",
+        },
+        inactive_tab = {
+          bg_color = "#494d64",
+          fg_color = "#cad3f5",
+        },
+        inactive_tab_hover = {
+          bg_color = "#cad3f5",
+          fg_color = "#24273a",
+        },
+        new_tab = {
+          bg_color = "#494d64",
+          fg_color = "#cad3f5",
+        },
+        new_tab_hover = {
+          bg_color = "#cad3f5",
+          fg_color = "#24273a",
+        },
+      },
     },
     command_palette_bg_color = "#1e2030",
     command_palette_fg_color = "#cad3f5",
