@@ -3,7 +3,7 @@ util.mkProfile "rice-darwin" {
   gipphe = {
     profiles.rice.enable = true;
     programs = {
-      yabai.enable = true;
+      yabai.enable = false;
       skhd.enable = true;
     };
   };
