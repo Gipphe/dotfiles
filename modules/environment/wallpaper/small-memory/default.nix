@@ -2,21 +2,22 @@
   lib,
   util,
   pkgs,
+  config,
   ...
 }:
-util.mkToggledModule
-  [
-    "environment"
-    "wallpaper"
-  ]
-  {
-    name = "small-memory";
-    hm = {
-      stylix.image = ./wallpaper/Macchiato-hald8-wall.png;
-      home.activation = lib.mkIf pkgs.stdenv.isDarwin {
-        set-wallpaper = ''
-          run /usr/bin/automator -i "${./wallpaper/dynamic.heic}" "${./automator/set_desktop_wallpaper.workflow}"
-        '';
-      };
+util.mkWallpaper {
+  name = "small-memory";
+  options.environment.wallpaper.small-memory.image = lib.mkOption {
+    description = "Path to wallpaper image";
+    type = lib.types.path;
+    default = ./wallpaper/Macchiato-hald8-wall.png;
+  };
+  hm = {
+    stylix.image = config.environment.wallpaper.small-memory.image;
+    home.activation = lib.mkIf pkgs.stdenv.isDarwin {
+      set-wallpaper = ''
+        run /usr/bin/automator -i "${./wallpaper/dynamic.heic}" "${./automator/set_desktop_wallpaper.workflow}"
+      '';
     };
-  }
+  };
+}

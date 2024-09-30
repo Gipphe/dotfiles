@@ -17,6 +17,7 @@ util.mkToggledModule [ "machines" ] {
       kvm.enable = true;
       logitech.enable = true;
       music.enable = true;
+      rice-darwin.enable = true;
       rice.enable = true;
       secrets.enable = true;
       work.enable = true;

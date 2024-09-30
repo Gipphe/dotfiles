@@ -150,6 +150,11 @@ let
   };
 
   mkProgram = mkToggledModule [ "programs" ];
+  mkEnvironment = mkToggledModule [ "environment" ];
+  mkWallpaper = mkToggledModule [
+    "environment"
+    "wallpaper"
+  ];
 
   # Creates a module with an automatically created `enable` options for the
   # given name, and injects an `lib.mkIf` into each of `hm`, `system-nixos`,
@@ -307,6 +312,7 @@ in
   inherit
     copyFileFixingPaths
     mkCopyActivationScript
+    mkEnvironment
     mkModule
     mkProfile
     mkProgram
@@ -314,6 +320,7 @@ in
     mkSimpleProgramByName
     mkSimpleProgramModule
     mkToggledModule
+    mkWallpaper
     recurseFirstMatching
     recurseFirstMatchingIncludingSibling
     setCaskHash
