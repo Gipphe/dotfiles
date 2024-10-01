@@ -5,7 +5,7 @@
   ...
 }:
 util.mkProgram {
-  name = "cursoride";
+  name = "code-cursor";
   hm.home.packages = lib.mkIf pkgs.stdenv.isLinux [ pkgs.cursoride ];
   system-darwin.homebrew.casks = [ "cursor" ];
 }
