@@ -30,14 +30,14 @@ class Choco {
 
     $ChocoApps = @(
       '7zip',
-      'xnviewmp',
+      'Everything',
       'barrier',
+      'cursoride',
       'cyberduck',
       'discord',
       'docker-desktop',
       'dust',
       'epicgameslauncher',
-      'Everything',
       'everythingpowertoys',
       'filen',
       'firacodenf',
@@ -77,6 +77,7 @@ class Choco {
       'wezterm',
       'windhawk',
       'windirstat',
+      'xnviewmp',
       'zoxide'
     )
 
