@@ -16,9 +16,9 @@ class Env {
       'HOME' = $Env:USERPROFILE
       'XDG_CONFIG_HOME' = "$Env:USERPROFILE/.config"
     }
-    $EnvVars | ForEach-Object {
-      $key = $_
-      $val = $EnvVars[$_]
+    $EnvVars.GetEnumerator() | ForEach-Object {
+      $key = $_.Key
+      $val = $_.Value
       [Environment]::SetEnvironmentVariable($key, $val, 'User')
       $ChildLogger.Info(" $key env var set")
     }
