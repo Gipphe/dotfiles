@@ -4,5 +4,5 @@ function nixos {
 
 $Env:STARSHIP_CONFIG = "$HOME\.config\starship.toml"
 Invoke-Expression (&starship init powershell)
-. "$HOME\.config\zoxide.ps1"
+Invoke-Expression (& { (zoxide init --cmd cd powershell | Out-String) })
 Invoke-Expression "$(direnv hook pwsh)"
