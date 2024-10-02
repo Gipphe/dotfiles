@@ -33,6 +33,7 @@ class Scoop {
       @('extras')
     )
     $RequiredApps = @(
+      @('direnv'),
       @('ffmpeg'),
       @('neovide'),
       @('neovim'),
