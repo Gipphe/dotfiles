@@ -30,45 +30,31 @@ class Scoop {
     $InstalledApps = Invoke-Native { scoop list 6>$Null } | ForEach-Object { $_.Name }
 
     $RequiredBuckets = @(
-      @('extras')
+      'extras'
     )
     $RequiredApps = @(
-      @('direnv'),
-      @('ffmpeg'),
-      @('neovide'),
-      @('neovim'),
-      @('stash')
+      'direnv',
+      'ffmpeg',
+      'neovide',
+      'neovim',
+      'stash'
     )
 
     $RequiredBuckets | ForEach-Object {
-      $BucketName = $_[0]
-      $BucketRepo = $_[1]
+      $BucketName = $_
 
-      if (-not ($InstalledBuckets.Contains($_))) {
-        $Repo = ""
-        if ($null -ne $BucketRepo)
-        {
-          $Repo = $BucketRepo
-        }
-
-        $ChildLogger.Info($(Invoke-Native { scoop bucket add $BucketName $Repo }))
+      if (-not ($InstalledBuckets.Contains($BucketName))) {
+        $ChildLogger.Info($(Invoke-Native { scoop bucket add $BucketName }))
       }
 
       $ChildLogger.Info(" $BucketName bucket installed.")
     }
 
     $RequiredApps | ForEach-Object {
-      $PackageName = $_[0]
-      $PackageArgs = $_[1]
+      $PackageName = $_
 
       if (-not ($InstalledApps.Contains($PackageName))) {
-        $Params = ""
-        if ($null -ne $PackageArgs)
-        {
-          $Params = @("--params", $PackageArgs)
-        }
-
-        $ChildLogger.Info($(Invoke-Native { scoop install @ScoopArgs $PackageName @Params }))
+        $ChildLogger.Info($(Invoke-Native { scoop install @ScoopArgs $PackageName }))
       }
 
       $ChildLogger.Info(" $PackageName package installed.")
