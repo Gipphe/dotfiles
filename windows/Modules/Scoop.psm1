@@ -40,7 +40,7 @@ class Scoop {
       @('stash')
     )
 
-    $RequiredBuckets |  ForEach-Object {
+    $RequiredBuckets | ForEach-Object {
       $BucketName = $_[0]
       $BucketRepo = $_[1]
 
@@ -51,7 +51,7 @@ class Scoop {
           $Repo = $BucketRepo
         }
 
-        $ChildLogger.Info($(InvokeNative { scoop bucket add $BucketName $Repo }))
+        $ChildLogger.Info($(Invoke-Native { scoop bucket add $BucketName $Repo }))
       }
 
       $ChildLogger.Info(" $BucketName bucket installed.")
@@ -68,7 +68,7 @@ class Scoop {
           $Params = @("--params", $PackageArgs)
         }
 
-        $ChildLogger.Info($(InvokeNative { scoop install @ScoopArgs $PackageName @Params }))
+        $ChildLogger.Info($(Invoke-Native { scoop install @ScoopArgs $PackageName @Params }))
       }
 
       $ChildLogger.Info(" $PackageName package installed.")
