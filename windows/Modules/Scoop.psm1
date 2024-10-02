@@ -25,7 +25,6 @@ class Scoop {
   [Void] InstallApps() {
     $this.Logger.Info(" Installing scoop programs...")
     $ChildLogger = $this.Logger.ChildLogger()
-    $ScoopArgs = @('-y')
     $InstalledBuckets = Invoke-Native { scoop bucket list 6>$Null } | ForEach-Object { $_.Name }
     $InstalledApps = Invoke-Native { scoop list 6>$Null } | ForEach-Object { $_.Name }
 
@@ -54,7 +53,7 @@ class Scoop {
       $PackageName = $_
 
       if (-not ($InstalledApps.Contains($PackageName))) {
-        $ChildLogger.Info($(Invoke-Native { scoop install @ScoopArgs $PackageName }))
+        $ChildLogger.Info($(Invoke-Native { scoop install $PackageName }))
       }
 
       $ChildLogger.Info(" $PackageName package installed.")
