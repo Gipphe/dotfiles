@@ -45,6 +45,7 @@ class Choco {
       'gdlauncher',
       'geforce-experience',
       'git',
+      'godot',
       'greenshot',
       'humble-app',
       'irfanview',
