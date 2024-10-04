@@ -53,6 +53,7 @@ class Choco {
       'irfanviewplugins',
       'k-litecodecpack-standard',
       'lghub',
+      'libresprite',
       'logseq',
       'microsoft-windows-terminal',
       'msiafterburner',
