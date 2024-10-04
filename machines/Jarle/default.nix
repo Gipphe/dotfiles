@@ -16,6 +16,7 @@ util.mkToggledModule [ "machines" ] {
         containers.enable = true;
         core.enable = true;
         fonts.enable = true;
+        game-dev.enable = true;
         gc.enable = true;
         programming.haskell.enable = true;
         rice.enable = true;
