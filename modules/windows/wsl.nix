@@ -41,5 +41,6 @@ util.mkToggledModule [ "windows" ] {
         }
       }
       $WSL = [WSL]::new($Logger, $Stamp)
+      $WSL.Install()
     '';
 }
