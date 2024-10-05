@@ -1,30 +1,78 @@
-{ lib, ... }:
 {
-  options.windows = {
+  lib,
+  pkgs,
+  config,
+  util,
+  ...
+}:
+let
+  cfg = config.gipphe.windows;
+in
+util.mkModule {
+  options.gipphe.windows = {
     enable = lib.mkEnableOption "Windows Powershell setup script";
 
-    chocolatey.programs = lib.mkOption {
-      description = "Programs to add from Chocolatey.";
-      type = lib.types.listOf lib.types.str;
-      default = [ ];
-      example = [
-        "vscode"
-        "Everything"
-      ];
+    destination = lib.mkOption {
+      description = ''
+        Where to put the final Powershell script
+      '';
+      type = lib.types.str;
+      default = builtins.throw "Missing options.windows.destination";
+      example = "$HOME/projects/dotfiles/windows/Main.ps1";
     };
-    scoop = {
-      buckets = lib.mkOption {
-        type = lib.types.listOf lib.types.str;
-        description = "Additional buckets to add.";
-        default = [ ];
-        example = [ "extras" ];
-      };
-      programs = lib.mkOption {
-        type = lib.types.listOf lib.types.str;
-        description = "Programs to add from Scoop.";
-        default = [ ];
-        example = [ "direnv" ];
-      };
+
+    powershell-script = lib.mkOption {
+      description = ''
+        Final Powershell script.
+      '';
+      internal = true;
+      type = lib.types.lines;
+      default = "";
     };
+
+    vcsPath = lib.mkOption {
+      description = ''
+        Path to VCS repo for this configuration. Used to find a spot for files
+        that have to be committed into VCS to be carried over to Windows.
+      '';
+      type = lib.types.str;
+      default = "${config.gipphe.homeDirectory}/projects/dotfiles";
+    };
+  };
+  shared.imports = [
+    ./chocolatey.nix
+    ./env.nix
+    ./games
+    ./home.nix
+    ./logger.nix
+    ./logger.nix
+    ./programs.nix
+    ./psUtils.nix
+    ./registry.nix
+    ./scoop.nix
+    ./sd.nix
+    ./stamp.nix
+    ./wsl.nix
+  ];
+  hm = {
+    gipphe.windows.powershell-script = (
+      lib.mkOrder 10
+        # powershell
+        ''
+          #Requires -Version 5.1
+          [CmdletBinding()]
+          param ()
+
+          $ErrorActionPreference = "Stop"
+          $InformationPreference = "Continue"
+        ''
+    );
+    home.activation.write-windows-script =
+      let
+        pkg = pkgs.writeText "windows-powershell-script" cfg.powershell-script;
+      in
+      lib.hm.dag.entryAfter [ "onFilesChange" ] ''
+        cp -f '${pkg}' '${cfg.destination}/Setup.ps1'
+      '';
   };
 }

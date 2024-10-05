@@ -25,6 +25,7 @@ util.mkToggledModule [ "machines" ] {
       rice.enable = true;
       secrets.enable = true;
       systemd.enable = true;
+      windows-setup.enable = true;
     };
   };
 }
