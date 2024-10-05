@@ -123,10 +123,20 @@ util.mkToggledModule [ "windows" ] {
         '';
       home.activation.copy-windows-files-to-vcs = lib.hm.dag.entryAfter [ "filesChanged" ] ''
         ${lib.concatStringsSep "\n" (
-          lib.mapAttrsToList (path: f: ''
-            mkdir -p "${vcsConfigs}/$(dirname -- '${f.source}')"
-            cp -f '${f.source}' '${vcsConfigs}/${f.source}'
-          '') files
+          lib.mapAttrsToList (
+            path: f:
+            let
+              fileName = lib.pipe "${f.source}" [
+                (lib.splitString "-")
+                builtins.tail
+                (lib.concatStringsSep "-")
+              ];
+            in
+            ''
+              mkdir -p "${vcsConfigs}/$(dirname -- '${f.source}')"
+              cp -f '${f.source}' '${vcsConfigs}/${fileName}'
+            ''
+          ) files
         )}
       '';
     };

@@ -58,6 +58,10 @@ util.mkProfile "windows-setup" {
         "windirstat"
         "xnviewmp"
         "zoxide"
+        {
+          name = "firefox-dev";
+          args = "--pre";
+        }
       ];
     };
     scoop = {

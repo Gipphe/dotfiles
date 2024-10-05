@@ -167,6 +167,690 @@ class Stamp {
 }
 $Stamp = [Stamp]::new($PSScriptRoot)
 
+class WSL {
+  [PSCustomObject]$Logger
+  [PSCustomObject]$Stamp
+
+  WSL([PSCustomObject]$Logger, [PSCustomObject]$Stamp) {
+    $this.Logger = $Logger
+    $this.Stamp = $Stamp
+  }
+
+  [Void] Install() {
+    $this.Logger.Info(" Installing and setting up WSL...")
+    $ChildLogger = $this.Logger.ChildLogger()
+    $this.Stamp.Register("install-wsl", {
+      $ChildLogger.Info($(Invoke-Native { wsl --install }))
+    })
+
+    $this.Stamp.Register("install-nixos-wsl", {
+      $ChildLogger.Info($(Invoke-WebRequest `
+        -Uri "https://github.com/nix-community/NixOS-WSL/releases/download/2311.5.3/nixos-wsl.tar.gz" `
+        -OutFile "$HOME\Downloads\nixos-wsl.tar.gz" `
+      ))
+      $ChildLogger.Info($(Invoke-Native { wsl --import "NixOS" "$HOME\NixOS\" "$HOME\Downloads\nixos-wsl.tar.gz" }))
+      $ChildLogger.Info($(Invoke-Native { wsl --set-default "NixOS" }))
+    })
+
+    $this.Stamp.Register("configure-nixos", {
+      $ChildLogger.Info($(Invoke-Native {
+        wsl -d "NixOS" -- `
+          ! test -s '$HOME/projects/dotfiles' `
+          '&&' nix-shell -p git --run '"git clone https://codeberg.org/Gipphe/dotfiles.git"' '"$HOME/projects/dotfiles"' `
+          '&&' cd '$HOME/projects/dotfiles' `
+          '&&' nixos-rebuild --extra-experimental-features 'flakes nix-command' switch --flake '"$(pwd)#Jarle"'
+      }))
+    })
+    $this.Logger.Info(" WSL installed and set up.")
+  }
+}
+$WSL = [WSL]::new($Logger, $Stamp)
+
+class SD {
+  [PSCustomObject]$Logger
+  [String]$Dirname
+
+  SD([PSCustomObject]$Logger, [String]$Dirname) {
+    $this.Logger = $Logger
+    $this.Dirname = $Dirname
+  }
+
+  [Void] Install() {
+    $this.Logger.Info(" Setting up SD...")
+    $ChildLogger = $this.Logger.ChildLogger()
+    $SDDir = "$($this.Dirname)\_temp"
+    Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
+    try {
+      $ChildLogger.Info($(Invoke-Native { git clone "https://codeberg.org/Gipphe/sd.git" "$SDDir" }))
+      try {
+        Push-Location $SDDir
+        $ChildLogger.Info($(Invoke-Native { pwsh .\sd.ps1 }))
+        Pop-Location
+      } catch {
+        Pop-Location
+        throw $error
+      }
+      $ChildLogger.Info(" SD repo downloaded and initialized.")
+    } catch {
+      $this.Logger.ChildLogger().Info("Failed to setup SD")
+    } finally {
+      Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
+    }
+    $this.Logger.Info(" SD set up.")
+  }
+}
+$SD = [SD]::new($Logger, $PSScriptRoot)
+$SD.Install()
+
+class Scoop {
+  [PSCustomObject]$Logger
+  
+  Scoop([PSCustomObject]$Logger) {
+    $this.Logger = $Logger
+    $this.EnsureInstalled()
+  }
+
+  [Void] EnsureInstalled() {
+    try {
+      Get-Command "scoop" -ErrorAction Stop
+    } catch {
+      Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+      Invoke-RestMethod -Uri "https://get.scoop.sh" | Invoke-Expression
+    }
+  }
+
+  [Void] InstallApps() {
+    $this.Logger.Info(" Installing scoop programs...")
+    $ChildLogger = $this.Logger.ChildLogger()
+    $InstalledBuckets = Invoke-Native { scoop bucket list 6>$Null } | ForEach-Object { $_.Name }
+    $InstalledApps = Invoke-Native { scoop list 6>$Null } | ForEach-Object { $_.Name }
+
+    $RequiredBuckets = @(
+      "extras", "extras"
+    )
+    $RequiredApps = @(
+      "direnv", "ffmpeg", "neovide", "neovim", "stash", "direnv", "ffmpeg", "neovide", "neovim", "stash"
+    )
+
+    $RequiredBuckets | ForEach-Object {
+      $BucketName = $_
+
+      if (-not ($InstalledBuckets.Contains($BucketName))) {
+        $ChildLogger.Info($(Invoke-Native { scoop bucket add $BucketName }))
+      }
+
+      $ChildLogger.Info(" $BucketName bucket installed.")
+    }
+
+    $RequiredApps | ForEach-Object {
+      $PackageName = $_
+
+      if (-not ($InstalledApps.Contains($PackageName))) {
+        $ChildLogger.Info($(Invoke-Native { scoop install $PackageName }))
+      }
+
+      $ChildLogger.Info(" $PackageName package installed.")
+    }
+
+    $this.Logger.Info(" Scoop programs installed.")
+  }
+}
+$Scoop = [Scoop]::new($Logger)
+$Scoop.InstallApps()
+
+class Registry {
+  [PSCustomObject]$Logger
+  [PSCustomObject]$Stamp
+
+  Registry([PSCustomObject]$Logger) {
+    $this.Logger = $Logger
+    $this.Stamp = New-Stamp
+  }
+
+  [Void] StampEntry([PSCustomObject]$ChildLogger, [String]$Stamp, [String]$Path, [String]$Entry, [String]$Type, [String]$Data) {
+    $this.Stamp.Register($Stamp, {
+      $ChildLogger.Info("Setting $Path\$Entry")
+      reg add "$Path" /v "$Entry" /t "$Type" /d $Data /f
+    })
+  }
+
+  [Void] SetEntries() {
+    $this.Logger.Info(" Setting registry entries...")
+    $ChildLogger = $this.Logger.ChildLogger()
+
+    # Use checkboxes for selecting files
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAdvanced-AutoCheckSelect",
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAdvanced",
+  "AutoCheckSelect",
+  "REG_DWORD",
+  "1"
+)
+
+# Show hidden files
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAdvanced-Hidden",
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAdvanced",
+  "Hidden",
+  "REG_DWORD",
+  "1"
+)
+
+# Always show file extensions
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAdvanced-HideFileExt",
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAdvanced",
+  "HideFileExt",
+  "REG_DWORD",
+  "0"
+)
+
+# Search files and folders in the Start Menu
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAdvanced-Start_SearchFiles",
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAdvanced",
+  "Start_SearchFiles",
+  "REG_DWORD",
+  "2"
+)
+
+# Disable UAC for all users
+$this.StampEntry(
+  $ChildLogger,
+  "HKLMSoftwareMicrosoftWindowsCurrentVersionPoliciesSystem-EnableLUA",
+  "HKLMSoftwareMicrosoftWindowsCurrentVersionPoliciesSystem",
+  "EnableLUA",
+  "REG_DWORD",
+  "0"
+)
+
+# 
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent-AccentColorMenu",
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent",
+  "AccentColorMenu",
+  "REG_DWORD",
+  "4290274439"
+)
+
+# 
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent-AcceptPalette",
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent",
+  "AcceptPalette",
+  "REG_BINARY",
+  "d4b5ff00c096fa00a882dd008764b8005b3e83003c2759002b1c40008e8cd800"
+)
+
+# 
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent-StartColorMenu",
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent",
+  "StartColorMenu",
+  "REG_DWORD",
+  "4286791259"
+)
+
+# Disable keyboard layout hotkeys
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUKeyboard Layout-Toggle-Hotkey",
+  "HKCUKeyboard Layout/Toggle",
+  "Hotkey",
+  "REG_SZ",
+  "3"
+)
+
+# 
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUKeyboard Layout-Toggle-Language Hotkey",
+  "HKCUKeyboard Layout/Toggle",
+  "Language Hotkey",
+  "REG_SZ",
+  "3"
+)
+
+# 
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUKeyboard Layout-Toggle-Layout Hotkey",
+  "HKCUKeyboard Layout/Toggle",
+  "Layout Hotkey",
+  "REG_SZ",
+  "3"
+)
+
+# Disable Taskbar Search bar
+$this.StampEntry(
+  $ChildLogger,
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionSearch-SearchboxTaskbarMode",
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionSearch",
+  "SearchboxTaskbarMode",
+  "REG_DWORD",
+  "0"
+)
+
+# Disable News and Interests from Start Menu
+$this.StampEntry(
+  $ChildLogger,
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionFeeds-ShellFeedsTaskbarViewMode",
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionFeeds",
+  "ShellFeedsTaskbarViewMode",
+  "REG_DWORD",
+  "2"
+)
+
+# Hide Task View button from Taskbar
+$this.StampEntry(
+  $ChildLogger,
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced-ShowTaskViewButton",
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced",
+  "ShowTaskViewButton",
+  "REG_DWORD",
+  "0"
+)
+
+# Use small icons in Taskbar
+$this.StampEntry(
+  $ChildLogger,
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced-TaskbarSmallIcons",
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced",
+  "TaskbarSmallIcons",
+  "REG_DWORD",
+  "1"
+)
+
+# Don't collapse taskbar items until taskbar is full
+$this.StampEntry(
+  $ChildLogger,
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced-TaskbarGlomLevel",
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced",
+  "TaskbarGlomLevel",
+  "REG_DWORD",
+  "1"
+)
+
+# Lock taskbar
+$this.StampEntry(
+  $ChildLogger,
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced-TaskbarSizeMove",
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced",
+  "TaskbarSizeMove",
+  "REG_DWORD",
+  "0"
+)
+
+# Show all icons in notification area
+$this.StampEntry(
+  $ChildLogger,
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorer-EnableAutoTray",
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorer",
+  "EnableAutoTray",
+  "REG_DWORD",
+  "0"
+)
+
+# Set window colors
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent-AccentColorMenu",
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent",
+  "AccentColorMenu",
+  "REG_DWORD",
+  "ffb86487"
+)
+
+# 
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent-StartColorMenu",
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent",
+  "StartColorMenu",
+  "REG_DWORD",
+  "ff833e5b"
+)
+
+# Use checkboxes for selecting files
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAdvanced-AutoCheckSelect",
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAdvanced",
+  "AutoCheckSelect",
+  "REG_DWORD",
+  "1"
+)
+
+# Show hidden files
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAdvanced-Hidden",
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAdvanced",
+  "Hidden",
+  "REG_DWORD",
+  "1"
+)
+
+# Always show file extensions
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAdvanced-HideFileExt",
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAdvanced",
+  "HideFileExt",
+  "REG_DWORD",
+  "0"
+)
+
+# Search files and folders in the Start Menu
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAdvanced-Start_SearchFiles",
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAdvanced",
+  "Start_SearchFiles",
+  "REG_DWORD",
+  "2"
+)
+
+# Disable UAC for all users
+$this.StampEntry(
+  $ChildLogger,
+  "HKLMSoftwareMicrosoftWindowsCurrentVersionPoliciesSystem-EnableLUA",
+  "HKLMSoftwareMicrosoftWindowsCurrentVersionPoliciesSystem",
+  "EnableLUA",
+  "REG_DWORD",
+  "0"
+)
+
+# 
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent-AccentColorMenu",
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent",
+  "AccentColorMenu",
+  "REG_DWORD",
+  "4290274439"
+)
+
+# 
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent-AcceptPalette",
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent",
+  "AcceptPalette",
+  "REG_BINARY",
+  "d4b5ff00c096fa00a882dd008764b8005b3e83003c2759002b1c40008e8cd800"
+)
+
+# 
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent-StartColorMenu",
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent",
+  "StartColorMenu",
+  "REG_DWORD",
+  "4286791259"
+)
+
+# Disable keyboard layout hotkeys
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUKeyboard Layout-Toggle-Hotkey",
+  "HKCUKeyboard Layout/Toggle",
+  "Hotkey",
+  "REG_SZ",
+  "3"
+)
+
+# 
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUKeyboard Layout-Toggle-Language Hotkey",
+  "HKCUKeyboard Layout/Toggle",
+  "Language Hotkey",
+  "REG_SZ",
+  "3"
+)
+
+# 
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUKeyboard Layout-Toggle-Layout Hotkey",
+  "HKCUKeyboard Layout/Toggle",
+  "Layout Hotkey",
+  "REG_SZ",
+  "3"
+)
+
+# Disable Taskbar Search bar
+$this.StampEntry(
+  $ChildLogger,
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionSearch-SearchboxTaskbarMode",
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionSearch",
+  "SearchboxTaskbarMode",
+  "REG_DWORD",
+  "0"
+)
+
+# Disable News and Interests from Start Menu
+$this.StampEntry(
+  $ChildLogger,
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionFeeds-ShellFeedsTaskbarViewMode",
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionFeeds",
+  "ShellFeedsTaskbarViewMode",
+  "REG_DWORD",
+  "2"
+)
+
+# Hide Task View button from Taskbar
+$this.StampEntry(
+  $ChildLogger,
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced-ShowTaskViewButton",
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced",
+  "ShowTaskViewButton",
+  "REG_DWORD",
+  "0"
+)
+
+# Use small icons in Taskbar
+$this.StampEntry(
+  $ChildLogger,
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced-TaskbarSmallIcons",
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced",
+  "TaskbarSmallIcons",
+  "REG_DWORD",
+  "1"
+)
+
+# Don't collapse taskbar items until taskbar is full
+$this.StampEntry(
+  $ChildLogger,
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced-TaskbarGlomLevel",
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced",
+  "TaskbarGlomLevel",
+  "REG_DWORD",
+  "1"
+)
+
+# Lock taskbar
+$this.StampEntry(
+  $ChildLogger,
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced-TaskbarSizeMove",
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced",
+  "TaskbarSizeMove",
+  "REG_DWORD",
+  "0"
+)
+
+# Show all icons in notification area
+$this.StampEntry(
+  $ChildLogger,
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorer-EnableAutoTray",
+  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorer",
+  "EnableAutoTray",
+  "REG_DWORD",
+  "0"
+)
+
+# Set window colors
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent-AccentColorMenu",
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent",
+  "AccentColorMenu",
+  "REG_DWORD",
+  "ffb86487"
+)
+
+# 
+$this.StampEntry(
+  $ChildLogger,
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent-StartColorMenu",
+  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent",
+  "StartColorMenu",
+  "REG_DWORD",
+  "ff833e5b"
+)
+
+
+    $AutoLoginEnabled = $False
+try {
+  $Prop = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'AutoAdminLogon'
+  $Prop
+  $AutoLoginEnabled = $Prop.AutoAdminLogon -eq '1'
+  $AutoLoginEnabled
+} catch { }
+
+if (-not $AutoLoginEnabled) {
+  $Username = Read-Host "Enter username for auto-login"
+  $Password = Read-Host "Enter password for auto-login" -AsSecureString
+
+  # Convert SecureString password to plain text
+  $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Password)
+  $PlainPass = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
+
+  # Set registry keys
+  Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'DefaultUserName' -Value $Username
+  Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'DefaultPassword' -Value $PlainPass
+  Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'AutoAdminLogon' -Value '1'
+
+  # Cleanup
+  [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($BSTR)
+}
+
+
+    $this.Logger.Info(" Registry entries set.")
+  }
+}
+
+class Programs {
+  [PSCustomObject]$Logger
+  [PSCustomObject]$Stamp
+
+  Programs([PSCustomObject]$Logger, [PSCustomObject]$Stamp) {
+    $this.Logger = $Logger
+    $this.Stamp = $Stamp
+  }
+
+  [void] Install() {
+    $this.Logger.Info(" Installing manually installed programs...")
+
+    $ChildLogger = $this.Logger.ChildLogger()
+
+    $this.Stamp.Register("install-1password", {
+  Install-FromWeb "1Password" "https://downloads.1password.com/win/1PasswordSetup-latest.exe" $ChildLogger
+})
+
+$this.Stamp.Register("install-firefox-developer-edition", {
+  Install-FromWeb "Firefox Developer Edition" "https://download-installer.cdn.mozilla.net/pub/devedition/releases/120.0b4/win32/en-US/Firefox%20Installer.exe" $ChildLogger
+})
+
+$this.Stamp.Register("install-ldplayer", {
+  Install-FromWeb "LDPlayer" "https://ldcdn.ldmnq.com/download/ldad/LDPlayer9.exe?n=LDPlayer9_ens_1001_ld.exe" $ChildLogger
+})
+
+$this.Stamp.Register("install-visipics", {
+  Install-FromWeb "VisiPics" "https://altushost-swe.dl.sourceforge.net/project/visipics/VisiPics-1-31.exe" $ChildLogger
+})
+
+
+    $this.Logger.Info(" Programs installed.")
+  }
+}
+$Programs = [Programs]::new($Logger, $Stamp)
+$Programs.Install()
+
+class Config {
+  [PSCustomObject]$Logger
+  [String]$CfgDir
+
+  Config([PSCustomObject]$Logger, [String]$Dirname) {
+    $this.Logger = $Logger
+    $this.CfgDir = "$Dirname/configs"
+  }
+
+  [Void] Install() {
+    $this.Logger.Info(" Copying config files...")
+    $ChildLogger = $this.Logger.ChildLogger()
+    if ($null -eq $Env:HOME) {
+      $Env:HOME = $Env:USERPROFILE
+    }
+    $HOME = $Env:HOME
+    $Items = @(
+      @("$($this.CfgDir)/.config-starship.toml", "$HOME/.config/starship.toml")
+
+@("$($this.CfgDir)/.config-zoxide.ps1", "$HOME/.config/zoxide.ps1")
+
+@("$($this.CfgDir)/.gitconfig", "$HOME/.gitconfig")
+
+@("$($this.CfgDir)/.gitconfig_strise", "$HOME/.gitconfig_strise")
+
+@("$($this.CfgDir)/.gitignore", "$HOME/.gitignore")
+
+@("$($this.CfgDir)/.vimrc", "$HOME/.vimrc")
+
+@("$($this.CfgDir)/.wslconfig", "$HOME/.wslconfig")
+
+@("$($this.CfgDir)/AppData-Local-nvim-init.vim", "$HOME/AppData/Local/nvim/init.vim")
+
+@("$($this.CfgDir)/Documents-PowerShell-Microsoft.PowerShell_profile.ps1", "$HOME/Documents/PowerShell/Microsoft.PowerShell_profile.ps1")
+
+    )
+
+    $Items | ForEach-Object {
+      $From = $_[0]
+      $To = $_[1]
+
+      # Ensure parent dir exists
+      $ToDir = Split-Path -Parent $To
+      if (-not (Test-Path -PathType Container $ToDir)) {
+        New-Item -Force -ItemType Directory $ToDir
+      }
+
+      # Clean out existing destination if it is a directory. Otherwise, we'll
+      # end up copying _into_ the existing directory.
+      if (Test-Path -PathType Container $To) {
+        Remove-Item -Recurse -Force $To
+      }
+
+      Copy-Item -Force -Recurse -Path $From -Destination $To
+      $FileName = Split-Path -Leaf $From
+      $ChildLogger.Info(" $FileName copied")
+    }
+
+    $this.Logger.Info(" Config files copied.")
+  }
+}
+
+$Config = [Config]::new($Logger, $PSScriptRoot)
+$Config.Install()
+
 class Choco {
   [PSCustomObject]$Logger
 
@@ -191,7 +875,7 @@ class Choco {
     $Installed = Invoke-Native { choco list --id-only }
 
     $ChocoApps = @(
-      "7zip", "Everything", "barrier", "cursoride", "cyberduck", "discord", "docker-desktop", "dust", "epicgameslauncher", "everythingpowertoys", "filen", "firacodenf", "fzf", "gdlauncher", "geforce-experience", "git", "godot", "greenshot", "humble-app", "irfanview", "irfanview-languages", "irfanviewplugins", "k-litecodecpack-standard", "lghub", "libresprite", "logseq", "microsoft-windows-terminal", "msiafterburner", "notion", "nvidia-broadcast", "openssh", "paint.net", "powershell-core", "powertoys", "qbittorrent", "restic", "rsync", "slack", "spotify", "starship", "steam", "sumatrapdf", "sunshine", "teamviewer", "vcredist-all", "vivaldi", "voicemeeter", "wezterm", "windhawk", "windirstat", "xnviewmp", "zoxide", "7zip", "Everything", "barrier", "cursoride", "cyberduck", "discord", "docker-desktop", "dust", "epicgameslauncher", "everythingpowertoys", "filen", "firacodenf", "fzf", "gdlauncher", "geforce-experience", "git", "godot", "greenshot", "humble-app", "irfanview", "irfanview-languages", "irfanviewplugins", "k-litecodecpack-standard", "lghub", "libresprite", "logseq", "microsoft-windows-terminal", "msiafterburner", "notion", "nvidia-broadcast", "openssh", "paint.net", "powershell-core", "powertoys", "qbittorrent", "restic", "rsync", "slack", "spotify", "starship", "steam", "sumatrapdf", "sunshine", "teamviewer", "vcredist-all", "vivaldi", "voicemeeter", "wezterm", "windhawk", "windirstat", "xnviewmp", "zoxide"
+      "7zip", "Everything", "barrier", "cursoride", "cyberduck", "discord", "docker-desktop", "dust", "epicgameslauncher", "everythingpowertoys", "filen", "firacodenf", "fzf", "gdlauncher", "geforce-experience", "git", "godot", "greenshot", "humble-app", "irfanview", "irfanview-languages", "irfanviewplugins", "k-litecodecpack-standard", "lghub", "libresprite", "logseq", "microsoft-windows-terminal", "msiafterburner", "notion", "nvidia-broadcast", "openssh", "paint.net", "powershell-core", "powertoys", "qbittorrent", "restic", "rsync", "slack", "spotify", "starship", "steam", "sumatrapdf", "sunshine", "teamviewer", "vcredist-all", "vivaldi", "voicemeeter", "wezterm", "windhawk", "windirstat", "xnviewmp", "zoxide", @("firefox-dev", "--pre"), "7zip", "Everything", "barrier", "cursoride", "cyberduck", "discord", "docker-desktop", "dust", "epicgameslauncher", "everythingpowertoys", "filen", "firacodenf", "fzf", "gdlauncher", "geforce-experience", "git", "godot", "greenshot", "humble-app", "irfanview", "irfanview-languages", "irfanviewplugins", "k-litecodecpack-standard", "lghub", "libresprite", "logseq", "microsoft-windows-terminal", "msiafterburner", "notion", "nvidia-broadcast", "openssh", "paint.net", "powershell-core", "powertoys", "qbittorrent", "restic", "rsync", "slack", "spotify", "starship", "steam", "sumatrapdf", "sunshine", "teamviewer", "vcredist-all", "vivaldi", "voicemeeter", "wezterm", "windhawk", "windirstat", "xnviewmp", "zoxide", @("firefox-dev", "--pre")
     )
 
     $ChildLogger = $this.Logger.ChildLogger()

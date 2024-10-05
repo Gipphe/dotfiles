@@ -15,7 +15,23 @@ util.mkToggledModule [ "windows" ] {
       description = ''
         Programs to add from Chocolatey.
       '';
-      type = lib.types.listOf lib.types.str;
+      type =
+        with lib.types;
+        listOf (oneOf [
+          str
+          (submodule {
+            options = {
+              name = lib.mkOption {
+                description = "Name of the package.";
+                type = str;
+              };
+              args = lib.mkOption {
+                description = "Arguments to pass to `choco install`.";
+                type = str;
+              };
+            };
+          })
+        ]);
       default = [ ];
       example = [
         "vscode"
@@ -49,7 +65,12 @@ util.mkToggledModule [ "windows" ] {
           $Installed = Invoke-Native { choco list --id-only }
 
           $ChocoApps = @(
-            ${concatStringsList cfg.programs}
+            ${
+              lib.pipe cfg.programs [
+                (builtins.map (p: if builtins.isString p then "\"${p}\"" else "@(\"${p.name}\", \"${p.args}\")"))
+                (lib.concatStringsSep ", ")
+              ]
+            }
           )
 
           $ChildLogger = $this.Logger.ChildLogger()
