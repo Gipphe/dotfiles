@@ -2,19 +2,15 @@
 let
   rocksTeamMembers = {
     "adrian" = "adriantr";
-
     "hanne" = "hanneoyy";
-    "sigurd" = "sberglann";
     "mathias" = "mattimoller";
+    "sigurd" = "sberglann";
     "tom" = "tpot1";
   };
-  teamMemberAliases = lib.foldlAttrs (
-    acc: name: username:
-    acc
-    // {
-      "add_${name}" = "pr edit --add-reviewer ${username}";
-    }
-  ) { } rocksTeamMembers;
+  teamMemberAliases = lib.mapAttrs' (acc: name: username: {
+    name = "add_${name}";
+    value = "pr edit --add-reviewer ${username}";
+  }) rocksTeamMembers;
 in
 util.mkProgram {
   name = "gh";
