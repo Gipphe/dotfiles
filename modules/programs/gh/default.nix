@@ -32,7 +32,6 @@ util.mkProgram {
         prc = "pr create -d --fill-first --assignee @me --no-maintainer-edit";
         prm = "pr merge --auto -sd";
         addme = "pr edit --add-assignee @me";
-        add_adrian = "pr edit --add-reviewer adriantr";
         addrocks = "pr edit --add-reviewer strise/rocks";
       } // teamMemberAliases;
     };
