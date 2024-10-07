@@ -1,7 +1,7 @@
 { lib, util, ... }:
 util.mkModule {
   hm.gipphe.windows.powershell-script =
-    lib.mkOrder 15 # powershell
+    lib.mkOrder (import ./order.nix).logger # powershell
       ''
         class Logger {
           [Int]$IndentLevel = 0

@@ -1,7 +1,7 @@
 { lib, util, ... }:
 util.mkModule {
   hm.gipphe.windows.powershell-script =
-    lib.mkOrder 40 # powershell
+    lib.mkOrder (import ./order.nix).stamp # powershell
       ''
         class Stamp {
           [String]$STAMP

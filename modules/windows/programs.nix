@@ -7,6 +7,7 @@
 let
   cfg = config.gipphe.windows.programs;
   progs = lib.filterAttrs (_: v: v.enable) cfg.manual;
+  order = import ./order.nix;
 in
 util.mkToggledModule [ "windows" ] {
   name = "programs";
@@ -45,40 +46,41 @@ util.mkToggledModule [ "windows" ] {
     };
   };
   hm = lib.mkIf (progs != { }) {
-    gipphe.windows.powershell-script = # powershell
-      ''
-        class Programs {
-          [PSCustomObject]$Logger
-          [PSCustomObject]$Stamp
+    gipphe.windows.powershell-script =
+      lib.mkOrder order.programs # powershell
+        ''
+          class Programs {
+            [PSCustomObject]$Logger
+            [PSCustomObject]$Stamp
 
-          Programs([PSCustomObject]$Logger, [PSCustomObject]$Stamp) {
-            $this.Logger = $Logger
-            $this.Stamp = $Stamp
-          }
-
-          [void] Install() {
-            $this.Logger.Info(" Installing manually installed programs...")
-
-            $ChildLogger = $this.Logger.ChildLogger()
-
-            ${
-              lib.pipe progs [
-                (lib.mapAttrsToList (
-                  name: p: ''
-                    $this.Stamp.Register("${p.stampName}", {
-                      Install-FromWeb "${name}" "${p.url}" $ChildLogger
-                    })
-                  ''
-                ))
-                (lib.concatStringsSep "\n")
-              ]
+            Programs([PSCustomObject]$Logger, [PSCustomObject]$Stamp) {
+              $this.Logger = $Logger
+              $this.Stamp = $Stamp
             }
 
-            $this.Logger.Info(" Programs installed.")
+            [void] Install() {
+              $this.Logger.Info(" Installing manually installed programs...")
+
+              $ChildLogger = $this.Logger.ChildLogger()
+
+              ${
+                lib.pipe progs [
+                  (lib.mapAttrsToList (
+                    name: p: ''
+                      $this.Stamp.Register("${p.stampName}", {
+                        Install-FromWeb "${name}" "${p.url}" $ChildLogger
+                      })
+                    ''
+                  ))
+                  (lib.concatStringsSep "\n")
+                ]
+              }
+
+              $this.Logger.Info(" Programs installed.")
+            }
           }
-        }
-        $Programs = [Programs]::new($Logger, $Stamp)
-        $Programs.Install()
-      '';
+          $Programs = [Programs]::new($Logger, $Stamp)
+          $Programs.Install()
+        '';
   };
 }

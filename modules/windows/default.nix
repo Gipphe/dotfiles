@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.gipphe.windows;
+  order = import ./order.nix;
 in
 util.mkModule {
   options.gipphe.windows = {
@@ -56,7 +57,7 @@ util.mkModule {
   ];
   hm = {
     gipphe.windows.powershell-script = (
-      lib.mkOrder 10
+      lib.mkOrder order.preamble
         # powershell
         ''
           #Requires -Version 5.1

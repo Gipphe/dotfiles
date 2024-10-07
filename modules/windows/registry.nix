@@ -34,6 +34,7 @@ let
           name;
     in
     "${pp}-${pn}";
+  order = import ./order.nix;
 in
 util.mkToggledModule [ "windows" ] {
   name = "registry";
@@ -82,76 +83,77 @@ util.mkToggledModule [ "windows" ] {
     };
   };
   hm = lib.mkIf (builtins.length regs > 0) {
-    gipphe.windows.powershell-script = # powershell
-      ''
-        class Registry {
-          [PSCustomObject]$Logger
-          [PSCustomObject]$Stamp
+    gipphe.windows.powershell-script =
+      lib.mkOrder order.registry # powershell
+        ''
+          class Registry {
+            [PSCustomObject]$Logger
+            [PSCustomObject]$Stamp
 
-          Registry([PSCustomObject]$Logger) {
-            $this.Logger = $Logger
-            $this.Stamp = New-Stamp
-          }
-
-          [Void] StampEntry([PSCustomObject]$ChildLogger, [String]$Stamp, [String]$Path, [String]$Entry, [String]$Type, [String]$Data) {
-            $this.Stamp.Register($Stamp, {
-              $ChildLogger.Info("Setting $Path\$Entry")
-              reg add "$Path" /v "$Entry" /t "$Type" /d $Data /f
-            })
-          }
-
-          [Void] SetEntries() {
-            $this.Logger.Info(" Setting registry entries...")
-            $ChildLogger = $this.Logger.ChildLogger()
-
-            ${
-              lib.pipe regs [
-                (builtins.map (x: ''
-                  # ${x.description}
-                  $this.StampEntry(
-                    $ChildLogger,
-                    "${stampifyPath x.path x.entry}",
-                    "${x.path}",
-                    "${x.entry}",
-                    "${x.type}",
-                    "${if (!builtins.isString x.data) then builtins.toString x.data else x.data}"
-                  )
-                ''))
-                (lib.concatStringsSep "\n")
-              ]
+            Registry([PSCustomObject]$Logger) {
+              $this.Logger = $Logger
+              $this.Stamp = New-Stamp
             }
 
-            ${lib.optionalString cfg.enableAutoLogin # powershell
-              ''
-                $AutoLoginEnabled = $False
-                try {
-                  $Prop = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'AutoAdminLogon'
-                  $Prop
-                  $AutoLoginEnabled = $Prop.AutoAdminLogon -eq '1'
-                  $AutoLoginEnabled
-                } catch { }
+            [Void] StampEntry([PSCustomObject]$ChildLogger, [String]$Stamp, [String]$Path, [String]$Entry, [String]$Type, [String]$Data) {
+              $this.Stamp.Register($Stamp, {
+                $ChildLogger.Info("Setting $Path\$Entry")
+                reg add "$Path" /v "$Entry" /t "$Type" /d $Data /f
+              })
+            }
 
-                if (-not $AutoLoginEnabled) {
-                  $Username = Read-Host "Enter username for auto-login"
-                  $Password = Read-Host "Enter password for auto-login" -AsSecureString
+            [Void] SetEntries() {
+              $this.Logger.Info(" Setting registry entries...")
+              $ChildLogger = $this.Logger.ChildLogger()
 
-                  # Convert SecureString password to plain text
-                  $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Password)
-                  $PlainPass = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
+              ${
+                lib.pipe regs [
+                  (builtins.map (x: ''
+                    # ${x.description}
+                    $this.StampEntry(
+                      $ChildLogger,
+                      "${stampifyPath x.path x.entry}",
+                      "${x.path}",
+                      "${x.entry}",
+                      "${x.type}",
+                      "${if (!builtins.isString x.data) then builtins.toString x.data else x.data}"
+                    )
+                  ''))
+                  (lib.concatStringsSep "\n")
+                ]
+              }
 
-                  # Set registry keys
-                  Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'DefaultUserName' -Value $Username
-                  Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'DefaultPassword' -Value $PlainPass
-                  Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'AutoAdminLogon' -Value '1'
+              ${lib.optionalString cfg.enableAutoLogin # powershell
+                ''
+                  $AutoLoginEnabled = $False
+                  try {
+                    $Prop = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'AutoAdminLogon'
+                    $Prop
+                    $AutoLoginEnabled = $Prop.AutoAdminLogon -eq '1'
+                    $AutoLoginEnabled
+                  } catch { }
 
-                  # Cleanup
-                  [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($BSTR)
-                }
-              ''}
+                  if (-not $AutoLoginEnabled) {
+                    $Username = Read-Host "Enter username for auto-login"
+                    $Password = Read-Host "Enter password for auto-login" -AsSecureString
 
-            $this.Logger.Info(" Registry entries set.")
+                    # Convert SecureString password to plain text
+                    $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Password)
+                    $PlainPass = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
+
+                    # Set registry keys
+                    Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'DefaultUserName' -Value $Username
+                    Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'DefaultPassword' -Value $PlainPass
+                    Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'AutoAdminLogon' -Value '1'
+
+                    # Cleanup
+                    [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($BSTR)
+                  }
+                ''}
+
+              $this.Logger.Info(" Registry entries set.")
+            }
           }
-        }
-      '';
+        '';
   };
 }

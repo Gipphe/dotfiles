@@ -11,6 +11,7 @@ let
     XDG_CONFIG_HOME = "$Env:USERPROFILE/.config";
   };
   envs = lib.filterAttrs (_: v: v.enable) cfg.variables;
+  order = import ./order.nix;
 in
 util.mkToggledModule [ "windows" ] {
   name = "environment";
@@ -39,31 +40,33 @@ util.mkToggledModule [ "windows" ] {
     };
   };
   hm = lib.mkIf (envs != { }) {
-    gipphe.windows.powershell-script = ''
-      class Env {
-        [PSCustomObject]$Logger
-        
-        Env([PSCustomObject]$Logger) {
-          $this.Logger = $Logger
-        }
-        [Void] Install() {
-          $this.Logger.Info(" Setting env vars...")
-          $ChildLogger = $this.Logger.ChildLogger()
-          $EnvVars = @{
-            'HOME' = $Env:USERPROFILE
-            'XDG_CONFIG_HOME' = "$Env:USERPROFILE/.config"
+    gipphe.windows.powershell-script =
+      lib.mkOrder order.env # powershell
+        ''
+          class Env {
+            [PSCustomObject]$Logger
+            
+            Env([PSCustomObject]$Logger) {
+              $this.Logger = $Logger
+            }
+            [Void] Install() {
+              $this.Logger.Info(" Setting env vars...")
+              $ChildLogger = $this.Logger.ChildLogger()
+              $EnvVars = @{
+                'HOME' = $Env:USERPROFILE
+                'XDG_CONFIG_HOME' = "$Env:USERPROFILE/.config"
+              }
+              $EnvVars.GetEnumerator() | ForEach-Object {
+                $key = $_.Key
+                $val = $_.Value
+                [Environment]::SetEnvironmentVariable($key, $val, 'User')
+                $ChildLogger.Info(" $key env var set")
+              }
+              $this.Logger.Info(" Env vars set.")
+            }
           }
-          $EnvVars.GetEnumerator() | ForEach-Object {
-            $key = $_.Key
-            $val = $_.Value
-            [Environment]::SetEnvironmentVariable($key, $val, 'User')
-            $ChildLogger.Info(" $key env var set")
-          }
-          $this.Logger.Info(" Env vars set.")
-        }
-      }
-      $Env = [Env]::new($Logger)
-      $Env.Install()
-    '';
+          $Env = [Env]::new($Logger)
+          $Env.Install()
+        '';
   };
 }

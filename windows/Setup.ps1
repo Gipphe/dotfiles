@@ -5,32 +5,6 @@ param ()
 $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 
-class Logger {
-  [Int]$IndentLevel = 0
-
-  Logger() {
-    $this.IndentLevel = 0
-  }
-
-  Logger([Int]$IndentLevel) {
-    $this.IndentLevel = $IndentLevel
-  }
-
-  [Void] Info([String]$Message) {
-    Write-Information "$($this.Indent($Message))"
-  }
-  [String] Indent([String]$Message) {
-    $lines = $Message -split "`n" | ForEach-Object { "$(" " * $this.IndentLevel * 2)$_" }
-    return $lines -join "`n"
-  }
-
-  [Logger] ChildLogger() {
-    return [Logger]::new($this.IndentLevel + 1)
-  }
-}
-
-$Logger = [Logger]::new()
-
 function Install-FromWeb {
   [CmdletBinding()]
   param (
@@ -133,6 +107,32 @@ function Invoke-Native {
   }
 }
 
+class Logger {
+  [Int]$IndentLevel = 0
+
+  Logger() {
+    $this.IndentLevel = 0
+  }
+
+  Logger([Int]$IndentLevel) {
+    $this.IndentLevel = $IndentLevel
+  }
+
+  [Void] Info([String]$Message) {
+    Write-Information "$($this.Indent($Message))"
+  }
+  [String] Indent([String]$Message) {
+    $lines = $Message -split "`n" | ForEach-Object { "$(" " * $this.IndentLevel * 2)$_" }
+    return $lines -join "`n"
+  }
+
+  [Logger] ChildLogger() {
+    return [Logger]::new($this.IndentLevel + 1)
+  }
+}
+
+$Logger = [Logger]::new()
+
 class Stamp {
   [String]$STAMP
   [String]$sep
@@ -167,81 +167,164 @@ class Stamp {
 }
 $Stamp = [Stamp]::new($PSScriptRoot)
 
-class WSL {
+class Config {
+  [PSCustomObject]$Logger
+  [String]$CfgDir
+
+  Config([PSCustomObject]$Logger, [String]$Dirname) {
+    $this.Logger = $Logger
+    $this.CfgDir = "$Dirname/configs"
+  }
+
+  [Void] Install() {
+    $this.Logger.Info(" Copying config files...")
+    $ChildLogger = $this.Logger.ChildLogger()
+    if ($null -eq $Env:HOME) {
+      $Env:HOME = $Env:USERPROFILE
+    }
+    $HOME = $Env:HOME
+    $Items = @(
+      @("$($this.CfgDir)/.config-starship.toml", "$HOME/.config/starship.toml")
+
+@("$($this.CfgDir)/.config-zoxide.ps1", "$HOME/.config/zoxide.ps1")
+
+@("$($this.CfgDir)/.gitconfig", "$HOME/.gitconfig")
+
+@("$($this.CfgDir)/.gitconfig_strise", "$HOME/.gitconfig_strise")
+
+@("$($this.CfgDir)/.gitignore", "$HOME/.gitignore")
+
+@("$($this.CfgDir)/.vimrc", "$HOME/.vimrc")
+
+@("$($this.CfgDir)/.wslconfig", "$HOME/.wslconfig")
+
+@("$($this.CfgDir)/AppData-Local-nvim-init.vim", "$HOME/AppData/Local/nvim/init.vim")
+
+@("$($this.CfgDir)/Documents-PowerShell-Microsoft.PowerShell_profile.ps1", "$HOME/Documents/PowerShell/Microsoft.PowerShell_profile.ps1")
+
+    )
+
+    $Items | ForEach-Object {
+      $From = $_[0]
+      $To = $_[1]
+
+      # Ensure parent dir exists
+      $ToDir = Split-Path -Parent $To
+      if (-not (Test-Path -PathType Container $ToDir)) {
+        New-Item -Force -ItemType Directory $ToDir
+      }
+
+      # Clean out existing destination if it is a directory. Otherwise, we'll
+      # end up copying _into_ the existing directory.
+      if (Test-Path -PathType Container $To) {
+        Remove-Item -Recurse -Force $To
+      }
+
+      Copy-Item -Force -Recurse -Path $From -Destination $To
+      $FileName = Split-Path -Leaf $From
+      $ChildLogger.Info(" $FileName copied")
+    }
+
+    $this.Logger.Info(" Config files copied.")
+  }
+}
+
+$Config = [Config]::new($Logger, $PSScriptRoot)
+$Config.Install()
+
+class Programs {
   [PSCustomObject]$Logger
   [PSCustomObject]$Stamp
 
-  WSL([PSCustomObject]$Logger, [PSCustomObject]$Stamp) {
+  Programs([PSCustomObject]$Logger, [PSCustomObject]$Stamp) {
     $this.Logger = $Logger
     $this.Stamp = $Stamp
   }
 
-  [Void] Install() {
-    $this.Logger.Info(" Installing and setting up WSL...")
+  [void] Install() {
+    $this.Logger.Info(" Installing manually installed programs...")
+
     $ChildLogger = $this.Logger.ChildLogger()
-    $this.Stamp.Register("install-wsl", {
-      $ChildLogger.Info($(Invoke-Native { wsl --install }))
-    })
 
-    $this.Stamp.Register("install-nixos-wsl", {
-      $ChildLogger.Info($(Invoke-WebRequest `
-        -Uri "https://github.com/nix-community/NixOS-WSL/releases/download/2311.5.3/nixos-wsl.tar.gz" `
-        -OutFile "$HOME\Downloads\nixos-wsl.tar.gz" `
-      ))
-      $ChildLogger.Info($(Invoke-Native { wsl --import "NixOS" "$HOME\NixOS\" "$HOME\Downloads\nixos-wsl.tar.gz" }))
-      $ChildLogger.Info($(Invoke-Native { wsl --set-default "NixOS" }))
-    })
+    $this.Stamp.Register("install-1password", {
+  Install-FromWeb "1Password" "https://downloads.1password.com/win/1PasswordSetup-latest.exe" $ChildLogger
+})
 
-    $this.Stamp.Register("configure-nixos", {
-      $ChildLogger.Info($(Invoke-Native {
-        wsl -d "NixOS" -- `
-          ! test -s '$HOME/projects/dotfiles' `
-          '&&' nix-shell -p git --run '"git clone https://codeberg.org/Gipphe/dotfiles.git"' '"$HOME/projects/dotfiles"' `
-          '&&' cd '$HOME/projects/dotfiles' `
-          '&&' nixos-rebuild --extra-experimental-features 'flakes nix-command' switch --flake '"$(pwd)#Jarle"'
-      }))
-    })
-    $this.Logger.Info(" WSL installed and set up.")
+$this.Stamp.Register("install-firefox-developer-edition", {
+  Install-FromWeb "Firefox Developer Edition" "https://download-installer.cdn.mozilla.net/pub/devedition/releases/120.0b4/win32/en-US/Firefox%20Installer.exe" $ChildLogger
+})
+
+$this.Stamp.Register("install-ldplayer", {
+  Install-FromWeb "LDPlayer" "https://ldcdn.ldmnq.com/download/ldad/LDPlayer9.exe?n=LDPlayer9_ens_1001_ld.exe" $ChildLogger
+})
+
+$this.Stamp.Register("install-visipics", {
+  Install-FromWeb "VisiPics" "https://altushost-swe.dl.sourceforge.net/project/visipics/VisiPics-1-31.exe" $ChildLogger
+})
+
+
+    $this.Logger.Info(" Programs installed.")
   }
 }
-$WSL = [WSL]::new($Logger, $Stamp)
-$WSL.Install()
+$Programs = [Programs]::new($Logger, $Stamp)
+$Programs.Install()
 
-class SD {
+class Choco {
   [PSCustomObject]$Logger
-  [String]$Dirname
 
-  SD([PSCustomObject]$Logger, [String]$Dirname) {
+  Choco([PSCustomObject]$Logger) {
     $this.Logger = $Logger
-    $this.Dirname = $Dirname
+    $this.EnsureInstalled()
   }
 
-  [Void] Install() {
-    $this.Logger.Info(" Setting up SD...")
-    $ChildLogger = $this.Logger.ChildLogger()
-    $SDDir = "$($this.Dirname)\_temp"
-    Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
+  [Void] EnsureInstalled() {
     try {
-      $ChildLogger.Info($(Invoke-Native { git clone "https://codeberg.org/Gipphe/sd.git" "$SDDir" }))
-      try {
-        Push-Location $SDDir
-        $ChildLogger.Info($(Invoke-Native { pwsh .\sd.ps1 }))
-        Pop-Location
-      } catch {
-        Pop-Location
-        throw $error
-      }
-      $ChildLogger.Info(" SD repo downloaded and initialized.")
+      Get-Command "choco" -ErrorAction Stop | Out-Null
     } catch {
-      $this.Logger.ChildLogger().Info("Failed to setup SD")
-    } finally {
-      Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
+      Set-ExecutionPolicy Bypass -Scope Process -Force
+      [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+      Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
     }
-    $this.Logger.Info(" SD set up.")
+  }
+
+  [Void] InstallApps() {
+    $this.Logger.Info(" Installing Chocolatey programs...")
+    $ChocoArgs = @('-y')
+    $Installed = Invoke-Native { choco list --id-only }
+
+    $ChocoApps = @(
+      "7zip", "Everything", "barrier", "cursoride", "cyberduck", "discord", "docker-desktop", "dust", "epicgameslauncher", "everythingpowertoys", "filen", "firacodenf", "fzf", "gdlauncher", "geforce-experience", "git", "godot", "greenshot", "humble-app", "irfanview", "irfanview-languages", "irfanviewplugins", "k-litecodecpack-standard", "lghub", "libresprite", "logseq", "microsoft-windows-terminal", "msiafterburner", "notion", "nvidia-broadcast", "openssh", "paint.net", "powershell-core", "powertoys", "qbittorrent", "restic", "rsync", "slack", "spotify", "starship", "steam", "sumatrapdf", "sunshine", "teamviewer", "vcredist-all", "vivaldi", "voicemeeter", "wezterm", "windhawk", "windirstat", "xnviewmp", "zoxide", @("firefox-dev", "--pre"), "7zip", "Everything", "barrier", "cursoride", "cyberduck", "discord", "docker-desktop", "dust", "epicgameslauncher", "everythingpowertoys", "filen", "firacodenf", "fzf", "gdlauncher", "geforce-experience", "git", "godot", "greenshot", "humble-app", "irfanview", "irfanview-languages", "irfanviewplugins", "k-litecodecpack-standard", "lghub", "libresprite", "logseq", "microsoft-windows-terminal", "msiafterburner", "notion", "nvidia-broadcast", "openssh", "paint.net", "powershell-core", "powertoys", "qbittorrent", "restic", "rsync", "slack", "spotify", "starship", "steam", "sumatrapdf", "sunshine", "teamviewer", "vcredist-all", "vivaldi", "voicemeeter", "wezterm", "windhawk", "windirstat", "xnviewmp", "zoxide", @("firefox-dev", "--pre")
+    )
+
+    $ChildLogger = $this.Logger.ChildLogger()
+
+    $ChocoApps | ForEach-Object {
+      $PackageName = $_
+      $PackageArgs = $null
+      if ($PackageName -isnot [String]) {
+        $PackageName = $_[0]
+        $PackageArgs = $_[1]
+      }
+      if ($Installed.Contains($PackageName)) {
+        $ChildLogger.Info(" $PackageName is already installed")
+        return
+      }
+
+      $params = ""
+      if ($null -ne $PackageArgs) {
+        $params = @("--params", $PackageArgs)
+      }
+
+      $ChildLogger.Info($(Invoke-Native { choco install @ChocoArgs $PackageName @params }))
+      $ChildLogger.Info(" $PackageName installed.")
+    }
+
+    $this.Logger.Info(" Chocolatey programs installed.")
   }
 }
-$SD = [SD]::new($Logger, $PSScriptRoot)
-$SD.Install()
+
+$Choco = [Choco]::new($Logger)
+$Choco.InstallApps()
 
 class Scoop {
   [PSCustomObject]$Logger
@@ -750,162 +833,79 @@ if (-not $AutoLoginEnabled) {
   }
 }
 
-class Programs {
+class SD {
+  [PSCustomObject]$Logger
+  [String]$Dirname
+
+  SD([PSCustomObject]$Logger, [String]$Dirname) {
+    $this.Logger = $Logger
+    $this.Dirname = $Dirname
+  }
+
+  [Void] Install() {
+    $this.Logger.Info(" Setting up SD...")
+    $ChildLogger = $this.Logger.ChildLogger()
+    $SDDir = "$($this.Dirname)\_temp"
+    Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
+    try {
+      $ChildLogger.Info($(Invoke-Native { git clone "https://codeberg.org/Gipphe/sd.git" "$SDDir" }))
+      try {
+        Push-Location $SDDir
+        $ChildLogger.Info($(Invoke-Native { pwsh .\sd.ps1 }))
+        Pop-Location
+      } catch {
+        Pop-Location
+        throw $error
+      }
+      $ChildLogger.Info(" SD repo downloaded and initialized.")
+    } catch {
+      $this.Logger.ChildLogger().Info("Failed to setup SD")
+    } finally {
+      Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
+    }
+    $this.Logger.Info(" SD set up.")
+  }
+}
+$SD = [SD]::new($Logger, $PSScriptRoot)
+$SD.Install()
+
+class WSL {
   [PSCustomObject]$Logger
   [PSCustomObject]$Stamp
 
-  Programs([PSCustomObject]$Logger, [PSCustomObject]$Stamp) {
+  WSL([PSCustomObject]$Logger, [PSCustomObject]$Stamp) {
     $this.Logger = $Logger
     $this.Stamp = $Stamp
   }
 
-  [void] Install() {
-    $this.Logger.Info(" Installing manually installed programs...")
-
-    $ChildLogger = $this.Logger.ChildLogger()
-
-    $this.Stamp.Register("install-1password", {
-  Install-FromWeb "1Password" "https://downloads.1password.com/win/1PasswordSetup-latest.exe" $ChildLogger
-})
-
-$this.Stamp.Register("install-firefox-developer-edition", {
-  Install-FromWeb "Firefox Developer Edition" "https://download-installer.cdn.mozilla.net/pub/devedition/releases/120.0b4/win32/en-US/Firefox%20Installer.exe" $ChildLogger
-})
-
-$this.Stamp.Register("install-ldplayer", {
-  Install-FromWeb "LDPlayer" "https://ldcdn.ldmnq.com/download/ldad/LDPlayer9.exe?n=LDPlayer9_ens_1001_ld.exe" $ChildLogger
-})
-
-$this.Stamp.Register("install-visipics", {
-  Install-FromWeb "VisiPics" "https://altushost-swe.dl.sourceforge.net/project/visipics/VisiPics-1-31.exe" $ChildLogger
-})
-
-
-    $this.Logger.Info(" Programs installed.")
-  }
-}
-$Programs = [Programs]::new($Logger, $Stamp)
-$Programs.Install()
-
-class Config {
-  [PSCustomObject]$Logger
-  [String]$CfgDir
-
-  Config([PSCustomObject]$Logger, [String]$Dirname) {
-    $this.Logger = $Logger
-    $this.CfgDir = "$Dirname/configs"
-  }
-
   [Void] Install() {
-    $this.Logger.Info(" Copying config files...")
+    $this.Logger.Info(" Installing and setting up WSL...")
     $ChildLogger = $this.Logger.ChildLogger()
-    if ($null -eq $Env:HOME) {
-      $Env:HOME = $Env:USERPROFILE
-    }
-    $HOME = $Env:HOME
-    $Items = @(
-      @("$($this.CfgDir)/.config-starship.toml", "$HOME/.config/starship.toml")
+    $this.Stamp.Register("install-wsl", {
+      $ChildLogger.Info($(Invoke-Native { wsl --install }))
+    })
 
-@("$($this.CfgDir)/.config-zoxide.ps1", "$HOME/.config/zoxide.ps1")
+    $this.Stamp.Register("install-nixos-wsl", {
+      $ChildLogger.Info($(Invoke-WebRequest `
+        -Uri "https://github.com/nix-community/NixOS-WSL/releases/download/2311.5.3/nixos-wsl.tar.gz" `
+        -OutFile "$HOME\Downloads\nixos-wsl.tar.gz" `
+      ))
+      $ChildLogger.Info($(Invoke-Native { wsl --import "NixOS" "$HOME\NixOS\" "$HOME\Downloads\nixos-wsl.tar.gz" }))
+      $ChildLogger.Info($(Invoke-Native { wsl --set-default "NixOS" }))
+    })
 
-@("$($this.CfgDir)/.gitconfig", "$HOME/.gitconfig")
-
-@("$($this.CfgDir)/.gitconfig_strise", "$HOME/.gitconfig_strise")
-
-@("$($this.CfgDir)/.gitignore", "$HOME/.gitignore")
-
-@("$($this.CfgDir)/.vimrc", "$HOME/.vimrc")
-
-@("$($this.CfgDir)/.wslconfig", "$HOME/.wslconfig")
-
-@("$($this.CfgDir)/AppData-Local-nvim-init.vim", "$HOME/AppData/Local/nvim/init.vim")
-
-@("$($this.CfgDir)/Documents-PowerShell-Microsoft.PowerShell_profile.ps1", "$HOME/Documents/PowerShell/Microsoft.PowerShell_profile.ps1")
-
-    )
-
-    $Items | ForEach-Object {
-      $From = $_[0]
-      $To = $_[1]
-
-      # Ensure parent dir exists
-      $ToDir = Split-Path -Parent $To
-      if (-not (Test-Path -PathType Container $ToDir)) {
-        New-Item -Force -ItemType Directory $ToDir
-      }
-
-      # Clean out existing destination if it is a directory. Otherwise, we'll
-      # end up copying _into_ the existing directory.
-      if (Test-Path -PathType Container $To) {
-        Remove-Item -Recurse -Force $To
-      }
-
-      Copy-Item -Force -Recurse -Path $From -Destination $To
-      $FileName = Split-Path -Leaf $From
-      $ChildLogger.Info(" $FileName copied")
-    }
-
-    $this.Logger.Info(" Config files copied.")
+    $this.Stamp.Register("configure-nixos", {
+      $ChildLogger.Info($(Invoke-Native {
+        wsl -d "NixOS" -- `
+          ! test -s '$HOME/projects/dotfiles' `
+          '&&' nix-shell -p git --run '"git clone https://codeberg.org/Gipphe/dotfiles.git"' '"$HOME/projects/dotfiles"' `
+          '&&' cd '$HOME/projects/dotfiles' `
+          '&&' nixos-rebuild --extra-experimental-features 'flakes nix-command' switch --flake '"$(pwd)#Jarle"'
+      }))
+    })
+    $this.Logger.Info(" WSL installed and set up.")
   }
 }
-
-$Config = [Config]::new($Logger, $PSScriptRoot)
-$Config.Install()
-
-class Choco {
-  [PSCustomObject]$Logger
-
-  Choco([PSCustomObject]$Logger) {
-    $this.Logger = $Logger
-    $this.EnsureInstalled()
-  }
-
-  [Void] EnsureInstalled() {
-    try {
-      Get-Command "choco" -ErrorAction Stop | Out-Null
-    } catch {
-      Set-ExecutionPolicy Bypass -Scope Process -Force
-      [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-      Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-    }
-  }
-
-  [Void] InstallApps() {
-    $this.Logger.Info(" Installing Chocolatey programs...")
-    $ChocoArgs = @('-y')
-    $Installed = Invoke-Native { choco list --id-only }
-
-    $ChocoApps = @(
-      "7zip", "Everything", "barrier", "cursoride", "cyberduck", "discord", "docker-desktop", "dust", "epicgameslauncher", "everythingpowertoys", "filen", "firacodenf", "fzf", "gdlauncher", "geforce-experience", "git", "godot", "greenshot", "humble-app", "irfanview", "irfanview-languages", "irfanviewplugins", "k-litecodecpack-standard", "lghub", "libresprite", "logseq", "microsoft-windows-terminal", "msiafterburner", "notion", "nvidia-broadcast", "openssh", "paint.net", "powershell-core", "powertoys", "qbittorrent", "restic", "rsync", "slack", "spotify", "starship", "steam", "sumatrapdf", "sunshine", "teamviewer", "vcredist-all", "vivaldi", "voicemeeter", "wezterm", "windhawk", "windirstat", "xnviewmp", "zoxide", @("firefox-dev", "--pre"), "7zip", "Everything", "barrier", "cursoride", "cyberduck", "discord", "docker-desktop", "dust", "epicgameslauncher", "everythingpowertoys", "filen", "firacodenf", "fzf", "gdlauncher", "geforce-experience", "git", "godot", "greenshot", "humble-app", "irfanview", "irfanview-languages", "irfanviewplugins", "k-litecodecpack-standard", "lghub", "libresprite", "logseq", "microsoft-windows-terminal", "msiafterburner", "notion", "nvidia-broadcast", "openssh", "paint.net", "powershell-core", "powertoys", "qbittorrent", "restic", "rsync", "slack", "spotify", "starship", "steam", "sumatrapdf", "sunshine", "teamviewer", "vcredist-all", "vivaldi", "voicemeeter", "wezterm", "windhawk", "windirstat", "xnviewmp", "zoxide", @("firefox-dev", "--pre")
-    )
-
-    $ChildLogger = $this.Logger.ChildLogger()
-
-    $ChocoApps | ForEach-Object {
-      $PackageName = $_
-      $PackageArgs = $null
-      if ($PackageName -isnot [String]) {
-        $PackageName = $_[0]
-        $PackageArgs = $_[1]
-      }
-      if ($Installed.Contains($PackageName)) {
-        $ChildLogger.Info(" $PackageName is already installed")
-        return
-      }
-
-      $params = ""
-      if ($null -ne $PackageArgs) {
-        $params = @("--params", $PackageArgs)
-      }
-
-      $ChildLogger.Info($(Invoke-Native { choco install @ChocoArgs $PackageName @params }))
-      $ChildLogger.Info(" $PackageName installed.")
-    }
-
-    $this.Logger.Info(" Chocolatey programs installed.")
-  }
-}
-
-$Choco = [Choco]::new($Logger)
-$Choco.InstallApps()
+$WSL = [WSL]::new($Logger, $Stamp)
+$WSL.Install()
 

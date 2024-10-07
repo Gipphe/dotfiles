@@ -10,6 +10,7 @@ let
   files = lib.filterAttrs (_: v: v.enable) cfg.file;
   flattenPath = builtins.replaceStrings [ "/" ] [ "-" ];
   vcsConfigs = "${config.gipphe.windows.vcsPath}/windows/configs";
+  order = import ./order.nix;
 in
 util.mkToggledModule [ "windows" ] {
   name = "home";
@@ -60,9 +61,9 @@ util.mkToggledModule [ "windows" ] {
       )
     );
   };
-  hm = # lib.mkIf (files != { }) {
-    {
-      gipphe.windows.powershell-script = # powershell
+  hm = lib.mkIf (files != { }) {
+    gipphe.windows.powershell-script =
+      lib.mkOrder order.home # powershell
         ''
           class Config {
             [PSCustomObject]$Logger
@@ -121,23 +122,23 @@ util.mkToggledModule [ "windows" ] {
           $Config = [Config]::new($Logger, $PSScriptRoot)
           $Config.Install()
         '';
-      home.activation.copy-windows-files-to-vcs = lib.hm.dag.entryAfter [ "filesChanged" ] ''
-        ${lib.concatStringsSep "\n" (
-          lib.mapAttrsToList (
-            path: f:
-            let
-              fileName = lib.pipe "${f.source}" [
-                (lib.splitString "-")
-                builtins.tail
-                (lib.concatStringsSep "-")
-              ];
-            in
-            ''
-              mkdir -p "${vcsConfigs}/$(dirname -- '${f.source}')"
-              cp -f '${f.source}' '${vcsConfigs}/${fileName}'
-            ''
-          ) files
-        )}
-      '';
-    };
+    home.activation.copy-windows-files-to-vcs = lib.hm.dag.entryAfter [ "filesChanged" ] ''
+      ${lib.concatStringsSep "\n" (
+        lib.mapAttrsToList (
+          path: f:
+          let
+            fileName = lib.pipe "${f.source}" [
+              (lib.splitString "-")
+              builtins.tail
+              (lib.concatStringsSep "-")
+            ];
+          in
+          ''
+            mkdir -p "${vcsConfigs}/$(dirname -- '${f.source}')"
+            cp -f '${f.source}' '${vcsConfigs}/${fileName}'
+          ''
+        ) files
+      )}
+    '';
+  };
 }
