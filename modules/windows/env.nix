@@ -9,7 +9,7 @@ let
   defaultEnvs = {
     XDG_CONFIG_HOME = "$Env:USERPROFILE/.config";
   };
-  inherit (import ./helpers.nix { inherit lib; }) toPSVal;
+  inherit (import ./helpers.nix { inherit lib; }) toPSValue;
   envs = lib.filterAttrs (_: v: v.enable) (
     lib.mapAttrs (
       name: value:
@@ -66,7 +66,7 @@ util.mkToggledModule [ "windows" ] {
               $EnvVars = @{
                 ${
                   lib.pipe envs [
-                    (lib.mapAttrsToList (name: val: "'${name}' = ${toPSVal val.value}"))
+                    (lib.mapAttrsToList (name: val: "'${name}' = ${toPSValue val.value}"))
                     (lib.concatStringsSep ", ")
                   ]
                 }

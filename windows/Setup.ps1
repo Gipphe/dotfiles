@@ -184,23 +184,23 @@ class Config {
     }
     $HOME = $Env:HOME
     $Items = @(
-      @("$($this.CfgDir)/.config-starship.toml", "$HOME/.config/starship.toml")
+      @("$($this.CfgDir)/.config-starship.toml", ("$HOME/" + '.config/starship.toml'))
 
-@("$($this.CfgDir)/.config-zoxide.ps1", "$HOME/.config/zoxide.ps1")
+@("$($this.CfgDir)/.config-zoxide.ps1", ("$HOME/" + '.config/zoxide.ps1'))
 
-@("$($this.CfgDir)/.gitconfig", "$HOME/.gitconfig")
+@("$($this.CfgDir)/.gitconfig", ("$HOME/" + '.gitconfig'))
 
-@("$($this.CfgDir)/.gitconfig_strise", "$HOME/.gitconfig_strise")
+@("$($this.CfgDir)/.gitconfig_strise", ("$HOME/" + '.gitconfig_strise'))
 
-@("$($this.CfgDir)/.gitignore", "$HOME/.gitignore")
+@("$($this.CfgDir)/.gitignore", ("$HOME/" + '.gitignore'))
 
-@("$($this.CfgDir)/.vimrc", "$HOME/.vimrc")
+@("$($this.CfgDir)/.vimrc", ("$HOME/" + '.vimrc'))
 
-@("$($this.CfgDir)/.wslconfig", "$HOME/.wslconfig")
+@("$($this.CfgDir)/.wslconfig", ("$HOME/" + '.wslconfig'))
 
-@("$($this.CfgDir)/AppData-Local-nvim-init.vim", "$HOME/AppData/Local/nvim/init.vim")
+@("$($this.CfgDir)/AppData-Local-nvim-init.vim", ("$HOME/" + 'AppData/Local/nvim/init.vim'))
 
-@("$($this.CfgDir)/Documents-PowerShell-Microsoft.PowerShell_profile.ps1", "$HOME/Documents/PowerShell/Microsoft.PowerShell_profile.ps1")
+@("$($this.CfgDir)/Documents-PowerShell-Microsoft.PowerShell_profile.ps1", ("$HOME/" + 'Documents/PowerShell/Microsoft.PowerShell_profile.ps1'))
 
     )
 
@@ -242,7 +242,7 @@ class Env {
     $this.Logger.Info(" Setting env vars...")
     $ChildLogger = $this.Logger.ChildLogger()
     $EnvVars = @{
-      'XDG_CONFIG_HOME' = $Env:USERPROFILE/.config
+      'XDG_CONFIG_HOME' = '$Env:USERPROFILE/.config'
     }
     $EnvVars.GetEnumerator() | ForEach-Object {
       $key = $_.Key

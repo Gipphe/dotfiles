@@ -11,7 +11,7 @@ let
   flattenPath = builtins.replaceStrings [ "/" ] [ "-" ];
   vcsConfigs = "${config.gipphe.windows.vcsPath}/windows/configs";
   order = import ./order.nix;
-  inherit (import ./helpers.nix { inherit lib; }) toPSVal;
+  inherit (import ./helpers.nix { inherit lib; }) toPSValue;
 in
 util.mkToggledModule [ "windows" ] {
   name = "home";
@@ -87,7 +87,7 @@ util.mkToggledModule [ "windows" ] {
                   lib.pipe files [
                     (lib.mapAttrsToList (
                       path: f: ''
-                        @("$($this.CfgDir)/${flattenPath path}", "$HOME/${toPSVal path}")
+                        @("$($this.CfgDir)/${flattenPath path}", ("$HOME/" + ${toPSValue path}))
                       ''
                     ))
                     (lib.concatStringsSep "\n")
