@@ -205,6 +205,7 @@ class WSL {
   }
 }
 $WSL = [WSL]::new($Logger, $Stamp)
+$WSL.Install()
 
 class SD {
   [PSCustomObject]$Logger
