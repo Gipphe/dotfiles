@@ -1,4 +1,21 @@
-{ util, ... }:
+{ util, lib, ... }:
+let
+  rocksTeamMembers = {
+    "adrian" = "adriantr";
+
+    "hanne" = "hanneoyy";
+    "sigurd" = "sberglann";
+    "mathias" = "mattimoller";
+    "tom" = "tpot1";
+  };
+  teamMemberAliases = lib.foldlAttrs (
+    acc: name: username:
+    acc
+    // {
+      "add_${name}" = "pr edit --add-reviewer ${username}";
+    }
+  ) rocksTeamMembers;
+in
 util.mkProgram {
   name = "gh";
   hm.programs.gh = {
@@ -17,7 +34,7 @@ util.mkProgram {
         addme = "pr edit --add-assignee @me";
         add_adrian = "pr edit --add-reviewer adriantr";
         addrocks = "pr edit --add-reviewer strise/rocks";
-      };
+      } // teamMemberAliases;
     };
   };
 }
