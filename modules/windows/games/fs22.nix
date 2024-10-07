@@ -34,10 +34,6 @@ util.mkToggledModule
 
             Games([PSCustomObject]$Logger) {
               $this.Logger = $Logger
-              if ($null -eq $Env:HOME) {
-                $Env:HOME = $Env:USERPROFILE
-              }
-              $HOME = $Env:HOME
               $this.FS22ModDir = "$HOME/Documents/My Games/FarmingSimulator2022/mods"
 
               $this.FS22Mods = @(

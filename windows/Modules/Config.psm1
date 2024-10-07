@@ -15,10 +15,6 @@ class Config {
   [Void] Install() {
     $this.Logger.Info(" Copying config files...")
     $ChildLogger = $this.Logger.ChildLogger()
-    if ($null -eq $Env:HOME) {
-      $Env:HOME = $Env:USERPROFILE
-    }
-    $HOME = $Env:HOME
     $Items = @(
       ".vimrc",
       ".wslconfig",

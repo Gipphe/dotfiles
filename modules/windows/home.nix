@@ -78,9 +78,6 @@ util.mkToggledModule [ "windows" ] {
             [Void] Install() {
               $this.Logger.Info(" Copying config files...")
               $ChildLogger = $this.Logger.ChildLogger()
-              if ($null -eq $Env:HOME) {
-                $Env:HOME = $Env:USERPROFILE
-              }
               $Items = @(
                 ${
                   lib.pipe files [
