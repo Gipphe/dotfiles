@@ -14,7 +14,7 @@ let
     // {
       "add_${name}" = "pr edit --add-reviewer ${username}";
     }
-  ) rocksTeamMembers;
+  ) { } rocksTeamMembers;
 in
 util.mkProgram {
   name = "gh";
