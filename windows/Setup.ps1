@@ -232,6 +232,30 @@ class Config {
 $Config = [Config]::new($Logger, $PSScriptRoot)
 $Config.Install()
 
+class Env {
+  [PSCustomObject]$Logger
+  
+  Env([PSCustomObject]$Logger) {
+    $this.Logger = $Logger
+  }
+  [Void] Install() {
+    $this.Logger.Info(" Setting env vars...")
+    $ChildLogger = $this.Logger.ChildLogger()
+    $EnvVars = @{
+      'XDG_CONFIG_HOME' = $Env:USERPROFILE/.config
+    }
+    $EnvVars.GetEnumerator() | ForEach-Object {
+      $key = $_.Key
+      $val = $_.Value
+      [Environment]::SetEnvironmentVariable($key, $val, 'User')
+      $ChildLogger.Info(" $key env var set")
+    }
+    $this.Logger.Info(" Env vars set.")
+  }
+}
+$Env = [Env]::new($Logger)
+$Env.Install()
+
 class Programs {
   [PSCustomObject]$Logger
   [PSCustomObject]$Stamp

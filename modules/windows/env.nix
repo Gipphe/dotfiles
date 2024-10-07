@@ -7,10 +7,20 @@
 let
   cfg = config.gipphe.windows.environment;
   defaultEnvs = {
-    HOME = "$Env:USERPROFILE";
     XDG_CONFIG_HOME = "$Env:USERPROFILE/.config";
   };
-  envs = lib.filterAttrs (_: v: v.enable) cfg.variables;
+  envs = lib.filterAttrs (_: v: v.enable) (
+    lib.mapAttrs (
+      name: value:
+      if builtins.isString value then
+        {
+          enable = true;
+          inherit value;
+        }
+      else
+        value
+    ) (cfg.variables // defaultEnvs)
+  );
   order = import ./order.nix;
 in
 util.mkToggledModule [ "windows" ] {
@@ -36,10 +46,10 @@ util.mkToggledModule [ "windows" ] {
             };
           })
         ]);
-      default = defaultEnvs;
+      default = { };
     };
   };
-  hm = lib.mkIf (envs != { }) {
+  hm = lib.mkIf cfg.enable {
     gipphe.windows.powershell-script =
       lib.mkOrder order.env # powershell
         ''
@@ -53,8 +63,12 @@ util.mkToggledModule [ "windows" ] {
               $this.Logger.Info(" Setting env vars...")
               $ChildLogger = $this.Logger.ChildLogger()
               $EnvVars = @{
-                'HOME' = $Env:USERPROFILE
-                'XDG_CONFIG_HOME' = "$Env:USERPROFILE/.config"
+                ${
+                  lib.pipe envs [
+                    (lib.mapAttrsToList (name: val: "'${name}' = ${val.value}"))
+                    (lib.concatStringsSep ", ")
+                  ]
+                }
               }
               $EnvVars.GetEnumerator() | ForEach-Object {
                 $key = $_.Key
