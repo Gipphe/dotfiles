@@ -81,7 +81,6 @@ util.mkToggledModule [ "windows" ] {
               if ($null -eq $Env:HOME) {
                 $Env:HOME = $Env:USERPROFILE
               }
-              $HOME = $Env:HOME
               $Items = @(
                 ${
                   lib.pipe files [
