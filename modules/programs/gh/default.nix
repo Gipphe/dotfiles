@@ -7,7 +7,7 @@ let
     "sigurd" = "sberglann";
     "tom" = "tpot1";
   };
-  teamMemberAliases = lib.mapAttrs' (acc: name: username: {
+  teamMemberAliases = lib.mapAttrs' (name: username: {
     name = "add_${name}";
     value = "pr edit --add-reviewer ${username}";
   }) rocksTeamMembers;
