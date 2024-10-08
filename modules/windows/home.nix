@@ -114,19 +114,27 @@ util.mkToggledModule [ "windows" ] {
           $Config.Install()
         '';
 
-    home.activation = lib.mapAttrs' (
-      path:
-      { source, ... }:
-      # bash
-      {
-        name = "copy-windows-file-${path}";
-        value =
+    home.activation =
+      (lib.mapAttrs' (
+        path:
+        { source, ... }:
+        # bash
+        {
+          name = "copy-windows-file-${path}";
+          value =
+            lib.hm.dag.entryBetween [ "filesChanged" ] [ "chmod-windows-configs" ] # bash
+              ''
+                mkdir -p "${vcsConfigs}/$(dirname -- '${path}')"
+                cp -f '${source}' '${vcsConfigs}/${path}'
+              '';
+        }
+      ) files)
+      // {
+        chmod-windows-configs =
           lib.hm.dag.entryAfter [ "filesChanged" ] # bash
             ''
-              mkdir -p "${vcsConfigs}/$(dirname -- '${path}')"
-              cp -f '${source}' '${vcsConfigs}/${path}'
+              chmod -R +rwx '${vcsConfigs}'
             '';
-      }
-    ) files;
+      };
   };
 }
