@@ -950,7 +950,7 @@ class FS22 {
   [String]$FS22ModDir
   [String[]]$FS22Mods
 
-  Games([PSCustomObject]$Logger) {
+  FS22([PSCustomObject]$Logger) {
     $this.Logger = $Logger
     $baseUrl = $Env:USERPROFILE
     $this.FS22ModDir = "$baseUrl/Documents/My Games/FarmingSimulator2022/mods"
@@ -988,8 +988,7 @@ class FS22 {
   }
 }
 
-$FS22 = [FS22]::new($Logger)
-$FS22.InstallFS22Mods()
+[FS22]::new($Logger).InstallFS22Mods()
 
 
 } catch {
