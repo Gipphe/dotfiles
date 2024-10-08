@@ -3,6 +3,7 @@ util.mkProfile "work" {
   gipphe = {
     profiles.work-slim.enable = true;
     programs = {
+      code-cursor.enable = true;
       cyberduck.enable = true;
       neo4j-desktop.enable = true;
       notion.enable = true;

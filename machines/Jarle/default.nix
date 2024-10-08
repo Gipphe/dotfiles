@@ -25,6 +25,7 @@ util.mkToggledModule [ "machines" ] {
         vm-guest.enable = true;
         windows-setup.enable = true;
         work-slim.enable = true;
+        work-wsl.enable = true;
       };
     };
   };
