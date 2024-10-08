@@ -91,10 +91,10 @@ util.mkToggledModule [ "windows" ] {
 
                 $params = ""
                 if ($null -ne $PackageArgs) {
-                  $params = @("--params", $PackageArgs)
+                  $params = $PackageArgs
                 }
 
-                $ChildLogger.Info($(Invoke-Native { choco install @ChocoArgs $PackageName @params }))
+                $ChildLogger.Info($(Invoke-Native { choco install @ChocoArgs $PackageName $params }))
                 $ChildLogger.Info(" $PackageName installed.")
               }
 
