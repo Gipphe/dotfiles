@@ -5,15 +5,21 @@
   ...
 }:
 let
+  inherit (builtins) isString;
+  inherit (import ./helpers.nix { inherit lib; })
+    toPSValue
+    mkRaw
+    isRaw
+    rawType
+    ;
   cfg = config.gipphe.windows.environment;
   defaultEnvs = {
-    XDG_CONFIG_HOME = "$Env:USERPROFILE/.config";
+    XDG_CONFIG_HOME = mkRaw "$Env:USERPROFILE\\.config";
   };
-  inherit (import ./helpers.nix { inherit lib; }) toPSValue;
   envs = lib.filterAttrs (_: v: v.enable) (
     lib.mapAttrs (
       name: value:
-      if builtins.isString value then
+      if isString value || isRaw value then
         {
           enable = true;
           inherit value;
@@ -35,14 +41,17 @@ util.mkToggledModule [ "windows" ] {
           str
           (submodule {
             options = {
-              value = lib.mkOption {
-                description = "Value of the environment variable";
-                type = str;
-              };
               enable = lib.mkOption {
                 description = "Whether to set the environment variable or not.";
                 type = bool;
                 default = true;
+              };
+              value = lib.mkOption {
+                description = "Value of the environment variable";
+                type = oneOf [
+                  str
+                  rawType
+                ];
               };
             };
           })
