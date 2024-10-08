@@ -109,6 +109,16 @@ function Invoke-Native {
   }
 }
 
+function Resolve-PathNice {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory)]
+    [String]$Path
+  )
+
+  return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($Path)
+}
+
 class Logger {
   [Int]$IndentLevel = 0
 
@@ -185,30 +195,11 @@ class Config {
       $Env:HOME = $Env:USERPROFILE
     }
     $baseUrl = $Env:HOME
-    $Items = @(
-      @("$($this.CfgDir)/.config-starship.toml", ("$baseUrl/" + '.config/starship.toml'))
-,
-@("$($this.CfgDir)/.config-zoxide.ps1", ("$baseUrl/" + '.config/zoxide.ps1'))
-,
-@("$($this.CfgDir)/.gitconfig", ("$baseUrl/" + '.gitconfig'))
-,
-@("$($this.CfgDir)/.gitconfig_strise", ("$baseUrl/" + '.gitconfig_strise'))
-,
-@("$($this.CfgDir)/.gitignore", ("$baseUrl/" + '.gitignore'))
-,
-@("$($this.CfgDir)/.vimrc", ("$baseUrl/" + '.vimrc'))
-,
-@("$($this.CfgDir)/.wslconfig", ("$baseUrl/" + '.wslconfig'))
-,
-@("$($this.CfgDir)/AppData-Local-nvim-init.vim", ("$baseUrl/" + 'AppData/Local/nvim/init.vim'))
-,
-@("$($this.CfgDir)/Documents-PowerShell-Microsoft.PowerShell_profile.ps1", ("$baseUrl/" + 'Documents/PowerShell/Microsoft.PowerShell_profile.ps1'))
-
-    )
+    $Items = Get-ChildItem -Recurse "$($this.CfgDir)" | Resolve-Path -Relative -RelativeBasePath "$($this.CfgDir)"
 
     $Items | ForEach-Object {
-      $From = $_[0]
-      $To = $_[1]
+      $From = Resolve-PathNice "$($this.CfgDir)/$_"
+      $To = Resolve-PathNice "$baseUrl/$_"
 
       # Ensure parent dir exists
       $ToDir = Split-Path -Parent $To
@@ -219,7 +210,9 @@ class Config {
       # Clean out existing destination if it is a directory. Otherwise, we'll
       # end up copying _into_ the existing directory.
       if (Test-Path -PathType Container $To) {
-        Remove-Item -Recurse -Force $To
+        Write-Host "Would have deleted $To because it is a directory"
+        continue
+        # Remove-Item -Recurse -Force $To
       }
 
       Copy-Item -Force -Recurse -Path $From -Destination $To
@@ -938,7 +931,7 @@ $WSL.Install()
 
 } catch {
   $Info = $error[0].InvocationInfo
-  Write-Error "Exception: $($Info.ScriptLineNumber): $($Info.Line)"
-  Write-Error $error
-  throw $error
+  Write-Host "Exception: $($Info.ScriptLineNumber): $($Info.Line)"
+  Write-Host $error
+  exit 1
 }

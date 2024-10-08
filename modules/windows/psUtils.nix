@@ -104,5 +104,15 @@ util.mkModule {
             Exit $LASTEXITCODE 
           }
         }
+
+        function Resolve-PathNice {
+          [CmdletBinding()]
+          param (
+            [Parameter(Mandatory)]
+            [String]$Path
+          )
+
+          return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($Path)
+        }
       '';
 }

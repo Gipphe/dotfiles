@@ -8,7 +8,6 @@
 let
   cfg = config.gipphe.windows.home;
   files = lib.filterAttrs (_: v: v.enable) cfg.file;
-  flattenPath = builtins.replaceStrings [ "/" ] [ "-" ];
   vcsConfigs = "${config.gipphe.windows.vcsPath}/windows/configs";
   order = import ./order.nix;
   inherit (import ./helpers.nix { inherit lib; }) toPSValue;
@@ -82,22 +81,11 @@ util.mkToggledModule [ "windows" ] {
                 $Env:HOME = $Env:USERPROFILE
               }
               $baseUrl = $Env:HOME
-              $Items = @(
-                ${
-                  lib.pipe files [
-                    (lib.mapAttrsToList (
-                      path: f: ''
-                        @("$($this.CfgDir)/${flattenPath path}", ("$baseUrl/" + ${toPSValue path}))
-                      ''
-                    ))
-                    (lib.concatStringsSep ",\n")
-                  ]
-                }
-              )
+              $Items = Get-ChildItem -Recurse "$($this.CfgDir)" | Resolve-Path -Relative -RelativeBasePath "$($this.CfgDir)"
 
               $Items | ForEach-Object {
-                $From = $_[0]
-                $To = $_[1]
+                $From = Resolve-PathNice "$($this.CfgDir)/$_"
+                $To = Resolve-PathNice "$baseUrl/$_"
 
                 # Ensure parent dir exists
                 $ToDir = Split-Path -Parent $To
@@ -108,7 +96,9 @@ util.mkToggledModule [ "windows" ] {
                 # Clean out existing destination if it is a directory. Otherwise, we'll
                 # end up copying _into_ the existing directory.
                 if (Test-Path -PathType Container $To) {
-                  Remove-Item -Recurse -Force $To
+                  Write-Host "Would have deleted $To because it is a directory"
+                  continue
+                  # Remove-Item -Recurse -Force $To
                 }
 
                 Copy-Item -Force -Recurse -Path $From -Destination $To
@@ -123,23 +113,20 @@ util.mkToggledModule [ "windows" ] {
           $Config = [Config]::new($Logger, $PSScriptRoot)
           $Config.Install()
         '';
-    home.activation.copy-windows-files-to-vcs = lib.hm.dag.entryAfter [ "filesChanged" ] ''
-      ${lib.concatStringsSep "\n" (
-        lib.mapAttrsToList (
-          path: f:
-          let
-            fileName = lib.pipe "${f.source}" [
-              (lib.splitString "-")
-              builtins.tail
-              (lib.concatStringsSep "-")
-            ];
-          in
-          ''
-            mkdir -p "${vcsConfigs}/$(dirname -- '${f.source}')"
-            cp -f '${f.source}' '${vcsConfigs}/${fileName}'
-          ''
-        ) files
-      )}
-    '';
+
+    home.activation = lib.mapAttrs' (
+      path:
+      { source, ... }:
+      # bash
+      {
+        name = "copy-windows-file-${path}";
+        value =
+          lib.hm.dag.entryAfter [ "filesChanged" ] # bash
+            ''
+              mkdir -p "${vcsConfigs}/$(dirname -- '${path}')"
+              cp -f '${source}' '${vcsConfigs}/${path}'
+            '';
+      }
+    ) files;
   };
 }
