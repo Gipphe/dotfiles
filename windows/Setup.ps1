@@ -265,22 +265,35 @@ class Programs {
 
     $ChildLogger = $this.Logger.ChildLogger()
 
-    $this.Stamp.Register("install-1password", {
-  Install-FromWeb "1Password" "https://downloads.1password.com/win/1PasswordSetup-latest.exe" $ChildLogger
-})
+    $Programs = @{ '1Password' = @{
+  'URI' = 'https://downloads.1password.com/win/1PasswordSetup-latest.exe'
+  'stamp' = 'install-1password'
+};
 
-$this.Stamp.Register("install-firefox-developer-edition", {
-  Install-FromWeb "Firefox Developer Edition" "https://download-installer.cdn.mozilla.net/pub/devedition/releases/120.0b4/win32/en-US/Firefox%20Installer.exe" $ChildLogger
-})
+'Firefox Developer Edition' = @{
+  'URI' = 'https://download-installer.cdn.mozilla.net/pub/devedition/releases/120.0b4/win32/en-US/Firefox%20Installer.exe'
+  'stamp' = 'install-firefox-developer-edition'
+};
 
-$this.Stamp.Register("install-ldplayer", {
-  Install-FromWeb "LDPlayer" "https://ldcdn.ldmnq.com/download/ldad/LDPlayer9.exe?n=LDPlayer9_ens_1001_ld.exe" $ChildLogger
-})
+'LDPlayer' = @{
+  'URI' = 'https://ldcdn.ldmnq.com/download/ldad/LDPlayer9.exe?n=LDPlayer9_ens_1001_ld.exe'
+  'stamp' = 'install-ldplayer'
+};
 
-$this.Stamp.Register("install-visipics", {
-  Install-FromWeb "VisiPics" "https://altushost-swe.dl.sourceforge.net/project/visipics/VisiPics-1-31.exe" $ChildLogger
-})
+'VisiPics' = @{
+  'URI' = 'https://altushost-swe.dl.sourceforge.net/project/visipics/VisiPics-1-31.exe'
+  'stamp' = 'install-visipics'
+};
+}
 
+    $Programs.GetEnumerator() | ForEach-Object {
+      $Name = $_.Key
+      $URI = $_.Val.URI
+      $StampName = $_.Val.stamp
+      $this.Stamp.Register("$StampName", {
+        Install-FromWeb "$Name" "$URI" $ChildLogger
+      })
+    }
 
     $this.Logger.Info(" Programs installed.")
   }

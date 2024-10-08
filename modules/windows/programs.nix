@@ -63,17 +63,28 @@ util.mkToggledModule [ "windows" ] {
 
               $ChildLogger = $this.Logger.ChildLogger()
 
-              ${
+              $Programs = @{ ${
                 lib.pipe progs [
                   (lib.mapAttrsToList (
-                    name: p: ''
-                      $this.Stamp.Register("${p.stampName}", {
-                        Install-FromWeb "${name}" "${p.url}" $ChildLogger
-                      })
+                    name: p: # powershell
+                    ''
+                      '${name}' = @{
+                        'URI' = '${p.url}'
+                        'stamp' = '${p.stampName}'
+                      };
                     ''
                   ))
                   (lib.concatStringsSep "\n")
                 ]
+              }}
+
+              $Programs.GetEnumerator() | ForEach-Object {
+                $Name = $_.Key
+                $URI = $_.Val.URI
+                $StampName = $_.Val.stamp
+                $this.Stamp.Register("$StampName", {
+                  Install-FromWeb "$Name" "$URI" $ChildLogger
+                })
               }
 
               $this.Logger.Info(" Programs installed.")
