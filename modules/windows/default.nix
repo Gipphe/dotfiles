@@ -56,6 +56,21 @@ util.mkModule {
     ./wsl.nix
   ];
   hm = {
+    imports = [
+      (
+        { lib, util, ... }:
+        util.mkModule {
+          hm.gipphe.windows.powershell-script =
+            lib.mkOrder 99999 # powershell
+              ''
+                } catch {
+                  $Info = $error[0].InvocationInfo
+                  Write-Error "Exception: $($Info.ScriptLineNumber): $($Info.Line)"
+                }
+              '';
+        }
+      )
+    ];
     gipphe.windows.powershell-script = (
       lib.mkOrder order.preamble
         # powershell
@@ -66,6 +81,8 @@ util.mkModule {
 
           $ErrorActionPreference = "Stop"
           $InformationPreference = "Continue"
+
+          try {
         ''
     );
     home.activation.write-windows-script =
