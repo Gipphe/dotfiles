@@ -89,6 +89,7 @@ util.mkProfile "windows-setup" {
         ".config/starship.toml".source = ../windows/Config/starship.toml;
         ".config/zoxide.ps1".source = ../windows/Config/zoxide.ps1;
         "AppData/Local/nvim/init.vim".source = ../windows/Config/nvim/init.vim;
+        "AppData/Roaming/Cursor/User/settings.json".source = config.gipphe.programs.code-cursor.configFile;
       };
     };
     environment = {
