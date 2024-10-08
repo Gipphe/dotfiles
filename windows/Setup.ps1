@@ -5,6 +5,8 @@ param ()
 $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
 
+try {
+
 function Install-FromWeb {
   [CmdletBinding()]
   param (
@@ -185,21 +187,21 @@ class Config {
     $HOME = $Env:HOME
     $Items = @(
       @("$($this.CfgDir)/.config-starship.toml", ("$HOME/" + '.config/starship.toml'))
-
+,
 @("$($this.CfgDir)/.config-zoxide.ps1", ("$HOME/" + '.config/zoxide.ps1'))
-
+,
 @("$($this.CfgDir)/.gitconfig", ("$HOME/" + '.gitconfig'))
-
+,
 @("$($this.CfgDir)/.gitconfig_strise", ("$HOME/" + '.gitconfig_strise'))
-
+,
 @("$($this.CfgDir)/.gitignore", ("$HOME/" + '.gitignore'))
-
+,
 @("$($this.CfgDir)/.vimrc", ("$HOME/" + '.vimrc'))
-
+,
 @("$($this.CfgDir)/.wslconfig", ("$HOME/" + '.wslconfig'))
-
+,
 @("$($this.CfgDir)/AppData-Local-nvim-init.vim", ("$HOME/" + 'AppData/Local/nvim/init.vim'))
-
+,
 @("$($this.CfgDir)/Documents-PowerShell-Microsoft.PowerShell_profile.ps1", ("$HOME/" + 'Documents/PowerShell/Microsoft.PowerShell_profile.ps1'))
 
     )
@@ -933,3 +935,8 @@ class WSL {
 $WSL = [WSL]::new($Logger, $Stamp)
 $WSL.Install()
 
+
+} catch {
+  $Info = $error[0].InvocationInfo
+  Write-Error "Exception: $($Info.ScriptLineNumber): $($Info.Line)"
+}

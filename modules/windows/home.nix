@@ -90,7 +90,7 @@ util.mkToggledModule [ "windows" ] {
                         @("$($this.CfgDir)/${flattenPath path}", ("$HOME/" + ${toPSValue path}))
                       ''
                     ))
-                    (lib.concatStringsSep "\n")
+                    (lib.concatStringsSep ",\n")
                   ]
                 }
               )
