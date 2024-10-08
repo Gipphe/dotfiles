@@ -66,6 +66,8 @@ util.mkModule {
                 } catch {
                   $Info = $error[0].InvocationInfo
                   Write-Error "Exception: $($Info.ScriptLineNumber): $($Info.Line)"
+                  Write-Error $error
+                  throw $error
                 }
               '';
         }
