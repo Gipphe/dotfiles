@@ -910,10 +910,14 @@ class WSL {
   [Void] Install() {
     $this.Logger.Info(" Installing and setting up WSL...")
     $ChildLogger = $this.Logger.ChildLogger()
+
+    $ChildLogger.Info(" Install WSL")
     $this.Stamp.Register("install-wsl", {
       $ChildLogger.Info($(Invoke-Native { wsl --install }))
     })
+    $ChildLogger.Info(" WSL installed")
 
+    $ChildLogger.Info(" Install nixos-wsl image")
     $this.Stamp.Register("install-nixos-wsl", {
       $ChildLogger.Info($(Invoke-WebRequest `
         -Uri "https://github.com/nix-community/NixOS-WSL/releases/download/2311.5.3/nixos-wsl.tar.gz" `
@@ -922,7 +926,9 @@ class WSL {
       $ChildLogger.Info($(Invoke-Native { wsl --import "NixOS" "$HOME\NixOS\" "$HOME\Downloads\nixos-wsl.tar.gz" }))
       $ChildLogger.Info($(Invoke-Native { wsl --set-default "NixOS" }))
     })
+    $ChildLogger.Info(" nixos-wsl installed")
 
+    $ChildLogger.Info(" Configure nixos-wsl")
     $this.Stamp.Register("configure-nixos", {
       $ChildLogger.Info($(Invoke-Native {
         wsl -d "NixOS" -- `
@@ -932,6 +938,7 @@ class WSL {
           '&&' nixos-rebuild --extra-experimental-features 'flakes nix-command' switch --flake '"$(pwd)#Jarle"'
       }))
     })
+    $ChildLogger.Info(" nixos-wsl configured")
     $this.Logger.Info(" WSL installed and set up.")
   }
 }
