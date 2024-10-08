@@ -77,10 +77,7 @@ util.mkToggledModule [ "windows" ] {
             [Void] Install() {
               $this.Logger.Info(" Copying config files...")
               $ChildLogger = $this.Logger.ChildLogger()
-              if ($null -eq $Env:HOME) {
-                $Env:HOME = $Env:USERPROFILE
-              }
-              $baseUrl = $Env:HOME
+              $baseUrl = $Env:USERPROFILE
               $Items = Get-ChildItem -File -Recurse "$($this.CfgDir)" | Resolve-Path -Relative -RelativeBasePath "$($this.CfgDir)"
 
               $Items | ForEach-Object {

@@ -46,7 +46,6 @@ util.mkModule {
     ./games
     ./home.nix
     ./logger.nix
-    ./logger.nix
     ./programs.nix
     ./psUtils.nix
     ./registry.nix

@@ -5,20 +5,17 @@
   ...
 }:
 let
-  cfg = config.windows.games.fs22;
+  cfg = config.gipphe.windows.games.fs22;
   inherit (import ../helpers.nix { inherit lib; }) concatStringsList;
 in
 util.mkToggledModule
   [
-    "winodws"
+    "windows"
     "games"
   ]
   {
     name = "fs22";
     options.gipphe.windows.games.fs22 = {
-      enable = lib.mkEnableOption "FS22 mod management" // {
-        default = true;
-      };
       modUrls = lib.mkOption {
         description = "URLs to mods to add.";
         type = with lib.types; listOf str;
@@ -34,10 +31,7 @@ util.mkToggledModule
 
             Games([PSCustomObject]$Logger) {
               $this.Logger = $Logger
-              if ($null -eq $Env:HOME) {
-                $Env:HOME = $Env:USERPROFILE
-              }
-              $baseUrl = $Env:HOME
+              $baseUrl = $Env:USERPROFILE
               $this.FS22ModDir = "$baseUrl/Documents/My Games/FarmingSimulator2022/mods"
 
               $this.FS22Mods = @(
