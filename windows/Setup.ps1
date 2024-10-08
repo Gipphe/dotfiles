@@ -234,7 +234,7 @@ class Env {
     $this.Logger.Info(" Setting env vars...")
     $ChildLogger = $this.Logger.ChildLogger()
     $EnvVars = @{
-      'XDG_CONFIG_HOME' = $Env:USERPROFILE\.config
+      'XDG_CONFIG_HOME' = "$($Env:USERPROFILE)\\.config"
     }
     $EnvVars.GetEnumerator() | ForEach-Object {
       $key = $_.Key

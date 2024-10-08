@@ -14,7 +14,7 @@ let
     ;
   cfg = config.gipphe.windows.environment;
   defaultEnvs = {
-    XDG_CONFIG_HOME = mkRaw "$Env:USERPROFILE\\.config";
+    XDG_CONFIG_HOME = mkRaw ''"$($Env:USERPROFILE)\\.config"'';
   };
   envs = lib.filterAttrs (_: v: v.enable) (
     lib.mapAttrs (
