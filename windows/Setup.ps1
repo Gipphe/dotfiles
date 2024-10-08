@@ -184,25 +184,25 @@ class Config {
     if ($null -eq $Env:HOME) {
       $Env:HOME = $Env:USERPROFILE
     }
-    $HOME = $Env:HOME
+    $baseUrl = $Env:HOME
     $Items = @(
-      @("$($this.CfgDir)/.config-starship.toml", ("$HOME/" + '.config/starship.toml'))
+      @("$($this.CfgDir)/.config-starship.toml", ("$baseUrl/" + '.config/starship.toml'))
 ,
-@("$($this.CfgDir)/.config-zoxide.ps1", ("$HOME/" + '.config/zoxide.ps1'))
+@("$($this.CfgDir)/.config-zoxide.ps1", ("$baseUrl/" + '.config/zoxide.ps1'))
 ,
-@("$($this.CfgDir)/.gitconfig", ("$HOME/" + '.gitconfig'))
+@("$($this.CfgDir)/.gitconfig", ("$baseUrl/" + '.gitconfig'))
 ,
-@("$($this.CfgDir)/.gitconfig_strise", ("$HOME/" + '.gitconfig_strise'))
+@("$($this.CfgDir)/.gitconfig_strise", ("$baseUrl/" + '.gitconfig_strise'))
 ,
-@("$($this.CfgDir)/.gitignore", ("$HOME/" + '.gitignore'))
+@("$($this.CfgDir)/.gitignore", ("$baseUrl/" + '.gitignore'))
 ,
-@("$($this.CfgDir)/.vimrc", ("$HOME/" + '.vimrc'))
+@("$($this.CfgDir)/.vimrc", ("$baseUrl/" + '.vimrc'))
 ,
-@("$($this.CfgDir)/.wslconfig", ("$HOME/" + '.wslconfig'))
+@("$($this.CfgDir)/.wslconfig", ("$baseUrl/" + '.wslconfig'))
 ,
-@("$($this.CfgDir)/AppData-Local-nvim-init.vim", ("$HOME/" + 'AppData/Local/nvim/init.vim'))
+@("$($this.CfgDir)/AppData-Local-nvim-init.vim", ("$baseUrl/" + 'AppData/Local/nvim/init.vim'))
 ,
-@("$($this.CfgDir)/Documents-PowerShell-Microsoft.PowerShell_profile.ps1", ("$HOME/" + 'Documents/PowerShell/Microsoft.PowerShell_profile.ps1'))
+@("$($this.CfgDir)/Documents-PowerShell-Microsoft.PowerShell_profile.ps1", ("$baseUrl/" + 'Documents/PowerShell/Microsoft.PowerShell_profile.ps1'))
 
     )
 

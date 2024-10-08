@@ -13,8 +13,8 @@ class Games {
     if ($null -eq $Env:HOME) {
       $Env:HOME = $Env:USERPROFILE
     }
-    $HOME = $Env:HOME
-    $this.FS22ModDir = "$HOME/Documents/My Games/FarmingSimulator2022/mods"
+    $baseUrl = $Env:HOME
+    $this.FS22ModDir = "$baseUrl/Documents/My Games/FarmingSimulator2022/mods"
 
     $this.FS22Mods = @(
       "https://cdn10.giants-software.com/modHub/storage/00225543/FS22_additionalCurrencies.zip",

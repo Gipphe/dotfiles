@@ -81,13 +81,13 @@ util.mkToggledModule [ "windows" ] {
               if ($null -eq $Env:HOME) {
                 $Env:HOME = $Env:USERPROFILE
               }
-              $HOME = $Env:HOME
+              $baseUrl = $Env:HOME
               $Items = @(
                 ${
                   lib.pipe files [
                     (lib.mapAttrsToList (
                       path: f: ''
-                        @("$($this.CfgDir)/${flattenPath path}", ("$HOME/" + ${toPSValue path}))
+                        @("$($this.CfgDir)/${flattenPath path}", ("$baseUrl/" + ${toPSValue path}))
                       ''
                     ))
                     (lib.concatStringsSep ",\n")

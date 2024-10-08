@@ -18,18 +18,18 @@ class Config {
     if ($null -eq $Env:HOME) {
       $Env:HOME = $Env:USERPROFILE
     }
-    $HOME = $Env:HOME
+    $baseUrl = $Env:HOME
     $Items = @(
       ".vimrc",
       ".wslconfig",
-      @("$($this.CfgDir)/git/ignore", "$HOME/.gitignore"),
-      @("$($this.CfgDir)/git/config", "$HOME/.gitconfig"),
-      @("$($this.CfgDir)/git/strise", "$HOME/.gitconfig_strise"),
-      @("$($this.CfgDir)/wezterm", "$HOME/.config/wezterm"),
-      @("$($this.CfgDir)/PSProfile.ps1", "$HOME/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"),
-      @("$($this.CfgDir)/starship.toml", "$HOME/.config/starship.toml"),
-      @("$($this.CfgDir)/zoxide.ps1", "$HOME/.config/zoxide.ps1"),
-      @("$($this.CfgDir)/nvim/init.vim", "$HOME/AppData/Local/nvim/init.vim")
+      @("$($this.CfgDir)/git/ignore", "$baseUrl/.gitignore"),
+      @("$($this.CfgDir)/git/config", "$baseUrl/.gitconfig"),
+      @("$($this.CfgDir)/git/strise", "$baseUrl/.gitconfig_strise"),
+      @("$($this.CfgDir)/wezterm", "$baseUrl/.config/wezterm"),
+      @("$($this.CfgDir)/PSProfile.ps1", "$baseUrl/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"),
+      @("$($this.CfgDir)/starship.toml", "$baseUrl/.config/starship.toml"),
+      @("$($this.CfgDir)/zoxide.ps1", "$baseUrl/.config/zoxide.ps1"),
+      @("$($this.CfgDir)/nvim/init.vim", "$baseUrl/AppData/Local/nvim/init.vim")
     )
 
     $Items | ForEach-Object {
@@ -37,7 +37,7 @@ class Config {
       $To = ''
       if ($_.GetType().Name -eq "String") {
         $From = "$($this.cfgDir)\$_"
-        $To = "$HOME\$_"
+        $To = "$baseUrl\$_"
       } else {
         $From = $_[0]
         $To = $_[1]
