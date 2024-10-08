@@ -81,7 +81,7 @@ util.mkToggledModule [ "windows" ] {
                 $Env:HOME = $Env:USERPROFILE
               }
               $baseUrl = $Env:HOME
-              $Items = Get-ChildItem -Recurse "$($this.CfgDir)" | Resolve-Path -Relative -RelativeBasePath "$($this.CfgDir)"
+              $Items = Get-ChildItem -File -Recurse "$($this.CfgDir)" | Resolve-Path -Relative -RelativeBasePath "$($this.CfgDir)"
 
               $Items | ForEach-Object {
                 $From = Resolve-PathNice "$($this.CfgDir)/$_"
