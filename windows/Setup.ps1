@@ -151,7 +151,7 @@ class Stamp {
 
   Stamp([String]$Dirname) {
     $this.sep = [IO.Path]::DirectorySeparatorChar
-    $this.STAMP = [IO.Path]::GetFullPath("${Dirname}$($this.sep)..$($this.sep)..$($this.sep)STAMP")
+    $this.STAMP = [IO.Path]::GetFullPath("${Dirname}$($this.sep)STAMP")
 
     $this.Initialize()
   }

@@ -1,4 +1,8 @@
-{ lib, util, ... }:
+{
+  lib,
+  util,
+  ...
+}:
 util.mkModule {
   hm.gipphe.windows.powershell-script =
     lib.mkOrder (import ./order.nix).stamp # powershell
@@ -9,7 +13,7 @@ util.mkModule {
 
           Stamp([String]$Dirname) {
             $this.sep = [IO.Path]::DirectorySeparatorChar
-            $this.STAMP = [IO.Path]::GetFullPath("''${Dirname}$($this.sep)..$($this.sep)..$($this.sep)STAMP")
+            $this.STAMP = [IO.Path]::GetFullPath("''${Dirname}$($this.sep)STAMP")
 
             $this.Initialize()
           }
