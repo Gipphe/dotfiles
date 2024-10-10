@@ -27,8 +27,8 @@ in
       );
 
       plugins."autolock location=\"file:~/.config/zellij/plugins/zellij-autolock.wasm\"" = {
-        triggers = "nvim|vim";
-        watch_triggers = "fzf|zoxide|atuin";
+        triggers = "nvim";
+        watch_triggers = "vim|fzf|zoxide|atuin|yazi|yy|less";
         watch_interval = "1.0";
       };
     };
