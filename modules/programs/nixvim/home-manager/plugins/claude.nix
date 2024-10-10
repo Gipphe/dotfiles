@@ -13,7 +13,7 @@ in
         name = "claude.vim";
         src = pkgs.fetchFromGitHub {
           owner = "pasky";
-          repo = "claude.nvim";
+          repo = "claude.vim";
           rev = "883c1fcad735f5e9916fddea54e7068349cc5d59";
           hash = "";
         };
