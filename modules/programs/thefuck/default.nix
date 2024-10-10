@@ -5,7 +5,7 @@ util.mkProgram {
     programs.thefuck.enable = true;
     xdg.configFile."thefuck/settings.py".text = # python
       ''
-        exclude_rules = ["fix_file"]
+        priority = { "fix_file": 2000 }
       '';
   };
 }
