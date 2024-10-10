@@ -1,11 +1,10 @@
 {
   pkgs,
-  lib,
   config,
   ...
 }:
 let
-  helpers = lib.nixvim;
+  helpers = config.lib.nixvim;
 in
 {
   programs.nixvim = {
