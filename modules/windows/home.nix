@@ -122,14 +122,18 @@ util.mkToggledModule [ "windows" ] {
           $Config.Install()
         '';
 
-    home.activation = lib.mapAttrs' (path: v: {
-      name = "copy-windows-file-${builtins.baseNameOf path}";
-      value =
-        lib.hm.dag.entryAfter [ "filesChanged" ] # powershell
-          ''
-            run mkdir -p "$(dirname -- "${vcsConfigs}/${path}")"
-            run cp -Lf "${v.source}" "${vcsConfigs}/${path}"
-          '';
-    }) files;
+    home.activation =
+      (lib.mapAttrs' (path: v: {
+        name = "copy-windows-file-${builtins.baseNameOf path}";
+        value =
+          lib.hm.dag.entryBetween [ "filesChanged" ] [ "copied-windows-files" ] # powershell
+            ''
+              run mkdir -p "$(dirname -- "${vcsConfigs}/${path}")"
+              run cp -Lf "${v.source}" "${vcsConfigs}/${path}"
+            '';
+      }) files)
+      // {
+        copied-windows-files = lib.hm.dag.entryAfter [ "filesChanged" ] "";
+      };
   };
 }
