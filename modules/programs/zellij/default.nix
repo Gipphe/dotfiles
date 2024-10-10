@@ -32,7 +32,6 @@ util.mkProgram {
         settings = {
           # copy_command = "xclip -in -sel clip";
           copy_on_select = true;
-          theme = "catppuccin-macchiato";
           ui = {
             pane_frames = {
               rounded_corners = false;
