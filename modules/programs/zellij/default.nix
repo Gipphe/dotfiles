@@ -1,5 +1,7 @@
 {
+  lib,
   util,
+  config,
   pkgs,
   ...
 }:
@@ -62,8 +64,8 @@ util.mkProgram {
       zellij.enable = true;
 
       fish.shellAbbrs = {
-        zq = "zellij kill-session $ZELLIJ_SESSION_NAME";
-        zj = "zellij";
+        zq = "${lib.getExe config.programs.zellij.package} kill-session $ZELLIJ_SESSION_NAME";
+        zj = "${lib.getExe config.programs.zellij.package}";
       };
     };
   };
