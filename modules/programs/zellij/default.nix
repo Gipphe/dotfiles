@@ -30,13 +30,8 @@ util.mkProgram {
         enable = true;
 
         settings = {
-          # copy_command = "xclip -in -sel clip";
           copy_on_select = true;
-          ui = {
-            pane_frames = {
-              rounded_corners = false;
-            };
-          };
+          ui.pane_frames.rounded_corners = false;
           keybinds = lib.mergeAttrsList [
             (section "move" (bind "Ctrl e" { SwitchToMode = "Normal"; }))
             (unbind "Ctrl q")
@@ -54,8 +49,8 @@ util.mkProgram {
               lib.mergeAttrsList [
                 (bind "Ctrl h" { MoveFocusOrTab = "Left"; })
                 (bind "Ctrl l" { MoveFocusOrTab = "Right"; })
-                (bind "Ctrl j" { MoveFocusOrTab = "Down"; })
-                (bind "Ctrl k" { MoveFocusOrTab = "Up"; })
+                (bind "Ctrl j" { MoveFocus = "Down"; })
+                (bind "Ctrl k" { MoveFocus = "Up"; })
                 (bind "Ctrl y" {
                   "LaunchOrFocusPlugin \"file:~/.config/zellij/plugins/zj_forgot.wasm\"" = {
                     floating = true;
