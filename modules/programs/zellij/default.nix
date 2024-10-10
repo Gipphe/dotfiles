@@ -46,6 +46,10 @@ util.mkProgram {
                 (bind "Ctrl l" { MoveFocusOrTab = "Right"; })
                 (bind "Ctrl j" { MoveFocus = "Down"; })
                 (bind "Ctrl k" { MoveFocus = "Up"; })
+                (bind "Ctrl u" { HalfPageScrollUp = [ ]; })
+                (bind "Ctrl d" { HalfPageScrollDown = [ ]; })
+                (bind "Ctrl f" { PageScrollDown = [ ]; })
+                (bind "Ctrl b" { PageSCrollUp = [ ]; })
               ]
             ))
           ];
