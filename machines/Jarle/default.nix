@@ -27,6 +27,7 @@ util.mkToggledModule [ "machines" ] {
         work-slim.enable = true;
         work-wsl.enable = true;
       };
+      programs.wezterm.enable = true;
     };
   };
 
