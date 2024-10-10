@@ -72,18 +72,16 @@
 	autocrlf = false
 	editor = "nvim"
 	eol = "lf"
-	pager = "/nix/store/7i6kn19wsi21rlwh6kd0cb3rnphz79c1-diff-so-fancy-1.4.4/bin/diff-so-fancy | /nix/store/zz05q2d70marhxnd3nykfvi0jdfw8z2z-less-661/bin/less '--tabs=4' -RFX"
+	pager = "less '--tabs=4' -RFX"
 	safecrlf = false
 	whitespace = "fix,-indent-with-non-tab,trailing-space,cr-at-eol"
 
-[credential]
-	credentialStore = "gpg"
 
 [credential "https://gist.github.com"]
-	helper = "/nix/store/rw4hd1b2h5qavw5xhzqymqyy7adkai4w-gh-2.58.0/bin/gh auth git-credential"
+	helper = "gh auth git-credential"
 
 [credential "https://github.com"]
-	helper = "/nix/store/rw4hd1b2h5qavw5xhzqymqyy7adkai4w-gh-2.58.0/bin/gh auth git-credential"
+	helper = "gh auth git-credential"
 
 [diff-so-fancy]
 	changeHunkIndicators = true
@@ -92,13 +90,11 @@
 	useUnicodeRuler = true
 
 [gpg]
-	program = "/nix/store/3l2rsi089jdwk17kmcpwwfbig8437lm9-gnupg-2.4.5/bin/gpg2"
+	program = "gpg2"
 
 [init]
 	defaultBranch = "main"
 
-[interactive]
-	diffFilter = "/nix/store/7i6kn19wsi21rlwh6kd0cb3rnphz79c1-diff-so-fancy-1.4.4/bin/diff-so-fancy --patch"
 
 [merge]
 	stat = "true"
@@ -127,3 +123,4 @@
 	email = "gipphe@gmail.com"
 	name = "Victor Nascimento Bakke"
 	signingKey = "23723701395B436C"
+

@@ -224,34 +224,14 @@ util.mkProgram {
         hide-flake = "!git add --intent-to-add flake.nix flake.lock && git update-index --assume-unchanged flake.nix flake.lock";
       };
     };
-    home.activation.copy-git-config-for-windows = lib.hm.dag.entryAfter [ "onFilesChange" ] (
-      let
-        script = pkgs.writeShellApplication {
-          name = "copy-git-config";
-          runtimeInputs = with pkgs; [
-            gnused
-            gnugrep
-          ];
-          runtimeEnv = {
-            toDir = "${config.home.homeDirectory}/projects/dotfiles/windows/Config/git";
-            fromDir = "${config.xdg.configHome}/git";
-          };
-          text = ''
-            to_config="$toDir/config"
-            to_ignore="$toDir/ignore"
-            to_strise="$toDir/strise"
 
-            from_config="$fromDir/config"
-            from_ignore="$fromDir/ignore"
-            from_strise=$(grep -Eo '/nix/store/.*-hm_gitconfig' "$from_config" | xargs)
-
-            rm -rf "$toDir"
-            mkdir -p "$toDir"
-
-            cp -rL "$from_strise" "$to_strise"
-            cp -rL "$from_ignore" "$to_ignore"
-
-            sed -r 's!/nix/store/.*/(\S+)!\1!' "$from_config" \
+    gipphe.windows.home.file = {
+      ".config/git/config".source =
+        pkgs.runCommandNoCC "git_config_windows"
+          { config = lib.generators.toGitINI config.programs.git.iniContent; } # bash
+          ''
+            echo "$config" \
+            | sed -r 's!/nix/store/.*/(\S+)!\1!' \
             | sed "s!/nix/store/.*-hm_gitconfig!./.gitconfig_strise!" \
             | sed "/credentialStore/d" \
             | sed "/\[credential\]/d" \
@@ -259,17 +239,8 @@ util.mkProgram {
             | sed "/\[diff\]/d" \
             | sed "/diffFilter =/d" \
             | sed "/\[interactive\]/d" \
-            | tee "$to_config" >/dev/null
+            | tee "$out" >/dev/null
           '';
-        };
-      in
-      "run ${script}/bin/copy-git-config"
-    );
-
-    gipphe.windows.home.file = {
-      ".config/git/config".text = lib.pipe config.programs.git.iniContent [
-        lib.generators.toGitINI
-      ];
       ".config/git/strise".text = lib.pipe config.programs.git.includes [
         (x: (builtins.elemAt x 0).contents)
         lib.generators.toGitINI
