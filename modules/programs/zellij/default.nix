@@ -15,9 +15,7 @@ let
   };
   bind = keys: opts: { "bind \"${keys}\"" = opts; };
   section = section: opts: { "${section}" = opts; };
-  shared_except = modes: opts: {
-    "shared_except \"${lib.concatStringsSep "\" \"" modes}\"" = opts;
-  };
+  shared_except = modes: opts: { "shared_except \"${lib.concatStringsSep "\" \"" modes}\"" = opts; };
 in
 util.mkProgram {
   name = "zellij";
@@ -25,6 +23,7 @@ util.mkProgram {
   hm = {
     xdg.configFile = {
       "zellij/layouts".source = ./layouts;
+      "zellij/plugins/zj_forgot.wasm".source = zj_forgot;
     };
     programs = {
       zellij.enable = true;
@@ -58,7 +57,7 @@ util.mkProgram {
               (bind "Ctrl j" { MoveFocusOrTab = "Down"; })
               (bind "Ctrl k" { MoveFocusOrTab = "Up"; })
               (bind "Ctrl y" {
-                "LaunchOrFocusPlugin \"file:${zj_forgot}\"" = {
+                "LaunchOrFocusPlugin \"file:~/.config/zellij/plugins/zj_forgot.wasm\"" = {
                   floating = true;
                 };
               })
