@@ -16,7 +16,7 @@ util.mkWallpaper {
     stylix.image = config.environment.wallpaper.small-memory.image;
     home.activation = lib.mkIf pkgs.stdenv.isDarwin {
       set-wallpaper = ''
-        run /usr/bin/automator -i "${./wallpaper/dynamic.heic}" "${./automator/set_desktop_wallpaper.workflow}"
+        run /usr/bin/automator -i "${./wallpaper/dynamic.heic}" "${./automator/set_desktop_wallpaper.workflow}" > /dev/null
       '';
     };
   };
