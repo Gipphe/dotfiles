@@ -46,12 +46,12 @@ util.mkProfile "cli" {
     ssh.enable = true;
     thefuck.enable = true;
     timg.enable = true;
-    tmux.enable = true;
     unzip.enable = true;
     vhs.enable = true;
     vim.enable = true;
     xclip.enable = true;
     yazi.enable = true;
+    zellij.enable = true;
     zoxide.enable = true;
   };
 }
