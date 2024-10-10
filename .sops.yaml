@@ -24,3 +24,9 @@ creation_rules:
           - *trond-arne
           - *jarle
           - *vnb-mb-pro
+  - path_regex: secrets/claude-nvim-api-key\.key
+    key_groups:
+      - age:
+          - *trond-arne
+          - *jarle
+          - *vnb-mb-pro
