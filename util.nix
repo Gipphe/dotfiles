@@ -1,9 +1,7 @@
 {
   lib,
-  gnused,
   fish,
   writeShellScriptBin,
-  writeShellApplication,
   writeTextFile,
   ...
 }:
@@ -24,50 +22,6 @@ let
     isValidPosixName
     ;
   inherit (lib.attrsets) foldlAttrs filterAttrs;
-
-  mkCopyActivationScript =
-    {
-      name,
-      fromDir,
-      toDir,
-    }:
-    writeShellApplication {
-      inherit name;
-      text = ''
-        rm -rf "${toDir}"
-        cp -rL "${fromDir}" "${toDir}"
-      '';
-    };
-
-  mkCopyFileScript =
-    {
-      name,
-      from,
-      to,
-    }:
-    writeShellApplication {
-      inherit name;
-      text = ''
-        cp -Lf "${from}" "${to}"
-      '';
-    };
-
-  copyFileFixingPaths =
-    name: from: to:
-    writeShellApplication {
-      inherit name;
-      runtimeInputs = [ gnused ];
-      runtimeEnv = {
-        inherit to from;
-      };
-      text = ''
-        toDir="$(dirname -- $to)"
-        mkdir -p "$toDir"
-        rm -f "$to"
-        sed -r 's!/nix/store/.*/bin/(\S+)!\1!' "$from" \
-        | tee "$to" >/dev/null
-      '';
-    };
 
   setCaskHash =
     cask: hash:
@@ -331,10 +285,7 @@ let
 in
 {
   inherit
-    copyFileFixingPaths
     findSiblings
-    mkCopyActivationScript
-    mkCopyFileScript
     mkEnvironment
     mkModule
     mkProfile
