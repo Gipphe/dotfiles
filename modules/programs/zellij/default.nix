@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (import ./helpers.nix { inherit lib; })
+  inherit (config.gipphe.lib.zellij)
     section
     unbind
     shared_except
@@ -14,11 +14,13 @@ let
 in
 util.mkProgram {
   name = "zellij";
-
   hm = {
-    imports = [ ./plugins ];
+    imports = [
+      ./plugins
+      ./helpers.nix
+    ];
     xdg.configFile = {
-      "zellij/layouts".source = ./layouts;
+      "zellij/layouts/main.kdl".source = ./layouts/main.kdl;
     };
     programs = {
       zellij = {

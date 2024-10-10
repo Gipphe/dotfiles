@@ -4,19 +4,20 @@ let
     url = "https://github.com/cristiand391/zj-status-bar/releases/download/0.3.0/zj-status-bar.wasm";
     hash = "sha256-seiWCtsrkFnDwXrXrAOE6y9EUWzpnb8qgHqRDdMKCeg=";
   };
+  path = "zellij/plugins/zj-status-bar.wasm";
 in
 {
   xdg.configFile = {
-    "zellij/layouts/default.kdl".text = # kdl
+    "zellij/layouts/zj-status-bar.kdl".text = # kdl
       ''
         layout {
           pane size=1 {
-            plugin location="file:~/.config/zellij/plugins/zj-status-bar.wasm"
+            plugin location="file:~/.config/${path}"
           }
           pane
         }
       '';
-    "zellij/plugins/zj-status-bar.wasm".source = zj-status-bar;
+    ${path}.source = zj-status-bar;
   };
   programs.fish.functions.zw = # fish
     ''

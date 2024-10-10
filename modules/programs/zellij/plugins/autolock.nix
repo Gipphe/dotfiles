@@ -1,11 +1,16 @@
-{ lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
 
   autolock = pkgs.fetchurl {
     url = "https://github.com/fresh2dev/zellij-autolock/releases/download/0.1.1/zellij-autolock.wasm";
     hash = "sha256-w0/tuThhDa+YaxqzUrGvovgZKNM+vSkQC7/FxmSWf8o=";
   };
-  inherit (import ../helpers.nix { inherit lib; }) section bind;
+  inherit (config.gipphe.lib.zellij) section bind;
 in
 {
   xdg.configFile."zellij/plugins/zellij-autolock.wasm".source = autolock;
