@@ -34,8 +34,8 @@ let
     writeShellApplication {
       inherit name;
       text = ''
-        run rm -rf "${toDir}"
-        run cp -rL "${fromDir}" "${toDir}"
+        rm -rf "${toDir}"
+        cp -rL "${fromDir}" "${toDir}"
       '';
     };
 
