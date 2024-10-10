@@ -19,10 +19,12 @@ in
       '';
     ${path}.source = zj-status-bar;
   };
-  programs.fish.functions.zw = # fish
-    ''
-      eval "$argv"
-      zellij pipe --name zj-status-bar:cli:tab_alert --args "pane_id=$ZELLIJ_PANE_ID,exit_code=$status"
-    '';
-
+  programs = {
+    fish.functions.zw = # fish
+      ''
+        eval "$argv"
+        zellij pipe --name zj-status-bar:cli:tab_alert --args "pane_id=$ZELLIJ_PANE_ID,exit_code=$status"
+      '';
+    zellij.settings.default-layout = "zj-status-bar";
+  };
 }
