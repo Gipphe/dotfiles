@@ -307,10 +307,19 @@ let
         else
           checkPhase;
     };
+  findSiblings =
+    path:
+    lib.pipe path [
+      readDir
+      (lib.attrsets.filterAttrs (name: _: name != "default.nix"))
+      attrNames
+      (map (x: /.${path}/${x}))
+    ];
 in
 {
   inherit
     copyFileFixingPaths
+    findSiblings
     mkCopyActivationScript
     mkEnvironment
     mkModule

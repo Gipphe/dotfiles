@@ -2,28 +2,23 @@
   lib,
   util,
   config,
-  pkgs,
   ...
 }:
 let
-  zj_forgot = pkgs.fetchurl {
-    url = "https://github.com/karimould/zellij-forgot/releases/download/0.3.0/zellij_forgot.wasm";
-    hash = "sha256-JNQ4KXb6VzjSF0O4J8Tvq3FXUYBBabQb9ZitcR3kZFw=";
-  };
-  unbind = keys: {
-    "unbind \"${keys}\"" = [ ];
-  };
-  bind = keys: opts: { "bind \"${keys}\"" = opts; };
-  section = section: opts: { "${section}" = opts; };
-  shared_except = modes: opts: { "shared_except \"${lib.concatStringsSep "\" \"" modes}\"" = opts; };
+  inherit (import ./helpers.nix { inherit lib; })
+    section
+    unbind
+    shared_except
+    bind
+    ;
 in
 util.mkProgram {
   name = "zellij";
 
   hm = {
+    imports = [ ./plugins ];
     xdg.configFile = {
       "zellij/layouts".source = ./layouts;
-      "zellij/plugins/zj_forgot.wasm".source = zj_forgot;
     };
     programs = {
       zellij = {
@@ -51,11 +46,6 @@ util.mkProgram {
                 (bind "Ctrl l" { MoveFocusOrTab = "Right"; })
                 (bind "Ctrl j" { MoveFocus = "Down"; })
                 (bind "Ctrl k" { MoveFocus = "Up"; })
-                (bind "Ctrl y" {
-                  "LaunchOrFocusPlugin \"file:~/.config/zellij/plugins/zj_forgot.wasm\"" = {
-                    floating = true;
-                  };
-                })
               ]
             ))
           ];
