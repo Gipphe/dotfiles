@@ -15,22 +15,7 @@ in
       settings = import ./presets { inherit pkgs lib; };
     };
 
-    home.activation.copy-starship-config = lib.hm.dag.entryAfter [ "onFilesChange" ] (
-      let
-        script = pkgs.writeShellApplication {
-          name = "starship-config-copy";
-          runtimeEnv = {
-            from = "${config.xdg.configHome}/starship.toml";
-            to = "${config.home.homeDirectory}/projects/dotfiles/windows/Config/starship.toml";
-          };
-          text = ''
-            cp -f "$from" "$to"
-          '';
-        };
-      in
-      ''
-        run ${lib.getExe script}
-      ''
-    );
+    gipphe.windows.home.file.".config/starship.toml".source =
+      config.xdg.configFile."starship.toml".source;
   };
 }

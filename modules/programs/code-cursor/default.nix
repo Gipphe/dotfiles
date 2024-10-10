@@ -46,6 +46,11 @@ util.mkProgram {
       (lib.mkIf pkgs.stdenv.isLinux {
         xdg.configFile."Cursor/User/settings.json".source = cfg.configFile;
       })
+
+      {
+        gipphe.windows.home.file."AppData/Roaming/Cursor/User/settings.json".source =
+          config.gipphe.programs.code-cursor.configFile;
+      }
     ]
   );
   system-darwin.homebrew.casks = lib.mkIf (!cfg.wsl) [ "cursor" ];

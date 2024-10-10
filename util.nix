@@ -39,6 +39,19 @@ let
       '';
     };
 
+  mkCopyFileScript =
+    {
+      name,
+      from,
+      to,
+    }:
+    writeShellApplication {
+      inherit name;
+      text = ''
+        cp -Lf "${from}" "${to}"
+      '';
+    };
+
   copyFileFixingPaths =
     name: from: to:
     writeShellApplication {
@@ -321,6 +334,7 @@ in
     copyFileFixingPaths
     findSiblings
     mkCopyActivationScript
+    mkCopyFileScript
     mkEnvironment
     mkModule
     mkProfile

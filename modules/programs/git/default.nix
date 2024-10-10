@@ -7,6 +7,23 @@
 }:
 util.mkProgram {
   name = "git";
+  options.gipphe.programs.git.windows = {
+    config = lib.mkOption {
+      description = "Config to be used on Windows";
+      type = lib.types.package;
+      internal = true;
+    };
+    strise = lib.mkOption {
+      description = "Config for Strise to be used on Windows";
+      type = lib.types.package;
+      internal = true;
+    };
+    ignores = lib.mkOption {
+      description = "Git ignore for Windows";
+      type = lib.types.path;
+      internal = true;
+    };
+  };
   hm = {
     home.packages =
       let
@@ -248,5 +265,16 @@ util.mkProgram {
       in
       "run ${script}/bin/copy-git-config"
     );
+
+    gipphe.windows.home.file = {
+      ".config/git/config".text = lib.pipe config.programs.git.iniContent [
+        lib.generators.toGitINI
+      ];
+      ".config/git/strise".text = lib.pipe config.programs.git.includes [
+        (x: (builtins.elemAt x 0).contents)
+        lib.generators.toGitINI
+      ];
+      ".config/git/ignore".source = config.xdg.configFile."git/ignore".source;
+    };
   };
 }

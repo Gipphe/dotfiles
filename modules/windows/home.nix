@@ -6,11 +6,25 @@
   ...
 }:
 let
+  storeFileName =
+    path:
+    let
+      safeChars = [
+        "+"
+        "."
+        "_"
+        "?"
+        "="
+      ] ++ lib.lowerChars ++ lib.upperChars ++ lib.stringToCharacters "0123456789";
+      empties = l: lib.genList (x: "") (lib.length l);
+      unsafeInName = lib.stringToCharacters (lib.replaceStrings safeChars (empties safeChars) path);
+      safeName = lib.replaceStrings unsafeInName (empties unsafeInName) path;
+    in
+    "win_" + safeName;
   cfg = config.gipphe.windows.home;
   files = lib.filterAttrs (_: v: v.enable) cfg.file;
   vcsConfigs = "${config.gipphe.windows.vcsPath}/windows/configs";
   order = import ./order.nix;
-  inherit (import ./helpers.nix { inherit lib; }) toPSValue;
 in
 util.mkToggledModule [ "windows" ] {
   name = "home";
@@ -20,19 +34,16 @@ util.mkToggledModule [ "windows" ] {
     '';
     type = lib.types.attrsOf (
       lib.types.submodule (
-        {
-          name,
-          config,
-          options,
-          ...
-        }:
+        { name, config, ... }:
         {
           config = {
             source = lib.mkIf (config.text != null) (
-              let
-                name' = "home-file-" + lib.replaceStrings [ "/" ] [ "-" ] name;
-              in
-              lib.mkDerivedConfig options.text (pkgs.writeText name')
+              lib.mkDefault (
+                pkgs.writeTextFile {
+                  inherit (config) text;
+                  name = storeFileName name;
+                }
+              )
             );
           };
           options = {
@@ -111,27 +122,14 @@ util.mkToggledModule [ "windows" ] {
           $Config.Install()
         '';
 
-    home.activation =
-      (lib.mapAttrs' (
-        path:
-        { source, ... }:
-        # bash
-        {
-          name = "copy-windows-file-${path}";
-          value =
-            lib.hm.dag.entryBetween [ "filesChanged" ] [ "chmod-windows-configs" ] # bash
-              ''
-                run mkdir -p "${vcsConfigs}/$(dirname -- '${path}')"
-                run cp -f '${source}' '${vcsConfigs}/${path}'
-              '';
-        }
-      ) files)
-      // {
-        chmod-windows-configs =
-          lib.hm.dag.entryAfter [ "filesChanged" ] # bash
-            ''
-              chmod -R +rwx '${vcsConfigs}'
-            '';
-      };
+    home.activation = lib.mapAttrs' (path: v: {
+      name = "copy-windows-file-${builtins.baseNameOf path}";
+      value =
+        lib.hm.dag.entryAfter [ "filesChanged" ] # powershell
+          ''
+            run mkdir -p "$(dirname -- "${vcsConfigs}/${path}")"
+            run cp -Lf "${v.source}" "${vcsConfigs}/${path}"
+          '';
+    }) files;
   };
 }

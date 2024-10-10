@@ -78,18 +78,12 @@ util.mkProfile "windows-setup" {
     home = {
       enable = true;
       file = {
-        ".vimrc".source = ../windows/Config/.vimrc;
-        ".wslconfig".source = ../windows/Config/.wslconfig;
-        ".gitignore".source = ../windows/Config/git/ignore;
-        ".gitconfig".source = ../windows/Config/git/config;
-        ".gitconfig_strise".source = ../windows/Config/git/strise;
+        ".vimrc".source = ../modules/windows/config/.vimrc;
+        ".wslconfig".source = ../modules/windows/config/.wslconfig;
         # TODO: support directories
         # ".config/wezterm".source = ../windows/Config/wezterm:
-        "Documents/PowerShell/Microsoft.PowerShell_profile.ps1".source = ../windows/Config/PSProfile.ps1;
-        ".config/starship.toml".source = ../windows/Config/starship.toml;
-        ".config/zoxide.ps1".source = ../windows/Config/zoxide.ps1;
-        "AppData/Local/nvim/init.vim".source = ../windows/Config/nvim/init.vim;
-        "AppData/Roaming/Cursor/User/settings.json".source = config.gipphe.programs.code-cursor.configFile;
+        "Documents/PowerShell/Microsoft.PowerShell_profile.ps1".source = ../modules/windows/config/PSProfile.ps1;
+        "AppData/Local/nvim/init.vim".source = ../modules/windows/config/nvim/init.vim;
       };
     };
     environment = {

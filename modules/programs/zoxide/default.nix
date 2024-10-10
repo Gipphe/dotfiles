@@ -1,5 +1,4 @@
 {
-  lib,
   config,
   util,
   ...
@@ -14,10 +13,9 @@ util.mkProgram {
         "cd"
       ];
     };
-    home.activation.set-zoxide-options =
-      lib.hm.dag.entryAfter [ "onFilesChange" ] # bash
-        ''
-          run echo "Invoke-Expression (& { (zoxide init ${builtins.toString config.programs.zoxide.options} powershell | Out-String) })" > "${config.home.homeDirectory}/projects/dotfiles/windows/Config/zoxide.ps1"
-        '';
+    gipphe.windows.home.file.".config/zoxide.ps1".text = # powershell
+      ''
+        run echo "Invoke-Expression (& { (zoxide init ${builtins.toString config.programs.zoxide.options} powershell | Out-String) })" > "${config.home.homeDirectory}/projects/dotfiles/windows/Config/zoxide.ps1"
+      '';
   };
 }
