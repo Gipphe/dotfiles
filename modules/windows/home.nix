@@ -121,8 +121,8 @@ util.mkToggledModule [ "windows" ] {
           value =
             lib.hm.dag.entryBetween [ "filesChanged" ] [ "chmod-windows-configs" ] # bash
               ''
-                mkdir -p "${vcsConfigs}/$(dirname -- '${path}')"
-                cp -f '${source}' '${vcsConfigs}/${path}'
+                run mkdir -p "${vcsConfigs}/$(dirname -- '${path}')"
+                run cp -f '${source}' '${vcsConfigs}/${path}'
               '';
         }
       ) files)

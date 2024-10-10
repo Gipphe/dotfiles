@@ -91,7 +91,7 @@ util.mkModule {
         pkg = pkgs.writeText "windows-powershell-script" cfg.powershell-script;
       in
       lib.hm.dag.entryAfter [ "onFilesChange" ] ''
-        cp -f '${pkg}' '${cfg.destination}/Setup.ps1'
+        run cp -f '${pkg}' '${cfg.destination}/Setup.ps1'
       '';
   };
 }
