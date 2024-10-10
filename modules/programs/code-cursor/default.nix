@@ -41,7 +41,10 @@ util.mkProgram {
             '')
           ];
         };
-        xdg.configFile."Cursor/User/settings.json".source = lib.mkIf pkgs.stdenv.isLinux cfg.configFile;
+      })
+
+      (lib.mkIf pkgs.stdenv.isLinux {
+        xdg.configFile."Cursor/User/settings.json".source = cfg.configFile;
       })
     ]
   );
