@@ -7,18 +7,18 @@ let
   path = "zellij/plugins/zj-status-bar.wasm";
 in
 {
-  xdg.configFile = {
-    "zellij/layouts/zj-status-bar.kdl".text = # kdl
+  gipphe.programs.zellij.layouts = {
+    "zj-status-bar".text = # kdl
       ''
         layout {
-          pane size=1 {
+          pane borderless=true size=1 {
             plugin location="file:~/.config/${path}"
           }
           pane
         }
       '';
-    ${path}.source = zj-status-bar;
   };
+  xdg.configFile.${path}.source = zj-status-bar;
   programs = {
     fish.functions.zw = # fish
       ''

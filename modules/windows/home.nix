@@ -6,21 +6,6 @@
   ...
 }:
 let
-  storeFileName =
-    path:
-    let
-      safeChars = [
-        "+"
-        "."
-        "_"
-        "?"
-        "="
-      ] ++ lib.lowerChars ++ lib.upperChars ++ lib.stringToCharacters "0123456789";
-      empties = l: lib.genList (x: "") (lib.length l);
-      unsafeInName = lib.stringToCharacters (lib.replaceStrings safeChars (empties safeChars) path);
-      safeName = lib.replaceStrings unsafeInName (empties unsafeInName) path;
-    in
-    "win_" + safeName;
   cfg = config.gipphe.windows.home;
   files = lib.filterAttrs (_: v: v.enable) cfg.file;
   vcsConfigs = "${config.gipphe.windows.vcsPath}/windows/configs";
@@ -41,7 +26,7 @@ util.mkToggledModule [ "windows" ] {
               lib.mkDefault (
                 pkgs.writeTextFile {
                   inherit (config) text;
-                  name = storeFileName name;
+                  name = util.storeFileName "win_" name;
                 }
               )
             );

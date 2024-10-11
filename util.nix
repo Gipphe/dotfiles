@@ -280,6 +280,22 @@ let
       attrNames
       (map (x: /.${path}/${x}))
     ];
+
+  storeFileName =
+    prefix: path:
+    let
+      safeChars = [
+        "+"
+        "."
+        "_"
+        "?"
+        "="
+      ] ++ lib.lowerChars ++ lib.upperChars ++ lib.stringToCharacters "0123456789";
+      empties = l: lib.genList (x: "") (lib.length l);
+      unsafeInName = lib.stringToCharacters (lib.replaceStrings safeChars (empties safeChars) path);
+      safeName = lib.replaceStrings unsafeInName (empties unsafeInName) path;
+    in
+    "${prefix}${safeName}";
 in
 {
   inherit
@@ -295,6 +311,7 @@ in
     recurseFirstMatching
     recurseFirstMatchingIncludingSibling
     setCaskHash
+    storeFileName
     writeFishApplication
     ;
 }

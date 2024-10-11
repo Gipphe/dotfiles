@@ -1,10 +1,12 @@
 {
+  pkgs,
   lib,
   util,
   config,
   ...
 }:
 let
+  cfg = config.gipphe.programs.zellij;
   inherit (config.gipphe.lib.zellij)
     section
     unbind
@@ -14,14 +16,62 @@ let
 in
 util.mkProgram {
   name = "zellij";
+
+  options.gipphe.programs.zellij.layouts = lib.mkOption {
+    description = "Layouts for Zellij";
+    default = { };
+    type =
+      with lib.types;
+      attrsOf (
+        submodule (
+          { name, config, ... }:
+          {
+            options = {
+              enable = lib.mkOption {
+                description = "Whether this layout should be generated.";
+                type = lib.types.bool;
+                default = true;
+              };
+              text = lib.mkOption {
+                description = "Text contents for the layout.";
+                type = with lib.types; nullOr lines;
+                default = null;
+              };
+              source = lib.mkOption {
+                description = "Path to the source file.";
+                type = lib.types.path;
+              };
+            };
+            config = {
+              source = lib.mkIf (config.text != null) (
+                lib.mkDefault (
+                  pkgs.writeTextFile {
+                    inherit (config) text;
+                    name = util.storeFileName "zellij_layout_" name;
+                  }
+                )
+              );
+            };
+          }
+        )
+      );
+  };
   hm = {
     imports = [
       ./plugins
       ./helpers.nix
     ];
-    xdg.configFile = {
-      "zellij/layouts/main.kdl".source = ./layouts/main.kdl;
-    };
+    gipphe.programs.zellij.layouts.main.source = ./layouts/main.kdl;
+    xdg.configFile = lib.mapAttrs' (
+      name: layout:
+      let
+        fullName = if lib.hasSuffix ".kdl" name then name else "${name}.kdl";
+      in
+      {
+        name = "zellij/config/layouts/${fullName}";
+        value = layout;
+      }
+    ) cfg.layouts;
     programs = {
       zellij = {
         enable = true;
