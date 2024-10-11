@@ -1,1 +1,1 @@
-{ util, ... }: util.mkSimpleProgramByName "imagemagick"
+{ util, ... }: util.mkSimpleProgramModule "imagemagick"

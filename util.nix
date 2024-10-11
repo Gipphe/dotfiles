@@ -98,11 +98,9 @@ let
 
   # Version of `mkSimpleProgrma` that uses the passed name to fetch the package
   # from `pkgs`.
-  mkSimpleProgramByName = name: {
+  mkSimpleProgramModule = name: {
     imports = [ ({ pkgs, ... }@args: mkSimpleProgram name pkgs.${name} args) ];
   };
-
-  mkSimpleProgramModule = name: { imports = [ (mkSimpleProgramByName name) ]; };
 
   mkProfile = name: cfg: {
     imports = [
@@ -291,7 +289,6 @@ in
     mkProfile
     mkProgram
     mkSimpleProgram
-    mkSimpleProgramByName
     mkSimpleProgramModule
     mkToggledModule
     mkWallpaper
