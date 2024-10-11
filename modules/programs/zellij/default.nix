@@ -68,7 +68,7 @@ util.mkProgram {
         fullName = if lib.hasSuffix ".kdl" name then name else "${name}.kdl";
       in
       {
-        name = "zellij/config/layouts/${fullName}";
+        name = "zellij/layouts/${fullName}";
         value = layout;
       }
     ) cfg.layouts;
