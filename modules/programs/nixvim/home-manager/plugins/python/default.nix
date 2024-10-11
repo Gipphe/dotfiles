@@ -12,7 +12,7 @@ in
 
       lsp.servers = {
         pyright.enable = true;
-        ruff-lsp = {
+        ruff_lsp = {
           enable = true;
           onAttach.function = # lua
             ''

@@ -6,6 +6,6 @@
         client.server_capabilities.semanticTokensProvider = nil
       '';
     };
-    nil-ls.enable = true;
+    nil_ls.enable = true;
   };
 }

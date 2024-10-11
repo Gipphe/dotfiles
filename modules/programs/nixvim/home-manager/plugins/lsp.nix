@@ -13,9 +13,9 @@ in
           html.enable = true;
           # Uses haskell-tools instead
           # hls.enable = true;
-          java-language-server.enable = true;
+          java_language_server.enable = true;
           lemminx.enable = true;
-          lua-ls.enable = true;
+          lua_ls.enable = true;
           # metals.enable = true;
           sqls.enable = true;
           yamlls.enable = true;
