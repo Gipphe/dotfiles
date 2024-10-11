@@ -15,7 +15,7 @@
     extraConfigLua = ''
       require('telescope').load_extension('pnpm')
     '';
-    plugins.lsp.servers.ts-ls.onAttach.function = ''
+    plugins.lsp.servers.ts_ls.onAttach.function = ''
       vim.keymap.set("n", "<leader>cw", function()
         require('telescope').extensions.pnpm.workspace()
       end, { buffer = true, desc = "Select pnpm workspace", silent = true })
