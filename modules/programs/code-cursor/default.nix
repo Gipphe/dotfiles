@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.gipphe.programs.code-cursor;
+  configFilePath = "${cfg.configFile}";
 in
 util.mkProgram {
   name = "code-cursor";
@@ -14,10 +15,10 @@ util.mkProgram {
     wsl = lib.mkEnableOption "WSL integration";
     configFile = lib.mkOption {
       description = "Configuration file";
-      type = lib.types.path;
-      default = ./config.json;
+      type = lib.types.package;
     };
   };
+  shared.imports = [ ./settings.nix ];
   hm = lib.mkIf cfg.enable (
     lib.mkMerge [
       (lib.mkIf cfg.wsl {
@@ -48,8 +49,7 @@ util.mkProgram {
       })
 
       {
-        gipphe.windows.home.file."AppData/Roaming/Cursor/User/settings.json".source =
-          config.gipphe.programs.code-cursor.configFile;
+        gipphe.windows.home.file."AppData/Roaming/Cursor/User/settings.json".source = cfg.configFile;
       }
     ]
   );

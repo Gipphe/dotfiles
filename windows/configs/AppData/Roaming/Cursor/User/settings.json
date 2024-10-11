@@ -1,4 +1,5 @@
 {
+    "editor.fontFamily": "Fira Code Nerd Font Mono",
     "window.commandCenter": 1,
     "editor.formatOnSave": true,
     "editor.lineNumbers": "relative",
