@@ -112,7 +112,7 @@
                 "<leader>"
             ],
             "commands": [
-                "search.action.openNewEditor"
+                "workbench.action.quickOpen"
             ]
         }
     ],
