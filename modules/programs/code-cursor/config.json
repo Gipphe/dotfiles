@@ -105,6 +105,15 @@
             "commands": [
                 "workbench.view.explorer"
             ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "<leader>"
+            ],
+            "commands": [
+                "search.action.openNewEditor"
+            ]
         }
     ],
     "workbench.iconTheme": "catppuccin-perfect-macchiato",
