@@ -117,5 +117,8 @@
         }
     ],
     "workbench.iconTheme": "catppuccin-perfect-macchiato",
-    "workbench.colorTheme": "Catppuccin Macchiato"
+    "workbench.colorTheme": "Catppuccin Macchiato",
+    "nix.enableLanguageServer": true,
+    "nix.formatterPath": "nixfmt",
+    "nix.serverPath": "nil"
 }
