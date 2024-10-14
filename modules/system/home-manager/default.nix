@@ -14,7 +14,7 @@ util.mkModule {
     {
       imports = lib.optional flags.isNixDarwin inputs.mac-app-util.homeManagerModules.default;
       # Copy config from OS to home-manager
-      config.gipphe = osConfig.gipphe;
+      config.gipphe = lib.mkDefault osConfig.gipphe;
     };
 
   system-darwin.imports = [ inputs.home-manager.darwinModules.home-manager ];

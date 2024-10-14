@@ -1,125 +1,125 @@
 {
-    "editor.fontFamily": "Fira Code Nerd Font Mono",
-    "window.commandCenter": 1,
-    "editor.formatOnSave": true,
-    "editor.lineNumbers": "relative",
-    "vim.useSystemClipboard": true,
-    "vim.hlsearch": true,
-    "vim.leader": "<space>",
-    "vim.smartRelativeLine": true,
-    "extensions.experimental.affinity": {
-        "vscode.vim": 1
+  "editor.cursorSurroundingLines": 8,
+  "editor.fontFamily": "FiraCode Nerd Font Mono",
+  "editor.formatOnSave": true,
+  "editor.lineNumbers": "relative",
+  "extensions.experimental.affinity": {
+    "vscode.vim": 1
+  },
+  "nix.enableLanguageServer": true,
+  "nix.formatterPath": "/nix/store/qyfzzvz197imqqn01g2ry44car46pxl9-nixfmt-unstable-2024-08-16/bin/nixfmt",
+  "nix.serverPath": "/nix/store/ij8h81g2vsqq8723xlqb89wcj16fz8n2-nil-2024-08-06/bin/nil",
+  "vim.highlightedyank.color": "#a9dc7660",
+  "vim.highlightedyank.duration": 150,
+  "vim.highlightedyank.enable": true,
+  "vim.hlsearch": true,
+  "vim.leader": "<space>",
+  "vim.normalModeKeyBindings": [
+    {
+      "before": [
+        "K"
+      ],
+      "commands": [
+        "editor.action.showHover"
+      ]
     },
-    "editor.cursorSurroundingLines": 8,
-    "vim.highlightedyank.enable": true,
-    "vim.highlightedyank.duration": 250,
-    "vim.highlightedyank.color": "#a9dc7660",
-    "vim.normalModeKeyBindings": [
-        {
-            "before": [
-                "K"
-            ],
-            "commands": [
-                "editor.action.showHover"
-            ]
-        },
-        {
-            "before": [
-                "g",
-                "p",
-                "d"
-            ],
-            "commands": [
-                "editor.action.peekDefinition"
-            ]
-        },
-        {
-            "before": [
-                "g",
-                "h"
-            ],
-            "commands": [
-                "editor.action.showDefinitionPreviewHover"
-            ]
-        },
-        {
-            "before": [
-                "g",
-                "i"
-            ],
-            "commands": [
-                "editor.action.goToImplementation"
-            ]
-        },
-        {
-            "before": [
-                "g",
-                "p",
-                "i"
-            ],
-            "commands": [
-                "editor.action.peekImplementation"
-            ]
-        },
-        {
-            "before": [
-                "g",
-                "q"
-            ],
-            "commands": [
-                "editor.action.quickFix"
-            ]
-        },
-        {
-            "before": [
-                "g",
-                "r"
-            ],
-            "commands": [
-                "editor.action.referenceSearch.trigger"
-            ]
-        },
-        {
-            "before": [
-                "g",
-                "t"
-            ],
-            "commands": [
-                "editor.action.goToTypeDefinition"
-            ]
-        },
-        {
-            "before": [
-                "g",
-                "p",
-                "t"
-            ],
-            "commands": [
-                "editor.action.peekTypeDefinition"
-            ]
-        },
-        {
-            "before": [
-                "<leader>",
-                "e"
-            ],
-            "commands": [
-                "workbench.view.explorer"
-            ]
-        },
-        {
-            "before": [
-                "<leader>",
-                "<leader>"
-            ],
-            "commands": [
-                "workbench.action.quickOpen"
-            ]
-        }
-    ],
-    "workbench.iconTheme": "catppuccin-perfect-macchiato",
-    "workbench.colorTheme": "Catppuccin Macchiato",
-    "nix.enableLanguageServer": true,
-    "nix.formatterPath": "nixfmt",
-    "nix.serverPath": "nil"
+    {
+      "before": [
+        "g",
+        "p",
+        "d"
+      ],
+      "commands": [
+        "editor.action.peekDefinition"
+      ]
+    },
+    {
+      "before": [
+        "g",
+        "h"
+      ],
+      "commands": [
+        "editor.action.showDefinitionPreviewHover"
+      ]
+    },
+    {
+      "before": [
+        "g",
+        "i"
+      ],
+      "commands": [
+        "editor.action.goToImplementation"
+      ]
+    },
+    {
+      "before": [
+        "g",
+        "p",
+        "i"
+      ],
+      "commands": [
+        "editor.action.peekImplementation"
+      ]
+    },
+    {
+      "before": [
+        "g",
+        "q"
+      ],
+      "commands": [
+        "editor.action.quickFix"
+      ]
+    },
+    {
+      "before": [
+        "g",
+        "r"
+      ],
+      "commands": [
+        "editor.action.referenceSearch.trigger"
+      ]
+    },
+    {
+      "before": [
+        "g",
+        "t"
+      ],
+      "commands": [
+        "editor.action.goToTypeDefinition"
+      ]
+    },
+    {
+      "before": [
+        "g",
+        "p",
+        "t"
+      ],
+      "commands": [
+        "editor.action.peekTypeDefinition"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "e"
+      ],
+      "commands": [
+        "workbench.view.explorer"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "<leader>"
+      ],
+      "commands": [
+        "workbench.action.quickOpen"
+      ]
+    }
+  ],
+  "vim.smartRelativeLine": true,
+  "vim.useSystemClipboard": true,
+  "window.commandCenter": 1,
+  "workbench.colorTheme": "Catppuccin Macchiato",
+  "workbench.iconTheme": "catppuccin-perfect-macchiato"
 }

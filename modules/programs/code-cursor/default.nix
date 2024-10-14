@@ -7,18 +7,31 @@
 }:
 let
   cfg = config.gipphe.programs.code-cursor;
-  configFilePath = "${cfg.configFile}";
+  settingsContents = builtins.toJSON cfg.settings;
 in
 util.mkProgram {
   name = "code-cursor";
   options.gipphe.programs.code-cursor = {
     wsl = lib.mkEnableOption "WSL integration";
-    configFile = lib.mkOption {
-      description = "Configuration file";
+    settings = lib.mkOption {
+      description = "Settings for Cursor";
+      type = with lib.types; attrsOf anything;
+      default = { };
+    };
+    settingsPackage = lib.mkOption {
+      description = "Package holding the settings file";
       type = lib.types.package;
+      internal = true;
     };
   };
-  shared.imports = [ ./settings.nix ];
+  shared = {
+    imports = [ ./settings.nix ];
+    gipphe.programs.code-cursor.settingsPackage =
+      pkgs.runCommandNoCC "code-cursor-settings.json" { settings = builtins.toJSON cfg.settings; }
+        ''
+          echo "$settings" | ${pkgs.jq}/bin/jq '.' > $out
+        '';
+  };
   hm = lib.mkIf cfg.enable (
     lib.mkMerge [
       (lib.mkIf cfg.wsl {
@@ -35,7 +48,7 @@ util.mkProgram {
 
       (lib.mkIf (!cfg.wsl) {
         home = {
-          file."Library/Application Support/Cursor/User/settings.json".source = lib.mkIf pkgs.stdenv.isDarwin cfg.configFile;
+          file."Library/Application Support/Cursor/User/settings.json".source = lib.mkIf pkgs.stdenv.isDarwin cfg.settingsPackage;
           packages = lib.mkIf pkgs.stdenv.isLinux [
             (pkgs.writeShellScriptBin "cursor" ''
               ${pkgs.code-cursor}/bin/cursor "$@" &>/dev/null &
@@ -45,11 +58,11 @@ util.mkProgram {
       })
 
       (lib.mkIf pkgs.stdenv.isLinux {
-        xdg.configFile."Cursor/User/settings.json".source = cfg.configFile;
+        xdg.configFile."Cursor/User/settings.json".source = cfg.settingsPackage;
       })
 
       {
-        gipphe.windows.home.file."AppData/Roaming/Cursor/User/settings.json".source = cfg.configFile;
+        gipphe.windows.home.file."AppData/Roaming/Cursor/User/settings.json".source = cfg.settingsPackage;
       }
     ]
   );
