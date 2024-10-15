@@ -5,9 +5,6 @@ in
   programs.nixvim = {
     plugins.trouble = {
       enable = true;
-      settings = {
-        use_diagnostic_signs = true;
-      };
     };
     keymaps = [
       (k "n" "<leader>xx" "<cmd>TroubleToggle document_diagnostics<cr>" {
