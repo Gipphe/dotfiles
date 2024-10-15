@@ -57,6 +57,8 @@ Corporate-issued Macbook Pro with nix-darwin.
 
 Located in [`./machines/VNB-MB-Pro`](./machines/VNB-MB-Pro).
 
+<img src="./assets/VNB-MB-Pro-neofetch.png" width="600px">
+
 ### trond-arne
 
 Lenovo Ideapad laptop running NixOS.
