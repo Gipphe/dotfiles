@@ -8,6 +8,7 @@
 util.mkModule {
   hm.gipphe.programs.code-cursor.settings = {
     "editor.fontFamily" = "FiraCode Nerd Font Mono";
+    "editor.fontLigatures" = true;
     "window.commandCenter" = 1;
     "editor.formatOnSave" = true;
     "editor.lineNumbers" = "relative";
