@@ -1,6 +1,7 @@
 {
   "editor.cursorSurroundingLines": 8,
   "editor.fontFamily": "FiraCode Nerd Font Mono",
+  "editor.fontLigatures": true,
   "editor.formatOnSave": true,
   "editor.lineNumbers": "relative",
   "extensions.experimental.affinity": {
