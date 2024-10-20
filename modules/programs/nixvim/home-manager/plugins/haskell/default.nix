@@ -11,7 +11,10 @@
         haskell = [ "fourmolu" ];
         cabal = [ "cabal_fmt" ];
       };
-      lsp.servers.hls.enable = true;
+      lsp.servers.hls = {
+        enable = true;
+        installGhc = false;
+      };
     };
   };
 }
