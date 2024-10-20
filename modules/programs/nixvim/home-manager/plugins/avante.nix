@@ -1,4 +1,9 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 {
   programs = {
     nixvim = {
@@ -39,10 +44,11 @@
         };
       };
     };
-    fish.shellInit = # fish
-      ''
-        set -gx ANTHROPIC_API_KEY "$(cat ${config.sops.secrets.anthropic_api_key.path})"
-      '';
+    fish.shellInit =
+      lib.mkIf (config.programs.nixvim.plugins.avante.settings.provider == "claude") # fish
+        ''
+          set -gx ANTHROPIC_API_KEY "$(cat ${config.sops.secrets.anthropic_api_key.path})"
+        '';
   };
 
   sops.secrets.anthropic_api_key = {
