@@ -29,7 +29,9 @@ util.mkProgram {
     gipphe.programs.code-cursor.settingsPackage =
       pkgs.runCommandNoCC "code-cursor-settings.json" { settings = builtins.toJSON cfg.settings; }
         ''
-          echo "$settings" | ${pkgs.jq}/bin/jq '.' > $out
+          echo "$settings" \
+          | ${pkgs.jq}/bin/jq '.' \
+          | sed -r 's!/nix/store/.*/(\S+)!\1!' > $out
         '';
   };
   hm = lib.mkIf cfg.enable (

@@ -8,8 +8,8 @@
     "vscode.vim": 1
   },
   "nix.enableLanguageServer": true,
-  "nix.formatterPath": "/nix/store/qyfzzvz197imqqn01g2ry44car46pxl9-nixfmt-unstable-2024-08-16/bin/nixfmt",
-  "nix.serverPath": "/nix/store/ij8h81g2vsqq8723xlqb89wcj16fz8n2-nil-2024-08-06/bin/nil",
+  "nix.formatterPath": "nixfmt",
+  "nix.serverPath": "nil",
   "vim.highlightedyank.color": "#a9dc7660",
   "vim.highlightedyank.duration": 150,
   "vim.highlightedyank.enable": true,
