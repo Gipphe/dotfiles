@@ -70,9 +70,10 @@ util.mkProgram {
 
     gipphe.windows.home.file = lib.pipe config.xdg.configFile [
       (lib.filterAttrs (path: _: lib.hasPrefix "wezterm/" path))
-      (lib.mapAttrs (
+      (lib.mapAttrs' (
         p: v: {
-          source = pkgs.runCommandNoCC "windows-wezterm-config-${builtins.baseNameOf p}" { } ''
+          name = ".config/${p}";
+          value.source = pkgs.runCommandNoCC "windows-wezterm-config-${builtins.baseNameOf p}" { } ''
             sed -r 's!/nix/store/.*/bin/(\S+)!\1!' "${v.source}" \
             | tee "$out" >/dev/null
           '';
