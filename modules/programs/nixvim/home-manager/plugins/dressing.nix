@@ -1,9 +1,3 @@
-{ pkgs, ... }:
 {
-  programs.nixvim = {
-    extraPlugins = [ pkgs.vimPlugins.dressing-nvim ];
-    extraConfigLua = ''
-      require('dressing').setup({})
-    '';
-  };
+  programs.nixvim.plugins.dressing.enable = true;
 }
