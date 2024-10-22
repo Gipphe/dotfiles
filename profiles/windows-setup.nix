@@ -52,7 +52,6 @@ util.mkProfile "windows-setup" {
         "sunshine"
         "teamviewer"
         "vcredist-all"
-        "vivaldi"
         "voicemeeter"
         "wezterm"
         "windhawk"
@@ -62,6 +61,10 @@ util.mkProfile "windows-setup" {
         {
           name = "firefox-dev";
           args = "--pre";
+        }
+        {
+          name = "opera-gx";
+          args = "--params='\"/NoDesktopShortcut /NoTaskbarShortcut\"'";
         }
       ];
     };
@@ -170,10 +173,6 @@ util.mkProfile "windows-setup" {
     programs = {
       enable = true;
       manual = {
-        "Firefox Developer Edition" = {
-          stampName = "install-firefox-developer-edition";
-          url = "https://download-installer.cdn.mozilla.net/pub/devedition/releases/120.0b4/win32/en-US/Firefox%20Installer.exe";
-        };
         "LDPlayer" = {
           stampName = "install-ldplayer";
           url = "https://ldcdn.ldmnq.com/download/ldad/LDPlayer9.exe?n=LDPlayer9_ens_1001_ld.exe";
