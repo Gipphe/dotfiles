@@ -678,7 +678,7 @@ class SD {
         Pop-Location
       } catch {
         Pop-Location
-        throw $error
+        throw $error[0]
       }
       $ChildLogger.Info(" SD repo downloaded and initialized.")
     } catch {
