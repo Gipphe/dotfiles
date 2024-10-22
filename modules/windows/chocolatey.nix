@@ -7,6 +7,7 @@
 let
   cfg = config.gipphe.windows.chocolatey;
   order = import ./order.nix;
+  escapeArgs = s: builtins.replaceStrings [ "\"" ] [ "`\"" ] s;
 in
 util.mkToggledModule [ "windows" ] {
   name = "chocolatey";
@@ -69,7 +70,9 @@ util.mkToggledModule [ "windows" ] {
               $ChocoApps = @(
                 ${
                   lib.pipe cfg.programs [
-                    (builtins.map (p: if builtins.isString p then "\"${p}\"" else "@(\"${p.name}\", \"${p.args}\")"))
+                    (builtins.map (
+                      p: if builtins.isString p then "\"${p}\"" else "@(\"${p.name}\", \"${escapeArgs p.args}\")"
+                    ))
                     (lib.concatStringsSep ", ")
                   ]
                 }
