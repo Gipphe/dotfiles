@@ -214,7 +214,7 @@ class Config {
 
       Copy-Item -Force -Recurse -Path $From -Destination $To
       $FileName = Split-Path -Leaf $From
-      $ChildLogger.Info(" $FileName copied")
+      $ChildLogger.Info(" $_ copied")
     }
 
     $this.Logger.Info(" Config files copied.")

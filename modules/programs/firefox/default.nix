@@ -11,6 +11,7 @@ let
     flip
     generators
     hasAttr
+    hasPrefix
     listToAttrs
     mapAttrs
     mapAttrs'
@@ -457,7 +458,15 @@ util.mkProgram {
           );
         }
         ++ optional (hasAttr "${thisPlatform.configPath}/profiles.ini" config.home.file) {
-          "${windowsPlatform.configPath}/profiles.ini".text = generators.toINI { } profiles;
+          "${windowsPlatform.configPath}/profiles.ini".text = generators.toINI { } (
+            flip mapAttrs profiles (
+              name: val:
+              if hasPrefix "Profile" name then
+                val // { Path = "${windowsPlatform.profilesSubdir}/${val.Path}"; }
+              else
+                val
+            )
+          );
         }
         ++ flip mapAttrsToList progCfg.profiles (
           _: profile:
