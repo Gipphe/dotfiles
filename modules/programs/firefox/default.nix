@@ -103,7 +103,7 @@ util.mkModule {
   };
   hm = {
     programs.firefox = {
-      enable = true;
+      enable = cfg.enable || cfg.createFiles;
       profiles = {
         default = {
           inherit search settings userChrome;
@@ -450,7 +450,6 @@ util.mkModule {
           ];
         };
       };
-      # finalPackage = mkIf cfg.createFiles (lib.mkForce null);
     };
     gipphe = {
       programs.firefox.installs = {
