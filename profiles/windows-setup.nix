@@ -86,8 +86,6 @@ util.mkProfile "windows-setup" {
         file = {
           ".vimrc".source = ../modules/windows/config/.vimrc;
           ".wslconfig".source = ../modules/windows/config/.wslconfig;
-          # TODO: support directories
-          # ".config/wezterm".source = ../windows/Config/wezterm:
           "Documents/PowerShell/Microsoft.PowerShell_profile.ps1".source = ../modules/windows/config/PSProfile.ps1;
           "AppData/Local/nvim/init.vim".source = ../modules/windows/config/nvim/init.vim;
         };
