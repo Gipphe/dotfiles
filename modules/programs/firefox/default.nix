@@ -15,7 +15,6 @@ let
     mapAttrs
     mapAttrs'
     mapAttrsToList
-    mkEnableOption
     mkMerge
     mkOption
     nameValuePair
@@ -72,14 +71,9 @@ let
       id: install: nameValuePair "Install${id}" (installToINIAttrs install)
     );
 in
-util.mkModule {
+util.mkProgram {
+  name = "firefox";
   options.gipphe.programs.firefox = {
-    enable = mkEnableOption "firefox";
-    createFiles = mkOption {
-      type = types.bool;
-      default = false;
-      description = "Create config and profile files without installing firefox.";
-    };
     installs = mkOption {
       description = "Installations that share the default Firefox config path.";
       default = { };
@@ -103,7 +97,7 @@ util.mkModule {
   };
   hm = {
     programs.firefox = {
-      enable = cfg.enable || cfg.createFiles;
+      enable = true;
       profiles = {
         default = {
           inherit search settings userChrome;
@@ -457,8 +451,7 @@ util.mkModule {
         ${installHashes.firefox-devedition}.defaultProfile = "strise";
       };
       windows.home.file = mkMerge (
-        [ ]
-        ++ optional (cfg.installs != { }) {
+        optional (cfg.installs != { }) {
           "${windowsPlatform.configPath}/installs.ini".text = generators.toINI { } (
             mapAttrs (_: i: installToINIAttrs i) cfg.installs
           );
@@ -476,10 +469,11 @@ util.mkModule {
                 sourcePath = "${thisPlatform.profilesPath}/${profileFilePath}";
                 destPath = "${windowsPlatform.profilesPath}/${profileFilePath}";
               in
-              optional (hasAttr sourcePath config.home.file) {
-                name = destPath;
-                value.source = config.home.file.${sourcePath}.source;
-              };
+              optional (hasAttr sourcePath config.home.file) (
+                nameValuePair destPath {
+                  inherit (config.home.file.${sourcePath}) source;
+                }
+              );
             profileFiles = [
               ".keep"
               "chrome/userChrome.css"

@@ -1,7 +1,7 @@
 { util, config, ... }:
 util.mkProfile "windows-setup" {
   gipphe = {
-    programs.firefox.createFiles = true;
+    programs.firefox.enable = true;
     windows = {
       enable = true;
       destination = "${config.gipphe.homeDirectory}/projects/dotfiles/windows";
