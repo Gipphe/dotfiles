@@ -262,17 +262,7 @@ class Programs {
 
     $ChildLogger = $this.Logger.ChildLogger()
 
-    $Programs = @{ '1Password' = @{
-  'URI' = 'https://downloads.1password.com/win/1PasswordSetup-latest.exe'
-  'stamp' = 'install-1password'
-};
-
-'Firefox Developer Edition' = @{
-  'URI' = 'https://download-installer.cdn.mozilla.net/pub/devedition/releases/120.0b4/win32/en-US/Firefox%20Installer.exe'
-  'stamp' = 'install-firefox-developer-edition'
-};
-
-'LDPlayer' = @{
+    $Programs = @{ 'LDPlayer' = @{
   'URI' = 'https://ldcdn.ldmnq.com/download/ldad/LDPlayer9.exe?n=LDPlayer9_ens_1001_ld.exe'
   'stamp' = 'install-ldplayer'
 };
@@ -322,7 +312,7 @@ class Choco {
     $Installed = Invoke-Native { choco list --id-only }
 
     $ChocoApps = @(
-      "7zip", "Everything", "barrier", "cursoride", "cyberduck", "discord", "docker-desktop", "dust", "epicgameslauncher", "everythingpowertoys", "filen", "firacodenf", "fzf", "gdlauncher", "geforce-experience", "git", "godot", "greenshot", "humble-app", "irfanview", "irfanview-languages", "irfanviewplugins", "k-litecodecpack-standard", "lghub", "libresprite", "logseq", "microsoft-windows-terminal", "msiafterburner", "notion", "nvidia-broadcast", "openssh", "paint.net", "powershell-core", "powertoys", "qbittorrent", "restic", "rsync", "slack", "spotify", "starship", "steam", "sumatrapdf", "sunshine", "teamviewer", "vcredist-all", "vivaldi", "voicemeeter", "wezterm", "windhawk", "windirstat", "xnviewmp", "zoxide", @("firefox-dev", "--pre")
+      "1password", "7zip", "Everything", "barrier", "cursoride", "discord", "docker-desktop", "dust", "epicgameslauncher", "everythingpowertoys", "filen", "filezilla", "firacodenf", "fzf", "gdlauncher", "geforce-experience", "git", "godot", "greenshot", "humble-app", "irfanview", "irfanview-languages", "irfanviewplugins", "k-litecodecpack-standard", "lghub", "libresprite", "logseq", "microsoft-windows-terminal", "msiafterburner", "notion", "nvidia-broadcast", "openssh", "paint.net", "powershell-core", "powertoys", "qbittorrent", "restic", "rsync", "slack", "spotify", "starship", "steam", "sumatrapdf", "sunshine", "teamviewer", "vcredist-all", "voicemeeter", "wezterm", "windhawk", "windirstat", "xnviewmp", "zoxide", @("firefox-dev", "--pre"), @("opera-gx", "--params='"/NoDesktopShortcut /NoTaskbarShortcut"'")
     )
 
     $ChildLogger = $this.Logger.ChildLogger()
