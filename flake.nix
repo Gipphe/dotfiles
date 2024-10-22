@@ -105,6 +105,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hm-src = {
+      url = "github:nix-community/home-manager";
+      flake = false;
+    };
+
     devshell = {
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs";

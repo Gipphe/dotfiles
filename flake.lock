@@ -968,6 +968,22 @@
         "type": "github"
       }
     },
+    "hm-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1729551526,
+        "narHash": "sha256-7LAGY32Xl14OVQp3y6M43/0AtHYYvV6pdyBcp3eoz0s=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "5ec753a1fc4454df9285d8b3ec0809234defb975",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -1462,6 +1478,7 @@
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "haskell-tools-nvim": "haskell-tools-nvim",
+        "hm-src": "hm-src",
         "home-manager": "home-manager",
         "mac-app-util": "mac-app-util",
         "neovim-overlay": "neovim-overlay",
