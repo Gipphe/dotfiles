@@ -10,6 +10,18 @@ let
   files = lib.filterAttrs (_: v: v.enable) cfg.file;
   vcsConfigs = "${config.gipphe.windows.vcsPath}/windows/configs";
   order = import ./order.nix;
+  normalize =
+    path:
+    builtins.replaceStrings
+      [
+        "/"
+        " "
+      ]
+      [
+        ""
+        ""
+      ]
+      path;
 in
 util.mkToggledModule [ "windows" ] {
   name = "home";
@@ -96,7 +108,7 @@ util.mkToggledModule [ "windows" ] {
 
                 Copy-Item -Force -Recurse -Path $From -Destination $To
                 $FileName = Split-Path -Leaf $From
-                $ChildLogger.Info(" $FileName copied")
+                $ChildLogger.Info(" $_ copied")
               }
 
               $this.Logger.Info(" Config files copied.")
@@ -107,18 +119,16 @@ util.mkToggledModule [ "windows" ] {
           $Config.Install()
         '';
 
-    home.activation =
-      (lib.mapAttrs' (path: v: {
-        name = "copy-windows-file-${builtins.baseNameOf path}";
+    home.activation = (
+      lib.mapAttrs' (path: v: {
+        name = "copy-windows-file-${normalize path}";
         value =
-          lib.hm.dag.entryBetween [ "filesChanged" ] [ "copied-windows-files" ] # powershell
+          lib.hm.dag.entryAfter [ "filesChanged" ] # bash
             ''
-              run mkdir -p "$(dirname -- "${vcsConfigs}/${path}")"
-              run cp -Lf "${v.source}" "${vcsConfigs}/${path}"
+              run mkdir -p "$(dirname -- '${vcsConfigs}/${path}')"
+              run cp -Lf '${v.source}' '${vcsConfigs}/${path}'
             '';
-      }) files)
-      // {
-        copied-windows-files = lib.hm.dag.entryAfter [ "filesChanged" ] "";
-      };
+      }) files
+    );
   };
 }
