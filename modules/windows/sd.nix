@@ -35,7 +35,7 @@ util.mkToggledModule [ "windows" ] {
               $ChildLogger.Info(" SD repo downloaded and initialized.")
             } catch {
               $ChildLogger.Info("✗ Failed to setup SD")
-              $ChildLogger.Info($error)
+              $ChildLogger.Info($error[0])
             } finally {
               Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
             }
