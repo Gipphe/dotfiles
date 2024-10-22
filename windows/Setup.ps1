@@ -667,14 +667,14 @@ class SD {
     $SDDir = "$($this.Dirname)\_temp"
     Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
     try {
-      $ChildLogger.Info($(Invoke-Native { git clone "https://codeberg.org/Gipphe/sd.git" "$SDDir" }))
+      Invoke-Native { git clone "https://codeberg.org/Gipphe/sd.git" "$SDDir" }
       if (-not (Test-Path -PathType Container "$SDDir")) {
         $ChildLogger.Info("✗ $SDDir does not exist, even though we _just_ cloned into it.")
         return
       }
       try {
         Push-Location $SDDir
-        $ChildLogger.Info($(Invoke-Native { pwsh .\sd.ps1 }))
+        Invoke-Native { pwsh .\sd.ps1 }
         Pop-Location
       } catch {
         Pop-Location
