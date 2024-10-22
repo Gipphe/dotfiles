@@ -6,6 +6,7 @@ util.mkProfile "windows-setup" {
     chocolatey = {
       enable = true;
       programs = [
+        "1password"
         "7zip"
         "Everything"
         "barrier"
@@ -169,10 +170,6 @@ util.mkProfile "windows-setup" {
     programs = {
       enable = true;
       manual = {
-        "1Password" = {
-          stampName = "install-1password";
-          url = "https://downloads.1password.com/win/1PasswordSetup-latest.exe";
-        };
         "Firefox Developer Edition" = {
           stampName = "install-firefox-developer-edition";
           url = "https://download-installer.cdn.mozilla.net/pub/devedition/releases/120.0b4/win32/en-US/Firefox%20Installer.exe";
