@@ -25,109 +25,136 @@ util.mkModule {
     "vim.highlightedyank.color" = "#a9dc7660";
     "vim.normalModeKeyBindings" = [
       {
-        "before" = [
-          "K"
-        ];
-        "commands" = [
-          "editor.action.showHover"
-        ];
+        before = [ "K" ];
+        commands = [ "editor.action.showHover" ];
       }
       {
-        "before" = [
+        before = [ "s" ];
+        after = [ "\\" ];
+      }
+      {
+        before = [
           "g"
           "p"
           "d"
         ];
-        "commands" = [
-          "editor.action.peekDefinition"
-        ];
+        commands = [ "editor.action.peekDefinition" ];
       }
       {
-        "before" = [
+        before = [
           "g"
           "h"
         ];
-        "commands" = [
-          "editor.action.showDefinitionPreviewHover"
-        ];
+        commands = [ "editor.action.showDefinitionPreviewHover" ];
       }
       {
-        "before" = [
+        before = [
           "g"
           "i"
         ];
-        "commands" = [
-          "editor.action.goToImplementation"
-        ];
+        commands = [ "editor.action.goToImplementation" ];
       }
       {
-        "before" = [
+        before = [
           "g"
           "p"
           "i"
         ];
-        "commands" = [
-          "editor.action.peekImplementation"
-        ];
+        commands = [ "editor.action.peekImplementation" ];
       }
       {
-        "before" = [
+        before = [
           "g"
           "q"
         ];
-        "commands" = [
-          "editor.action.quickFix"
-        ];
+        commands = [ "editor.action.quickFix" ];
       }
       {
-        "before" = [
+        before = [
           "g"
           "r"
         ];
-        "commands" = [
-          "editor.action.referenceSearch.trigger"
-        ];
+        commands = [ "editor.action.referenceSearch.trigger" ];
       }
       {
-        "before" = [
+        before = [
           "g"
           "t"
         ];
-        "commands" = [
-          "editor.action.goToTypeDefinition"
-        ];
+        commands = [ "editor.action.goToTypeDefinition" ];
       }
       {
-        "before" = [
+        before = [
           "g"
           "p"
           "t"
         ];
-        "commands" = [
-          "editor.action.peekTypeDefinition"
-        ];
+        commands = [ "editor.action.peekTypeDefinition" ];
       }
       {
-        "before" = [
+        before = [
           "<leader>"
           "e"
         ];
-        "commands" = [
-          "workbench.view.explorer"
+        commands = [ "workbench.view.explorer" ];
+      }
+      {
+        before = [
+          "<leader>"
+          "<leader>"
+        ];
+        commands = [ "workbench.action.quickOpen" ];
+      }
+      {
+        before = [
+          "g"
+          "s"
+          "a"
+        ];
+        after = [
+          "y"
+          "s"
         ];
       }
       {
-        "before" = [
-          "<leader>"
-          "<leader>"
+        before = [
+          "g"
+          "s"
+          "d"
         ];
-        "commands" = [
-          "workbench.action.quickOpen"
+        after = [
+          "d"
+          "s"
+        ];
+      }
+      {
+        before = [
+          "g"
+          "s"
+          "r"
+        ];
+        after = [
+          "c"
+          "s"
         ];
       }
     ];
+    "vim.visualModeKeyBindings" = [
+      {
+        before = [
+          "g"
+          "s"
+          "a"
+        ];
+        after = [ "S" ];
+      }
+    ];
+    "vim.commentary" = true;
+    "vim.easymotion" = true;
+    "vim.surround" = true;
     "workbench.iconTheme" = "catppuccin-perfect-macchiato";
     "workbench.colorTheme" = "Catppuccin Macchiato";
+    "workbench.activityBar.orientation" = "vertical";
     "nix.enableLanguageServer" = true;
     "nix.formatterPath" = "${lib.getExe pkgs.nixfmt-rfc-style}";
     "nix.serverPath" = "${lib.getExe config.programs.nixvim.plugins.lsp.servers.nil_ls.package}";
