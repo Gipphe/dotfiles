@@ -25,7 +25,6 @@ util.mkProfile "windows-setup" {
           "gdlauncher"
           "geforce-experience"
           "git"
-          "godot"
           "greenshot"
           "humble-app"
           "irfanview"
