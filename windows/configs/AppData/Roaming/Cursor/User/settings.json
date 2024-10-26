@@ -11,6 +11,8 @@
   "nix.enableLanguageServer": true,
   "nix.formatterPath": "nixfmt",
   "nix.serverPath": "nil",
+  "vim.commentary": true,
+  "vim.easymotion": true,
   "vim.highlightedyank.color": "#a9dc7660",
   "vim.highlightedyank.duration": 150,
   "vim.highlightedyank.enable": true,
@@ -23,6 +25,14 @@
       ],
       "commands": [
         "editor.action.showHover"
+      ]
+    },
+    {
+      "after": [
+        "\\"
+      ],
+      "before": [
+        "s"
       ]
     },
     {
@@ -117,11 +127,58 @@
       "commands": [
         "workbench.action.quickOpen"
       ]
+    },
+    {
+      "after": [
+        "y",
+        "s"
+      ],
+      "before": [
+        "g",
+        "s",
+        "a"
+      ]
+    },
+    {
+      "after": [
+        "d",
+        "s"
+      ],
+      "before": [
+        "g",
+        "s",
+        "d"
+      ]
+    },
+    {
+      "after": [
+        "c",
+        "s"
+      ],
+      "before": [
+        "g",
+        "s",
+        "r"
+      ]
     }
   ],
   "vim.smartRelativeLine": true,
+  "vim.surround": true,
   "vim.useSystemClipboard": true,
+  "vim.visualModeKeyBindings": [
+    {
+      "after": [
+        "S"
+      ],
+      "before": [
+        "g",
+        "s",
+        "a"
+      ]
+    }
+  ],
   "window.commandCenter": 1,
+  "workbench.activityBar.orientation": "vertical",
   "workbench.colorTheme": "Catppuccin Macchiato",
   "workbench.iconTheme": "catppuccin-perfect-macchiato"
 }
