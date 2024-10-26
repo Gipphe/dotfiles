@@ -9,7 +9,6 @@ let
     hash = "sha256-SmpnZ2La7V0dfvy0jnJKksog9AG7sFXEwcIs4Vo8O3E=";
   };
   pkg = pkgs.runCommandNoCC "libresprite" { src = "${src}"; } ''
-    stat "$src"
     ${pkgs._7zz}/bin/7zz x "$src/libresprite.dmg"
     mkdir -p $out/Applications
     mv "libresprite.app" "$out/Applications/Libresprite.app"
