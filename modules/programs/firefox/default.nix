@@ -1,4 +1,5 @@
 {
+  inputs,
   util,
   lib,
   pkgs,
@@ -42,6 +43,9 @@ util.mkProgram {
   };
   shared.imports = [ ./windows.nix ];
   hm = lib.mkMerge [
+    (lib.mkIf pkgs.stdenv.isDarwin {
+      home.packages = [ inputs.brew-nix.packages.${pkgs.system}.firefox ];
+    })
     (lib.mkIf pkgs.stdenv.isLinux {
       programs.firefox = {
         enable = true;
