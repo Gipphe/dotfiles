@@ -48,15 +48,8 @@ util.mkProgram {
         };
       })
 
-      (lib.mkIf (!cfg.wsl) {
-        home = {
-          file."Library/Application Support/Cursor/User/settings.json".source = lib.mkIf pkgs.stdenv.isDarwin cfg.settingsPackage;
-          packages = lib.mkIf pkgs.stdenv.isLinux [
-            (pkgs.writeShellScriptBin "cursor" ''
-              ${pkgs.code-cursor}/bin/cursor "$@" &>/dev/null &
-            '')
-          ];
-        };
+      (lib.mkIf pkgs.stdenv.isDarwin {
+        home.file."Library/Application Support/Cursor/User/settings.json".source = cfg.settingsPackage;
       })
 
       (lib.mkIf pkgs.stdenv.isLinux {
@@ -66,6 +59,15 @@ util.mkProgram {
       {
         gipphe.windows.home.file."AppData/Roaming/Cursor/User/settings.json".source = cfg.settingsPackage;
       }
+
+      (lib.mkIf (!cfg.wsl) {
+        home.packages = lib.mkIf pkgs.stdenv.isLinux [
+          (pkgs.writeShellScriptBin "cursor" ''
+            ${pkgs.code-cursor}/bin/cursor "$@" &>/dev/null &
+          '')
+        ];
+      })
+
     ]
   );
   system-darwin.homebrew.casks = lib.mkIf (!cfg.wsl) [ "cursor" ];
