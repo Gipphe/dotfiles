@@ -7,7 +7,7 @@
 }:
 let
   cfg = config.gipphe.programs.code-cursor;
-  settingsContents = builtins.toJSON cfg.settings;
+  settingsPackage = pkgs.writeText "code-cursor-settings.raw.json" (builtins.toJSON cfg.settings);
 in
 util.mkProgram {
   name = "code-cursor";
@@ -23,16 +23,24 @@ util.mkProgram {
       type = lib.types.package;
       internal = true;
     };
+    windowsSettingsPackage = lib.mkOption {
+      description = "Package holding the settings file for Windows";
+      type = lib.types.package;
+      internal = true;
+    };
   };
   shared = {
     imports = [ ./settings.nix ];
-    gipphe.programs.code-cursor.settingsPackage =
-      pkgs.runCommandNoCC "code-cursor-settings.json" { settings = builtins.toJSON cfg.settings; }
-        ''
-          echo "$settings" \
-          | ${pkgs.jq}/bin/jq '.' \
-          | sed -r 's!/nix/store/.*/(\S+)!\1!' > $out
-        '';
+    gipphe.programs.code-cursor = {
+      inherit settingsPackage;
+      windowsSettingsPackage =
+        pkgs.runCommandNoCC "code-cursor-settings.json" { src = settingsPackage; }
+          ''
+            cat "$src" \
+            | ${pkgs.jq}/bin/jq '.' \
+            | sed -r 's!/nix/store/.*/(\S+)!\1!' > $out
+          '';
+    };
   };
   hm = lib.mkIf cfg.enable (
     lib.mkMerge [
@@ -57,7 +65,8 @@ util.mkProgram {
       })
 
       {
-        gipphe.windows.home.file."AppData/Roaming/Cursor/User/settings.json".source = cfg.settingsPackage;
+        gipphe.windows.home.file."AppData/Roaming/Cursor/User/settings.json".source =
+          cfg.windowsSettingsPackage;
       }
 
       (lib.mkIf (!cfg.wsl) {
@@ -67,7 +76,6 @@ util.mkProgram {
           '')
         ];
       })
-
     ]
   );
   system-darwin.homebrew.casks = lib.mkIf (!cfg.wsl) [ "cursor" ];
