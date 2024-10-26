@@ -13,6 +13,7 @@ util.mkToggledModule [ "machines" ] {
       core.enable = true;
       darwin.enable = true;
       desktop.enable = true;
+      game-dev.enable = true;
       home-vpn.enable = true;
       k8s.enable = true;
       kvm.enable = true;
