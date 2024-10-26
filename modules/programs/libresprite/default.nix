@@ -11,8 +11,8 @@ let
   pkg = pkgs.runCommandNoCC "libresprite" { src = "${src}"; } ''
     stat "$src"
     ${pkgs._7zz}/bin/7zz x "$src/libresprite.dmg"
-    mkdir -p $out/bin
-    mv "libresprite.app" "$out/bin/Libresprite.app"
+    mkdir -p $out/Applications
+    mv "libresprite.app" "$out/Applications/Libresprite.app"
   '';
   linuxPackage = pkgs.writeShellApplication {
     name = "libresprite";
@@ -23,7 +23,6 @@ let
   };
   darwinPackage = pkgs.writeShellApplication {
     name = "libresprite";
-    runtimeInputs = [ pkg ];
     text = ''
       open -na "Libresprite.app" --args "$@"
     '';
@@ -31,7 +30,12 @@ let
 in
 util.mkProgram {
   name = "libresprite";
-  hm.home.packages = [
-    (if pkgs.stdenv.isDarwin then darwinPackage else linuxPackage)
-  ];
+  hm.home.packages =
+    if pkgs.stdenv.isDarwin then
+      [
+        pkg
+        darwinPackage
+      ]
+    else
+      [ linuxPackage ];
 }
