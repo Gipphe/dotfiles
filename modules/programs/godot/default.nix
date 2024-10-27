@@ -13,7 +13,8 @@ util.mkProgram {
     gipphe.windows.chocolatey.programs = [ "godot" ];
     gipphe.programs.code-cursor.settings."godotTools.editorPath.godot4" = "${pkg}/bin/godot";
     home.packages = [
-      (pkgs.writeShellScriptBin "godot" ''
+      pkg
+      (pkgs.writeShellScriptBin "gd" ''
         ${pkg}/bin/godot "$@" &>/dev/null &
       '')
     ];
