@@ -19,7 +19,11 @@ util.mkProgram {
       ];
     })
     (lib.mkIf pkgs.stdenv.isDarwin {
-      gipphe.programs.code-cursor.settings."godotTools.editorPath.godot4" = "godot";
+      gipphe.programs.code-cursor.settings = {
+        "godotTools.editorPath.godot4" = "godot";
+        "godotTools.lsp.serverPort" = 6005;
+      };
+
       home.packages = [
         (pkgs.writeShellScriptBin "gd" ''
           open -na "Godot.app" --args "$@"
