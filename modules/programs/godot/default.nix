@@ -21,7 +21,7 @@ util.mkProgram {
     (lib.mkIf pkgs.stdenv.isDarwin {
       gipphe.programs.code-cursor.settings."godotTools.editorPath.godot4" = "godot";
       home.packages = [
-        (pkgs.writeShellScriptBin "godot" ''
+        (pkgs.writeShellScriptBin "gd" ''
           open -na "Godot.app" --args "$@"
         '')
       ];
