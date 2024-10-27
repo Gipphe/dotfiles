@@ -8,6 +8,7 @@
     "vscode.vim": 1
   },
   "godotTools.editorPath.godot4": "godot",
+  "godotTools.lsp.serverPort": 6005,
   "nix.enableLanguageServer": true,
   "nix.formatterPath": "nixfmt",
   "nix.serverPath": "nil",
