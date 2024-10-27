@@ -1,22 +1,31 @@
 {
-  inputs,
+  lib,
   pkgs,
   util,
   ...
 }:
-let
-  pkg = if pkgs.stdenv.isDarwin then inputs.brew-nix.packages.${pkgs.system}.godot else pkgs.godot_4;
-in
 util.mkProgram {
   name = "godot";
-  hm = {
-    gipphe.windows.chocolatey.programs = [ "godot" ];
-    gipphe.programs.code-cursor.settings."godotTools.editorPath.godot4" = "${pkg}/bin/godot";
-    home.packages = [
-      pkg
-      (pkgs.writeShellScriptBin "gd" ''
-        ${pkg}/bin/godot "$@" &>/dev/null &
-      '')
-    ];
-  };
+  hm = lib.mkMerge [
+    {
+      gipphe.windows.chocolatey.programs = [ "godot" ];
+    }
+    (lib.mkIf (!pkgs.stdenv.isDarwin) {
+      gipphe.programs.code-cursor.settings."godotTools.editorPath.godot4" = "${pkgs.godot_4}/bin/godot";
+      home.packages = [
+        (pkgs.writeShellScriptBin "gd" ''
+          ${pkgs.godot_4}/bin/godot "$@" &>/dev/null &
+        '')
+      ];
+    })
+    (lib.mkIf pkgs.stdenv.isDarwin {
+      gipphe.programs.code-cursor.settings."godotTools.editorPath.godot4" = "godot";
+      home.packages = [
+        (pkgs.writeShellScriptBin "godot" ''
+          open -na "Godot.app" --args "$@"
+        '')
+      ];
+    })
+  ];
+  system-darwin.homebrew.casks = [ "godot" ];
 }
