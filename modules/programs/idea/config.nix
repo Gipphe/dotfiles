@@ -53,7 +53,8 @@ in
       {
         home.file.".ideavimrc".text = # vim
           ''
-            set mapleader=' '
+            nnoremap <SPACE> <Nop>
+            let mapleader=" "
 
             Plug 'easymotion/vim-easymotion'
             Plug 'tpope/vim-surround'
