@@ -51,15 +51,41 @@ in
       darwinConfig
       linuxConfig
       {
-        home.file.".ideavimrc".text = ''
-          set number
-          set relativenumber
+        home.file.".ideavimrc".text = # vim
+          ''
+            set mapleader=' '
 
-          set scrolloff=8
+            Plug 'easymotion/vim-easymotion'
+            Plug 'tpope/vim-surround'
+            Plug 'tpope/vim-commentary'
+            Plug 'machakann/vim-highlightedyank'
+            Plug 'michaeljsmith/vim-indent-object'
 
-          set visualbell
-          set noerrorbells
-        '';
+            set number
+            set relativenumber
+
+            set scrolloff=8
+
+            set visualbell
+            set noerrorbells
+            set clipboard=unnamedplus
+            set incsearch
+
+            set easymotion
+            set quickscope
+            set which-key
+
+            let g:highlightedyank_highlight_duration = "400"
+
+            " vim-surround keybinds
+            nmap gsa ys
+            vmap gsa ys
+            nmap gsr cs
+            nmap gsd ds
+
+            nmap <Leader><Leader> <Action>GotoFile
+            nmap <Leader>e <Action>ActivateProjectToolWindow
+          '';
       }
     ]
   );
