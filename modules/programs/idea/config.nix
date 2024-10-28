@@ -85,6 +85,9 @@ in
             nmap gsr cs
             nmap gsd ds
 
+            " vim-easymotion keybinds
+            nmap s <Plug>(easymotion-s)
+
             nmap <Leader><Leader> <Action>(GotoFile)
             nmap <Leader>e <Action>(ActivateProjectToolWindow)
           '';
