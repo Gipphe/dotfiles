@@ -76,6 +76,7 @@ in
             set quickscope
             set which-key
 
+            set notimeout
             let g:highlightedyank_highlight_duration = "400"
 
             " vim-surround keybinds
