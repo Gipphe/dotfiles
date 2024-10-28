@@ -2,7 +2,7 @@
 
 user_pref("browser.aboutConfig.showWarning", false);
 user_pref("browser.aboutwelcome.didSeeFinalScreen", true);
-user_pref("browser.bookmarks.file", "/nix/store/qfvpsrdp66av1k3gxjb1s9iadsz4p8qi-firefox-bookmarks.html");
+user_pref("browser.bookmarks.file", "/nix/store/q7iphvc52yhka6inr3m8j7wc7j68iyf6-firefox-bookmarks.html");
 user_pref("browser.bookmarks.restore_default_bookmarks", false);
 user_pref("browser.bookmarks.showMobileBookmarks", true);
 user_pref("browser.contentblocking.category", "standard");
