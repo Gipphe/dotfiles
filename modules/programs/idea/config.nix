@@ -85,8 +85,8 @@ in
             nmap gsr cs
             nmap gsd ds
 
-            nmap <Leader><Leader> <Action>GotoFile
-            nmap <Leader>e <Action>ActivateProjectToolWindow
+            nmap <Leader><Leader> <Action>(GotoFile)
+            nmap <Leader>e <Action>(ActivateProjectToolWindow)
           '';
       }
     ]
