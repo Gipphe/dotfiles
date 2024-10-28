@@ -7,7 +7,7 @@
 }:
 let
   cfg = config.gipphe.programs.code-cursor;
-  settingsPackage = pkgs.writeText "code-cursor-settings.raw.json" (builtins.toJSON cfg.settings);
+  settingsPackage = pkgs.writeText "code-cursor-settings.json" (builtins.toJSON cfg.settings);
 in
 util.mkProgram {
   name = "code-cursor";
@@ -23,6 +23,11 @@ util.mkProgram {
       type = lib.types.package;
       internal = true;
     };
+    windowsSettings = lib.mkOption {
+      description = "Windows-specific settings.";
+      type = with lib.types; attrsOf anything;
+      default = { };
+    };
     windowsSettingsPackage = lib.mkOption {
       description = "Package holding the settings file for Windows";
       type = lib.types.package;
@@ -34,9 +39,10 @@ util.mkProgram {
     gipphe.programs.code-cursor = {
       inherit settingsPackage;
       windowsSettingsPackage =
-        pkgs.runCommandNoCC "code-cursor-settings.json" { src = settingsPackage; }
+        pkgs.runCommandNoCC "code-cursor-settings.windows.json"
+          { settings = builtins.toJSON (cfg.settings // cfg.windowsSettings); }
           ''
-            cat "$src" \
+            echo "$settings" \
             | ${pkgs.jq}/bin/jq '.' \
             | sed -r 's!/nix/store/.*/(\S+)!\1!' > $out
           '';
