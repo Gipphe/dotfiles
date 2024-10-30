@@ -66,7 +66,7 @@
 	autosetupmerge = "true"
 
 [commit]
-	gpgSign = true
+	gpgSign = false
 
 [core]
 	autocrlf = false
@@ -90,7 +90,7 @@
 	useUnicodeRuler = true
 
 [gpg]
-	program = "gpg"
+	program = "gpg2"
 
 [init]
 	defaultBranch = "main"
@@ -117,7 +117,7 @@
 	enabled = true
 
 [tag]
-	gpgSign = true
+	gpgSign = false
 
 [user]
 	email = "gipphe@gmail.com"

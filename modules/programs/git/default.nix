@@ -239,7 +239,7 @@ util.mkProgram {
             | sed "/\[diff\]/d" \
             | sed "/diffFilter =/d" \
             | sed "/\[interactive\]/d" \
-            | sed "s/gpg2/gpg/" \
+            | sed "s/gpgSign = true$/gpgSign = false/" \
             | tee "$out" >/dev/null
           '';
       ".config/git/strise".text = lib.pipe config.programs.git.includes [
