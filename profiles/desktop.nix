@@ -7,6 +7,7 @@ util.mkProfile "desktop" {
       code-cursor.enable = true;
       cool-retro-term.enable = true;
       filen.enable = true;
+      firefox.enable = true;
       gimp.enable = true;
       hoppscotch.enable = true;
       logseq.enable = true;
