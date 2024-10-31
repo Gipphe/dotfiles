@@ -69,8 +69,8 @@ in
 util.mkModule {
   hm.gipphe = lib.mkIf pkgs.stdenv.isLinux {
     programs.firefox.installs = {
-      ${installHashes.firefox}.defaultProfile = "default";
-      ${installHashes.firefox-devedition}.defaultProfile = "strise";
+      ${installHashes.windows.firefox}.defaultProfile = "default";
+      ${installHashes.windows.firefox-devedition}.defaultProfile = "strise";
     };
     windows.home.file = mkMerge (
       optional (cfg.installs != { }) {

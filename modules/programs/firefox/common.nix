@@ -152,7 +152,13 @@
   };
 
   installHashes = {
-    firefox = "308046B0AF4A39CB";
-    firefox-devedition = "CA9422711AE1A81C";
+    darwin = {
+      firefox = "69FE9373C2142565";
+      firefox-devedition = "C293F2A37E5B85C3";
+    };
+    windows = {
+      firefox = "308046B0AF4A39CB";
+      firefox-devedition = "CA9422711AE1A81C";
+    };
   };
 }

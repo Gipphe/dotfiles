@@ -16,6 +16,7 @@ let
     search
     settings
     userChrome
+    installHashes
     ;
 in
 util.mkProgram {
@@ -47,6 +48,13 @@ util.mkProgram {
     (lib.mkIf pkgs.stdenv.isDarwin {
       home.packages = [ brewpkgs."firefox@developer-edition" ];
       programs.firefox.package = brewpkgs.firefox;
+      gipphe.programs.firefox.installs = {
+        ${installHashes.darwin.firefox}.defaultProfile = "default";
+        ${installHashes.darwin.firefox-devedition}.defaultProfile = "strise";
+      };
+    })
+    (lib.mkIf pkgs.stdenv.isLinux {
+      home.packages = [ pkgs.firefox-devedition ];
     })
     {
       programs.firefox = {
