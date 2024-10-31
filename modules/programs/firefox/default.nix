@@ -6,6 +6,7 @@
   ...
 }:
 let
+  brewpkgs = inputs.brew-nix.packages.${pkgs.system};
   inherit (lib)
     mkOption
     types
@@ -44,9 +45,10 @@ util.mkProgram {
   shared.imports = [ ./windows.nix ];
   hm = lib.mkMerge [
     (lib.mkIf pkgs.stdenv.isDarwin {
-      home.packages = [ inputs.brew-nix.packages.${pkgs.system}.firefox ];
+      home.packages = [ brewpkgs."firefox@developer-edition" ];
+      programs.firefox.package = brewpkgs.firefox;
     })
-    (lib.mkIf pkgs.stdenv.isLinux {
+    {
       programs.firefox = {
         enable = true;
         profiles = {
@@ -55,7 +57,7 @@ util.mkProgram {
             name = "Default";
             id = 0;
             isDefault = true;
-            bookmarks = [bangs] ++ import ./bookmarks/default.nix;
+            bookmarks = [ bangs ] ++ (import ./bookmarks/default.nix);
             containers = {
               Work = {
                 id = 10;
@@ -69,10 +71,10 @@ util.mkProgram {
             inherit search settings userChrome;
             id = 1;
             name = "Strise";
-            bookmarks = [bangs] ++ import ./bookmarks/strise.nix; };
+            bookmarks = [ bangs ] ++ (import ./bookmarks/strise.nix);
           };
         };
       };
-    })
+    }
   ];
 }
