@@ -60,31 +60,15 @@ util.mkProgram {
               Default=Profiles/default
               Locked=1
 
-              [Profile4]
+              [Profile1]
               Name=Strise
               IsRelative=1
               Path=Profiles/strise
 
-              [Profile3]
+              [Profile0]
               Name=Default
               IsRelative=1
               Path=Profiles/default
-
-              [Profile2]
-              Name=dev-edition-default
-              IsRelative=1
-              Path=Profiles/byem38pu.dev-edition-default
-
-              [Profile1]
-              Name=default
-              IsRelative=1
-              Path=Profiles/l20p8rp4.default
-              Default=1
-
-              [Profile0]
-              Name=default-release
-              IsRelative=1
-              Path=Profiles/h2g96bw8.default-release
 
               [General]
               StartWithLastProfile=1
