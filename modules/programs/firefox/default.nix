@@ -86,7 +86,6 @@ util.mkProgram {
               IsRelative=1
               Path=Profiles/h2g96bw8.default-release
 
-
               [General]
               StartWithLastProfile=1
               Version=2
@@ -98,12 +97,12 @@ util.mkProgram {
         "Library/Application Support/Firefox/installs.ini".text = # ini
           ''
             [69FE9373C2142565]
-             Default=Profiles/default
-             Locked=1
-             
-             [C293F2A37E5B85C3]
-             Default=Profiles/strise
-             Locked=1
+            Default=Profiles/default
+            Locked=1
+
+            [C293F2A37E5B85C3]
+            Default=Profiles/strise
+            Locked=1
           '';
       };
     })
