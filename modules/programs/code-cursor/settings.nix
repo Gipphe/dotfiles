@@ -138,6 +138,13 @@ util.mkModule {
           "s"
         ];
       }
+      {
+        before = [ "Y" ];
+        after = [
+          "y"
+          "$"
+        ];
+      }
     ];
     "vim.visualModeKeyBindings" = [
       {

@@ -161,6 +161,15 @@
         "s",
         "r"
       ]
+    },
+    {
+      "after": [
+        "y",
+        "$"
+      ],
+      "before": [
+        "Y"
+      ]
     }
   ],
   "vim.smartRelativeLine": true,
