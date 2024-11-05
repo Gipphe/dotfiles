@@ -91,7 +91,7 @@ util.mkProgram {
       };
     })
     (lib.mkIf pkgs.stdenv.isLinux {
-      home.packages = [ pkgs.firefox-devedition ];
+      programs.firefox.package = pkgs.firefox;
     })
     {
       programs.firefox = {
