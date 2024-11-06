@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkProfile "cli" {
   gipphe.programs = {
-    _1password.enable = true;
+    _1password-cli.enable = true;
     asciinema-agg.enable = true;
     asciinema.enable = true;
     atuin.enable = true;
