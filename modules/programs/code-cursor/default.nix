@@ -7,7 +7,11 @@
 }:
 let
   cfg = config.gipphe.programs.code-cursor;
-  settingsPackage = pkgs.writeText "code-cursor-settings.json" (builtins.toJSON cfg.settings);
+  settingsPackage =
+    pkgs.runCommandNoCC "code-cursor-settings.json" { settings = builtins.toJSON cfg.settings; }
+      ''
+        echo "$settings" | ${pkgs.jq}/bin/jq '.' > $out
+      '';
 in
 util.mkProgram {
   name = "code-cursor";
