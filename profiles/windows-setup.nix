@@ -1,7 +1,7 @@
 { util, config, ... }:
 util.mkProfile "windows-setup" {
   gipphe = {
-    programs.firefox.enable = true;
+    programs.firefox.enable = false;
     windows = {
       enable = true;
       destination = "${config.gipphe.homeDirectory}/projects/dotfiles/windows";
@@ -53,6 +53,7 @@ util.mkProfile "windows-setup" {
           "sunshine"
           "teamviewer"
           "vcredist-all"
+          "vivaldi"
           "voicemeeter"
           "wezterm"
           "windhawk"
