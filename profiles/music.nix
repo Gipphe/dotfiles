@@ -1,1 +1,5 @@
-{ util, ... }: util.mkProfile "music" { gipphe.programs.spotify-player.enable = true; }
+{ util, ... }:
+util.mkProfile "music" {
+  # Currently broken.
+  gipphe.programs.spotify-player.enable = false;
+}
