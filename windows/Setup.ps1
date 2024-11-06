@@ -262,7 +262,12 @@ class Programs {
 
     $ChildLogger = $this.Logger.ChildLogger()
 
-    $Programs = @{ 'LDPlayer' = @{
+    $Programs = @{ 'Hurl' = @{
+  'URI' = 'https://github.com/U-C-S/Hurl/releases/download/v0.9.0/Hurl_Installer.exe'
+  'stamp' = 'install-hurl'
+};
+
+'LDPlayer' = @{
   'URI' = 'https://ldcdn.ldmnq.com/download/ldad/LDPlayer9.exe?n=LDPlayer9_ens_1001_ld.exe'
   'stamp' = 'install-ldplayer'
 };
@@ -270,6 +275,11 @@ class Programs {
 'VisiPics' = @{
   'URI' = 'https://altushost-swe.dl.sourceforge.net/project/visipics/VisiPics-1-31.exe'
   'stamp' = 'install-visipics'
+};
+
+'Windows App SDK' = @{
+  'URI' = 'https://aka.ms/windowsappsdk/1.5/1.5.241001000/windowsappruntimeinstall-x64.exe'
+  'stamp' = 'install-windows-app-sdk'
 };
 }
 
