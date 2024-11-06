@@ -165,5 +165,8 @@ util.mkModule {
     "nix.enableLanguageServer" = true;
     "nix.formatterPath" = "${lib.getExe pkgs.nixfmt-rfc-style}";
     "nix.serverPath" = "${lib.getExe config.programs.nixvim.plugins.lsp.servers.nil_ls.package}";
+    "[javascript]" = {
+      "editor.defaultFormatter" = "esbenp.prettier-vscode";
+    };
   };
 }
