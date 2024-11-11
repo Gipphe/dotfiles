@@ -17,13 +17,16 @@ util.mkModule {
     (lib.mkIf config.gipphe.programs.godot.enable (
       lib.mkMerge [
         {
-          gipphe.windows.chocolatey.programs = [ "godot" ];
+          gipphe.windows.chocolatey.programs = [
+            "godot-mono"
+            "dotnet-8.0-sdk"
+          ];
         }
         (lib.mkIf (!pkgs.stdenv.isDarwin) {
           gipphe.programs.code-cursor.settings."godotTools.editorPath.godot4" = "${pkgs.godot_4}/bin/godot";
           home.packages = [
             (pkgs.writeShellScriptBin "gd" ''
-              ${pkgs.godot_4}/bin/godot "$@" &>/dev/null &
+              ${pkgs.godot_4-mono}/bin/godot "$@" &>/dev/null &
             '')
           ];
         })
@@ -43,6 +46,6 @@ util.mkModule {
     ))
   ];
   system-darwin = lib.mkIf config.gipphe.programs.godot.enable {
-    homebrew.casks = [ "godot" ];
+    homebrew.casks = [ "godot-mono" ];
   };
 }
