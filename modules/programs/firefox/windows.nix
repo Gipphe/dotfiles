@@ -67,7 +67,7 @@ let
     );
 in
 util.mkModule {
-  hm.gipphe = lib.mkIf pkgs.stdenv.isLinux {
+  hm.gipphe = lib.mkIf (pkgs.stdenv.isLinux && config.gipphe.programs.firefox.enable) {
     programs.firefox.installs = {
       ${installHashes.windows.firefox}.defaultProfile = "default";
       ${installHashes.windows.firefox-devedition}.defaultProfile = "strise";
