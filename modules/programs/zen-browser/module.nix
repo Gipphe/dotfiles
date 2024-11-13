@@ -3,7 +3,6 @@
   pkgs,
   lib,
   inputs,
-  config,
   ...
 }:
 let
@@ -23,6 +22,7 @@ util.mkProgram {
   hm = lib.mkMerge [
     {
       programs.zen-browser = {
+        enable = true;
         package = pkg;
         profiles = {
           default = {
@@ -41,8 +41,11 @@ util.mkProgram {
       };
     }
 
-    # (lib.mkIf pkgs.stdenv.isDarwin {
-    #   home.file."Applications/Home Manager Apps/Zen Browser.app".source = "${config.programs.zen-browser.package}/Applications/Zen Browser.app";
-    # })
+    (lib.mkIf pkgs.stdenv.isDarwin {
+      home.file = {
+        "Library/Application Support/zen/profiles.ini".source = ./darwin/profiles.ini;
+        "Library/Application Support/zen/installs.ini".source = ./darwin/installs.ini;
+      };
+    })
   ];
 }
