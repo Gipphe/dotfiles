@@ -26,19 +26,19 @@ util.mkModule {
           gipphe.programs.code-cursor.settings."godotTools.editorPath.godot4" = "${pkgs.godot_4-mono}/bin/godot";
           home.packages = [
             (pkgs.writeShellScriptBin "gd" ''
-              ${pkgs.godot_4-mono}/bin/godot "$@" &>/dev/null &
+              ${pkgs.godot_4-mono}/bin/godot-mono "$@" &>/dev/null &
             '')
           ];
         })
         (lib.mkIf pkgs.stdenv.isDarwin {
           gipphe.programs.code-cursor.settings = {
-            "godotTools.editorPath.godot4" = "godot";
+            "godotTools.editorPath.godot4" = "godot-mono";
             "godotTools.lsp.serverPort" = 6005;
           };
 
           home.packages = [
             (pkgs.writeShellScriptBin "gd" ''
-              open -na "Godot.app" --args "$@"
+              open -na "godot_mono.app" --args "$@"
             '')
           ];
         })
