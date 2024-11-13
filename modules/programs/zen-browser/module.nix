@@ -2,7 +2,6 @@
   util,
   pkgs,
   lib,
-  inputs,
   ...
 }:
 let
@@ -14,7 +13,12 @@ let
     name = "ZenBrowser";
     src = linuxAppImage;
   };
-  darwinPkg = inputs.brew-nix.packages.${pkgs.system}.zen-browser;
+  darwinPkg = pkgs.writeShellApplication {
+    name = "dummy-zen-browser";
+    text = ''
+      open -na "Zen Browser.app"
+    '';
+  };
   pkg = if pkgs.stdenv.isDarwin then darwinPkg else linuxPkg;
 in
 util.mkProgram {
@@ -48,4 +52,5 @@ util.mkProgram {
       };
     })
   ];
+  system-darwin.homebrew.casks = [ "zen-browser" ];
 }
