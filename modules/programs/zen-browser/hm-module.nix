@@ -1,6 +1,6 @@
 { util, inputs, ... }:
 let
-  mkFirefoxModule = import /./${inputs.hm-src}/modules/programs/firefox/mkFirefoxModule.nix;
+  mkFirefoxModule = import "${inputs.hm-src}/modules/programs/firefox/mkFirefoxModule.nix";
   modulePath = [
     "programs"
     "zen-browser"

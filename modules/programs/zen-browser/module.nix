@@ -27,7 +27,8 @@ util.mkProgram {
         profiles = {
           default = {
             settings = {
-              "browser.urlbar.ctrlCanonizesURLs" = false;
+              "browser.urlbar.trimHttps" = false;
+              "browser.urlbar.trimUrls" = false;
               "taskbar.grouping.useprofile" = true;
               "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
             };
@@ -40,8 +41,8 @@ util.mkProgram {
       };
     }
 
-    (lib.mkIf pkgs.stdenv.isDarwin {
-      home.file."Applications/Home Manager Apps/Zen Browser.app".source = "${config.programs.zen-browser.package}/Applications/Zen Browser.app";
-    })
+    # (lib.mkIf pkgs.stdenv.isDarwin {
+    #   home.file."Applications/Home Manager Apps/Zen Browser.app".source = "${config.programs.zen-browser.package}/Applications/Zen Browser.app";
+    # })
   ];
 }
