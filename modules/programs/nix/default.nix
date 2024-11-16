@@ -17,6 +17,7 @@ in
       options.gipphe.programs.nix.enable = lib.mkEnableOption "nix";
 
       system-all = lib.mkIf config.gipphe.programs.nix.enable {
+        imports = [ ./insecure.nix ];
         nix = {
           package = pkgs.nixVersions.latest;
 
