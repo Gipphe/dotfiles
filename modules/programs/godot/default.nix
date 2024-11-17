@@ -23,7 +23,7 @@ util.mkModule {
           ];
         }
         (lib.mkIf (!pkgs.stdenv.isDarwin) {
-          gipphe.programs.code-cursor.settings."godotTools.editorPath.godot4" = "${pkgs.godot_4}/bin/godot";
+          gipphe.programs.code-cursor.settings."godotTools.editorPath.godot4" = "${pkgs.godot_4-mono}/bin/godot";
           home.packages = [
             (pkgs.writeShellScriptBin "gd" ''
               ${pkgs.godot_4-mono}/bin/godot "$@" &>/dev/null &
