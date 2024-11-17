@@ -1,7 +1,7 @@
 { util, config, ... }:
 util.mkProfile "windows-setup" {
   gipphe = {
-    programs.firefox.enable = false;
+    programs.floorp.windows = true;
     windows = {
       enable = true;
       destination = "${config.gipphe.homeDirectory}/projects/dotfiles/windows";
@@ -21,6 +21,7 @@ util.mkProfile "windows-setup" {
           "filen"
           "filezilla"
           "firacodenf"
+          "floorp"
           "fzf"
           "gdlauncher"
           "geforce-experience"
@@ -53,17 +54,12 @@ util.mkProfile "windows-setup" {
           "sunshine"
           "teamviewer"
           "vcredist-all"
-          "vivaldi"
           "voicemeeter"
           "wezterm"
           "windhawk"
           "windirstat"
           "xnviewmp"
           "zoxide"
-          {
-            name = "firefox-dev";
-            args = "--pre";
-          }
           {
             name = "opera-gx";
             args = "--params='\"/NoDesktopShortcut /NoTaskbarShortcut\"'";
