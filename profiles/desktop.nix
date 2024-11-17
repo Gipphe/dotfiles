@@ -15,7 +15,6 @@ util.mkProfile "desktop" {
       slack.enable = true;
       vivaldi.enable = true;
       wezterm.enable = true;
-      zen-browser.enable = true;
     };
   };
 }
