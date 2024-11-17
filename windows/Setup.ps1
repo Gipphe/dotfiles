@@ -234,7 +234,7 @@ class Env {
     $this.Logger.Info(" Setting env vars...")
     $ChildLogger = $this.Logger.ChildLogger()
     $EnvVars = @{
-      'XDG_CONFIG_HOME' = "$($Env:USERPROFILE)\\.config"
+      'MOZ_LEGACY_PROFILES' = '1', 'XDG_CONFIG_HOME' = "$($Env:USERPROFILE)\\.config"
     }
     $EnvVars.GetEnumerator() | ForEach-Object {
       $key = $_.Key
@@ -322,7 +322,7 @@ class Choco {
     $Installed = Invoke-Native { choco list --id-only }
 
     $ChocoApps = @(
-      "godot-mono", "dotnet-8.0-sdk", "1password", "7zip", "Everything", "barrier", "cursoride", "discord", "docker-desktop", "dust", "epicgameslauncher", "everythingpowertoys", "filen", "filezilla", "firacodenf", "fzf", "gdlauncher", "geforce-experience", "git", "greenshot", "humble-app", "irfanview", "irfanview-languages", "irfanviewplugins", "k-litecodecpack-standard", "lghub", "libresprite", "logseq", "microsoft-windows-terminal", "msiafterburner", "notion", "nvidia-broadcast", "openssh", "paint.net", "powershell-core", "powertoys", "qbittorrent", "restic", "rsync", "slack", "spotify", "starship", "steam", "sumatrapdf", "sunshine", "teamviewer", "vcredist-all", "vivaldi", "voicemeeter", "wezterm", "windhawk", "windirstat", "xnviewmp", "zoxide", @("firefox-dev", "--pre"), @("opera-gx", "--params='`"/NoDesktopShortcut /NoTaskbarShortcut`"'")
+      "godot-mono", "dotnet-8.0-sdk", "floorp", "1password", "7zip", "Everything", "barrier", "cursoride", "discord", "docker-desktop", "dust", "epicgameslauncher", "everythingpowertoys", "filen", "filezilla", "firacodenf", "floorp", "fzf", "gdlauncher", "geforce-experience", "git", "greenshot", "humble-app", "irfanview", "irfanview-languages", "irfanviewplugins", "k-litecodecpack-standard", "lghub", "libresprite", "logseq", "microsoft-windows-terminal", "msiafterburner", "notion", "nvidia-broadcast", "openssh", "paint.net", "powershell-core", "powertoys", "qbittorrent", "restic", "rsync", "slack", "spotify", "starship", "steam", "sumatrapdf", "sunshine", "teamviewer", "vcredist-all", "voicemeeter", "wezterm", "windhawk", "windirstat", "xnviewmp", "zoxide", @("opera-gx", "--params='`"/NoDesktopShortcut /NoTaskbarShortcut`"'")
     )
 
     $ChildLogger = $this.Logger.ChildLogger()
