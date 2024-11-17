@@ -75,8 +75,8 @@ util.mkToggledModule [ "windows" ] {
               $EnvVars = @{
                 ${
                   lib.pipe envs [
-                    (lib.mapAttrsToList (name: val: "'${name}' = ${toPSValue val.value}"))
-                    (lib.concatStringsSep ", ")
+                    (lib.mapAttrsToList (name: val: "'${name}' = ${toPSValue val.value};"))
+                    (lib.concatStringsSep " ")
                   ]
                 }
               }
