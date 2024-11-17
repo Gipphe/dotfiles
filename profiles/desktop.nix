@@ -13,7 +13,6 @@ util.mkProfile "desktop" {
       logseq.enable = true;
       obsidian.enable = true;
       slack.enable = true;
-      vivaldi.enable = true;
       wezterm.enable = true;
     };
   };
