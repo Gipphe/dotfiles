@@ -12,7 +12,6 @@ util.mkToggledModule [ "machines" ] {
       containers.enable = true;
       core.enable = true;
       darwin.enable = true;
-      desktop-darwin.enable = true;
       desktop.enable = true;
       game-dev.enable = true;
       home-vpn.enable = true;
