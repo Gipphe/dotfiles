@@ -24,7 +24,7 @@ util.mkModule {
   };
   hm.config = lib.mkMerge [
     {
-      programs.floorp = {
+      programs.floorp = lib.mkIf pkgs.stdenv.isLinux {
         enable = cfg.enable || cfg.windows;
         package = pkg;
         profiles = {
