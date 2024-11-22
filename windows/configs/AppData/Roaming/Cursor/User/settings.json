@@ -21,6 +21,7 @@
   "nix.enableLanguageServer": true,
   "nix.formatterPath": "nixfmt",
   "nix.serverPath": "nil",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
   "vim.commentary": true,
   "vim.easymotion": true,
   "vim.highlightedyank.color": "#a9dc7660",
