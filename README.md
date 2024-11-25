@@ -43,27 +43,27 @@ configurations for a variety of machines.
 
 Machine configs are located in [`./machines`](./machines).
 
-### Jarle-wsl
+### argon
 
 NixOS in WSL on Windows. Supports GUI programs through WSLg.
 
-Located in [`./machines/Jarle-wsl`](./machines/Jarle-wsl).
+Located in [`./machines/argon`](./machines/argon).
 
-<img src="./assets/Jarle-wsl-neofetch.png" width="600px">
+<img src="./assets/argon-neofetch.png" width="600px">
 
-### VNB-MB-Pro
+### silicon
 
 Corporate-issued Macbook Pro with nix-darwin.
 
-Located in [`./machines/VNB-MB-Pro`](./machines/VNB-MB-Pro).
+Located in [`./machines/silicon`](./machines/silicon).
 
-<img src="./assets/VNB-MB-Pro-neofetch.png" width="600px">
+<img src="./assets/silicon-neofetch.png" width="600px">
 
-### trond-arne
+### cobalt
 
 Lenovo Ideapad laptop running NixOS.
 
-Located in [`./machines/trond-arne`](./machines/trond-arne).
+Located in [`./machines/cobalt`](./machines/cobalt).
 
 ## Architecture
 

@@ -1,9 +1,9 @@
 { nixpkgs, self, ... }@inputs:
 let
   machines = {
-    Jarle-wsl.system = "x86_64-linux";
-    trond-arne.system = "x86_64-linux";
-    VNB-MB-Pro.system = "aarch64-darwin";
+    argon.system = "x86_64-linux";
+    cobalt.system = "x86_64-linux";
+    silicon.system = "aarch64-darwin";
   };
   inherit (nixpkgs.lib.attrsets) filterAttrs mapAttrs;
   inherit (nixpkgs.lib) nixosSystem hasSuffix;

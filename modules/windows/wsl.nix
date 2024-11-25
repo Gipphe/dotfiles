@@ -41,7 +41,7 @@ util.mkToggledModule [ "windows" ] {
                   ! test -s '$HOME/projects/dotfiles' `
                   '&&' nix-shell -p git --run '"git clone https://codeberg.org/Gipphe/dotfiles.git"' '"$HOME/projects/dotfiles"' `
                   '&&' cd '$HOME/projects/dotfiles' `
-                  '&&' nixos-rebuild --extra-experimental-features 'flakes nix-command' switch --flake '"$(pwd)#Jarle-wsl"'
+                  '&&' nixos-rebuild --extra-experimental-features 'flakes nix-command' switch --flake '"$(pwd)#argon"'
               }))
             })
             $ChildLogger.Info(" nixos-wsl configured")

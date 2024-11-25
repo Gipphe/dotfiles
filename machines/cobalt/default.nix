@@ -1,11 +1,11 @@
 { util, ... }:
 util.mkToggledModule [ "machines" ] {
-  name = "trond-arne";
+  name = "cobalt";
 
   shared.gipphe = {
     username = "gipphe";
     homeDirectory = "/home/gipphe";
-    hostName = "trond-arne";
+    hostName = "cobalt";
     profiles = {
       nixos = {
         audio.enable = true;

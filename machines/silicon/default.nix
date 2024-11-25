@@ -1,11 +1,11 @@
 { lib, util, ... }:
 util.mkToggledModule [ "machines" ] {
-  name = "VNB-MB-Pro";
+  name = "silicon";
 
   shared.gipphe = {
     username = "victor";
     homeDirectory = "/Users/victor";
-    hostName = "VNB-MB-Pro";
+    hostName = "silicon";
     profiles = {
       ai.enable = true;
       cli.enable = true;

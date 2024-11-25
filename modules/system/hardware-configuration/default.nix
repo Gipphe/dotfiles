@@ -6,8 +6,8 @@
 }:
 let
   configs = {
-    "trond-arne" = ./trond-arne.nix;
-    "Jarle-wsl" = ./Jarle-wsl.nix;
+    "cobalt" = ./cobalt.nix;
+    "argon" = ./argon.nix;
   };
 in
 {

@@ -1,9 +1,9 @@
 { lib, flags, ... }:
 {
   imports = [
-    ./Jarle-wsl
-    ./VNB-MB-Pro
-    ./trond-arne
+    ./argon
+    ./silicon
+    ./cobalt
   ];
   options.gipphe = {
     username = lib.mkOption {
