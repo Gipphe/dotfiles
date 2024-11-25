@@ -41,6 +41,8 @@ ensuring `nix` is available, it bootstraps the system using `nixos-rebuild`,
 This dotfiles repo consists of NixOS configurations and nix-darwin
 configurations for a variety of machines.
 
+Machines are named according to elements from the periodic table.
+
 Machine configs are located in [`./machines`](./machines).
 
 ### argon
