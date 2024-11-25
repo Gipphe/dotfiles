@@ -322,7 +322,7 @@ class Choco {
     $Installed = Invoke-Native { choco list --id-only }
 
     $ChocoApps = @(
-      "godot-mono", "dotnet-8.0-sdk", "floorp", "1password", "7zip", "barrier", "cursoride", "discord", "docker-desktop", "dust", "epicgameslauncher", "filen", "filezilla", "firacodenf", "floorp", "fzf", "gdlauncher", "geforce-experience", "git", "greenshot", "humble-app", "irfanview", "irfanview-languages", "irfanviewplugins", "k-litecodecpack-standard", "lghub", "libresprite", "logseq", "microsoft-windows-terminal", "msiafterburner", "notion", "nvidia-broadcast", "openssh", "paint.net", "powershell-core", "powertoys", "qbittorrent", "restic", "rsync", "slack", "spotify", "starship", "steam", "sumatrapdf", "sunshine", "teamviewer", "vcredist-all", "voicemeeter", "wezterm", "windhawk", "windirstat", "xnviewmp", "zoxide", @("opera-gx", "--params='`"/NoDesktopShortcut /NoTaskbarShortcut`"'")
+      "floorp", "1password", "7zip", "barrier", "cursoride", "discord", "docker-desktop", "dust", "epicgameslauncher", "filen", "filezilla", "firacodenf", "floorp", "fzf", "gdlauncher", "geforce-experience", "git", "greenshot", "humble-app", "irfanview", "irfanview-languages", "irfanviewplugins", "k-litecodecpack-standard", "lghub", "libresprite", "logseq", "microsoft-windows-terminal", "msiafterburner", "notion", "nvidia-broadcast", "openssh", "paint.net", "powershell-core", "powertoys", "qbittorrent", "restic", "rsync", "slack", "spotify", "starship", "steam", "sumatrapdf", "sunshine", "teamviewer", "vcredist-all", "voicemeeter", "wezterm", "windhawk", "windirstat", "xnviewmp", "zoxide", @("opera-gx", "--params='`"/NoDesktopShortcut /NoTaskbarShortcut`"'")
     )
 
     $ChildLogger = $this.Logger.ChildLogger()
@@ -740,7 +740,7 @@ class WSL {
           ! test -s '$HOME/projects/dotfiles' `
           '&&' nix-shell -p git --run '"git clone https://codeberg.org/Gipphe/dotfiles.git"' '"$HOME/projects/dotfiles"' `
           '&&' cd '$HOME/projects/dotfiles' `
-          '&&' nixos-rebuild --extra-experimental-features 'flakes nix-command' switch --flake '"$(pwd)#Jarle"'
+          '&&' nixos-rebuild --extra-experimental-features 'flakes nix-command' switch --flake '"$(pwd)#Jarle-wsl"'
       }))
     })
     $ChildLogger.Info(" nixos-wsl configured")

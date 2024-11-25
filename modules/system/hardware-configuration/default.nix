@@ -7,7 +7,7 @@
 let
   configs = {
     "trond-arne" = ./trond-arne.nix;
-    "Jarle" = ./Jarle.nix;
+    "Jarle-wsl" = ./Jarle-wsl.nix;
   };
 in
 {

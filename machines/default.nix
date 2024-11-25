@@ -1,7 +1,7 @@
 { lib, flags, ... }:
 {
   imports = [
-    ./Jarle
+    ./Jarle-wsl
     ./VNB-MB-Pro
     ./trond-arne
   ];

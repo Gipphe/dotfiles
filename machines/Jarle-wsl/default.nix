@@ -1,11 +1,11 @@
 { lib, util, ... }:
 util.mkToggledModule [ "machines" ] {
-  name = "Jarle";
+  name = "Jarle-wsl";
   shared = {
     gipphe = {
       username = "gipphe";
       homeDirectory = "/home/gipphe";
-      hostName = "Jarle";
+      hostName = "Jarle-wsl";
       profiles = {
         nixos = {
           system.enable = true;

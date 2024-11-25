@@ -43,13 +43,13 @@ configurations for a variety of machines.
 
 Machine configs are located in [`./machines`](./machines).
 
-### Jarle
+### Jarle-wsl
 
 NixOS in WSL on Windows. Supports GUI programs through WSLg.
 
-Located in [`./machines/Jarle`](./machines/Jarle).
+Located in [`./machines/Jarle-wsl`](./machines/Jarle-wsl).
 
-<img src="./assets/Jarle-neofetch.png" width="600px">
+<img src="./assets/Jarle-wsl-neofetch.png" width="600px">
 
 ### VNB-MB-Pro
 

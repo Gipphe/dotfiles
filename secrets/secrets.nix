@@ -9,11 +9,11 @@ let
   VNB-MB-Pro-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAvkGogV7sRBoR8XhCspJPNXpDPTAedNij+CoT/gqfNU victor@VNB-MB-Pro.local";
   VNB-MB-Pro = [ VNB-MB-Pro-user ];
 
-  Jarle-host = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFAcsfSTqXBF7E5mIpAKGk6JDVg8cZEwxa+ysUUy+JJN root@Jarle";
-  Jarle-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILtYQ119Fz/wXHvgVcOeCsnECQYAhmrJ7Wzon1zBV1PZ gipphe@Jarle";
-  Jarle = [
-    Jarle-host
-    Jarle-user
+  Jarle-wsl-host = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFAcsfSTqXBF7E5mIpAKGk6JDVg8cZEwxa+ysUUy+JJN root@Jarle";
+  Jarle-wsl-user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILtYQ119Fz/wXHvgVcOeCsnECQYAhmrJ7Wzon1zBV1PZ gipphe@Jarle";
+  Jarle-wsl = [
+    Jarle-wsl-host
+    Jarle-wsl-user
   ];
 
   services = [
@@ -24,7 +24,7 @@ let
   hosts = {
     "trond-arne" = trond-arne;
     "VNB-MB-Pro" = VNB-MB-Pro;
-    "Jarle" = Jarle;
+    "Jarle-wsl" = Jarle-wsl;
   };
   extensions = [
     ".ssh"
@@ -47,6 +47,6 @@ let
     acc: curr:
     acc // (foldl' (acc': curr': acc' // { "${curr'}".publicKeys = curr.keys; }) { } curr.keyNames)
   ) { } (attrValues hostKeys);
-  all = Jarle ++ VNB-MB-Pro ++ trond-arne;
+  all = Jarle-wsl ++ VNB-MB-Pro ++ trond-arne;
 in
 entries // { "mods-cli-openai-api-key.age".publicKeys = all; }
