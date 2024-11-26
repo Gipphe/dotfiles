@@ -94,7 +94,7 @@
     });
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11"; # 24.11 beta release
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     darwin = {
       url = "github:LnL7/nix-darwin";
