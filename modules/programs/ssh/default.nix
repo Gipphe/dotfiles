@@ -51,8 +51,6 @@ util.mkProgram {
             kill = "${pkgs.coreutils}/bin/kill";
             sed = "${pkgs.gnused}/bin/sed";
             chmod = "${pkgs.coreutils}/bin/chmod";
-            ps = "${pkgs.procps}/bin/ps";
-            grep = "${pkgs.gnugrep}/bin/grep";
             ssh-add = if (!pkgs.stdenv.isDarwin) then "${pkgs.openssh}/bin/ssh-add" else "ssh-add";
             cat = "${pkgs.coreutils}/bin/cat";
           in
@@ -112,8 +110,7 @@ util.mkProgram {
                   start-ssh-agent
                 end
               '';
-            add-ssh-keys-to-agent =
-              # fish
+            add-ssh-keys-to-agent = # fish
               ''
                 ${ssh-add} ${ssh_keys} &>/dev/null
               '';
