@@ -54,11 +54,12 @@ util.mkProgram {
             ps = "${pkgs.procps}/bin/ps";
             grep = "${pkgs.gnugrep}/bin/grep";
             ssh-add = if (!pkgs.stdenv.isDarwin) then "${pkgs.openssh}/bin/ssh-add" else "ssh-add";
+            cat = "${pkgs.coreutils}/bin/cat";
           in
           {
             read-ssh-env = # fish
               ''
-                set -l lines $(${pkgs.coreutils}/bin/cat ${ssh-env-path} | string split '\n')
+                set -l lines $(${cat} ${ssh-env-path} | string split '\n')
                 for line in $lines
                   if string match -qr '^#'
                     continue
