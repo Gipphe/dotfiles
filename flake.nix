@@ -63,6 +63,7 @@
                   deadnix # clean up unused nix code
                   nvd # Diff nix results
                   sops
+                  vulnix # Vulnerability scanner
                 ]);
             };
 
