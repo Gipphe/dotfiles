@@ -21,7 +21,7 @@ let
   darwin = lib.mkIf pkgs.stdenv.isDarwin {
     home.packages = [
       (util.setCaskHash inputs.brew-nix.packages.${pkgs.system}.filen
-        "sha256-ewoPrA8HuYftz9tvp7OUgDqikKhPZ7WOVyWH83oADJQ="
+        "sha256-95nv9+eja+Al2nknKIVr9a3smlL2PMEOb9tghfRBs1I="
       )
     ];
   };
