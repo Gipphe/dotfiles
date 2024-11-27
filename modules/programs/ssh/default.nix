@@ -104,8 +104,8 @@ util.mkProgram {
                 # Source SSH settings, if applicable
                 if ${test} -f "${ssh-env-path}"
                   read-ssh-env "${ssh-env-path}"
-                  ${ps} -ef | ${grep} $SSH_AGENT_PID | ${grep} 'ssh-agent$' >/dev/null
-                  if ${test} "$status" != 0
+                  set -l pid $(${pgrep} 'ssh-agent$')
+                  if test $pid != $SSH_AGENT_PID
                     start-ssh-agent
                   end
                 else
