@@ -20,7 +20,8 @@ let
   };
 
   ssh_secrets = lib.filterAttrs (k: _: lib.hasSuffix ".ssh" k) config.sops.secrets;
-  ssh_keys = concatStringsSep " " (lib.mapAttrsToList (_: v: "'${v.path}'") ssh_secrets);
+  ssh_key_paths = lib.mapAttrsToList (_: v: "'${v.path}'") ssh_secrets;
+  ssh_keys = concatStringsSep " " ssh_key_paths;
   ssh-env-path = "${config.home.homeDirectory}/.ssh/agent-environment";
 in
 util.mkProgram {
@@ -38,6 +39,10 @@ util.mkProgram {
           identitiesOnly = true;
         });
       };
+      # keychain = {
+      #   enable = true;
+      #   keys = [ "id_ed25519" ] ++ ssh_key_paths;
+      # };
       fish = {
         shellInit = # fish
           ''
