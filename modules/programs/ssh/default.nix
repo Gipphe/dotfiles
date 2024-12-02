@@ -103,7 +103,7 @@ util.mkProgram {
                 if ${test} -f "${ssh-env-path}"
                   read-ssh-env "${ssh-env-path}"
                   set -l pid $(${pgrep} 'ssh-agent$')
-                  if test $pid != $SSH_AGENT_PID
+                  if test "$pid" != "$SSH_AGENT_PID"
                     start-ssh-agent
                   end
                 else
