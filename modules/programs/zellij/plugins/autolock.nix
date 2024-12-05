@@ -19,9 +19,7 @@ in
   xdg.configFile."zellij/plugins/zellij-autolock.wasm".source = autolock;
   programs.zellij = {
     settings = {
-      load_plugins = [
-        "autolock"
-      ];
+      load_plugins.autolock = null;
       keybinds = (
         section "normal" (
           lib.mergeAttrsList [

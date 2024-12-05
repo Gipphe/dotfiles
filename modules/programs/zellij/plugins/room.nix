@@ -12,13 +12,16 @@ let
 in
 {
   xdg.configFile."zellij/plugins/room.wasm".source = room;
-  programs.zellij.settings.keybinds = shared_except [ "locked" ] (
-    bind "Ctrl o" {
-      "LaunchOrFocusPlugin \"file:~/.config/zellij/plugins/room.wasm\"" = {
-        floating = true;
-        ignore_case = true;
-        quick_jump = true;
-      };
-    }
-  );
+  programs.zellij.settings = {
+    load_plugins.zoom = null;
+    keybinds = shared_except [ "locked" ] (
+      bind "Ctrl o" {
+        "LaunchOrFocusPlugin \"file:~/.config/zellij/plugins/room.wasm\"" = {
+          floating = true;
+          ignore_case = true;
+          quick_jump = true;
+        };
+      }
+    );
+  };
 }

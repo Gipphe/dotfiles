@@ -17,44 +17,46 @@ in
 util.mkProgram {
   name = "zellij";
 
-  options.gipphe.programs.zellij.layouts = lib.mkOption {
-    description = "Layouts for Zellij";
-    default = { };
-    type =
-      with lib.types;
-      attrsOf (
-        submodule (
-          { name, config, ... }:
-          {
-            options = {
-              enable = lib.mkOption {
-                description = "Whether this layout should be generated.";
-                type = lib.types.bool;
-                default = true;
+  options.gipphe.programs.zellij = {
+    layouts = lib.mkOption {
+      description = "Layouts for Zellij";
+      default = { };
+      type =
+        with lib.types;
+        attrsOf (
+          submodule (
+            { name, config, ... }:
+            {
+              options = {
+                enable = lib.mkOption {
+                  description = "Whether this layout should be generated.";
+                  type = lib.types.bool;
+                  default = true;
+                };
+                text = lib.mkOption {
+                  description = "Text contents for the layout.";
+                  type = with lib.types; nullOr lines;
+                  default = null;
+                };
+                source = lib.mkOption {
+                  description = "Path to the source file.";
+                  type = lib.types.path;
+                };
               };
-              text = lib.mkOption {
-                description = "Text contents for the layout.";
-                type = with lib.types; nullOr lines;
-                default = null;
+              config = {
+                source = lib.mkIf (config.text != null) (
+                  lib.mkDefault (
+                    pkgs.writeTextFile {
+                      inherit (config) text;
+                      name = util.storeFileName "zellij_layout_" name;
+                    }
+                  )
+                );
               };
-              source = lib.mkOption {
-                description = "Path to the source file.";
-                type = lib.types.path;
-              };
-            };
-            config = {
-              source = lib.mkIf (config.text != null) (
-                lib.mkDefault (
-                  pkgs.writeTextFile {
-                    inherit (config) text;
-                    name = util.storeFileName "zellij_layout_" name;
-                  }
-                )
-              );
-            };
-          }
-        )
-      );
+            }
+          )
+        );
+    };
   };
   hm = {
     imports = [

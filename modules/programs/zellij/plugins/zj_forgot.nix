@@ -15,14 +15,16 @@ in
   programs = {
     zellij = {
       enable = true;
-
-      settings.keybinds = (
-        shared_except [ "locked" ] (
-          bind "Ctrl y" {
-            "LaunchOrFocusPlugin \"file:~/.config/zellij/plugins/zj_forgot.wasm\"".floating = true;
-          }
-        )
-      );
+      settings = {
+        load_plugins.zellij_forgot = null;
+        keybinds = (
+          shared_except [ "locked" ] (
+            bind "Ctrl y" {
+              "LaunchOrFocusPlugin \"file:~/.config/zellij/plugins/zj_forgot.wasm\"".floating = true;
+            }
+          )
+        );
+      };
     };
   };
 }
