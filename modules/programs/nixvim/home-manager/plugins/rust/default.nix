@@ -1,6 +1,6 @@
 {
   programs.nixvim.plugins.lsp.servers = {
-    rust-analyzer = {
+    rust_analyzer = {
       enable = true;
       installCargo = false;
       installRustc = false;
