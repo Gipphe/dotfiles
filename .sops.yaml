@@ -1,31 +1,31 @@
 keys:
-  - &vnb-mb-pro age1hvcmce9e4tkhm2ue2nh7tan6qxy7dewyf8rkentshf20qlt3x5aszkpn7c
-  - &jarle-wsl age1akwhlc7p3nmvty78nvqj9egdamvt86r6pkljjry9846f5uxju4hsnzr5pq
-  - &trond-arne age12ewxc5y60mgvu240gvjnnc6uufvjrh757kad7dkzlwm64fcd4v4qtmvpy5
+  - &silicon age1hvcmce9e4tkhm2ue2nh7tan6qxy7dewyf8rkentshf20qlt3x5aszkpn7c
+  - &argon age1akwhlc7p3nmvty78nvqj9egdamvt86r6pkljjry9846f5uxju4hsnzr5pq
+  - &cobalt age12ewxc5y60mgvu240gvjnnc6uufvjrh757kad7dkzlwm64fcd4v4qtmvpy5
 creation_rules:
-  - path_regex: secrets/VNB-MB-Pro.*
+  - path_regex: secrets/silicon.*
     key_groups:
       - age:
-          - *vnb-mb-pro
-  - path_regex: secrets/Jarle-wsl.*
+          - *silicon
+  - path_regex: secrets/argon.*
     key_groups:
       - age:
-          - *jarle-wsl
+          - *argon
 
-  - path_regex: secrets/trond-arne.*
+  - path_regex: secrets/cobalt.*
     key_groups:
       - age:
-          - *trond-arne
+          - *cobalt
 
   - path_regex: secrets/mods-cli-openai-api\.key
     key_groups:
       - age:
-          - *trond-arne
-          - *jarle
-          - *vnb-mb-pro
+          - *cobalt
+          - *argon
+          - *silicon
   - path_regex: secrets/claude-nvim-api-key\.key
     key_groups:
       - age:
-          - *trond-arne
-          - *jarle
-          - *vnb-mb-pro
+          - *cobalt
+          - *argon
+          - *silicon
