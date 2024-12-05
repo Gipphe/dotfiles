@@ -52,12 +52,12 @@ util.mkProgram {
         functions =
           let
             test = "${pkgs.coreutils}/bin/test";
-            pgrep = "${pkgs.procps}/bin/pgrep";
-            kill = "${pkgs.coreutils}/bin/kill";
+            pgrep = if pkgs.stdenv.isDarwin then "pgrep" else "${pkgs.procps}/bin/pgrep";
+            kill = if pkgs.stdenv.isDarwin then "kill" else "${pkgs.coreutils}/bin/kill";
             sed = "${pkgs.gnused}/bin/sed";
-            chmod = "${pkgs.coreutils}/bin/chmod";
-            ssh-add = if (!pkgs.stdenv.isDarwin) then "${pkgs.openssh}/bin/ssh-add" else "ssh-add";
-            cat = "${pkgs.coreutils}/bin/cat";
+            chmod = if pkgs.stdenv.isDarwin then "chmod" else "${pkgs.coreutils}/bin/chmod";
+            ssh-add = if pkgs.stdenv.isDarwin then "ssh-add" else "${pkgs.openssh}/bin/ssh-add";
+            cat = if pkgs.stdenv.isDarwin then "cat" else "${pkgs.coreutils}/bin/cat";
           in
           {
             read-ssh-env = # fish
