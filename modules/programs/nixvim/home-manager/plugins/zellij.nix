@@ -8,7 +8,7 @@
           owner = "fresh2dev";
           repo = "zellij.vim";
           rev = "0.3.0";
-          hash = "";
+          hash = "sha256-PxZkJod+104VY2BjlQETTuZioGAnUzV3krSYDW6riyg=";
         };
       })
     ];
