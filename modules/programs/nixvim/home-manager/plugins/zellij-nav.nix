@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   inherit (import ../util.nix) k;
 in
 {
-  programs.nixvim = {
+  programs.nixvim = lib.mkIf false {
     extraPlugins = [
       (pkgs.vimUtils.buildVimPlugin {
         name = "zellij-nav.nvim";
