@@ -9,6 +9,7 @@ let
   inherit (lib) pipe concatStringsSep mapAttrsToList;
   cfg = config.gipphe.windows.home;
   files = lib.filterAttrs (_: v: v.enable) cfg.file;
+  downloads = cfg.download;
   vcsConfigs = "${config.gipphe.windows.vcsPath}/windows/configs";
   order = import ./order.nix;
   normalize =
@@ -78,105 +79,117 @@ util.mkToggledModule [ "windows" ] {
       );
     };
   };
-  hm = lib.mkIf (files != { }) {
-    gipphe.windows.powershell-script =
-      lib.mkOrder order.home # powershell
-        ''
-          class Config {
-            [PSCustomObject]$Logger
-            [String]$CfgDir
+  hm = lib.mkMerge [
+    (lib.mkIf (files != { }) {
+      gipphe.windows.powershell-script =
+        lib.mkOrder order.home # powershell
+          ''
+            class Config {
+              [PSCustomObject]$Logger
+              [String]$CfgDir
 
-            Config([PSCustomObject]$Logger, [String]$Dirname) {
-              $this.Logger = $Logger
-              $this.CfgDir = "$Dirname/configs"
-            }
-
-            [Void] Install() {
-              $this.Logger.Info(" Copying config files...")
-              $ChildLogger = $this.Logger.ChildLogger()
-              $baseUrl = $Env:USERPROFILE
-              $Items = Get-ChildItem -File -Recurse "$($this.CfgDir)" | Resolve-Path -Relative -RelativeBasePath "$($this.CfgDir)"
-
-              $Items | ForEach-Object {
-                $From = Resolve-PathNice "$($this.CfgDir)/$_"
-                $To = Resolve-PathNice "$baseUrl/$_"
-
-                # Ensure parent dir exists
-                $ToDir = Split-Path -Parent $To
-                if (-not (Test-Path -PathType Container $ToDir)) {
-                  New-Item -Force -ItemType Directory $ToDir
-                }
-
-                # Clean out existing destination if it is a directory. Otherwise, we'll
-                # end up copying _into_ the existing directory.
-                if (Test-Path -PathType Container $To) {
-                  Write-Host "Would have deleted $To because it is a directory"
-                  continue
-                  # Remove-Item -Recurse -Force $To
-                }
-
-                Copy-Item -Force -Recurse -Path $From -Destination $To
-                $FileName = Split-Path -Leaf $From
-                $ChildLogger.Info(" $_ copied")
+              Config([PSCustomObject]$Logger, [String]$Dirname) {
+                $this.Logger = $Logger
+                $this.CfgDir = "$Dirname/configs"
               }
 
-              $this.Logger.Info(" Config files copied.")
+              [Void] Install() {
+                $this.Logger.Info(" Copying config files...")
+                $ChildLogger = $this.Logger.ChildLogger()
+                $baseUrl = $Env:USERPROFILE
+                $Items = Get-ChildItem -File -Recurse "$($this.CfgDir)" | Resolve-Path -Relative -RelativeBasePath "$($this.CfgDir)"
+
+                $Items | ForEach-Object {
+                  $From = Resolve-PathNice "$($this.CfgDir)/$_"
+                  $To = Resolve-PathNice "$baseUrl/$_"
+
+                  # Ensure parent dir exists
+                  $ToDir = Split-Path -Parent $To
+                  if (-not (Test-Path -PathType Container $ToDir)) {
+                    New-Item -Force -ItemType Directory $ToDir
+                  }
+
+                  # Clean out existing destination if it is a directory. Otherwise, we'll
+                  # end up copying _into_ the existing directory.
+                  if (Test-Path -PathType Container $To) {
+                    Write-Host "Would have deleted $To because it is a directory"
+                    continue
+                    # Remove-Item -Recurse -Force $To
+                  }
+
+                  Copy-Item -Force -Recurse -Path $From -Destination $To
+                  $FileName = Split-Path -Leaf $From
+                  $ChildLogger.Info(" $_ copied")
+                }
+
+                $this.Logger.Info(" Config files copied.")
+              }
             }
-          }
 
-          $Config = [Config]::new($Logger, $PSScriptRoot)
-          $Config.Install()
+            $Config = [Config]::new($Logger, $PSScriptRoot)
+            $Config.Install()
+          '';
 
-          class Download {
-            [PSCustomObject]$Logger
+      home.activation = (
+        lib.mapAttrs' (path: v: {
+          name = "copy-windows-file-${normalize path}";
+          value =
+            lib.hm.dag.entryAfter [ "filesChanged" ] # bash
+              ''
+                run mkdir -p "$(dirname -- '${vcsConfigs}/${path}')"
+                run cp -Lf '${v.source}' '${vcsConfigs}/${path}'
+              '';
+        }) files
+      );
+    })
 
-            Download([PSCustomObject]$Logger) {
-              $this.Logger = $Logger
-            }
+    (lib.mkIf (downloads != { }) {
+      gipphe.windows.powershell-script =
+        lib.mkOrder (order.home + 1) # powershell
+          ''
 
-            [Void] Install() {
-              $this.Logger.Info(" Downloading files...")
-              $ChildLogger = $this.Logger.ChildLogger()
-              $DestDir = $Env:USERPROFILE
+            class Download {
+              [PSCustomObject]$Logger
 
-              ${
-                pipe config.gipphe.windows.home.download [
-                  (mapAttrsToList (
-                    dest: url:
-                    let
-                      destPath = "$DestDir/${dest}";
-                    in
-                    # powershell
-                    ''
-                      if (Test-Path "${destPath}") {
-                        $Logger.Info(" ${destPath} already downloaded.")
-                      } else {
-                        $Logger.Info(" Downloading ${url}...")
-                        New-Item -ItemType Container -Path (Split-Path -Parent "${destPath}")
-                        Invoke-WebRequest -Uri "${url}" -OutFile "${destPath}"
-                        $Logger.Info(" Downloaded ${url}")
-                      }
-                    ''
-                  ))
-                  (concatStringsSep "\n\n")
-                ]
+              Download([PSCustomObject]$Logger) {
+                $this.Logger = $Logger
               }
 
-              $this.Logger.Info(" Files downloaded.")
-            }
-          }
-        '';
+              [Void] Install() {
+                $this.Logger.Info(" Downloading files...")
+                $ChildLogger = $this.Logger.ChildLogger()
+                $DestDir = $Env:USERPROFILE
 
-    home.activation = (
-      lib.mapAttrs' (path: v: {
-        name = "copy-windows-file-${normalize path}";
-        value =
-          lib.hm.dag.entryAfter [ "filesChanged" ] # bash
-            ''
-              run mkdir -p "$(dirname -- '${vcsConfigs}/${path}')"
-              run cp -Lf '${v.source}' '${vcsConfigs}/${path}'
-            '';
-      }) files
-    );
-  };
+                ${
+                  pipe config.gipphe.windows.home.download [
+                    (mapAttrsToList (
+                      dest: url:
+                      let
+                        destPath = "$DestDir/${dest}";
+                      in
+                      # powershell
+                      ''
+                        if (Test-Path "${destPath}") {
+                          $Logger.Info(" ${destPath} already downloaded.")
+                        } else {
+                          $Logger.Info(" Downloading ${url}...")
+                          New-Item -ItemType Container -Path (Split-Path -Parent "${destPath}")
+                          Invoke-WebRequest -Uri "${url}" -OutFile "${destPath}"
+                          $Logger.Info(" Downloaded ${url}")
+                        }
+                      ''
+                    ))
+                    (concatStringsSep "\n\n")
+                  ]
+                }
+
+                $this.Logger.Info(" Files downloaded.")
+              }
+            }
+
+            $Download = [Download]::new($Logger)
+            $Download.Install()
+          '';
+    })
+  ];
 }

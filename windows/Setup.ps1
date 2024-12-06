@@ -224,6 +224,7 @@ class Config {
 $Config = [Config]::new($Logger, $PSScriptRoot)
 $Config.Install()
 
+
 class Download {
   [PSCustomObject]$Logger
 
@@ -249,6 +250,9 @@ class Download {
     $this.Logger.Info(" Files downloaded.")
   }
 }
+
+$Download = [Download]::new($Logger)
+$Download.Install()
 
 class Env {
   [PSCustomObject]$Logger
