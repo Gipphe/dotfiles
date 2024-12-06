@@ -168,12 +168,12 @@ util.mkToggledModule [ "windows" ] {
                       # powershell
                       ''
                         if (Test-Path "${destPath}") {
-                          $Logger.Info(" ${destPath} already downloaded.")
+                          $ChildLogger.Info(" ${destPath} already downloaded.")
                         } else {
-                          $Logger.Info(" Downloading ${url}...")
+                          $ChildLogger.Info(" Downloading ${url}...")
                           New-Item -ItemType Container -Path (Split-Path -Parent "${destPath}")
                           Invoke-WebRequest -Uri "${url}" -OutFile "${destPath}"
-                          $Logger.Info(" Downloaded ${url}")
+                          $ChildLogger.Info(" Downloaded ${url}")
                         }
                       ''
                     ))
