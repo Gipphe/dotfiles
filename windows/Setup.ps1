@@ -224,7 +224,6 @@ class Config {
 $Config = [Config]::new($Logger, $PSScriptRoot)
 $Config.Install()
 
-
 class Download {
   [PSCustomObject]$Logger
 

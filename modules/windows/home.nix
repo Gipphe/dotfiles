@@ -9,7 +9,6 @@ let
   inherit (lib) pipe concatStringsSep mapAttrsToList;
   cfg = config.gipphe.windows.home;
   files = lib.filterAttrs (_: v: v.enable) cfg.file;
-  downloads = cfg.download;
   vcsConfigs = "${config.gipphe.windows.vcsPath}/windows/configs";
   order = import ./order.nix;
   normalize =
@@ -143,11 +142,10 @@ util.mkToggledModule [ "windows" ] {
       );
     })
 
-    (lib.mkIf (downloads != { }) {
+    (lib.mkIf (cfg.download != { }) {
       gipphe.windows.powershell-script =
         lib.mkOrder (order.home + 1) # powershell
           ''
-
             class Download {
               [PSCustomObject]$Logger
 
@@ -161,7 +159,7 @@ util.mkToggledModule [ "windows" ] {
                 $DestDir = $Env:USERPROFILE
 
                 ${
-                  pipe config.gipphe.windows.home.download [
+                  pipe cfg.download [
                     (mapAttrsToList (
                       dest: url:
                       let
