@@ -224,6 +224,32 @@ class Config {
 $Config = [Config]::new($Logger, $PSScriptRoot)
 $Config.Install()
 
+class Download {
+  [PSCustomObject]$Logger
+
+  Download([PSCustomObject]$Logger) {
+    $this.Logger = $Logger
+  }
+
+  [Void] Install() {
+    $this.Logger.Info(" Downloading files...")
+    $ChildLogger = $this.Logger.ChildLogger()
+    $DestDir = $Env:USERPROFILE
+
+    if (Test-Path "$DestDir/.local/bin/filen.exe") {
+  $Logger.Info(" $DestDir/.local/bin/filen.exe already downloaded.")
+} else {
+  $Logger.Info(" Downloading https://github.com/FilenCloudDienste/filen-cli/releases/download/v0.0.24/filen-cli-v0.0.24-win-x64.exe...")
+  New-Item -ItemType Container -Path (Split-Path -Parent "$DestDir/.local/bin/filen.exe")
+  Invoke-WebRequest -Uri "https://github.com/FilenCloudDienste/filen-cli/releases/download/v0.0.24/filen-cli-v0.0.24-win-x64.exe" -OutFile "$DestDir/.local/bin/filen.exe"
+  $Logger.Info(" Downloaded https://github.com/FilenCloudDienste/filen-cli/releases/download/v0.0.24/filen-cli-v0.0.24-win-x64.exe")
+}
+
+
+    $this.Logger.Info(" Files downloaded.")
+  }
+}
+
 class Env {
   [PSCustomObject]$Logger
   

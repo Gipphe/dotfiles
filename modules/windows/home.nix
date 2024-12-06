@@ -6,6 +6,7 @@
   ...
 }:
 let
+  inherit (lib) pipe concatStringsSep mapAttrsToList;
   cfg = config.gipphe.windows.home;
   files = lib.filterAttrs (_: v: v.enable) cfg.file;
   vcsConfigs = "${config.gipphe.windows.vcsPath}/windows/configs";
@@ -25,49 +26,57 @@ let
 in
 util.mkToggledModule [ "windows" ] {
   name = "home";
-  options.gipphe.windows.home.file = lib.mkOption {
-    description = ''
-      Files to write to home directory. Either `text` or `source` are required.
-    '';
-    type = lib.types.attrsOf (
-      lib.types.submodule (
-        { name, config, ... }:
-        {
-          config = {
-            source = lib.mkIf (config.text != null) (
-              lib.mkDefault (
-                pkgs.writeTextFile {
-                  inherit (config) text;
-                  name = util.storeFileName "win_" name;
-                }
-              )
-            );
-          };
-          options = {
-            enable = lib.mkOption {
-              description = ''
-                Whether this $HOME file should be generated.
-              '';
-              type = lib.types.bool;
-              default = true;
+  options.gipphe.windows.home = {
+    download = lib.mkOption {
+      description = ''
+        Files to download and write to home directory. Attrset where keys represent destination path and values represent download URLs.
+      '';
+      type = with lib.types; attrsOf str;
+    };
+    file = lib.mkOption {
+      description = ''
+        Files to write to home directory. Either `text` or `source` are required.
+      '';
+      type = lib.types.attrsOf (
+        lib.types.submodule (
+          { name, config, ... }:
+          {
+            config = {
+              source = lib.mkIf (config.text != null) (
+                lib.mkDefault (
+                  pkgs.writeTextFile {
+                    inherit (config) text;
+                    name = util.storeFileName "win_" name;
+                  }
+                )
+              );
             };
-            text = lib.mkOption {
-              description = ''
-                Text contents of the file.
-              '';
-              type = lib.types.nullOr lib.types.lines;
-              default = null;
+            options = {
+              enable = lib.mkOption {
+                description = ''
+                  Whether this $HOME file should be generated.
+                '';
+                type = lib.types.bool;
+                default = true;
+              };
+              text = lib.mkOption {
+                description = ''
+                  Text contents of the file.
+                '';
+                type = lib.types.nullOr lib.types.lines;
+                default = null;
+              };
+              source = lib.mkOption {
+                description = ''
+                  Path to the source file.
+                '';
+                type = lib.types.path;
+              };
             };
-            source = lib.mkOption {
-              description = ''
-                Path to the source file.
-              '';
-              type = lib.types.path;
-            };
-          };
-        }
-      )
-    );
+          }
+        )
+      );
+    };
   };
   hm = lib.mkIf (files != { }) {
     gipphe.windows.powershell-script =
@@ -117,6 +126,45 @@ util.mkToggledModule [ "windows" ] {
 
           $Config = [Config]::new($Logger, $PSScriptRoot)
           $Config.Install()
+
+          class Download {
+            [PSCustomObject]$Logger
+
+            Download([PSCustomObject]$Logger) {
+              $this.Logger = $Logger
+            }
+
+            [Void] Install() {
+              $this.Logger.Info(" Downloading files...")
+              $ChildLogger = $this.Logger.ChildLogger()
+              $DestDir = $Env:USERPROFILE
+
+              ${
+                pipe config.gipphe.windows.home.download [
+                  (mapAttrsToList (
+                    dest: url:
+                    let
+                      destPath = "$DestDir/${dest}";
+                    in
+                    # powershell
+                    ''
+                      if (Test-Path "${destPath}") {
+                        $Logger.Info(" ${destPath} already downloaded.")
+                      } else {
+                        $Logger.Info(" Downloading ${url}...")
+                        New-Item -ItemType Container -Path (Split-Path -Parent "${destPath}")
+                        Invoke-WebRequest -Uri "${url}" -OutFile "${destPath}"
+                        $Logger.Info(" Downloaded ${url}")
+                      }
+                    ''
+                  ))
+                  (concatStringsSep "\n\n")
+                ]
+              }
+
+              $this.Logger.Info(" Files downloaded.")
+            }
+          }
         '';
 
     home.activation = (

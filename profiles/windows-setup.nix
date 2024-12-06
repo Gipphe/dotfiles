@@ -83,6 +83,9 @@ util.mkProfile "windows-setup" {
           "Documents/PowerShell/Microsoft.PowerShell_profile.ps1".source = ../modules/windows/config/PSProfile.ps1;
           "AppData/Local/nvim/init.vim".source = ../modules/windows/config/nvim/init.vim;
         };
+        download = {
+          ".local/bin/filen.exe" = "https://github.com/FilenCloudDienste/filen-cli/releases/download/v0.0.24/filen-cli-v0.0.24-win-x64.exe";
+        };
       };
       environment = {
         enable = true;
