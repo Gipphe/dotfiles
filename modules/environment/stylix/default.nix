@@ -44,5 +44,6 @@ util.mkEnvironment {
       name = "Bibata-Modern-Ice";
       size = 24;
     };
+    systemd.services."home-manager-${config.gipphe.username}".wants = [ "dbus.service" ];
   };
 }
