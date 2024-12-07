@@ -13,6 +13,7 @@ util.mkProfile "desktop" {
       hoppscotch.enable = true;
       logseq.enable = true;
       obsidian.enable = true;
+      signal.enable = true;
       slack.enable = true;
       wezterm.enable = true;
     };
