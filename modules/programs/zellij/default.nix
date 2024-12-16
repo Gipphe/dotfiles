@@ -6,7 +6,6 @@
   ...
 }:
 let
-  autolock = import ./plugins/autolock.nix { inherit pkgs; };
   zellij-forgot = import ./plugins/zellij-forgot.nix { inherit pkgs; };
   room = import ./plugins/room.nix { inherit pkgs; };
 in
@@ -18,26 +17,6 @@ util.mkProgram {
         keybinds clear-defaults=true {
             locked {
                 bind "Ctrl g" { SwitchToMode "normal"; }
-                bind "Alt z" {
-                    MessagePlugin "autolock" { payload "disable"; }
-                    SwitchToMode "normal"
-                }
-            }
-            normal {
-                // Intercept `Enter` for autolock.
-                bind "Enter" {
-                    // Passthru `Enter`.
-                    WriteChars "\u{000D}"
-                    // Invoke autolock to immediately assess proper lock state.
-                    // (This provides a snappier experience compared to
-                    // solely relying on `reaction_seconds` to elapse.)
-                    MessagePlugin "autolock" {}
-                }
-            }
-            shared {
-                bind "Alt Shift z" {
-                    MessagePlugin "autolock" { payload "enable"; }
-                }
             }
             pane {
                 bind "left" { MoveFocus "left"; }
@@ -178,11 +157,6 @@ util.mkProgram {
                         quick_jump true
                     }
                 }
-                bind "Alt z" {
-                    // Disable the autolock plugin.
-                    MessagePlugin "autolock" { payload "disable"; }
-                    SwitchToMode "locked"
-                }
                 bind "Alt left" { MoveFocusOrTab "left"; }
                 bind "Alt down" { MoveFocus "down"; }
                 bind "Alt up" { MoveFocus "up"; }
@@ -279,18 +253,7 @@ util.mkProgram {
                 welcome_screen true
             }
 
-            autolock location="file:${autolock}" {
-                is_enabled true
-                triggers "nvim|vim|atuin|fzf"
-                reaction_seconds "0.3"
-                print_to_log false
-            }
-
             room location="file:${room}"
-        }
-
-        load_plugins {
-            autolock
         }
 
         copy_on_select true
@@ -311,7 +274,7 @@ util.mkProgram {
         // Choose the theme that is specified in the themes section.
         // Default: default
         // 
-        // theme "dracula"
+        theme "catppuccin-macchiato"
 
         // Choose the base input mode of zellij.
         // Default: normal
@@ -335,7 +298,7 @@ util.mkProgram {
         // The folder in which Zellij will look for layouts
         // (Requires restart)
         // 
-        // layout_dir "/tmp"
+        layout_dir "~/.config/zellij/layouts"
 
         // The folder in which Zellij will look for themes
         // (Requires restart)
