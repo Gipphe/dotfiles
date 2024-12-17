@@ -7,7 +7,7 @@ util.mkProfile "desktop" {
       code-cursor.enable = true;
       cool-retro-term.enable = true;
       # appImage wrapping breaking change.
-      filen.enable = false;
+      filen.enable = true;
       floorp.enable = true;
       gimp.enable = true;
       hoppscotch.enable = true;
