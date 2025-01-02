@@ -133,6 +133,7 @@ let
       hm ? { },
       system-nixos ? { },
       system-darwin ? { },
+      system-droid ? { },
       system-all ? { },
       shared ? { },
     }:
@@ -168,6 +169,7 @@ let
             hm = injectMkIf hm;
             system-nixos = injectMkIf system-nixos;
             system-darwin = injectMkIf system-darwin;
+	    system-droid = injectMkIf system-droid;
             system-all = injectMkIf system-all;
             shared = {
               imports = [
@@ -187,6 +189,7 @@ let
       hm ? { },
       system-nixos ? { },
       system-darwin ? { },
+      system-droid ? { },
       system-all ? { },
       shared ? { },
     }:
@@ -203,6 +206,7 @@ let
               ++ lib.optional flags.isHm hm
               ++ lib.optional flags.isNixos system-nixos
               ++ lib.optional flags.isNixDarwin system-darwin
+	      ++ lib.optional flags.isNixOnDroid system-droid
               ++ lib.optional flags.isSystem system-all;
           }
         )

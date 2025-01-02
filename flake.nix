@@ -90,7 +90,7 @@
         };
 
       flake = {
-        inherit (import ./hosts.nix inputs) nixosConfigurations darwinConfigurations;
+        inherit (import ./hosts.nix inputs) nixosConfigurations darwinConfigurations nixOnDroidConfigurations;
       };
     });
 
@@ -99,6 +99,10 @@
     nixos-hardware.url = "github:nixos/nixos-hardware";
     darwin = {
       url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-on-droid = {
+      url = "github:nix-community/nix-on-droid/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {

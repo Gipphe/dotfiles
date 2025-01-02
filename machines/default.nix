@@ -2,8 +2,9 @@
 {
   imports = [
     ./argon
-    ./silicon
     ./cobalt
+    ./helium
+    ./silicon
   ];
   options.gipphe = {
     username = lib.mkOption {

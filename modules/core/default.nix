@@ -63,4 +63,9 @@ util.mkModule {
     # The platform the configuration will be used on.
     nixpkgs.hostPlatform = "aarch64-darwin";
   };
+
+  system-droid = {
+    # Read the changelog before changing this value
+    system.stateVersion = "24.05";
+  };
 }
