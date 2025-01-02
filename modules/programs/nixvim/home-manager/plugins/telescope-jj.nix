@@ -1,16 +1,9 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}:
+{ pkgs, ... }:
 let
   inherit (import ../util.nix) kv;
 in
 {
-  options.gipphe.programs.nixvim.plugins.telescope-jj.enable =
-    lib.mkEnableOption "telescope-jj plugin";
-  config.programs.nixvim = lib.mkIf config.gipphe.programs.nixvim.plugins.telescope-jj.enable {
+  programs.nixvim = {
     extraPlugins = [
       (pkgs.vimUtils.buildVimPlugin {
         name = "telescope-jj.nvim";
