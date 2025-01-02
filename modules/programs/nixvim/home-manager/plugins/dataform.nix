@@ -1,15 +1,9 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}:
+{ pkgs, ... }:
 let
   inherit (import ../util.nix) k;
 in
 {
-  options.gipphe.programs.nixvim.plugins.dataform.enable = lib.mkEnableOption "dataform plugin";
-  config.programs.nixvim = lib.mkIf config.gipphe.programs.nixvim.plugins.dataform.enable {
+  programs.nixvim = {
     extraPlugins = [
       (pkgs.vimUtils.buildVimPlugin {
         name = "dataform.nvim";
