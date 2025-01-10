@@ -90,7 +90,11 @@
         };
 
       flake = {
-        inherit (import ./hosts.nix inputs) nixosConfigurations darwinConfigurations nixOnDroidConfigurations;
+        inherit (import ./hosts.nix inputs)
+          nixosConfigurations
+          darwinConfigurations
+          nixOnDroidConfigurations
+          ;
       };
     });
 
@@ -177,7 +181,6 @@
       url = "github:nix-community/NixOS-WSL";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
         flake-compat.follows = "flake-compat";
       };
     };
