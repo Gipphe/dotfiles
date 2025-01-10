@@ -1,8 +1,6 @@
 {
   programs.nixvim.plugins.vim-matchup = {
     enable = true;
-    treesitterIntegration = {
-      enable = true;
-    };
+    treesitter.enable = true;
   };
 }

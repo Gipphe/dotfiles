@@ -3,19 +3,17 @@ let
 in
 {
   programs.nixvim = {
-    plugins.persistence = {
-      enable = true;
-      options = [
-        "buffers"
-        "curdir"
-        "tabpages"
-        # "winsizes"
-        "help"
-        "globals"
-        "skiprtp"
-        "folds"
-      ];
-    };
+    opts.sessionoptions = [
+      "buffers"
+      "curdir"
+      "tabpages"
+      # "winsizes"
+      "help"
+      "globals"
+      "skiprtp"
+      "folds"
+    ];
+    plugins.persistence.enable = true;
 
     keymaps = [
       (kv "n" "<leader>qs" ''function() require("persistence").load() end'' { desc = "Restore Session"; })
