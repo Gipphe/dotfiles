@@ -100,6 +100,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-working-nix.url = "github:nixos/nixpkgs/c00d587b1a1afbf200b1d8f0b0e4ba9deb1c7f0e";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     darwin = {
       url = "github:LnL7/nix-darwin";
