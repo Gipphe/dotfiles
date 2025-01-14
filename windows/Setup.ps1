@@ -388,6 +388,8 @@ class Choco {
       "paint.net",
       "powershell-core",
       "powertoys",
+      "python310",
+      "python312",
       "qbittorrent",
       "restic",
       "rsync",
