@@ -14,6 +14,7 @@ util.mkProfile "windows-setup" {
           "cursoride"
           "discord"
           "docker-desktop"
+          "dotnet-8.0-sdk"
           "dust"
           "epicgameslauncher"
           "filen"
@@ -24,11 +25,13 @@ util.mkProfile "windows-setup" {
           "gdlauncher"
           "geforce-experience"
           "git"
+          "godot-mono"
           "greenshot"
           "humble-app"
           "irfanview"
           "irfanview-languages"
           "irfanviewplugins"
+          "jetbrains-rider"
           "k-litecodecpack-standard"
           "lghub"
           "libresprite"
@@ -44,6 +47,7 @@ util.mkProfile "windows-setup" {
           "qbittorrent"
           "restic"
           "rsync"
+          "signal"
           "slack"
           "spotify"
           "starship"
@@ -80,11 +84,13 @@ util.mkProfile "windows-setup" {
         file = {
           ".vimrc".source = ../modules/windows/config/.vimrc;
           ".wslconfig".source = ../modules/windows/config/.wslconfig;
-          "Documents/PowerShell/Microsoft.PowerShell_profile.ps1".source = ../modules/windows/config/PSProfile.ps1;
+          "Documents/PowerShell/Microsoft.PowerShell_profile.ps1".source =
+            ../modules/windows/config/PSProfile.ps1;
           "AppData/Local/nvim/init.vim".source = ../modules/windows/config/nvim/init.vim;
         };
         download = {
-          ".local/bin/filen.exe" = "https://github.com/FilenCloudDienste/filen-cli/releases/download/v0.0.24/filen-cli-v0.0.24-win-x64.exe";
+          ".local/bin/filen.exe" =
+            "https://github.com/FilenCloudDienste/filen-cli/releases/download/v0.0.24/filen-cli-v0.0.24-win-x64.exe";
         };
       };
       environment = {
