@@ -23,22 +23,11 @@ let
     };
   };
   linux = lib.mkIf pkgs.stdenv.isLinux { home.packages = [ linuxPackage ]; };
-  darwinUnwrapped = pkgs.fetchzip {
-    name = "filen-unwrapped";
-    version = "3.0.41";
-    url = "https://github.com/FilenCloudDienste/filen-desktop/releases/download/v3.0.41/Filen_mac_arm64.zip";
-    hash = "sha256-ZHeZ26TXFS7dwiF0ITuMNWPOSk2xfw2r7DWeAICgEow=";
-  };
-  darwinPackage = pkgs.runCommandNoCC "filen" { version = "3.0.41"; } ''
-    mkdir -p $out/Applications
-    ln -s "${darwinUnwrapped}/Filen.app" "$out/Applications/Filen.app"
-  '';
-  darwin = lib.mkIf pkgs.stdenv.isDarwin { home.packages = [ darwinPackage ]; };
 in
 util.mkProgram {
   name = "filen";
   hm.config = lib.mkMerge [
     linux
-    darwin
   ];
+  system-darwin.homebrew.casks = [ "filen" ];
 }
