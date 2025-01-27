@@ -5,7 +5,8 @@
   ...
 }:
 {
-  programs = {
+  options.gipphe.programs.nixvim.plugins.avante.enable = lib.mkEnableOption "avante plugin";
+  config.programs = {
     nixvim = {
       extraPlugins = with pkgs.vimPlugins; [
         nui-nvim
