@@ -52,7 +52,7 @@
         '';
   };
 
-  sops.secrets.anthropic_api_key = {
+  config.sops.secrets.anthropic_api_key = {
     sopsFile = ../../../../../secrets/claude-nvim-api-key.key;
     mode = "400";
     format = "binary";
