@@ -10,6 +10,7 @@ util.mkProfile "windows-setup" {
         programs = [
           "1password"
           "7zip"
+          "OpenShot"
           "barrier"
           "cursoride"
           "discord"
