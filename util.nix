@@ -62,14 +62,13 @@ let
   # `./foo/quux`, we do not traverse further down that part of the file tree.
   recurseFirstMatching =
     file: dir:
-    lib.pipe dir [
-      readDir
-      (filterAttrs (_: type: type == "directory"))
-      attrNames
-      (map (d: /.${dir}/${d}))
-      (map (recurseFirstMatchingIncludingSibling file))
-      flatten
-    ];
+    dir
+    |> readDir
+    |> filterAttrs (_: type: type == "directory")
+    |> attrNames
+    |> map (d: /.${dir}/${d})
+    |> map (recurseFirstMatchingIncludingSibling file)
+    |> flatten;
   recurseFirstMatchingIncludingSibling =
     file: dir:
     let
@@ -169,7 +168,7 @@ let
             hm = injectMkIf hm;
             system-nixos = injectMkIf system-nixos;
             system-darwin = injectMkIf system-darwin;
-	    system-droid = injectMkIf system-droid;
+            system-droid = injectMkIf system-droid;
             system-all = injectMkIf system-all;
             shared = {
               imports = [
@@ -206,7 +205,7 @@ let
               ++ lib.optional flags.isHm hm
               ++ lib.optional flags.isNixos system-nixos
               ++ lib.optional flags.isNixDarwin system-darwin
-	      ++ lib.optional flags.isNixOnDroid system-droid
+              ++ lib.optional flags.isNixOnDroid system-droid
               ++ lib.optional flags.isSystem system-all;
           }
         )
@@ -288,13 +287,17 @@ let
   storeFileName =
     prefix: path:
     let
-      safeChars = [
-        "+"
-        "."
-        "_"
-        "?"
-        "="
-      ] ++ lib.lowerChars ++ lib.upperChars ++ lib.stringToCharacters "0123456789";
+      safeChars =
+        [
+          "+"
+          "."
+          "_"
+          "?"
+          "="
+        ]
+        ++ lib.lowerChars
+        ++ lib.upperChars
+        ++ lib.stringToCharacters "0123456789";
       empties = l: lib.genList (x: "") (lib.length l);
       unsafeInName = lib.stringToCharacters (lib.replaceStrings safeChars (empties safeChars) path);
       safeName = lib.replaceStrings unsafeInName (empties unsafeInName) path;
