@@ -354,6 +354,7 @@ class Choco {
       "floorp",
       "1password",
       "7zip",
+      "OpenShot",
       "barrier",
       "cursoride",
       "discord",
