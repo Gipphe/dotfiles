@@ -164,7 +164,7 @@ util.mkModule {
     "workbench.activityBar.orientation" = "vertical";
     "nix.enableLanguageServer" = true;
     "nix.formatterPath" = "${lib.getExe pkgs.nixfmt-rfc-style}";
-    "nix.serverPath" = "${lib.getExe config.programs.nixvim.plugins.lsp.servers.nil_ls.package}";
+    "nix.serverPath" = "${lib.getExe config.programs.nixvim.plugins.lsp.servers.nixd.package}";
     "typescript.preferences.importModuleSpecifier" = "non-relative";
     "[javascript]" = {
       "editor.defaultFormatter" = "esbenp.prettier-vscode";
