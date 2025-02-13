@@ -68,12 +68,13 @@ util.mkToggledModule [ "windows" ] {
               $Installed = Invoke-Native { choco list --id-only }
 
               $ChocoApps = @(
-                ${lib.pipe cfg.programs [
-                  (builtins.map (
+                ${
+                  cfg.programs
+                  |> builtins.map (
                     p: if builtins.isString p then "\"${p}\"" else "@(\"${p.name}\", \"${escapeArgs p.args}\")"
-                  ))
-                  (lib.concatStringsSep ",\n      ")
-                ]}
+                  )
+                  |> lib.concatStringsSep ",\n      "
+                }
               )
 
               $ChildLogger = $this.Logger.ChildLogger()

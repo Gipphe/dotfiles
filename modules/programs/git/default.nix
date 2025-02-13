@@ -242,10 +242,8 @@ util.mkProgram {
             | sed "s/gpgSign = true$/gpgSign = false/" \
             | tee "$out" >/dev/null
           '';
-      ".config/git/strise".text = lib.pipe config.programs.git.includes [
-        (x: (builtins.elemAt x 0).contents)
-        lib.generators.toGitINI
-      ];
+      ".config/git/strise".text =
+        config.programs.git.includes |> (x: (builtins.elemAt x 0).contents) |> lib.generators.toGitINI;
       ".config/git/ignore".source = config.xdg.configFile."git/ignore".source;
     };
   };

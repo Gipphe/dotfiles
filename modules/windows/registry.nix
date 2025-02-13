@@ -107,20 +107,19 @@ util.mkToggledModule [ "windows" ] {
               $ChildLogger = $this.Logger.ChildLogger()
 
               ${
-                lib.pipe regs [
-                  (builtins.map (x: ''
-                    # ${x.description}
-                    $this.StampEntry(
-                      $ChildLogger,
-                      "${stampifyPath x.path x.entry}",
-                      "${x.path}",
-                      "${x.entry}",
-                      "${x.type}",
-                      "${if (!builtins.isString x.data) then builtins.toString x.data else x.data}"
-                    )
-                  ''))
-                  (lib.concatStringsSep "\n")
-                ]
+                regs
+                |> builtins.map (x: ''
+                  # ${x.description}
+                  $this.StampEntry(
+                    $ChildLogger,
+                    "${stampifyPath x.path x.entry}",
+                    "${x.path}",
+                    "${x.entry}",
+                    "${x.type}",
+                    "${if (!builtins.isString x.data) then builtins.toString x.data else x.data}"
+                  )
+                '')
+                |> lib.concatStringsSep "\n"
               }
 
               ${lib.optionalString cfg.enableAutoLogin # powershell
@@ -149,7 +148,8 @@ util.mkToggledModule [ "windows" ] {
                     # Cleanup
                     [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($BSTR)
                   }
-                ''}
+                ''
+              }
 
               $this.Logger.Info(" Registry entries set.")
             }

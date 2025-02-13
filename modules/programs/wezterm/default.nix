@@ -70,9 +70,10 @@ util.mkProgram {
         '';
     };
 
-    gipphe.windows.home.file = lib.pipe config.xdg.configFile [
-      (lib.filterAttrs (path: _: lib.hasPrefix "wezterm/" path))
-      (lib.mapAttrs' (
+    gipphe.windows.home.file =
+      config.xdg.configFile
+      |> lib.filterAttrs (path: _: lib.hasPrefix "wezterm/" path)
+      |> lib.mapAttrs' (
         p: v: {
           name = ".config/${p}";
           value.source = pkgs.runCommandNoCC "windows-wezterm-config-${builtins.baseNameOf p}" { } ''
@@ -80,7 +81,6 @@ util.mkProgram {
             | tee "$out" >/dev/null
           '';
         }
-      ))
-    ];
+      );
   };
 }

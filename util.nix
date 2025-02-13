@@ -277,12 +277,11 @@ let
     };
   findSiblings =
     path:
-    lib.pipe path [
-      readDir
-      (lib.attrsets.filterAttrs (name: _: name != "default.nix"))
-      attrNames
-      (map (x: /.${path}/${x}))
-    ];
+    path
+    |> readDir
+    |> lib.attrsets.filterAttrs (name: _: name != "default.nix")
+    |> attrNames
+    |> map (x: /.${path}/${x});
 
   storeFileName =
     prefix: path:

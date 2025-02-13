@@ -118,12 +118,7 @@ let
       } segment;
     in
     if style != "" then "[${segment.divider}](${style})" else segment.divider;
-  formatSection =
-    segment:
-    lib.pipe segment.modules [
-      (map (x: "\$${x.name}"))
-      (concatStringsSep "")
-    ];
+  formatSection = segment: segment.modules |> map (x: "\$${x.name}") |> concatStringsSep "";
   formatSegment =
     acc: segment:
     acc
