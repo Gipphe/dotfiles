@@ -1,4 +1,5 @@
 {
+  config,
   util,
   inputs,
   pkgs,
@@ -17,8 +18,9 @@ util.mkProgram {
         vim = {
           syntaxHighlighting = true;
           theme = {
+            enable = true;
             name = "catppuccin";
-            style = "dark";
+            style = "macchiato";
           };
           treesitter = {
             enable = true;
@@ -82,23 +84,66 @@ util.mkProgram {
                   require('oil').setup({
                     columns = { "icon" },
                     keymaps = {
-                      "<C-h>" = false,
-                      "<C-l>" = false,
-                      "<C-n>" = "actions.select_split",
-                      "<C-m>" = "actions.refresh",
+                      ["<C-h>"] = false,
+                      ["<C-l>"] = false,
+                      ["<C-n>"] = "actions.select_split",
+                      ["<C-m>"] = "actions.refresh",
                     },
                     view_options = {
                       show_hidden = true,
                       is_always_hidden = function(name)
                         return oil_always_hidden_names[name] ~= nil
-                      end
-                    };
+                      end,
+                    },
                   })
-
-                  vim.keymap.set('n', '<leader>e', '<cmd>Oil<cr>', { desc = 'Open Oil (parent dir)' })
-                  vim.keymap.set('n', '<leader>E', '<cmd>Oil .<cr>', { desc = 'Open Oil (cwd)' })
                 '';
             };
+          };
+          maps.normal = {
+            "<leader>e" = {
+              action = "<cmd>Oil<cr>";
+              desc = "Open Oil (parent dir)";
+            };
+            "<leader>E" = {
+              action = "<cmd>Oil .<cr>";
+              desc = "Open Oil (cwd)";
+            };
+            "<leader>qq" = {
+              action = "<cmd>quitall<cr>";
+              desc = "Exit";
+            };
+          };
+          languages = {
+            enableDAP = true;
+            enableExtraDiagnostics = true;
+            enableFormat = true;
+            enableLSP = true;
+            enableTreesitter = true;
+
+            bash.enable = true;
+            csharp.enable = true;
+            css.enable = true;
+            css.format.type = "prettierd";
+            go.enable = true;
+            haskell.enable = true;
+            hcl.enable = true;
+            html.enable = true;
+            java.enable = true;
+            lua.enable = true;
+            markdown.enable = true;
+            markdown.format.type = "prettierd";
+            nix.enable = true;
+            nix.format.type = "nixfmt";
+            python.enable = true;
+            python.format.type = "ruff";
+            rust.enable = true;
+            scala.enable = true;
+            sql.enable = true;
+            tailwind.enable = true;
+            terraform.enable = true;
+            ts.enable = true;
+            ts.extensions.ts-error-translator.enable = true;
+            ts.format.type = "prettierd";
           };
           mini = {
             ai.enable = true;
@@ -129,19 +174,12 @@ util.mkProgram {
                   prettier_formatted =
                     [
                       "markdown.mdx"
-                      "css"
                       "graphql"
                       "handlebars"
-                      "html"
-                      "javascript"
-                      "javascriptreact"
                       "json"
                       "jsonc"
                       "less"
-                      "markdown"
                       "scss"
-                      "typescript"
-                      "typescriptreact"
                       "vue"
                       "yaml"
                     ]
@@ -152,15 +190,11 @@ util.mkProgram {
                     |> listToAttrs;
                 in
                 {
-                  lua = [ "stylua" ];
                   fish = [ "fish_indent" ];
-                  sh = [ "shfmt" ];
-                  nix = [ "nixfmt" ];
-                  python = [
-                    "ruff_format"
-                    "ruff_organize_imports"
-                  ];
-                  terraform = [ "terraform_fmt" ];
+                  # python = [
+                  #   "ruff_format"
+                  #   "ruff_organize_imports"
+                  # ];
                   haskell = [ "fourmolu" ];
                   cabal = [ "cabal_fmt" ];
                 }
