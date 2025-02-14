@@ -1,12 +1,14 @@
 {
   util,
   inputs,
+  pkgs,
   ...
 }:
 let
   inherit (builtins) map listToAttrs;
 in
-util.mkProgram "nvf" {
+util.mkProgram {
+  name = "nvf";
   hm = {
     imports = [ inputs.nvf.homeManagerModules.default ];
     programs.nvf = {
@@ -47,6 +49,9 @@ util.mkProgram "nvf" {
             enable = true;
           };
           useSystemClipboard = true;
+          autocomplete.nvim-cmp = {
+            enable = true;
+          };
           lsp = {
             enable = true;
             formatOnSave = true;
@@ -60,7 +65,17 @@ util.mkProgram "nvf" {
           };
           telescope.enable = true;
           binds = {
-            whichkey.enable = true;
+            cheatsheet.enable = true;
+            whichKey.enable = true;
+          };
+          extraPlugins = {
+            "oil-nvim" = {
+              package = pkgs.vimPlugins.oil-nvim;
+              setup = # lua
+                ''
+                  require('oil').setup()
+                '';
+            };
           };
           mini = {
             ai.enable = true;
