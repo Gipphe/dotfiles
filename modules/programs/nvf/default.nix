@@ -73,7 +73,30 @@ util.mkProgram {
               package = pkgs.vimPlugins.oil-nvim;
               setup = # lua
                 ''
-                  require('oil').setup()
+                  local oil_always_hidden_names = {
+                    [".git"] = true,
+                    [".jj"] = true,
+                    [".direnv"] = true,
+                    [".DS_Store"] = true,
+                  }
+                  require('oil').setup({
+                    columns = { "icon" },
+                    keymaps = {
+                      "<C-h>" = false,
+                      "<C-l>" = false,
+                      "<C-n>" = "actions.select_split",
+                      "<C-m>" = "actions.refresh",
+                    },
+                    view_options = {
+                      show_hidden = true,
+                      is_always_hidden = function(name)
+                        return oil_always_hidden_names[name] ~= nil
+                      end
+                    };
+                  })
+
+                  vim.keymap.set('n', '<leader>e', '<cmd>Oil<cr>', { desc = 'Open Oil (parent dir)' })
+                  vim.keymap.set('n', '<leader>E', '<cmd>Oil .<cr>', { desc = 'Open Oil (cwd)' })
                 '';
             };
           };
