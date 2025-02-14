@@ -38,7 +38,7 @@ util.mkProfile "cli" {
     make.enable = true;
     mprocs.enable = true;
     nh.enable = true;
-    nixvim.enable = true;
+    nvf.enable = true;
     procs.enable = true;
     pv.enable = true;
     ripgrep.enable = true;
