@@ -177,6 +177,11 @@
       };
     };
 
+    nvf = {
+      url = "github:notashelf/nvf";
+      nixpkgs.follows = "nixpkgs";
+    };
+
     wsl = {
       url = "github:nix-community/NixOS-WSL";
       inputs = {
