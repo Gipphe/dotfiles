@@ -128,7 +128,6 @@ util.mkProgram {
             css.format.type = "prettierd";
             go.enable = true;
             haskell.enable = true;
-            hcl.enable = true;
             html.enable = true;
             java.enable = true;
             lua.enable = true;
