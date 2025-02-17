@@ -1,4 +1,5 @@
 {
+  lib,
   config,
   util,
   inputs,
@@ -132,8 +133,18 @@ util.mkProgram {
             lua.enable = true;
             markdown.enable = true;
             markdown.format.type = "prettierd";
-            nix.enable = true;
-            nix.format.type = "nixfmt";
+            nix = {
+              enable = true;
+              format.type = "nixfmt";
+              lsp.options = {
+                nixpkgs.expr = "import <nixpkgs> { }";
+                options.nixos.expr =
+                  let
+                    configType = if pkgs.stdenv.isDarwin then "darwinConfigurations" else "nixosConfigurations";
+                  in
+                  "(builtins.getFlake \"${config.home.sessionVariables.FLAKE}\").${configType}.${config.gipphe.hostName}.options";
+              };
+            };
             python.enable = true;
             python.format.type = "ruff";
             rust.enable = true;
