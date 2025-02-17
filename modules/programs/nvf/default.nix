@@ -152,9 +152,11 @@ util.mkProgram {
             sql.enable = true;
             tailwind.enable = true;
             terraform.enable = true;
-            ts.enable = true;
-            ts.extensions.ts-error-translator.enable = true;
-            ts.format.type = "prettierd";
+            ts = {
+              enable = true;
+              extensions.ts-error-translator.enable = true;
+              format.type = "prettierd";
+            };
           };
           mini = {
             ai.enable = true;
