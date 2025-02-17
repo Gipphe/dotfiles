@@ -185,22 +185,25 @@ util.mkProgram {
                     stop_after_first = true;
                   };
                   prettier_formatted =
-                    [
-                      "markdown.mdx"
-                      "graphql"
-                      "handlebars"
-                      "json"
-                      "jsonc"
-                      "less"
-                      "scss"
-                      "vue"
-                      "yaml"
-                    ]
-                    |> map (x: {
-                      name = x;
-                      value = prettier;
-                    })
-                    |> listToAttrs;
+                    lib.pipe
+                      [
+                        "markdown.mdx"
+                        "graphql"
+                        "handlebars"
+                        "json"
+                        "jsonc"
+                        "less"
+                        "scss"
+                        "vue"
+                        "yaml"
+                      ]
+                      [
+                        (map (x: {
+                          name = x;
+                          value = prettier;
+                        }))
+                        listToAttrs
+                      ];
                 in
                 {
                   fish = [ "fish_indent" ];
