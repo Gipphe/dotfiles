@@ -60,6 +60,7 @@ util.mkProfile "windows-setup" {
           "teamviewer"
           "vcredist-all"
           "voicemeeter"
+          "waterfox"
           "wezterm"
           "windhawk"
           "windirstat"
