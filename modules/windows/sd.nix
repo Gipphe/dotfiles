@@ -19,7 +19,7 @@ util.mkToggledModule [ "windows" ] {
             $SDDir = "$($this.Dirname)\_temp"
             Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
             try {
-              Invoke-Native { git clone "https://codeberg.org/Gipphe/sd.git" "$SDDir" }
+              Invoke-Native { git clone "https://gitlab.org/Gipphe/sd.git" "$SDDir" }
               if (-not (Test-Path -PathType Container "$SDDir")) {
                 $ChildLogger.Info("✗ $SDDir does not exist, even though we _just_ cloned into it.")
                 return

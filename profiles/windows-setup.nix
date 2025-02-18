@@ -346,7 +346,7 @@ util.mkProfile "windows-setup" {
           }
         ];
       };
-      sd.enable = true;
+      sd.enable = false;
       wsl.enable = true;
     };
   };
