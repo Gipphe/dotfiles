@@ -27,7 +27,6 @@ util.mkProfile "windows-setup" {
           "geforce-experience"
           "git"
           "godot-mono"
-          "greenshot"
           "humble-app"
           "irfanview"
           "irfanview-languages"
