@@ -238,6 +238,7 @@ util.mkProfile "windows-setup" {
             data = 0;
           }
           {
+            enable = false;
             description = "";
             path = "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent";
             entry = "AccentColorMenu";
@@ -245,6 +246,7 @@ util.mkProfile "windows-setup" {
             data = 4290274439;
           }
           {
+            enable = false;
             description = "";
             path = "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent";
             entry = "AcceptPalette";
@@ -252,6 +254,7 @@ util.mkProfile "windows-setup" {
             data = "d4b5ff00c096fa00a882dd008764b8005b3e83003c2759002b1c40008e8cd800";
           }
           {
+            enable = false;
             description = "";
             path = "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent";
             entry = "StartColorMenu";
@@ -281,6 +284,7 @@ util.mkProfile "windows-setup" {
           }
           #
           {
+            enable = false;
             description = "Disable Taskbar Search bar";
             path = "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Search";
             entry = "SearchboxTaskbarMode";
@@ -288,6 +292,7 @@ util.mkProfile "windows-setup" {
             data = 0;
           }
           {
+            enable = false;
             description = "Disable News and Interests from Start Menu";
             path = "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Feeds";
             entry = "ShellFeedsTaskbarViewMode";
@@ -295,6 +300,7 @@ util.mkProfile "windows-setup" {
             data = 2;
           }
           {
+            enable = false;
             description = "Hide Task View button from Taskbar";
             path = "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced";
             entry = "ShowTaskViewButton";
@@ -302,6 +308,7 @@ util.mkProfile "windows-setup" {
             data = 0;
           }
           {
+            enable = false;
             description = "Use small icons in Taskbar";
             path = "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced";
             entry = "TaskbarSmallIcons";
@@ -309,6 +316,7 @@ util.mkProfile "windows-setup" {
             data = 1;
           }
           {
+            enable = false;
             description = "Don't collapse taskbar items until taskbar is full";
             path = "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced";
             entry = "TaskbarGlomLevel";
@@ -324,6 +332,7 @@ util.mkProfile "windows-setup" {
           }
           # TODO find a way to change the taskbar height with registry entries (or otherwise)
           {
+            enable = false;
             description = "Show all icons in notification area";
             path = "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer";
             entry = "EnableAutoTray";
@@ -331,6 +340,7 @@ util.mkProfile "windows-setup" {
             data = 0;
           }
           {
+            enable = false;
             description = "Set window colors";
             path = "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent";
             entry = "AccentColorMenu";
@@ -338,6 +348,7 @@ util.mkProfile "windows-setup" {
             data = "ffb86487";
           }
           {
+            enable = false;
             description = "";
             path = "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Accent";
             entry = "StartColorMenu";
