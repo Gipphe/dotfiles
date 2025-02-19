@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   util,
@@ -73,6 +74,7 @@ util.mkProgram {
             # Taken from https://discourse.nixos.org/t/list-and-delete-nixos-generations/29637/6
             prune-gens = "sudo nix profile wipe-history --profile /nix/var/nix/profiles/sytem --older-than";
             rm = "rm -i";
+            openai-key = "cat ${config.sops.secrets.milkyway-translations-openai-key.path}";
           };
           plugins = [
             {
@@ -91,6 +93,7 @@ util.mkProgram {
           ];
         };
       };
+
       xdg.configFile =
         let
           inherit (builtins) readDir attrNames foldl';
@@ -108,6 +111,12 @@ util.mkProgram {
           ) { } function_list;
         in
         functions;
+
+      sops.secrets."milkyway-translations-openai-key" = {
+        sopsFile = ../../../secrets/strise-milkyway-translations-openai-api-key.key;
+        mode = "400";
+        format = "binary";
+      };
     };
   };
 }
