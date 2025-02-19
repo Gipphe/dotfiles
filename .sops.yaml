@@ -29,3 +29,9 @@ creation_rules:
           - *cobalt
           - *argon
           - *silicon
+  - path_regex: secrets/strise-milkyway-translations-openai-api-key\.key
+    key_groups:
+      - age:
+          - *cobalt
+          - *argon
+          - *silicon
