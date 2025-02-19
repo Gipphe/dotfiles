@@ -371,7 +371,6 @@ class Choco {
       "geforce-experience",
       "git",
       "godot-mono",
-      "greenshot",
       "humble-app",
       "irfanview",
       "irfanview-languages",
@@ -389,8 +388,6 @@ class Choco {
       "paint.net",
       "powershell-core",
       "powertoys",
-      "python310",
-      "python312",
       "qbittorrent",
       "restic",
       "rsync",
@@ -404,12 +401,12 @@ class Choco {
       "teamviewer",
       "vcredist-all",
       "voicemeeter",
+      "waterfox",
       "wezterm",
       "windhawk",
       "windirstat",
       "xnviewmp",
-      "zoxide",
-      @("opera-gx", "--params='`"/NoDesktopShortcut /NoTaskbarShortcut`"'")
+      "zoxide"
     )
 
     $ChildLogger = $this.Logger.ChildLogger()
@@ -568,36 +565,6 @@ $this.StampEntry(
   "0"
 )
 
-# 
-$this.StampEntry(
-  $ChildLogger,
-  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent-AccentColorMenu",
-  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent",
-  "AccentColorMenu",
-  "REG_DWORD",
-  "4290274439"
-)
-
-# 
-$this.StampEntry(
-  $ChildLogger,
-  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent-AcceptPalette",
-  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent",
-  "AcceptPalette",
-  "REG_BINARY",
-  "d4b5ff00c096fa00a882dd008764b8005b3e83003c2759002b1c40008e8cd800"
-)
-
-# 
-$this.StampEntry(
-  $ChildLogger,
-  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent-StartColorMenu",
-  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent",
-  "StartColorMenu",
-  "REG_DWORD",
-  "4286791259"
-)
-
 # Disable keyboard layout hotkeys
 $this.StampEntry(
   $ChildLogger,
@@ -628,56 +595,6 @@ $this.StampEntry(
   "3"
 )
 
-# Disable Taskbar Search bar
-$this.StampEntry(
-  $ChildLogger,
-  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionSearch-SearchboxTaskbarMode",
-  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionSearch",
-  "SearchboxTaskbarMode",
-  "REG_DWORD",
-  "0"
-)
-
-# Disable News and Interests from Start Menu
-$this.StampEntry(
-  $ChildLogger,
-  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionFeeds-ShellFeedsTaskbarViewMode",
-  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionFeeds",
-  "ShellFeedsTaskbarViewMode",
-  "REG_DWORD",
-  "2"
-)
-
-# Hide Task View button from Taskbar
-$this.StampEntry(
-  $ChildLogger,
-  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced-ShowTaskViewButton",
-  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced",
-  "ShowTaskViewButton",
-  "REG_DWORD",
-  "0"
-)
-
-# Use small icons in Taskbar
-$this.StampEntry(
-  $ChildLogger,
-  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced-TaskbarSmallIcons",
-  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced",
-  "TaskbarSmallIcons",
-  "REG_DWORD",
-  "1"
-)
-
-# Don't collapse taskbar items until taskbar is full
-$this.StampEntry(
-  $ChildLogger,
-  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced-TaskbarGlomLevel",
-  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorerAdvanced",
-  "TaskbarGlomLevel",
-  "REG_DWORD",
-  "1"
-)
-
 # Lock taskbar
 $this.StampEntry(
   $ChildLogger,
@@ -686,36 +603,6 @@ $this.StampEntry(
   "TaskbarSizeMove",
   "REG_DWORD",
   "0"
-)
-
-# Show all icons in notification area
-$this.StampEntry(
-  $ChildLogger,
-  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorer-EnableAutoTray",
-  "HKEY_CURRENT_USERSOFTWAREMicrosoftWindowsCurrentVersionExplorer",
-  "EnableAutoTray",
-  "REG_DWORD",
-  "0"
-)
-
-# Set window colors
-$this.StampEntry(
-  $ChildLogger,
-  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent-AccentColorMenu",
-  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent",
-  "AccentColorMenu",
-  "REG_DWORD",
-  "ffb86487"
-)
-
-# 
-$this.StampEntry(
-  $ChildLogger,
-  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent-StartColorMenu",
-  "HKCUSoftwareMicrosoftWindowsCurrentVersionExplorerAccent",
-  "StartColorMenu",
-  "REG_DWORD",
-  "ff833e5b"
 )
 
 
@@ -748,47 +635,6 @@ if (-not $AutoLoginEnabled) {
     $this.Logger.Info(" Registry entries set.")
   }
 }
-
-class SD {
-  [PSCustomObject]$Logger
-  [String]$Dirname
-
-  SD([PSCustomObject]$Logger, [String]$Dirname) {
-    $this.Logger = $Logger
-    $this.Dirname = $Dirname
-  }
-
-  [Void] Install() {
-    $this.Logger.Info(" Setting up SD...")
-    $ChildLogger = $this.Logger.ChildLogger()
-    $SDDir = "$($this.Dirname)\_temp"
-    Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
-    try {
-      Invoke-Native { git clone "https://codeberg.org/Gipphe/sd.git" "$SDDir" }
-      if (-not (Test-Path -PathType Container "$SDDir")) {
-        $ChildLogger.Info("✗ $SDDir does not exist, even though we _just_ cloned into it.")
-        return
-      }
-      try {
-        Push-Location $SDDir
-        Invoke-Native { pwsh .\sd.ps1 }
-        Pop-Location
-      } catch {
-        Pop-Location
-        throw $error[0]
-      }
-      $ChildLogger.Info(" SD repo downloaded and initialized.")
-    } catch {
-      $ChildLogger.Info("✗ Failed to setup SD")
-      $ChildLogger.Info($error[0])
-    } finally {
-      Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
-    }
-    $this.Logger.Info(" SD set up.")
-  }
-}
-$SD = [SD]::new($Logger, $PSScriptRoot)
-$SD.Install()
 
 class WSL {
   [PSCustomObject]$Logger
