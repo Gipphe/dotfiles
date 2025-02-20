@@ -63,6 +63,10 @@ util.mkProfile "windows-setup" {
           "windirstat"
           "xnviewmp"
           "zoxide"
+          {
+            name = "opera-gx";
+            args = "--params='\"/NoDesktopShortcut /NoTaskbarShortcut\"'";
+          }
         ];
       };
       scoop = {
