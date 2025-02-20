@@ -65,7 +65,7 @@ util.mkToggledModule [ "windows" ] {
         ''
           class Env {
             [PSCustomObject]$Logger
-            
+
             Env([PSCustomObject]$Logger) {
               $this.Logger = $Logger
             }

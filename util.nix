@@ -222,7 +222,7 @@ let
             concatStringsSep " " (lib.mapAttrsToList (n: v: "${escapeShellArg n}=${escapeShellArg v}"))
           }"
         else if isList value then
-          "set ${name} ${concatStringsSep " " (map (v: escapeShellArg v) value)}"
+          "set ${name} ${concatStringsSep " " (map escapeShellArg value)}"
         else
           "set ${name} ${escapeShellArg value}"
       );
@@ -299,7 +299,7 @@ let
         ++ lib.lowerChars
         ++ lib.upperChars
         ++ lib.stringToCharacters "0123456789";
-      empties = l: lib.genList (x: "") (lib.length l);
+      empties = l: lib.genList (_: "") (lib.length l);
       unsafeInName = lib.stringToCharacters (lib.replaceStrings safeChars (empties safeChars) path);
       safeName = lib.replaceStrings unsafeInName (empties unsafeInName) path;
     in
