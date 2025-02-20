@@ -52,7 +52,6 @@ in
               "nix-command"
               "recursive-nix"
               "ca-derivations"
-              "pipe-operators"
             ];
 
             # use binary cache, its not gentoo
