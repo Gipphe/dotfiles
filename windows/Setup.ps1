@@ -255,7 +255,7 @@ $Download.Install()
 
 class Env {
   [PSCustomObject]$Logger
-  
+
   Env([PSCustomObject]$Logger) {
     $this.Logger = $Logger
   }
@@ -291,7 +291,7 @@ class Programs {
 
     $ChildLogger = $this.Logger.ChildLogger()
 
-    $Programs = @{ 'Hurl' = @{
+    $Programs = @{'Hurl' = @{
   'URI' = 'https://github.com/U-C-S/Hurl/releases/download/v0.9.0/Hurl_Installer.exe'
   'stamp' = 'install-hurl'
 };
@@ -406,7 +406,8 @@ class Choco {
       "windhawk",
       "windirstat",
       "xnviewmp",
-      "zoxide"
+      "zoxide",
+      @("opera-gx", "--params='`"/NoDesktopShortcut /NoTaskbarShortcut`"'")
     )
 
     $ChildLogger = $this.Logger.ChildLogger()
@@ -441,7 +442,7 @@ $Choco.InstallApps()
 
 class Scoop {
   [PSCustomObject]$Logger
-  
+
   Scoop([PSCustomObject]$Logger) {
     $this.Logger = $Logger
     $this.EnsureInstalled()
