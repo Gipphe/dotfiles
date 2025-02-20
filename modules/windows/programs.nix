@@ -63,7 +63,7 @@ util.mkToggledModule [ "windows" ] {
 
               $ChildLogger = $this.Logger.ChildLogger()
 
-              $Programs = @{ ${
+              $Programs = @{${
                 lib.pipe progs [
                   (lib.mapAttrsToList (
                     name: p: # powershell
@@ -76,7 +76,7 @@ util.mkToggledModule [ "windows" ] {
                   ))
                   (lib.concatStringsSep "\n")
                 ]
-              } }
+              }}
 
               $Programs.GetEnumerator() | ForEach-Object {
                 $Name = $_.Key

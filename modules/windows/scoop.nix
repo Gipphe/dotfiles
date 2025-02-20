@@ -36,7 +36,7 @@ util.mkToggledModule [ "windows" ] {
         ''
           class Scoop {
             [PSCustomObject]$Logger
-            
+
             Scoop([PSCustomObject]$Logger) {
               $this.Logger = $Logger
               $this.EnsureInstalled()
