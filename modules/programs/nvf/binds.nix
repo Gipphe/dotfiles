@@ -10,9 +10,9 @@ in
       builtins.attrNames
       (map (k: {
         name = prefixes.${k}.prefix;
-        value = prefixes.${k}.description;
+        value = prefixes.${k}.desc;
       }))
-      builtins.listtoAttrs
+      builtins.listToAttrs
     ];
   };
 }
