@@ -27,7 +27,12 @@ in
       mappings = {
         closeCurrent = "<leader>bd";
       };
-      setupOpts.options.close_command = closeCommand;
+      setupOpts.options = {
+        close_command = closeCommand;
+        modified_icon = "~";
+        numbers = "buffer_id";
+        sort_by = "insert_at_end";
+      };
     };
     keymaps = [
       {
