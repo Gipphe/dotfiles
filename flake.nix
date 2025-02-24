@@ -169,11 +169,7 @@
       url = "github:nix-community/nixvim";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        devshell.follows = "devshell";
-        flake-compat.follows = "flake-compat";
         flake-parts.follows = "flake-parts";
-        nix-darwin.follows = "darwin";
-        home-manager.follows = "home-manager";
       };
     };
 
