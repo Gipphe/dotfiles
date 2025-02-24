@@ -7,4 +7,6 @@
   session.prefix = "<leader>q";
   lsp.desc = "LSP";
   lsp.prefix = "<leader>l";
+  buffer.desc = "Buffer";
+  buffer.prefix = "<leader>b";
 }
