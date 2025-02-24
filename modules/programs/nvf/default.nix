@@ -4,6 +4,8 @@ util.mkProgram {
   hm = {
     imports = [
       inputs.nvf.homeManagerModules.default
+      ./autocomplete.nix
+      ./binds.nix
       ./formatter.nix
       ./languages.nix
       ./lsp.nix
@@ -23,13 +25,6 @@ util.mkProgram {
             enable = true;
           };
           useSystemClipboard = true;
-          autocomplete.nvim-cmp = {
-            enable = true;
-          };
-          binds = {
-            cheatsheet.enable = true;
-            whichKey.enable = true;
-          };
           keymaps = [
 
             # Move lines
