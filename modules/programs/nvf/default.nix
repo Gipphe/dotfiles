@@ -12,6 +12,7 @@ util.mkProgram {
       ./mini.nix
       ./navigation
       ./picker.nix
+      ./session.nix
       ./theme.nix
       ./treesitter.nix
       ./ui.nix

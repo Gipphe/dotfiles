@@ -5,7 +5,6 @@
     icons.enable = true;
     notify.enable = true;
     pairs.enable = true;
-    sessions.enable = true;
     statusline.enable = true;
     surround.enable = true;
     trailspace.enable = true;
