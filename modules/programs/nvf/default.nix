@@ -16,6 +16,7 @@ util.mkProgram {
       ./theme.nix
       ./treesitter.nix
       ./ui.nix
+      ./utility.nix
     ];
     programs.nvf = {
       enable = true;
