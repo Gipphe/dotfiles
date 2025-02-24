@@ -90,7 +90,10 @@
 	useUnicodeRuler = true
 
 [gpg]
-	program = "gpg2"
+	format = "openpgp"
+
+[gpg "openpgp"]
+	program = "gpg"
 
 [init]
 	defaultBranch = "main"
