@@ -115,4 +115,17 @@ util.mkModule {
           return $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($Path)
         }
       '';
+  toPowershell = { multiline ? true, indent ? "", asBindings ? false, }@args: v: let
+  innerIndent = "${indent}  ";
+  introSpace = if multiline then "\n${innerIndent}" else " ";
+  outroSpace = if multiline then "\n${indent}" else " ";
+  innerArgs = args // {
+    indent = if asBindings then indent else innerIndent;
+    asBindings = false;
+  };
+  concatItems = concatStringsSep ",${introSpace}";
+  isPowershellInline = { _type ? null, ... }: _type = "powershell-inline";
+
+  generatedBindings = assert assertMsg
+  in
 }
