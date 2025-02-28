@@ -1,4 +1,9 @@
-{ util, inputs, ... }:
+{
+  util,
+  inputs,
+  pkgs,
+  ...
+}:
 util.mkProgram {
   name = "nvf";
   hm = {
@@ -22,6 +27,95 @@ util.mkProgram {
       enable = true;
       settings = {
         vim = {
+          globals = {
+            mapleader = " ";
+            maplocalleader = "\\\\";
+            root_spec = [
+              "lsp"
+              [
+                ".git"
+                "lua"
+              ]
+              "cwd"
+            ];
+            markdown_recommended_style = 0;
+          };
+          options = {
+            autowrite = true;
+            # Confirm to save changes before leaving modified buffer
+            confirm = true;
+            # Use spaces instead of tabs
+            expandtab = true;
+            # tcqj
+            formatoptions = "jcroqlnt";
+            grepformat = "%f:%l:%c:%m";
+            # Use ripgrep for searching
+            grepprg = "rg --vimgrep";
+            ignorecase = true;
+            # Preview incremental substitute
+            inccommand = "nosplit";
+            # Popup blend
+            pumblend = 10;
+            # Maximum number of entries in a popup
+            pumheight = 10;
+            # Lines of context
+            scrolloff = 8;
+            # Round indent
+            shiftround = true;
+            # Indent size
+            shiftwidth = 2;
+            # Columns of context
+            sidescrolloff = 8;
+            signcolumn = "yes";
+            # Don't ignore case with capitals
+            smartcase = true;
+            # Insert indents automatically
+            # Currently having issues where the closing bracket of a {} pair is
+            # incorrectly idented.
+            smartindent = true;
+            autoindent = true;
+
+            spellang = [ "en" ];
+            timeoutlen = 300;
+            # Put new windows below current
+            splitkeep = "screen";
+            tabstop = 2;
+            # Allow cursor to move where there is no text in visual block mode
+            virtualedit = "block";
+            wildmode = "longest:full,full";
+            winminwidth = 5;
+            fillchars = {
+              foldopen = "";
+              foldclose = "";
+              fold = " ";
+              foldsep = " ";
+              diff = "╱";
+              eob = " ";
+            };
+            foldlevel = 99;
+            foldtext = "v:lua.utils.foldtext()";
+            shell = "${pkgs.bash}/bin/bash";
+            updatetime = 50;
+            colorcolumn = "80";
+            wrap = true;
+            linebreak = true;
+            title = true;
+            titlestring = "%t %h%m%r%w (%{v:progname})";
+            list = true;
+            conceallevel = 0;
+            listchars = {
+              tab = ">-";
+              trail = "~";
+              extends = ">";
+              precedes = "<";
+            };
+            completeopt = [
+              "menuone"
+              "preview"
+              "noinsert"
+              "noselect"
+            ];
+          };
           syntaxHighlighting = true;
           undoFile = {
             enable = true;
