@@ -1,26 +1,26 @@
 let
   inherit (import ../mapping-prefixes.nix) buffer;
-  closeCommand = # lua
+  del_buffer_with_confirmation = # lua
     ''
-      function()
-        local bd = require('bufdelete').bufdelete
-        if vim.bo.modified then
-          local choice = vim.fn.confirm(("Save changes to %q?"):format(vim.fn.bufname()), "&Yes\n&No\n&Cancel")
-          if choice == 1 then -- Yes
+      function(bufnum)
+        local del = require('bufdelete').bufdelete
+        local is_modified = vim.api.nvim_buf_get_option(bufnum, "modified")
+        if is_modified then
+          local choice = vim.fn.confirm(("Save changes to %q?"):format(vim.api.nvim_buf_get_name(bufnum)), "&Yes\n&No\n&Cancel")
+          if choice == 1 then
             vim.cmd.write()
-            bd(0)
+            del(bufnum)
           elseif choice == 2 then
-            bd(0, true)
+            del(bufnum, true)
           end
         else
-          bd(0)
+          del(bufnum)
         end
       end
     '';
 in
 {
   imports = [ ./bufferline.nix ];
-  # gipphe.programs.nvf.settings.vim.tabline.bufferline.enable = true;
   programs.nvf.settings.vim = {
     tabline.nvimBufferline = {
       enable = true;
@@ -28,7 +28,14 @@ in
         closeCurrent = "<leader>bd";
       };
       setupOpts.options = {
-        close_command = closeCommand;
+        close_command = # lua
+          ''
+            function()
+              local bd = ${del_buffer_with_confirmation}
+              bd(nvim_get_current_buf())
+            end
+          '';
+
         modified_icon = "~";
         numbers = "buffer_id";
         sort_by = "insert_at_end";
@@ -42,16 +49,19 @@ in
         action = # lua
           ''
             function()
-              local bd = ${closeCommand}
+              local bd = ${del_buffer_with_confirmation}
               local bufs = vim.api.nvim_list_bufs()
               local current = vim.api.nvim_get_current_buf()
               local to_remove = {}
-              for buf in bufs do
+              for _, buf in pairs(bufs) do
                 if buf ~= current then
                   table.insert(to_remove, buf)
                 end
               end
-              bd(to_remove, false)
+
+              for _, buf in pairs(to_remove) do
+                bd(buf)
+              end
             end
           '';
         lua = true;
