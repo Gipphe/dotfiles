@@ -11,9 +11,10 @@ util.mkToggledModule [ "machines" ] {
         core.enable = true;
         fonts.enable = true;
         gc.enable = true;
-        rice.enable = true;
+        rice.enable = false;
         secrets.enable = false;
       };
     };
   };
+  system-droid.system.stateVersion = "24.05";
 }
