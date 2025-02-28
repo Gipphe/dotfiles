@@ -27,6 +27,12 @@ in
       }
       {
         mode = "n";
+        key = "${file.prefix}o";
+        action = "<cmd>FzfLua oldfiles<cr>";
+        desc = "Find in recently opened files";
+      }
+      {
+        mode = "n";
         key = "${file.prefix}r";
         action = "<cmd>FzfLua resume<cr>";
         desc = "Resume last picker";
