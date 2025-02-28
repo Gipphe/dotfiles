@@ -21,6 +21,7 @@ util.mkProgram {
       ./theme.nix
       ./treesitter.nix
       ./ui.nix
+      ./undo.nix
       ./utility.nix
     ];
     programs.nvf = {
