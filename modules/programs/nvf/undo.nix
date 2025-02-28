@@ -4,25 +4,22 @@ let
 in
 {
   programs.nvf.settings.vim = {
-    extraPlugins = {
+    lazy.plugins = {
       undotree = {
         package = pkgs.vimPlugins.undotree;
-        setup =
-          # lua
-          ''
-            require('undotree').setup()
-          '';
+        setupModule = "undotree";
+        setupOpts = { };
+        keys = [
+          {
+            mode = "n";
+            key = "${file.prefix}u";
+            action = "<cmd>UndotreeToggle<cr><cmd>UndotreeFocus<cr>";
+            desc = "Toggle Undotree";
+          }
+        ];
       };
     };
 
-    keymaps = [
-      {
-        mode = "n";
-        key = "${file.prefix}u";
-        action = "<cmd>UndotreeToggle<cr><cmd>UndotreeFocus<cr>";
-        desc = "Toggle Undotree";
-      }
-    ];
     options = {
       # Optimal for undotree
       swapfile = false;

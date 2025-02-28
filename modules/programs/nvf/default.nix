@@ -31,14 +31,14 @@ util.mkProgram {
           globals = {
             mapleader = " ";
             maplocalleader = "\\\\";
-            root_spec = [
-              "lsp"
-              [
-                ".git"
-                "lua"
-              ]
-              "cwd"
-            ];
+            # root_spec = [
+            #   "lsp"
+            #   [
+            #     ".git"
+            #     "lua"
+            #   ]
+            #   "cwd"
+            # ];
             markdown_recommended_style = 0;
           };
           options = {
@@ -75,8 +75,6 @@ util.mkProgram {
             # incorrectly idented.
             smartindent = true;
             autoindent = true;
-
-            spellang = [ "en" ];
             timeoutlen = 300;
             # Put new windows below current
             splitkeep = "screen";
@@ -85,14 +83,7 @@ util.mkProgram {
             virtualedit = "block";
             wildmode = "longest:full,full";
             winminwidth = 5;
-            fillchars = {
-              foldopen = "";
-              foldclose = "";
-              fold = " ";
-              foldsep = " ";
-              diff = "╱";
-              eob = " ";
-            };
+            fillchars = "foldopen:,foldclose:,fold: ,foldsep: ,diff:/,eob: ";
             foldlevel = 99;
             foldtext = "v:lua.utils.foldtext()";
             shell = "${pkgs.bash}/bin/bash";
@@ -104,18 +95,8 @@ util.mkProgram {
             titlestring = "%t %h%m%r%w (%{v:progname})";
             list = true;
             conceallevel = 0;
-            listchars = {
-              tab = ">-";
-              trail = "~";
-              extends = ">";
-              precedes = "<";
-            };
-            completeopt = [
-              "menuone"
-              "preview"
-              "noinsert"
-              "noselect"
-            ];
+            listchars = "tab:>-,trail:~,extends:>,precedes:<";
+            completeopt = "menuone,preview,noinsert,noselect";
           };
           syntaxHighlighting = true;
           undoFile = {
