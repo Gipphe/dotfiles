@@ -26,10 +26,10 @@ util.mkToggledModule [ "windows" ] {
             $ChildLogger.Info(" Install nixos-wsl image")
             $this.Stamp.Register("install-nixos-wsl", {
               $ChildLogger.Info($(Invoke-WebRequest `
-                -Uri "https://github.com/nix-community/NixOS-WSL/releases/download/2311.5.3/nixos-wsl.tar.gz" `
-                -OutFile "$HOME\Downloads\nixos-wsl.tar.gz" `
+                -Uri "https://github.com/nix-community/NixOS-WSL/releases/download/2411.6.0/nixos.wsl" `
+                -OutFile "$HOME\Downloads\nixos.wsl" `
               ))
-              $ChildLogger.Info($(Invoke-Native { wsl --import "NixOS" "$HOME\NixOS\" "$HOME\Downloads\nixos-wsl.tar.gz" }))
+              $ChildLogger.Info($(Invoke-Native { wsl --install --name "NixOS" --location "$HOME/WSL/NixOS" --from-file "$HOME\Downloads\nixos.wsl" }))
               $ChildLogger.Info($(Invoke-Native { wsl --set-default "NixOS" }))
             })
             $ChildLogger.Info(" nixos-wsl installed")
