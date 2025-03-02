@@ -6,14 +6,23 @@
   ...
 }:
 let
-  inherit (lib) pipe concatStringsSep mapAttrsToList;
-  cfg = config.gipphe.windows.home;
-  files = lib.filterAttrs (_: v: v.enable) cfg.file;
+  inherit (import ./util.nix { inherit lib; }) profileOpt;
+  inherit (lib) pipe concatStringsSep mapAttrsToList replaceStrings;
+  files = lib.filterAttrs
+    (_: v: v.enable)
+    (lib.concatMapAttrs
+      (profileName: profile:
+        lib.mapAttrs'
+          (path: v: { name = "${profile}/${path}"; value = v; })
+          profile.home.files
+      )
+      config.gipphe.windows.home.profiles
+    );
   vcsConfigs = "${config.gipphe.windows.vcsPath}/windows/configs";
   order = import ./order.nix;
   normalize =
     path:
-    builtins.replaceStrings
+    replaceStrings
       [
         "/"
         " "
@@ -26,56 +35,58 @@ let
 in
 util.mkToggledModule [ "windows" ] {
   name = "home";
-  options.gipphe.windows.home = {
-    download = lib.mkOption {
-      description = ''
-        Files to download and write to home directory. Attrset where keys represent destination path and values represent download URLs.
-      '';
-      type = with lib.types; attrsOf str;
-    };
-    file = lib.mkOption {
-      description = ''
-        Files to write to home directory. Either `text` or `source` are required.
-      '';
-      type = lib.types.attrsOf (
-        lib.types.submodule (
-          { name, config, ... }:
-          {
-            config = {
-              source = lib.mkIf (config.text != null) (
-                lib.mkDefault (
-                  pkgs.writeTextFile {
-                    inherit (config) text;
-                    name = util.storeFileName "win_" name;
-                  }
-                )
-              );
-            };
-            options = {
-              enable = lib.mkOption {
-                description = ''
-                  Whether this $HOME file should be generated.
-                '';
-                type = lib.types.bool;
-                default = true;
+  options.gipphe.windows.profiles = profileOpt {
+    home = {
+      download = lib.mkOption {
+        description = ''
+          Files to download and write to home directory. Attrset where keys represent destination path and values represent download URLs.
+        '';
+        type = with lib.types; attrsOf str;
+      };
+      file = lib.mkOption {
+        description = ''
+          Files to write to home directory. Either `text` or `source` are required.
+        '';
+        type = lib.types.attrsOf (
+          lib.types.submodule (
+            { name, config, ... }:
+            {
+              config = {
+                source = lib.mkIf (config.text != null) (
+                  lib.mkDefault (
+                    pkgs.writeTextFile {
+                      inherit (config) text;
+                      name = util.storeFileName "win_" name;
+                    }
+                  )
+                );
               };
-              text = lib.mkOption {
-                description = ''
-                  Text contents of the file.
-                '';
-                type = lib.types.nullOr lib.types.lines;
-                default = null;
+              options = {
+                enable = lib.mkOption {
+                  description = ''
+                    Whether this $HOME file should be generated.
+                  '';
+                  type = lib.types.bool;
+                  default = true;
+                };
+                text = lib.mkOption {
+                  description = ''
+                    Text contents of the file.
+                  '';
+                  type = lib.types.nullOr lib.types.lines;
+                  default = null;
+                };
+                source = lib.mkOption {
+                  description = ''
+                    Path to the source file.
+                  '';
+                  type = lib.types.path;
+                };
               };
-              source = lib.mkOption {
-                description = ''
-                  Path to the source file.
-                '';
-                type = lib.types.path;
-              };
-            };
-          }
-        )
-      );
+            }
+          )
+        );
+      };
     };
   };
   hm = lib.mkMerge [
@@ -95,12 +106,13 @@ util.mkToggledModule [ "windows" ] {
               [Void] Install() {
                 $this.Logger.Info(" Copying config files...")
                 $ChildLogger = $this.Logger.ChildLogger()
-                $baseUrl = $Env:USERPROFILE
-                $Items = Get-ChildItem -File -Recurse "$($this.CfgDir)" | Resolve-Path -Relative -RelativeBasePath "$($this.CfgDir)"
+                $baseDestPath = $Env:USERPROFILE
+                $baseSourcePath = "$($this.CfgDir)/$($Profile.ProfileName)"
+                $Items = Get-ChildItem -File -Recurse $baseSourcePath | Resolve-Path -Relative -RelativeBasePath $basePath
 
                 $Items | ForEach-Object {
-                  $From = Resolve-PathNice "$($this.CfgDir)/$_"
-                  $To = Resolve-PathNice "$baseUrl/$_"
+                  $From = Resolve-PathNice "$baseSourcePath/$_"
+                  $To = Resolve-PathNice "$baseDestPath/$_"
 
                   # Ensure parent dir exists
                   $ToDir = Split-Path -Parent $To
@@ -142,7 +154,7 @@ util.mkToggledModule [ "windows" ] {
       );
     })
 
-    (lib.mkIf (cfg.download != { }) {
+    {
       gipphe.windows.powershell-script =
         lib.mkOrder (order.home + 1) # powershell
           ''
@@ -158,27 +170,21 @@ util.mkToggledModule [ "windows" ] {
                 $ChildLogger = $this.Logger.ChildLogger()
                 $DestDir = $Env:USERPROFILE
 
-                ${
-                  pipe cfg.download [
-                    (mapAttrsToList (
-                      dest: url:
-                      let
-                        destPath = "$DestDir/${dest}";
-                      in
-                      # powershell
-                      ''
-                        if (Test-Path "${destPath}") {
-                          $ChildLogger.Info(" ${destPath} already downloaded.")
-                        } else {
-                          $ChildLogger.Info(" Downloading ${url}...")
-                          New-Item -ItemType Container -Path (Split-Path -Parent "${destPath}")
-                          Invoke-WebRequest -Uri "${url}" -OutFile "${destPath}"
-                          $ChildLogger.Info(" Downloaded ${url}")
-                        }
-                      ''
-                    ))
-                    (concatStringsSep "\n\n")
-                  ]
+                $Items = $Profile.home.download
+
+                $Items.GetEnumerator() | ForEach-Object {
+                  $Dest = $_.Key
+                  $Url = $_.Value
+                  $DestPath = "$DestDir/$Dest"
+
+                  if (Test-Path $DestPath) {
+                    $ChildLogger.Info(" $DestPath already downloaded.")
+                  } else {
+                    $ChildLogger.Info(" Downloading $Url...")
+                    New-Item -ItemType Container -Path (Split-Path -Parent $DestPath)
+                    Invoke-WebRequest -Uri $Url -OutFile $DestPath
+                    $ChildLogger.Info(" Downloaded $Url")
+                  }
                 }
 
                 $this.Logger.Info(" Files downloaded.")
@@ -188,6 +194,6 @@ util.mkToggledModule [ "windows" ] {
             $Download = [Download]::new($Logger)
             $Download.Install()
           '';
-    })
+    }
   ];
 }

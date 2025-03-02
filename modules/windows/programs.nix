@@ -1,12 +1,6 @@
-{
-  lib,
-  config,
-  util,
-  ...
-}:
+{ lib, util, ... }:
 let
-  cfg = config.gipphe.windows.programs;
-  progs = lib.filterAttrs (_: v: v.enable) cfg.manual;
+  inherit (import ./util.nix { inherit lib; }) profileOpt;
   order = import ./order.nix;
 in
 util.mkToggledModule [ "windows" ] {
@@ -45,53 +39,44 @@ util.mkToggledModule [ "windows" ] {
       };
     };
   };
-  hm = lib.mkIf (progs != { }) {
-    gipphe.windows.powershell-script =
-      lib.mkOrder order.programs # powershell
-        ''
-          class Programs {
-            [PSCustomObject]$Logger
-            [PSCustomObject]$Stamp
+  hm.gipphe.windows.powershell-script =
+    lib.mkOrder order.programs # powershell
+      ''
+        class Programs {
+          [PSCustomObject]$Logger
+          [PSCustomObject]$Stamp
 
-            Programs([PSCustomObject]$Logger, [PSCustomObject]$Stamp) {
-              $this.Logger = $Logger
-              $this.Stamp = $Stamp
-            }
+          Programs([PSCustomObject]$Logger, [PSCustomObject]$Stamp) {
+            $this.Logger = $Logger
+            $this.Stamp = $Stamp
+          }
 
-            [void] Install() {
-              $this.Logger.Info(" Installing manually installed programs...")
+          [void] Install() {
+            $this.Logger.Info(" Installing manually installed programs...")
 
-              $ChildLogger = $this.Logger.ChildLogger()
+            $ChildLogger = $this.Logger.ChildLogger()
 
-              $Programs = @{${
-                lib.pipe progs [
-                  (lib.mapAttrsToList (
-                    name: p: # powershell
-                    ''
-                      '${name}' = @{
-                        'URI' = '${p.url}'
-                        'stamp' = '${p.stampName}'
-                      };
-                    ''
-                  ))
-                  (lib.concatStringsSep "\n")
-                ]
-              }}
+            $Programs = $Profile.programs.manual
+            $Programs.GetEnumerator() | ForEach-Object {
+              $Name = $_.Key
+              $Enable = $_.Value.enable
+              $URI = $_.Value.url
+              $StampName = $_.Value.stampName
 
-              $Programs.GetEnumerator() | ForEach-Object {
-                $Name = $_.Key
-                $URI = $_.Val.URI
-                $StampName = $_.Val.stamp
-                $this.Stamp.Register("$StampName", {
-                  Install-FromWeb "$Name" "$URI" $ChildLogger
-                })
+              if (-not $Enable) {
+                $ChildLogger.Info("Skipping disabled manual program $Name")
+                return
               }
 
-              $this.Logger.Info(" Programs installed.")
+              $this.Stamp.Register("$StampName", {
+                Install-FromWeb "$Name" "$URI" $ChildLogger
+              })
             }
+
+            $this.Logger.Info(" Programs installed.")
           }
-          $Programs = [Programs]::new($Logger, $Stamp)
-          $Programs.Install()
-        '';
-  };
+        }
+        $Programs = [Programs]::new($Logger, $Stamp)
+        $Programs.Install()
+      '';
 }
