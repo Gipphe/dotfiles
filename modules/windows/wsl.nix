@@ -31,17 +31,21 @@ util.mkToggledModule [ "windows" ] {
               ))
               $ChildLogger.Info($(Invoke-Native { wsl --install --name "NixOS" --location "$HOME/WSL/NixOS" --from-file "$HOME\Downloads\nixos.wsl" }))
               $ChildLogger.Info($(Invoke-Native { wsl --set-default "NixOS" }))
+              $ChildLogger.Info($(Invoke-Native { wsl --manage "NixOS" --set-sparse true }))
             })
             $ChildLogger.Info(" nixos-wsl installed")
 
             $ChildLogger.Info(" Configure nixos-wsl")
             $this.Stamp.Register("configure-nixos", {
               $ChildLogger.Info($(Invoke-Native {
-                wsl -d "NixOS" -- `
-                  ! test -s '$HOME/projects/dotfiles' `
-                  '&&' nix-shell -p git --run '"git clone https://codeberg.org/Gipphe/dotfiles.git"' '"$HOME/projects/dotfiles"' `
-                  '&&' cd '$HOME/projects/dotfiles' `
-                  '&&' nixos-rebuild --extra-experimental-features 'flakes nix-command' switch --flake '"$(pwd)#argon"'
+                wsl -d "NixOS" -- @'
+                  if test -e '$HOME/projects/dotfiles'; then
+                    echo "$HOME/projects/dotfiles already exists. Cancelling bootstrapping."
+                  else
+                    nix-shell -p git --run "git clone 'https://gitlab.com/Gipphe/dotfiles.git' '$HOME/projects/dotfiles'" \
+                    && nix-shell -p git --run "nixos-rebuild --extra-experimental-features 'flakes nix-command' switch --flake '$HOME/projects/dotfiles#argon'"
+                  fi
+        '@
               }))
             })
             $ChildLogger.Info(" nixos-wsl configured")
