@@ -18,16 +18,7 @@ let
     toLower
     ;
   inherit (generators) toPretty;
-in
-{
-  profileOpt = options: lib.mkOption {
-    description = ''
-      List of profiles and their Windows setups to configure.
-    '';
-    type = with lib.types; attrsOf (submodule {
-      inherit options;
-    });
-  };
+
 
   toPowershell = {
     multiline ? true,
@@ -82,9 +73,20 @@ in
         )}${outroSpace}}"
     else
       abort "toPowershell: type ${typeOf v} is unsupported";
+in
+{
+  inherit toPowershell;
+
+  profileOpt = options: lib.mkOption {
+    description = ''
+      List of profiles and their Windows setups to configure.
+    '';
+    type = with lib.types; attrsOf (submodule {
+      inherit options;
+    });
+  };
 
   mkPowershellInline = expr: { _type = "powershell-inline"; inherit expr; };
-
 
   powershellInlineType =
     with lib.types;
