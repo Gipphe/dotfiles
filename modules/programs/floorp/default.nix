@@ -105,7 +105,7 @@ util.mkModule {
           };
         };
       };
-      gipphe.windows = {
+      gipphe.windows.profiles.titanium = {
         # environment.variables."MOZ_LEGACY_PROFILES" = "1";
         chocolatey.programs = [ "floorp" ];
         # home.file =
