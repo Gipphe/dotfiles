@@ -1,7 +1,6 @@
 { lib, ... }:
 let
   inherit (lib)
-    assert
     assertMsg
     concatStringsSep
     filter
