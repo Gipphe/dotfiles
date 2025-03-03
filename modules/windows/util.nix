@@ -46,7 +46,7 @@ let
         );
       matchVarName = match "[[:alpha:]_][[:alnum:]_]*(\\.[[:alpha:]_][[:alnum:]_]*)*";
       badVarNames = filter (name: matchVarName name == null) (attrNames v);
-      loweredNames = map (name: { inherit name; lowered = toLower n; }) (attrNames v);
+      loweredNames = map (name: { inherit name; lowered = toLower name; }) (attrNames v);
       collidingNames = filter ({ name, lowered }: length (filter (x: x.lowered == lowered) loweredNames) > 1) loweredNames;
     in
     if asBindings then
