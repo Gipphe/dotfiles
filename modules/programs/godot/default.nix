@@ -17,7 +17,7 @@ util.mkModule {
     (lib.mkIf config.gipphe.programs.godot.enable (
       lib.mkMerge [
         {
-          gipphe.windows.chocolatey.programs = [
+          gipphe.windows.profiles.titanium.chocolatey.programs = [
             "godot-mono"
             "dotnet-8.0-sdk"
           ];
