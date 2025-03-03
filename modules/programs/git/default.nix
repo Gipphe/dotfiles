@@ -225,7 +225,7 @@ util.mkProgram {
       };
     };
 
-    gipphe.windows.home.file = {
+    gipphe.windows.profiles.titanium.home.file = {
       ".config/git/config".source =
         pkgs.runCommandNoCC "git_config_windows"
           { config = lib.generators.toGitINI config.programs.git.iniContent; } # bash
