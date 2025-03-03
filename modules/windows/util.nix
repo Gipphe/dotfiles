@@ -20,6 +20,7 @@ let
     match
     toJSON
     toLower
+    typeOf
     ;
   inherit (generators) toPretty;
 
