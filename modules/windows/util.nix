@@ -64,7 +64,7 @@ in
     else if isBool v then
       "$$${toJSON v}"
     else if isList v then
-      if v = [] then
+      if v == [] then
         "@()"
       else
         "@(${introSpace}${concatItems (map (value: "${toPowershell innerArgs value}") v)}${outroSpace})"
