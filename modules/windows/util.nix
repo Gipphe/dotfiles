@@ -8,6 +8,7 @@ let
     filter
     generators
     isAttrs
+    isBool
     isDerivation
     isFloat
     isInt
