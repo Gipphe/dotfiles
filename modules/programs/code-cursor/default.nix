@@ -61,7 +61,7 @@ util.mkProgram {
 
           file.".vscode-server/server-env-setup".source = pkgs.fetchurl {
             url = "https://raw.githubusercontent.com/sonowz/vscode-remote-wsl-nixos/refs/heads/master/server-env-setup";
-            hash = "sha256-Kd/qp4gY9WnbX4bSewytmeuyqWFwiobP7G7nxMEW8ac=";
+            hash = "sha256-dAv7G/mDTYYGrGzs7C1IhhGadG/1OBGzYgOI3+BFGYo=";
           };
         };
       })
