@@ -17,6 +17,7 @@ let
     map
     mapAttrsToList
     match
+    toJSON
     toLower
     ;
   inherit (generators) toPretty;
