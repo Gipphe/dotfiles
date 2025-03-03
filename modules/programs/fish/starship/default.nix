@@ -15,7 +15,7 @@ in
       settings = import ./presets { inherit pkgs lib; };
     };
 
-    gipphe.windows.home.file.".config/starship.toml".source =
+    gipphe.windows.profiles.titanium.home.file.".config/starship.toml".source =
       config.xdg.configFile."starship.toml".source;
   };
 }
