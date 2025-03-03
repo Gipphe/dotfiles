@@ -9,6 +9,10 @@ let
     silicon.machine = "nix-darwin";
     helium.system = "aarch64-linux";
     helium.machine = "nix-on-droid";
+    titanium.system = "x86_64-linux";
+    titanium.machine = "windows";
+    lithium.system = "x86_64-linux";
+    lithium.machine = "windows";
   };
   inherit (nixpkgs.lib.attrsets) filterAttrs mapAttrs;
   inherit (nixpkgs.lib) nixosSystem hasSuffix;
@@ -21,31 +25,35 @@ let
   nixosMachines = filterAttrs (_: c: c.machine == "nixos") machines;
   darwinMachines = filterAttrs (_: c: c.machine == "nix-darwin") machines;
   droidMachines = filterAttrs (_: c: c.machine == "nix-on-droid") machines;
+  windowsMachines = filterATtrs (_: c: c.machine == "windows") machines;
 
-  nixosFlags = {
+  baseFlags = {
+    isNixos = false;
+    isNixDarwin = false;
+    isNixOnDroid = false;
+    isHm = false;
+    isSystem = false;
+  };
+
+  nixosFlags = baseFlags // {
     isNixos = true;
-    isNixDarwin = false;
-    isNixOnDroid = false;
-    isHm = false;
     isSystem = true;
   };
-  darwinFlags = {
-    isNixos = false;
+  darwinFlags = baseFlags // {
     isNixDarwin = true;
-    isNixOnDroid = false;
-    isHm = false;
     isSystem = true;
   };
-  droidFlags = {
-    isNixos = false;
-    isNixDarwin = false;
+  droidFlags = baseFlags // {
     isNixOnDroid = true;
-    isHm = false;
     isSystem = true;
+  };
+  windowsFlags = baseFlags // {
+    isWindows = true;
   };
   nixosConfigurations = mapAttrs (mkMachine nixosFlags nixosSystem) nixosMachines;
   darwinConfigurations = mapAttrs (mkMachine darwinFlags darwinSystem) darwinMachines;
   nixOnDroidConfigurations = mapAttrs (mkMachine droidFlags nixOnDroidConfiguration) droidMachines;
+  windowsConfigurations = mapAttrs (mkMachine windowsFlags windowsConfiguration) windowsMachines;
 
   mkMachine =
     flags: mkSystem: hostname: config:
@@ -73,4 +81,5 @@ in
   inherit nixosConfigurations;
   inherit darwinConfigurations;
   inherit nixOnDroidConfigurations;
+  inherit windowsConfigurations;
 }
