@@ -9,8 +9,7 @@ let
   inherit (builtins) throw;
   cfg = config.gipphe.windows;
   order = import ./order.nix;
-  inherit (import ./psUtils.nix) toPowershell profileOpt;
-  inherit (import ./util.nix { inherit lib; }) profileOpt;
+  inherit (import ./util.nix { inherit lib; }) toPowershell profileOpt;
 in
 util.mkModule {
   options.gipphe.windows = {
