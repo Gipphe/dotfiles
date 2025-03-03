@@ -13,6 +13,7 @@ let
     isInt
     isList
     isString
+    length
     map
     mapAttrsToList
     match
