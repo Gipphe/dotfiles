@@ -42,7 +42,7 @@ in
         asBindings = false;
       };
       concatItems = concatStringsSep ",${introSpace}";
-      isPowershellInline = { _type ? null, ... }: _type = "powershell-inline";
+      isPowershellInline = { _type ? null, ... }: _type == "powershell-inline";
 
       generatedBindings =
         assert assertMsg (badVarNames == []) "Bad Powershell var names: ${toPretty {} badVarNames}";
