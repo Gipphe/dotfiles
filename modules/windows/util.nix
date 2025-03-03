@@ -2,6 +2,7 @@
 let
   inherit (lib)
     assertMsg
+    attrNames
     concatStrings
     concatStringsSep
     filter
