@@ -75,7 +75,7 @@ util.mkProgram {
       })
 
       {
-        gipphe.windows.home.file."AppData/Roaming/Cursor/User/settings.json".source =
+        gipphe.windows.profiles.titanium.home.file."AppData/Roaming/Cursor/User/settings.json".source =
           cfg.windowsSettingsPackage;
       }
 
