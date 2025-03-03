@@ -1,6 +1,12 @@
 { util, lib, ... }:
+let
+  inherit (import ./util.nix { inherit lib; }) profileOpt;
+in
 util.mkToggledModule [ "windows" ] {
   name = "wsl";
+  options.gipphe.windows.profiles = profileOpt {
+    wsl.enable = lib.mkEnableOption "wsl setup";
+  };
   hm.gipphe.windows.powershell-script =
     lib.mkOrder (import ./order.nix).wsl # powershell
       ''

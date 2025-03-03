@@ -1,12 +1,6 @@
-{
-  lib,
-  config,
-  util,
-  ...
-}:
+{ lib, util, ... }:
 let
-  cfg = config.gipphe.windows.games.fs22;
-  inherit (import ../helpers.nix { inherit lib; }) concatStringsList;
+  inherit (import ../util.nix { inherit lib; }) profileOpt;
 in
 util.mkToggledModule
   [
@@ -15,13 +9,15 @@ util.mkToggledModule
   ]
   {
     name = "fs22";
-    options.gipphe.windows.games.fs22 = {
-      modUrls = lib.mkOption {
-        description = "URLs to mods to add.";
-        type = with lib.types; listOf str;
+    options.gipphe.windows.profiles = profileOpt {
+      games.fs22 = {
+        modUrls = lib.mkOption {
+          description = "URLs to mods to add.";
+          type = with lib.types; listOf str;
+        };
       };
     };
-    hm = lib.mkIf (builtins.length cfg.modUrls > 0) {
+    hm = {
       gipphe.windows.powershell-script = # powershell
         ''
           class FS22 {
@@ -34,9 +30,7 @@ util.mkToggledModule
               $baseUrl = $Env:USERPROFILE
               $this.FS22ModDir = "$baseUrl/Documents/My Games/FarmingSimulator2022/mods"
 
-              $this.FS22Mods = @(
-                ${concatStringsList cfg.modUrls}
-              )
+              $this.FS22Mods = $Profile.games.fs22.modUrls
             }
 
             [Void] InstallFS22Mod([PSCustomObject]$ChildLogger, [String]$URI) {

@@ -2,7 +2,7 @@
 util.mkProfile "windows-setup" {
   gipphe = {
     programs.floorp.windows = true;
-    windows = {
+    windows.profiles.titanium = {
       enable = true;
       destination = "${config.gipphe.homeDirectory}/projects/dotfiles/windows";
       chocolatey = {
