@@ -13,7 +13,7 @@ util.mkProgram {
         "cd"
       ];
     };
-    gipphe.windows.home.file.".config/zoxide.ps1".text = # powershell
+    gipphe.windows.profiles.titanium.home.file.".config/zoxide.ps1".text = # powershell
       ''
         Invoke-Expression (& { (zoxide init ${builtins.toString config.programs.zoxide.options} powershell | Out-String) })
       '';
