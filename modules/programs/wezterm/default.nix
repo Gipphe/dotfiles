@@ -70,7 +70,7 @@ util.mkProgram {
         '';
     };
 
-    gipphe.windows.home.file = lib.pipe config.xdg.configFile [
+    gipphe.windows.profiles.titanium.home.file = lib.pipe config.xdg.configFile [
       (lib.filterAttrs (path: _: lib.hasPrefix "wezterm/" path))
       (lib.mapAttrs' (
         p: v: {
