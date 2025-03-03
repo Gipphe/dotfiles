@@ -8,7 +8,7 @@
 let
   inherit (builtins) throw;
   cfg = config.gipphe.windows;
-  inherit (lib) mapAttrs';
+  inherit (lib) mapAttrs' toLower;
   order = import ./order.nix;
   inherit (import ./util.nix { inherit lib; }) toPowershell profileOpt;
 in
