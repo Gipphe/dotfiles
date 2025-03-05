@@ -8,7 +8,7 @@
     enableTreesitter = true;
 
     bash.enable = true;
-    csharp.enable = true;
+    csharp.enable = !pkgs.stdenv.isDarwin;
     css.enable = true;
     css.format.type = "prettierd";
     go.enable = true;
