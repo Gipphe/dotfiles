@@ -11,5 +11,4 @@
   registry = 80;
   sd = 90;
   wsl = 100;
-  postamble = 99999;
 }

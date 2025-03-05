@@ -1,6 +1,12 @@
-{ lib, util, ... }:
+{
+  lib,
+  config,
+  util,
+  ...
+}:
 let
-  inherit (import ./util.nix { inherit lib; }) profileOpt;
+  cfg = config.gipphe.windows.programs;
+  progs = lib.filterAttrs (_: v: v.enable) cfg.manual;
   order = import ./order.nix;
 in
 util.mkToggledModule [ "windows" ] {
@@ -39,44 +45,53 @@ util.mkToggledModule [ "windows" ] {
       };
     };
   };
-  hm.gipphe.windows.powershell-script =
-    lib.mkOrder order.programs # powershell
-      ''
-        class Programs {
-          [PSCustomObject]$Logger
-          [PSCustomObject]$Stamp
+  hm = lib.mkIf (progs != { }) {
+    gipphe.windows.powershell-script =
+      lib.mkOrder order.programs # powershell
+        ''
+          class Programs {
+            [PSCustomObject]$Logger
+            [PSCustomObject]$Stamp
 
-          Programs([PSCustomObject]$Logger, [PSCustomObject]$Stamp) {
-            $this.Logger = $Logger
-            $this.Stamp = $Stamp
-          }
-
-          [void] Install() {
-            $this.Logger.Info(" Installing manually installed programs...")
-
-            $ChildLogger = $this.Logger.ChildLogger()
-
-            $Programs = $Profile.programs.manual
-            $Programs.GetEnumerator() | ForEach-Object {
-              $Name = $_.Key
-              $Enable = $_.Value.enable
-              $URI = $_.Value.url
-              $StampName = $_.Value.stampName
-
-              if (-not $Enable) {
-                $ChildLogger.Info("Skipping disabled manual program $Name")
-                return
-              }
-
-              $this.Stamp.Register("$StampName", {
-                Install-FromWeb "$Name" "$URI" $ChildLogger
-              })
+            Programs([PSCustomObject]$Logger, [PSCustomObject]$Stamp) {
+              $this.Logger = $Logger
+              $this.Stamp = $Stamp
             }
 
-            $this.Logger.Info(" Programs installed.")
+            [void] Install() {
+              $this.Logger.Info(" Installing manually installed programs...")
+
+              $ChildLogger = $this.Logger.ChildLogger()
+
+              $Programs = @{${
+                lib.pipe progs [
+                  (lib.mapAttrsToList (
+                    name: p: # powershell
+                    ''
+                      '${name}' = @{
+                        'URI' = '${p.url}'
+                        'stamp' = '${p.stampName}'
+                      };
+                    ''
+                  ))
+                  (lib.concatStringsSep "\n")
+                ]
+              }}
+
+              $Programs.GetEnumerator() | ForEach-Object {
+                $Name = $_.Key
+                $URI = $_.Val.URI
+                $StampName = $_.Val.stamp
+                $this.Stamp.Register("$StampName", {
+                  Install-FromWeb "$Name" "$URI" $ChildLogger
+                })
+              }
+
+              $this.Logger.Info(" Programs installed.")
+            }
           }
-        }
-        $Programs = [Programs]::new($Logger, $Stamp)
-        $Programs.Install()
-      '';
+          $Programs = [Programs]::new($Logger, $Stamp)
+          $Programs.Install()
+        '';
+  };
 }

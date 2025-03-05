@@ -1,12 +1,6 @@
 { util, lib, ... }:
-let
-  inherit (import ./util.nix { inherit lib; }) profileOpt;
-in
 util.mkToggledModule [ "windows" ] {
   name = "sd";
-  options.gipphe.windows.profiles = profileOpt {
-    sd.enable = lib.mkEnableOption "sd setup";
-  };
   hm.gipphe.windows.powershell-script =
     lib.mkOrder (import ./order.nix).sd # powershell
       ''
@@ -20,10 +14,6 @@ util.mkToggledModule [ "windows" ] {
           }
 
           [Void] Install() {
-            if (-not $Profile.sd.enable) {
-              this.Logger.Info("Skipping SD setup.")
-              return
-            }
             $this.Logger.Info(" Setting up SD...")
             $ChildLogger = $this.Logger.ChildLogger()
             $SDDir = "$($this.Dirname)\_temp"
