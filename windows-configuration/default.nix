@@ -4,7 +4,15 @@ let
   inherit (lib.modules) evalModules;
 
   evaluated = evalModules {
-    inherit specialArgs modules;
+    inherit specialArgs;
+    modules = modules ++ [
+      {
+        options.windows.profile = lib.mkOption {
+          description = "Full Windows confiuration";
+          type = with lib.types; attrsOf anything;
+        };
+      }
+    ];
   };
 in
 specialArgs.util.mkModule {
