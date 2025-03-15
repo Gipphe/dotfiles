@@ -11,7 +11,7 @@ let
 in
 {
   script = ./script.ps1;
-  profile = {
+  profiles = {
   home.file = cfg.home.file;
   chocolatey.programs = cfg.chocolatey.programs;
         };
