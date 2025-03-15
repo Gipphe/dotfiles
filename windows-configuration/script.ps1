@@ -129,7 +129,7 @@ function Resolve-PathNice {
 
 
 try {
-  $Profile = "$PSScriptRoot\profiles\$($Env:COMPUTERNAME.ToLower()).json"
+  $Profile = ConvertFrom-Json $(Get-Contents "$PSScriptRoot\profiles\$($Env:COMPUTERNAME.ToLower()).json"))
 
   class Logger {
     [Int]$IndentLevel = 0
@@ -368,7 +368,10 @@ try {
     function StampifyPath {
       [CmdletBinding()]
       param (
+        [Parameter(Mandatory)]
         [String]$Path,
+
+        [Parameter(Mandatory)]
         [String]$Name
       )
       $pp = $Path.Replace('/', '-').Replace('\', '-')
@@ -399,7 +402,7 @@ try {
     foreach ($x in $Registry.entries.GetEnumerator()) {
       $StampEntry(
         $ChildLogger,
-        $StampifyPath($x.path, $.entry),
+        $(StampifyPath -Path $x.path -Name $.entry),
         $x.path,
         $x.entry,
         $x.type,
@@ -408,7 +411,7 @@ try {
     }
 
     if ($Registry.enableAutoLogin) {
-      $AutoLoginEnabled = $False
+      $AutoLoginEnabled = $false
       try {
         $Prop = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'AutoAdminLogon'
         $Prop
