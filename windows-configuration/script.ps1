@@ -2,10 +2,18 @@
 [CmdletBinding()]
 param ()
 
+
+$Check = ""
+$Hg = ""
+$Cross = "✗"
+
+
+###########
+# Utilities
+###########
+
 $ErrorActionPreference = "Stop"
 $InformationPreference = "Continue"
-
-
 
 function Install-FromWeb {
   [CmdletBinding()]
@@ -121,6 +129,7 @@ function Resolve-PathNice {
 
 
 try {
+  $Profile = "$PSScriptRoot\profiles\$($Env:COMPUTERNAME.ToLower()).json"
 
   class Logger {
     [Int]$IndentLevel = 0
@@ -145,7 +154,6 @@ try {
       return [Logger]::new($this.IndentLevel + 1)
     }
   }
-
   $Logger = [Logger]::new()
 
 
@@ -155,7 +163,7 @@ try {
 
     Stamp([String]$Dirname) {
       $this.sep = [IO.Path]::DirectorySeparatorChar
-      $this.STAMP = [IO.Path]::GetFullPath("''${Dirname}$($this.sep)STAMP")
+      $this.STAMP = [IO.Path]::GetFullPath("${Dirname}$($this.sep)STAMP")
 
       $this.Initialize()
     }
@@ -167,7 +175,7 @@ try {
     }
 
     [String] NewStampPath([String]$StampName) {
-      return "$($this.STAMP)$($this.sep)''${StampName}"
+      return "$($this.STAMP)$($this.sep)${StampName}"
     }
 
     [Void] Register([String]$StampName, [ScriptBlock]$Action) {
@@ -184,402 +192,318 @@ try {
   $Stamp = [Stamp]::new($PSScriptRoot)
 
 
-  class Config {
-    [PSCustomObject]$Logger
-    [String]$CfgDir
+  function Config {
+    $CfgDir = "$PSSCriptRoot/configs"
+    $Logger.Info("$Hg Copying config files...")
+    $ChildLogger = $Logger.ChildLogger()
+    $baseUrl = $Env:USERPROFILE
+    $Items = Get-ChildItem -File -Recurse $CfgDir | Resolve-Path -Relative -RelativeBasePath $CfgDir
 
-    Config([PSCustomObject]$Logger, [String]$Dirname) {
-      $this.Logger = $Logger
-      $this.CfgDir = "$Dirname/configs"
-    }
+    $Items | ForEach-Object {
+      $From = Resolve-PathNice "$CfgDir/$_"
+      $To = Resolve-PathNice "$baseUrl/$_"
 
-    [Void] Install() {
-      $this.Logger.Info(" Copying config files...")
-      $ChildLogger = $this.Logger.ChildLogger()
-      $baseUrl = $Env:USERPROFILE
-      $Items = Get-ChildItem -File -Recurse "$($this.CfgDir)" | Resolve-Path -Relative -RelativeBasePath "$($this.CfgDir)"
-
-      $Items | ForEach-Object {
-        $From = Resolve-PathNice "$($this.CfgDir)/$_"
-        $To = Resolve-PathNice "$baseUrl/$_"
-
-        # Ensure parent dir exists
-        $ToDir = Split-Path -Parent $To
-        if (-not (Test-Path -PathType Container $ToDir)) {
-          New-Item -Force -ItemType Directory $ToDir
-        }
-
-        # Clean out existing destination if it is a directory. Otherwise, we'll
-        # end up copying _into_ the existing directory.
-        if (Test-Path -PathType Container $To) {
-          Write-Host "Would have deleted $To because it is a directory"
-          continue
-          # Remove-Item -Recurse -Force $To
-        }
-
-        Copy-Item -Force -Recurse -Path $From -Destination $To
-        $FileName = Split-Path -Leaf $From
-        $ChildLogger.Info(" $_ copied")
+      # Ensure parent dir exists
+      $ToDir = Split-Path -Parent $To
+      if (-not (Test-Path -PathType Container $ToDir)) {
+        New-Item -Force -ItemType Directory $ToDir
       }
 
-      $this.Logger.Info(" Config files copied.")
+      # Clean out existing destination if it is a directory. Otherwise, we'll
+      # end up copying _into_ the existing directory.
+      if (Test-Path $To) {
+        Move-Item $To "$To.backup"
+        $ChildLogger.Info("$Check backed up existing $To item")
+      }
+
+      Copy-Item -Force -Recurse -Path $From -Destination $To
+      $FileName = Split-Path -Leaf $From
+      $ChildLogger.Info("$Check $_ copied")
     }
+
+    $Logger.Info("$Check Config files copied.")
   }
-
-  $Config = [Config]::new($Logger, $PSScriptRoot)
-  $Config.Install()
+  Config
 
 
-  class Env {
-    [PSCustomObject]$Logger
-
-    Env([PSCustomObject]$Logger) {
-      $this.Logger = $Logger
-    }
-    [Void] Install() {
-      $this.Logger.Info(" Setting env vars...")
-      $ChildLogger = $this.Logger.ChildLogger()
-      $EnvVars = @{
-        ${lib.pipe envs [
-          (lib.mapAttrsToList (name: val: "'${name}' = ${toPSValue val.value};"))
-          (lib.concatStringsSep " ")
-        ]}
+  function Environment {
+    $Logger.Info("$Hg Setting env vars...")
+    $ChildLogger = $Logger.ChildLogger()
+    $EnvVars = $Profile.environment.variables
+    $EnvVars.GetEnumerator() | ForEach-Object {
+      $key = $_.Key
+      $enabled = $true
+      $val = $_.Value
+      if (-not isString($val)) {
+        $enabled = $val.enable
+        $val = $val.value
       }
-      $EnvVars.GetEnumerator() | ForEach-Object {
-        $key = $_.Key
-        $val = $_.Value
+      if ($enabled) {
         [Environment]::SetEnvironmentVariable($key, $val, 'User')
-        $ChildLogger.Info(" $key env var set")
       }
-      $this.Logger.Info(" Env vars set.")
+      $ChildLogger.Info("$Check $key env var set")
     }
+    $Logger.Info("$Check Env vars set.")
   }
-  $Env = [Env]::new($Logger)
-  $Env.Install()
+  Environment
 
 
-  class Programs {
-    [PSCustomObject]$Logger
-    [PSCustomObject]$Stamp
+  function Programs {
+    $Logger.Info("$Hg Installing manually installed programs...")
 
-    Programs([PSCustomObject]$Logger, [PSCustomObject]$Stamp) {
-      $this.Logger = $Logger
-      $this.Stamp = $Stamp
-    }
+    $ChildLogger = $Logger.ChildLogger()
 
-    [void] Install() {
-      $this.Logger.Info(" Installing manually installed programs...")
+    $Programs = $Profile.programs
 
-      $ChildLogger = $this.Logger.ChildLogger()
-
-      $Programs = @{${
-        lib.pipe progs [
-          (lib.mapAttrsToList (
-            name: p: # powershell
-            ''
-              '${name}' = @{
-                'URI' = '${p.url}'
-                'stamp' = '${p.stampName}'
-              };
-            ''
-          ))
-          (lib.concatStringsSep "\n")
-        ]
-      }}
-
-      $Programs.GetEnumerator() | ForEach-Object {
-        $Name = $_.Key
-        $URI = $_.Val.URI
-        $StampName = $_.Val.stamp
-        $this.Stamp.Register("$StampName", {
-          Install-FromWeb "$Name" "$URI" $ChildLogger
+    $Programs.GetEnumerator() | ForEach-Object {
+      $Name = $_.Key
+      $enabled = $_.Value.enable
+      $URI = $_.Value.url
+      $StampName = $_.Value.stampName
+      if ($enabled) {
+        $Stamp.Register($StampName, {
+          Install-FromWeb $Name $URI $ChildLogger
         })
       }
-
-      $this.Logger.Info(" Programs installed.")
     }
+
+    $Logger.Info("$Check Programs installed.")
   }
-  $Programs = [Programs]::new($Logger, $Stamp)
-  $Programs.Install()
+  Programs
 
 
-  class Choco {
-    [PSCustomObject]$Logger
-
-    Choco([PSCustomObject]$Logger) {
-      $this.Logger = $Logger
-      $this.EnsureInstalled()
-    }
-
-    [Void] EnsureInstalled() {
-      try {
-        Get-Command "choco" -ErrorAction Stop | Out-Null
-      } catch {
-        Set-ExecutionPolicy Bypass -Scope Process -Force
-        [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-        Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-      }
-    }
-
-    [Void] InstallApps() {
-      $this.Logger.Info(" Installing Chocolatey programs...")
-      $ChocoArgs = @('-y')
-      $Installed = Invoke-Native { choco list --id-only }
-
-      $ChocoApps = @(
-        ${lib.pipe cfg.programs [
-          (builtins.map (
-            p: if builtins.isString p then "\"${p}\"" else "@(\"${p.name}\", \"${escapeArgs p.args}\")"
-          ))
-          (lib.concatStringsSep ",\n      ")
-        ]}
-      )
-
-      $ChildLogger = $this.Logger.ChildLogger()
-
-      $ChocoApps | ForEach-Object {
-        $PackageName = $_
-        $PackageArgs = $null
-        if ($PackageName -isnot [String]) {
-          $PackageName = $_[0]
-          $PackageArgs = $_[1]
-        }
-        if ($Installed.Contains($PackageName)) {
-          $ChildLogger.Info(" $PackageName is already installed")
-          return
-        }
-
-        $params = ""
-        if ($null -ne $PackageArgs) {
-          $params = $PackageArgs
-        }
-
-        $ChildLogger.Info($(Invoke-Native { choco install @ChocoArgs $PackageName $params }))
-        $ChildLogger.Info(" $PackageName installed.")
-      }
-
-      $this.Logger.Info(" Chocolatey programs installed.")
+  function InstallChocolatey {
+    try {
+      Get-Command "choco" -ErrorAction Stop | Out-Null
+    } catch {
+      Set-ExecutionPolicy Bypass -Scope Process -Force
+      [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+      Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
     }
   }
 
-  $Choco = [Choco]::new($Logger)
-  $Choco.InstallApps()
+  function InstallChocoApps {
+    $Logger.Info("$Hg Installing Chocolatey programs...")
+    $ChocoArgs = @('-y')
+    $Installed = Invoke-Native { choco list --id-only }
 
+    $ChocoApps = $Profile.chocolatey.programs
 
-  class Scoop {
-    [PSCustomObject]$Logger
+    $ChildLogger = $Logger.ChildLogger()
 
-    Scoop([PSCustomObject]$Logger) {
-      $this.Logger = $Logger
-      $this.EnsureInstalled()
+    $ChocoApps | ForEach-Object {
+      $PackageName = $_
+      $PackageArgs = $null
+      if ($PackageName -isnot [String]) {
+        $PackageName = $_.name
+        $PackageArgs = $_.args
+      }
+      if ($Installed.Contains($PackageName)) {
+        $ChildLogger.Info("$Check $PackageName is already installed")
+        return
+      }
+
+      $params = ""
+      if ($null -ne $PackageArgs) {
+        $params = $PackageArgs
+      }
+
+      $ChildLogger.Info($(Invoke-Native { choco install @ChocoArgs $PackageName $params }))
+      $ChildLogger.Info("$Check $PackageName installed.")
     }
 
-    [Void] EnsureInstalled() {
-      try {
-        Get-Command "scoop" -ErrorAction Stop
-      } catch {
-        Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-        Invoke-RestMethod -Uri "https://get.scoop.sh" | Invoke-Expression
-      }
-    }
+    $Logger.Info("$Check Chocolatey programs installed.")
+  }
+  InstallChocolatey
+  InstallChocoApps
 
-    [Void] InstallApps() {
-      $this.Logger.Info(" Installing scoop programs...")
-      $ChildLogger = $this.Logger.ChildLogger()
-      $InstalledBuckets = Invoke-Native { scoop bucket list 6>$Null } | ForEach-Object { $_.Name }
-      $InstalledApps = Invoke-Native { scoop list 6>$Null } | ForEach-Object { $_.Name }
 
-      $RequiredBuckets = @(
-        ${concatStringsList cfg.buckets}
-      )
-      $RequiredApps = @(
-        ${concatStringsList cfg.programs}
-      )
-
-      $RequiredBuckets | ForEach-Object {
-        $BucketName = $_
-
-        if (-not ($InstalledBuckets.Contains($BucketName))) {
-          $ChildLogger.Info($(Invoke-Native { scoop bucket add $BucketName }))
-        }
-
-        $ChildLogger.Info(" $BucketName bucket installed.")
-      }
-
-      $RequiredApps | ForEach-Object {
-        $PackageName = $_
-
-        if (-not ($InstalledApps.Contains($PackageName))) {
-          $ChildLogger.Info($(Invoke-Native { scoop install $PackageName }))
-        }
-
-        $ChildLogger.Info(" $PackageName package installed.")
-      }
-
-      $this.Logger.Info(" Scoop programs installed.")
+  function InstallScoop {
+    try {
+      Get-Command "scoop" -ErrorAction Stop
+    } catch {
+      Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+      Invoke-RestMethod -Uri "https://get.scoop.sh" | Invoke-Expression
     }
   }
-  $Scoop = [Scoop]::new($Logger)
-  $Scoop.InstallApps()
+  function InstallScoopApps {
+    $Logger.Info("$Hg Installing scoop programs...")
+    $ChildLogger = $Logger.ChildLogger()
+    $InstalledBuckets = Invoke-Native { scoop bucket list 6>$Null } | ForEach-Object { $_.Name }
+    $InstalledApps = Invoke-Native { scoop list 6>$Null } | ForEach-Object { $_.Name }
 
+    $Scoop = $Profile.scoop
+    $RequiredBuckets = $Scoop.buckets
+    $RequiredApps = $Scoop.programs
 
-  class Registry {
-    [PSCustomObject]$Logger
-    [PSCustomObject]$Stamp
+    $RequiredBuckets | ForEach-Object {
+      $BucketName = $_
 
-    Registry([PSCustomObject]$Logger) {
-      $this.Logger = $Logger
-      $this.Stamp = New-Stamp
+      if (-not ($InstalledBuckets.Contains($BucketName))) {
+        $ChildLogger.Info($(Invoke-Native { scoop bucket add $BucketName }))
+      }
+
+      $ChildLogger.Info("$Check $BucketName bucket installed.")
     }
 
-    [Void] StampEntry([PSCustomObject]$ChildLogger, [String]$Stamp, [String]$Path, [String]$Entry, [String]$Type, [String]$Data) {
-      $this.Stamp.Register($Stamp, {
+    $RequiredApps | ForEach-Object {
+      $PackageName = $_
+
+      if (-not ($InstalledApps.Contains($PackageName))) {
+        $ChildLogger.Info($(Invoke-Native { scoop install $PackageName }))
+      }
+
+      $ChildLogger.Info("$Check $PackageName package installed.")
+    }
+
+    $this.Logger.Info("$Check Scoop programs installed.")
+  }
+  InstallScoop
+  InstallScoopApps
+
+
+  function SetRegistryEntries {
+    $ChildLogger = $Logger.ChildLogger()
+
+    function StampifyPath {
+      [CmdletBinding()]
+      param (
+        [String]$Path,
+        [String]$Name
+      )
+      $pp = $Path.Replace('/', '-').Replace('\', '-')
+      $pn = $Name.Replace('/', '-').Replace('\', '-')
+      return "$pp-$pn"
+    }
+
+    function StampEntry {
+      [CmdletBinding()]
+      param (
+        [String]$Stamp,
+        [String]$Path,
+        [String]$Entry,
+        [String]$Type,
+        [String]$Data
+      )
+
+      $Stamp.Register($Stamp, {
         $ChildLogger.Info("Setting $Path\$Entry")
         reg add "$Path" /v "$Entry" /t "$Type" /d $Data /f
       })
     }
 
-    [Void] SetEntries() {
-      $this.Logger.Info(" Setting registry entries...")
-      $ChildLogger = $this.Logger.ChildLogger()
+    $Logger.Info("$Hg Setting registry entries...")
 
-      ${lib.pipe regs [
-        (builtins.map (x: ''
-          # ${x.description}
-          $this.StampEntry(
-            $ChildLogger,
-            "${stampifyPath x.path x.entry}",
-            "${x.path}",
-            "${x.entry}",
-            "${x.type}",
-            "${if (!builtins.isString x.data) then builtins.toString x.data else x.data}"
-          )
-        ''))
-        (lib.concatStringsSep "\n")
-      ]}
+    $Registry = $Profile.registry
 
-      ${lib.optionalString cfg.enableAutoLogin # powershell
-        ''
-          $AutoLoginEnabled = $False
-          try {
-            $Prop = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'AutoAdminLogon'
-            $Prop
-            $AutoLoginEnabled = $Prop.AutoAdminLogon -eq '1'
-            $AutoLoginEnabled
-          } catch { }
-
-          if (-not $AutoLoginEnabled) {
-            $Username = Read-Host "Enter username for auto-login"
-            $Password = Read-Host "Enter password for auto-login" -AsSecureString
-
-            # Convert SecureString password to plain text
-            $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Password)
-            $PlainPass = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
-
-            # Set registry keys
-            Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'DefaultUserName' -Value $Username
-            Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'DefaultPassword' -Value $PlainPass
-            Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'AutoAdminLogon' -Value '1'
-
-            # Cleanup
-            [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($BSTR)
-          }
-        ''
-      }
-
-      $this.Logger.Info(" Registry entries set.")
-    }
-  }
-
-
-  class SD {
-    [PSCustomObject]$Logger
-    [String]$Dirname
-
-    SD([PSCustomObject]$Logger, [String]$Dirname) {
-      $this.Logger = $Logger
-      $this.Dirname = $Dirname
+    foreach ($x in $Registry.entries.GetEnumerator()) {
+      $StampEntry(
+        $ChildLogger,
+        $StampifyPath($x.path, $.entry),
+        $x.path,
+        $x.entry,
+        $x.type,
+        "$($x.data)"
+      )
     }
 
-    [Void] Install() {
-      $this.Logger.Info(" Setting up SD...")
-      $ChildLogger = $this.Logger.ChildLogger()
-      $SDDir = "$($this.Dirname)\_temp"
-      Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
+    if ($Registry.enableAutoLogin) {
+      $AutoLoginEnabled = $False
       try {
-        Invoke-Native { git clone "https://gitlab.org/Gipphe/sd.git" "$SDDir" }
-        if (-not (Test-Path -PathType Container "$SDDir")) {
-          $ChildLogger.Info("✗ $SDDir does not exist, even though we _just_ cloned into it.")
-          return
-        }
-        try {
-          Push-Location $SDDir
-          Invoke-Native { pwsh .\sd.ps1 }
-          Pop-Location
-        } catch {
-          Pop-Location
-          throw $error[0]
-        }
-        $ChildLogger.Info(" SD repo downloaded and initialized.")
-      } catch {
-        $ChildLogger.Info("✗ Failed to setup SD")
-        $ChildLogger.Info($error[0])
-      } finally {
-        Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
+        $Prop = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'AutoAdminLogon'
+        $Prop
+        $AutoLoginEnabled = $Prop.AutoAdminLogon -eq '1'
+        $AutoLoginEnabled
+      } catch { }
+
+      if (-not $AutoLoginEnabled) {
+        $Username = Read-Host "Enter username for auto-login"
+        $Password = Read-Host "Enter password for auto-login" -AsSecureString
+
+        # Convert SecureString password to plain text
+        $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Password)
+        $PlainPass = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
+
+        # Set registry keys
+        Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'DefaultUserName' -Value $Username
+        Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'DefaultPassword' -Value $PlainPass
+        Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon' -Name 'AutoAdminLogon' -Value '1'
+
+        # Cleanup
+        [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($BSTR)
       }
-      $this.Logger.Info(" SD set up.")
     }
+
+    $Logger.Info("$Check Registry entries set.")
   }
-  $SD = [SD]::new($Logger, $PSScriptRoot)
-  $SD.Install()
+  SetRegistryEntries
 
 
-  class WSL {
-    [PSCustomObject]$Logger
-    [PSCustomObject]$Stamp
-
-    WSL([PSCustomObject]$Logger, [PSCustomObject]$Stamp) {
-      $this.Logger = $Logger
-      $this.Stamp = $Stamp
+  function InstallSD() {
+    $Logger.Info("$Hg Setting up SD...")
+    $ChildLogger = $Logger.ChildLogger()
+    $SDDir = "$PSScriptRoot\_temp"
+    Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
+    try {
+      Invoke-Native { git clone "https://gitlab.org/Gipphe/sd.git" "$SDDir" }
+      if (-not (Test-Path -PathType Container "$SDDir")) {
+        $ChildLogger.Info("$Cross $SDDir does not exist, even though we _just_ cloned into it.")
+        return
+      }
+      try {
+        Push-Location $SDDir
+        Invoke-Native { pwsh .\sd.ps1 }
+        Pop-Location
+      } catch {
+        Pop-Location
+        throw $error[0]
+      }
+      $ChildLogger.Info("$Check SD repo downloaded and initialized.")
+    } catch {
+      $ChildLogger.Info("$Cross Failed to setup SD")
+      $ChildLogger.Info($error[0])
+    } finally {
+      Remove-Item -Force -Recurse -ErrorAction 'SilentlyContinue' -Path $SDDir
     }
-
-    [Void] Install() {
-      $this.Logger.Info(" Installing and setting up WSL...")
-      $ChildLogger = $this.Logger.ChildLogger()
-
-      $ChildLogger.Info(" Install WSL")
-      $this.Stamp.Register("install-wsl", {
-        $ChildLogger.Info($(Invoke-Native { wsl --install }))
-      })
-      $ChildLogger.Info(" WSL installed")
-
-      $ChildLogger.Info(" Install nixos-wsl image")
-      $this.Stamp.Register("install-nixos-wsl", {
-        $ChildLogger.Info($(Invoke-WebRequest `
-          -Uri "https://github.com/nix-community/NixOS-WSL/releases/download/2311.5.3/nixos-wsl.tar.gz" `
-          -OutFile "$HOME\Downloads\nixos-wsl.tar.gz" `
-        ))
-        $ChildLogger.Info($(Invoke-Native { wsl --import "NixOS" "$HOME\NixOS\" "$HOME\Downloads\nixos-wsl.tar.gz" }))
-        $ChildLogger.Info($(Invoke-Native { wsl --set-default "NixOS" }))
-      })
-      $ChildLogger.Info(" nixos-wsl installed")
-
-      $ChildLogger.Info(" Configure nixos-wsl")
-      $this.Stamp.Register("configure-nixos", {
-        $ChildLogger.Info($(Invoke-Native {
-          wsl -d "NixOS" -- `
-            ! test -s '$HOME/projects/dotfiles' `
-            '&&' nix-shell -p git --run '"git clone https://codeberg.org/Gipphe/dotfiles.git"' '"$HOME/projects/dotfiles"' `
-            '&&' cd '$HOME/projects/dotfiles' `
-            '&&' nixos-rebuild --extra-experimental-features 'flakes nix-command' switch --flake '"$(pwd)#argon"'
-        }))
-      })
-      $ChildLogger.Info(" nixos-wsl configured")
-      $this.Logger.Info(" WSL installed and set up.")
-    }
+    $Logger.Info("$Check SD set up.")
   }
-  $WSL = [WSL]::new($Logger, $Stamp)
-  $WSL.Install()
+  InstallSD
+
+
+  function InstallWSL {
+    $Logger.Info("$Hg Installing and setting up WSL...")
+    $ChildLogger = $Logger.ChildLogger()
+
+    $ChildLogger.Info("$Hg Install WSL")
+    $Stamp.Register("install-wsl", {
+      Invoke-Native { wsl --install }
+    })
+    $ChildLogger.Info("$Check WSL installed")
+
+    $ChildLogger.Info("$Hg Install nixos-wsl image")
+    $Stamp.Register("install-nixos-wsl", {
+      Invoke-WebRequest `
+        -Uri "https://github.com/nix-community/NixOS-WSL/releases/download/2311.5.3/nixos-wsl.tar.gz" `
+        -OutFile "$HOME\Downloads\nixos-wsl.tar.gz"
+      Invoke-Native { wsl --import "NixOS" "$HOME\NixOS\" "$HOME\Downloads\nixos-wsl.tar.gz" }
+      Invoke-Native { wsl --set-default "NixOS" }
+    })
+    $ChildLogger.Info("$Check nixos-wsl installed")
+
+    $ChildLogger.Info("$Hg Configure nixos-wsl")
+    $Stamp.Register("configure-nixos", {
+      Invoke-Native {
+        wsl -d "NixOS" -- `
+          ! test -s '$HOME/projects/dotfiles' `
+          '&&' nix-shell -p git --run '"git clone https://codeberg.org/Gipphe/dotfiles.git"' '"$HOME/projects/dotfiles"' `
+          '&&' cd '$HOME/projects/dotfiles' `
+          '&&' nixos-rebuild --extra-experimental-features 'flakes nix-command' switch --flake '"$(pwd)#argon"'
+      }
+    })
+    $ChildLogger.Info("$Check nixos-wsl configured")
+    $Logger.Info("$Check WSL installed and set up.")
+  }
+  InstallWSL
 
 } catch {
   $Info = $error[0].InvocationInfo

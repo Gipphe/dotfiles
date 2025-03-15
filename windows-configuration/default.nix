@@ -5,14 +5,7 @@ let
 
   evaluated = evalModules {
     inherit specialArgs;
-    modules = modules ++ [
-      {
-        options.windows.profile = lib.mkOption {
-          description = "Full Windows confiuration";
-          type = with lib.types; attrsOf anything;
-        };
-      }
-    ];
+    modules = modules;
   };
 in
 specialArgs.util.mkModule {
@@ -20,7 +13,11 @@ specialArgs.util.mkModule {
     type = with lib.types; attrsOf anything;
   };
   shared.rootConfig = evaluated;
-  shared.imports = [
-    ./home.nix
-  ];
+  home.activation.write-windows-script =
+    let
+      pkg = pkgs.writeText "windows-powershell-script" cfg.powershell-script;
+    in
+    lib.hm.dag.entryAfter [ "onFilesChange" ] ''
+      run cp -f '${pkg}' '${cfg.destination}/Setup.ps1'
+    '';
 }
