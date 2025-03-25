@@ -28,7 +28,10 @@ let
     }
     // cfg;
 
-  windowsConfiguration = inputs.windows-configuration.lib."x86_64-linux".mkWindowsConfiguration;
+  windowsLib = import ./modules/windows/windows-configuration/lib.nix {
+    pkgs = nixpkgs.legacyPackages."x86_64-linux";
+  };
+  windowsConfiguration = windowsLib.mkWindowsConfiguration;
 
   nixosMachines = filterAttrs (_: c: c.machine == "nixos") machines;
   darwinMachines = filterAttrs (_: c: c.machine == "nix-darwin") machines;

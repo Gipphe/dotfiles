@@ -1,4 +1,7 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
+let
+  inherit (pkgs) lib;
+in
 {
   mkWindowsConfiguration =
     {

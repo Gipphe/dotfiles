@@ -1802,7 +1802,6 @@
         "sys-default": "sys-default",
         "sys-default-linux": "sys-default-linux",
         "treefmt-nix": "treefmt-nix_4",
-        "windows-configuration": "windows-configuration",
         "wsl": "wsl"
       }
     },
@@ -2176,26 +2175,6 @@
         "owner": "numtide",
         "repo": "treefmt-nix",
         "type": "github"
-      }
-    },
-    "windows-configuration": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-HK6zSqWl6kNzkhlObaTAQ/yp/KTWljNn68hbDlSr22g=",
-        "path": "flakes/windows-configuration",
-        "type": "path"
-      },
-      "original": {
-        "path": "flakes/windows-configuration",
-        "type": "path"
       }
     },
     "wsl": {

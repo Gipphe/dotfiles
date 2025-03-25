@@ -9,10 +9,12 @@
       system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        inherit (pkgs) lib;
       in
       {
-        lib = import ./flakes/windows-configuration/lib.nix { inherit pkgs lib; };
+        lib = import ./flakes/windows-configuration/lib.nix {
+          inherit pkgs;
+          lib = pkgs.lib;
+        };
       }
     );
 }
