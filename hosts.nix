@@ -5,27 +5,35 @@ let
     argon.machine = "nixos";
     cobalt.system = "x86_64-linux";
     cobalt.machine = "nixos";
+
     silicon.system = "aarch64-darwin";
     silicon.machine = "nix-darwin";
+
     helium.system = "aarch64-linux";
     helium.machine = "nix-on-droid";
+
     titanium.system = "x86_64-linux";
     titanium.machine = "windows";
     lithium.system = "x86_64-linux";
     lithium.machine = "windows";
   };
   inherit (nixpkgs.lib.attrsets) filterAttrs mapAttrs;
-  inherit (nixpkgs.lib) nixosSystem hasSuffix;
+  inherit (nixpkgs.lib) nixosSystem;
   inherit (inputs.darwin.lib) darwinSystem;
 
-  nixOnDroidConfiguration = cfg: inputs.nix-on-droid.lib.nixOnDroidConfiguration {
-    pkgs = nixpkgs.legacyPackages."aarch64-linux";
-  } // cfg;
+  nixOnDroidConfiguration =
+    cfg:
+    inputs.nix-on-droid.lib.nixOnDroidConfiguration {
+      pkgs = nixpkgs.legacyPackages."aarch64-linux";
+    }
+    // cfg;
+
+  windowsConfiguration = inputs.windows-configuration.lib."x86_64-linux".mkWindowsConfiguration;
 
   nixosMachines = filterAttrs (_: c: c.machine == "nixos") machines;
   darwinMachines = filterAttrs (_: c: c.machine == "nix-darwin") machines;
   droidMachines = filterAttrs (_: c: c.machine == "nix-on-droid") machines;
-  windowsMachines = filterATtrs (_: c: c.machine == "windows") machines;
+  windowsMachines = filterAttrs (_: c: c.machine == "windows") machines;
 
   baseFlags = {
     isNixos = false;

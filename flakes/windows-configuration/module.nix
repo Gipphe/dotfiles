@@ -149,6 +149,13 @@ in
         };
       };
 
+      games.fs22 = {
+        modUrls = lib.mkOption {
+          description = "URLs to mods to add.";
+          type = with lib.types; listOf str;
+        };
+      };
+
       programs = {
         manual = lib.mkOption {
           description = "Programs to install manually from an installer.";

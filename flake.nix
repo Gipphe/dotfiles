@@ -94,6 +94,7 @@
           nixosConfigurations
           darwinConfigurations
           nixOnDroidConfigurations
+          windowsConfigurations
           ;
       };
     });
@@ -205,6 +206,12 @@
     };
 
     mac-app-util.url = "github:hraban/mac-app-util";
+
+    windows-configuration = {
+      url = "path:flakes/windows-configuration";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
 
     brew-nix = {
       url = "github:BatteredBunny/brew-nix";
