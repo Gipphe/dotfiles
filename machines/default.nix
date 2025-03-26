@@ -5,6 +5,7 @@
     ./cobalt
     ./helium
     ./silicon
+    ./titanium
   ];
   options.gipphe = {
     username = lib.mkOption {

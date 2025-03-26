@@ -3,13 +3,14 @@
   util,
   lib,
   pkgs,
+  config,
   ...
 }:
 util.mkModule {
   hm.home.activation = lib.mapAttrs' (
     hostname: cfg:
     let
-      destPath = "projects/dotfiles/windows/configurations/${hostname}.json";
+      destPath = "${config.gipphe.homeDirectory}/projects/dotfiles/windows/configurations/${hostname}.json";
       pkg = pkgs.writeText "windows-configuration-${cfg.hostname}" (
         builtins.toJSON cfg.windows.configuration
       );

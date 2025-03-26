@@ -23,7 +23,7 @@ util.mkToggledModule [ "machines" ] {
         secrets.enable = true;
         systemd.enable = true;
         vm-guest.enable = true;
-        windows-setup.enable = true;
+        # windows-setup.enable = true;
         work-slim.enable = true;
         work-wsl.enable = true;
       };

@@ -113,6 +113,19 @@ let
       )
     ];
   };
+  mkNestedProfile = path: cfg: {
+    imports = [
+      (
+        { lib, config, ... }:
+        {
+          options.gipphe.profiles = lib.setAttrByPath (path ++ [ "enable" ]) (
+            lib.mkEnableOption "${lib.concatStringsSep "." path} profile"
+          );
+          config = lib.mkIf (lib.attrByPath (path ++ [ "enable" ]) false config) cfg;
+        }
+      )
+    ];
+  };
 
   mkProgram = mkToggledModule [ "programs" ];
   mkEnvironment = mkToggledModule [ "environment" ];
@@ -315,6 +328,7 @@ in
     mkEnvironment
     mkModule
     mkProfile
+    mkNestedProfile
     mkProgram
     mkSimpleProgram
     mkSimpleProgramModule

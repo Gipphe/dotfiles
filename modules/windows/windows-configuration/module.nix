@@ -10,16 +10,6 @@ let
 in
 {
   options.windows = {
-    destination = lib.mkOption {
-      description = ''
-        Where to put the final machine configuration JSONs, relative to $HOME.
-
-        This uses `home.file` under the hood to write the final JSONs.
-      '';
-      type = lib.types.str;
-      example = "projects/dotfiles/windows/profiles/";
-    };
-
     hostname = lib.mkOption {
       type = lib.types.str;
       description = "Hostname for the Windows machine";
@@ -262,14 +252,14 @@ in
     };
   };
 
-  config = {
-    home.activation.write-windows-configuration =
-      let
-        pkg = pkgs.writeText "windows-configuration-${cfg.hostname}" (builtins.toJSON cfg.configuration);
-      in
-      lib.hm.dag.entryAfter [ "onFilesChange" ] ''
-        run mkdir -p '${cfg.destination}'
-        run cp -f '${pkg}' '${cfg.destination}/${cfg.hostname}.json'
-      '';
-  };
+  # config = {
+  #   home.activation.write-windows-configuration =
+  #     let
+  #       pkg = pkgs.writeText "windows-configuration-${cfg.hostname}" (builtins.toJSON cfg.configuration);
+  #     in
+  #     lib.hm.dag.entryAfter [ "onFilesChange" ] ''
+  #       run mkdir -p '${cfg.destination}'
+  #       run cp -f '${pkg}' '${cfg.destination}/${cfg.hostname}.json'
+  #     '';
+  # };
 }
