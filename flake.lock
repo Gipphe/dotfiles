@@ -1355,6 +1355,37 @@
         "type": "github"
       }
     },
+    "nixCats": {
+      "inputs": {
+        "nixCats": "nixCats_2",
+        "nixpkgs": "nixpkgs_7"
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-oieWXY5gvJE/l2bb4/Z/KfvvGVNrFalD6ELRYykerfA=",
+        "path": "./flakes/nixCats",
+        "type": "path"
+      },
+      "original": {
+        "path": "./flakes/nixCats",
+        "type": "path"
+      }
+    },
+    "nixCats_2": {
+      "locked": {
+        "lastModified": 1741744174,
+        "narHash": "sha256-caGSuskv+9EbKFhjT2OF22tLU8QhFLTmUom1CuzNwy0=",
+        "owner": "BirdeeHub",
+        "repo": "nixCats-nvim",
+        "rev": "55d64d920a94297538acde4610016d4abdd0b7d9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "BirdeeHub",
+        "repo": "nixCats-nvim",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1740646007,
@@ -1551,6 +1582,22 @@
       }
     },
     "nixpkgs_7": {
+      "locked": {
+        "lastModified": 1743076231,
+        "narHash": "sha256-yQugdVfi316qUfqzN8JMaA2vixl+45GxNm4oUfXlbgw=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "6c5963357f3c1c840201eda129a99d455074db04",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_8": {
       "locked": {
         "lastModified": 1741010256,
         "narHash": "sha256-WZNlK/KX7Sni0RyqLSqLPbK8k08Kq7H7RijPJbq9KHM=",
@@ -1773,8 +1820,9 @@
         "neovim-overlay": "neovim-overlay",
         "nix-index-db": "nix-index-db",
         "nix-on-droid": "nix-on-droid",
+        "nixCats": "nixCats",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_7",
+        "nixpkgs": "nixpkgs_8",
         "nixvim": "nixvim",
         "nvf": "nvf",
         "pre-commit-hooks": "pre-commit-hooks",

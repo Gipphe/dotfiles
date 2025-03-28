@@ -1,0 +1,52 @@
+local M = {}
+
+---Run command and capture output.
+---@param cmd string
+---@return string|nil
+---@diagnostic disable-next-line: unused-local, unused-function
+function M.capture(cmd)
+  local handle = io.popen(cmd)
+  if handle == nil then
+    return nil
+  end
+  local result = handle:read '*a'
+  handle:close()
+  return result
+end
+
+---Returns `true` if the current OS is MacOS. Returns `false` otherwise.
+---@return boolean
+function M.is_mac()
+  ---@diagnostic disable-next-line: undefined-field
+  return vim.uv.os_uname().sysname == 'Darwin'
+end
+---Returns `true` if the current OS is a Linux distro. Returns `false` otherwise.
+---@return boolean
+function M.is_linux()
+  ---@diagnostic disable-next-line: undefined-field
+  return vim.uv.os_uname().sysname == 'Linux'
+end
+
+---Returns `true` if the current OS is a Windows. Returns `false` otherwise.
+---@return boolean
+function M.is_windows()
+  ---@diagnostic disable-next-line: undefined-field
+  return vim.uv.os_uname().sysname == 'Windows_NT'
+end
+
+---Returns the hostname of the machine using libuv.
+---@return string
+function M.hostname()
+  ---@diagnostic disable-next-line: undefined-field
+  return vim.uv.os_gethostname()
+end
+
+---Returns the current working directory.
+---@return string
+function M.get_current_dir()
+  local cwd = vim.fn.expand '%:p:h:~:.'
+  local x, _ = cwd:gsub('^oil://', '')
+  return x
+end
+
+return M

@@ -205,6 +205,11 @@
       };
     };
 
+    nixCats = {
+      url = "path:./flakes/nixCats";
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     mac-app-util.url = "github:hraban/mac-app-util";
 
     brew-nix = {
