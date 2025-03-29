@@ -112,6 +112,8 @@ return {
           },
         },
       },
+
+      -- TODO Add cmp_nvim_lsp to deps list here
     },
     config = function()
       -- Brief aside: **What is LSP?**
@@ -248,10 +250,6 @@ return {
         end,
       })
 
-      -- LSP servers and clients are able to communicate to each other what features they support.
-      --  By default, Neovim doesn't support everything that is in the LSP specification.
-      --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-      --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities.textDocument.foldingRange = {
         dynamicRegistration = false,
@@ -369,13 +367,21 @@ return {
 
         servers.nixd = {
           nixpkgs = {
-            expr = 'import <nixpkgs> { }',
+            expr = nixCats.extra 'nixd.nixpkgs' or 'import <nixpkgs> { }',
           },
           formatting = {
             command = { 'nixfmt' },
           },
           options = {
-            nixos = nixos_cfg(),
+            nixos = {
+              expr = nixCats.extra 'nixd.nixos_options',
+            },
+            darwin = {
+              expr = nixCats.extra 'nixd.darwin_options',
+            },
+            droid = {
+              expr = nixCats.extra 'nixd.droid_options',
+            },
           },
         }
       else
@@ -388,12 +394,14 @@ return {
       -- but don't... its not worth it. Just add the lsp to lspsAndRuntimeDeps.
       if require('nixCatsUtils').isNixCats then
         for server_name, _ in pairs(servers) do
+          local server = servers[server_name] or {}
+          local merged_capabilities = vim.tbl_deep_extend('force', capabilities, server.capabilities)
           require('lspconfig')[server_name].setup {
-            capabilities = capabilities,
-            settings = (servers[server_name] or {}).settings,
-            filetypes = (servers[server_name] or {}).filetypes,
-            cmd = (servers[server_name] or {}).cmd,
-            root_pattern = (servers[server_name] or {}).root_pattern,
+            capabilities = merged_capabilities,
+            settings = server.settings,
+            filetypes = server.filetypes,
+            cmd = server.cmd,
+            root_pattern = server.root_pattern,
           }
         end
       else

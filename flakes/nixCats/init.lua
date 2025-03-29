@@ -96,6 +96,7 @@ require 'settings'
 require 'filetypes'
 require 'keymaps'
 require 'autocommands'
+require 'commands'
 
 -- NOTE: nixCats: You might want to move the lazy-lock.json file
 local function getlockfilepath()

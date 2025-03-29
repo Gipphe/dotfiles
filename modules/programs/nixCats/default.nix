@@ -1,8 +1,21 @@
-{ util, inputs, ... }:
+{
+  util,
+  pkgs,
+  inputs,
+  ...
+}:
 util.mkProgram {
   name = "nixCats";
   hm = {
     imports = [ inputs.nixCats.homeModules.default ];
     config.nvim.enable = true;
+    config.nvim.packageDefinition.merge = {
+      extra.nixd = {
+        nixpkgs = ''import ${pkgs.path} {}'';
+        nixos_options = ''(builtins.getFlake "${inputs.self}").nixosConfigurations.argon.options'';
+        darwin_options = ''(builtins.getFlake "${inputs.self}").darwinConfigurations.silicon.options'';
+        droid_options = ''(builtins.getFlake "${inputs.self}").nixOnDroidConfigurations.helium.options'';
+      };
+    };
   };
 }

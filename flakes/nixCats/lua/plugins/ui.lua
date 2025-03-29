@@ -201,6 +201,9 @@ return {
 
   {
     'rcarriga/nvim-notify',
+    dependencies = {
+      'nvim-telescope/telescope.nvim',
+    },
     ---@type notify.Config
     opts = {
       timeout = 3000,

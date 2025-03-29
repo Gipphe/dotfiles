@@ -275,9 +275,9 @@
           # shared libraries to be added to LD_LIBRARY_PATH
           # variable available to nvim runtime
           sharedLibraries = {
-            general = with pkgs; [
-              # libgit2
-            ];
+            # general = with pkgs; [
+            # libgit2
+            # ];
           };
 
           # environmentVariables:
@@ -356,6 +356,15 @@
                   "see :help nixCats"
                   "and type :NixCats to see the categories set in nvim"
                 ];
+              };
+            };
+
+            extra = {
+              nixd = {
+                nixpkgs = ''import ${pkgs.path} {}'';
+                nixos_options = ''(builtins.getFlake "${inputs.self}").nixosConfigurations.argon.options'';
+                darwin_options = ''(builtins.getFlake "${inputs.self}").darwinConfigurations.silicon.options'';
+                droid_options = ''(builtins.getFlake "${inputs.self}").nixOnDroidConfigurations.helium.options'';
               };
             };
           };
