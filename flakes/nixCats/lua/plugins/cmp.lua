@@ -70,53 +70,67 @@ return { -- Autocompletion
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
     'onsails/lspkind.nvim',
+    { 'folke/lazydev.nvim', ft = 'lua' },
   },
-  config = function()
+
+  ---@type cmp.ConfigSchema
+  opts = {
+    completion = { completeopt = 'menuone,menu,preview,noinsert,noselect' },
+
+    sources = {
+      { name = 'nvim_lsp' },
+      { name = 'luasnip' },
+      { name = 'path' },
+      { name = 'buffer' },
+    },
+    experimental = {
+      ghost_text = {
+        hl_group = 'CmpGhostText',
+      },
+    },
+  },
+  ---@param opts cmp.ConfigSchema
+  config = function(_, opts)
     -- See `:help cmp`
     local cmp = require 'cmp'
     local luasnip = require 'luasnip'
     local lspkind = require 'lspkind'
     luasnip.config.setup {}
 
-    vim.api.nvim_set_hl(0, 'CmpGhostText', {
-      default = true,
-      link = 'Comment',
-    })
-
-    cmp.setup {
-      formatting = {
-        format = lspkind.cmp_format {
-          mode = 'symbol', -- show only symbol annotations
-          maxwidth = {
-            -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-            -- can also be a function to dynamically calculate max width such as
-            -- menu = function() return math.floor(0.45 * vim.o.columns) end,
-            menu = 50, -- leading text (labelDetails)
-            abbr = 50, -- actual suggestion item
-          },
-          ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
-          show_labelDetails = true, -- show labelDetails in menu. Disabled by default
-
-          -- The function below will be called before any actual modifications from lspkind
-          -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-          -- before = function(entry, vim_item)
-          --   -- ...
-          --   return vim_item
-          -- end,
-        },
+    opts.formatting = opts.formatting or {}
+    opts.formatting.format = lspkind.cmp_format {
+      mode = 'symbol', -- show only symbol annotations
+      maxwidth = {
+        -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+        -- can also be a function to dynamically calculate max width such as
+        -- menu = function() return math.floor(0.45 * vim.o.columns) end,
+        menu = 50, -- leading text (labelDetails)
+        abbr = 50, -- actual suggestion item
       },
-      snippet = {
-        expand = function(args)
-          luasnip.lsp_expand(args.body)
-        end,
-      },
-      completion = { completeopt = 'menuone,menu,preview,noinsert,noselect' },
+      ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+      show_labelDetails = true, -- show labelDetails in menu. Disabled by default
 
-      -- For an understanding of why these mappings were
-      -- chosen, you will need to read `:help ins-completion`
-      --
-      -- No, but seriously. Please read `:help ins-completion`, it is really good!
-      mapping = cmp.mapping.preset.insert {
+      -- The function below will be called before any actual modifications from lspkind
+      -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+      -- before = function(entry, vim_item)
+      --   -- ...
+      --   return vim_item
+      -- end,
+    }
+
+    opts.snippet = opts.snippet or {}
+    opts.snippet.expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end
+
+    -- For an understanding of why these mappings were
+    -- chosen, you will need to read `:help ins-completion`
+    --
+    -- No, but seriously. Please read `:help ins-completion`, it is really good!
+    opts.mapping = vim.tbl_deep_extend(
+      'force',
+      opts.mapping or {},
+      cmp.mapping.preset.insert {
         -- Select the [n]ext item
         ['<C-n>'] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
         -- Select the [p]revious item
@@ -166,18 +180,14 @@ return { -- Autocompletion
 
         -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
         --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
-      },
-      sources = {
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-        { name = 'path' },
-        { name = 'buffer' },
-      },
-      experimental = {
-        ghost_text = {
-          hl_group = 'CmpGhostText',
-        },
-      },
-    }
+      }
+    )
+
+    vim.api.nvim_set_hl(0, 'CmpGhostText', {
+      default = true,
+      link = 'Comment',
+    })
+
+    cmp.setup(opts)
   end,
 }

@@ -12,6 +12,7 @@ return {
         enabled = require('nixCatsUtils').lazyAdd(true, false),
         config = true,
       }, -- NOTE: Must be loaded before dependants
+
       {
         'williamboman/mason-lspconfig.nvim',
         -- NOTE: nixCats: use lazyAdd to only enable mason if nix wasnt involved.
@@ -27,17 +28,35 @@ return {
 
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      {
+        'j-hui/fidget.nvim',
+        ---@type table See |fidget-options| or |fidget-option.txt|.
+        opts = {},
+      },
 
       -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
       -- used for completion, annotations and signatures of Neovim apis
       {
         'folke/lazydev.nvim',
+        dependencies = {
+          {
+            'hrsh7th/nvim-cmp',
+            opts = function(_, opts)
+              opts.sources = opts.sources or {}
+              table.insert(opts.sources, {
+                name = 'lazydev',
+                group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+              })
+            end,
+          },
+        },
         ft = 'lua',
+        ---@type lazydev.Config
         opts = {
           library = {
             -- adds type hints for nixCats global
             { path = (nixCats.nixCatsPath or '') .. '/lua', words = { 'nixCats' } },
+            { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
           },
         },
       },
@@ -301,7 +320,7 @@ return {
       -- }
       servers.marksman = {}
       servers.ruff = {
-        on_attach = function(client, bufnr)
+        on_attach = function(client)
           -- Disable hover in favour of Pyright
           client.server_capabilities.hoverProvider = false
           vim.keymap.set('n', '<leader>co', function()
@@ -433,7 +452,7 @@ return {
             vim.keymap.set(mode, l, r, {
               noremap = true,
               silent = true,
-              buffer = buffer,
+              buffer = buffer.buf,
               desc = desc,
             })
           end
@@ -450,6 +469,7 @@ return {
     end,
     ft = { 'haskell' },
   },
+
   {
     'kiyoon/haskell-scope-highlighting.nvim',
     enabled = require('nixCatsUtils').enableForCategory 'haskell',
@@ -459,4 +479,29 @@ return {
       vim.cmd [[autocmd FileType haskell TSDisable highlight]]
     end,
   },
+
+  {
+    'jmbuhr/otter.nvim',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+    },
+    opts = {
+      handle_leading_whitespace = true,
+    },
+  },
+
+  -- TODO Are LSPs good enough?
+  -- {
+  --   'mfussenegger/nvim-lint',
+  --   config = function()
+  --     require('lint').linters_by_ft = {
+  --       fish = { 'fish' },
+  --     }
+  --     vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufReadPost', 'InsertLeave' }, {
+  --       callback = function()
+  --         require('lint').try_lint()
+  --       end,
+  --     })
+  --   end,
+  -- },
 }
