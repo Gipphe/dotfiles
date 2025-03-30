@@ -160,21 +160,37 @@
           lspsAndRuntimeDeps = with pkgs; {
             general = [
               basedpyright
+              bash-language-server
+              dockerfile-language-server-nodejs
               fd
+              fish-lsp
               fourmolu
+              gopls
               haskellPackages.cabal-fmt
+              java-language-server
+              lemminx
               lua-language-server
               markdownlint-cli
+              marksman
+              metals
               nix-doc
               nixd
+              nixfmt-rfc-style
               opentofu
+              opentofu-ls
+              prettier
               prettierd
               ripgrep
               ruff
+              rust-analyzer
               shfmt
+              sqls
               stdenv.cc.cc
               stylua
+              tailwindcss-language-server
+              typescript-language-server
               universal-ctags
+              vscode-langservers-extracted
             ];
 
             haskell = with pkgs.haskellPackages; [
