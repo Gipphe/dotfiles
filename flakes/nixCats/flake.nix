@@ -178,7 +178,6 @@
               nixfmt-rfc-style
               opentofu
               opentofu-ls
-              prettier
               prettierd
               ripgrep
               ruff

@@ -133,7 +133,7 @@ return {
       -- }}}
       ---@type { [string]: lspconfig.Config }
       servers = {
-        basedpyright = {},
+        -- basedpyright = {},
         bashls = {},
         dockerls = {},
         jsonls = {},
@@ -179,7 +179,7 @@ return {
         ruff = {
           on_attach = function(client)
             -- Disable hover in favour of Pyright
-            client.server_capabilities.hoverProvider = false
+            -- client.server_capabilities.hoverProvider = false
             vim.keymap.set('n', '<leader>co', function()
               vim.lsp.buf.code_action {
                 apply = true,
