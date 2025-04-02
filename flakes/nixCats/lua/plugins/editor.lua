@@ -21,7 +21,7 @@ return {
 
   {
     'magal1337/dataform.nvim',
-    enable = require('nixCatsUtils').enableForCategory 'dataform',
+    enabled = require('nixCatsUtils').enableForCategory 'dataform',
     dependencies = {
       'rcarriga/nvim-notify',
       'nvim-telescope/telescope.nvim',
@@ -55,18 +55,18 @@ return {
 
   {
     'linux-cultist/venv-selector.nvim',
-    version = false,
-    opts = {
-      name = {
-        'venv',
-        '.venv',
-        'env',
-        '.env',
-      },
+    dependencies = {
+      'neovim/nvim-lspconfig',
+      'mfussenegger/nvim-dap',
+      'mfussenegger/nvim-dap-python',
+      'nvim-telescope/telescope.nvim',
     },
+    lazy = false,
+    branch = require('nixCatsUtils').isNixCats or 'regexp',
+    ---@type venv-selector.Config
+    opts = {},
     keys = {
       { '<leader>cv', '<cmd>VenvSelect<cr>', desc = 'Select VirtualEnv' },
-      { '<leader>cV', '<cmd>VenvSelectCached<cr>', desc = 'Select cached VirtualEnv' },
     },
   },
 
@@ -76,12 +76,16 @@ return {
     keys = {
       {
         '<leader>mpo',
-        require('marp.nvim').ServerStart,
+        function()
+          require('marp.nvim').ServerStart()
+        end,
         desc = 'Start Marp server',
       },
       {
         '<leader>mpc',
-        require('marp.nvim').ServerStop,
+        function()
+          require('marp.nvim').ServerStop()
+        end,
         desc = 'Stop Marp server',
       },
     },

@@ -106,7 +106,8 @@
         }@packageDef:
         let
           marp-nvim = pkgs.vimUtils.buildVimPlugin {
-            name = "marp-nvim";
+            pname = "marp-nvim";
+            version = "2025-04-02";
             src = pkgs.fetchFromGitHub {
               owner = "aca";
               repo = "marp.nvim";
@@ -115,17 +116,19 @@
             };
           };
           venv-selector-nvim = pkgs.vimUtils.buildVimPlugin {
-            name = "venv-selector.nvim";
+            pname = "venv-selector.nvim";
+            version = "2025-04-02";
             src = pkgs.fetchFromGitHub {
               owner = "linux-cultist";
               repo = "venv-selector.nvim";
-              rev = "f212a424fb29949cb5e683928bdd4038bbe0062d";
-              hash = "sha256-L4L14yq5Ix3w5ty/CImkQXx/CBxwH7jsQhU+dWKndtQ=";
+              rev = "regexp";
+              hash = "sha256-ogd4T+mIbb86qFUbDczzDra8yWm/bwKmYCRGYCJz6fM=";
             };
           };
           dataform-nvim =
             (pkgs.vimUtils.buildVimPlugin {
-              name = "dataform.nvim";
+              pname = "dataform.nvim";
+              version = "2025-04-02";
               src = pkgs.fetchFromGitHub {
                 owner = "magal1337";
                 repo = "dataform.nvim";
@@ -136,9 +139,9 @@
               {
                 nvimSkipModule = "notify";
               };
-
           pnpm-nvim = pkgs.vimUtils.buildVimPlugin {
-            name = "pnpm.nvim";
+            pname = "pnpm.nvim";
+            version = "2025-04-02";
             src = pkgs.fetchFromGitHub {
               owner = "lukahartwig";
               repo = "pnpm.nvim";
@@ -159,7 +162,6 @@
           # this includes LSPs
           lspsAndRuntimeDeps = with pkgs; {
             general = [
-              basedpyright
               bash-language-server
               dockerfile-language-server-nodejs
               fd
@@ -192,6 +194,8 @@
               vscode-langservers-extracted
             ];
 
+            basedpyright = with pkgs; [ basedpyright ];
+
             haskell = with pkgs.haskellPackages; [
               fast-tags
               ghci-dap
@@ -222,13 +226,12 @@
               marp-nvim
               mini-nvim
               neoconf-nvim
-              noice-nvim
               nvim-cmp
               nvim-dap
+              nvim-dap-python
               nvim-dap-ui
               nvim-lspconfig
               nvim-nio
-              nvim-notify
               nvim-spectre
               nvim-treesitter
               nvim-treesitter-context
@@ -264,7 +267,7 @@
               zellij-nav-nvim
             ];
 
-            haskell = [
+            haskell = with pkgs.vimPlugins; [
               haskell-scope-highlighting-nvim
               haskell-tools-nvim
               telescope-nvim
@@ -274,9 +277,12 @@
               dataform-nvim
             ];
 
-            navbuddy = [
+            ui = with pkgs.vimPlugins; [
+              noice-nvim
+              nui-nvim
               nvim-navbuddy
               nvim-navic
+              nvim-notify
             ];
           };
 
@@ -357,7 +363,8 @@
 
               haskell = false;
               dataform = false;
-              navbuddy = false;
+              ui = false;
+              basedpyright = false;
 
               # we can pass whatever we want actually.
               have_nerd_font = true;

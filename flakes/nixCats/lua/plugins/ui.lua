@@ -52,7 +52,7 @@ return {
 
   {
     'catppuccin/nvim',
-    name = 'catppuccin',
+    name = require('nixCatsUtils').lazyAdd('catppuccin', 'catppuccin-nvim'),
     priority = 1000,
     ---@type CatppuccinOptions
     opts = {
@@ -97,6 +97,12 @@ return {
   {
     'folke/noice.nvim',
     event = 'VeryLazy',
+    enabled = require('nixCatsUtils').enableForCategory 'ui',
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'rcarriga/nvim-notify',
+      'folke/which-key.nvim',
+    },
     ---@type NoiceConfig
     opts = {
       presets = {
@@ -192,15 +198,11 @@ return {
         desc = 'Scroll backwards',
       },
     },
-    dependencies = {
-      'MunifTanjim/nui.nvim',
-      'rcarriga/nvim-notify',
-      'folke/which-key.nvim',
-    },
   },
 
   {
     'rcarriga/nvim-notify',
+    enabled = require('nixCatsUtils').enableForCategory 'ui',
     dependencies = {
       'nvim-telescope/telescope.nvim',
     },
