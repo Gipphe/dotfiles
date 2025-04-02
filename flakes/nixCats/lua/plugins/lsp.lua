@@ -134,7 +134,7 @@ return {
       ---@type { [string]: lspconfig.Config }
       servers = {
         basedpyright = {
-          enabled = require('nixCats').enableForCategory 'basedpyright',
+          enabled = require('nixCatsUtils').enableForCategory 'basedpyright',
         },
         bashls = {},
         dockerls = {},
@@ -181,7 +181,7 @@ return {
         ruff = {
           on_attach = function(client)
             -- Disable hover in favour of Pyright
-            if require('nixCats').enableForCategory 'basedpyright' then
+            if require('nixCatsUtils').enableForCategory 'basedpyright' then
               client.server_capabilities.hoverProvider = false
             end
             vim.keymap.set('n', '<leader>co', function()
