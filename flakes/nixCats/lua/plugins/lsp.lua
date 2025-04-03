@@ -148,7 +148,7 @@ return {
         tailwindcss = {},
         fish_lsp = {},
         terraformls = {
-          cmd = { 'opentofu-ls', 'serve' },
+          -- cmd = { 'opentofu-ls', 'serve' },
         },
         metals = {},
         yamlls = {

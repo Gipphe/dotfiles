@@ -189,15 +189,16 @@
               stdenv.cc.cc
               stylua
               tailwindcss-language-server
+              terraform-ls
               typescript-language-server
               universal-ctags
               vscode-langservers-extracted
               yaml-language-server
             ];
 
-            basedpyright = with pkgs; [ basedpyright ];
+            basedpyright = [ basedpyright ];
 
-            haskell = with pkgs.haskellPackages; [
+            haskell = with haskellPackages; [
               fast-tags
               ghci-dap
               haskell-debug-adapter
@@ -268,7 +269,7 @@
               zellij-nav-nvim
             ];
 
-            haskell = with pkgs.vimPlugins; [
+            haskell = [
               haskell-scope-highlighting-nvim
               haskell-tools-nvim
               telescope-nvim
@@ -278,7 +279,7 @@
               dataform-nvim
             ];
 
-            ui = with pkgs.vimPlugins; [
+            ui = [
               noice-nvim
               nui-nvim
               nvim-navbuddy
