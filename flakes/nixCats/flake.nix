@@ -192,6 +192,7 @@
               typescript-language-server
               universal-ctags
               vscode-langservers-extracted
+              yaml-language-server
             ];
 
             basedpyright = with pkgs; [ basedpyright ];
