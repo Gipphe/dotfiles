@@ -1362,7 +1362,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-bw24JfpCnQiQjpzLlp4YLunONuytpeE6xXP6tYl26Ps=",
+        "narHash": "sha256-3lQb89sMJvQrlTZ+dB86FHuJwWyGIw+ntldbDmCEWwY=",
         "path": "./flakes/nixCats",
         "type": "path"
       },
