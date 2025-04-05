@@ -14,7 +14,7 @@ util.mkWallpaper {
     default = ./wallpaper/Macchiato-hald8-wall.png;
   };
   hm = lib.mkMerge [
-    (lib.optionalAttrs (pkgs.system != "aarch64-linux") {
+    (lib.optionalAttrs (!flags.isNixOnDroid) {
       stylix.image = config.environment.wallpaper.small-memory.image;
     })
     {
