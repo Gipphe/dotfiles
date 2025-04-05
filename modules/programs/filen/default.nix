@@ -22,7 +22,7 @@ let
       hash = appImages.${pkgs.system}.hash;
     };
   };
-  linux = lib.mkIf pkgs.stdenv.isLinux { home.packages = [ linuxPackage ]; };
+  linux = lib.mkIf pkgs.stdenv.hostPlatform.isLinux { home.packages = [ linuxPackage ]; };
 in
 util.mkProgram {
   name = "filen";

@@ -30,7 +30,7 @@ in
 util.mkProgram {
   name = "libresprite";
   hm.home.packages =
-    if pkgs.stdenv.isDarwin then
+    if pkgs.stdenv.hostPlatform.isDarwin then
       [
         pkg
         darwinPackage

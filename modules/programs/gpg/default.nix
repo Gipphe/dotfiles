@@ -4,13 +4,16 @@
   util,
   ...
 }:
+let
+  inherit (pkgs.stdenv) hostPlatform;
+in
 util.mkProgram {
   name = "gpg";
 
   hm.config = lib.mkMerge [
     { programs.gpg.enable = true; }
 
-    (lib.mkIf pkgs.stdenv.isLinux {
+    (lib.mkIf hostPlatform.isLinux {
       services.gpg-agent = {
         enable = true;
         defaultCacheTtl = 1800;
@@ -19,7 +22,7 @@ util.mkProgram {
       };
     })
 
-    (lib.mkIf pkgs.stdenv.isDarwin {
+    (lib.mkIf hostPlatform.isDarwin {
       programs.fish.shellInit = ''
         set -gx GPG_TTY $(tty)
       '';

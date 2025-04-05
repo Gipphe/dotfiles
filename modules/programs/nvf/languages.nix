@@ -1,4 +1,7 @@
 { config, pkgs, ... }:
+let
+  inherit (pkgs.stdenv) hostPlatform;
+in
 {
   programs.nvf.settings.vim.languages = {
     enableDAP = true;
@@ -8,7 +11,7 @@
     enableTreesitter = true;
 
     bash.enable = true;
-    csharp.enable = !pkgs.stdenv.isDarwin;
+    csharp.enable = !hostPlatform.isDarwin;
     css.enable = true;
     css.format.type = "prettierd";
     go.enable = true;
@@ -25,7 +28,7 @@
         nixpkgs.expr = "import <nixpkgs> { }";
         options.nixos.expr =
           let
-            configType = if pkgs.stdenv.isDarwin then "darwinConfigurations" else "nixosConfigurations";
+            configType = if hostPlatform.isDarwin then "darwinConfigurations" else "nixosConfigurations";
           in
           "(builtins.getFlake \"${config.home.sessionVariables.FLAKE}\").${configType}.${config.gipphe.hostName}.options";
       };

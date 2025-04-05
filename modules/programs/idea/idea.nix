@@ -5,10 +5,13 @@
   config,
   ...
 }:
+let
+  inherit (pkgs.stdenv) hostPlatform;
+in
 {
   config = lib.mkIf config.gipphe.programs.idea-ultimate.enable (
     lib.mkMerge [
-      (lib.mkIf pkgs.stdenv.isLinux {
+      (lib.mkIf hostPlatform.isLinux {
         home = {
           packages = with pkgs; [
             jetbrains.idea-ultimate
@@ -19,7 +22,7 @@
         };
       })
 
-      (lib.mkIf pkgs.stdenv.isDarwin {
+      (lib.mkIf hostPlatform.isDarwin {
         home.packages = [
           (pkgs.writeShellScriptBin "idea" ''
             open -na "IntelliJ IDEA.app" --args "$@"

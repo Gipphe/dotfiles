@@ -5,11 +5,14 @@
   inputs,
   ...
 }:
+let
+  inherit (pkgs.stdenv) hostPlatform;
+in
 util.mkProgram {
   name = "gimp";
 
   hm.home.packages = [
-    (lib.mkIf pkgs.stdenv.isLinux pkgs.gimp-with-plugins)
-    (lib.mkIf pkgs.stdenv.isDarwin inputs.brew-nix.packages.${pkgs.system}.gimp)
+    (lib.mkIf hostPlatform.isLinux pkgs.gimp-with-plugins)
+    (lib.mkIf hostPlatform.isDarwin inputs.brew-nix.packages.${pkgs.system}.gimp)
   ];
 }

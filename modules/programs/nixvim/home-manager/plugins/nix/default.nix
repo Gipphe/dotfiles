@@ -14,7 +14,8 @@
           nixos = {
             expr =
               let
-                configType = if pkgs.stdenv.isDarwin then "darwinConfigurations" else "nixosConfigurations";
+                configType =
+                  if pkgs.stdenv.hostPlatform.isDarwin then "darwinConfigurations" else "nixosConfigurations";
               in
               "(builtins.getFlake \"${config.home.sessionVariables.FLAKE}\").${configType}.${config.gipphe.hostName}.options";
           };

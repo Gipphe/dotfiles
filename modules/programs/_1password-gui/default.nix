@@ -6,7 +6,9 @@
 }:
 util.mkProgram {
   name = "_1password-gui";
-  hm = lib.mkIf pkgs.stdenv.isLinux { home.packages = with pkgs; [ _1password-gui ]; };
+  hm = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+    home.packages = with pkgs; [ _1password-gui ];
+  };
   system-nixos.systemd.user.services._1password-boot = {
     wantedBy = [ "default.target" ];
     description = "Start 1password in the background.";

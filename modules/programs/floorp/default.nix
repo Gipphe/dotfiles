@@ -8,7 +8,7 @@
 let
   cfg = config.gipphe.programs.floorp;
   windows = import ./windows.nix;
-  pkg = if (pkgs.stdenv.isLinux && cfg.enable) then pkgs.floorp else null;
+  pkg = if (pkgs.stdenv.hostPlatform.isLinux && cfg.enable) then pkgs.floorp else null;
   getWithDefault =
     path: def: attrs:
     if builtins.hasAttr path attrs then builtins.getAttr path attrs else def;
@@ -24,7 +24,7 @@ util.mkModule {
   };
   hm.config = lib.mkMerge [
     {
-      programs.floorp = lib.mkIf pkgs.stdenv.isLinux {
+      programs.floorp = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         enable = cfg.enable || cfg.windows;
         package = pkg;
         profiles = {
@@ -135,7 +135,7 @@ util.mkModule {
         #   // optionalFile "AppData/Roaming/Floorp/Profiles/default/chrome/userChrome.css" ".floorp/default/chrome/userChrome.css";
       };
     }
-    (lib.mkIf (cfg.enable && pkgs.stdenv.isDarwin) {
+    (lib.mkIf (cfg.enable && pkgs.stdenv.hostPlatform.isDarwin) {
       home.packages = [
         (pkgs.writeShellScriptBin "floorp" ''
           MOZ_LEGACY_PROFILES=1 open -na "Floorp.app"

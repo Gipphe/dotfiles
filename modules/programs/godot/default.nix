@@ -5,6 +5,9 @@
   util,
   ...
 }:
+let
+  inherit (pkgs.stdenv) hostPlatform;
+in
 util.mkModule {
   options.gipphe.programs.godot.enable = lib.mkEnableOption "godot";
   hm.config = lib.mkMerge [
@@ -22,15 +25,16 @@ util.mkModule {
             "dotnet-8.0-sdk"
           ];
         }
-        (lib.mkIf (!pkgs.stdenv.isDarwin) {
-          gipphe.programs.code-cursor.settings."godotTools.editorPath.godot4" = "${pkgs.godot_4-mono}/bin/godot";
+        (lib.mkIf (!hostPlatform.isDarwin) {
+          gipphe.programs.code-cursor.settings."godotTools.editorPath.godot4" =
+            "${pkgs.godot_4-mono}/bin/godot";
           home.packages = [
             (pkgs.writeShellScriptBin "gd" ''
               ${pkgs.godot_4-mono}/bin/godot-mono "$@" &>/dev/null &
             '')
           ];
         })
-        (lib.mkIf pkgs.stdenv.isDarwin {
+        (lib.mkIf hostPlatform.isDarwin {
           gipphe.programs.code-cursor.settings = {
             "godotTools.editorPath.godot4" = "godot-mono";
             "godotTools.lsp.serverPort" = 6005;

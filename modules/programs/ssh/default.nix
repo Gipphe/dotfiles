@@ -51,13 +51,14 @@ util.mkProgram {
           '';
         functions =
           let
+            inherit (pkgs.stdenv.hostPlatform) isDarwin;
             test = "${pkgs.coreutils}/bin/test";
-            pgrep = if pkgs.stdenv.isDarwin then "pgrep" else "${pkgs.procps}/bin/pgrep";
-            kill = if pkgs.stdenv.isDarwin then "kill" else "${pkgs.coreutils}/bin/kill";
+            pgrep = if isDarwin then "pgrep" else "${pkgs.procps}/bin/pgrep";
+            kill = if isDarwin then "kill" else "${pkgs.coreutils}/bin/kill";
             sed = "${pkgs.gnused}/bin/sed";
-            chmod = if pkgs.stdenv.isDarwin then "chmod" else "${pkgs.coreutils}/bin/chmod";
-            ssh-add = if pkgs.stdenv.isDarwin then "ssh-add" else "${pkgs.openssh}/bin/ssh-add";
-            cat = if pkgs.stdenv.isDarwin then "cat" else "${pkgs.coreutils}/bin/cat";
+            chmod = if isDarwin then "chmod" else "${pkgs.coreutils}/bin/chmod";
+            ssh-add = if isDarwin then "ssh-add" else "${pkgs.openssh}/bin/ssh-add";
+            cat = if isDarwin then "cat" else "${pkgs.coreutils}/bin/cat";
           in
           {
             read-ssh-env = # fish
@@ -82,7 +83,7 @@ util.mkProgram {
               '';
             start-ssh-agent =
               let
-                ssh-agent = if (!pkgs.stdenv.isDarwin) then "${pkgs.openssh}/bin/ssh-agent" else "ssh-agent";
+                ssh-agent = if (!isDarwin) then "${pkgs.openssh}/bin/ssh-agent" else "ssh-agent";
               in
               # fish
               ''

@@ -12,6 +12,7 @@ let
       ''
         echo "$settings" | ${pkgs.jq}/bin/jq '.' > $out
       '';
+  inherit (pkgs.stdenv) hostPlatform;
 in
 util.mkProgram {
   name = "code-cursor";
@@ -66,11 +67,11 @@ util.mkProgram {
         };
       })
 
-      (lib.mkIf pkgs.stdenv.isDarwin {
+      (lib.mkIf hostPlatform.isDarwin {
         home.file."Library/Application Support/Cursor/User/settings.json".source = cfg.settingsPackage;
       })
 
-      (lib.mkIf pkgs.stdenv.isLinux {
+      (lib.mkIf hostPlatform.isLinux {
         xdg.configFile."Cursor/User/settings.json".source = cfg.settingsPackage;
       })
 
@@ -80,7 +81,7 @@ util.mkProgram {
       }
 
       (lib.mkIf (!cfg.wsl) {
-        home.packages = lib.mkIf pkgs.stdenv.isLinux [
+        home.packages = lib.mkIf hostPlatform.isLinux [
           (pkgs.writeShellScriptBin "cursor" ''
             ${pkgs.code-cursor}/bin/cursor "$@" &>/dev/null &
           '')

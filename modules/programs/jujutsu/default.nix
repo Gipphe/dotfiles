@@ -25,7 +25,7 @@ util.mkProgram {
         signing = {
           sign-all = true;
           backend = "gpg";
-          program = if pkgs.stdenv.isLinux then config.programs.gpg.package else "gpg";
+          program = if pkgs.stdenv.hostPlatform.isLinux then config.programs.gpg.package else "gpg";
           key = "23723701395B436C";
         };
         aliases = {

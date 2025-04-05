@@ -5,6 +5,9 @@
   util,
   ...
 }:
+let
+  inherit (pkgs.stdenv) hostPlatform;
+in
 util.mkProgram {
   name = "fish";
   options.gipphe.programs.fish.prompt = lib.mkOption {
@@ -24,7 +27,7 @@ util.mkProgram {
 
       programs = {
         bash = {
-          enable = !pkgs.stdenv.isDarwin;
+          enable = !hostPlatform.isDarwin;
           initExtra = ''
             if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]; then
               shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
@@ -33,7 +36,7 @@ util.mkProgram {
           '';
         };
         zsh = {
-          enable = pkgs.stdenv.isDarwin;
+          enable = hostPlatform.isDarwin;
           initExtra = ''
             if [[ $(${pkgs.procps}/bin/ps -p $PPID -o comm | tail -n +2) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]; then
               LOGIN_OPTION=""
