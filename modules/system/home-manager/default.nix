@@ -46,9 +46,9 @@ util.mkModule {
 
         osConfig = config;
         flags = flags // {
-          isNixos = false;
-          isNixDarwin = false;
-	  isNixOnDroid = false;
+          isNixos = true;
+          isNixDarwin = true;
+          isNixOnDroid = true;
           isHm = true;
           isSystem = false;
         };

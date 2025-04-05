@@ -204,9 +204,9 @@ let
                 shared
               ]
               ++ lib.optional flags.isHm hm
-              ++ lib.optional flags.isNixos system-nixos
-              ++ lib.optional flags.isNixDarwin system-darwin
-              ++ lib.optional flags.isNixOnDroid system-droid
+              ++ lib.optional (flags.isSystem && flags.isNixos) system-nixos
+              ++ lib.optional (flags.isSystem && flags.isNixDarwin) system-darwin
+              ++ lib.optional (flags.isSystem && flags.isNixOnDroid) system-droid
               ++ lib.optional flags.isSystem system-all;
           }
         )
