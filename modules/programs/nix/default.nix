@@ -75,9 +75,12 @@ in
           doc.enable = false;
           man.enable = true;
         };
-
         nixpkgs.config = {
           allowUnfree = true;
+          permittedInsecurePackages = [
+            "dotnet-sdk-6.0.428"
+            "electron-27.3.11"
+          ];
           overlays = [
             (_: super: {
               coreutils = super.uutils-coreutils-noprefix;
