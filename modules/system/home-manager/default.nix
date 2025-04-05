@@ -17,8 +17,19 @@ util.mkModule {
       config.gipphe = lib.mkDefault osConfig.gipphe;
     };
 
-  system-darwin.imports = [ inputs.home-manager.darwinModules.home-manager ];
-  system-nixos.imports = [ inputs.home-manager.nixosModules.home-manager ];
+  system-darwin = {
+    imports = [ inputs.home-manager.darwinModules.home-manager ];
+    home-manager.users.${config.gipphe.username}.imports = [ ../../../root.nix ];
+  };
+
+  system-nixos = {
+    imports = [ inputs.home-manager.nixosModules.home-manager ];
+    home-manager.users.${config.gipphe.username}.imports = [ ../../../root.nix ];
+  };
+
+  system-droid.home-manager = {
+    config = ../../../root.nix;
+  };
 
   system-all = {
     home-manager = {
@@ -37,11 +48,11 @@ util.mkModule {
         flags = flags // {
           isNixos = false;
           isNixDarwin = false;
+	  isNixOnDroid = false;
           isHm = true;
           isSystem = false;
         };
       };
-      users.${config.gipphe.username}.imports = [ ../../../root.nix ];
     };
   };
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env nix
-#! nix shell --file ``<nixpkgs>`` openssh sops coreutils --command bash
+#! nix shell nixpkgs#openssh nixpkgs#sops nixpkgs#coreutils --command bash
 
 log() {
     echo "$@" >&2

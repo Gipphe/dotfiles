@@ -2,6 +2,7 @@ keys:
   - &silicon age1hvcmce9e4tkhm2ue2nh7tan6qxy7dewyf8rkentshf20qlt3x5aszkpn7c
   - &argon age1akwhlc7p3nmvty78nvqj9egdamvt86r6pkljjry9846f5uxju4hsnzr5pq
   - &cobalt age12ewxc5y60mgvu240gvjnnc6uufvjrh757kad7dkzlwm64fcd4v4qtmvpy5
+  - &helium age102w690dszwe3305vg3v084y6z6hstjsxskatz6evguj3utzz6e4s7yfrfr
 creation_rules:
   - path_regex: secrets/silicon.*
     key_groups:
@@ -17,21 +18,29 @@ creation_rules:
       - age:
           - *cobalt
 
+  - path_regex: secrets/helium.*
+    key_groups:
+      - age:
+          - *helium
+
   - path_regex: secrets/mods-cli-openai-api\.key
     key_groups:
       - age:
           - *cobalt
           - *argon
           - *silicon
+          - *helium
   - path_regex: secrets/claude-nvim-api-key\.key
     key_groups:
       - age:
           - *cobalt
           - *argon
           - *silicon
+          - *helium
   - path_regex: secrets/strise-milkyway-translations-openai-api-key\.key
     key_groups:
       - age:
           - *cobalt
           - *argon
           - *silicon
+          - *helium

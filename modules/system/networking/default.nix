@@ -1,4 +1,10 @@
 { config, util, ... }:
+let
+  networking = {
+    hostName = config.gipphe.hostName;
+  };
+in
 util.mkModule {
-  system-all.networking.hostName = config.gipphe.hostName;
+  system-nixos.networking = networking;
+  system-darwin.networking = networking;
 }

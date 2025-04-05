@@ -5,7 +5,6 @@
   environment.packages = with pkgs; [
     # User-facing stuff that you really really want to have
     vim # or some other editor, e.g. nano or neovim
-    neovim
     git
 
     # Some common stuff that people expect to have
@@ -41,4 +40,10 @@
 
   # Set your time zone
   #time.timeZone = "Europe/Berlin";
+  home-manager.config = {
+    programs = {
+      fish.enable = true;
+      zoxide.enable = true;
+    };
+  };
 }

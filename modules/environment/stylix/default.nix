@@ -5,16 +5,11 @@
   util,
   osConfig,
   lib,
+  flags,
   ...
 }:
-util.mkEnvironment {
-  name = "stylix";
-
-  hm.stylix = {
-    inherit (osConfig.stylix) base16Scheme;
-  };
-
-  system-all.stylix = {
+let
+  stylix = {
     enable = true;
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
     image = lib.mkDefault config.environment.wallpaper.small-memory.image;
@@ -34,15 +29,30 @@ util.mkEnvironment {
       };
     };
   };
+in
+util.mkEnvironment {
+  name = "stylix";
 
-  system-darwin.imports = [ inputs.stylix.darwinModules.stylix ];
+  hm = {
+    imports = [ inputs.stylix.homeManagerModules.stylix ];
+    stylix = {
+      inherit (osConfig.stylix) base16Scheme;
+    };
+  };
+
+  system-darwin = {
+    imports = [ inputs.stylix.darwinModules.stylix ];
+    inherit stylix;
+  };
 
   system-nixos = {
     imports = [ inputs.stylix.nixosModules.stylix ];
-    stylix.cursor = {
-      package = pkgs.bibata-cursors;
-      name = "Bibata-Modern-Ice";
-      size = 24;
+    stylix = stylix // {
+      cursor = {
+        package = pkgs.bibata-cursors;
+        name = "Bibata-Modern-Ice";
+        size = 24;
+      };
     };
     systemd.services."home-manager-${config.gipphe.username}".wants = [ "dbus.service" ];
   };

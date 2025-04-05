@@ -16,5 +16,5 @@ util.mkToggledModule [ "machines" ] {
       };
     };
   };
-  system-droid.system.stateVersion = "24.05";
+  system-droid.system.stateVersion = lib.mkForce "24.05";
 }

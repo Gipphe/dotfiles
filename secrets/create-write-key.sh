@@ -9,4 +9,4 @@ if test -e "$key_dest"; then
     exit 1
 fi
 
-nix shell nixpkgs#age -c age-keygen -o "$key_dest"
+nix --extra-experimental-features 'flakes nix-command' shell nixpkgs#age -c age-keygen -o "$key_dest"

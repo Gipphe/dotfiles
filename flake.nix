@@ -89,13 +89,17 @@
           };
         };
 
-      flake = {
-        inherit (import ./hosts.nix inputs)
-          nixosConfigurations
-          darwinConfigurations
-          nixOnDroidConfigurations
-          ;
-      };
+      flake =
+        let
+          hosts = import ./hosts.nix inputs;
+        in
+        {
+          inherit (hosts)
+            darwinConfigurations
+            nixOnDroidConfigurations
+            nixosConfigurations
+            ;
+        };
     });
 
   inputs = {

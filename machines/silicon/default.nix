@@ -27,7 +27,7 @@ util.mkToggledModule [ "machines" ] {
     };
   };
 
-  system-all = {
+  system-darwin = {
     nix.settings.auto-optimise-store = lib.mkForce false;
   };
 }

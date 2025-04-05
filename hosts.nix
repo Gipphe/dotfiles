@@ -11,12 +11,20 @@ let
     helium.machine = "nix-on-droid";
   };
   inherit (nixpkgs.lib.attrsets) filterAttrs mapAttrs;
-  inherit (nixpkgs.lib) nixosSystem hasSuffix;
+  inherit (nixpkgs.lib) nixosSystem;
   inherit (inputs.darwin.lib) darwinSystem;
 
-  nixOnDroidConfiguration = cfg: inputs.nix-on-droid.lib.nixOnDroidConfiguration {
-    pkgs = nixpkgs.legacyPackages."aarch64-linux";
-  } // cfg;
+  nixOnDroidConfiguration =
+    {
+      specialArgs,
+      modules,
+      ...
+    }:
+    inputs.nix-on-droid.lib.nixOnDroidConfiguration {
+      pkgs = nixpkgs.legacyPackages."aarch64-linux";
+      inherit modules;
+      extraSpecialArgs = specialArgs;
+    };
 
   nixosMachines = filterAttrs (_: c: c.machine == "nixos") machines;
   darwinMachines = filterAttrs (_: c: c.machine == "nix-darwin") machines;
