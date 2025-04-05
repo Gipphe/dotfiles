@@ -3,9 +3,8 @@
   pkgs,
   config,
   util,
-  osConfig,
+  # osConfig,
   lib,
-  flags,
   ...
 }:
 let
@@ -34,10 +33,11 @@ util.mkEnvironment {
   name = "stylix";
 
   hm = {
-    imports = [ inputs.stylix.homeManagerModules.stylix ];
-    stylix = {
-      inherit (osConfig.stylix) base16Scheme;
-    };
+    # imports = [ inputs.stylix.homeManagerModules.stylix ];
+    # stylix.enable = pkgs.system != "aarch64-linux";
+    # stylix = {
+    #   base16Scheme = lib.mkForce stylix.base16Scheme;
+    # };
   };
 
   system-darwin = {
@@ -47,13 +47,16 @@ util.mkEnvironment {
 
   system-nixos = {
     imports = [ inputs.stylix.nixosModules.stylix ];
-    stylix = stylix // {
-      cursor = {
-        package = pkgs.bibata-cursors;
-        name = "Bibata-Modern-Ice";
-        size = 24;
-      };
-    };
+    stylix = lib.mkMerge [
+      stylix
+      {
+        cursor = {
+          package = pkgs.bibata-cursors;
+          name = "Bibata-Modern-Ice";
+          size = 24;
+        };
+      }
+    ];
     systemd.services."home-manager-${config.gipphe.username}".wants = [ "dbus.service" ];
   };
 }

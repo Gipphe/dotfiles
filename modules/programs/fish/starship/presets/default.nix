@@ -8,7 +8,7 @@ let
 in
 {
   format = "${format}\n$character";
-  palette = "catppuccin_${flavour}";
+  palette = lib.mkForce "catppuccin_${flavour}";
 }
 // (builtins.fromTOML (
   builtins.readFile (
