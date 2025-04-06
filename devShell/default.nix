@@ -31,6 +31,12 @@ in
           ''
             if command -v nixos-rebuild &>/dev/null; then
               nh os switch
+            elif command -v nis-on-droid &>/dev/null; then
+              nix-on-droid build --flake "$(pwd)"
+              echo
+              nvd diff /run/current-system result
+              echo
+              nix-on-droid seitch --flake "$(pwd)"
             elif command -v darwin-rebuild &>/dev/null; then
               darwin-rebuild build --flake "$(pwd)"
               echo
@@ -58,6 +64,21 @@ in
           ''
             if command -v nixos-rebuild &> /dev/null; then
               nh os switch --ask
+            elif command -v nix-on-droid &>/dev/null; then
+              nix-on-droid build --flake "$(pwd)"
+
+              echo
+              nvd diff /run/current-system result
+              echo
+
+              echo "Apply the config?"
+              read -r -p "[y/N]" -n 1 REPLY
+              echo
+
+              case "$REPLY" in
+                y|Y) nix-on-droid switch --flake "$(pwd)" ;;
+              esac
+              rm -f result
             elif command -v darwin-rebuild &>/dev/null; then
               darwin-rebuild build --flake "$(pwd)"
 
