@@ -1,1 +1,4 @@
-{ util, ... }: util.mkProfile "fonts" { gipphe.core.fontconfig.enable = true; }
+{ util, ... }:
+util.mkProfile "fonts" {
+  gipphe.core.fontconfig.enable = true;
+}
