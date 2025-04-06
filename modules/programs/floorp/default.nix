@@ -30,7 +30,7 @@ util.mkModule {
         profiles = {
           default = {
             search = {
-              default = "Google";
+              default = "google";
               engines = {
                 "nixpkgs" = {
                   urls = [
