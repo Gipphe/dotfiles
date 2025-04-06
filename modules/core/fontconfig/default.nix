@@ -16,8 +16,8 @@ util.mkToggledModule [ "core" ] {
       in
       lib.mkIf flags.isNixOnDroid (
         lib.hm.dag.entryAfter [ "filesChanged" ] ''
-          run mkdir -p "$(dirname -- '${font}')"
-          run cp '${font}' '.termux/font.ttf'
+          run mkdir -p "$HOME/.termux"
+          run cp '${font}' "$HOME/.termux/font.ttf"
         ''
       );
   };
