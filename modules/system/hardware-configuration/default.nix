@@ -11,7 +11,7 @@ let
   };
 in
 {
-  imports = lib.optionals flags.isNixos [
+  imports = lib.optionals (flags.isSystem && flags.isNixos) [
     (configs.${hostname} or (throw "No hardware config found for ${hostname}"))
   ];
 }
