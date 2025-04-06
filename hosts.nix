@@ -21,7 +21,10 @@ let
       ...
     }:
     inputs.nix-on-droid.lib.nixOnDroidConfiguration {
-      pkgs = nixpkgs.legacyPackages."aarch64-linux";
+      pkgs = import nixpkgs {
+        system = "aarch64-linux";
+        config.allowUnfree = true;
+      };
       inherit modules;
       extraSpecialArgs = specialArgs;
     };
