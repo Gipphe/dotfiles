@@ -16,7 +16,7 @@ util.mkToggledModule
     name = "catppuccin";
 
     hm = {
-      imports = [ inputs.catppuccin.homeManagerModules.catppuccin ];
+      imports = [ inputs.catppuccin.homeModules.catppuccin ];
       inherit config;
     };
 
