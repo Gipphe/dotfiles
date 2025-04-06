@@ -146,10 +146,9 @@ return {
         gopls = {},
         rust_analyzer = {},
         tailwindcss = {},
+        csharp_ls = {},
         fish_lsp = {},
-        terraformls = {
-          -- cmd = { 'opentofu-ls', 'serve' },
-        },
+        terraformls = {},
         metals = {},
         yamlls = {
           capabilities = {
@@ -169,14 +168,6 @@ return {
             end, { buffer = true, desc = 'Select pnpm workspace', silent = true })
           end,
         },
-        -- TODO Using haskell-tools instead
-        -- hls = {
-        --   filetypes = { 'haskell', 'lhaskell', 'cabal' },
-        --   settings = {
-        --     cabalFormattingProvider = 'cabalfmt',
-        --     formattingProvider = 'fourmolu',
-        --   },
-        -- }
         marksman = {},
         ruff = {
           on_attach = function(client)
