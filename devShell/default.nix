@@ -26,17 +26,28 @@ in
       name = "sw";
       command = shellApplicationAsCommand {
         inherit name;
-        runtimeInputs = with pkgs; [ nh ];
-        text = # bash
+        runtimeInputs = with pkgs; [
+          nh
+          jq
+        ];
+        text =
+          let
+          in
+          # bash
           ''
             if command -v nixos-rebuild &>/dev/null; then
               nh os switch
-            elif command -v nis-on-droid &>/dev/null; then
-              nix-on-droid build --flake "$(pwd)"
+            elif command -v nix-on-droid &>/dev/null; then
+              hostname=$(jq '.hostname' env.json)
+              if test -z "$hostname"; then
+                echo 'Found no hostname in env.json' >&2
+                exit 1
+              fi
+              nix-on-droid build --flake "$(pwd)#$${hostname}"
               echo
               nvd diff /run/current-system result
               echo
-              nix-on-droid seitch --flake "$(pwd)"
+              nix-on-droid switch --flake "$(pwd)#$${hostname}"
             elif command -v darwin-rebuild &>/dev/null; then
               darwin-rebuild build --flake "$(pwd)"
               echo
@@ -65,7 +76,13 @@ in
             if command -v nixos-rebuild &> /dev/null; then
               nh os switch --ask
             elif command -v nix-on-droid &>/dev/null; then
-              nix-on-droid build --flake "$(pwd)"
+              hostname=$(jq '.hostname' env.json)
+              if test -z "$hostname"; then
+                echo 'Found no hostname in env.json' >&2
+                exit 1
+              fi
+
+              nix-on-droid build --flake "$(pwd)#$${hostname}"
 
               echo
               nvd diff /run/current-system result
@@ -76,7 +93,7 @@ in
               echo
 
               case "$REPLY" in
-                y|Y) nix-on-droid switch --flake "$(pwd)" ;;
+                y|Y) nix-on-droid switch --flake "$(pwd)#$${hostname}" ;;
               esac
               rm -f result
             elif command -v darwin-rebuild &>/dev/null; then

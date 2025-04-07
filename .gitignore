@@ -3,3 +3,4 @@ STAMP/
 .DS_Store
 result
 **/_temp/
+env.json
