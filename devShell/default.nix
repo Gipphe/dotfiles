@@ -43,11 +43,11 @@ in
                 echo 'Found no hostname in env.json' >&2
                 exit 1
               fi
-              nix-on-droid build --flake "$(pwd)#$${hostname}"
+              nix-on-droid build --flake "$(pwd)#''${hostname}"
               echo
               nvd diff /run/current-system result
               echo
-              nix-on-droid switch --flake "$(pwd)#$${hostname}"
+              nix-on-droid switch --flake "$(pwd)#''${hostname}"
             elif command -v darwin-rebuild &>/dev/null; then
               darwin-rebuild build --flake "$(pwd)"
               echo
@@ -82,7 +82,7 @@ in
                 exit 1
               fi
 
-              nix-on-droid build --flake "$(pwd)#$${hostname}"
+              nix-on-droid build --flake "$(pwd)#''${hostname}"
 
               echo
               nvd diff /run/current-system result
@@ -93,7 +93,7 @@ in
               echo
 
               case "$REPLY" in
-                y|Y) nix-on-droid switch --flake "$(pwd)#$${hostname}" ;;
+                y|Y) nix-on-droid switch --flake "$(pwd)#''${hostname}" ;;
               esac
               rm -f result
             elif command -v darwin-rebuild &>/dev/null; then
