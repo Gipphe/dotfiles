@@ -25,6 +25,7 @@ util.mkProfile "cli" {
     git.enable = true;
     glab.enable = true;
     glow.enable = true;
+    gnugrep.enable = true;
     gnused.enable = true;
     gnutar.enable = true;
     gpg.enable = true;
