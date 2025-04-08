@@ -358,8 +358,6 @@
               aliases = [ "vim" ];
               # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
             };
-            # and a set of categories that you want
-            # (and other information to pass to lua)
             categories = {
               general = true;
 
@@ -371,16 +369,7 @@
               # we can pass whatever we want actually.
               have_nerd_font = true;
 
-              example = {
-                youCan = "add more than just booleans";
-                toThisSet = [
-                  "and the contents of this categories set"
-                  "will be accessible to your lua with"
-                  "nixCats('path.to.value')"
-                  "see :help nixCats"
-                  "and type :NixCats to see the categories set in nvim"
-                ];
-              };
+              droid = false;
             };
 
             extra = {
@@ -390,6 +379,18 @@
                 darwin_options = ''(builtins.getFlake "${inputs.self}").darwinConfigurations.silicon.options'';
                 droid_options = ''(builtins.getFlake "${inputs.self}").nixOnDroidConfigurations.helium.options'';
               };
+            };
+          };
+
+        droid =
+          args:
+          let
+            pkg = packageDefinitions.nvim args;
+          in
+          pkg
+          // {
+            categories = pkg.categories // {
+              droid = true;
             };
           };
       };

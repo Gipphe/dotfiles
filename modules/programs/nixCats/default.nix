@@ -2,6 +2,7 @@
   util,
   pkgs,
   inputs,
+  flags,
   ...
 }:
 util.mkProgram {
@@ -11,6 +12,7 @@ util.mkProgram {
     config.nvim = {
       enable = true;
       packageDefinitions.merge = {
+        categories.droid = flags.isNixOnDroid;
         extra.nixd = {
           nixpkgs = ''import ${pkgs.path} {}'';
           nixos_options = ''(builtins.getFlake "${inputs.self}").nixosConfigurations.argon.options'';
