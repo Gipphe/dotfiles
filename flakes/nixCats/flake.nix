@@ -364,7 +364,7 @@
               haskell = false;
               dataform = false;
               ui = false;
-              basedpyright = false;
+              basedpyright = true;
 
               # we can pass whatever we want actually.
               have_nerd_font = true;
