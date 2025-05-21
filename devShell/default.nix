@@ -46,7 +46,7 @@ in
               nix-on-droid build --flake "$(pwd)#''${hostname}"
               echo
               nixOnDroidPkg=$(nix path-info --impure "$FLAKE#nixOnDroidConfigurations.$hostname.activationPackage")
-              nvd diff $nixOnDroidPkg result
+              nvd diff "$nixOnDroidPkg" result
               echo
               nix-on-droid switch --flake "$(pwd)#''${hostname}"
             elif command -v darwin-rebuild &>/dev/null; then
@@ -87,7 +87,7 @@ in
 
               echo
               nixOnDroidPkg=$(nix path-info --impure "$FLAKE#nixOnDroidConfigurations.$hostname.activationPackage")
-              nvd diff $nixOnDroidPkg result
+              nvd diff "$nixOnDroidPkg" result
               echo
 
               echo "Apply the config?"
