@@ -27,8 +27,7 @@ util.mkToggledModule [ "machines" ] {
       secrets.enable = true;
       systemd.enable = true;
       windows-setup.enable = true;
-      # temporary to get IDEA
-      work-slim.enable = true;
     };
+    programs.idea-community.enable = true;
   };
 }
