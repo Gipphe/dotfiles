@@ -45,7 +45,7 @@ in
               fi
               nix-on-droid build --flake "$(pwd)#''${hostname}"
               echo
-              nixOnDroidPkg=$(nix path-info --impure "$FLAKE#nixOnDroidConfigurations.$hostname.activationPackage")
+              nixOnDroidPkg=$(nix path-info --impure "$NH_FLAKE#nixOnDroidConfigurations.$hostname.activationPackage")
               nvd diff "$nixOnDroidPkg" result
               echo
               nix-on-droid switch --flake "$(pwd)#''${hostname}"
@@ -86,7 +86,7 @@ in
               nix-on-droid build --flake "$(pwd)#''${hostname}"
 
               echo
-              nixOnDroidPkg=$(nix path-info --impure "$FLAKE#nixOnDroidConfigurations.$hostname.activationPackage")
+              nixOnDroidPkg=$(nix path-info --impure "$NH_FLAKE#nixOnDroidConfigurations.$hostname.activationPackage")
               nvd diff "$nixOnDroidPkg" result
               echo
 

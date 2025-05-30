@@ -14,8 +14,7 @@ util.mkModule {
       # NO TOUCHY!
       stateVersion = "23.11";
       sessionVariables = {
-        FLAKE = "${config.home.homeDirectory}/projects/dotfiles";
-        NH_FLAKE = config.home.sessionVariables.FLAKE;
+        NH_FLAKE = "${config.home.homeDirectory}/projects/dotfiles";
         # Help dynamically linked libraries and other libraries depending upon the
         # c++ stdenv find their stuff
         LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";

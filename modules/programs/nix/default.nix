@@ -99,8 +99,7 @@ in
           non-droid
           {
             environment.variables = {
-              NH_FLAKE = config.environment.variables.FLAKE;
-              FLAKE = "/Users/victor/projects/dotfiles";
+              NH_FLAKE = "/Users/victor/projects/dotfiles";
             };
 
             nix = {

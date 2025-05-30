@@ -30,7 +30,7 @@ in
           let
             configType = if hostPlatform.isDarwin then "darwinConfigurations" else "nixosConfigurations";
           in
-          "(builtins.getFlake \"${config.home.sessionVariables.FLAKE}\").${configType}.${config.gipphe.hostName}.options";
+          "(builtins.getFlake \"${config.home.sessionVariables.NH_FLAKE}\").${configType}.${config.gipphe.hostName}.options";
       };
     };
     python.enable = true;
