@@ -221,6 +221,7 @@
       inputs = {
         brew-api.follows = "brew-api";
         nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
         nix-darwin.follows = "darwin";
       };
     };
