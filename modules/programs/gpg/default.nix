@@ -18,7 +18,7 @@ util.mkProgram {
         enable = true;
         defaultCacheTtl = 1800;
         grabKeyboardAndMouse = false;
-        pinentryPackage = pkgs.pinentry-curses;
+        pinentry.package = pkgs.pinentry-curses;
       };
     })
 

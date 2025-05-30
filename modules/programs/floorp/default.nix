@@ -24,6 +24,7 @@ util.mkModule {
   };
   hm.config = lib.mkMerge [
     {
+      stylix.targets.floorp.profileNames = [ "default" ];
       programs.floorp = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         enable = cfg.enable || cfg.windows;
         package = pkg;
