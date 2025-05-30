@@ -103,7 +103,7 @@
     });
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     darwin = {
       url = "github:LnL7/nix-darwin";
@@ -221,7 +221,6 @@
       inputs = {
         brew-api.follows = "brew-api";
         nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
         nix-darwin.follows = "darwin";
       };
     };
