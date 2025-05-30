@@ -1341,7 +1341,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-nfS32fU1PjZg09OwE7etOfsk2ectUSHJKgKTdvlIPSw=",
+        "narHash": "sha256-V0Px19GRVSvbHOrEoq/btchNchg7hpBl6wwBkxtuf48=",
         "path": "./flakes/nixCats",
         "type": "path"
       },
