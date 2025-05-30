@@ -15,6 +15,7 @@ util.mkModule {
       stateVersion = "23.11";
       sessionVariables = {
         FLAKE = "${config.home.homeDirectory}/projects/dotfiles";
+        NH_FLAKE = config.home.sessionVariables.FLAKE;
         # Help dynamically linked libraries and other libraries depending upon the
         # c++ stdenv find their stuff
         LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
