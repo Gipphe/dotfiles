@@ -18,10 +18,6 @@ util.mkProgram {
           "cobalt".id = "5WAUGFG-XWLSBTV-IJMCB5F-YGN7AZM-RQ2FQOT-7SWUF7Q-7OUZKSR-JBZX3AK";
         };
         folders = {
-          "Autodesk case TF state" = {
-            path = "${config.home.homeDirectory}/projects/autodesk-case/infrastructure/tfstate";
-            devices = [ "titanium" ];
-          };
         };
       };
       tray.enable = true;
