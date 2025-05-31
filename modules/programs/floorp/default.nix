@@ -32,6 +32,7 @@ util.mkModule {
           default = {
             search = {
               default = "google";
+              force = true;
               engines = {
                 "nixpkgs" = {
                   urls = [
