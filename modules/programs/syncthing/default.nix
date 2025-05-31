@@ -18,7 +18,7 @@ util.mkProgram {
         };
         folders = {
           "Autodesk case TF state" = {
-            path = "${config.home.homeDirectory}/projects/autodesk-case/infrastructure/terraform.tfstate";
+            path = "${config.home.homeDirectory}/projects/autodesk-case/infrastructure/tfstate";
             devices = [ "titanium" ];
           };
         };
