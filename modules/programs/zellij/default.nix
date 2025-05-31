@@ -14,6 +14,8 @@ util.mkProgram {
   hm = {
     xdg.configFile."zellij/config.kdl".text = # kdl
       ''
+        show_startup_tips false
+
         keybinds clear-defaults=true {
             locked {
                 bind "Ctrl g" { SwitchToMode "normal"; }
