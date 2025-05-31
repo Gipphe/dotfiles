@@ -44,3 +44,10 @@ creation_rules:
           - *argon
           - *silicon
           - *helium
+  - path_regex: secrets/syncthing-password
+    key_groups:
+      - age:
+          - *cobalt
+          - *argon
+          - *silicon
+          - *helium

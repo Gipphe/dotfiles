@@ -19,12 +19,12 @@ util.mkToggledModule [ "machines" ] {
       desktop-normal.enable = true;
       desktop.enable = true;
       fonts.enable = true;
-      # game-dev.enable = true;
       gaming.enable = true;
       gc.enable = true;
       networkmanager.enable = true;
       rice.enable = true;
       secrets.enable = true;
+      sync.enable = true;
       systemd.enable = true;
       windows-setup.enable = true;
     };
