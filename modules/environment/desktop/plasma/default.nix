@@ -18,7 +18,7 @@ util.mkToggledModule
           enable = true;
 
           # Enable the Plasma (KDE) Desktop Environment.
-          desktopManager.plasma5.enable = true;
+          desktopManager.plasma6.enable = true;
         };
 
         displayManager = {
