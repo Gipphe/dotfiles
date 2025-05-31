@@ -27,15 +27,15 @@ util.mkProgram {
       };
       tray.enable = true;
     };
-    networking.firewall = {
-      allowedTCPPorts = [
-        8384
-        22000
-      ];
-      allowedUDPPorts = [
-        22000
-        21027
-      ];
-    };
+  };
+  system-nixos.networking.firewall = {
+    allowedTCPPorts = [
+      8384
+      22000
+    ];
+    allowedUDPPorts = [
+      22000
+      21027
+    ];
   };
 }
