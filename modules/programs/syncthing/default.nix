@@ -25,6 +25,11 @@ util.mkProgram {
       };
       tray.enable = true;
     };
+    sops.secrets."syncthing-password" = {
+      sopsFile = ../../../secrets/syncthing-password;
+      mode = "400";
+      format = "binary";
+    };
   };
   system-nixos.networking.firewall = {
     allowedTCPPorts = [
