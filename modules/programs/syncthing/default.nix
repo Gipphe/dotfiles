@@ -15,6 +15,7 @@ util.mkProgram {
         devices = {
           "titanium".id = "MPSR6F6-NO6UV52-VWGSMR2-BQSANDW-HSOCRQ4-XDHZHLC-4JJ4AJE-QBYXIAA";
           "helium".id = "XM4OOHL-EP23EPU-63QRPZY-TLLMY45-JPJ5TDB-MB6LZ6J-3UO7W2A-RLOVVA2";
+          "cobalt".id = "5WAUGFG-XWLSBTV-IJMCB5F-YGN7AZM-RQ2FQOT-7SWUF7Q-7OUZKSR-JBZX3AK";
         };
         folders = {
           "Autodesk case TF state" = {
