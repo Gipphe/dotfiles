@@ -8,8 +8,6 @@ util.mkProgram {
   hm = {
     services.syncthing = {
       enable = true;
-      user = config.gipphe.username;
-      group = config.gipphe.username;
       overrideDevices = true;
       overrideFolders = true;
       passwordFile = config.sops.secrets."syncthing-password".path;
