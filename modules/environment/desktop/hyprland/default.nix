@@ -10,6 +10,13 @@ util.mkToggledModule
       enable = true;
     };
     system-nixos = {
-      programs.hyprland.enable = true;
+      programs = {
+        hyprland.enable = true;
+        hyprlock.enable = true;
+      };
+      services = {
+        hypridle.enable = true;
+        hyprpaper.enable = true;
+      };
     };
   }
