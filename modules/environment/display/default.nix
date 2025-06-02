@@ -7,15 +7,17 @@
 util.mkEnvironment {
   name = "display";
   system-nixos = {
-    displayManager = {
-      sddm.enable = true;
-      # Enable automatic login for the user.
-      autoLogin = {
-        enable = true;
-        user = config.gipphe.username;
+    services = {
+      displayManager = {
+        sddm.enable = true;
+        # Enable automatic login for the user.
+        autoLogin = {
+          enable = true;
+          user = config.gipphe.username;
+        };
       };
+      dbus.packages = [ pkgs.gcr ];
     };
-    dbus.packages = [ pkgs.gcr ];
 
     # Workaround for GNOME autologin issue
     systemd.services = {
