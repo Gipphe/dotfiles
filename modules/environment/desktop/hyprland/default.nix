@@ -53,21 +53,21 @@ util.mkToggledModule
         #     ", Print, exec, ${grimblast} copy area"
         #   ];
         # };
-        xwayland.enable = true;
+        # xwayland.enable = true;
       };
-      home.sessionVariables.NIXOS_OZONE_WL = "1";
-      programs = {
-        hyprlock.enable = true;
-        waybar.enable = true;
-      };
-      services = {
-        hypridle.enable = true;
-        hyprpaper.enable = true;
-        mako.enable = true;
-      };
+      # home.sessionVariables.NIXOS_OZONE_WL = "1";
+      # programs = {
+      #   hyprlock.enable = true;
+      #   waybar.enable = true;
+      # };
+      # services = {
+      #   hypridle.enable = true;
+      #   hyprpaper.enable = true;
+      #   mako.enable = true;
+      # };
     };
     system-nixos = {
       programs.hyprland.enable = true;
-      security.pam.services.hyprlock = { };
+      # security.pam.services.hyprlock = { };
     };
   }
