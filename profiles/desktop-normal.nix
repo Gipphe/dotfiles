@@ -5,4 +5,7 @@ util.mkProfile "desktop-normal" {
     display.enable = true;
     x.enable = true;
   };
+  gipphe.programs = {
+    wl-clipboard.enable = true;
+  };
 }
