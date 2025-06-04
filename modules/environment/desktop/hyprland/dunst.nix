@@ -1,10 +1,16 @@
-{ pkgs, util, ... }:
+{
+  pkgs,
+  util,
+  lib,
+  config,
+  ...
+}:
 let
   dmenu = "${pkgs.dmenu}/bin/dmenu";
   xdg-open = "${pkgs.xdg-utils}/bin/xdg-open";
 in
 util.mkModule {
-  hm.config = {
+  hm.config = lib.mkIf config.gipphe.environment.desktop.hyprland.enable {
     services.dunst = {
       enable = true;
       settings = {

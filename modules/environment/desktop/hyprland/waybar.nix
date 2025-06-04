@@ -8,7 +8,7 @@ let
   colors = config.lib.stylix.colors.withHashtag;
 in
 util.mkModule {
-  hm.config = {
+  hm.config = lib.mkIf config.gipphe.environment.desktop.hyprland.enable {
     programs.waybar = {
       enable = true;
       settings.mainBar = {

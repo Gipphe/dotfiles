@@ -1,4 +1,5 @@
 {
+  lib,
   util,
   config,
   pkgs,
@@ -12,7 +13,7 @@ let
   '';
 in
 util.mkModule {
-  hm.config = {
+  hm.config = lib.mkIf config.gipphe.environment.desktop.hyprland.enable {
     services.hyprpaper = {
       enable = true;
       settings = {
