@@ -1,6 +1,5 @@
 {
   util,
-  lib,
   config,
   pkgs,
   ...
@@ -10,8 +9,8 @@ let
   killall = "${pkgs.killall}/bin/killall";
   systemctl = "${pkgs.systemd}/bin/systemctl";
   icons = "${pkgs.gnome-icon-theme}/share/icons/gnome/48x48";
-  colors = lib.stylix.colors.withHashtag;
-  raw_colors = lib.stylix.colors;
+  colors = config.lib.stylix.colors.withHashtag;
+  raw_colors = config.lib.stylix.colors;
 in
 util.mkModule {
   hm.config.programs.wlogout = {
