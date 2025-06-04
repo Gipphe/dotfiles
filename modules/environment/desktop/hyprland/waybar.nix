@@ -1,4 +1,12 @@
-{ util, config, ... }:
+{
+  util,
+  lib,
+  config,
+  ...
+}:
+let
+  colors = lib.stylix.colors.withHashtag;
+in
 util.mkModule {
   hm.config = {
     programs.waybar = {
