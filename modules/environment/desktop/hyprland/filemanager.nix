@@ -7,7 +7,7 @@
 }:
 let
   file_manager_script = pkgs.writeShellScriptBin "file-manager-script.sh" ''
-    ${config.programs.wezterm.package}/bin/wezterm start -- ${config.programs.yazi.package}/bin/yazi"
+    ${config.programs.wezterm.package}/bin/wezterm start -- "${config.programs.yazi.package}/bin/yazi"
   '';
 in
 util.mkModule {
