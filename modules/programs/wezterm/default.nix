@@ -18,6 +18,10 @@ util.mkProgram {
             return os.getenv("COMSPEC") ~= nil and os.getenv("USERPROFILE") ~= nil
           end
 
+          function M.isLinux()
+            return ~M.isWindows()
+          end
+
           return M
         '';
       "wezterm/windows-config.lua".text =
@@ -47,12 +51,32 @@ util.mkProgram {
 
           return M
         '';
+      "wezterm/linux-config.lua".text = # lua
+        ''
+          local wezterm = require 'wezterm'
+          local OSUtils = require 'os-utils'
+
+          local M = {}
+
+          funtion M.config()
+            if not OSUtils.isLinux() then
+              return {}
+            end
+
+            return {
+              enable_wayland = false,
+            }
+          end
+
+          return M
+        '';
     };
     programs.wezterm = {
       enable = true;
       extraConfig = # lua
         ''
           local windowsConfig = require 'windows-config'
+          local linuxConfig = require 'linux-config'
           local baseConfig = {
             hide_tab_bar_if_only_one_tab = true,
             send_composed_key_when_left_alt_is_pressed = true,
@@ -64,6 +88,9 @@ util.mkProgram {
             animation_fps = 1,
           }
           for k,v in pairs(windowsConfig.config()) do
+            baseConfig[k] = v
+          end
+          for k,v in pairs(linuxConfig.config()) do
             baseConfig[k] = v
           end
           return baseConfig
