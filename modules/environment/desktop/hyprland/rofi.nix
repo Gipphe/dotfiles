@@ -39,7 +39,7 @@ util.mkModule {
         display-filebrowser = "FILES";
         display-window = "WINDOW";
         hover-select = false;
-        scroll-method = mkLiteral 1;
+        scroll-method = mkLiteral "1";
         me-select-entry = "";
         me-accept-entry = "MousePrimary";
         drun-display-format = "{name};";
