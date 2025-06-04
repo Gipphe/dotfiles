@@ -5,4 +5,7 @@ util.mkProfile "desktop-hyprland" {
     display.enable = true;
     wayland.enable = true;
   };
+  gipphe.programs = {
+    wl-clipboard.enable = true;
+  };
 }
