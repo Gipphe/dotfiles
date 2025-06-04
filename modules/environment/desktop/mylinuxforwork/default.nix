@@ -319,6 +319,7 @@ util.mkToggledModule [ "environment" "desktop" ] {
 
           # Actions
           bind = $mainMod, RETURN, exec, ${term} # Open terminal
+          bind = CTRL SHIFT, RETURN, exec, ${term}
           bind = $mainMod, Q, killactive # Close current window
           bind = $mainMod, M, exit # Exit Hyprland
           bind = $mainMod, E, exec, ${file_manager_script} # Opens the file manager
