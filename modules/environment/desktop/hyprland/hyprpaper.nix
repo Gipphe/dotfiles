@@ -20,7 +20,7 @@ util.mkModule {
         splash = false;
       };
     };
-    wayland.windowManagers.hyprland.settings = {
+    wayland.windowManager.hyprland.settings = {
       bind = [
         # Reload hyprpaper after changing wallpaper
         "$mod SHIFT, W, exec, ${reload_hyprpaper_script}/bin/reload-hyprpaper.sh"

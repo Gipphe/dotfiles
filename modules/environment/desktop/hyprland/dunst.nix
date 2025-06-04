@@ -108,7 +108,7 @@ util.mkModule {
       };
     };
     # Started through systemd by home-manager config
-    # wayland.windowManagers.hyprland.settings.exec-once = [
+    # wayland.windowManager.hyprland.settings.exec-once = [
     #   "${config.services.dunst.package}/bin/dunst"
     # ];
   };

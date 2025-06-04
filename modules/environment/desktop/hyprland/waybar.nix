@@ -620,7 +620,7 @@ util.mkModule {
         }
       '';
     };
-    wayland.windowManagers.hyprland.settings.exec-once = [
+    wayland.windowManager.hyprland.settings.exec-once = [
       "${config.programs.waybar.package}/bin/waybar"
     ];
   };
