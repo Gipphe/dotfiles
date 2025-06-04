@@ -1,4 +1,4 @@
-{ util, ... }:
+{ util, config, ... }:
 util.mkModule {
   hm.config = {
     programs.waybar = {
@@ -267,27 +267,15 @@ util.mkModule {
         };
       };
       style = ''
-        /*
-         * __        __          _                  ____  _         _
-         * \ \      / /_ _ _   _| |__   __ _ _ __  / ___|| |_ _   _| | ___
-         *  \ \ /\ / / _` | | | | '_ \ / _` | '__| \___ \| __| | | | |/ _ \
-         *   \ V  V / (_| | |_| | |_) | (_| | |     ___) | |_| |_| | |  __/
-         *    \_/\_/ \__,_|\__, |_.__/ \__,_|_|    |____/ \__|\__, |_|\___|
-         *                 |___/                              |___/
-         *
-         * by Stephan Raabe (2024)
-         * -----------------------------------------------------
-        */
-
-        @define-color backgroundlight #FFFFFF;
-        @define-color backgrounddark #FFFFFF;
-        @define-color workspacesbackground1 #FFFFFF;
-        @define-color workspacesbackground2 #CCCCCC;
-        @define-color bordercolor #FFFFFF;
+        @define-color backgroundlight ${colors.base04};
+        @define-color backgrounddark ${colors.base00};
+        @define-color workspacesbackground1 ${colors.base01};
+        @define-color workspacesbackground2 ${colors.base03};
+        @define-color bordercolor ${colors.base0D};
         @define-color textcolor1 #000000;
         @define-color textcolor2 #000000;
-        @define-color textcolor3 #FFFFFF;
-        @define-color iconcolor #FFFFFF;
+        @define-color textcolor3 ${colors.base05};
+        @define-color iconcolor ${colors.base05};
 
         /* -----------------------------------------------------
          * General
@@ -621,32 +609,6 @@ util.mkModule {
 
         #network.disconnected {
             background-color: #f53c3c;
-        }
-      '';
-      "wlogout/layout".text = ''
-        {
-            "label" : "lock",
-            "action" : "hyprlock",
-            "text" : "Lock",
-            "keybind" : "l"
-        }
-        {
-            "label" : "logout",
-            "action" : "killall -9 Hyprland",
-            "text" : "Exit",
-            "keybind" : "e"
-        }
-        {
-            "label" : "shutdown",
-            "action" : "poweroff",
-            "text" : "Shutdown",
-            "keybind" : "s"
-        }
-        {
-            "label" : "reboot",
-            "action" : "reboot",
-            "text" : "Reboot",
-            "keybind" : "r"
         }
       '';
     };
