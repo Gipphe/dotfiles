@@ -1,8 +1,4 @@
-{
-  pkgs,
-  util,
-  ...
-}:
+{ pkgs, util, ... }:
 let
   dmenu = "${pkgs.dmenu}/bin/dmenu";
   xdg-open = "${pkgs.xdg-utils}/bin/xdg-open";
@@ -40,10 +36,10 @@ util.mkModule {
           frame_width = 1;
           # frame_color = "#ffffff";
           gap_size = 0;
-          separator_color = "frame";
+          # separator_color = "frame";
           sort = "yes";
 
-          font = "\"Fira Sans Semibold\" 9";
+          # font = "\"Fira Sans Semibold\" 9";
           line_height = 1;
           markup = "full";
           format = "<b>%s</b>\n%b";
