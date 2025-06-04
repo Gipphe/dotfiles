@@ -322,7 +322,6 @@ util.mkToggledModule [ "environment" "desktop" ] {
           bind = CTRL SHIFT, RETURN, exec, ${term}
           bind = $mainMod, Q, killactive # Close current window
           bind = $mainMod, M, exit # Exit Hyprland
-          bind = $mainMod, E, exec, ${file_manager_script} # Opens the file manager
           bind = $mainMod, T, togglefloating # Toggle between tiling and floating window
           bind = $mainMod, F, fullscreen # Open the window in fullscreen
           bind = $mainMod CTRL, RETURN, exec, rofi -show drun # Open rofi
@@ -331,6 +330,7 @@ util.mkToggledModule [ "environment" "desktop" ] {
           bind = $mainMod, B, exec, ${browser_script} # Opens the browser
           bind = $mainMod SHIFT, B, exec, ${reload_waybar_script} # Reload waybar
           bind = $mainMod SHIFT, W, exec, ${reload_hyprpaper_script} # Reload hyprpaper after changing wallpaper
+
           bind = , XF86AudioRaiseVolume, exec, ${wpctl} set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+
           bind = , XF86AudioLowerVolume, exec, ${wpctl} set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-
           bind = , XF86MonBrightnessUp, exec, ${brightnessctl} set 10%+

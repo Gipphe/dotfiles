@@ -1,7 +1,7 @@
 { util, ... }:
-util.mkProfile "desktop-mylinux4work" {
+util.mkProfile "desktop-mylinuxforwork" {
   gipphe.environment = {
-    desktop.mylinux4work.enable = true;
+    desktop.mylinuxforwork.enable = true;
     display.enable = true;
     wayland.enable = true;
   };

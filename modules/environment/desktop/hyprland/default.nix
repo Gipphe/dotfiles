@@ -1,6 +1,12 @@
-{ util, pkgs, ... }:
+{
+  util,
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
-  grimblast = pkgs.makeExe pkgs.grimblast;
+  grimblast = lib.getExe pkgs.grimblast;
   inherit (builtins) concatLists genList toString;
 
   # sioodmy's implementation
@@ -18,7 +24,7 @@ let
         "$mod, ${ws}, workspace, ${toString (x + 1)}"
         "$mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
       ]
-    )
+    ) 10
   );
 
   # Hyprland docs implementation
@@ -32,8 +38,11 @@ let
         "$mod, code:1${toString i}, workspace, ${toString ws}"
         "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
       ]
-    )
+    ) 10
   );
+  waybar = "${pkgs.waybar}/bin/waybar";
+  dunst = "${config.services.dunst.package}/bin/dunst";
+  hyprpaper = "${config.services.hyprpaper.package}/bin/hyprpaper";
 in
 util.mkToggledModule
   [
@@ -43,31 +52,35 @@ util.mkToggledModule
   {
     name = "hyprland";
     hm = {
-      programs.kitty.enable = true;
+      imports = [
+        ./dunst.nix
+        ./filemanager.nix
+        ./hypridle.nix
+        ./hyprlock.nix
+        ./hyprpaper.nix
+        ./hyprpolkit.nix
+        ./rofi.nix
+        ./waybar.nix
+        ./wlogout.nix
+      ];
+      home.packages = with pkgs; [ wireplumber ];
       wayland.windowManager.hyprland = {
         enable = true;
-        # settings = {
-        #   "$mod" = "Super";
-        #   bind = workspaces ++ [
-        #     "$mod, F, exec, floorp"
-        #     ", Print, exec, ${grimblast} copy area"
-        #   ];
-        # };
-        # xwayland.enable = true;
+        settings = {
+          "$mod" = "SUPER";
+          bind = workspaces ++ [
+            "$mod, F, exec, floorp"
+            ", Print, exec, ${grimblast} copy area"
+            "$mod, RETURN, exec, ${config.programs.wezterm.package}/bin/wezterm"
+            "CTRL SHIFT, RETURN, exec, ${config.programs.wezterm.package}/bin/wezterm"
+            "$mod, Q, killactive" # Close current window
+          ];
+        };
+        xwayland.enable = true;
       };
-      # home.sessionVariables.NIXOS_OZONE_WL = "1";
-      # programs = {
-      #   hyprlock.enable = true;
-      #   waybar.enable = true;
-      # };
-      # services = {
-      #   hypridle.enable = true;
-      #   hyprpaper.enable = true;
-      #   mako.enable = true;
-      # };
+      home.sessionVariables.NIXOS_OZONE_WL = "1";
     };
     system-nixos = {
       programs.hyprland.enable = true;
-      # security.pam.services.hyprlock = { };
     };
   }
