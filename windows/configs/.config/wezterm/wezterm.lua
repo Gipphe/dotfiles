@@ -65,6 +65,7 @@ for key, value in pairs(stylix_base_config) do
 end
 local function stylix_wrapped_config()
     local windowsConfig = require 'windows-config'
+local linuxConfig = require 'linux-config'
 local baseConfig = {
   hide_tab_bar_if_only_one_tab = true,
   send_composed_key_when_left_alt_is_pressed = true,
@@ -76,6 +77,9 @@ local baseConfig = {
   animation_fps = 1,
 }
 for k,v in pairs(windowsConfig.config()) do
+  baseConfig[k] = v
+end
+for k,v in pairs(linuxConfig.config()) do
   baseConfig[k] = v
 end
 return baseConfig

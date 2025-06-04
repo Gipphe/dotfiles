@@ -58,7 +58,7 @@ util.mkProgram {
 
           local M = {}
 
-          funtion M.config()
+          function M.config()
             if not OSUtils.isLinux() then
               return {}
             end
