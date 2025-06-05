@@ -137,7 +137,7 @@ util.mkToggledModule
           decoration = {
             rounding = 10;
             blur = {
-              enable = true;
+              enabled = true;
               size = 3;
               passes = 1;
             };
