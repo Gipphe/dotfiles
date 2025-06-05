@@ -101,16 +101,16 @@ util.mkToggledModule
             "$mod, up, movefocus, u # Move focus up"
             "$mod, down, movefocus, d # Move focus down"
 
-            # Scroll through existing workspaces with mainMod + scroll
+            # Scroll through existing workspaces with mod + scroll
             "$mod, mouse_down, workspace, e+1"
             "$mod, mouse_up, workspace, e-1"
 
           ];
 
           bindm = [
-            # Move/resize windows with mainMod + LMB/RMB and dragging
-            "$mainMod, mouse:272, movewindow"
-            "$mainMod, mouse:273, resizewindow"
+            # Move/resize windows with mod + LMB/RMB and dragging
+            "$mod, mouse:272, movewindow"
+            "$mod, mouse:273, resizewindow"
           ];
 
           env = [
@@ -199,7 +199,7 @@ util.mkToggledModule
           dwindle = {
             # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
 
-            # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+            # master switch for pseudotiling. Enabling is bound to mod + P in the keybinds section below
             pseudotile = true;
             # you probably want this
             preserve_split = true;
