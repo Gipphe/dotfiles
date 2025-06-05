@@ -28,18 +28,6 @@ let
   );
 
   # Hyprland docs implementation
-  workspaces' = concatLists (
-    genList (
-      i:
-      let
-        ws = i + 1;
-      in
-      [
-        "$mod, code:1${toString i}, workspace, ${toString ws}"
-        "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-      ]
-    ) 10
-  );
   wpctl = "${pkgs.wireplumber}/bin/wpctl";
   brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
   nmcli = "${pkgs.networkmanager}/bin/nmcli";
