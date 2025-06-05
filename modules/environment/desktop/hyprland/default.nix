@@ -209,12 +209,10 @@ util.mkToggledModule
             workspace_swipe = true;
           };
 
-          # # Misc
-          #
-          # misc {
-          #   disable_hyprland_logo = true
-          #   disable_splash_rendering = true
-          # }
+          misc = {
+            disable_hyprland_logo = true;
+            disable_splash_rendering = true;
+          };
         };
         xwayland.enable = true;
       };
