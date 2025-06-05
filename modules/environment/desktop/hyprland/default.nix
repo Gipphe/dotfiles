@@ -27,7 +27,6 @@ let
     ) 10
   );
 
-  # Hyprland docs implementation
   wpctl = "${pkgs.wireplumber}/bin/wpctl";
   brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
   nmcli = "${pkgs.networkmanager}/bin/nmcli";
