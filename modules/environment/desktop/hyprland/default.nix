@@ -196,13 +196,15 @@ util.mkToggledModule
             ];
           };
 
-          # # Layouts
-          #
-          # dwindle {
-          #   # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
-          #   pseudotile = true # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
-          #   preserve_split = true # you probably want this
-          # }
+          dwindle = {
+            # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
+
+            # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+            pseudotile = true;
+            # you probably want this
+            preserve_split = true;
+          };
+
           #
           # # Gestures
           #
