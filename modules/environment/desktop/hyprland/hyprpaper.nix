@@ -1,5 +1,4 @@
 {
-  lib,
   util,
   config,
   pkgs,
@@ -12,8 +11,9 @@ let
     ${config.services.hyprpaper.package}/bin/hyprpaper &
   '';
 in
-util.mkModule {
-  hm.config = lib.mkIf config.gipphe.environment.desktop.hyprland.enable {
+util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
+  name = "hyprpaper";
+  hm = {
     services.hyprpaper = {
       enable = true;
       settings = {

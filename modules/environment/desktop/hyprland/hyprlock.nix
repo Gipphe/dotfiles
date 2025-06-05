@@ -1,11 +1,7 @@
-{
-  util,
-  lib,
-  config,
-  ...
-}:
-util.mkModule {
-  hm.config.programs.hyprlock = lib.mkIf config.gipphe.environment.desktop.hyprland.enable {
+{ util, ... }:
+util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
+  name = "hyprlock";
+  hm.programs.hyprlock = {
     enable = true;
     settings = {
       background = {
@@ -73,7 +69,5 @@ util.mkModule {
       ];
     };
   };
-  system-nixos.config = lib.mkIf config.gipphe.environment.desktop.hyprland.enable {
-    security.pam.services.hyprlock = { };
-  };
+  system-nixos.security.pam.services.hyprlock = { };
 }

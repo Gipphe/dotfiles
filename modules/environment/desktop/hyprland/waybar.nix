@@ -1,14 +1,22 @@
 {
   util,
-  lib,
+  pkgs,
   config,
   ...
 }:
 let
   colors = config.lib.stylix.colors.withHashtag;
 in
-util.mkModule {
-  hm.config = lib.mkIf config.gipphe.environment.desktop.hyprland.enable {
+util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
+  name = "waybar";
+  hm = {
+    home.packages = [
+      (pkgs.writeShellScriptBin "restart-waybar" ''
+        ${pkgs.killall}/bin/killall waybar
+        sleep 1s
+        ${config.programs.waybar}/bin/waybar
+      '')
+    ];
     programs.waybar = {
       enable = true;
       settings.mainBar = {

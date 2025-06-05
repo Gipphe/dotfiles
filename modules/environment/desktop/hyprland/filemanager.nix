@@ -1,5 +1,4 @@
 {
-  lib,
   util,
   config,
   pkgs,
@@ -10,12 +9,10 @@ let
     ${config.programs.wezterm.package}/bin/wezterm start -- "${config.programs.yazi.package}/bin/yazi"
   '';
 in
-util.mkModule {
-  shared.gipphe.programs.yazi.enable =
-    lib.mkDefault config.gipphe.environment.desktop.hyprland.enable;
-  hm.config = lib.mkIf config.gipphe.environment.desktop.hyprland.enable {
-    wayland.windowManager.hyprland.settings.bind = [
-      "$mod, E, exec, ${file_manager_script}/bin/file-manager-script.sh" # Opens the file manager
-    ];
-  };
+util.makeToggledModule [ "environment" "desktop" "hyprland" ] {
+  name = "filemanager";
+  shared.gipphe.programs.yazi.enable = true;
+  hm.wayland.windowManager.hyprland.settings.bind = [
+    "$mod, E, exec, ${file_manager_script}/bin/file-manager-script.sh"
+  ];
 }

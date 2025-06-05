@@ -1,15 +1,11 @@
-{
-  util,
-  lib,
-  config,
-  ...
-}:
+{ util, config, ... }:
 let
   hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
   hyprlock = "${config.programs.hyprlock.package}/bin/hyprlock";
 in
-util.mkModule {
-  hm.config.services.hypridle = lib.mkIf config.gipphe.environment.desktop.hyprland.enable {
+util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
+  name = "hypridle";
+  hm.services.hypridle = {
     enable = true;
     settings = {
       general = {

@@ -1,11 +1,5 @@
-{
-  util,
-  lib,
-  config,
-  ...
-}:
-util.mkModule {
-  hm.config = lib.mkIf config.gipphe.environment.desktop.hyprland.enable {
-    services.hyprpolkitagent.enable = true;
-  };
+{ util, ... }:
+util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
+  name = "hyprpolkitagent";
+  hm.services.hyprpolkitagent.enable = true;
 }

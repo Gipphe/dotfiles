@@ -1,20 +1,14 @@
-{
-  pkgs,
-  util,
-  lib,
-  config,
-  ...
-}:
+{ pkgs, util, ... }:
 let
   dmenu = "${pkgs.dmenu}/bin/dmenu";
   xdg-open = "${pkgs.xdg-utils}/bin/xdg-open";
 in
-util.mkModule {
-  hm.config = lib.mkIf config.gipphe.environment.desktop.hyprland.enable {
+util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
+  name = "dunst";
+  hm = {
     services.dunst = {
       enable = true;
       settings = {
-
         global = {
           monitor = 0;
           follow = 0;
@@ -109,9 +103,5 @@ util.mkModule {
         };
       };
     };
-    # Started through systemd by home-manager config
-    # wayland.windowManager.hyprland.settings.exec-once = [
-    #   "${config.services.dunst.package}/bin/dunst"
-    # ];
   };
 }
