@@ -205,25 +205,16 @@ util.mkToggledModule
             preserve_split = true;
           };
 
-          #
-          # # Gestures
-          #
-          # gestures {
-          #   workspace_swipe = true
-          # }
-          #
-          #
+          gestures = {
+            workspace_swipe = true;
+          };
+
           # # Misc
           #
           # misc {
           #   disable_hyprland_logo = true
           #   disable_splash_rendering = true
           # }
-          #
-          # # Window rules
-          # # No settings here yet.
-          #
-          #
         };
         xwayland.enable = true;
       };
