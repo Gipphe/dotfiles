@@ -40,9 +40,10 @@ let
       ]
     ) 10
   );
-  waybar = "${pkgs.waybar}/bin/waybar";
-  dunst = "${config.services.dunst.package}/bin/dunst";
-  hyprpaper = "${config.services.hyprpaper.package}/bin/hyprpaper";
+  wpctl = "${pkgs.wireplumber}/bin/wpctl";
+  brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
+  nmcli = "${pkgs.networkmanager}/bin/nmcli";
+  xdotool = "${pkgs.xdotool}/bin/xdotool";
 in
 util.mkToggledModule
   [
@@ -78,6 +79,38 @@ util.mkToggledModule
             "CTRL SHIFT, RETURN, exec, ${config.programs.wezterm.package}/bin/wezterm"
             "$mod, Q, killactive" # Close current window
             "$mod CTRL, RETURN, exec, rofi -show drun" # Open rofi
+            "$mod, M, exit # Exit Hyprland"
+            "$mod, T, togglefloating # Toggle between tiling and floating window"
+            "$mod, F, fullscreen # Open the window in fullscreen"
+            "$mod, P, pseudo, # dwindle"
+            "$mod, J, togglesplit, # dwindle"
+            "$mod, B, exec, ${config.programs.floorp.package}/bin/floorp # Opens the browser"
+
+            ", XF86AudioRaiseVolume, exec, ${wpctl} set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+"
+            ", XF86AudioLowerVolume, exec, ${wpctl} set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-"
+            ", XF86MonBrightnessUp, exec, ${brightnessctl} set 10%+"
+            ", XF86MonBrightnessDown, exec, ${brightnessctl} set 10%-"
+            ", XF86AudioMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
+            ", XF86AudioMicMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+            ", XF86WLAN, exec, ${nmcli} radio wifi toggle"
+            ", XF86Refresh, exec, ${xdotool} key F5"
+
+            # Move focus with mod + arrow keys
+            "$mod, left, movefocus, l # Move focus left"
+            "$mod, right, movefocus, r # Move focus right"
+            "$mod, up, movefocus, u # Move focus up"
+            "$mod, down, movefocus, d # Move focus down"
+
+            # Scroll through existing workspaces with mainMod + scroll
+            "$mod, mouse_down, workspace, e+1"
+            "$mod, mouse_up, workspace, e-1"
+
+          ];
+
+          bindm = [
+            # Move/resize windows with mainMod + LMB/RMB and dragging
+            "$mainMod, mouse:272, movewindow"
+            "$mainMod, mouse:273, resizewindow"
           ];
 
           env = [
@@ -189,70 +222,6 @@ util.mkToggledModule
           # # No settings here yet.
           #
           #
-          # # Binds
-          #
-          # # SUPER key
-          # $mainMod = SUPER
-          #
-          # # Actions
-          # bind = $mainMod, RETURN, exec, ${term} # Open terminal
-          # bind = CTRL SHIFT, RETURN, exec, ${term}
-          # bind = $mainMod, Q, killactive # Close current window
-          # bind = $mainMod, M, exit # Exit Hyprland
-          # bind = $mainMod, T, togglefloating # Toggle between tiling and floating window
-          # bind = $mainMod, F, fullscreen # Open the window in fullscreen
-          # bind = $mainMod, P, pseudo, # dwindle
-          # bind = $mainMod, J, togglesplit, # dwindle
-          # bind = $mainMod, B, exec, ${browser_script} # Opens the browser
-          # bind = $mainMod SHIFT, B, exec, ${reload_waybar_script} # Reload waybar
-          # bind = $mainMod SHIFT, W, exec, ${reload_hyprpaper_script} # Reload hyprpaper after changing wallpaper
-          #
-          # bind = , XF86AudioRaiseVolume, exec, ${wpctl} set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+
-          # bind = , XF86AudioLowerVolume, exec, ${wpctl} set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-
-          # bind = , XF86MonBrightnessUp, exec, ${brightnessctl} set 10%+
-          # bind = , XF86MonBrightnessDown, exec, ${brightnessctl} set 10%-
-          # bind = , XF86AudioMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle
-          # bind = , XF86AudioMicMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-          # bind = , XF86WLAN, exec, ${nmcli} radio wifi toggle
-          # bind = , XF86Refresh, exec, ${xdotool} key F5
-          #
-          # # Move focus with mainMod + arrow keys
-          # bind = $mainMod, left, movefocus, l # Move focus left
-          # bind = $mainMod, right, movefocus, r # Move focus right
-          # bind = $mainMod, up, movefocus, u # Move focus up
-          # bind = $mainMod, down, movefocus, d # Move focus down
-          #
-          # # Switch workspaces with mainMod + [0-9]
-          # bind = $mainMod, 1, workspace, 1
-          # bind = $mainMod, 2, workspace, 2
-          # bind = $mainMod, 3, workspace, 3
-          # bind = $mainMod, 4, workspace, 4
-          # bind = $mainMod, 5, workspace, 5
-          # bind = $mainMod, 6, workspace, 6
-          # bind = $mainMod, 7, workspace, 7
-          # bind = $mainMod, 8, workspace, 8
-          # bind = $mainMod, 9, workspace, 9
-          # bind = $mainMod, 0, workspace, 10
-          #
-          # # Move active window to a workspace with mainMod + SHIFT + [0-9]
-          # bind = $mainMod SHIFT, 1, movetoworkspace, 1
-          # bind = $mainMod SHIFT, 2, movetoworkspace, 2
-          # bind = $mainMod SHIFT, 3, movetoworkspace, 3
-          # bind = $mainMod SHIFT, 4, movetoworkspace, 4
-          # bind = $mainMod SHIFT, 5, movetoworkspace, 5
-          # bind = $mainMod SHIFT, 6, movetoworkspace, 6
-          # bind = $mainMod SHIFT, 7, movetoworkspace, 7
-          # bind = $mainMod SHIFT, 8, movetoworkspace, 8
-          # bind = $mainMod SHIFT, 9, movetoworkspace, 9
-          # bind = $mainMod SHIFT, 0, movetoworkspace, 10
-          #
-          # # Scroll through existing workspaces with mainMod + scroll
-          # bind = $mainMod, mouse_down, workspace, e+1
-          # bind = $mainMod, mouse_up, workspace, e-1
-          #
-          # # Move/resize windows with mainMod + LMB/RMB and dragging
-          # bindm = $mainMod, mouse:272, movewindow
-          # bindm = $mainMod, mouse:273, resizewindow
         };
         xwayland.enable = true;
       };
