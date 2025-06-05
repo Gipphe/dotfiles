@@ -19,7 +19,7 @@ util.mkProgram {
           end
 
           function M.isLinux()
-            return ~M.isWindows()
+            return not M.isWindows()
           end
 
           return M
