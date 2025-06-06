@@ -5,14 +5,9 @@
   ...
 }:
 let
-  quick-access = pkgs.symlinkJoin {
-    name = "1password-quick-access";
-    paths = [ pkgs._1password-gui ];
-    buildInputs = [ pkgs.makeWrapper ];
-    postBuild = ''
-      wrapProgram $out/bin/1password --add-flags "--quick-access"
-    '';
-  };
+  quick-access = pkgs.writeShellScriptBin "1password-quick-access" ''
+    ${pkgs._1password-gui}/bin/1password --quick-access
+  '';
 in
 util.mkProgram {
   name = "_1password-gui";
