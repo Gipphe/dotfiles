@@ -3,13 +3,13 @@ util.mkProfile "desktop-hyprland" {
   gipphe.environment = {
     desktop.hyprland = {
       enable = true;
-      dunst.enable = true;
+      dunst.enable = false;
       filemanager.enable = true;
       hypridle.enable = true;
       hyprlock.enable = true;
       hyprpaper.enable = true;
       hyprpolkitagent.enable = true;
-      mako.enable = false;
+      mako.enable = true;
       rofi.enable = true;
       waybar.enable = true;
       wlogout.enable = true;
