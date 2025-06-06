@@ -8,7 +8,7 @@ let
   hyprlock = "${config.programs.hyprlock.package}/bin/hyprlock";
   killall = "${pkgs.killall}/bin/killall";
   systemctl = "${pkgs.systemd}/bin/systemctl";
-  icons = "${pkgs.gnome-icon-theme}/share/icons/gnome/48x48";
+  icons = import ./icons { inherit pkgs; };
   colors = config.lib.stylix.colors.withHashtag;
   raw_colors = config.lib.stylix.colors;
 in
@@ -85,25 +85,25 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
       #lock {
         margin: 10px;
         border-radius: 20px;
-        background-image: image(url("${icons}/actions/lock.png"));
+        background-image: image(url("${icons}/actions/24/lock.svg"));
       }
 
       #logout {
         margin: 10px;
         border-radius: 20px;
-        background-image: image(url("${icons}/actions/system-logout.png"));
+        background-image: image(url("${icons}/actions/24/application-exit.svg"));
       }
 
       #shutdown {
         margin: 10px;
         border-radius: 20px;
-        background-image: image(url("${icons}/actions/system-shutdown.png"));
+        background-image: image(url("${icons}/actions/view-close.svg"));
       }
 
       #reboot {
         margin: 10px;
         border-radius: 20px;
-        background-image: image(url("${icons}/actions/view-refresh.png"));
+        background-image: image(url("${icons}/actions/view-refresh.svg"));
       }
     '';
   };
