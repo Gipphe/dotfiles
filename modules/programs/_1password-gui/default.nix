@@ -4,10 +4,23 @@
   util,
   ...
 }:
+let
+  quick-access = pkgs.symlinkJoin {
+    name = "1password-quick-access";
+    paths = [ pkgs._1password-gui ];
+    buildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/1password --add-flags "--quick-access"
+    '';
+  };
+in
 util.mkProgram {
   name = "_1password-gui";
   hm = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     home.packages = with pkgs; [ _1password-gui ];
+    wayland.windowManager.hyprland.settings.bind = [
+      "CTRL SHIFT,SPACE,exec,${quick-access}/bin/1password"
+    ];
   };
   system-nixos.systemd.user.services._1password-boot = {
     wantedBy = [ "default.target" ];
