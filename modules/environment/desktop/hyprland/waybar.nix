@@ -6,16 +6,17 @@
 }:
 let
   colors = config.lib.stylix.colors.withHashtag;
+  restart-waybar = pkgs.writeShellScriptBin "restart-waybar" ''
+    ${pkgs.killall}/bin/killall waybar
+    sleep 1s
+    ${config.programs.waybar.package}/bin/waybar
+  '';
 in
 util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
   name = "waybar";
   hm = {
     home.packages = [
-      (pkgs.writeShellScriptBin "restart-waybar" ''
-        ${pkgs.killall}/bin/killall waybar
-        sleep 1s
-        ${config.programs.waybar}/bin/waybar
-      '')
+      restart-waybar
     ];
     programs.waybar = {
       enable = true;
