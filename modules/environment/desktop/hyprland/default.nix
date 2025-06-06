@@ -47,6 +47,7 @@ util.mkToggledModule
         ./hyprlock.nix
         ./hyprpaper.nix
         ./hyprpolkitagent.nix
+        ./mako.nix
         ./rofi.nix
         ./waybar.nix
         ./wlogout.nix
