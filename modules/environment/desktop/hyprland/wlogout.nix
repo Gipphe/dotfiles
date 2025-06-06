@@ -26,13 +26,13 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
       {
         "label" = "logout";
         "action" = "${killall} -9 Hyprland";
-        "text" = "Exit";
+        "text" = "Log out";
         "keybind" = "e";
       }
       {
         "label" = "shutdown";
         "action" = "${systemctl} poweroff";
-        "text" = "Shutdown";
+        "text" = "Shut down";
         "keybind" = "s";
       }
       {
