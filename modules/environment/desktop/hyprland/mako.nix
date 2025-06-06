@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
   name = "mako";
-  hm.programs.mako = {
+  hm.services.mako = {
     enable = true;
     settings = {
       # font = "Fira Sans Semibold";

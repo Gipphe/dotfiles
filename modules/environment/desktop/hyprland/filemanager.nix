@@ -9,7 +9,7 @@ let
     ${config.programs.wezterm.package}/bin/wezterm start -- "${config.programs.yazi.package}/bin/yazi"
   '';
 in
-util.makeToggledModule [ "environment" "desktop" "hyprland" ] {
+util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
   name = "filemanager";
   shared.gipphe.programs.yazi.enable = true;
   hm.wayland.windowManager.hyprland.settings.bind = [

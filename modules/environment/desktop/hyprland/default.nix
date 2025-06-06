@@ -39,19 +39,19 @@ util.mkToggledModule
   ]
   {
     name = "hyprland";
+    shared.imports = [
+      ./dunst.nix
+      ./filemanager.nix
+      ./hypridle.nix
+      ./hyprlock.nix
+      ./hyprpaper.nix
+      ./hyprpolkitagent.nix
+      # ./mako.nix
+      ./rofi.nix
+      ./waybar.nix
+      ./wlogout.nix
+    ];
     hm = {
-      imports = [
-        ./dunst.nix
-        ./filemanager.nix
-        ./hypridle.nix
-        ./hyprlock.nix
-        ./hyprpaper.nix
-        ./hyprpolkitagent.nix
-        ./mako.nix
-        ./rofi.nix
-        ./waybar.nix
-        ./wlogout.nix
-      ];
       home.packages = with pkgs; [ wireplumber ];
       wayland.windowManager.hyprland = {
         enable = true;
