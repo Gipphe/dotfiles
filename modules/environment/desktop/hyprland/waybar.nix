@@ -26,7 +26,6 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
         # "height" = 30; # Waybar height (to be removed for auto height)
         # "width"= 1280, // Waybar width
         "spacing" = 4; # Gaps between modules (4px)
-        # Choose the order of the modules
 
         "modules-left" = [
           "custom/appmenu"
@@ -49,9 +48,6 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
           "custom/exit"
         ];
 
-        # Modules
-
-        # Workspaces
         "hyprland/workspaces" = {
           on-click = "activate";
           active-only = false;
@@ -67,7 +63,6 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
           };
         };
 
-        # Hyprland Window
         "hyprland/window" = {
           rewrite = {
             "(.*) - Brave" = "$1";
