@@ -13,6 +13,7 @@ util.mkToggledModule [ "machines" ] {
         devices.enable = true;
         system.enable = true;
       };
+      ai.enable = true;
       audio.enable = true;
       cli.enable = true;
       core.enable = true;
