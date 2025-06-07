@@ -123,7 +123,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
 
         # System
         "custom/system" = {
-          format = "";
+          format = "";
           tooltip = false;
         };
 
@@ -172,11 +172,11 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
         network = {
           format = "{ifname}";
           format-wifi = "   {signalStrength}%";
-          format-ethernet = "  {ipaddr}";
+          format-ethernet = "󰈁  {ipaddr}";
           format-disconnected = "Not connected"; # An empty format will hide the module.
-          tooltip-format = " {ifname} via {gwaddri}";
+          tooltip-format = " {ifname} via {gwaddri}";
           tooltip-format-wifi = "   {essid} ({signalStrength}%)";
-          tooltip-format-ethernet = "  {ifname} ({ipaddr}/{cidr})";
+          tooltip-format-ethernet = "󰈁  {ifname} ({ipaddr}/{cidr})";
           tooltip-format-disconnected = "Disconnected";
           max-length = 50;
           on-click = "alacritty -e nmtui";
@@ -190,7 +190,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
             critical = 15;
           };
           format = "{icon}   {capacity}%";
-          format-charging = "  {capacity}%";
+          format-charging = "󰂄  {capacity}%";
           format-plugged = "  {capacity}%";
           format-alt = "{icon}  {time}";
           # format-good= ""; // An empty format will hide the module
@@ -215,14 +215,14 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
           format-source-muted = "";
           format-icons = {
             headphone = "";
-            hands-free = "";
-            headset = "";
+            hands-free = "";
+            headset = "󰋎";
             phone = "";
             portable = "";
             car = "";
             default = [
               ""
-              " "
+              " "
               " "
             ];
           };
@@ -250,7 +250,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
           format = "{icon}";
           tooltip = true;
           format-icons = {
-            activated = "";
+            activated = "";
             deactivated = "";
           };
           on-click-right = "hyprlock";
