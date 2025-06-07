@@ -332,7 +332,6 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
         #workspaces button.active {
             color: @textcolor1;
             background: @workspacesbackground2;
-            border-radius: 15px;
             min-width: 40px;
             transition: all 0.3s ease-in-out;
         }
@@ -470,7 +469,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
          * Hardware Group
          * ----------------------------------------------------- */
 
-         #disk,#memory,#cpu,#language {
+        #disk,#memory,#cpu,#language {
             margin:0px;
             padding:0px;
             font-size:16px;
