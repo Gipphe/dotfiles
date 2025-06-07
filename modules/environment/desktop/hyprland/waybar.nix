@@ -75,6 +75,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
             "(.*) - Brave Search" = "$1";
             "(.*) - Outlook" = "$1";
             "(.*) Microsoft Teams" = "$1";
+            "Zellij \\((:?.*)\\) - (.*)" = "$1";
           };
           separate-outputs = true;
         };
