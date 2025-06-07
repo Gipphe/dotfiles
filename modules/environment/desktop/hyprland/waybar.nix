@@ -179,7 +179,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
           tooltip-format-ethernet = "󰈁  {ifname} ({ipaddr}/{cidr})";
           tooltip-format-disconnected = "Disconnected";
           max-length = 50;
-          on-click = "alacritty -e nmtui";
+          on-click = "${pkgs.wezterm}/bin/wezterm start -- nmtui";
         };
 
         # Battery
@@ -226,7 +226,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
               " "
             ];
           };
-          on-click = "pavucontrol";
+          on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
         };
 
         # Bluetooth
@@ -234,7 +234,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
           format-disabled = "";
           format-off = "";
           interval = 30;
-          on-click = "blueman-manager";
+          on-click = "${pkgs.blueman}/bin/blueman-manager";
           format-no-controller = "";
         };
 
@@ -253,22 +253,17 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
             activated = "";
             deactivated = "";
           };
-          on-click-right = "hyprlock";
+          on-click-right = "${config.programs.hyprlock.package}/bin/hyprlock";
         };
 
         "custom/quicklink1" = {
-          format = " ";
-          on-click = "~/.config/ml4w/apps/ML4W_Hyprland_Settings-x86_64.AppImage";
-          tooltip-format = "Open Hyprland Settings";
-        };
-        "custom/quicklink2" = {
           format = " ";
-          on-click = "~/.config/ml4w/settings/browser.sh";
+          on-click = "${config.programs.floorp.package}/bin/floorp";
           tooltip-format = "Open the browser";
         };
-        "custom/quicklink3" = {
+        "custom/quicklink2" = {
           format = " ";
-          on-click = "~/.config/ml4w/settings/filemanager.sh";
+          on-click = "${config.programs.wezterm.package}/bin/wezterm start -- yazi";
           tooltip-format = "Open the filemanager";
         };
         "custom/quicklinkempty" = { };
@@ -277,7 +272,6 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
           modules = [
             "custom/quicklink1"
             "custom/quicklink2"
-            "custom/quicklink3"
             "custom/quicklinkempty"
           ];
         };
