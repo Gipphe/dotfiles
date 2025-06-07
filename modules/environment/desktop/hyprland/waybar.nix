@@ -282,8 +282,8 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
         @define-color workspacesbackground1 ${colors.base01};
         @define-color workspacesbackground2 ${colors.base03};
         @define-color bordercolor ${colors.base0D};
-        @define-color textcolor1 ${colors.base04};
-        @define-color textcolor2 ${colors.base04};
+        @define-color textcolor1 ${colors.base05};
+        @define-color textcolor2 ${colors.base05};
         @define-color textcolor3 ${colors.base05};
         @define-color iconcolor ${colors.base05};
 
