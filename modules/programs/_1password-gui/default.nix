@@ -14,7 +14,7 @@ util.mkProgram {
   hm = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     home.packages = with pkgs; [ _1password-gui ];
     wayland.windowManager.hyprland.settings.bind = [
-      "CTRL SHIFT,SPACE,exec,${quick-access}/bin/1password"
+      "CONTROL SHIFT,SPACE,exec,${quick-access}/bin/1password-quick-access"
     ];
   };
   system-nixos.systemd.user.services._1password-boot = {
