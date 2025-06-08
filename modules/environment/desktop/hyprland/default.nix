@@ -91,6 +91,12 @@ util.mkToggledModule
             # Scroll through existing workspaces with mod + scroll
             "$mod, mouse_down, workspace, e+1"
             "$mod, mouse_up, workspace, e-1"
+
+            # Cycle to next window with Alt + Tab
+            "Alt, Tab, cyclenext"
+            "Alt, Tab, bringactivetotop"
+            "Alt Shift, Tab, cycleprevious"
+            "Alt Shift, Tab, bringactivetotop"
           ];
 
           bindl = [
