@@ -279,8 +279,10 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
         @define-color bordercolor ${colors.base0D};
         @define-color textcolor1 ${colors.base05};
         @define-color textcolor2 ${colors.base05};
-        @define-color textcolor3 ${colors.base05};
+        @define-color textcolor3 ${colors.base04};
         @define-color iconcolor ${colors.base05};
+        @define-color textPrimary ${colors.base05};
+        @define-color textSecondary ${colors.base04};
 
         /* -----------------------------------------------------
          * General
@@ -307,34 +309,36 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
         #workspaces {
             margin: 5px 1px 6px 1px;
             padding: 0px 1px;
-            border-radius: 15px;
+            border-radius: 0px;
             border: 0px;
             font-weight: bold;
             font-style: normal;
             font-size: 16px;
-            color: @textcolor1;
+            color: @textPrimary;
         }
 
+        #workspaces button:not(:last-child) {
+            margin-right: 3px;
+        }
         #workspaces button {
-            padding: 0px 5px;
-            margin: 4px 3px;
-            border-radius: 15px;
+            padding: 4px 8px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            border-radius: 0px;
             border: 0px;
-            color: @textcolor3;
             transition: all 0.3s ease-in-out;
+            color: @textSecondary;
         }
 
         #workspaces button.active {
-            color: @textcolor1;
-            background: @workspacesbackground2;
-            min-width: 40px;
-            transition: all 0.3s ease-in-out;
+            border-bottom: 2px solid #fff;
+            color: @textPrimary;
         }
 
         #workspaces button:hover {
-            color: @textcolor1;
-            background: @workspacesbackground2;
-            border-radius: 15px;
+            border-bottom: 1px solid #fff;
+            color: @textPrimary;
         }
 
         /* -----------------------------------------------------
@@ -344,13 +348,13 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
         tooltip {
             border-radius: 10px;
             background-color: @backgroundlight;
-            opacity:0.8;
-            padding:20px;
-            margin:0px;
+            padding: 20px;
+            margin: 0px;
+            color: @textSecondary;
         }
 
         tooltip label {
-            color: @textcolor2;
+            color: @textPrimary;
         }
 
         /* -----------------------------------------------------
@@ -362,13 +366,13 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
             margin: 10px 15px 10px 0px;
             padding: 2px 10px 0px 10px;
             border-radius: 12px;
-            color:@textcolor2;
-            font-size:16px;
-            font-weight:normal;
+            color: @textPrimary;
+            font-size: 16px;
+            font-weight: normal;
         }
 
         window#waybar.empty #window {
-            background-color:transparent;
+            background-color: transparent;
         }
 
         /* -----------------------------------------------------
@@ -378,7 +382,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
         #taskbar {
             background: @backgroundlight;
             margin: 6px 15px 6px 0px;
-            padding:0px;
+            padding: 0px;
             border-radius: 15px;
             font-weight: normal;
             font-style: normal;
@@ -386,7 +390,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
         }
 
         #taskbar button {
-            margin:0;
+            margin: 0;
             border-radius: 15px;
             padding: 0px 5px 0px 5px;
         }
@@ -432,9 +436,9 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
         #custom-quicklink8,
         #custom-quicklink9,
         #custom-quicklink10 {
-            padding:0px;
+            padding: 0px;
             margin-right: 7px;
-            font-size:20px;
+            font-size: 20px;
             color: @iconcolor;
         }
 
@@ -455,8 +459,8 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
 
         #custom-exit {
             margin: 2px 20px 0px 0px;
-            padding:0px;
-            font-size:20px;
+            padding: 0px;
+            font-size: 20px;
             color: @iconcolor;
         }
 
@@ -465,14 +469,14 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
          * ----------------------------------------------------- */
 
         #disk,#memory,#cpu,#language {
-            margin:0px;
-            padding:0px;
-            font-size:16px;
-            color:@iconcolor;
+            margin: 0px;
+            padding: 0px;
+            font-size: 16px;
+            color: @iconcolor;
         }
 
         #language {
-            margin-right:10px;
+            margin-right: 10px;
         }
 
         /* -----------------------------------------------------
@@ -482,7 +486,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
         #clock {
             background-color: @backgrounddark;
             font-size: 16px;
-            color: @textcolor1;
+            color: @textPrimary;
             border-radius: 15px;
             margin: 10px 7px 10px 0px;
         }
@@ -494,7 +498,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
         #pulseaudio {
             background-color: @backgroundlight;
             font-size: 16px;
-            color: @textcolor2;
+            color: @textPrimary;
             border-radius: 15px;
             margin: 10px 10px 10px 0px;
         }
@@ -511,19 +515,19 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
         #network {
             background-color: @backgroundlight;
             font-size: 16px;
-            color: @textcolor2;
+            color: @textSecondary;
             border-radius: 15px;
             margin: 10px 10px 10px 0px;
         }
 
         #network.ethernet {
             background-color: @backgroundlight;
-            color: @textcolor2;
+            color: @textSecondary;
         }
 
         #network.wifi {
             background-color: @backgroundlight;
-            color: @textcolor2;
+            color: @textSecondary;
         }
 
         /* -----------------------------------------------------
@@ -533,7 +537,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
          #bluetooth, #bluetooth.on, #bluetooth.connected {
             background-color: @backgroundlight;
             font-size: 16px;
-            color: @textcolor2;
+            color: @textSecondary;
             border-radius: 15px;
             margin: 10px 15px 10px 0px;
         }
@@ -557,20 +561,20 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
         }
 
         #battery.charging, #battery.plugged {
-            color: @textcolor2;
+            color: @textSecondary;
             background-color: @backgroundlight;
         }
 
         @keyframes blink {
             to {
                 background-color: @backgroundlight;
-                color: @textcolor2;
+                color: @textPrimary;
             }
         }
 
         #battery.critical:not(.charging) {
             background-color: #f53c3c;
-            color: @textcolor3;
+            color: @textPrimary;
             animation-name: blink;
             animation-duration: 0.5s;
             animation-timing-function: linear;
