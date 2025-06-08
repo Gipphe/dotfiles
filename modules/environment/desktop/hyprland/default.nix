@@ -31,6 +31,7 @@ let
   brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
   nmcli = "${pkgs.networkmanager}/bin/nmcli";
   xdotool = "${pkgs.xdotool}/bin/xdotool";
+  hyprlock = "${config.programs.hyprlock.package}/bin/hyprlock";
 in
 util.mkToggledModule
   [
@@ -92,6 +93,10 @@ util.mkToggledModule
             # Scroll through existing workspaces with mod + scroll
             "$mod, mouse_down, workspace, e+1"
             "$mod, mouse_up, workspace, e-1"
+          ];
+
+          bindl = [
+            "switch:Lid Switch, exec, ${hyprlock}"
           ];
 
           bindm = [
