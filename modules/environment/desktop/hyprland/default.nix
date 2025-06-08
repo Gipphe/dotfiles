@@ -62,7 +62,6 @@ util.mkToggledModule
           # See https://wiki.hyprland.org/Configuring/Monitors
           monitor = ",preferred,auto,1";
           bind = workspaces ++ [
-            "$mod, F, exec, floorp"
             ", Print, exec, ${grimblast} copy area"
             "$mod, RETURN, exec, ${config.programs.wezterm.package}/bin/wezterm"
             "CTRL SHIFT, RETURN, exec, ${config.programs.wezterm.package}/bin/wezterm"
