@@ -21,7 +21,7 @@ util.mkProgram {
     home.packages = with pkgs; [ _1password-gui ];
 
     wayland.windowManager.hyprland.settings.bind = [
-      "CONTROL SHIFT,SPACE,exec,${quick-access}/bin/1password-quick-access"
+      "CTRL SHIFT,code:65,exec,${lib.getExe quick-access}"
     ];
 
     systemd.user.services.boot-start-1password = {
