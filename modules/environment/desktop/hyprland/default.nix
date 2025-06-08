@@ -64,7 +64,6 @@ util.mkToggledModule
           bind = workspaces ++ [
             ", Print, exec, ${grimblast} copy area"
             "$mod, RETURN, exec, ${config.programs.wezterm.package}/bin/wezterm"
-            "CTRL SHIFT, RETURN, exec, ${config.programs.wezterm.package}/bin/wezterm"
             "$mod, Q, killactive" # Close current window
             "$mod CTRL, RETURN, exec, rofi -show drun" # Open rofi
             "$mod, M, exit # Exit Hyprland"
