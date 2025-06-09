@@ -100,7 +100,7 @@ util.mkToggledModule
           ];
 
           bindl = [
-            "switch:Lid Switch, exec, ${hyprlock}"
+            ", switch:Lid Switch, exec, ${hyprlock}"
           ];
 
           bindm = [
