@@ -17,7 +17,6 @@
           };
         }
 
-        inputs.pre-commit-hooks.flakeModule
         inputs.treefmt-nix.flakeModule
       ];
 
@@ -31,14 +30,6 @@
         {
           formatter = pkgs.nixfmt-rfc-style;
 
-          pre-commit = {
-            settings.excludes = [ "flake.lock" ];
-
-            settings.hooks = {
-              nixfmt.enable = true;
-              prettier.enable = true;
-            };
-          };
           devShells.default =
             let
               extra = import ./devShell {
@@ -144,13 +135,6 @@
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
-
-    pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
     };
 
     treefmt-nix = {
