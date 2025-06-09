@@ -1,5 +1,5 @@
 if test -z "$PINENTRY_PROGRAM"
-    set -x PINENTRY_PROGRAM pinentry-rofi
+    set -x PINENTRY_PROGRAM pinentry-gtk-2
 end
 
 function prompt-password
@@ -27,6 +27,8 @@ end
 function login
     if command -q $PINENTRY_PROGRAM
         set password (prompt-password)
+        mkdir -p $HOME/.op
+        chmod 700 $HOME/.op
         echo $password | op signin >$HOME/.op/session
     end
 end
