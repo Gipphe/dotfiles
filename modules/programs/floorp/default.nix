@@ -103,6 +103,9 @@ util.mkModule {
               "browser.urlbar.trimUrls" = false;
               "taskbar.grouping.useprofile" = true;
               "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+              # Disable kinetic/momentum/inertia when scrolling (especially bad
+              # with touchpad)
+              "apz.gtk.kinetic_scroll.enabled" = false;
             };
           };
         };
