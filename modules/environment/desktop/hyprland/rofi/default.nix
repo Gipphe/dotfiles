@@ -1,7 +1,7 @@
 { util, config, ... }:
 let
   inherit (config.lib.formats.rasi) mkLiteral;
-  inherit (import ./codes.nix) space;
+  inherit (import ../codes.nix) space;
 in
 util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
   name = "rofi";
@@ -265,7 +265,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
         };
       };
     };
-    wayland.windowManager.hyprland.bind = [
+    wayland.windowManager.hyprland.settings.bind = [
       "CTRL, ${space}, exec, ${config.programs.rofi.package}/bin/rofi -show drun"
     ];
   };
