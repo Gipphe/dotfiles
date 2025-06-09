@@ -74,10 +74,6 @@
               "hardware-configuration.nix"
             ];
           };
-
-          packages = {
-            tlm = pkgs.callPackage ./modules/programs/tlm/package.nix { };
-          };
         };
 
       flake =
