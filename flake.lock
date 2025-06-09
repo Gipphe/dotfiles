@@ -109,6 +109,22 @@
         "type": "github"
       }
     },
+    "caelestia-shell": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1749463569,
+        "narHash": "sha256-rh4Cu24uZoArFBYJhREGPkwTFTA9Q2GeGjdOTu9WhgA=",
+        "owner": "caelestia-dots",
+        "repo": "shell",
+        "rev": "ea4d3f26ef438b8075d9ea1aa3f297173d6cd58d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "caelestia-dots",
+        "repo": "shell",
+        "type": "github"
+      }
+    },
     "cl-nix-lite": {
       "locked": {
         "lastModified": 1728174978,
@@ -1328,10 +1344,31 @@
         "type": "github"
       }
     },
+    "quickshell": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1749469533,
+        "narHash": "sha256-Tvsi5OYYaVDB6PFTn1IXUe40FT7xrej10jogzxJXCo0=",
+        "ref": "refs/heads/master",
+        "rev": "14ed65bf7d93b7f0aac6106ec9687691c15811cb",
+        "revCount": 569,
+        "type": "git",
+        "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.outfoxxed.me/outfoxxed/quickshell"
+      }
+    },
     "root": {
       "inputs": {
         "brew-api": "brew-api",
         "brew-nix": "brew-nix",
+        "caelestia-shell": "caelestia-shell",
         "darwin": "darwin",
         "devshell": "devshell",
         "flake-parts": "flake-parts",
@@ -1343,6 +1380,7 @@
         "nixCats": "nixCats",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_6",
+        "quickshell": "quickshell",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
         "treefmt-nix": "treefmt-nix_3",
