@@ -29,7 +29,10 @@ util.mkProgram {
       let
         ci = util.writeFishApplication {
           name = "ci";
-          runtimeInputs = [ pkgs.gum ];
+          runtimeInputs = [
+            pkgs.gum
+            config.programs.git.package
+          ];
           text = # bash
             ''
               set -l type $(gum choose "fix" "feat" "refactor" "docs" "test" "style" "chore" "revert")
