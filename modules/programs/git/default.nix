@@ -49,7 +49,9 @@ util.mkProgram {
               set -l description $(gum write --placeholder "Details of this change.")
               or exit $status
 
-              gum confirm "Commit changes?" && git commit -m "$summary" -m "$description"
+              set -l command git commit -m "$summary" -m "$description"
+
+              gum confirm "Commit changes?" && eval "$command" && history append $command
               or exit $status
             '';
         };
