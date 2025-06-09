@@ -105,23 +105,21 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixos-hardware.url = "github:nixos/nixos-hardware";
+
     darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hm-src = {
-      url = "github:nix-community/home-manager/release-25.05";
-      flake = false;
     };
 
     devshell = {
@@ -131,20 +129,6 @@
 
     catppuccin = {
       url = "github:catppuccin/nix";
-    };
-
-    neovim-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-        flake-compat.follows = "flake-compat";
-      };
-    };
-
-    treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     sops-nix = {
@@ -166,16 +150,17 @@
       url = "github:cachix/pre-commit-hooks.nix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        flake-compat.follows = "flake-compat";
       };
+    };
+
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixvim = {
       url = "github:nix-community/nixvim";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nvf = {
@@ -185,19 +170,12 @@
 
     wsl = {
       url = "github:nix-community/NixOS-WSL";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-compat.follows = "flake-compat";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     haskell-tools-nvim = {
       url = "github:mrcjkb/haskell-tools.nvim";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-        flake-compat.follows = "flake-compat";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     stylix = {
@@ -205,7 +183,6 @@
       inputs = {
         nixpkgs.follows = "nixpkgs";
         home-manager.follows = "home-manager";
-        flake-compat.follows = "flake-compat";
       };
     };
 
@@ -229,11 +206,5 @@
       url = "github:BatteredBunny/brew-api";
       flake = false;
     };
-
-    flake-compat.url = "github:edolstra/flake-compat";
-    flake-utils.url = "github:numtide/flake-utils";
-    flake-utils.inputs.systems.follows = "sys-default";
-    sys-default-linux.url = "github:nix-systems/default-linux";
-    sys-default.url = "github:nix-systems/default";
   };
 }
