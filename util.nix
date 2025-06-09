@@ -236,6 +236,7 @@ let
       meta ? { },
       checkPhase ? null,
       derivationArgs ? { },
+      inheritPath ? false,
     }:
     writeTextFile {
       inherit name meta derivationArgs;
@@ -260,9 +261,10 @@ let
           )
         )
         + lib.optionalString (runtimeInputs != [ ]) ''
-          set -xp PATH ${concatStringsSep " " (map (p: "'${lib.getBin p}'") runtimeInputs)}
+          set -x --path PATH "${lib.makeBinPath runtimeInputs}${lib.optionalString inheritPath ":$PATH"}"
         ''
         + ''
+
           ${text}
         '';
       checkPhase =
