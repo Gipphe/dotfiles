@@ -6,6 +6,7 @@ in
 util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
   name = "rofi";
   hm = {
+    imports = [ ./1password.nix ];
     programs.rofi = {
       enable = true;
       theme = {
