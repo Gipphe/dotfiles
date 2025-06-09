@@ -93,9 +93,9 @@ util.mkToggledModule
             "$mod, mouse_up, workspace, e-1"
 
             # Cycle to next window with Alt + Tab
-            "Alt, Tab, cyclenext"
-            "Alt, Tab, bringactivetotop"
-            "Alt Shift, Tab, cyclenext, prev,"
+            "Alt, Tab, cyclenext,"
+            "Alt, Tab, bringactivetotop,"
+            "Alt Shift, Tab, cyclenext, prev"
             "Alt Shift, Tab, bringactivetotop,"
           ];
 
