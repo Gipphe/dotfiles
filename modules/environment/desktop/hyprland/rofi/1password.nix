@@ -25,7 +25,7 @@ in
       rofi-1p
     ];
     wayland.windowManager.hyprland.settings.bind = [
-      "$mod, P, exec, ${rofi-1p}/bin/rofi-1pass"
+      "$mod SHIFT, P, exec, ${rofi-1p}/bin/rofi-1pass"
     ];
   };
 }
