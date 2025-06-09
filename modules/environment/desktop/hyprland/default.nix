@@ -48,7 +48,7 @@ util.mkToggledModule
       ./hyprpaper.nix
       ./hyprpolkitagent.nix
       ./mako.nix
-      ./rofi.nix
+      ./rofi
       ./waybar.nix
       ./wlogout.nix
     ];
@@ -65,7 +65,6 @@ util.mkToggledModule
             ", Print, exec, ${grimblast} copy area"
             "$mod, RETURN, exec, ${config.programs.wezterm.package}/bin/wezterm"
             "$mod, Q, killactive" # Close current window
-            "$mod CTRL, RETURN, exec, rofi -show drun" # Open rofi
             "$mod, M, exit # Exit Hyprland"
             "$mod, T, togglefloating # Toggle between tiling and floating window"
             "$mod, F, fullscreen # Open the window in fullscreen"
