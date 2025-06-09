@@ -1,10 +1,10 @@
 if test -z "$PINENTRY_PROGRAM"
-  set -x PINENTRY_PROGRAM pinentry-rofi
+    set -x PINENTRY_PROGRAM pinentry-rofi
 end
 
 function prompt-password
-  set pinentry ($PINENTRY_PROGRAM)
-  set -l response (begin
+    set pinentry ($PINENTRY_PROGRAM)
+    set -l response (begin
     echo "SETTITLE 1password"
     echo "SETPROMPT Master password:"
     echo "SETDESC Enter your 1password master password."
@@ -12,76 +12,63 @@ function prompt-password
     echo "BYE"
   end | $PINENTRY_PROGRAM)
 
-  for line in $response
-    switch (string sub -s 1 -l 2 $line)
-      case "D "
-        set password (string sub -s 3 $line)
-        break
-      case OK
-        break
-      case ERR
-        echo "Error from pinentry: $line" >&2
-        exit 1
+    for line in $response
+        switch (string sub -s 1 -l 2 $line)
+            case "D "
+                set password (string sub -s 3 $line)
+            case OK
+            case ERR
+                echo "Error from pinentry: $line" >&2
+                exit 1
+        end
     end
-  end
 end
 
 function login
-  if command -q $PINENTRY_PROGRAM
-    set password (prompt-password)
-    echo $password | op signin > $HOME/.op/session
-  end
-  source "$HOME/.op/session"
+    if command -q $PINENTRY_PROGRAM
+        set password (prompt-password)
+        echo $password | op signin >$HOME/.op/session
+    end
 end
 
 function print-account-list
-  op whoami &>/dev/null
-  set logged_in $status
-  if test logged_in -ne 0
-    login
-  end
+    op whoami &>/dev/null
+    set logged_in $status
+    if test $logged_in -ne 0
+        login
+    end
 
-  op items list --format=json | jq -r '.[] | " - \(.title) (\(.additional_information)) [\(.id)]"' | sort
+    op items list --format=json | jq -r '.[] | " - \(.title) (\(.additional_information)) [\(.id)]"' | sort
 end
 
 function show-account-options
-  set -l id $argv[1]
-  set -l entry $(op get item "$id" --format=json)
+    set -l id $argv[1]
+    set -l entry $(op get item "$id" --format=json)
 
-  echo ">> Copy password [$id]"
-  echo ">> Copy username [$id]"
+    echo ">> Copy password [$id]"
+    echo ">> Copy username [$id]"
 
-  if test -n "$(echo $entry | jq -r '.fields | select(.type == "OTP" and .value != null and (.value | contains("otpauth://")))')"
-    echo ">> Copy OTP [$id]"
-  end
+    if test -n "$(echo $entry | jq -r '.fields | select(.type == "OTP" and .value != null and (.value | contains("otpauth://")))')"
+        echo ">> Copy OTP [$id]"
+    end
 
-  set -l url (get-url $entry)
-  if test $status = 0 && is-actual-url "$url"
-    echo ">> Open $url [$id]"
-    echo ">> Copy URL [$id]"
-  end
+    set -l url (get-url $entry)
+    if test $status = 0 && is-actual-url "$url"
+        echo ">> Open $url [$id]"
+        echo ">> Copy URL [$id]"
+    end
 
-  echo ">> Copy ID [$id]"
+    echo ">> Copy ID [$id]"
 end
 
 function get-url
-  set -l entry $argv[1]
-  echo $entry | jq '.urls | map(select(.primary)) | .[0].href' &2> /dev/null
+    set -l entry $argv[1]
+    echo $entry | jq '.urls | map(select(.primary)) | .[0].href' 2>/dev/null
 end
 
 function open-account-url
     set -l url (get-url (op item get $argv[1] --format json))
     if test -n "$url"
-        xdg-open "$url" &>/dev/null
-    else
-        exit 2
-    end
-end
-
-function open-account-url
-    set -l entry $argv[1]
-    set -l url (get-url $entry)
-    if test $status = 0 -a -n "$url"
         xdg-open "$url" &>/dev/null
     else
         exit 2
@@ -110,7 +97,6 @@ source "$HOME/.op/session"
 
 if is-entry-selected $argv[1]
     set -l selected $argv[1]
-
     set -l id "$(id-in-selection "$selected")"
 
     if test -n "$id"
