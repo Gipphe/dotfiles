@@ -53,6 +53,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
       bluez
       ddcutil
       brightnessctl
+      upower
 
       # Wrapper for caelestia to work with quickshell
       (writeScriptBin "caelestia-quickshell" ''

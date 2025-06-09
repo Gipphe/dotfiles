@@ -266,7 +266,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
       };
     };
     wayland.windowManager.hyprland.settings.bind = [
-      "CTRL, ${space}, exec, ${config.programs.rofi.package}/bin/rofi -show drun"
+      "$mod, ${space}, exec, ${config.programs.rofi.package}/bin/rofi -show drun"
     ];
   };
 }

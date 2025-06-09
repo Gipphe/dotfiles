@@ -4,6 +4,7 @@ util.mkProfile "desktop-caelestia" {
     desktop.hyprland = {
       enable = true;
       caelestia.enable = true;
+      rofi.enable = true;
     };
     display.enable = true;
     wayland.enable = true;
