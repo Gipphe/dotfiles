@@ -65,6 +65,7 @@ util.mkToggledModule
             ", Print, exec, ${grimblast} copy area"
             "$mod, RETURN, exec, ${config.programs.wezterm.package}/bin/wezterm"
             "$mod, Q, killactive" # Close current window
+            "$mod SHIFT, Q, forcekillactive" # Force close current window
             "$mod, M, exit # Exit Hyprland"
             "$mod, T, togglefloating # Toggle between tiling and floating window"
             "$mod, F, fullscreen # Open the window in fullscreen"
