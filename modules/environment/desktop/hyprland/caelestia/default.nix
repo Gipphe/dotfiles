@@ -8,7 +8,7 @@
 let
   fish = config.programs.fish.package;
 in
-util.mkToggledPackage [ "environment" "desktop" "hyprland" ] {
+util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
   name = "caelestia";
   hm = {
     imports = [
@@ -41,7 +41,7 @@ util.mkToggledPackage [ "environment" "desktop" "hyprland" ] {
 
       # Additional dependencies
       lm_sensors
-      curl
+      curlFull
       material-symbols
       nerd-fonts.jetbrains-mono
       ibm-plex

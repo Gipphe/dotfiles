@@ -182,5 +182,10 @@
       url = "github:caelestia-dots/shell";
       flake = false;
     };
+
+    astal = {
+      url = "github:aylur/astal";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }

@@ -41,6 +41,7 @@ util.mkToggledModule
   {
     name = "hyprland";
     shared.imports = [
+      ./caelestia
       ./dunst.nix
       ./filemanager.nix
       ./hypridle.nix
