@@ -18,7 +18,6 @@ util.mkToggledModule [ "machines" ] {
         fonts.enable = true;
         game-dev.enable = false;
         gc.enable = true;
-        programming.haskell.enable = true;
         rice.enable = true;
         secrets.enable = true;
         systemd.enable = true;
