@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   util,
@@ -24,16 +25,19 @@ util.mkProgram {
       "CTRL SHIFT,code:65,exec,${lib.getExe quick-access}"
     ];
 
-    systemd.user.services.boot-start-1password = {
+    systemd.user.services._1password = lib.mkIf config.gipphe.programs._1password-gui.startOnBoot {
       Unit = {
         Description = "Start 1password in silent mode on boot";
+        After = [ "graphical-session.target" ];
+        PartOf = [ "graphical-session.target" ];
       };
       Service = {
         ExecStart = "${pkgs.writeShellScriptBin "1password-boot" ''
           ${pkgs._1password-gui}/bin/1password --silent
         ''}/bin/1password-boot";
+        Restart = "never";
       };
-      Install.wantedBy = "multi-user.target";
+      Install.WantedBy = [ "graphical-session.target" ];
     };
   };
 
