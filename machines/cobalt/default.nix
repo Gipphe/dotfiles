@@ -1,4 +1,4 @@
-{ util, ... }:
+{ util, inputs, ... }:
 util.mkToggledModule [ "machines" ] {
   name = "cobalt";
 
@@ -33,4 +33,11 @@ util.mkToggledModule [ "machines" ] {
     };
     programs.idea-community.enable = true;
   };
+
+  system-nixos.imports = with inputs.nixos-hardware.nixosModules; [
+    common-cpu-intel
+    common-gpu-amd
+    common-pc-laptop
+    common-pc-laptop-ssd
+  ];
 }
