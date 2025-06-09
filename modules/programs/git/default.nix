@@ -35,6 +35,11 @@ util.mkProgram {
           ];
           text = # bash
             ''
+              if test (count $argv) != 0
+                echo "This script expects no arguments" >&2
+                exit 1
+              end
+
               set -l type $(gum choose "fix" "feat" "refactor" "docs" "test" "style" "chore" "revert")
               or exit $status
               set -l scope $(gum input --placeholder "scope")
