@@ -1,10 +1,11 @@
-{ util, pkgs, ... }:
+{ util, ... }:
 util.mkToggledModule [ "system" ] {
   name = "audio";
   system-nixos = {
     # Enable sound with pipewire.
     security.rtkit.enable = true;
     services = {
+      pulseaudio.support32Bit = true;
       pipewire = {
         enable = true;
         audio.enable = true;
@@ -36,14 +37,6 @@ util.mkToggledModule [ "system" ] {
           "default.clock.min-quantum" = 32;
           "default.clock.max-quantum" = 32;
         };
-      };
-    };
-    hardware = {
-      pulseaudio.support32Bit = true;
-      bluetooth = {
-        enable = true;
-        powerOnBoot = false;
-        package = pkgs.bluez5-experimental;
       };
     };
   };

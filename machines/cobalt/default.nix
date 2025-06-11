@@ -9,6 +9,7 @@ util.mkToggledModule [ "machines" ] {
     profiles = {
       nixos = {
         audio.enable = true;
+        bluetooth.enable = true;
         boot-efi.enable = true;
         devices.enable = true;
         system.enable = true;
