@@ -11,6 +11,11 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      # additional libraries and packages to add to gjs' runtime
+      extraPackages = [
+        # ags.packages.${system}.battery
+        # pkgs.fzf
+      ];
     in
     {
       packages.${system}.default = ags.lib.bundle {
@@ -19,11 +24,13 @@
         name = "giphtshell";
         entry = "app.ts";
         gtk4 = false;
-
-        # additional libraries and packages to add to gjs' runtime
-        extraPackages = [
-          # ags.packages.${system}.battery
-          # pkgs.fzf
+        inherit extraPackages;
+      };
+      devShells.${system}.default = pkgs.mkShell {
+        packages = [
+          (ags.packages.${system}.default.override {
+            inherit extraPackages;
+          })
         ];
       };
     };
