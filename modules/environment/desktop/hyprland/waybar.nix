@@ -174,7 +174,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
           tooltip-format-ethernet = "󰈁  {ifname} ({ipaddr}/{cidr})";
           tooltip-format-disconnected = "Disconnected";
           max-length = 50;
-          on-click = "${pkgs.wezterm}/bin/wezterm start -- nmtui";
+          on-click = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
         };
 
         # Battery
