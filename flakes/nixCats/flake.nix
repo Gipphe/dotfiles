@@ -164,6 +164,7 @@
             general = [
               bash-language-server
               dockerfile-language-server-nodejs
+              elmPackages.elm-language-server
               fd
               fish-lsp
               fourmolu

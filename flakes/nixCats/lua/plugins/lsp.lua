@@ -138,6 +138,7 @@ return {
         },
         bashls = {},
         dockerls = {},
+        elmls = {},
         jsonls = {},
         html = {},
         java_language_server = {},
