@@ -1,38 +1,8 @@
 #!/usr/bin/env bash
 
-host_public_key="/etc/ssh/ssh_host_ed25519_key.pub"
-user_public_key="$HOME/.ssh/id_ed25519.pub"
 dir="$(dirname -- "${BASH_SOURCE[0]}")"
-
-grep="nix run nixpkgs#gnugrep --"
 ssh_keygen="nix shell nixpkgs#openssh --command ssh-keygen --"
 sops="nix shell nixpkgs#sops --"
-
-if ! $grep -q "$(hostname)" "$dir/secrets.nix"; then
-    if ! test -e "$host_public_key"; then
-        echo "Missing host public key at $host_public_key"
-        echo "You have to set services.ssh-agent.enable to true, enabling the"
-        echo "ssh-agent and creating a host key."
-        exit 1
-    fi
-
-    if ! test -e "$user_public_key"; then
-        echo "No user key found at $user_public_key"
-        echo "Generating new user key"
-        $ssh_keygen -f ~/.ssh/id_ed25519
-    fi
-
-    echo "Add the following public keys to $dir/secrets.nix for host $(hostname)"
-    echo ""
-    echo "Host public key:"
-    echo ""
-    cat "$host_public_key"
-    echo ""
-    echo "User public key:"
-    echo ""
-    cat "$user_public_key"
-    exit 0
-fi
 
 services=(github gitlab codeberg)
 ext=.ssh
