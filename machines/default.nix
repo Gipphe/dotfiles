@@ -3,6 +3,7 @@
   imports = [
     ./argon
     ./cobalt
+    ./fluoride
     ./helium
     ./silicon
   ];
