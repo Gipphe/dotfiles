@@ -6,8 +6,9 @@
 }:
 let
   configs = {
-    "cobalt" = ./cobalt.nix;
     "argon" = ./argon.nix;
+    "cobalt" = ./cobalt.nix;
+    "fluoride" = ./fluoride.nix;
   };
 in
 {
