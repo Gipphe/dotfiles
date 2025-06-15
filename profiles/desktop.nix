@@ -4,7 +4,6 @@ util.mkProfile "desktop" {
     programs = {
       _1password-gui.enable = true;
       appimage.enable = true;
-      code-cursor.enable = true;
       cool-retro-term.enable = true;
       filen-desktop.enable = true;
       floorp.enable = true;
