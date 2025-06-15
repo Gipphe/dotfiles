@@ -9,7 +9,6 @@ util.mkToggledModule [ "machines" ] {
     profiles = {
       nixos = {
         audio.enable = true;
-        bluetooth.enable = true;
         boot-efi.enable = true;
         devices.enable = true;
         system.enable = true;
@@ -31,14 +30,7 @@ util.mkToggledModule [ "machines" ] {
       sync.enable = true;
       systemd.enable = true;
       windows-setup.enable = true;
+      vm-guest.enable = true;
     };
-    programs.idea-community.enable = true;
   };
-
-  system-nixos.imports = with inputs.nixos-hardware.nixosModules; [
-    common-cpu-intel
-    common-gpu-amd
-    common-pc-laptop
-    common-pc-laptop-ssd
-  ];
 }
