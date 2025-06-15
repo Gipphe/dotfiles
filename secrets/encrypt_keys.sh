@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 n() {
     nix --extra-experimental-features 'flakes nix-command' "$@"
 }
