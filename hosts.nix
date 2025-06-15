@@ -5,6 +5,8 @@ let
     argon.machine = "nixos";
     cobalt.system = "x86_64-linux";
     cobalt.machine = "nixos";
+    fluoride.system = "x86_64-linux";
+    fluoride.machine = "nixos";
     silicon.system = "aarch64-darwin";
     silicon.machine = "nix-darwin";
     helium.system = "aarch64-linux";

@@ -3,6 +3,7 @@ keys:
   - &argon age1akwhlc7p3nmvty78nvqj9egdamvt86r6pkljjry9846f5uxju4hsnzr5pq
   - &cobalt age12ewxc5y60mgvu240gvjnnc6uufvjrh757kad7dkzlwm64fcd4v4qtmvpy5
   - &helium age102w690dszwe3305vg3v084y6z6hstjsxskatz6evguj3utzz6e4s7yfrfr
+  - &fluoride age16fmgfwq6hjyps36ar9jvwj7325sjfju3yfxt9df2zlfwu9dzdudqwpsh9f
 creation_rules:
   - path_regex: secrets/silicon.*
     key_groups:
@@ -23,6 +24,11 @@ creation_rules:
       - age:
           - *helium
 
+  - path_regex: secrets/fluoride.*
+    key_groups:
+      - age:
+          - *fluoride
+
   - path_regex: secrets/mods-cli-openai-api\.key
     key_groups:
       - age:
@@ -30,6 +36,7 @@ creation_rules:
           - *argon
           - *silicon
           - *helium
+          - *fluoride
   - path_regex: secrets/claude-nvim-api-key\.key
     key_groups:
       - age:
@@ -37,6 +44,7 @@ creation_rules:
           - *argon
           - *silicon
           - *helium
+          - *fluoride
   - path_regex: secrets/strise-milkyway-translations-openai-api-key\.key
     key_groups:
       - age:
@@ -44,6 +52,7 @@ creation_rules:
           - *argon
           - *silicon
           - *helium
+          - *fluoride
   - path_regex: secrets/syncthing-password
     key_groups:
       - age:
@@ -51,3 +60,4 @@ creation_rules:
           - *argon
           - *silicon
           - *helium
+          - *fluoride
