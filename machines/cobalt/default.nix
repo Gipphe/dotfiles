@@ -20,7 +20,6 @@ util.mkToggledModule [ "machines" ] {
       core.enable = true;
       # desktop-mylinuxforwork.enable = true;
       desktop-hyprland.enable = true;
-      # desktop-caelestia.enable = true;
       # desktop-normal.enable = true;
       desktop.enable = true;
       fonts.enable = true;
