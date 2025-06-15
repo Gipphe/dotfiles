@@ -267,6 +267,7 @@
               virt-column-nvim
               which-key-nvim
               wilder-nvim
+              yuck-vim
               zellij-nav-nvim
             ];
 

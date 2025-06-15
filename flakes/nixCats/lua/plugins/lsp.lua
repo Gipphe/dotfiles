@@ -462,6 +462,11 @@ return {
     },
   },
 
+  {
+    'elkowar/yuck.vim',
+    ft = { 'yuck' },
+  },
+
   -- TODO Are LSPs good enough?
   -- {
   --   'mfussenegger/nvim-lint',
