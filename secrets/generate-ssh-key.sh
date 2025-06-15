@@ -13,7 +13,7 @@ help() {
 }
 
 key_name="$1"
-if test -z "$key_name"; then
+if test -z "$key_name" || test "$key_name" == "--help"; then
     echo "Missing key_name arg".
     help
     exit 1
