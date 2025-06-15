@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
+n() {
+    nix --extra-experimental-features 'flakes nix-command' "$@"
+}
+
 dir="$(dirname -- "${BASH_SOURCE[0]}")"
-ssh_keygen="nix shell nixpkgs#openssh --command ssh-keygen --"
-sops="nix shell nixpkgs#sops --"
+ssh_keygen="n shell nixpkgs#openssh --command ssh-keygen --"
+sops="n shell nixpkgs#sops --"
 
 services=(github gitlab codeberg)
 ext=.ssh
