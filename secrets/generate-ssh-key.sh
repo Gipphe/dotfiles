@@ -8,6 +8,8 @@ log() {
 help() {
     log "Usage: generate-ssh-key.sh <key_name>"
     log ""
+    log "Generates a new key pair and encrypts them with sops."
+    log ""
     log "Arguments:"
     log "  key_name: string, required"
 }
