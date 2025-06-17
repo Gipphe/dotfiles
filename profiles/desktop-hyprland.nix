@@ -4,6 +4,7 @@ util.mkProfile "desktop-hyprland" {
     desktop.hyprland = {
       enable = true;
       dunst.enable = false;
+      eww.enable = true;
       filemanager.enable = true;
       hypridle.enable = true;
       hyprlock.enable = true;

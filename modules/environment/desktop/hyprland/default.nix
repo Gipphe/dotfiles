@@ -42,6 +42,7 @@ util.mkToggledModule
     name = "hyprland";
     shared.imports = [
       ./dunst.nix
+      ./eww
       ./filemanager.nix
       ./hypridle.nix
       ./hyprlock.nix
