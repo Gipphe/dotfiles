@@ -129,17 +129,15 @@ util.mkToggledModule [ "windows" ] {
             $Config.Install()
           '';
 
-      home.activation = (
-        lib.mapAttrs' (path: v: {
-          name = "copy-windows-file-${normalize path}";
-          value =
-            lib.hm.dag.entryAfter [ "filesChanged" ] # bash
-              ''
-                run mkdir -p "$(dirname -- '${vcsConfigs}/${path}')"
-                run cp -Lf '${v.source}' '${vcsConfigs}/${path}'
-              '';
-        }) files
-      );
+      home.activation = lib.mapAttrs' (path: v: {
+        name = "copy-windows-file-${normalize path}";
+        value =
+          lib.hm.dag.entryAfter [ "filesChanged" ] # bash
+            ''
+              run mkdir -p "$(dirname -- '${vcsConfigs}/${path}')"
+              run cp -Lf '${v.source}' '${vcsConfigs}/${path}'
+            '';
+      }) files;
     })
 
     (lib.mkIf (cfg.download != { }) {
@@ -158,28 +156,26 @@ util.mkToggledModule [ "windows" ] {
                 $ChildLogger = $this.Logger.ChildLogger()
                 $DestDir = $Env:USERPROFILE
 
-                ${
-                  pipe cfg.download [
-                    (mapAttrsToList (
-                      dest: url:
-                      let
-                        destPath = "$DestDir/${dest}";
-                      in
-                      # powershell
-                      ''
-                        if (Test-Path "${destPath}") {
-                          $ChildLogger.Info(" ${destPath} already downloaded.")
-                        } else {
-                          $ChildLogger.Info(" Downloading ${url}...")
-                          New-Item -ItemType Container -Path (Split-Path -Parent "${destPath}")
-                          Invoke-WebRequest -Uri "${url}" -OutFile "${destPath}"
-                          $ChildLogger.Info(" Downloaded ${url}")
-                        }
-                      ''
-                    ))
-                    (concatStringsSep "\n\n")
-                  ]
-                }
+                ${pipe cfg.download [
+                  (mapAttrsToList (
+                    dest: url:
+                    let
+                      destPath = "$DestDir/${dest}";
+                    in
+                    # powershell
+                    ''
+                      if (Test-Path "${destPath}") {
+                        $ChildLogger.Info(" ${destPath} already downloaded.")
+                      } else {
+                        $ChildLogger.Info(" Downloading ${url}...")
+                        New-Item -ItemType Container -Path (Split-Path -Parent "${destPath}")
+                        Invoke-WebRequest -Uri "${url}" -OutFile "${destPath}"
+                        $ChildLogger.Info(" Downloaded ${url}")
+                      }
+                    ''
+                  ))
+                  (concatStringsSep "\n\n")
+                ]}
 
                 $this.Logger.Info(" Files downloaded.")
               }

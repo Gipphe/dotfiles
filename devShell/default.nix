@@ -31,8 +31,6 @@ in
           jq
         ];
         text =
-          let
-          in
           # bash
           ''
             if command -v nixos-rebuild &>/dev/null; then

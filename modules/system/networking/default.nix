@@ -1,7 +1,7 @@
 { config, util, ... }:
 let
   networking = {
-    hostName = config.gipphe.hostName;
+    inherit (config.gipphe) hostName;
   };
 in
 util.mkModule {

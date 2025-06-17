@@ -1,4 +1,4 @@
 disabled = []
 nix_version = '2.4'
-ignore = ['.direnv', 'root/modules/system/hardware-configuration', 'hardware-configuration.nix']
+ignore = ['.direnv', 'modules/system/hardware-configuration', 'hardware-configuration.nix']
 

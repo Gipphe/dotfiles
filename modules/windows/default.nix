@@ -72,7 +72,7 @@ util.mkModule {
         }
       )
     ];
-    gipphe.windows.powershell-script = (
+    gipphe.windows.powershell-script =
       lib.mkOrder order.preamble
         # powershell
         ''
@@ -84,16 +84,15 @@ util.mkModule {
           $InformationPreference = "Continue"
 
           try {
-        ''
-    );
+        '';
     home.activation = lib.mkIf cfg.enable {
-    write-windows-script =
-      let
-        pkg = pkgs.writeText "windows-powershell-script" cfg.powershell-script;
-      in
-      lib.hm.dag.entryAfter [ "onFilesChange" ] ''
-        run cp -f '${pkg}' '${cfg.destination}/Setup.ps1'
-      '';
+      write-windows-script =
+        let
+          pkg = pkgs.writeText "windows-powershell-script" cfg.powershell-script;
+        in
+        lib.hm.dag.entryAfter [ "onFilesChange" ] ''
+          run cp -f '${pkg}' '${cfg.destination}/Setup.ps1'
+        '';
     };
   };
 }
