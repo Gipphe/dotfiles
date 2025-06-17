@@ -17,7 +17,6 @@ util.mkToggledModule [ "machines" ] {
       audio.enable = true;
       cli.enable = true;
       core.enable = true;
-      # desktop-mylinuxforwork.enable = true;
       # desktop-hyprland.enable = true;
       desktop-normal.enable = true;
       desktop.enable = true;
