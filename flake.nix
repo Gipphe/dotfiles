@@ -152,10 +152,7 @@
       };
     };
 
-    nixCats = {
-      url = "path:./flakes/nixCats";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixCats.url = "github:BirdeeHub/nixCats-nvim";
 
     mac-app-util.url = "github:hraban/mac-app-util";
 

@@ -5,10 +5,13 @@
   flags,
   ...
 }:
+let
+  nixCats = import ./package.nix inputs;
+in
 util.mkProgram {
   name = "nixCats";
   hm = {
-    imports = [ inputs.nixCats.homeModules.default ];
+    imports = [ nixCats.homeModules.default ];
     config = {
       home.sessionVariables.EDITOR = "nvim";
       nvim = {
