@@ -128,7 +128,6 @@ let
           nixd
           nixfmt-rfc-style
           opentofu
-          opentofu-ls
           prettierd
           ripgrep
           ruff
@@ -139,6 +138,7 @@ let
           stylua
           tailwindcss-language-server
           terraform-ls
+          tofu-ls
           typescript-language-server
           universal-ctags
           vscode-langservers-extracted
