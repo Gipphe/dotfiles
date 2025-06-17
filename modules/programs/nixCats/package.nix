@@ -51,15 +51,7 @@ let
   # and
   # :help nixCats.flake.outputs.categoryDefinitions.scheme
   categoryDefinitions =
-    {
-      pkgs,
-      settings,
-      categories,
-      extra,
-      name,
-      mkNvimPlugin,
-      ...
-    }@packageDef:
+    { pkgs, ... }:
     let
       marp-nvim = pkgs.vimUtils.buildVimPlugin {
         pname = "marp-nvim";

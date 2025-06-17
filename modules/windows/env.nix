@@ -18,7 +18,7 @@ let
   };
   envs = lib.filterAttrs (_: v: v.enable) (
     lib.mapAttrs (
-      name: value:
+      _: value:
       if isString value || isRaw value then
         {
           enable = true;

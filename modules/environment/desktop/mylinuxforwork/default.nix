@@ -48,7 +48,6 @@ util.mkToggledModule [ "environment" "desktop" ] {
         hyprpaper = "${pkgs.hyprpaper}/bin/hyprpaper";
         dunst = "${pkgs.dunst}/bin/dunst";
         term = "${pkgs.wezterm}/bin/wezterm";
-        thunar = "${pkgs.xfce.thunar}/bin/thunar";
         floorp = "${pkgs.floorp}/bin/floorp";
         killall = "${pkgs.killall}/bin/killall";
         wpctl = "${pkgs.wireplumber}/bin/wpctl";
@@ -56,7 +55,6 @@ util.mkToggledModule [ "environment" "desktop" ] {
         nmcli = "${pkgs.networkmanager}/bin/nmcli";
         xdotool = "${pkgs.xdotool}/bin/xdotool";
 
-        file_manager_script = thunar;
         browser_script = floorp;
         reload_hyprpaper_script = pkgs.writeShellScriptBin "reload-hyprpaper.sh" ''
           ${killall} hyprpaper

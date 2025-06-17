@@ -9,9 +9,6 @@ let
   cfg = config.gipphe.programs.floorp;
   windows = import ./windows.nix;
   pkg = if (pkgs.stdenv.hostPlatform.isLinux && cfg.enable) then pkgs.floorp else null;
-  getWithDefault =
-    path: def: attrs:
-    if builtins.hasAttr path attrs then builtins.getAttr path attrs else def;
 in
 util.mkModule {
   options.gipphe.programs.floorp = {

@@ -1,4 +1,4 @@
-{ util, inputs, ... }:
+{ util, ... }:
 util.mkToggledModule [ "machines" ] {
   name = "fluoride";
 
