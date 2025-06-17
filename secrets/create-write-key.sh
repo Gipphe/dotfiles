@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nix
+#! nix --extra-experimental-features ``flakes nix-command`` shell nixpkgs#age --command bash
 
 mkdir -p ~/.config/sops/age
 
@@ -9,4 +10,4 @@ if test -e "$key_dest"; then
     exit 1
 fi
 
-nix --extra-experimental-features 'flakes nix-command' shell nixpkgs#age -c age-keygen -o "$key_dest"
+age-keygen -o "$key_dest"
