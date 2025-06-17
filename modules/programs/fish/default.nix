@@ -63,9 +63,6 @@ util.mkProgram {
                 set -U fish_color_autosuggestion 5b6078
               '';
           package = pkgs.fish;
-          functions = {
-            openai-key = "cat ${config.sops.secrets.milkyway-translations-openai-key.path}";
-          };
           shellAbbrs = {
             vim = "nvim";
             tf = "terraform";
@@ -116,12 +113,6 @@ util.mkProgram {
           ) { } function_list;
         in
         functions;
-
-      sops.secrets."milkyway-translations-openai-key" = {
-        sopsFile = ../../../secrets/strise-milkyway-translations-openai-api-key.key;
-        mode = "400";
-        format = "binary";
-      };
     };
   };
 }
