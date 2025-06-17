@@ -29,38 +29,6 @@
         (label :text "${time.hour}:${time.min}"))
       (buttons))))
 
-; (defwidget buttons []
-;   (_buttons :shutdown poweroff
-;             :shutdown_icon ""
-;             :reboot reboot
-;             :reboot_icon ""
-;             :logout "${loginctl} kill-session self"
-;             :logout_icon ""))
-
-(defwidget network []
-  (_network :strength {wifi.signal}
-            :offline "󰣼"
-            :excellent "󰣺"
-            :good "󰣸"
-            :okay "󰣶"
-            :slow "󰣴"))
-
-(defwidget battery []
-  (_battery :status {battery-info.status}
-            :battery {battery-info.capacity}
-            :charging "󰂄"
-            :c-100    "󰁹"
-            :c-90     "󰂂"
-            :c-80     "󰂁"
-            :c-70     "󰂀"
-            :c-60     "󰁿"
-            :c-50     "󰁾"
-            :c-40     "󰁽"
-            :c-30     "󰁼"
-            :c-20     "󰁻"
-            :c-10     "󰁺"
-            :c-0      "󰂃"))
-
 (defpoll time :interval "5s" `date +'{"hour": "%H", "min": "%M", "date": "%y-%m-%d"}'`)
 (defpoll wifi :interval "30s"
   `nmcli -t -f SSID,SIGNAL,ACTIVE device wifi \
@@ -104,9 +72,6 @@
   (box
     (label :text "${window}")))
 
-(defvar COL_WLAN "#ffffff")
-(defvar WLAN_ICON {wifi.})
-
 (defwidget wifi []
   (eventbox :onhover "${EWW_CMD} update wifi_reveal=true"
             :onhoverlost "${EWW_CMD} update wifi_reveal=false"
@@ -115,8 +80,8 @@
               :onclick "networkmanager_dmenu"
               :wrap false
               :limit-width 12
-              :style "color: ${COL_WLAN};"
-        WLAN_ICON)
+              :style "color: #ffffff;"
+        (network))
       (revealer :transition "slideright"
                 :reveal wifi_reveal
                 :duration "350ms"
@@ -276,6 +241,13 @@
 
 (defwidget clock [] "${time.hour}:${time.min}")
 
+; (defwidget buttons []
+;   (_buttons :shutdown poweroff
+;             :shutdown_icon ""
+;             :reboot reboot
+;             :reboot_icon ""
+;             :logout "${loginctl} kill-session self"
+;             :logout_icon ""))
 ; (defwidget _buttons [shutdown shutdown_icon
 ;                      reboot reboot_icon
 ;                      logout logout_icon]
@@ -287,12 +259,36 @@
 ;     (button :onclick reboot reboot_icon)
 ;     (button :onclick logout logout_icon)))
 
+(defwidget network []
+  (_network :strength {wifi.signal}
+            :offline "󰣼"
+            :excellent "󰣺"
+            :good "󰣸"
+            :okay "󰣶"
+            :slow "󰣴"))
+
 (defwidget _network [strength offline excellent good okay slow]
   {strength == "" ? offline :
    strength < 26 ? slow :
    strength < 51 ? okay :
    strength < 76 ? good :
    excellent})
+
+(defwidget battery []
+  (_battery :status {battery-info.status}
+            :battery {battery-info.capacity}
+            :charging "󰂄"
+            :c-100    "󰁹"
+            :c-90     "󰂂"
+            :c-80     "󰂁"
+            :c-70     "󰂀"
+            :c-60     "󰁿"
+            :c-50     "󰁾"
+            :c-40     "󰁽"
+            :c-30     "󰁼"
+            :c-20     "󰁻"
+            :c-10     "󰁺"
+            :c-0      "󰂃"))
 
 (defwidget _battery
   [battery status
