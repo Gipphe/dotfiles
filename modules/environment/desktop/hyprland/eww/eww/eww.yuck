@@ -157,11 +157,19 @@
                 :onclick "echo calendar"
           {time.date})))))
 
+(defwidget volume-icon []
+  {volume-percent > 66 ? "" :
+   volume-percent > 33 ? "" :
+   volume-percent > 0 ? "" :
+   ""})
+
 (defwidget volume []
   (eventbox :onhover "${EWW_CMD} update vol_reveal=true"
             :onhoverlost "${EWW_CMD} update vol_reveal=false"
     (box :class "module-2" :space-evenly false :orientation "h" :spacing 3
-      (button :onclick "EWW_CMD='${EWW_CMD}' ./scripts/pop.sh audio" :class "volume_icon" "")
+      (button :onclick "EWW_CMD='${EWW_CMD}' ./scripts/pop.sh audio"
+              :class "volume_icon"
+        (volume-icon))
       (revealer :transition "slideLeft"
                 :reveal vol_reveal
                 :duration "350ms"
@@ -171,7 +179,7 @@
                :tooltip "${volume-percent}%"
                :max 100
                :min 0
-               :onchange "pamixer --set-volume {}")))))
+               :onchange "pamixer --set-volume {} && ${EWW_CMD} poll volume-percent")))))
 
 (defwidget bright []
   (eventbox :onhover "${EWW_CMD} update br_reveal=true"
@@ -187,7 +195,7 @@
                :tooltip "${brightness-percent}%"
                :max 100
                :min 0
-               :onchange "brightnessctl set {}%")))))
+               :onchange "brightnessctl set {}% && ${EWW_CMD} poll brightness-percent")))))
 
 (defwidget music []
   (eventbox :onhover "${EWW_CMD} update music_reveal=true"
