@@ -63,7 +63,7 @@
 ;   | tr -d '%'`)
 (defpoll brightness-percent :interval "5s"
   `brightnessctl -m -d intel_backlight | awk -F, '{print $4}' | tr -d '%'`)
-(defpoll battery :interval "15s" "./scripts/battery.sh")
+; (defpoll battery :interval "15s" "./scripts/battery.sh")
 (defpoll memory :interval "15s"
   `free -L \
   | awk -F' ' '{ print "{ \\"total\\": \\""($6 + $8)"\\", \\"used\\": \\""$6"\\", \\"free\\": \\""$8"\\" }" }'`)
@@ -110,18 +110,18 @@
 
 (defwidget bat []
   (box :class "bat_module" :vexpand false :hexpand false
-    (circular-progress :value {battery.capacity}
+    (circular-progress :value {EWW_BATTERY.BAT1.capacity}
                        :class "batbar"
                        :thickness 4
                        :min 0
                        :max 100
       (button :class "iconbat"
-            :tooltip "battery on ${battery.capacity}%"
+            :tooltip "battery on ${EWW_BATTERY.BAT1.capacity}%"
             :limit-width 2
             :show_truncated false
             :onclick "EWW_CMD='${EWW_CMD}' ./scripts/pop.sh system"
             :wrap false
-            {battery.status == "Charging" ? "" : ""}))))
+            {EWW_BATTERY.BAT1.status == "Charging" ? "" : ""}))))
 
 (defwidget mem []
   (box :class "mem_module" :vexpand false :hexpand false
@@ -235,8 +235,8 @@
    excellent})
 
 (defwidget battery []
-  (_battery :status {battery.status}
-            :battery {battery.capacity}
+  (_battery :status {EWW_BATTERY.BAT1.status}
+            :battery {EWW_BATTERY.BAT1.capacity}
             :charging "󰂄"
             :c-100    "󰁹"
             :c-90     "󰂂"
@@ -299,13 +299,13 @@
                 :limit-width 9
                 :show_truncated false
                 :wrap false)
-            (label :text "${battery.capacity}%"
+            (label :text "${EWW_BATTERY.BAT1.capacity}%"
                 :halign "start"
                 :class "sys_text_bat_sub"
                 :limit-width 22
                 :show_truncated false
                 :wrap false)
-            (label :text "${battery.status}"
+            (label :text "${EWW_BATTERY.BAT1.status}"
                 :halign "start"
                 :class "sys_text_bat_sub"
                 :limit-width 22
