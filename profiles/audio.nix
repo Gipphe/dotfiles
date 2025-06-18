@@ -5,5 +5,6 @@ util.mkProfile "audio" {
     # Temporarily broken
     cava.enable = false;
     mpc-cli.enable = true;
+    mpd.enable = true;
   };
 }
