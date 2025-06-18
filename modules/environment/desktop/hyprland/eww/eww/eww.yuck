@@ -42,6 +42,8 @@
     (bat)
     (mem)
     (sep)
+    (tray)
+    (sep)
     (clock_module)))
 
 (defvar loginctl "loginctl")
@@ -75,6 +77,13 @@
 (defvar music_reveal false)
 (defvar wifi_reveal false)
 (defvar time_reveal false)
+
+(defwidget tray []
+  (systray :spacing 4
+           :orientation "h"
+           :space-evenly true
+           :prepend-new true
+           :icon-size 20))
 
 (deflisten workspaces :initial '[]' "./scripts/get-workspaces.sh")
 (deflisten current-workspace :initial "1" "./scripts/get-active-workspace.sh")
