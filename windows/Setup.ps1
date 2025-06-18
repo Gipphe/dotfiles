@@ -351,6 +351,7 @@ class Choco {
     $Installed = Invoke-Native { choco list --id-only }
 
     $ChocoApps = @(
+      "signal",
       "floorp",
       "1password",
       "7zip",
