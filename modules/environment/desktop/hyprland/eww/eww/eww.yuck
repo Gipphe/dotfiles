@@ -284,7 +284,7 @@
 (defwidget system []
   (box :class "sys_win" :orientation "v" :space-evenly "false" :hexpand "false" :vexpand "false" :spacing 0
   (box :class "sys_bat_box" :orientation "h" :space-evenly "false"
-      (circular-progress :value battery
+      (circular-progress :value {EWW_BATTERY.BAT1.capacity}
                 :class "sys_bat"
                 :thickness 9
             (label :text "󰁹"
