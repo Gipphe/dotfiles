@@ -64,7 +64,7 @@
 ;   | awk -F'[][]' '/Left:/ {print $2}' \
 ;   | tr -d '%'`)
 (defpoll brightness-percent :interval "5s"
-  `brightnessctl -m -d intel_backlight | awk -F, '{print $4}' | tr -d '%'`)
+  `${brightnessctl} -m -d intel_backlight | awk -F, '{print $4}' | tr -d '%'`)
 ; (defpoll battery :interval "15s" "./scripts/battery.sh")
 (defpoll memory :interval "15s"
   `free -L \
@@ -97,7 +97,7 @@
 
 (deflisten window :initial "..." "./scripts/get-window-title.sh")
 (defwidget window-title []
-  (box :class "window-title" :vexpand false :hexpand false :show_truncated true
+  (box :class "window-title" :vexpand false :hexpand false
     (label :text {strlength(window) > 30 ? "${substring(window, 0, 60)}..." : window})))
 
 (defwidget wifi []
@@ -216,7 +216,6 @@
          :hexpand false
       (box :class "song_cover_art" :vexpand false :hexpand false :style "background-image: url('${music.cover}');")
       (button :class "song"
-              :wrap true
               :onclick "EWW_CMD='${EWW_CMD}' ./scripts/pop.sh music"
         {music.song})
       (revealer :transition "slideRight"

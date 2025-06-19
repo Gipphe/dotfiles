@@ -66,32 +66,3 @@ cat <<EOF
   "cover": "$cover"
 }
 EOF
-
-## Execute accordingly
-# if [[ "$1" == "--song" ]]; then
-#   get_song
-# elif [[ "$1" == "--artist" ]]; then
-#   get_artist
-# elif [[ "$1" == "--status" ]]; then
-#   get_status
-# elif [[ "$1" == "--time" ]]; then
-#   get_time
-# elif [[ "$1" == "--ctime" ]]; then
-#   get_ctime
-# elif [[ "$1" == "--ttime" ]]; then
-#   get_ttime
-# elif [[ "$1" == "--cover" ]]; then
-#   get_cover
-# elif [[ "$1" == "--toggle" ]]; then
-#   mpc -q toggle
-# elif [[ "$1" == "--next" ]]; then
-#   {
-#     mpc -q next
-#     get_cover
-#   }
-# elif [[ "$1" == "--prev" ]]; then
-#   {
-#     mpc -q prev
-#     get_cover
-#   }
-# fi

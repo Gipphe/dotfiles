@@ -17,6 +17,7 @@ let
       brightnessctl
       mpc
     ];
+  configDir = "${config.gipphe.homeDirectory}/projects/dotfiles/modules/environment/desktop/hyprland/eww/eww";
   eww = pkgs.symlinkJoin {
     name = "eww";
     paths = [ pkgs.eww ];
@@ -30,39 +31,46 @@ let
     postBuild = ''
       wrapProgram $out/bin/eww \
         --prefix PATH : "${deps}" \
-        --add-flags "--config ${config.gipphe.homeDirectory}/projects/dotfiles/modules/environment/desktop/hyprland/eww/eww"
+        --add-flags "--config ${configDir}"
     '';
   };
+  eww-bar = pkgs.writeShellScriptBin "eww-bar" ''
+    export PATH=${deps}:$PATH
+    ${pkgs.eww}/bin/eww --config ${configDir} open --screen 0 bar
+  '';
 in
 util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
   name = "eww";
   hm = {
-    home.packages = [ eww ];
+    home.packages = [
+      eww
+      eww-bar
+    ];
     systemd.user.services = {
       "eww-daemon" = {
         Unit = {
           Description = "Start eww daemon";
-          After = [ "graphical-session.target" ];
+          Documentation = "https://elkowar.github.io/eww/";
           PartOf = [ "graphical-session.target" ];
         };
         Service = {
-          ExecStart = "${eww}/bin/eww daemon";
-          Restart = "never";
+          ExecStart = "${eww}/bin/eww daemon --no-daemonize";
+          Restart = "on-failure";
+          Type = "exec";
         };
         Install.WantedBy = [ "graphical-session.target" ];
       };
       "eww-bar" = {
         Unit = {
           Description = "Start eww bar";
-          After = [
-            "graphical-session.target"
-            "eww-daemon.service"
-          ];
+          Documentation = "https://elkowar.github.io/eww/";
+          After = [ "eww-daemon.service" ];
           PartOf = [ "eww-daemon.service" ];
         };
         Service = {
-          ExecStart = "${eww}/bin/eww open --screen 0 bar";
-          Restart = "never";
+          ExecStart = "${eww-bar}/bin/eww-bar open --no-daemonize --screen 0 bar";
+          Restart = "on-failure";
+          Type = "simple";
         };
         Install.WantedBy = [ "eww-daemon.service" ];
       };
