@@ -1,0 +1,19 @@
+(defpoll memory :interval "15s"
+  `free -L \
+  | awk -F' ' '{ print "{ \\"total\\": "($6 + $8)", \\"used\\": "$6", \\"free\\": "$8" }" }'`)
+
+(defwidget memory []
+  (box :class "mem_module" :vexpand false :hexpand false
+    (circular-progress :value {memory.used / memory.total}
+                       :class "membar"
+                       :thickness 4
+                       :min 0
+                       :max 100
+      (button :class "iconmem"
+              :limit-width 2
+              :tooltip "using ${round(memory.used / memory.total * 100, 0)}% RAM"
+              :onclick "EWW_CMD='${EWW_CMD}' ./scripts/pop.sh system"
+              :show_truncated false
+              :wrap false
+              ""))))
+

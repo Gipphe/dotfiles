@@ -59,7 +59,7 @@ $crust: #181926;
 tooltip.background {
   background-color: $base;
   // background-color: #0f0f17;
-  font-size: 18;
+  font-size: 18px;
   border-radius: 10px;
   // color: #bfc9db;
   color: $subtext1;
@@ -72,17 +72,17 @@ tooltip label {
 /** Widgets **/
 
 .clock_time_sep {
-  font-size: 16;
+  font-size: 16px;
   // color: #bfc9db;
   color: $subtext1;
   margin: 0px 4px 1px 4px;
 }
 .clock_time_class,
 .clock_minute_class {
-  font-size: 23;
+  font-size: 23px;
 }
 .clock_date_class {
-  font-size: 18;
+  font-size: 18px;
   margin: 0px 20px 0px -1px;
   // color: #d7beda;
   color: $rosewater;
@@ -141,20 +141,20 @@ tooltip label {
   border-radius: 10px;
 }
 .volume_icon {
-  font-size: 22;
+  font-size: 22px;
   // color: #a1bdce;
   color: $lavender;
   margin: 0px 10px 0px 10px;
 }
 
 .module_essid {
-  font-size: 18;
+  font-size: 18px;
   // color: #a1bdce;
   color: $lavender;
   margin: 0px 10px 0px 0px;
 }
 .module-wif {
-  font-size: 22;
+  font-size: 22px;
   // color: #a1bdce;
   color: $lavender;
   border-radius: 100%;
@@ -353,24 +353,24 @@ calendar:indeterminate {
 
 .sys_sep {
   color: #38384d;
-  font-size: 18;
+  font-size: 18px;
   margin: 0px 10px 0px 10px;
 }
 .sys_text_bat_sub,
 .sys_text_mem_sub {
-  font-size: 16;
+  font-size: 16px;
   color: #bbc5d7;
   margin: 5px 0px 0px 25px;
 }
 .sys_text_bat,
 .sys_text_mem {
-  font-size: 21;
+  font-size: 21px;
   font-weight: bold;
   margin: 14px 0px 0px 25px;
 }
 .sys_icon_bat,
 .sys_icon_mem {
-  font-size: 30;
+  font-size: 30px;
   margin: 30px;
 }
 .sys_win {

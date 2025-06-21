@@ -1,0 +1,43 @@
+(defvar wifi-reveal false)
+
+(defpoll wifi-signal :interval "10s"
+  `nmcli -t -f SIGNAL,ACTIVE device wifi | \
+    grep 'yes$' | \
+    head -1 | \
+    cut -d':' -f 1`)
+(defpoll wifi :interval "10s" `./modules/network/wifi.sh`)
+(deflisten wifi-ssid `./modules/network/wifi-ssid-watch.sh`)
+
+(defwidget network []
+  (eventbox :onhover "${EWW_CMD} update wifi-reveal=true"
+            :onhoverlost "${EWW_CMD} update wifi-reveal=false"
+    (box :vexpand false :hexpand false :space-evenly false
+      (button :class "module-wif"
+              :onclick "networkmanager_dmenu"
+              :wrap false
+              :limit-width 12
+              :style "color: #ffffff;"
+        (network-icon))
+      (revealer :transition "slideRight"
+                :reveal wifi-reveal
+                :visible {wifi-ssid != ""}
+                :duration "350ms"
+        (label :class "module_essid"
+               :text {wifi-ssid}
+               :orientation "h")))))
+
+(defwidget network-icon []
+  (_network-icon :strength {wifi-ssid == "" ? 0 : wifi-signal}
+            :offline "󰣼"
+            :excellent "󰣺"
+            :good "󰣸"
+            :okay "󰣶"
+            :slow "󰣴"))
+
+(defwidget _network-icon [strength offline excellent good okay slow]
+  {strength == "" ? offline :
+   strength < 26 ? slow :
+   strength < 51 ? okay :
+   strength < 76 ? good :
+   excellent})
+

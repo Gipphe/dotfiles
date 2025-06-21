@@ -34,18 +34,11 @@ let
         --add-flags "--config ${configDir}"
     '';
   };
-  eww-bar = pkgs.writeShellScriptBin "eww-bar" ''
-    export PATH=${deps}:$PATH
-    ${pkgs.eww}/bin/eww --config ${configDir} open --screen 0 bar
-  '';
 in
 util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
   name = "eww";
   hm = {
-    home.packages = [
-      eww
-      eww-bar
-    ];
+    home.packages = [ eww ];
     systemd.user.services = {
       "eww-daemon" = {
         Unit = {
@@ -68,7 +61,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
           PartOf = [ "eww-daemon.service" ];
         };
         Service = {
-          ExecStart = "${eww-bar}/bin/eww-bar open --no-daemonize --screen 0 bar";
+          ExecStart = "${eww}/bin/eww open --no-daemonize --screen 0 bar";
           Restart = "on-failure";
           Type = "simple";
         };

@@ -1,0 +1,49 @@
+; (defpoll battery :interval "15s" "./modules/battery/battery.sh")
+
+(defwidget battery []
+  (box :class "bat_module" :vexpand false :hexpand false
+    (circular-progress :value {EWW_BATTERY.BAT1.capacity}
+                       :class "batbar"
+                       :thickness 4
+                       :min 0
+                       :max 100
+      (button :class "iconbat"
+            :tooltip "battery on ${EWW_BATTERY.BAT1.capacity}%"
+            :limit-width 2
+            :show_truncated false
+            :onclick "EWW_CMD='${EWW_CMD}' ./scripts/pop.sh system"
+            :wrap false
+            {EWW_BATTERY.BAT1.status == "Charging" ? "" : ""}))))
+
+(defwidget battery-icon []
+  (_battery :status {EWW_BATTERY.BAT1.status}
+            :battery {EWW_BATTERY.BAT1.capacity}
+            :charging "󰂄"
+            :c-100    "󰁹"
+            :c-90     "󰂂"
+            :c-80     "󰂁"
+            :c-70     "󰂀"
+            :c-60     "󰁿"
+            :c-50     "󰁾"
+            :c-40     "󰁽"
+            :c-30     "󰁼"
+            :c-20     "󰁻"
+            :c-10     "󰁺"
+            :c-0      "󰂃"))
+
+(defwidget _battery-icon
+  [battery status
+   charging c-100 c-90 c-80 c-70 c-60 c-50 c-40 c-30 c-20 c-10 c-0]
+  {status == "Charging" ? charging :
+   battery < 5 ? c-0 :
+   battery < 10 ? c-10 :
+   battery < 20 ? c-20 :
+   battery < 30 ? c-30 :
+   battery < 40 ? c-40 :
+   battery < 50 ? c-50 :
+   battery < 60 ? c-60 :
+   battery < 70 ? c-70 :
+   battery < 80 ? c-80 :
+   battery < 90 ? c-90 :
+   c-100})
+

@@ -1,0 +1,10 @@
+(deflisten workspaces :initial '[]' "./modules/workspaces/get-workspaces.sh")
+(deflisten current-workspace :initial "1" "./modules/workspaces/get-active-workspace.sh")
+(defwidget workspaces []
+  (eventbox :onscroll "./modules/workspaces/change-active-workspace.sh {} ${current-workspace}" :class "workspace-widget"
+    (box :space-evenly true :hexpand false :vexpand false
+      (for workspace in workspaces
+        (eventbox :onclick "hyprctl dispatch workspace ${workspace}"
+          (box :class "workspace-entry ${workspace == current-workspace ? 'current' : ''}"
+            (label :text "${workspace}")))))))
+

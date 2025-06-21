@@ -1,0 +1,38 @@
+(defvar time_reveal false)
+
+(defpoll time :interval "5s"
+  `date +'{"hour": "%H", "min": "%M", "date": "%Y-%m-%d"}'`)
+(defpoll calendar :interval "1h"
+  `date +'{"day": "%d", "year": "%Y"}'`)
+
+(defwidget time []
+  (eventbox :onhover "${EWW_CMD} update time_reveal=true"
+            :onhoverlost "${EWW_CMD} update time_reveal=false"
+    (box :class "module"
+         :space-evenly false
+         :orientation "h"
+         :spacing 3
+      (label :text "${time.hour}:${time.min}"
+             :class "clock_time_class clock_minute_class")
+      (revealer :transition "slideleft"
+                :reveal time_reveal
+                :duration "350ms"
+        (button :class "clock_date_class"
+                :onclick "EWW_CMD='${EWW_CMD}' ./pop.sh calendar"
+          {time.date})))))
+
+(defwidget cal []
+  (box :class "cal" :orientation "v"
+    (box :class "cal-in"
+      (calendar :class "cal" 
+                :day {calendar.day} 
+                :year {calendar.year}))))
+
+(defwindow calendar
+  :geometry (geometry
+              :x "-20px"
+              :y "7%"
+              :anchor "top right"
+              :width "270px" 
+              :height "60px")
+  (cal))

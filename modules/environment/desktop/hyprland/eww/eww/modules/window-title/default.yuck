@@ -1,0 +1,5 @@
+(deflisten window :initial "..." "./modules/window-title/get-window-title.sh")
+(defwidget window-title []
+  (box :class "window-title" :vexpand false :hexpand false
+    (label :text {strlength(window) > 30 ? "${substring(window, 0, 60)}..." : window})))
+
