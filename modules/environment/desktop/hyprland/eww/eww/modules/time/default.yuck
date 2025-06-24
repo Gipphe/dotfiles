@@ -1,32 +1,32 @@
-(defvar time_reveal false)
+(defvar time-reveal false)
 
-(defpoll time :interval "5s"
-  `date +'{"hour": "%H", "min": "%M", "date": "%Y-%m-%d"}'`)
-(defpoll calendar :interval "1h"
+(defpoll time :interval "5s" :initial `00:00` `date +'%H:%M'`)
+(defpoll date :interval "3h" :initial `1970-01-01` `date +'%Y-%m-%d'`)
+(defpoll calendar :interval "1h" :initial `{"day": "01", "year": "1970"}`
   `date +'{"day": "%d", "year": "%Y"}'`)
 
 (defwidget time []
-  (eventbox :onhover "${EWW_CMD} update time_reveal=true"
-            :onhoverlost "${EWW_CMD} update time_reveal=false"
-    (box :class "module"
+  (eventbox :onhover "${EWW_CMD} update time-reveal=true"
+            :onhoverlost "${EWW_CMD} update time-reveal=false"
+    (box :class "time"
          :space-evenly false
          :orientation "h"
          :spacing 3
-      (label :text "${time.hour}:${time.min}"
-             :class "clock_time_class clock_minute_class")
+      (label :text time
+             :class "time__clock")
       (revealer :transition "slideleft"
-                :reveal time_reveal
+                :reveal time-reveal
                 :duration "350ms"
-        (button :class "clock_date_class"
+        (button :class "time__date"
                 :onclick "EWW_CMD='${EWW_CMD}' ./pop.sh calendar"
-          {time.date})))))
+          date)))))
 
 (defwidget cal []
-  (box :class "cal" :orientation "v"
-    (box :class "cal-in"
-      (calendar :class "cal" 
-                :day {calendar.day} 
-                :year {calendar.year}))))
+  (box :class "calendar" :orientation "v"
+    (box :class "calendar__inner"
+      (calendar :class "calendar__calendar" 
+                :day {calendar?.day ?: "01"} 
+                :year {calendar?.year ?: "2025"}))))
 
 (defwindow calendar
   :geometry (geometry

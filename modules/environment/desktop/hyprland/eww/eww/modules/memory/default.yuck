@@ -1,19 +1,22 @@
 (defpoll memory :interval "15s"
-  `free -L \
-  | awk -F' ' '{ print "{ \\"total\\": "($6 + $8)", \\"used\\": "$6", \\"free\\": "$8" }" }'`)
+                :initial `{"total": 0, "available": 0, "used": 0, "percent": 0}`
+  `awk '
+    $1 == "MemTotal:" { memtotal = $2 }
+    $1 == "MemAvailable:" { memavailable = $2 }
+    END {
+      printf("{\\"total\\": %s, \\"available\\": %s, \\"used\\": %s, \\"percent\\": %s }\\n", memtotal, memavailable, (memtotal - memavailable), ((memtotal - memavailable) / memtotal * 100))
+    }
+  ' /proc/meminfo`)
 
 (defwidget memory []
-  (box :class "mem_module" :vexpand false :hexpand false
-    (circular-progress :value {memory.used / memory.total}
-                       :class "membar"
+  (box :class "memory"
+       :vexpand false
+       :hexpand false
+    (circular-progress :value {round(memory.percent, 0)}
+                       :class "memory__progress"
                        :thickness 4
-                       :min 0
-                       :max 100
-      (button :class "iconmem"
-              :limit-width 2
-              :tooltip "using ${round(memory.used / memory.total * 100, 0)}% RAM"
+      (button :class "memory__button"
+              :tooltip "using ${round(memory.percent, 0)}% RAM"
               :onclick "EWW_CMD='${EWW_CMD}' ./scripts/pop.sh system"
-              :show_truncated false
-              :wrap false
-              ""))))
+        ""))))
 

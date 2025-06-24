@@ -1,0 +1,59 @@
+(defwidget bar-layout []
+  (box :class "bar"
+       :orientation "h"
+       :hexpand false
+    (left)
+    (center)
+    (right)))
+
+(defwidget left []
+  (box :orientation "h"
+       :space-evenly false
+       :halign "start"
+       :class "bar__left"
+    (app-drawer)
+    (window-title)))
+
+(defwidget center []
+  (box :orientation "h"
+       :space-evenly false
+       :halign "center"
+       :class "bar__center"
+    (workspaces)))
+
+(defwidget right []
+  (box :orientation "h"
+       :space-evenly false
+       :halign "end"
+       :class "bar__right"
+    (brightness)
+    (volume)
+    (network)
+    (sep)
+    (battery)
+    (memory)
+    (sep)
+    (tray)
+    (sep)
+    (time)))
+
+(defwidget sep []
+  (box :vexpand false :hexpand false
+    (label :class "separator" :text "|")))
+
+(defwindow bar-floating :geometry (geometry :x "0%"
+                                   :y "9px"
+                                   :width "98%"
+                                   :height "30px"
+                                   :anchor "top center")
+               :exclusive true
+               :stacking "overlay"
+  (bar-layout))
+
+
+(defwindow bar :geometry (geometry :width "100%"
+                                   :anchor "top center")
+               :exclusive true
+               :stacking "overlay"
+  (bar-layout))
+

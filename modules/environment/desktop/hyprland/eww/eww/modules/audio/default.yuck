@@ -1,20 +1,26 @@
-(defpoll volume-percent :interval "3s" `pamixer --get-volume`)
-
+(defvar vol_reveal false)
 (defvar mic-percent "100")
+
+(defpoll volume-percent :interval "3s" :initial 0
+  `pamixer --get-volume`)
 ; (defpoll mic-percent :interval "3s"
 ;   `amixer -D pulse sget Capture \
 ;   | awk -F'[][]' '/Left:/ {print $2}' \
 ;   | tr -d '%'`)
-(defvar vol_reveal false)
+
 (defwidget volume-icon []
   {volume-percent > 66 ? "" :
    volume-percent > 33 ? "" :
    volume-percent > 0 ? "" :
    ""})
+
 (defwidget volume []
   (eventbox :onhover "${EWW_CMD} update vol_reveal=true"
             :onhoverlost "${EWW_CMD} update vol_reveal=false"
-    (box :class "module-2" :space-evenly false :orientation "h" :spacing 3
+    (box :class "module-2"
+         :space-evenly false
+         :orientation "h"
+         :spacing 3
       (button :onclick "EWW_CMD='${EWW_CMD}' ./scripts/pop.sh audio"
               :class "volume_icon"
         (volume-icon))
@@ -28,13 +34,31 @@
                :max 100
                :min 0
                :onchange "pamixer --set-volume {} && ${EWW_CMD} poll volume-percent")))))
+
 (defwidget audio []
-  (box :class "audio-box" :orientation "v" :space-evenly "false" :vexpand "false" :hexpand "false"
-    (box :halign "v" :space-evenly "false" :hexpand "false" :vexpand "false"
-      (box :class "speaker_icon" :orientation "v")
-      (box :orientation "v" :halign "center" :vexpand "false" :hexpand "false"
-        (label :class "speaker_text" :text "speaker" :valign "center" :halign "left" )
-        (box :class "speaker_bar" :halign "center" :vexpand "false" :hexpand "false"
+  (box :class "audio-box"
+       :orientation "v"
+       :space-evenly "false"
+       :vexpand "false"
+       :hexpand "false"
+    (box :halign "v"
+         :space-evenly "false"
+         :hexpand "false"
+         :vexpand "false"
+      (box :class "speaker_icon"
+           :orientation "v")
+      (box :orientation "v"
+           :halign "center"
+           :vexpand "false"
+           :hexpand "false"
+        (label :class "speaker_text"
+               :text "speaker"
+               :valign "center"
+               :halign "left" )
+        (box :class "speaker_bar"
+             :halign "center"
+             :vexpand "false"
+             :hexpand "false"
           (scale :value volume-percent
                  :space-evenly "false"
                  :orientation "h"
@@ -42,12 +66,27 @@
                  :tooltip "volume on ${volume-percent}%"
                  :max 100
                  :min 0))))
-    (label :text "" :class "audio_sep" :halign "center")
-    (box :halign "v" :space-evenly "false" :hexpand "false" :vexpand "false"
-      (box :class "mic_icon" :orientation "v")
-      (box :orientation "v" :halign "center" :vexpand "false" :hexpand "false"
-        (label :class "mic_text" :text "mic" :valign "center" :halign "left" )
-        (box :class "mic_bar" :halign "center" :vexpand "false" :hexpand "false"
+    (label :text ""
+           :class "audio_sep"
+           :halign "center")
+    (box :halign "v"
+         :space-evenly "false"
+         :hexpand "false"
+         :vexpand "false"
+      (box :class "mic_icon"
+           :orientation "v")
+      (box :orientation "v"
+           :halign "center"
+           :vexpand "false"
+           :hexpand "false"
+        (label :class "mic_text"
+               :text "mic"
+               :valign "center"
+               :halign "left")
+        (box :class "mic_bar"
+             :halign "center"
+             :vexpand "false"
+             :hexpand "false"
           (scale :value mic-percent
                  :space-evenly "false"
                  :orientation "h"

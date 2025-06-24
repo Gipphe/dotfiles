@@ -1,0 +1,21 @@
+.memory {
+  // background-color: #0f0f17;
+  background-color: $base;
+  border-radius: 16px;
+  margin: 0px 10px 0px 3px;
+
+  &__progress {
+    color: $peach;
+    // color: #e0b089;
+    // background-color: #38384d;
+    background-color: $surface0;
+    border-radius: 10px;
+  }
+
+  &__button {
+    color: $yellow;
+    // color: #e0b089;
+    font-size: 15px;
+    margin: 10px;
+  }
+}

@@ -1,0 +1,16 @@
+.bar {
+  all: unset;
+  // background-color: #0f0f17;
+  background-color: $crust;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  padding: 4px 8px;
+}
+
+.separator {
+  // color: #3e424f;
+  color: $surface1;
+  font-weight: bold;
+  font-size: 22px;
+  margin: 0px 8px 0px 8px;
+}

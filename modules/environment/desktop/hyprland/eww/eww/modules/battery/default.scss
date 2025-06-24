@@ -1,0 +1,19 @@
+.battery {
+  border-radius: 16px;
+  margin: 0px 10px 0px 10px;
+
+  &__progress {
+    color: $green;
+    // color: #afbea2;
+    // background-color: #38384d;
+    background-color: $surface0;
+    border-radius: 10px;
+  }
+
+  &__icon {
+    // color: #afbea2;
+    color: $green;
+    font-size: 15px;
+    margin: 10px;
+  }
+}

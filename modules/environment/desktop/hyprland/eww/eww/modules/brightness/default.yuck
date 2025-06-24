@@ -1,17 +1,22 @@
 (defvar br_reveal false)
 
-(defpoll brightness-percent :interval "5s"
+(defpoll brightness-percent :interval "5s" :initial 100
   `brightnessctl -m -d intel_backlight | awk -F, '{print $4}' | tr -d '%'`)
 
-(defwidget bright []
+(defwidget brightness []
   (eventbox :onhover "${EWW_CMD} update br_reveal=true"
             :onhoverlost "${EWW_CMD} update br_reveal=false"
-    (box :class "module-2" :space-evenly false :orientation "h" :spacing 3
-      (label :text "󰃠" :class "bright_icon" :tooltip "brightness")
+    (box :class "brightness"
+         :space-evenly false
+         :orientation "h"
+         :spacing 3
+      (label :class "brightness__icon"
+             :tooltip "brightness"
+             :text "󰃠")
       (revealer :transition "slideLeft"
                 :reveal br_reveal
                 :duration "350ms"
-        (scale :class "brightbar"
+        (scale :class "brightness__bar"
                :value brightness-percent
                :orientation "h"
                :tooltip "${brightness-percent}%"

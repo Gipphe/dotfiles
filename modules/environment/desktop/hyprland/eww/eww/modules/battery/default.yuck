@@ -1,18 +1,13 @@
 ; (defpoll battery :interval "15s" "./modules/battery/battery.sh")
 
 (defwidget battery []
-  (box :class "bat_module" :vexpand false :hexpand false
+  (box :class "battery" :vexpand false :hexpand false
     (circular-progress :value {EWW_BATTERY.BAT1.capacity}
-                       :class "batbar"
+                       :class "battery__progress"
                        :thickness 4
-                       :min 0
-                       :max 100
-      (button :class "iconbat"
+      (button :class "battery__icon"
             :tooltip "battery on ${EWW_BATTERY.BAT1.capacity}%"
-            :limit-width 2
-            :show_truncated false
             :onclick "EWW_CMD='${EWW_CMD}' ./scripts/pop.sh system"
-            :wrap false
             {EWW_BATTERY.BAT1.status == "Charging" ? "" : ""}))))
 
 (defwidget battery-icon []

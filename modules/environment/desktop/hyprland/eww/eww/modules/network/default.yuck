@@ -11,20 +11,20 @@
 (defwidget network []
   (eventbox :onhover "${EWW_CMD} update wifi-reveal=true"
             :onhoverlost "${EWW_CMD} update wifi-reveal=false"
-    (box :vexpand false :hexpand false :space-evenly false
-      (button :class "module-wif"
+    (box :class "network"
+         :vexpand false
+         :hexpand false
+         :space-evenly false
+      (button :class "network__icon"
               :onclick "networkmanager_dmenu"
-              :wrap false
-              :limit-width 12
               :style "color: #ffffff;"
         (network-icon))
       (revealer :transition "slideRight"
                 :reveal wifi-reveal
                 :visible {wifi-ssid != ""}
                 :duration "350ms"
-        (label :class "module_essid"
-               :text {wifi-ssid}
-               :orientation "h")))))
+        (label :class "network__ssid"
+               :text wifi-ssid)))))
 
 (defwidget network-icon []
   (_network-icon :strength {wifi-ssid == "" ? 0 : wifi-signal}

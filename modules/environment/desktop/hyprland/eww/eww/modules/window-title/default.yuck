@@ -1,5 +1,14 @@
-(deflisten window :initial "..." "./modules/window-title/get-window-title.sh")
+(defpoll screen-width :interval "24h" :initial '1920'
+  `wlr-randr --output eDP-1 | awk -F' ' '/px,/ { split($1, a, "x"); print a[1] }'`)
+
+(deflisten window :initial "..."
+  `./modules/window-title/get-window-title.sh`)
+
 (defwidget window-title []
-  (box :class "window-title" :vexpand false :hexpand false
-    (label :text {strlength(window) > 30 ? "${substring(window, 0, 60)}..." : window})))
+  (box :class "window-title"
+       :vexpand false
+       :hexpand false
+    (label :text {strlength(window) > ((screen-width / 2) - 30)
+      ? "${substring(window, 0, 60)}..."
+      : window})))
 
