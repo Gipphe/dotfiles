@@ -8,31 +8,49 @@
   min-height: 10px;
   min-width: 70px;
   margin: 0px 10px 0px 0px;
+
+  .light & {
+    background-color: $light_surface1;
+    box-shadow: 0 2px 3px 2px $light_crust;
+  }
 }
 
 .volbar trough highlight {
   background-image: linear-gradient(
     to right,
-    /*
-    #afcee0 30%,
-    #a1bdce 50%,
-    #77a5bf 100% * 50
-    */ $lavender 30%,
+    $lavender 30%,
     $sapphire 50%,
     $blue 100% * 50
   );
   border-radius: 10px;
+
+  .light & {
+    background-image: linear-gradient(
+      to right,
+      $light_lavender 30%,
+      $light_sapphire 50%,
+      $light_blue 100% * 50
+    );
+  }
 }
 .volume_icon {
   font-size: 22px;
   // color: #a1bdce;
   color: $lavender;
   margin: 0px 10px 0px 10px;
+
+  .light & {
+    color: $light_lavender;
+  }
 }
 
 .audio-box {
-  background-color: #0f0f17;
+  background-color: $surface0;
   border-radius: 16px;
+
+  .light & {
+    background-color: $light_surface0;
+  }
 }
 
 .speaker_icon {
@@ -46,10 +64,14 @@
 }
 
 .speaker_text {
-  color: #a1bdce;
+  color: $sky;
   font-size: 26px;
   font-weight: bold;
   margin: 20px 0px 0px 0px;
+
+  .light & {
+    color: $light_sky;
+  }
 }
 
 .speaker_bar scale trough highlight {

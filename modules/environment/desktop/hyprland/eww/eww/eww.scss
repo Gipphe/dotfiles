@@ -25,6 +25,33 @@ $base: #24273a;
 $mantle: #1e2030;
 $crust: #181926;
 
+$light_rosewater: #dc8a78;
+$light_flamingo: #dd7878;
+$light_pink: #ea76cb;
+$light_mauve: #8839ef;
+$light_red: #d20f39;
+$light_maroon: #e64553;
+$light_peach: #fe640b;
+$light_yellow: #df8e1d;
+$light_green: #40a02b;
+$light_teal: #179299;
+$light_sky: #04a5e5;
+$light_sapphire: #209fb5;
+$light_blue: #1e66f5;
+$light_lavender: #7287fd;
+$light_text: #4c4f69;
+$light_subtext1: #5c5f77;
+$light_subtext0: #6c6f85;
+$light_overlay2: #7c7f93;
+$light_overlay1: #8c8fa1;
+$light_overlay0: #9ca0b0;
+$light_surface2: #acb0be;
+$light_surface1: #bcc0cc;
+$light_surface0: #ccd0da;
+$light_base: #eff1f5;
+$light_mantle: #e6e9ef;
+$light_crust: #dce0e8;
+
 @import "modules/app-drawer/default.scss";
 @import "modules/audio/default.scss";
 @import "modules/bar/default.scss";
@@ -54,6 +81,10 @@ tooltip.background {
   color: $subtext1;
 }
 
+.light tooltip.background {
+  color: $light_subtext1;
+}
+
 tooltip label {
   margin: 6px;
 }
@@ -68,4 +99,8 @@ scale trough {
   min-height: 10px;
   min-width: 70px;
   margin: 0px 10px 0px 0px;
+}
+
+.light scale trough {
+  background-color: $light_surface1;
 }

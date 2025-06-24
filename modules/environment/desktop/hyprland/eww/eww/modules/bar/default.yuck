@@ -1,3 +1,5 @@
+(defvar mode "dark")
+
 (defwidget bar-layout []
   (box :class "bar"
        :orientation "h"
@@ -26,6 +28,7 @@
        :space-evenly false
        :halign "end"
        :class "bar__right"
+    (mode)
     (brightness)
     (volume)
     (network)
@@ -41,19 +44,25 @@
   (box :vexpand false :hexpand false
     (label :class "separator" :text "|")))
 
-(defwindow bar-floating :geometry (geometry :x "0%"
-                                   :y "9px"
-                                   :width "98%"
-                                   :height "30px"
-                                   :anchor "top center")
-               :exclusive true
-               :stacking "overlay"
+(defwidget mode []
+  (button :class "mode" :onclick `${EWW_CMD} update mode=${mode == 'light' ? 'dark' : 'light'}`
+    {mode == 'light' ? '󰃠' : '󰃛'}))
+
+(defwindow bar-floating
+  :geometry (geometry :x "0%"
+                      :y "9px"
+                      :width "98%"
+                      :height "30px"
+                      :anchor "top center")
+  :exclusive true
+  :stacking "overlay"
   (bar-layout))
 
 
-(defwindow bar :geometry (geometry :width "100%"
-                                   :anchor "top center")
-               :exclusive true
-               :stacking "overlay"
+(defwindow bar
+  :geometry (geometry :width "100%"
+                      :anchor "top center")
+  :exclusive true
+  :stacking "overlay"
   (bar-layout))
 

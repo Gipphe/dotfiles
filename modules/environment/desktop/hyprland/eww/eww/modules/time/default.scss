@@ -3,26 +3,21 @@
   border-radius: 10px 16px 0px 10px;
 
   &__clock {
-    // color: #bfc9db;
     color: $subtext1;
     font-size: 23px;
     font-weight: bold;
+
+    .light & {
+      color: $light_subtext1;
+    }
   }
 
   &__date {
     font-size: 18px;
     margin: 0px 10px 0px 5px;
-    // color: #d7beda;
     color: $rosewater;
-  }
-}
 
-.light-mode {
-  .time {
-    &__clock {
-      color: $light_subtext1;
-    }
-    &__date {
+    .light & {
       color: $light_rosewater;
     }
   }
@@ -30,48 +25,72 @@
 
 .cal {
   background-color: $base;
-  // background-color: #0f0f17;
   font-family: JetBrainsMono Nerd Font;
   font-size: 18px;
   font-weight: normal;
 
+  .light & {
+    background-color: $light_base;
+  }
+
   &__inner {
     padding: 0px 10px 0px 10px;
-    // color: #bfc9db;
     color: $lavender;
+
+    .light & {
+      color: $light_lavender;
+    }
   }
   &__calendar {
     color: $lavender;
     padding: 5px 5px 5px 5px;
     margin-left: 10px;
 
+    .light & {
+      color: $light_lavender;
+    }
+
     &:selected {
-      // color: #a1bdce;
       color: $sapphire;
+
+      .light & {
+        color: $light_sapphire;
+      }
     }
 
     &.header {
-      // color: #a1bdce;
       color: $sapphire;
       font-weight: bold;
+
+      .light & {
+        color: $light_sapphire;
+      }
     }
 
     &.button {
-      // color: #afbea2;
       color: $yellow;
+
+      .light & {
+        color: $light_yellow;
+      }
     }
 
     &.highlight {
-      // color: #a1bdce;
       color: $sapphire;
       font-weight: bold;
       padding: 20px;
+
+      .light & {
+        color: $light_sapphire;
+      }
     }
 
     &:indeterminate {
-      // color: #bfc9db;
       color: $lavender;
+
+      .light & {
+        color: $light_lavender;
+      }
     }
   }
 }
-.light-mode

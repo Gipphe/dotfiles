@@ -12,7 +12,7 @@
          :spacing 3
       (label :class "brightness__icon"
              :tooltip "brightness"
-             :text "󰃠")
+             :text "󰛨")
       (revealer :transition "slideLeft"
                 :reveal br_reveal
                 :duration "350ms"

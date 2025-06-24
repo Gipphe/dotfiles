@@ -5,6 +5,10 @@
     color: $lavender;
     border-radius: 100%;
     margin: 0px 10px 0px 5px;
+
+    .light & {
+      color: $light_lavender;
+    }
   }
 
   &__ssid {
@@ -12,5 +16,9 @@
     // color: #a1bdce;
     color: $lavender;
     margin: 0px 10px 0px 0px;
+
+    .light & {
+      color: $light_lavender;
+    }
   }
 }

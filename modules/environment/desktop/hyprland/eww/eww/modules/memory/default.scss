@@ -1,21 +1,30 @@
 .memory {
-  // background-color: #0f0f17;
   background-color: $base;
   border-radius: 16px;
   margin: 0px 10px 0px 3px;
 
+  .light & {
+    background-color: $light_base;
+  }
+
   &__progress {
     color: $peach;
-    // color: #e0b089;
-    // background-color: #38384d;
     background-color: $surface0;
     border-radius: 10px;
+
+    .light & {
+      color: $light_peach;
+      background-color: $light_surface0;
+    }
   }
 
   &__button {
     color: $yellow;
-    // color: #e0b089;
     font-size: 15px;
     margin: 10px;
+
+    .light & {
+      color: $light_yellow;
+    }
   }
 }
