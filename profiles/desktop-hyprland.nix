@@ -11,7 +11,8 @@ util.mkProfile "desktop-hyprland" {
       hyprpaper.enable = true;
       hyprpolkitagent.enable = true;
       mako.enable = true;
-      rofi.enable = true;
+      rofi.enable = false;
+      walker.enable = true;
       waybar.enable = true;
       wlogout.enable = true;
     };
