@@ -18,6 +18,15 @@ util.mkProgram {
           "cobalt".id = "5WAUGFG-XWLSBTV-IJMCB5F-YGN7AZM-RQ2FQOT-7SWUF7Q-7OUZKSR-JBZX3AK";
         };
         folders = {
+          "${config.home.homeDirectory}/Notes" = {
+            id = "notes";
+            label = "Notes";
+            devices = [
+              "cobalt"
+              "helium"
+              "titanium"
+            ];
+          };
         };
       };
       tray.enable = true;
