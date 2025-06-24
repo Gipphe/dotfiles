@@ -1,9 +1,8 @@
 (defvar mode "dark")
 
 (defwidget bar-layout []
-  (box :class "bar"
-       :orientation "h"
-       :hexpand false
+  (centerbox :class "bar ${mode}"
+             :orientation "h"
     (left)
     (center)
     (right)))
