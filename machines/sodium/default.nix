@@ -1,4 +1,4 @@
-{ util, inputs, lib, ... }:
+{ util, ... }:
 util.mkToggledModule [ "machines" ] {
   name = "sodium";
 
@@ -39,8 +39,9 @@ util.mkToggledModule [ "machines" ] {
     #   dell-precision-
     # ];
 
-    boot.initrd.luks.devices."luks-03a05c7c-fec2-435a-a17c-40693494c8ea".device = "/dev/disk/by-uuid/03a05c7c-fec2-435a-a17c-40693494c8ea";
+    boot.initrd.luks.devices."luks-03a05c7c-fec2-435a-a17c-40693494c8ea".device =
+      "/dev/disk/by-uuid/03a05c7c-fec2-435a-a17c-40693494c8ea";
 
-    system.stateVersion = lib.mkForce "25.05";
+    system.stateVersion = "25.05";
   };
 }
