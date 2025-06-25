@@ -23,7 +23,7 @@ util.mkToggledModule [ "machines" ] {
       rice.enable = true;
       secrets.enable = true;
       windows-setup.enable = true;
-      work.enable = true;
+      strise.enable = true;
     };
   };
 

@@ -1,5 +1,5 @@
 { util, ... }:
-util.mkProfile "work-wsl" {
+util.mkProfile "strise-wsl" {
   gipphe.programs = {
     code-cursor = {
       enable = true;

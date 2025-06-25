@@ -23,8 +23,8 @@ util.mkToggledModule [ "machines" ] {
         systemd.enable = true;
         vm-guest.enable = true;
         windows-setup.enable = true;
-        work-slim.enable = true;
-        work-wsl.enable = true;
+        strise-slim.enable = true;
+        strise-wsl.enable = true;
       };
       programs.wezterm.enable = true;
     };

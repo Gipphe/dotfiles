@@ -1,5 +1,5 @@
 { util, ... }:
-util.mkProfile "work-slim" {
+util.mkProfile "strise-slim" {
   gipphe.programs = {
     google-cloud-sdk.enable = true;
     idea-ultimate.enable = true;
