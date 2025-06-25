@@ -19,11 +19,11 @@ util.mkToggledModule [ "machines" ] {
       cli.enable = true;
       core.enable = true;
       desktop-hyprland.enable = true;
-      # desktop-normal.enable = true;
       desktop.enable = true;
       fonts.enable = true;
       gaming.enable = true;
       gc.enable = true;
+      logitech.enable = true;
       networkmanager.enable = true;
       rice.enable = true;
       secrets.enable = true;
