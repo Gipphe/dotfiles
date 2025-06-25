@@ -50,6 +50,7 @@ util.mkToggledModule
       ./hyprpolkitagent.nix
       ./mako.nix
       ./rofi
+      ./swaync.nix
       ./walker
       ./waybar.nix
       ./wlogout.nix
