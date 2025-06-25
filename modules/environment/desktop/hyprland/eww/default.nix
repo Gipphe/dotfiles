@@ -17,6 +17,7 @@ let
       pamixer
       socat
       wlr-randr
+      walker
     ];
   configDir = "${config.gipphe.homeDirectory}/projects/dotfiles/modules/environment/desktop/hyprland/eww/eww";
   eww = pkgs.symlinkJoin {

@@ -1,4 +1,4 @@
 (defwidget app-drawer []
   (button :class "app-drawer"
-          :onclick "rofi -show drun"
+          :onclick "walker"
     "󱗼"))
