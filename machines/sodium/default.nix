@@ -26,6 +26,7 @@ util.mkToggledModule [ "machines" ] {
       gc.enable = true;
       logitech.enable = true;
       networkmanager.enable = true;
+      lovdata.enable = true;
       rice.enable = true;
       secrets.enable = true;
       sync.enable = true;
