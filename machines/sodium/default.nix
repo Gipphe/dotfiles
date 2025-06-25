@@ -12,6 +12,7 @@ util.mkToggledModule [ "machines" ] {
         bluetooth.enable = true;
         boot-efi.enable = true;
         devices.enable = true;
+        power.enable = true;
         system.enable = true;
       };
       ai.enable = true;
