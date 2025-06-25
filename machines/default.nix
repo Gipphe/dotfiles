@@ -6,7 +6,7 @@
     ./fluoride
     ./helium
     ./silicon
-    ./sodium
+    ./utv-vnb-lt
   ];
   options.gipphe = {
     username = lib.mkOption {

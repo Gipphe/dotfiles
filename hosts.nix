@@ -9,8 +9,8 @@ let
     fluoride.machine = "nixos";
     silicon.system = "aarch64-darwin";
     silicon.machine = "nix-darwin";
-    sodium.system = "x86_64-linux";
-    sodium.machine = "nixos";
+    utv-vnb-lt.system = "x86_64-linux";
+    utv-vnb-lt.machine = "nixos";
     helium.system = "aarch64-linux";
     helium.machine = "nix-on-droid";
   };

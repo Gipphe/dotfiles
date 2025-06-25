@@ -4,7 +4,7 @@ keys:
   - &cobalt age12ewxc5y60mgvu240gvjnnc6uufvjrh757kad7dkzlwm64fcd4v4qtmvpy5
   - &helium age102w690dszwe3305vg3v084y6z6hstjsxskatz6evguj3utzz6e4s7yfrfr
   - &fluoride age16fmgfwq6hjyps36ar9jvwj7325sjfju3yfxt9df2zlfwu9dzdudqwpsh9f
-  - &sodium age19f0gx25ug7r8gczchncs7hmhvff92rhjn748ednp29j68y3jrffqwkl79k
+  - &utv-vnb-lt age19f0gx25ug7r8gczchncs7hmhvff92rhjn748ednp29j68y3jrffqwkl79k
 creation_rules:
   - path_regex: secrets/silicon.*
     key_groups:
@@ -30,15 +30,10 @@ creation_rules:
       - age:
           - *fluoride
 
-  - path_regex: secrets/sodium.*
-    key_groups:
-      - age:
-          - *sodium
-
   - path_regex: secrets/utv-vnb-lt.*
     key_groups:
       - age:
-          - *sodium
+          - *utv-vnb-lt
 
   - path_regex: secrets/mods-cli-openai-api\.key
     key_groups:
@@ -48,7 +43,7 @@ creation_rules:
           - *silicon
           - *helium
           - *fluoride
-          - *sodium
+          - *utv-vnb-lt
   - path_regex: secrets/claude-nvim-api-key\.key
     key_groups:
       - age:
@@ -57,7 +52,7 @@ creation_rules:
           - *silicon
           - *helium
           - *fluoride
-          - *sodium
+          - *utv-vnb-lt
   - path_regex: secrets/strise-milkyway-translations-openai-api-key\.key
     key_groups:
       - age:
@@ -66,7 +61,7 @@ creation_rules:
           - *silicon
           - *helium
           - *fluoride
-          - *sodium
+          - *utv-vnb-lt
   - path_regex: secrets/syncthing-password
     key_groups:
       - age:
@@ -75,4 +70,4 @@ creation_rules:
           - *silicon
           - *helium
           - *fluoride
-          - *sodium
+          - *utv-vnb-lt

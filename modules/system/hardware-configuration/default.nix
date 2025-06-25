@@ -6,10 +6,10 @@
 }:
 let
   configs = {
-    "argon" = ./argon.nix;
-    "cobalt" = ./cobalt.nix;
-    "fluoride" = ./fluoride.nix;
-    sodium = ./sodium.nix;
+    argon = ./argon.nix;
+    cobalt = ./cobalt.nix;
+    fluoride = ./fluoride.nix;
+    utv-vnb-lt = ./utv-vnb-lt.nix;
   };
 in
 {

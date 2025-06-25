@@ -1,6 +1,6 @@
 { util, ... }:
 util.mkToggledModule [ "machines" ] {
-  name = "sodium";
+  name = "utv-vnb-lt";
 
   shared.gipphe = {
     username = "gipphe";
