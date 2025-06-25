@@ -6,7 +6,10 @@ util.mkProfile "logitech" {
       # Did not work as expected.
       # solaar.enable = true;
     };
-    # Use ltunify to do things.
-    system.devices.logitech.enable = true;
+    system.devices = {
+      enable = true;
+      # Use ltunify to do things.
+      logitech.enable = true;
+    };
   };
 }
