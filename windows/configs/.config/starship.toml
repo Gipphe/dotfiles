@@ -1,5 +1,6 @@
 format = "$os$username$hostname$memory_usage$shlvl$directory$fossil_branch$hg_branch$git_branch$pijul_channel$git_status $aws$buf$c$conda$crystal$dart$elixir$elm$fennel$golang$gradle$haskell$haxe$java$julia$kotlin$lua$nim$nodejs$ocaml$perl$php$python$rlang$ruby$rust$scala$swift$zig$package$fill$status$direnv$docker_context$guix_shell$meson$nix_shell$time\n$character"
 palette = "catppuccin_macchiato"
+
 [aws]
 format = "[$symbol($version) ]($style)"
 style = "fg:peach"
