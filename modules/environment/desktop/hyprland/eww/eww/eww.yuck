@@ -6,6 +6,7 @@
 (include "./modules/memory/default.yuck")
 (include "./modules/music/default.yuck")
 (include "./modules/network/default.yuck")
+(include "./modules/notifications/default.yuck")
 (include "./modules/system/default.yuck")
 (include "./modules/time/default.yuck")
 (include "./modules/tray/default.yuck")

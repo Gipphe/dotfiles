@@ -37,6 +37,7 @@
     (sep)
     (tray)
     (sep)
+    (notifications)
     (time)))
 
 (defwidget sep []
