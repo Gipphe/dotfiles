@@ -6,6 +6,7 @@
   ...
 }:
 let
+  cfg = config.gipphe.programs.ssh;
   inherit (builtins) map concatStringsSep;
   raw_services = [
     "github"
@@ -27,17 +28,14 @@ in
 util.mkProgram {
   name = "ssh";
 
+  options.gipphe.programs.ssh.lovdata.enable = lib.mkEnableOption "Lovdata configs for SSH";
+
   hm = {
     programs = {
       ssh = {
         enable = true;
         package = pkgs.openssh;
         addKeysToAgent = "yes";
-        matchBlocks = lib.genAttrs services (s: {
-          user = "git";
-          identityFile = config.sops.secrets.${s}.path;
-          identitiesOnly = true;
-        });
       };
       # keychain = {
       #   enable = true;
@@ -124,9 +122,14 @@ util.mkProgram {
       };
     };
 
-    sops.secrets = lib.mkIf config.gipphe.environment.secrets.enable (
-      lib.concatMapAttrs (k: v: { ${k} = v; }) (lib.genAttrs services mkSecret)
-    );
+    sops.secrets = lib.mkMerge [
+      (lib.mkIf config.gipphe.environment.secrets.enable (
+        lib.concatMapAttrs (k: v: { ${k} = v; }) (lib.genAttrs services mkSecret)
+      ))
+      (lib.mkIf cfg.lovdata.enable {
+        "lovdata-gitlab.ssh" = mkSecret "lovdata-gitlab";
+      })
+    ];
   };
 
   system-nixos.programs.ssh.startAgent = true;

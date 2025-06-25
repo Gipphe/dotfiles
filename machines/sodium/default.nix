@@ -5,7 +5,7 @@ util.mkToggledModule [ "machines" ] {
   shared.gipphe = {
     username = "gipphe";
     homeDirectory = "/home/gipphe";
-    hostName = "sodium";
+    hostName = "utv-vnb-lt";
     profiles = {
       nixos = {
         audio.enable = true;
