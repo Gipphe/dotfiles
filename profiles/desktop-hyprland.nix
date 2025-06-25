@@ -13,7 +13,7 @@ util.mkProfile "desktop-hyprland" {
       mako.enable = true;
       rofi.enable = false;
       walker.enable = true;
-      waybar.enable = true;
+      waybar.enable = false;
       wlogout.enable = true;
     };
     display.enable = true;
