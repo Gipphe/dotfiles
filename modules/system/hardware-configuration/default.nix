@@ -9,6 +9,7 @@ let
     "argon" = ./argon.nix;
     "cobalt" = ./cobalt.nix;
     "fluoride" = ./fluoride.nix;
+    sodium = ./sodium.nix;
   };
 in
 {

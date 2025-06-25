@@ -6,6 +6,7 @@
     ./fluoride
     ./helium
     ./silicon
+    ./sodium
   ];
   options.gipphe = {
     username = lib.mkOption {
