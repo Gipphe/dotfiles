@@ -127,7 +127,7 @@ util.mkProgram {
         lib.concatMapAttrs (k: v: { ${k} = v; }) (lib.genAttrs services mkSecret)
       ))
       (lib.mkIf cfg.lovdata.enable {
-        "lovdata-gitlab.ssh" = mkSecret "lovdata-gitlab";
+        "lovdata-gitlab.ssh" = mkSecret "lovdata-gitlab.ssh";
       })
     ];
   };
