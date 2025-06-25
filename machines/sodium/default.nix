@@ -32,7 +32,6 @@ util.mkToggledModule [ "machines" ] {
       systemd.enable = true;
       windows-setup.enable = true;
     };
-    programs.idea-community.enable = true;
   };
 
   system-nixos = {
