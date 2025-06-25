@@ -35,6 +35,11 @@ creation_rules:
       - age:
           - *sodium
 
+  - path_regex: secrets/utv-vnb-lt.*
+    key_groups:
+      - age:
+          - *sodium
+
   - path_regex: secrets/mods-cli-openai-api\.key
     key_groups:
       - age:
