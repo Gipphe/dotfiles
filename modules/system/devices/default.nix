@@ -10,5 +10,5 @@ in
 util.mkToggledModule [ "system" ] {
   name = "devices";
   options.gipphe.system.devices.logitech.enable = lib.mkEnableOption "logitech unifying defices";
-  system-nixos.hardware.logitech.wireless = cfg.logitech.enable;
+  system-nixos.hardware.logitech.wireless.enable = cfg.logitech.enable;
 }
