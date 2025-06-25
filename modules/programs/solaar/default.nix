@@ -2,9 +2,9 @@
 util.mkProgram {
   name = "solaar";
   hm = {
-    home.packages = with pkgs; [
-      solaar
-      logitech-udev-rules
-    ];
+    home.packages = [ pkgs.solaar ];
+  };
+  system-nixos.hardware.logitech.wireless = {
+    enable = true;
   };
 }
