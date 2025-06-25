@@ -9,7 +9,7 @@
     (box :class "brightness"
          :space-evenly false
          :orientation "h"
-         :spacing 3
+         :spacing 10
       (label :class "brightness__icon"
              :tooltip "brightness"
              :text "󰛨")

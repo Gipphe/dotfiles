@@ -1,9 +1,8 @@
 .brightness {
   &__icon {
     font-size: 22px;
-    // color: #e4c9af;
+    min-width: 20px;
     color: $yellow;
-    margin: 0px 10px 0px 10px;
 
     .light & {
       color: $light_yellow;
@@ -13,14 +12,11 @@
   &__bar {
     scale trough {
       all: unset;
-      // background-color: #22242b;
       background-color: $surface1;
-      // box-shadow: 0 2px 3px 2px #06060b;
       box-shadow: 0 2px 3px 2px $crust;
       border-radius: 16px;
       min-height: 10px;
       min-width: 70px;
-      margin: 0px 10px 0px 0px;
 
       .light & {
         background-color: $light_surface1;

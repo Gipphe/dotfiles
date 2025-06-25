@@ -1,46 +1,49 @@
-.volbar scale trough {
-  all: unset;
-  // background-color: #22242b;
-  background-color: $surface1;
-  // box-shadow: 0 2px 3px 2px #06060b;
-  box-shadow: 0 2px 3px 2px $crust;
-  border-radius: 16px;
-  min-height: 10px;
-  min-width: 70px;
-  margin: 0px 10px 0px 0px;
+.audio {
+  &__icon {
+    font-size: 22px;
+    color: $lavender;
+    min-width: 40px;
 
-  .light & {
-    background-color: $light_surface1;
-    box-shadow: 0 2px 3px 2px $light_crust;
+    .light & {
+      color: $light_lavender;
+    }
   }
-}
 
-.volbar trough highlight {
-  background-image: linear-gradient(
-    to right,
-    $lavender 30%,
-    $sapphire 50%,
-    $blue 100% * 50
-  );
-  border-radius: 10px;
+  &__bar {
+    // margin-left: 10px;
 
-  .light & {
-    background-image: linear-gradient(
-      to right,
-      $light_lavender 30%,
-      $light_sapphire 50%,
-      $light_blue 100% * 50
-    );
-  }
-}
-.volume_icon {
-  font-size: 22px;
-  // color: #a1bdce;
-  color: $lavender;
-  margin: 0px 10px 0px 10px;
+    scale trough {
+      all: unset;
+      background-color: $surface1;
+      box-shadow: 0 2px 3px 2px $crust;
+      border-radius: 16px;
+      min-height: 10px;
+      min-width: 70px;
 
-  .light & {
-    color: $light_lavender;
+      .light & {
+        background-color: $light_surface1;
+        box-shadow: 0 2px 3px 2px $light_crust;
+      }
+    }
+
+    trough highlight {
+      background-image: linear-gradient(
+        to right,
+        $lavender 30%,
+        $sapphire 50%,
+        $blue 100% * 50
+      );
+      border-radius: 10px;
+
+      .light & {
+        background-image: linear-gradient(
+          to right,
+          $light_lavender 30%,
+          $light_sapphire 50%,
+          $light_blue 100% * 50
+        );
+      }
+    }
   }
 }
 

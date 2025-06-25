@@ -10,13 +10,18 @@
   &.light {
     background-color: $light_crust;
   }
+
+  &__right {
+    > * {
+      margin-right: 10px;
+    }
+  }
 }
 
 .separator {
   color: $surface1;
   font-weight: bold;
   font-size: 22px;
-  margin: 0px 8px 0px 8px;
 
   .dark & {
     color: $surface1;

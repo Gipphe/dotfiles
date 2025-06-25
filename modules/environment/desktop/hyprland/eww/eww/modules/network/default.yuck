@@ -13,9 +13,10 @@
             :onhoverlost "${EWW_CMD} update wifi-reveal=false"
     (box :class "network"
          :vexpand false
-         :hexpand false
+         :hexpand true
          :space-evenly false
       (button :class "network__icon"
+              :hexpand true
               :onclick "networkmanager_dmenu"
               :style "color: #ffffff;"
         (network-icon))

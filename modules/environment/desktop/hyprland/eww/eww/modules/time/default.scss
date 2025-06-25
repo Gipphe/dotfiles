@@ -1,10 +1,9 @@
 .time {
-  margin: 0px 0px 0px 0px;
   border-radius: 10px 16px 0px 10px;
 
   &__clock {
     color: $subtext1;
-    font-size: 23px;
+    font-size: 22px;
     font-weight: bold;
 
     .light & {
