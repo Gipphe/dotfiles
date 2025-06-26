@@ -117,6 +117,16 @@ util.mkProgram {
             };
           };
         }
+        {
+          condition = "gitdir:**/lovdata/**/.git";
+          contents = {
+            user = {
+              name = "Victor Nascimento Bakke";
+              email = "vnb@lovdata.no";
+              signingKey = "03F37B072C391203";
+            };
+          };
+        }
       ];
       aliases = {
         last = "log -1 HEAD";
