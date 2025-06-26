@@ -50,7 +50,7 @@ util.mkToggledModule
       ./hyprpolkitagent.nix
       ./mako.nix
       ./rofi
-      ./swaync.nix
+      ./swaync
       ./walker
       ./waybar.nix
       ./wlogout.nix
@@ -131,7 +131,8 @@ util.mkToggledModule
             "GDK_SCALE,1"
 
             # Mozilla
-            "MOZ_ENABLE_WAYLAND,1"
+            # Floorp seems to crash a lot of is this 1
+            "MOZ_ENABLE_WAYLAND,0"
 
             # Disable appimage launcher by default
             "APPIMAGELAUNCHER_DISABLE,1"
