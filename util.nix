@@ -1,4 +1,7 @@
 {
+  coreutils,
+  gnused,
+  runCommand,
   lib,
   fish,
   writeShellScriptBin,
@@ -306,9 +309,20 @@ let
       safeName = lib.replaceStrings unsafeInName (empties unsafeInName) path;
     in
     "${prefix}${safeName}";
+
+  patchDesktop =
+    pkg: appName: from: to:
+    lib.hiPrio (
+      runCommand "$patched-desktop-entry-for-${appName}" { } ''
+        ${coreutils}/bin/mkdir -p $out/share/applications
+        ${gnused}/bin/sed 's#${from}#${to}#g' < ${pkg}/share/applications/${appName}.desktop > $out/share/applications/${appName}.desktop
+      ''
+    );
+  GPUOffloadApp = pkg: desktopName: patchDesktop pkg desktopName "^Exec=" "Exec=nvidia-offload ";
 in
 {
   inherit
+    GPUOffloadApp
     findSiblings
     mkEnvironment
     mkModule
@@ -318,6 +332,7 @@ in
     mkSimpleProgramModule
     mkToggledModule
     mkWallpaper
+    patchDesktop
     recurseFirstMatching
     recurseFirstMatchingIncludingSibling
     setCaskHash
