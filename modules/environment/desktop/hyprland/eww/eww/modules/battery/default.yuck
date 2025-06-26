@@ -6,9 +6,11 @@
                        :class "battery__progress"
                        :thickness 4
       (button :class "battery__icon"
-            :tooltip "battery on ${(EWW_BATTERY.BAT0 ?: EWW_BATTERY.BAT1).capacity}%"
-            :onclick "EWW_CMD='${EWW_CMD}' ./scripts/pop.sh system"
-            (label :text {(EWW_BATTERY.BAT0 ?: EWW_BATTERY.BAT1).status == "Charging" ? "" : ""})))))
+              :tooltip "battery on ${(EWW_BATTERY.BAT0 ?: EWW_BATTERY.BAT1).capacity}%"
+              :onclick "EWW_CMD='${EWW_CMD}' ./scripts/pop.sh system"
+        (label :text {(EWW_BATTERY.BAT0 ?: EWW_BATTERY.BAT1).status == "Charging"
+                      ? ""
+                      : ""})))))
 
 (defwidget battery-icon []
   (_battery :status {(EWW_BATTERY.BAT0 ?: EWW_BATTERY.BAT1).status}

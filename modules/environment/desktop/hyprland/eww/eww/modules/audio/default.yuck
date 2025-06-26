@@ -1,6 +1,8 @@
 (defvar vol_reveal false)
 (defvar mic-percent "100")
 
+(defpoll volume-muted :interval "3s" :initial false
+  `pamixer --get-mute`)
 (defpoll volume-percent :interval "3s" :initial 0
   `pamixer --get-volume`)
 ; (defpoll mic-percent :interval "3s"
@@ -9,10 +11,10 @@
 ;   | tr -d '%'`)
 
 (defwidget volume-icon []
-  {volume-percent > 66 ? "" :
-   volume-percent > 33 ? "" :
-   volume-percent > 0 ? "" :
-   ""})
+  {volume-muted ? "" :
+   volume-percent > 50 ? "" :
+   volume-percent > 0 ? "" :
+   ""})
 
 (defwidget volume []
   (eventbox :onhover "${EWW_CMD} update vol_reveal=true"
@@ -27,12 +29,12 @@
                 :reveal vol_reveal
                 :duration "350ms"
         (scale :class "audio__bar"
-               :value volume-percent
-               :orientation "h"
-               :tooltip "${volume-percent}%"
-               :max 100
-               :min 0
-               :onchange "pamixer --set-volume {} && ${EWW_CMD} poll volume-percent")))))
+              :value volume-percent
+              :orientation "h"
+              :tooltip "${volume-percent}%"
+              :max 100
+              :min 0
+              :onchange "pamixer --set-volume {} && ${EWW_CMD} poll volume-percent")))))
 
 (defwidget audio []
   (box :class "audio-box"

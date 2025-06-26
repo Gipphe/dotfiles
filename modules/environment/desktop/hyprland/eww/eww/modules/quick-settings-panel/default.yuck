@@ -1,0 +1,29 @@
+; include ../audio/default.yuck
+
+(defwindow quick-settings-panel
+  :geometry (geometry :anchor "top right"
+                      :x "16%")
+  :exclusive true
+  :stacking "overlay"
+  (quick-settings-panel))
+
+(defwidget quick-settings-panel []
+  (box :class "quick-settings-panel"
+       :orientation "h"
+    (box :class "volume-settings"
+         :orientation "v"
+         :space-evenly false
+      (scale :class "slider"
+             :orientation "v"
+             :flipped true
+             :marks true
+             :value volume-percent
+             :tooltip "${volume-percent}%"
+             :min 0
+             :max 100
+             :onchange "pamixer --set-volume {} && ${EWW_CMD} poll volume-percent")
+      (button :onclick "pamixer --toggle-mute && ${EWW_CMD} poll volume-muted"
+              :class "icon"
+              ; :hexpand false
+              ; :vexpand false
+        (volume-icon)))))
