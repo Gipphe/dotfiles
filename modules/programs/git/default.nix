@@ -108,16 +108,6 @@ util.mkProgram {
       };
       includes = [
         {
-          condition = "gitdir:**/strise/**/.git";
-          contents = {
-            user = {
-              name = "Victor Nascimento Bakke";
-              email = "victor@strise.ai";
-              signingkey = "B4C7E23DDC6AE725";
-            };
-          };
-        }
-        {
           condition = "gitdir:**/lovdata/**/.git";
           contents = {
             user = {
