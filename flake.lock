@@ -444,6 +444,24 @@
     },
     "flake-parts_6": {
       "inputs": {
+        "nixpkgs-lib": "nixpkgs-lib_3"
+      },
+      "locked": {
+        "lastModified": 1736143030,
+        "narHash": "sha256-+hu54pAoLDEZT9pjHlqL9DNzWz0NbUn8NEAHP7PQPzU=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "b905f6fc23a9051a6e1b741e1438dbfc0634c6de",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-parts_7": {
+      "inputs": {
         "nixpkgs-lib": [
           "stylix",
           "nixpkgs"
@@ -1172,6 +1190,18 @@
         "type": "github"
       }
     },
+    "nixpkgs-lib_3": {
+      "locked": {
+        "lastModified": 1735774519,
+        "narHash": "sha256-CewEm1o2eVAnoqb6Ml+Qi9Gg/EfNAxbRx1lANGVyoLI=",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/e9b51731911566bbf7e4895475a87fe06961de0b.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/e9b51731911566bbf7e4895475a87fe06961de0b.tar.gz"
+      }
+    },
     "nixpkgs-openconnect-sso": {
       "locked": {
         "lastModified": 1716361217,
@@ -1284,6 +1314,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_7": {
+      "locked": {
+        "lastModified": 1735554305,
+        "narHash": "sha256-zExSA1i/b+1NMRhGGLtNfFGXgLtgo+dcuzHzaWA6w3Q=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "0e82ab234249d8eee3e8c91437802b32c74bb3fd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nmd": {
       "inputs": {
         "nixpkgs": [
@@ -1332,7 +1378,7 @@
           "stylix",
           "nixpkgs"
         ],
-        "treefmt-nix": "treefmt-nix_3"
+        "treefmt-nix": "treefmt-nix_4"
       },
       "locked": {
         "lastModified": 1748730660,
@@ -1416,9 +1462,10 @@
         "nixpkgs": "nixpkgs_6",
         "nixpkgs-openconnect-sso": "nixpkgs-openconnect-sso",
         "openconnect-sso": "openconnect-sso",
+        "sentinelone": "sentinelone",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
-        "treefmt-nix": "treefmt-nix_4",
+        "treefmt-nix": "treefmt-nix_5",
         "wsl": "wsl"
       }
     },
@@ -1435,6 +1482,28 @@
       "original": {
         "owner": "andreymatin",
         "repo": "scss-reset",
+        "type": "github"
+      }
+    },
+    "sentinelone": {
+      "inputs": {
+        "flake-parts": "flake-parts_6",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": "treefmt-nix_3"
+      },
+      "locked": {
+        "lastModified": 1743368176,
+        "narHash": "sha256-+LGtqu17QgUQXSGy6pwlOm3Bi7G+imz3RwX56HOAifY=",
+        "owner": "devusb",
+        "repo": "sentinelone-nix",
+        "rev": "addba45ce70932022dcd0df128b424d3b2331925",
+        "type": "github"
+      },
+      "original": {
+        "owner": "devusb",
+        "repo": "sentinelone-nix",
         "type": "github"
       }
     },
@@ -1466,7 +1535,7 @@
         "base16-vim": "base16-vim",
         "firefox-gnome-theme": "firefox-gnome-theme",
         "flake-compat": "flake-compat_9",
-        "flake-parts": "flake-parts_6",
+        "flake-parts": "flake-parts_7",
         "git-hooks": "git-hooks_5",
         "gnome-shell": "gnome-shell",
         "home-manager": [
@@ -1684,6 +1753,24 @@
     },
     "treefmt-nix_3": {
       "inputs": {
+        "nixpkgs": "nixpkgs_7"
+      },
+      "locked": {
+        "lastModified": 1737483750,
+        "narHash": "sha256-5An1wq5U8sNycOBBg3nsDDgpwBmR9liOpDGlhliA6Xo=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "f2cc121df15418d028a59c9737d38e3a90fbaf8f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "treefmt-nix_4": {
+      "inputs": {
         "nixpkgs": [
           "stylix",
           "nur",
@@ -1704,7 +1791,7 @@
         "type": "github"
       }
     },
-    "treefmt-nix_4": {
+    "treefmt-nix_5": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"

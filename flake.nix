@@ -152,6 +152,11 @@
       };
     };
 
+    sentinelone = {
+      url = "github:devusb/sentinelone-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     openconnect-sso = {
       url = "github:jcszymansk/openconnect-sso";
       inputs.nixpkgs.follows = "nixpkgs-openconnect-sso";
