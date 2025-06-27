@@ -501,6 +501,21 @@
         "type": "indirect"
       }
     },
+    "flake-utils_3": {
+      "locked": {
+        "lastModified": 1622445595,
+        "narHash": "sha256-m+JRe6Wc5OZ/mKw2bB3+Tl0ZbtyxxxfnAWln8Q5qs+Y=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "7d706970d94bc5559077eb1a6600afddcd25a7c8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "fromYaml": {
       "flake": false,
       "locked": {
@@ -1231,6 +1246,19 @@
         "type": "github"
       }
     },
+    "nixpkgs_7": {
+      "locked": {
+        "lastModified": 1622282707,
+        "narHash": "sha256-+GOrUDsdneUqrOm9d+9bHXjEVoVcU8tm14WGVzbt6gg=",
+        "path": "/nix/store/9za793c35j4rnawwf2n2wpbwwnah1rq9-source",
+        "rev": "6933d068c5d2fcff398e802f7c4e271bbdab6705",
+        "type": "path"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
     "nmd": {
       "inputs": {
         "nixpkgs": [
@@ -1295,6 +1323,25 @@
         "type": "github"
       }
     },
+    "openconnect-sso": {
+      "inputs": {
+        "flake-utils": "flake-utils_3",
+        "nixpkgs": "nixpkgs_7"
+      },
+      "locked": {
+        "lastModified": 1692692901,
+        "narHash": "sha256-JFVvTw11KFnrd/A5z3QCh30ac9MZG+ojDY3udAFpmCE=",
+        "owner": "vlaci",
+        "repo": "openconnect-sso",
+        "rev": "94128073ef49acb3bad84a2ae19fdef926ab7bdf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vlaci",
+        "repo": "openconnect-sso",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "brew-api": "brew-api",
@@ -1310,6 +1357,7 @@
         "nixCats": "nixCats",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_6",
+        "openconnect-sso": "openconnect-sso",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
         "treefmt-nix": "treefmt-nix_3",

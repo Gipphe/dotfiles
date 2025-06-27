@@ -152,6 +152,8 @@
       };
     };
 
+    openconnect-sso.url = "github:vlaci/openconnect-sso";
+
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
 
     mac-app-util.url = "github:hraban/mac-app-util";
