@@ -1,0 +1,10 @@
+.mode-toggle {
+  color: $surface0;
+  background-color: $text;
+  border-radius: 999px;
+  padding: 5px;
+  .light & {
+    color: $light_surface0;
+    background-color: $light_text;
+  }
+}

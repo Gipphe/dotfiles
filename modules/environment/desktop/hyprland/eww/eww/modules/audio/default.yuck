@@ -10,7 +10,8 @@
 ;   | tr -d '%'`)
 
 (defwidget volume-icon []
-  (label :hexpand true
+  (label :class "volume-icon ${volume-muted ? "muted" : ""}"
+         :hexpand true
          :text {volume-muted ? "" :
                 volume-percent > 50 ? "" :
                 volume-percent > 0 ? "" :
@@ -22,6 +23,6 @@
          :space-evenly false
          :orientation "h"
       (button :class "audio__icon"
-              :onclick "EWW_CMD='${EWW_CMD}' ./scripts/pop.sh audio"
+              :onclick "pamixer -t && ${EWW_CMD} poll volume-muted"
         (volume-icon)))))
 

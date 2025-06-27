@@ -1,0 +1,8 @@
+(defvar mode "dark")
+
+(defwidget mode []
+  (button :class "mode-toggle"
+          :hexpand false
+          :vexpand false
+          :onclick `${EWW_CMD} update mode=${mode == 'light' ? 'dark' : 'light'}`
+    (label :hexpand false :vexpand false {mode == 'light' ? '󰃠' : '󰃛'})))

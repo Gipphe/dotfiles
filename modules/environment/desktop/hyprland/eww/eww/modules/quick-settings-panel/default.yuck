@@ -10,35 +10,31 @@
   (quick-settings-panel))
 
 (defwidget quick-settings-panel []
-  (revealer :transition "slidedown"
+  (revealer :class "quick-settings-panel ${mode == "light" ? "light" : "dark"}"
+            :transition "slidedown"
             :duration "200ms"
             :reveal show-quick-settings
     (eventbox :onhoverlost "${EWW_CMD} update show-quick-settings=false"
-      (box :class "quick-settings-panel"
-          :orientation "v"
-          :spacing 10
-          :space-evenly false
-        (box :class "quick-settings-panel"
-            :orientation "h"
+      (box :orientation "v"
+           :spacing 10
+           :space-evenly false
+        (box :orientation "h"
             :spacing 10
-          (setting :class "volume ${volume-muted ? "muted" : ""}"
+          (setting :class "quick-settings-panel__settings__volume ${volume-muted ? "muted" : ""}"
                    :value volume-percent
                    :on-slider-change "pamixer --set-volume {} && ${EWW_CMD} poll volume-percent"
                    :on-icon-click "pamixer --toggle-mute && ${EWW_CMD} poll volume-muted"
             (volume-icon))
-          (setting :class "brightness"
+          (setting :class "quick-settings-panel__settings__brightness"
                    :value brightness-percent
                    :on-slider-change "brightnessctl set {}% && ${EWW_CMD} poll brightness-percent"
                    :on-icon-click ""
             (brightness-icon))
-          (setting :class "network-settings"
+          (setting :class "quick-settings-panel__settings__network-settings"
                    :value {wired-connected == "connected" ? 100 : wifi-signal}
             (network-icon)))
         (mode)))))
 
-(defwidget mode []
-  (button :class "mode" :onclick `${EWW_CMD} update mode=${mode == 'light' ? 'dark' : 'light'}`
-    {mode == 'light' ? '󰃠' : '󰃛'}))
 
 (defwidget settings-slider [?class ?value ?onchange]
   (scale :class "slider ${class ?: ""}"

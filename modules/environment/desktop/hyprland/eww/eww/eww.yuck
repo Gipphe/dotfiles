@@ -4,6 +4,7 @@
 (include "./modules/battery/default.yuck")
 (include "./modules/brightness/default.yuck")
 (include "./modules/memory/default.yuck")
+(include "./modules/mode-toggle/default.yuck")
 (include "./modules/music/default.yuck")
 (include "./modules/network/default.yuck")
 (include "./modules/notifications/default.yuck")
