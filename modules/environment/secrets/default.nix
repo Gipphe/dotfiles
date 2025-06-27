@@ -25,4 +25,8 @@ util.mkModule {
         end
       '';
   };
+  system-nixos = {
+    imports = [ inputs.sops-nix.nixosModules.sops ];
+    config.sops.age.keyFile = "${config.gipphe.homeDirectory}/.config/sops/age/keys.txt";
+  };
 }
