@@ -35,6 +35,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
 
     wayland.windowManager.hyprland.settings.bind = [
       "$mod, ${space}, exec, ${cfg.package}/bin/walker"
+      "$mod, Tab, exec, ${cfg.package}/bin/walker --modules windows"
     ];
 
     systemd.user.services.walker = {
