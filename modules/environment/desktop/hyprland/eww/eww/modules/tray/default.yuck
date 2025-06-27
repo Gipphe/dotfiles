@@ -1,6 +1,6 @@
 (defwidget tray []
   (systray :class "tray"
-           :spacing 4
+           :spacing 8
            :orientation "h"
            :space-evenly true
            :prepend-new true

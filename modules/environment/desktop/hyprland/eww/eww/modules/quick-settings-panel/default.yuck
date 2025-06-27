@@ -1,29 +1,63 @@
 ; include ../audio/default.yuck
 
+(defvar show-quick-settings false)
+
 (defwindow quick-settings-panel
   :geometry (geometry :anchor "top right"
-                      :x "16%")
+                      :x "18%")
   :exclusive true
   :stacking "overlay"
   (quick-settings-panel))
 
 (defwidget quick-settings-panel []
-  (box :class "quick-settings-panel"
-       :orientation "h"
-    (box :class "volume-settings"
+  (revealer :transition "slidedown"
+            :duration "200ms"
+            :reveal show-quick-settings
+    (eventbox :onhoverlost "${EWW_CMD} update show-quick-settings=false"
+      (box :class "quick-settings-panel"
+          :orientation "v"
+          :spacing 10
+          :space-evenly false
+        (box :class "quick-settings-panel"
+            :orientation "h"
+            :spacing 10
+          (setting :class "volume ${volume-muted ? "muted" : ""}"
+                   :value volume-percent
+                   :on-slider-change "pamixer --set-volume {} && ${EWW_CMD} poll volume-percent"
+                   :on-icon-click "pamixer --toggle-mute && ${EWW_CMD} poll volume-muted"
+            (volume-icon))
+          (setting :class "brightness"
+                   :value brightness-percent
+                   :on-slider-change "brightnessctl set {}% && ${EWW_CMD} poll brightness-percent"
+                   :on-icon-click ""
+            (brightness-icon))
+          (setting :class "network-settings"
+                   :value {wired-connected == "connected" ? 100 : wifi-signal}
+            (network-icon)))
+        (mode)))))
+
+(defwidget mode []
+  (button :class "mode" :onclick `${EWW_CMD} update mode=${mode == 'light' ? 'dark' : 'light'}`
+    {mode == 'light' ? '󰃠' : '󰃛'}))
+
+(defwidget settings-slider [?class ?value ?onchange]
+  (scale :class "slider ${class ?: ""}"
          :orientation "v"
-         :space-evenly false
-      (scale :class "slider"
-             :orientation "v"
-             :flipped true
-             :marks true
-             :value volume-percent
-             :tooltip "${volume-percent}%"
-             :min 0
-             :max 100
-             :onchange "pamixer --set-volume {} && ${EWW_CMD} poll volume-percent")
-      (button :onclick "pamixer --toggle-mute && ${EWW_CMD} poll volume-muted"
-              :class "icon"
-              ; :hexpand false
-              ; :vexpand false
-        (volume-icon)))))
+         :flipped true
+         :marks true
+         :hexpand true
+         :value value
+         :tooltip "${value}%"
+         :min 0
+         :max 100
+         :onchange onchange))
+
+(defwidget setting [?class value ?on-slider-change ?on-icon-click]
+  (box :class "settings ${class ?: ""}"
+       :orientation "v"
+       :space-evenly false
+    (settings-slider :value value
+           :onchange on-slider-change)
+    (button :onclick on-icon-click
+            :class "icon"
+      (children :nth 0))))

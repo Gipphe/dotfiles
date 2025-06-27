@@ -1,7 +1,10 @@
 ; (defpoll battery :interval "15s" "./modules/battery/battery.sh")
 
 (defwidget battery []
-  (box :class "battery" :vexpand false :hexpand false
+  (box :class "battery"
+       :vexpand false
+       :hexpand false
+       :space-evenly false
     (circular-progress :value {(EWW_BATTERY.BAT0 ?: EWW_BATTERY.BAT1).capacity}
                        :class "battery__progress"
                        :thickness 4

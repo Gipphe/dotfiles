@@ -26,8 +26,8 @@
   (box :orientation "h"
        :space-evenly false
        :halign "end"
+       :spacing 10
        :class "bar__right"
-    (mode)
     (brightness)
     (volume)
     (network)
@@ -43,10 +43,6 @@
 (defwidget sep []
   (box :vexpand false :hexpand false
     (label :class "separator" :text "|")))
-
-(defwidget mode []
-  (button :class "mode" :onclick `${EWW_CMD} update mode=${mode == 'light' ? 'dark' : 'light'}`
-    {mode == 'light' ? '󰃠' : '󰃛'}))
 
 (defwindow bar-floating
   :geometry (geometry :x "0%"

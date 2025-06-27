@@ -1,20 +1,7 @@
 .network {
-  min-width: 25px;
-  margin-right: 10px;
   &__icon {
     font-size: 22px;
     color: $lavender;
-    border-radius: 100%;
-
-    .light & {
-      color: $light_lavender;
-    }
-  }
-
-  &__ssid {
-    font-size: 18px;
-    color: $lavender;
-    margin: 0px 0px 0px 10px;
 
     .light & {
       color: $light_lavender;

@@ -1,15 +1,7 @@
 .memory {
-  background-color: $base;
-  border-radius: 16px;
-
-  .light & {
-    background-color: $light_base;
-  }
-
   &__progress {
     color: $peach;
     background-color: $surface0;
-    border-radius: 10px;
 
     .light & {
       color: $light_peach;

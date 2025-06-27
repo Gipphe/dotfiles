@@ -1,46 +1,10 @@
 .brightness {
   &__icon {
-    font-size: 22px;
-    min-width: 20px;
+    font-size: 24px;
     color: $yellow;
 
     .light & {
       color: $light_yellow;
-    }
-  }
-
-  &__bar {
-    scale trough {
-      all: unset;
-      background-color: $surface1;
-      box-shadow: 0 2px 3px 2px $crust;
-      border-radius: 16px;
-      min-height: 10px;
-      min-width: 70px;
-
-      .light & {
-        background-color: $light_surface1;
-        box-shadow: 0 2px 3px 2px $light_crust;
-      }
-    }
-
-    trough highlight {
-      background-image: linear-gradient(
-        to right,
-        $rosewater 30%,
-        $flamingo 50%,
-        $red 100% * 50
-      );
-      border-radius: 10px;
-
-      .light & {
-        background-image: linear-gradient(
-          to right,
-          $light_rosewater 30%,
-          $light_flamingo 50%,
-          $light_red 100% * 50
-        );
-      }
     }
   }
 }
