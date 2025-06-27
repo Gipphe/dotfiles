@@ -66,6 +66,7 @@ util.mkToggledModule
           monitor = ",preferred,auto,1";
           bind = workspaces ++ [
             ", Print, exec, ${grimblast} copy area"
+            "Alt_L, Print, exec, ${grimblast} copy screen"
             "$mod, RETURN, exec, ${config.programs.wezterm.package}/bin/wezterm"
             "$mod, Q, killactive" # Close current window
             "$mod SHIFT, Q, forcekillactive" # Force close current window
