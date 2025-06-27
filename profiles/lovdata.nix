@@ -16,5 +16,6 @@ util.mkProfile "lovdata" {
     virtualisation = {
       docker.enable = true;
     };
+    networking.lovdata-dns.enable = true;
   };
 }
