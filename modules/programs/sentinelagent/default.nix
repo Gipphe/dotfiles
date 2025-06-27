@@ -18,7 +18,7 @@ util.mkProgram {
         version = "24.2.2.20";
         src = pkgs.fetchurl {
           url = "https://databra007.se/s1/SentinelAgent_linux_x86_64_v24_2_2_20.deb";
-          hash = "";
+          hash = "sha256-Dg7xg3xeFT+k1HPXvilBBgHOaUyKmFIoGAqj2y+EFMY=";
         };
       });
     };
