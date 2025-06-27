@@ -245,7 +245,7 @@ util.mkProgram {
           ''
             echo "$config" \
             | sed -r 's!/nix/store/.*/(\S+)!\1!' \
-            | sed "s!/nix/store/.*-hm_gitconfig!./.gitconfig_strise!" \
+            | sed "s!/nix/store/.*-hm_gitconfig!./.gitconfig_lovdata!" \
             | sed "/credentialStore/d" \
             | sed "/\[credential\]/d" \
             | sed "/external = \"diff-so-fancy/d" \
@@ -255,7 +255,7 @@ util.mkProgram {
             | sed "s/gpgSign = true$/gpgSign = false/" \
             | tee "$out" >/dev/null
           '';
-      ".config/git/strise".text = lib.pipe config.programs.git.includes [
+      ".config/git/lovdata".text = lib.pipe config.programs.git.includes [
         (x: (builtins.elemAt x 0).contents)
         lib.generators.toGitINI
       ];
