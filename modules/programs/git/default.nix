@@ -77,6 +77,8 @@ util.mkProgram {
       ignores = [
         ".DS_Store"
         "**/*Zone.Identifier"
+        ".idea/"
+        ".vscode/"
       ];
       signing = {
         key = "23723701395B436C";
