@@ -30,7 +30,7 @@ util.mkProgram {
         ExecStart = "${openconnect-sso}/bin/openconnect-sso --server lovdataazure.ivpn.se";
         Restart = "never";
       };
-      Install.WantedBy = config.wayland.systemd.target;
+      Install.WantedBy = [ config.wayland.systemd.target ];
     };
   };
 }
