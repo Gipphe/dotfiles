@@ -96,10 +96,10 @@ util.mkToggledModule
             "$mod, mouse_up, workspace, e-1"
 
             # Cycle to next window with Alt + Tab
-            "Alt, Tab, cyclenext,"
-            "Alt, Tab, bringactivetotop,"
-            "Alt Shift, Tab, cyclenext, prev"
-            "Alt Shift, Tab, bringactivetotop,"
+            "Alt_L, Tab, cyclenext,"
+            "Alt_L, Tab, bringactivetotop,"
+            "Alt_L Shift, Tab, cyclenext, prev"
+            "Alt_L Shift, Tab, bringactivetotop,"
           ];
 
           bindl = [
