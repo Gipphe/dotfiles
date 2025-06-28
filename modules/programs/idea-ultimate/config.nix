@@ -1,12 +1,11 @@
 {
   lib,
   config,
-  flags,
   pkgs,
   ...
-}:
+}@args:
 let
-  paths = import ./utils.nix { inherit lib flags pkgs; };
+  paths = import ./utils.nix args;
 
   mkConfig =
     { optionsDir, configDir }:
