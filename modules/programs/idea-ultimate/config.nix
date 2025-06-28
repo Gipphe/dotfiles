@@ -44,6 +44,16 @@ let
           </component>
         </application>
       '';
+      "${configDir}/idea64.vmoptions".text = ''
+        # custom IntelliJ IDEA VM options (expand/override 'bin/idea64.vmoptions')
+
+
+        -DskipTests=false
+        -DskipITs=false
+        -Dskip.failsafe.tests=false
+        -DsurefireArgLine=
+        -Dawt.toolkit.name=WLToolkit
+      '';
     };
   inherit (pkgs.stdenv) hostPlatform;
   darwinConfig = lib.mkIf hostPlatform.isDarwin {
