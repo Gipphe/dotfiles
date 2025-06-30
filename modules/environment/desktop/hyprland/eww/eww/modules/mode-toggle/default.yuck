@@ -1,8 +1,11 @@
-(defvar mode "dark")
+(deflisten mode `cat "$HOME/.cache/gipphe/theme" || echo "dark"`)
 
 (defwidget mode []
   (button :class "mode-toggle"
           :hexpand false
           :vexpand false
-          :onclick `${EWW_CMD} update mode=${mode == 'light' ? 'dark' : 'light'}`
-    (label :hexpand false :vexpand false {mode == 'light' ? '󰃠' : '󰃛'})))
+          :halign "center"
+          :onclick `./scripts/theme.fish`
+    (label :hexpand false
+           :vexpand false
+           :text {mode == 'light' ? '󰃠' : '󰃛'})))

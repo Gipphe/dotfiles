@@ -5,16 +5,8 @@
     border-radius: 10px;
     color: $subtext0;
 
-    .light & {
-      color: $light_subtext0;
-    }
-
     &--current {
       color: $sky;
-
-      .light & {
-        color: $light_sky;
-      }
     }
   }
 }

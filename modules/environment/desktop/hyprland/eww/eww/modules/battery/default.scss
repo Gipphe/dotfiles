@@ -2,20 +2,11 @@
   &__progress {
     color: $green;
     background-color: $surface0;
-
-    .light & {
-      color: $light_green;
-      background-color: $light_surface0;
-    }
   }
 
   &__icon {
     color: $green;
     font-size: 15px;
     margin: 10px;
-
-    .light & {
-      color: $light_green;
-    }
   }
 }

@@ -2,10 +2,6 @@
   &__icon {
     font-size: 30px;
     color: $lavender;
-
-    .light & {
-      color: $light_lavender;
-    }
   }
 }
 .volume-icon.muted {

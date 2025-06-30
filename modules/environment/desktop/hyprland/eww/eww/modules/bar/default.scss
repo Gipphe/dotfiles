@@ -3,25 +3,10 @@
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
   padding: 4px 8px;
-
-  &.dark {
-    background-color: $crust;
-  }
-  &.light {
-    background-color: $light_crust;
-  }
 }
 
 .separator {
   color: $surface1;
   font-weight: bold;
   font-size: 22px;
-
-  .dark & {
-    color: $surface1;
-  }
-
-  .light & {
-    color: $light_surface1;
-  }
 }

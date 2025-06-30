@@ -13,20 +13,12 @@
     font-size: 18px;
     font-weight: bold;
     margin: 3px 5px 0px 0px;
-
-    .light & {
-      color: $light_sapphire;
-    }
   }
 
   &__play {
     color: $lavender;
     font-size: 28px;
     margin: 3px 0px 0px 5px;
-
-    .light & {
-      color: $light_lavender;
-    }
   }
 
   &__prev,
@@ -35,10 +27,6 @@
     color: $lavender;
     font-size: 24px;
     margin: 3px 0px 0px 5px;
-
-    .light & {
-      color: $light_lavender;
-    }
   }
 }
 

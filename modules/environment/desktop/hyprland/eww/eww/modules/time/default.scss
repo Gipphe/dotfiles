@@ -5,20 +5,12 @@
     color: $subtext1;
     font-size: 22px;
     font-weight: bold;
-
-    .light & {
-      color: $light_subtext1;
-    }
   }
 
   &__date {
     font-size: 18px;
     margin: 0px 10px 0px 5px;
     color: $rosewater;
-
-    .light & {
-      color: $light_rosewater;
-    }
   }
 }
 
@@ -28,68 +20,36 @@
   font-size: 18px;
   font-weight: normal;
 
-  .light & {
-    background-color: $light_base;
-  }
-
   &__inner {
     padding: 0px 10px 0px 10px;
     color: $lavender;
-
-    .light & {
-      color: $light_lavender;
-    }
   }
   &__calendar {
     color: $lavender;
     padding: 5px 5px 5px 5px;
     margin-left: 10px;
 
-    .light & {
-      color: $light_lavender;
-    }
-
     &:selected {
       color: $sapphire;
-
-      .light & {
-        color: $light_sapphire;
-      }
     }
 
     &.header {
       color: $sapphire;
       font-weight: bold;
-
-      .light & {
-        color: $light_sapphire;
-      }
     }
 
     &.button {
       color: $yellow;
-
-      .light & {
-        color: $light_yellow;
-      }
     }
 
     &.highlight {
       color: $sapphire;
       font-weight: bold;
       padding: 20px;
-
-      .light & {
-        color: $light_sapphire;
-      }
     }
 
     &:indeterminate {
       color: $lavender;
-
-      .light & {
-        color: $light_lavender;
-      }
     }
   }
 }

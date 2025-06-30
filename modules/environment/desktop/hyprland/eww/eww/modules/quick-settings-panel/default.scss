@@ -9,12 +9,7 @@
     transition: all 0.2s;
   }
 
-  &.light {
-    background-color: $light_crust;
-    color: $light_text;
-  }
-
-  &__settings {
+  .settings {
     .slider {
       trough {
         margin: 0px;
@@ -31,26 +26,17 @@
     .icon {
       border-radius: 0 0 $border-radius $border-radius;
       font-size: 35px;
-      padding: 10px 5px;
+      padding: 5px;
     }
 
-    &__volume {
+    .volume-settings {
       .icon {
         background-color: $sky;
         color: $surface1;
-
-        .light & {
-          background-color: $light_sky;
-          color: $light_surface1;
-        }
       }
       .slider {
         trough {
           background-color: $surface1;
-
-          .light & {
-            background-color: $light_surface1;
-          }
 
           highlight {
             background-image: linear-gradient(
@@ -59,15 +45,6 @@
               $sapphire 50%,
               $sky 100%
             );
-
-            .light & {
-              background-image: linear-gradient(
-                to bottom,
-                $light_lavender 30%,
-                $light_sapphire 50%,
-                $light_blue 100%
-              );
-            }
           }
         }
       }
@@ -76,24 +53,15 @@
       }
     }
 
-    &__brightness {
+    .brightness-settings {
       .icon {
         background-color: $maroon;
         color: $surface1;
-
-        .light & {
-          background-color: $light_maroon;
-          color: $light_surface1;
-        }
       }
 
       .slider {
         trough {
           background-color: $surface1;
-
-          .light & {
-            background-color: $light_surface1;
-          }
 
           highlight {
             background-image: linear-gradient(
@@ -102,49 +70,23 @@
               $flamingo 50%,
               $rosewater 100%
             );
-
-            .light & {
-              background-image: linear-gradient(
-                to top,
-                $light_maroon 30%,
-                $light_flamingo 50%,
-                $light_rosewater 100%
-              );
-            }
           }
         }
       }
     }
 
-    &__network-settings {
+    .network-settings {
       .icon {
         background-color: $mauve;
         color: $surface1;
-
-        .light & {
-          background-color: $light_mauve;
-          color: $light_surface1;
-        }
       }
 
       .slider {
         trough {
           background-color: $surface1;
 
-          .light & {
-            background-color: $light_surface1;
-          }
-
           highlight {
             background-image: linear-gradient(to top, $mauve 0%, $pink 100%);
-
-            .light & {
-              background-image: linear-gradient(
-                to top,
-                $light_mauve 30%,
-                $light_lavender 100%
-              );
-            }
           }
         }
       }
