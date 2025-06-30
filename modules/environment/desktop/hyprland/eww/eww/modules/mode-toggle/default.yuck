@@ -5,7 +5,7 @@
           :hexpand false
           :vexpand false
           :halign "center"
-          :onclick `./scripts/theme.fish`
+          :onclick `./modules/mode-toggle/theme.fish`
     (label :hexpand false
            :vexpand false
            :text {mode == 'light' ? '󰃠' : '󰃛'})))
