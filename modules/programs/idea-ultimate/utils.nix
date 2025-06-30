@@ -15,7 +15,7 @@ let
       _version = majorMinor (getVersion name);
     in
     if flags.isNixDarwin then "JetBrains/IntelliJIdea2025.1" else "JetBrains/${_name}${_version}";
-  linuxConfigDir = "${config.xdg.configHome}/JetBrains/${ideaDir}";
+  linuxConfigDir = ideaDir;
   linuxOptionsDir = "${ideaDir}/options";
   darwinOptionsDir = "Library/Application Support/${ideaDir}/options";
 in
