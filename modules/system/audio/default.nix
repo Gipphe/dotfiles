@@ -14,7 +14,6 @@ util.mkToggledModule [ "system" ] {
           support32Bit = true;
         };
         pulse.enable = true;
-        jack.enable = true;
         wireplumber = {
           enable = true;
           extraConfig.bluetoothEnhancement."monitor.bluez.properties" = {

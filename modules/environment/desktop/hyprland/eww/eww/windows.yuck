@@ -1,0 +1,52 @@
+(defwindow bar-floating
+  :geometry (geometry :x "0%"
+                      :y "9px"
+                      :width "98%"
+                      :height "30px"
+                      :anchor "top center")
+  :exclusive true
+  :stacking "overlay"
+  (bar-layout))
+
+
+(defwindow bar
+  :geometry (geometry :width "100%"
+                      :anchor "top center")
+  :exclusive true
+  (bar-layout))
+
+(defwindow music_win
+  :stacking "fg"
+  :focusable "false"
+  :screen 1
+  :geometry (geometry :x "0"
+                      :y "7%"
+                      :width 428
+                      :height 104
+                      :anchor "top center")
+  (music_pop))
+
+(defwindow system
+  :geometry (geometry :x "-20px" 
+                      :y "7%" 
+                      :anchor "top right"
+                      :width "290px" 
+                      :height "120px")
+  (system))
+
+(defwindow calendar
+  :geometry (geometry
+              :x "-20px"
+              :y "7%"
+              :anchor "top right"
+              :width "270px" 
+              :height "60px")
+  (cal))
+
+(defwindow quick-settings-panel
+  :geometry (geometry :anchor "top right"
+                      :x "18%")
+  :exclusive true
+  :stacking "overlay"
+  (quick-settings-panel))
+

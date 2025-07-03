@@ -41,22 +41,3 @@
 (defwidget sep []
   (box :vexpand false :hexpand false
     (label :class "separator" :text "|")))
-
-(defwindow bar-floating
-  :geometry (geometry :x "0%"
-                      :y "9px"
-                      :width "98%"
-                      :height "30px"
-                      :anchor "top center")
-  :exclusive true
-  :stacking "overlay"
-  (bar-layout))
-
-
-(defwindow bar
-  :geometry (geometry :width "100%"
-                      :anchor "top center")
-  :exclusive true
-  :stacking "overlay"
-  (bar-layout))
-

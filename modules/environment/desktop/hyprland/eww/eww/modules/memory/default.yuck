@@ -1,13 +1,3 @@
-(defpoll memory :interval "15s"
-                :initial `{"total": 0, "available": 0, "used": 0, "percent": 0}`
-  `awk '
-    $1 == "MemTotal:" { memtotal = $2 }
-    $1 == "MemAvailable:" { memavailable = $2 }
-    END {
-      printf("{\\"total\\": %s, \\"available\\": %s, \\"used\\": %s, \\"percent\\": %s }\\n", memtotal, memavailable, (memtotal - memavailable), ((memtotal - memavailable) / memtotal * 100))
-    }
-  ' /proc/meminfo`)
-
 (defwidget memory []
   (box :class "memory"
        :vexpand false

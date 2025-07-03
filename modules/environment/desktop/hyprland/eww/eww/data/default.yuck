@@ -1,0 +1,25 @@
+(deflisten network :initial '{"ssid": "", "signal": "0"}'
+  `./data/network.fish`)
+
+(defpoll brightness-percent :interval "5s" :initial 100
+  `brightnessctl -m -d intel_backlight | awk -F, '{print $4}' | tr -d '%'`)
+
+(deflisten volume :initial "0" `./data/volume.fish`)
+
+(defpoll volume-muted :interval "3s" :initial false
+  `pamixer --get-mute`)
+
+(defpoll volume-percent :interval "3s" :initial 0
+  `pamixer --get-volume`)
+
+(defpoll memory :interval "15s"
+                :initial `{"total": 0, "available": 0, "used": 0, "percent": 0}`
+  `./data/memory.fish`)
+
+(deflisten mode `cat "$HOME/.cache/gipphe/theme" || echo "dark"`)
+
+(deflisten mpris :initial '{ "name":"", "title": "", "artist":"", "artUrl": "", "status":"", "length": "", "lengthStr": "", }'
+  `./data/mpris.fish`)
+
+(defpoll wifi-networks :initial '[]' :interval "30s"
+  `./data/wifi-networks.fish`)

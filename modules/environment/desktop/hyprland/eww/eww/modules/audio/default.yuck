@@ -1,14 +1,3 @@
-(defvar mic-percent "100")
-
-(defpoll volume-muted :interval "3s" :initial false
-  `pamixer --get-mute`)
-(defpoll volume-percent :interval "3s" :initial 0
-  `pamixer --get-volume`)
-; (defpoll mic-percent :interval "3s"
-;   `amixer -D pulse sget Capture \
-;   | awk -F'[][]' '/Left:/ {print $2}' \
-;   | tr -d '%'`)
-
 (defwidget volume-icon []
   (label :class "volume-icon ${volume-muted ? "muted" : ""}"
          :hexpand true

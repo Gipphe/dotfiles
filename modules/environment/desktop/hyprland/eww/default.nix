@@ -12,12 +12,15 @@ let
       brightnessctl
       calc
       gawk
+      jo
       mpc
       networkmanager
       pamixer
+      playerctl
+      pulseaudio
       socat
-      wlr-randr
       walker
+      wlr-randr
     ];
   configDir = "${config.gipphe.homeDirectory}/projects/dotfiles/modules/environment/desktop/hyprland/eww/eww";
   eww = pkgs.symlinkJoin {

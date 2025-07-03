@@ -1,0 +1,15 @@
+(defwidget wifi-panel []
+  (eventbox :class "wifi-panel" :onhover "${EWW_CMD} poll wifi-networks"
+  (box :orientation "v"
+    (for network in wifi-networks
+      (box :class {network.active
+        ? "wifi-panel__wifi-network wifi-panel__wifi-network--active"
+        : "wifi-panel__wifi-network"}
+           :orientation "h"
+        (label :text {network.ssid})
+        (label :text {network.signal}))))))
+
+(defwindow wifi-panel
+  :geometry (geometry :anchor "top right")
+  :stacking "overlay"
+  (wifi-panel))

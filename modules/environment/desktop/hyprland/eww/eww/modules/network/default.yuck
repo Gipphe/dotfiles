@@ -1,13 +1,3 @@
-(defpoll wired-connected :interval "15s"
-  `nmcli -t -f STATE g status`)
-(defpoll wifi-signal :interval "10s"
-  `nmcli -t -f SIGNAL,ACTIVE device wifi | \
-    grep 'yes$' | \
-    head -1 | \
-    cut -d':' -f 1`)
-(defpoll wifi :interval "10s" `./modules/network/wifi.sh`)
-(deflisten wifi-ssid `./modules/network/wifi-ssid-watch.sh`)
-
 (defwidget network []
   (eventbox :onhover "${EWW_CMD} update show-quick-settings=true"
     (box :class "network"
@@ -21,9 +11,8 @@
         (network-icon)))))
 
 (defwidget network-icon []
-  (_network-icon :strength {wired-connected == "connected" ? "wired" :
-                            wifi-ssid == "" ? 0 :
-                            wifi-signal}
+  (_network-icon :strength {network.ssid == "" ? 0 :
+                            network.signal}
             :offline "󰣼"
             :excellent "󰣺"
             :good "󰣸"

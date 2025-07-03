@@ -1,5 +1,3 @@
-(deflisten mode `cat "$HOME/.cache/gipphe/theme" || echo "dark"`)
-
 (defwidget mode []
   (button :class "mode-toggle"
           :hexpand false

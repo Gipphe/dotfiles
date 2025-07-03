@@ -61,13 +61,3 @@
                :class "sys_text_mem_sub"
                :show_truncated false
                :wrap false)))))
-
-
-(defwindow system
-  :geometry (geometry :x "-20px" 
-                      :y "7%" 
-                      :anchor "top right"
-                      :width "290px" 
-                      :height "120px")
-  (system))
-

@@ -1,8 +1,5 @@
 (defvar brightness-icon "󰛨")
 
-(defpoll brightness-percent :interval "5s" :initial 100
-  `brightnessctl -m -d intel_backlight | awk -F, '{print $4}' | tr -d '%'`)
-
 (defwidget brightness []
   (eventbox :onhover "${EWW_CMD} update show-quick-settings=true"
     (box :class "brightness"

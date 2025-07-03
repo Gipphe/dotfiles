@@ -1,5 +1,3 @@
-; (defpoll battery :interval "15s" "./modules/battery/battery.sh")
-
 (defwidget battery []
   (box :class "battery"
        :vexpand false

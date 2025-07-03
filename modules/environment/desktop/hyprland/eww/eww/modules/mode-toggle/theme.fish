@@ -2,7 +2,7 @@
 
 set -l theme_file "$HOME/.cache/gipphe/theme"
 set -l dir $(dirname -- "$(status filename)")
-set -l color_dir = "$dir/../../colors"
+set -l color_dir "$dir/../../colors"
 
 mkdir -p $(dirname -- $theme_file)
 if test -e "$theme_file" && test "$(cat "$theme_file")" = dark

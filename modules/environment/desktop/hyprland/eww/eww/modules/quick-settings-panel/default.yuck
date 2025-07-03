@@ -2,13 +2,6 @@
 
 (defvar show-quick-settings false)
 
-(defwindow quick-settings-panel
-  :geometry (geometry :anchor "top right"
-                      :x "18%")
-  :exclusive true
-  :stacking "overlay"
-  (quick-settings-panel))
-
 (defwidget quick-settings-panel []
   (revealer :class "quick-settings-panel ${mode == "light" ? "light" : "dark"}"
             :transition "slidedown"
@@ -32,7 +25,7 @@
                    :on-icon-click ""
             (brightness-icon))
           (setting :class "network-settings"
-                   :value {wired-connected == "connected" ? 100 : wifi-signal}
+                   :value {network.signal}
             (network-icon)))
         (mode)))))
 

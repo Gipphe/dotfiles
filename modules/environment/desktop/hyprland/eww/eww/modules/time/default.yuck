@@ -27,12 +27,3 @@
       (calendar :class "calendar__calendar" 
                 :day {calendar?.day ?: "01"} 
                 :year {calendar?.year ?: "2025"}))))
-
-(defwindow calendar
-  :geometry (geometry
-              :x "-20px"
-              :y "7%"
-              :anchor "top right"
-              :width "270px" 
-              :height "60px")
-  (cal))
