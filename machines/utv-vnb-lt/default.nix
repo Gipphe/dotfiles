@@ -1,18 +1,22 @@
 {
   pkgs,
+  hostname,
   util,
   inputs,
   config,
   lib,
   ...
 }:
-util.mkToggledModule [ "machines" ] {
+let
   name = "utv-vnb-lt";
+in
+util.mkToggledModule [ "machines" ] {
+  inherit name;
 
   shared.gipphe = {
     username = "gipphe";
     homeDirectory = "/home/gipphe";
-    hostName = "utv-vnb-lt";
+    hostName = name;
     profiles = {
       nixos = {
         audio.enable = true;
@@ -47,12 +51,15 @@ util.mkToggledModule [ "machines" ] {
   ];
 
   system-nixos = {
-    imports = with inputs.nixos-hardware.nixosModules; [
-      (import "${inputs.nixos-hardware}/common/cpu/intel/raptor-lake")
-      common-pc-laptop
-      common-pc-ssd
-      common-gpu-nvidia
-    ];
+    imports = lib.optionals (hostname == name) (
+      with inputs.nixos-hardware.nixosModules;
+      [
+        (import "${inputs.nixos-hardware}/common/cpu/intel/raptor-lake")
+        common-pc-laptop
+        common-pc-ssd
+        common-gpu-nvidia
+      ]
+    );
 
     services.xserver.videoDrivers = [
       "modesetting"

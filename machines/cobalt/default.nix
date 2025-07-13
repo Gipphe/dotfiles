@@ -1,11 +1,20 @@
-{ util, inputs, ... }:
-util.mkToggledModule [ "machines" ] {
+{
+  lib,
+  util,
+  hostname,
+  inputs,
+  ...
+}:
+let
   name = "cobalt";
+in
+util.mkToggledModule [ "machines" ] {
+  inherit name;
 
   shared.gipphe = {
     username = "gipphe";
     homeDirectory = "/home/gipphe";
-    hostName = "cobalt";
+    hostName = name;
     profiles = {
       nixos = {
         audio.enable = true;
@@ -34,10 +43,13 @@ util.mkToggledModule [ "machines" ] {
     programs.idea-community.enable = true;
   };
 
-  system-nixos.imports = with inputs.nixos-hardware.nixosModules; [
-    common-cpu-intel
-    common-gpu-amd
-    common-pc-laptop
-    common-pc-laptop-ssd
-  ];
+  system-nixos.imports = lib.optionals (hostname == name) (
+    with inputs.nixos-hardware.nixosModules;
+    [
+      common-cpu-intel
+      common-gpu-amd
+      common-pc-laptop
+      common-pc-laptop-ssd
+    ]
+  );
 }
