@@ -76,7 +76,7 @@ util.mkToggledModule
             "$mod, F, fullscreen # Open the window in fullscreen"
             "$mod, P, pseudo, # dwindle"
             "$mod, J, togglesplit, # dwindle"
-            "$mod, B, exec, ${config.programs.floorp.package}/bin/floorp # Opens the browser"
+            "$mod, B, exec, ${config.programs.vivaldi.package}/bin/vivaldi # Opens the browser"
 
             ", XF86AudioRaiseVolume, exec, ${wpctl} set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+"
             ", XF86AudioLowerVolume, exec, ${wpctl} set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-"
@@ -150,8 +150,7 @@ util.mkToggledModule
             "GDK_SCALE,1"
 
             # Mozilla
-            # Floorp seems to crash a lot of is this 1
-            "MOZ_ENABLE_WAYLAND,0"
+            "MOZ_ENABLE_WAYLAND,1"
 
             # Disable appimage launcher by default
             "APPIMAGELAUNCHER_DISABLE,1"

@@ -253,7 +253,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
 
         "custom/quicklink1" = {
           format = " ";
-          on-click = "${config.programs.floorp.package}/bin/floorp";
+          on-click = "${config.programs.vivaldi.package}/bin/vivaldi";
           tooltip-format = "Open the browser";
         };
         "custom/quicklink2" = {
