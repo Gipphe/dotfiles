@@ -46,9 +46,18 @@ util.mkToggledModule [ "machines" ] {
     };
   };
 
-  hm.home.packages = [
-    (util.GPUOffloadApp pkgs.steam "steam")
-  ];
+  hm = {
+    home.packages = [
+      (util.GPUOffloadApp pkgs.steam "steam")
+    ];
+    wayland.windowManager.hyprland.settings.monitor = [
+      "DP-7, preferred, 0x0, 1"
+      "DP-8, preferred, auto-right, 1"
+      "DP-9, preferred, auto-left, 1"
+      "eDP-1, preferred, auto-down, 1"
+      ", preferred, auto, 1"
+    ];
+  };
 
   system-nixos = {
     imports = lib.optionals (hostname == name) (

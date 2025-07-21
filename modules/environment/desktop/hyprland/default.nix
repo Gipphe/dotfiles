@@ -63,7 +63,7 @@ util.mkToggledModule
           "$mod" = "SUPER";
           # Monitor
           # See https://wiki.hyprland.org/Configuring/Monitors
-          monitor = ",preferred,auto,1";
+          monitor = lib.mkDefault ",preferred,auto,1";
           bind = workspaces ++ [
             ", Print, exec, ${grimblast} copy area"
             "Alt_L, Print, exec, ${grimblast} copy screen"
