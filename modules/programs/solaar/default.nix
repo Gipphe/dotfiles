@@ -1,10 +1,15 @@
-{ util, pkgs, ... }:
+{
+  util,
+  inputs,
+  ...
+}:
 util.mkProgram {
   name = "solaar";
-  hm = {
-    home.packages = [ pkgs.solaar ];
-  };
-  system-nixos.hardware.logitech.wireless = {
-    enable = true;
+  system-nixos = {
+    imports = [ inputs.solaar.nixosModules.default ];
+    services.solaar = {
+      enable = true;
+      window = "hide";
+    };
   };
 }

@@ -154,6 +154,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    solaar = {
+      url = "github:Svenum/Solaar-Flake/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     openconnect-sso = {
       url = "github:jcszymansk/openconnect-sso";
       inputs.nixpkgs.follows = "nixpkgs-openconnect-sso";
