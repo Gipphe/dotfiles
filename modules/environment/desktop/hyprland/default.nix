@@ -104,7 +104,12 @@ util.mkToggledModule
           ];
 
           bindl = [
-            ", switch:Lid Switch, exec, ${hyprlock}"
+            ", switch:Lid Switch, exec, ${util.writeShellScriptBin "lid-switch" ''
+              monitors="$(${pkgs.hyprland}/bin/hyprctl monitors -j | jq 'length | . > 1')"
+              if test "$monitors" = "false"; then
+                ${hyprlock}
+              fi
+            ''}/bin/lid-switch"
           ];
 
           bindm = [
