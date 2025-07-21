@@ -9,7 +9,10 @@ util.mkEnvironment {
   system-nixos = {
     services = {
       displayManager = {
-        sddm.enable = true;
+        sddm = {
+          enable = true;
+          autoNumlock = true;
+        };
         # Enable automatic login for the user.
         autoLogin = {
           enable = true;
