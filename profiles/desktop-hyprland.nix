@@ -3,8 +3,9 @@ util.mkProfile "desktop-hyprland" {
   gipphe.environment = {
     desktop.hyprland = {
       enable = true;
+      ashell.enable = true;
       dunst.enable = false;
-      eww.enable = true;
+      eww.enable = false;
       filemanager.enable = true;
       hypridle.enable = true;
       hyprlock.enable = true;

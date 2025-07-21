@@ -1,6 +1,17 @@
-{ util, config, ... }:
+{
+  util,
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
   name = "hyprlock";
+  options.gipphe.environment.desktop.hyprland.hyprlock.package =
+    lib.mkPackageOption pkgs "hyprlock" { }
+    // {
+      default = config.programs.hyprlock.package;
+    };
   hm = {
     programs.hyprlock = {
       enable = true;
