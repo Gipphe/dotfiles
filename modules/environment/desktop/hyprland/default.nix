@@ -104,14 +104,26 @@ util.mkToggledModule
             "Alt_L Shift, Tab, bringactivetotop,"
           ];
 
-          bindl = [
-            ", switch:Lid Switch, exec, ${util.writeShellScriptBin "lid-switch" ''
-              monitors="$(${pkgs.hyprland}/bin/hyprctl monitors -j | jq 'length | . > 1')"
-              if test "$monitors" = "false"; then
-                ${hyprlock}
-              fi
-            ''}/bin/lid-switch"
-          ];
+          bindl =
+            let
+              lid-switch = util.writeFishApplication {
+                name = "lid-switch";
+                text = ''
+                  set -l monitors "$(${pkgs.hyprland}/bin/hyprctl monitors -j | jq 'length')"
+                  if test $monitors -gt 1
+                    if test $argv[1] == "open"
+                      hyprctl keyword monitor "eDP-1,1920x1080,auto-down,1"
+                    else
+                      hyprctl keyword monitor "eDP-1,disable"
+                    end
+                  end
+                '';
+              };
+            in
+            [
+              ", switch:off:Lid Switch, exec, ${lid-switch}/bin/lid-switch open"
+              ", switch:on:Lid Switch, exec, ${lid-switch}/bin/lid-switch close"
+            ];
 
           bindm = [
             # Move/resize windows with mod + LMB/RMB and dragging
