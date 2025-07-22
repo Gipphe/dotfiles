@@ -48,8 +48,29 @@ util.mkProgram {
     };
   };
   system-nixos = {
-    systemd.tmpfiles.rules = [
-      "d /app 755 ${config.gipphe.username} ${config.gipphe.username} - -"
-    ];
+    boot.kernelModules = [ "fuse" ];
+    environment.etc."fuse.conf".text = ''
+      user_allow_other
+    '';
+    sops.secrets.lovdata-ssh-key = {
+      format = "binary";
+      sopsFile = ../../../secrets/utv-vnb-lt-lovdata-stage.ssh;
+    };
+    systemd = {
+      mounts = [
+        {
+          type = "fuse.sshfs";
+          what = "vnb@stage:/app/lovdata-import/ld/utf8-mor";
+          where = "/app/lovdata-import/ld/utf8-mor";
+          options = "IdentityFile=${config.sops.secrets.lovdata-ssh-key.path},allow_other,default_permissions,reconnect,ServerAliveInterval=15,ServerAliveCountMax=3,StrictHostKeyChecking=no";
+          after = [ "network-online.target" ];
+        }
+      ];
+      tmpfiles.rules = [
+        "d /app 755 ${config.gipphe.username} ${config.gipphe.username} - -"
+        "d /app/lovdata-import/ld/utf8-mor 755 ${config.gipphe.username} ${config.gipphe.username} - -"
+      ];
+    };
+    users.${config.gipphe.username}.extraGroups = [ "fuse" ];
   };
 }
