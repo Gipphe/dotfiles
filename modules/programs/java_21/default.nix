@@ -15,6 +15,6 @@ util.mkProgram {
   };
   hm.home = {
     packages = [ cfg.package ];
-    sessionVariables.JAVA_HOME = "${cfg.package}/bin";
+    sessionVariables.JAVA_HOME = "${cfg.package}";
   };
 }
