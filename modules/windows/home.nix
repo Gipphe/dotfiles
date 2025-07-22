@@ -129,15 +129,17 @@ util.mkToggledModule [ "windows" ] {
             $Config.Install()
           '';
 
-      home.activation = lib.mapAttrs' (path: v: {
-        name = "copy-windows-file-${normalize path}";
-        value =
-          lib.hm.dag.entryAfter [ "filesChanged" ] # bash
-            ''
-              run mkdir -p "$(dirname -- '${vcsConfigs}/${path}')"
-              run cp -Lf '${v.source}' '${vcsConfigs}/${path}'
-            '';
-      }) files;
+      home.activation = lib.mkIf (config.gipphe.windows.enable) (
+        lib.mapAttrs' (path: v: {
+          name = "copy-windows-file-${normalize path}";
+          value =
+            lib.hm.dag.entryAfter [ "filesChanged" ] # bash
+              ''
+                run mkdir -p "$(dirname -- '${vcsConfigs}/${path}')"
+                run cp -Lf '${v.source}' '${vcsConfigs}/${path}'
+              '';
+        }) files
+      );
     })
 
     (lib.mkIf (cfg.download != { }) {
