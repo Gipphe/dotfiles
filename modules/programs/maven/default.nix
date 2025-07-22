@@ -64,6 +64,7 @@ util.mkProgram {
           where = "/app/lovdata-import/ld/utf8-mor";
           options = "IdentityFile=${config.sops.secrets.lovdata-ssh-key.path},allow_other,default_permissions,reconnect,ServerAliveInterval=15,ServerAliveCountMax=3,StrictHostKeyChecking=no";
           after = [ "network-online.target" ];
+          wants = [ "network-online.target" ];
         }
       ];
       tmpfiles.rules = [
@@ -71,6 +72,6 @@ util.mkProgram {
         "d /app/lovdata-import/ld/utf8-mor 755 ${config.gipphe.username} ${config.gipphe.username} - -"
       ];
     };
-    users.${config.gipphe.username}.extraGroups = [ "fuse" ];
+    users.users.${config.gipphe.username}.extraGroups = [ "fuse" ];
   };
 }
