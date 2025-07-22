@@ -32,11 +32,11 @@ util.mkProgram {
       openconnect-sso
       openconnect-lovdata
     ];
-    programs.fish.shellAbbrs.vpn = "openconnect-lovdata";
+    programs.fish.shellAbbrs.vpn = "systemctl --user start openconnect-sso.service";
     systemd.user.services.openconnect-sso =
       {
         Unit = {
-          description = "openconnect with SSO support";
+          Description = "openconnect with SSO support";
           After = [ config.wayland.systemd.target ];
           PartOf = [ config.wayland.systemd.target ];
         };
@@ -45,8 +45,8 @@ util.mkProgram {
           Restart = "never";
         };
       }
-      // (lib.optionalAttrs cfg.systemd {
+      // lib.optionalAttrs cfg.systemd {
         Install.WantedBy = [ config.wayland.systemd.target ];
-      });
+      };
   };
 }
