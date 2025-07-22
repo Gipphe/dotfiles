@@ -5,7 +5,6 @@
   ...
 }:
 let
-  vpn = "${config.gipphe.programs.openconnect.openconnect-lovdata}/bin/openconnect-lovdata";
   nm-connection-editor = "${config.gipphe.programs.networkmanagerapplet.package}/bin/nm-connection-editor";
   pavucontrol = "${pkgs.pavucontrol}/bin/pavucontrol";
   walker = "${config.gipphe.environment.desktop.hyprland.walker.package}/bin/walker";
@@ -64,7 +63,6 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
           audio_sinks_more_cmd = "${pavucontrol} -t 3";
           audio_sources_more_cmd = "${pavucontrol} -t 4";
           wifi_more_cmd = nm-connection-editor;
-          vpn_more_cmd = vpn;
           bluetooth_more_cmd = "${config.gipphe.system.bluetooth.blueman.package}/bin/blueman-manager";
         };
 
@@ -73,7 +71,5 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
         };
       };
     };
-    # Disable automatic VPN connect with this bar
-    gipphe.programs.openconnect.systemd = false;
   };
 }
