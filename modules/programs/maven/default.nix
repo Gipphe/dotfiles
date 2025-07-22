@@ -13,6 +13,7 @@ util.mkProgram {
         (util.writeFishApplication {
           name = "lovdata-config";
           runtimeInputs = with pkgs; [
+            coreutils
             fd
             fzf
           ];
@@ -23,12 +24,13 @@ util.mkProgram {
 
               set -l dest /app/lovdata-config.xml
 
-              if ! test -L $dest
+              if test -e $dest && ! test -L $dest
                 echo "$dest is not a symbolic link!" >&2
                 exit 2
               end
               rm -f $dest
               ln -s $file $dest
+              echo "Linked $dest to $file" >&2
             '';
         })
       ];
