@@ -1,9 +1,18 @@
-{ util, ... }:
+{ util, config, ... }:
 util.mkToggledModule [ "networking" ] {
   name = "lovdata-dns";
-  hm.sops.secrets.lovdata-ssh-key = {
-    format = "binary";
-    sopsFile = ../../../secrets/utv-vnb-lt-lovdata-stage.ssh;
+  hm = {
+    programs.ssh.matchBlocks.lovdata = {
+      host = "*.lovdata.c.bitbit.net";
+      identitiesOnly = true;
+      identityFile = [ config.sops.secrets.lovdata-ssh-key.path ];
+      user = "vnb";
+    };
+    sops.secrets.lovdata-ssh-key = {
+      format = "binary";
+      sopsFile = ../../../secrets/utv-vnb-lt-lovdata-stage.ssh;
+      path = "${config.home.homeDirectory}/.ssh/lovdata.key";
+    };
   };
   system-nixos = {
     networking = {
