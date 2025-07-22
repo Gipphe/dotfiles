@@ -52,6 +52,7 @@ util.mkProgram {
     environment.etc."fuse.conf".text = ''
       user_allow_other
     '';
+    environment.systemPackages = [ pkgs.sshfs ];
     sops.secrets.lovdata-ssh-key = {
       format = "binary";
       sopsFile = ../../../secrets/utv-vnb-lt-lovdata-stage.ssh;
@@ -60,6 +61,7 @@ util.mkProgram {
       mounts = [
         {
           type = "fuse.sshfs";
+          description = "Remote lovdata-import mount";
           what = "vnb@stage:/app/lovdata-import/ld/utf8-mor";
           where = "/app/lovdata-import/ld/utf8-mor";
           options = "IdentityFile=${config.sops.secrets.lovdata-ssh-key.path},allow_other,default_permissions,reconnect,ServerAliveInterval=15,ServerAliveCountMax=3,StrictHostKeyChecking=no";
