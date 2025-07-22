@@ -8,7 +8,30 @@ util.mkProgram {
   name = "maven";
   hm = {
     home = {
-      packages = [ pkgs.maven ];
+      packages = [
+        pkgs.maven
+        (util.writeFishApplication {
+          name = "lovdata-config";
+          runtimeInputs = with pkgs; [
+            fd
+            fzf
+          ];
+          text = # fish
+            ''
+              set -l file (fd --type file '.' /app | fzf)
+              or exit 1
+
+              set -l dest /app/lovdata-config.xml
+
+              if ! test -L $dest
+                echo "$dest is not a symbolic link!" >&2
+                exit 2
+              end
+              rm -f $dest
+              ln -s $file $dest
+            '';
+        })
+      ];
       file.".m2/settings-security.xml".text = ''
         <settingsSecurity>
           <relocation>
@@ -21,5 +44,10 @@ util.mkProgram {
       format = "binary";
       sopsFile = ../../../secrets/utv-vnb-lt-maven-settings-security.xml;
     };
+  };
+  system-nixos = {
+    systemd.tmpfiles.rules = [
+      "d /app 755 ${config.gipphe.username} ${config.gipphe.username} - -"
+    ];
   };
 }
