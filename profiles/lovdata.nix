@@ -2,6 +2,7 @@
 util.mkProfile "lovdata" {
   gipphe = {
     programs = {
+      devbox.enable = true;
       idea-ultimate.enable = true;
       java_21.enable = true;
       mattermost.enable = true;
