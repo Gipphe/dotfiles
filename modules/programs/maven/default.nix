@@ -19,7 +19,7 @@ util.mkProgram {
           ];
           text = # fish
             ''
-              set -l file (fd --type file '.' /app | fzf)
+              set -l file (fd --type file '.' /app/config | fzf)
               or exit 1
 
               set -l dest /app/lovdata-config.xml
