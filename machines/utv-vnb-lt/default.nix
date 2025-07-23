@@ -99,6 +99,9 @@ util.mkToggledModule [ "machines" ] {
       };
     };
 
+    users.groups.${config.gipphe.username}.gid = 993;
+    users.users.${config.gipphe.username}.uid = 1000;
+
     # Override Intel GPU driver from common-cpu-intel-raptor-lake module.
     environment.variables.VDPAU_DRIVER = lib.mkIf config.hardware.graphics.enable (
       lib.mkOverride 990 "nvidia"
