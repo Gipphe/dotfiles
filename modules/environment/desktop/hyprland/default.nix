@@ -50,7 +50,7 @@ util.mkToggledModule
       ./hyprpaper.nix
       ./hyprpolkitagent.nix
       ./mako.nix
-      ./mechabar.nix
+      ./mechabar
       ./rofi
       ./swaync
       ./walker

@@ -21,15 +21,23 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
     xdg.configFile = {
       "waybar/config.jsonc" = {
         source = pkgs.runCommandNoCC "waybar-config" { } ''
-          cp ${mechabar}/config.jsonc config.jsonc
-          ${pkgs.yq-go}/bin/yq -pj -oj '. *+ {"custom/distro": {"format": " "}, "clock#date": {"format": "󰸗 {:%d-%m}"}}'
+          export PATH=${
+            lib.makeBinPath [
+              pkgs.coreutils
+              pkgs.gnused
+            ]
+          }:$PATH
+          cat ${mechabar}/config.jsonc |
+          sed 's///g' |
+          sed 's/%m-%d/%d-%m/g' |
+          sed 's!"custom/left7",!"tray","custom/left7",!' |
+          tee $out >/dev/null
         '';
         onChange = kill-waybar;
       };
       "waybar/style.css" = {
         source = pkgs.runCommandNoCC "waybar-style" { } ''
-          cp "${mechabar}/style.css" style.css
-
+          cat "${mechabar}/style.css" "${./style.css}" > $out
         '';
         onChange = kill-waybar;
       };
