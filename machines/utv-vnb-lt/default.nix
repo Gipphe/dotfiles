@@ -57,27 +57,41 @@ util.mkToggledModule [ "machines" ] {
       ", preferred, auto-down, 1"
     ];
 
-    services.kanshi.profiles = {
-      undocked = {
-        outputs = [
+    services.kanshi.settings = [
+      {
+        output.criteria = "Dell Inc. DELL U2724D G15V4Z3";
+        output.alias = "left";
+      }
+      {
+        output.criteria = "Dell Inc. DELL U2724D G27V4Z3";
+        output.alias = "right";
+      }
+      {
+        output.criteria = "Dell Inc. DELL U2724D G11T4Z3";
+        output.alias = "center";
+      }
+      {
+        profile.name = "undocked";
+        profile.outputs = [
           {
             criteria = "eDP-1";
             status = "enable";
           }
         ];
-      };
-      docked = {
-        outputs = [
+      }
+      {
+        profile.name = "docked";
+        profile.outputs = [
           {
             criteria = "eDP-1";
             status = "disable";
           }
-          { criteria = "DP-7"; }
-          { criteria = "DP-8"; }
-          { criteria = "DP-9"; }
+          { criteria = "$left"; }
+          { criteria = "$center"; }
+          { criteria = "$right"; }
         ];
-      };
-    };
+      }
+    ];
   };
 
   system-nixos = {
