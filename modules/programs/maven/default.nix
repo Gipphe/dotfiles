@@ -60,6 +60,7 @@ util.mkProgram {
     systemd = {
       mounts = [
         {
+          enable = false;
           type = "fuse.sshfs";
           description = "Remote lovdata-import mount";
           what = "vnb@stage:/app/lovdata-import/ld/utf8-mor";
