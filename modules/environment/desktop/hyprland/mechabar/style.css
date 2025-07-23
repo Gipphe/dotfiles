@@ -55,7 +55,7 @@ tooltip label,
 
 #custom-left5,
 #custom-right2 {
-  font-size: 19.68px;
+  font-size: 15.68px;
 }
 
 /*
@@ -78,4 +78,17 @@ tooltip label,
 #custom-power {
   border-radius: 12px;
   padding: 0 8px 0 11px;
+}
+
+/**
+ * My own stuff
+ */
+#custom-notifications {
+  background: @pulseaudio;
+  color: @module-fg;
+  opacity: 1;
+  padding: 0 4px;
+}
+#custom-notifications:hover {
+  color: @hover-fg;
 }

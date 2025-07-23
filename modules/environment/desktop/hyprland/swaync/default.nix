@@ -33,7 +33,7 @@ let
 in
 util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
   name = "swaync";
-  options.gipphe.environmnet.desktop.hyprland.swaync = {
+  options.gipphe.environment.desktop.hyprland.swaync = {
     package = lib.mkPackageOption pkgs "swaync" {
       default = [ "swaynotificationcenter" ];
     };
