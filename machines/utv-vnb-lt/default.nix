@@ -36,8 +36,9 @@ util.mkToggledModule [ "machines" ] {
       gaming.enable = true;
       gc.enable = true;
       logitech.enable = true;
-      networkmanager.enable = true;
       lovdata.enable = true;
+      multi-monitor.enable = true;
+      networkmanager.enable = true;
       rice.enable = true;
       secrets.enable = true;
       sync.enable = true;
@@ -53,9 +54,30 @@ util.mkToggledModule [ "machines" ] {
       "DP-7, preferred, 0x0, 1"
       "DP-8, preferred, auto-right, 1"
       "DP-9, preferred, auto-left, 1"
-      "eDP-1, preferred, auto-down, 1"
-      ", preferred, auto, 1"
+      ", preferred, auto-down, 1"
     ];
+
+    services.kanshi.profiles = {
+      undocked = {
+        outputs = [
+          {
+            criteria = "eDP-1";
+            status = "enable";
+          }
+        ];
+      };
+      docked = {
+        outputs = [
+          {
+            criteria = "eDP-1";
+            status = "disable";
+          }
+          { criteria = "DP-7"; }
+          { criteria = "DP-8"; }
+          { criteria = "DP-9"; }
+        ];
+      };
+    };
   };
 
   system-nixos = {
