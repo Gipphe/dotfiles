@@ -111,14 +111,8 @@ util.mkToggledModule
               lid-switch = util.writeFishApplication {
                 name = "lid-switch";
                 text = ''
-                  set -l monitors "$(${hyprctl} monitors -j | jq 'length')"
-                  if test $monitors -gt 1
-                    if test $argv[1] == "open"
-                      sleep 1 && ${hyprctl} dispatch dpms on eDP-1
-                    else
-                      sleep 1 && ${hyprctl} dispatch dpms off eDP-1
-                    end
-                  else
+                  set -l monitors "$(${hyprctl} monitors all -j | jq 'length')"
+                  if test $monitors == 1
                     if test $argv[1] == "close"
                       systemctl suspend
                     else
