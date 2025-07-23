@@ -2,7 +2,6 @@
   util,
   inputs,
   pkgs,
-  config,
   lib,
   ...
 }:
@@ -37,7 +36,7 @@ let
         function start
           sudo echo "Pre-authenticated sudo" >&2
           and openconnect-lovdata &>/dev/null &
-          and echo "Started openconnect" >&2
+          echo "Started openconnect" >&2
         end
 
         switch $choice
