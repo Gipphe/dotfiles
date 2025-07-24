@@ -3,21 +3,27 @@ util.mkProfile "desktop-hyprland" {
   gipphe.environment = {
     desktop.hyprland = {
       enable = true;
-      ashell.enable = false;
-      mechabar.enable = true;
-      dunst.enable = false;
-      eww.enable = false;
       filemanager.enable = true;
       hypridle.enable = true;
       hyprlock.enable = true;
       hyprpaper.enable = true;
       hyprpolkitagent.enable = true;
+      wlogout.enable = false;
+
+      # Notifications
+      dunst.enable = false;
       mako.enable = false;
-      rofi.enable = false;
       swaync.enable = true;
+
+      # Launchers
+      rofi.enable = false;
       walker.enable = true;
+
+      # Bars
+      ashell.enable = false;
+      mechabar.enable = false;
+      eww.enable = true;
       waybar.enable = false;
-      wlogout.enable = true;
     };
     display.enable = true;
     wayland.enable = true;
