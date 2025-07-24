@@ -2,11 +2,20 @@
 util.mkToggledModule [ "networking" ] {
   name = "lovdata-dns";
   hm = {
-    programs.ssh.matchBlocks.lovdata = {
-      host = "*.lovdata.c.bitbit.net";
-      identitiesOnly = true;
-      identityFile = [ config.sops.secrets.lovdata-ssh-key.path ];
-      user = "vnb";
+    programs.ssh.matchBlocks = {
+      lovdata-stage = {
+        host = "*.lovdata.c.bitbit.net";
+        identitiesOnly = true;
+        identityFile = [ config.sops.secrets.lovdata-ssh-key.path ];
+        user = "vnb";
+      };
+
+      lovdata-stage-alias = {
+        host = "stage";
+        identitiesOnly = true;
+        identityFile = [ config.sops.secrets.lovdata-ssh-key.path ];
+        user = "vnb";
+      };
     };
     sops.secrets.lovdata-ssh-key = {
       format = "binary";

@@ -81,15 +81,15 @@ util.mkToggledModule [ "lovdata" ] {
       })
       (pkgs.writeShellScriptBin "mount-lovdata" (
         let
-          OPTIONS = "IdentityFile=${config.sops.secrets.lovdata-ssh-key.path},uid=1000,gid=993,follow_symlinks,compression=no,reconnect";
+          OPTIONS = "uid=$(id -u),gid=$(id -g),follow_symlinks,compression=no,reconnect";
           RO_OPTIONS = "${OPTIONS},ro";
         in
         ''
-          sshfs -o ${RO_OPTIONS} vnb@stage:/app/lovdata-import/ld/utf8-mor/ /app/lovdata-import/ld/utf8-mor/
-          sshfs -o ${RO_OPTIONS} vnb@stage:/app/lovdata-webdata /app/lovdata-webdata
-          sshfs -o ${RO_OPTIONS} vnb@stage:/app/lovdata-static /app/lovdata-static
-          sshfs -o ${RO_OPTIONS} vnb@stage:/app/lovdata-apidata /app/lovdata-apidata
-          sshfs -o ${OPTIONS} vnb@stage:/app/lovdata-documents /app/lovdata-documents
+          sshfs -o "${RO_OPTIONS}" vnb@stage:/app/lovdata-import/ld/utf8-mor/ /app/lovdata-import/ld/utf8-mor/
+          sshfs -o "${RO_OPTIONS}" vnb@stage:/app/lovdata-webdata /app/lovdata-webdata
+          sshfs -o "${RO_OPTIONS}" vnb@stage:/app/lovdata-static /app/lovdata-static
+          sshfs -o "${RO_OPTIONS}" vnb@stage:/app/lovdata-apidata /app/lovdata-apidata
+          sshfs -o "${OPTIONS}" vnb@stage:/app/lovdata-documents /app/lovdata-documents
         ''
       ))
     ];
