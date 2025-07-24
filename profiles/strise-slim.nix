@@ -6,7 +6,7 @@ util.mkProfile "strise-slim" {
     kubectl.enable = true;
     kubectx.enable = true;
     gh.enable = true;
-    gh.aliases =
+    gh.settings.aliases =
       let
         rocksTeamMembers = {
           "adrian" = "adriantr";
