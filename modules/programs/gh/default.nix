@@ -1,17 +1,4 @@
-{ util, lib, ... }:
-let
-  rocksTeamMembers = {
-    "adrian" = "adriantr";
-    "sivert" = "SivertRanden";
-    "mathias" = "mattimoller";
-    "sigurd" = "sberglann";
-    "tom" = "tpot1";
-  };
-  teamMemberAliases = lib.mapAttrs' (name: username: {
-    name = "add_${name}";
-    value = "pr edit --add-reviewer ${username}";
-  }) rocksTeamMembers;
-in
+{ util, ... }:
 util.mkProgram {
   name = "gh";
   hm.programs.gh = {
@@ -28,8 +15,7 @@ util.mkProgram {
         prc = "pr create -d --fill-first --assignee @me --no-maintainer-edit";
         prm = "pr merge --auto -sd";
         addme = "pr edit --add-assignee @me";
-        addorcks = "pr edit --add-reviewer strise/orcks";
-      } // teamMemberAliases;
+      };
     };
   };
 }
