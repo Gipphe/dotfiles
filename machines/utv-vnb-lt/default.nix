@@ -51,9 +51,9 @@ util.mkToggledModule [ "machines" ] {
       (util.GPUOffloadApp pkgs.steam "steam")
     ];
     wayland.windowManager.hyprland.settings.monitor = [
-      "Dell Inc. DELL U2724D G11T4Z3, preferred, 0x0, 1"
-      "Dell Inc. DELL U2724D G27V4Z3, preferred, auto-right, 1"
-      "Dell Inc. DELL U2724D G15V4Z3, preferred, auto-left, 1"
+      "desc:Dell Inc. DELL U2724D G11T4Z3, preferred, 0x0, 1"
+      "desc:Dell Inc. DELL U2724D G27V4Z3, preferred, auto-right, 1"
+      "desc:Dell Inc. DELL U2724D G15V4Z3, preferred, auto-left, 1"
       ", preferred, auto-down, 1"
     ];
 
