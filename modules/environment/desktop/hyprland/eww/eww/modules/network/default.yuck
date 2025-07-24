@@ -6,7 +6,7 @@
          :space-evenly false
       (button :class "network__icon"
               :hexpand true
-              :onclick "networkmanager_dmenu"
+              :onclick "wezterm start -- bash -c 'sleep 0.1s && nmtui'"
               :style "color: #ffffff;"
         (network-icon)))))
 
