@@ -65,11 +65,21 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
           After = [ "eww-daemon.service" ];
           PartOf = [ "eww-daemon.service" ];
         };
-        Service = {
-          ExecStart = "${eww}/bin/eww open --no-daemonize --screen 0 bar";
-          Restart = "on-failure";
-          Type = "simple";
-        };
+        Service =
+          let
+            hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
+            script = pkgs.writeShellScriptBin "eww-start" ''
+              monitors="$(${hyprctl} monitors -j | jq -r '.[] | .name')"
+              for monitor in $monitors; do
+                ${eww}/bin/eww open --no-daemonize --screen "$monitor" --id "bar-$monitor" bar
+              done
+            '';
+          in
+          {
+            ExecStart = "${script}/bin/eww-start";
+            Restart = "on-failure";
+            Type = "simple";
+          };
         Install.WantedBy = [ "eww-daemon.service" ];
       };
     };
