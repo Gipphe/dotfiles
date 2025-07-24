@@ -51,9 +51,9 @@ util.mkToggledModule [ "machines" ] {
       (util.GPUOffloadApp pkgs.steam "steam")
     ];
     wayland.windowManager.hyprland.settings.monitor = [
-      "DP-7, preferred, 0x0, 1"
-      "DP-8, preferred, auto-right, 1"
-      "DP-9, preferred, auto-left, 1"
+      "Dell Inc. DELL U2724D G11T4Z3, preferred, 0x0, 1"
+      "Dell Inc. DELL U2724D G27V4Z3, preferred, auto-right, 1"
+      "Dell Inc. DELL U2724D G15V4Z3, preferred, auto-left, 1"
       ", preferred, auto-down, 1"
     ];
 
@@ -71,10 +71,14 @@ util.mkToggledModule [ "machines" ] {
         output.alias = "center";
       }
       {
+        output.criteria = "AU Optronics 0x31A6 Unknown";
+        output.alias = "laptop";
+      }
+      {
         profile.name = "undocked";
         profile.outputs = [
           {
-            criteria = "eDP-1";
+            criteria = "$laptop";
             status = "enable";
           }
         ];
@@ -83,7 +87,7 @@ util.mkToggledModule [ "machines" ] {
         profile.name = "docked";
         profile.outputs = [
           {
-            criteria = "eDP-1";
+            criteria = "$laptop";
             status = "disable";
           }
           { criteria = "$left"; }
