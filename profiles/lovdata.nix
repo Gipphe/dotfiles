@@ -14,6 +14,12 @@ util.mkProfile "lovdata" {
         enable = true;
         lovdata.enable = true;
       };
+      glab.enable = true;
+      glab.settings.hosts."git.lovdata.no" = {
+        git_protocol = "ssh";
+        api_protocol = "https";
+        user = "vnb";
+      };
     };
     virtualisation = {
       docker.enable = true;
