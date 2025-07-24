@@ -116,6 +116,12 @@ util.mkProgram {
                 description = "Your username in the GitLab instance.";
                 example = "john.doe";
               };
+              token_path = lib.mkOption {
+                type = with lib.types; nullOr str;
+                description = "Path to text file containing API token to use.";
+                default = null;
+                example = "/home/username/secrets/glab_token.txt";
+              };
             };
           });
       };
@@ -128,29 +134,70 @@ util.mkProgram {
         last_update_check_timestamp = "1970-01-01T01:00:00Z";
         hosts = lib.mapAttrs (
           host: xs:
-          xs
+          lib.filterAttrs (n: _: n != "token_path") xs
           // {
-            token = null;
             api_host = xs.api_host or host;
           }
         ) cfg.settings.hosts;
       };
 
-      # settings = pkgs.writeText "glab-settings" (builtins.toJSON finalSettings);
-      # aliases = pkgs.writeText "glab-aliases" (builtins.toJSON cfg.aliases);
-      # configFiles = pkgs.linkFarm "glab-config" {
-      #   "config.yaml" = settings;
-      #   "aliases.yaml" = aliases;
-      # };
-      inherit (pkgs) glab;
-      # glab = pkgs.symlinkJoin {
-      #   name = "glab";
-      #   paths = [ pkgs.glab ];
-      #   buildInputs = [ pkgs.makeWrapper ];
-      #   postBuild = ''
-      #     wrapProgram $out/bin/glab --set GLAB_CONFIG_DIR="${configFiles}"
-      #   '';
-      # };
+      aliases = pkgs.writeText "glab-aliases" (builtins.toJSON cfg.aliases);
+      settings = pkgs.writeText "glab-settings" (builtins.toJSON finalSettings);
+      config-dir = "${config.gipphe.homeDirectory}/.config/gipphe/glab-cli";
+      glab = pkgs.symlinkJoin {
+        name = "glab";
+        paths = [ pkgs.glab ];
+        buildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/glab --set GLAB_CONFIG_DIR="${config-dir}"
+        '';
+      };
+
+      host-token-paths = lib.pipe cfg.settings.hosts [
+        (lib.filterAttrs (_: x: x ? token_path && x.token_path != null && x.token_path != ""))
+        (lib.mapAttrs (_: x: x.token_path))
+        builtins.toJSON
+        (pkgs.writeText "host-token-paths")
+      ];
+      add-tokens = util.writeFishApplication {
+        name = "add-tokens";
+        runtimeInputs = with pkgs; [
+          jq
+          coreutils
+          mktemp
+        ];
+        text = ''
+          mkdir -p '${config-dir}'
+          chmod -R 755 '${config-dir}' run cp -Lf '${aliases}' '${config-dir}/aliases.yml'
+          cp -Lf '${settings}' '${config-dir}/config.yml'
+          chown -R ${config.gipphe.username}:${config.gipphe.username} '${config-dir}'
+          chmod -R 644 ${config-dir}/*
+
+          set -l hosts (jq 'to_entries | map(.key)' '${host-token-paths}')
+          set -l paths (jq 'to_entries | map(.value)' '${host-token-paths}')
+          set -l tokens
+
+          set -l res
+
+          if test (count $hosts) = 0
+            echo "{}"
+            exit
+          end
+
+          for idx in (seq 1 (count $hosts))
+            set -l host $hosts[$idx]
+            set -l path $paths[$idx]
+            set -l token (cat $path)
+            set -a res '"'$host'":{"token":"'$token'"}'
+          end
+
+          set -l host_tokens '{ "hosts": {' (string join ',' $res) '}}'
+
+          set -l tmp (mktemp)
+          jq --argjson tokens "$host_tokens" '. * $host_tokens' '${config-dir}/config.yml' > $tmp
+          mv $tmp '${config-dir}/config.yml'
+        '';
+      };
     in
     {
       sops.secrets.lovdata-gitlab-ci-access-token = {
@@ -166,9 +213,8 @@ util.mkProgram {
           ${glab}/bin/glab "$@"
         '')
       ];
-      xdg.configFile = {
-        "glab-cli/aliases.yml".text = builtins.toJSON cfg.aliases;
-        "glab-cli/config.yml".text = builtins.toJSON finalSettings;
-      };
+      home.activation.glab-config = lib.hm.dag.entryAfter [ "onFilesChanged" ] ''
+        run ${add-tokens}/bin/add-tokens
+      '';
     };
 }
