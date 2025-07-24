@@ -69,7 +69,7 @@ util.mkProgram {
                 bind "x" { CloseTab; SwitchToMode "locked"; }
                 bind "tab" { ToggleTab; }
                 bind "+" { NextSwapLayout; }
-                bind "\" { PreviousSwapLayout; }
+                bind "\\" { PreviousSwapLayout; }
             }
             resize {
                 bind "left" { Resize "Increase left"; }
