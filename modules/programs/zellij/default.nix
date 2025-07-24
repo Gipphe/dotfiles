@@ -68,6 +68,8 @@ util.mkProgram {
                 bind "t" { SwitchToMode "normal"; }
                 bind "x" { CloseTab; SwitchToMode "locked"; }
                 bind "tab" { ToggleTab; }
+                bind "+" { NextSwapLayout; }
+                bind "\" { PreviousSwapLayout; }
             }
             resize {
                 bind "left" { Resize "Increase left"; }
