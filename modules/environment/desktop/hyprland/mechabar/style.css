@@ -9,54 +9,54 @@
   in this section to keep the layout consistent.
 */
 
-* {
-  font-family: "JetBrainsMono Nerd Font";
-  font-size: 14px;
-  font-weight: bold;
-}
-
-tooltip label,
-#window label,
-#mpris {
-  font-weight: normal;
-}
-
+/* * { */
+/*   font-family: "JetBrainsMono Nerd Font"; */
+/*   font-size: 14px; */
+/*   font-weight: bold; */
+/* } */
+/**/
+/* tooltip label, */
+/* #window label, */
+/* #mpris { */
+/*   font-weight: normal; */
+/* } */
+/**/
 /* ──────────────────────────────────────────────────┤ left & right arrows ├───
 */
-#custom-left1,
-#custom-left2,
-#custom-left3,
-#custom-left4,
-#custom-left5,
-#custom-left6,
-#custom-left7,
-#custom-left8,
-#custom-right1,
-#custom-right2,
-#custom-right3,
-#custom-right4,
-#custom-right5 {
-  font-size: 18.68px;
-}
+/* #custom-left1, */
+/* #custom-left2, */
+/* #custom-left3, */
+/* #custom-left4, */
+/* #custom-left5, */
+/* #custom-left6, */
+/* #custom-left7, */
+/* #custom-left8, */
+/* #custom-right1, */
+/* #custom-right2, */
+/* #custom-right3, */
+/* #custom-right4, */
+/* #custom-right5 { */
+/*   font-size: 18.68px; */
+/* } */
 
 /* ─────────────────────────────────────────────────┤ left & right inverse ├───
 */
-#custom-leftin1,
-#custom-leftin2,
-#custom-rightin1 {
-  font-size: 19.5px;
-}
+/* #custom-leftin1, */
+/* #custom-leftin2, */
+/* #custom-rightin1 { */
+/*   font-size: 19.5px; */
+/* } */
 
 /* ──────────────────────────────────────────────────────────┤ distro icon ├───
 */
-#custom-distro {
-  font-size: 14.6px;
-}
-
-#custom-left5,
-#custom-right2 {
-  font-size: 15.68px;
-}
+/* #custom-distro { */
+/*   font-size: 18.6px; */
+/* } */
+/**/
+/* #custom-left5, */
+/* #custom-right2 { */
+/*   font-size: 19.68px; */
+/* } */
 
 /*
   Adjust these properties as well to keep the design consistent.
@@ -64,21 +64,21 @@ tooltip label,
 
 /* ───────────────────────────────────────────────────────────┤ workspaces ├───
 */
-#workspaces button {
-  border-radius: 8px;
-  padding: 0 3px;
-}
-
-#workspaces button.active {
-  padding: 0 8px;
-}
+/* #workspaces button { */
+/*   border-radius: 8px; */
+/*   padding: 0 3px; */
+/* } */
+/**/
+/* #workspaces button.active { */
+/*   padding: 0 8px; */
+/* } */
 
 /* ─────────────────────────────────────────────────────────┤ power button ├───
 */
-#custom-power {
-  border-radius: 12px;
-  padding: 0 8px 0 11px;
-}
+/* #custom-power { */
+/*   border-radius: 12px; */
+/*   padding: 0 8px 0 11px; */
+/* } */
 
 /**
  * My own stuff
@@ -91,4 +91,9 @@ tooltip label,
 }
 #custom-notifications:hover {
   color: @hover-fg;
+}
+
+#tray {
+  padding: 0 4px;
+  opacity: 1;
 }
