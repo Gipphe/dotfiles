@@ -5,7 +5,8 @@
               :circle-class "notifications__progress"
               :button-class "notifications__icon"
               :value {min(ceil(notifications.count / notifications-limit * 100), 100)}
+              :tooltip "Notifications: ${notifications.count}${notifications.dnd ? " with DND" : ""}"
               :onclick "swaync-client -t"
-    {notifications.count == 0 ? "" :
-     notifications.dnd ? "󱏧" :
+    {notifications.dnd ? "󱏧" :
+     notifications.count == 0 ? "" :
      ""}))

@@ -17,3 +17,14 @@
     }
   }
 }
+
+.brightness-indicator {
+  &__icon {
+    color: $yellow;
+  }
+
+  &__progress {
+    color: $yellow;
+    background-color: $surface0;
+  }
+}

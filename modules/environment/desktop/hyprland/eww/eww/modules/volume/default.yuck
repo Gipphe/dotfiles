@@ -9,6 +9,7 @@
                      :onhoverlost "${EWW_CMD} update show-volume-bar=false"
                      :onchange "pamixer --set-volume {}"
                      :onclick "pamixer -t && ${EWW_CMD} poll volume-muted"
+                     :tooltip "Volume: ${volume-muted ? "muted" : "${volume}%"}"
                      :value volume
     (circle-bar :class "volume-indicator ${volume-muted ? "volume-indicator--muted" : ""}"
                 :circle-class "volume-indicator__progress"
