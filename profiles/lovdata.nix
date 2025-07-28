@@ -31,6 +31,7 @@ util.mkProfile "lovdata" {
           team_members = {
             audun = "agevelt";
             stian = "stian";
+            simon = "sis";
           };
         in
         lib.mapAttrs (name: handle: "mr update --reviewer '${handle}'") team_members;
