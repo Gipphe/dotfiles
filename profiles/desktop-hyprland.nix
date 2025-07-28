@@ -29,7 +29,7 @@ util.mkProfile "desktop-hyprland" {
     wayland.enable = true;
   };
   gipphe.programs = {
-    networkmanagerapplet.enable = true;
+    networkmanagerapplet.enable = false;
     wl-clipboard.enable = true;
   };
 }

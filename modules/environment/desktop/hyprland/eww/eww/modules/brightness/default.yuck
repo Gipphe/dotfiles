@@ -1,6 +1,25 @@
+(defvar show-brightness-bar false)
 (defvar brightness-icon "󰛨")
 
 (defwidget brightness []
+  (horizontal-slider :class "brightness"
+                     :scale-class "brightness__scale"
+                     :icon-class "brightness__icon"
+                     :show-bar show-brightness-bar
+                     :onhover "${EWW_CMD} update show-brightness-bar=true"
+                     :onhoverlost "${EWW_CMD} update show-brightness-bar=false"
+                     :onchange "brightnessctl set {}% && ${EWW_CMD} poll brightness-percent"
+                     :min 1
+                     :value brightness-percent
+                     :tooltip "Brightness: ${brightness-percent}%"
+                     :onclick "test \"$(./data/brightness.fish)\" -ge 90 && brightnessctl set 1% || brightnessctl set 100%"
+    (circle-bar :class "brightness-indicator"
+                :circle-class "brightness-indicator__progress"
+                :button-class "brightness-indicator__icon"
+                :value {brightness-percent > 98 ? 100 : brightness-percent}
+      "󰛨" )))
+
+(defwidget brightness-old []
   (eventbox :onhover "${EWW_CMD} update show-quick-settings=true"
     (box :class "brightness"
          :space-evenly false
@@ -11,3 +30,4 @@
         (brightness-icon)))))
 
 (defwidget brightness-icon [] "󰛨")
+

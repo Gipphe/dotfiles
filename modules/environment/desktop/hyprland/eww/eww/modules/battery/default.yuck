@@ -1,20 +1,13 @@
 (defwidget battery []
-  (box :class "battery"
-       :vexpand false
-       :hexpand false
-       :space-evenly false
-    (circular-progress :value {(EWW_BATTERY.BAT0 ?: EWW_BATTERY.BAT1).capacity}
-                       :class "battery__progress"
-                       :thickness 4
-      (button :class "battery__icon"
-              :tooltip "battery on ${(EWW_BATTERY.BAT0 ?: EWW_BATTERY.BAT1).capacity}%"
-              :onclick "EWW_CMD='${EWW_CMD}' ./scripts/pop.sh system"
-        (label :text {(EWW_BATTERY.BAT0 ?: EWW_BATTERY.BAT1).status == "Charging"
-                      ? ""
-                      : ""})))))
+  (circle-bar :class "battery"
+              :circle-class "battery__progress"
+              :button-class "battery__icon"
+              :tooltip "Battery: ${(EWW_BATTERY.BAT0 ?: EWW_BATTERY.BAT1).capacity}%"
+              :value {(EWW_BATTERY.BAT0 ?: EWW_BATTERY.BAT1).capacity}
+    (battery-icon)))
 
 (defwidget battery-icon []
-  (_battery :status {(EWW_BATTERY.BAT0 ?: EWW_BATTERY.BAT1).status}
+  (_battery-icon :status {(EWW_BATTERY.BAT0 ?: EWW_BATTERY.BAT1).status}
             :battery {(EWW_BATTERY.BAT0 ?: EWW_BATTERY.BAT1).capacity}
             :charging "󰂄"
             :c-100    "󰁹"

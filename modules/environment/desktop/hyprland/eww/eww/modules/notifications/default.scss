@@ -1,3 +1,8 @@
 .notifications {
-  font-size: 20px;
+  &__icon {
+    color: white;
+  }
+  &__progress {
+    color: white;
+  }
 }

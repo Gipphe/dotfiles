@@ -13,6 +13,7 @@ let
       calc
       gawk
       jo
+      lm_sensors
       mpc
       networkmanager
       pamixer

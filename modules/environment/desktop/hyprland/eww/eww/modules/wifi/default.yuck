@@ -1,14 +1,11 @@
-(defwidget network []
-  (eventbox :onhover "${EWW_CMD} update show-quick-settings=true"
-    (box :class "network"
-         :vexpand false
-         :hexpand true
-         :space-evenly false
-      (button :class "network__icon"
-              :hexpand true
+(defwidget wifi []
+  (circle-bar :class "wifi"
+              :circle-class "wifi__progress"
+              :button-class "wifi__icon"
+              :value {network.signal}
+              :tooltip "Wifi: ${network.signal}% on ${network.ssid}"
               :onclick "wezterm start -- bash -c 'sleep 0.1s && nmtui'"
-              :style "color: #ffffff;"
-        (network-icon)))))
+    (network-icon)))
 
 (defwidget network-icon []
   (_network-icon :strength {network.ssid == "" ? 0 :

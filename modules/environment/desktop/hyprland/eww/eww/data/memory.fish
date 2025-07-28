@@ -1,7 +1,9 @@
-awk '
-    $1 == "MemTotal:" { memtotal = $2 }
-    $1 == "MemAvailable:" { memavailable = $2 }
-    END {
-      printf("{\\"total\\": %s, \\"available\\": %s, \\"used\\": %s, \\"percent\\": %s }\\n", memtotal, memavailable, (memtotal - memavailable), ((memtotal - memavailable) / memtotal * 100))
-    }
-  ' /proc/meminfo
+#!/usr/bin/env fish
+
+set -l total (awk '/MemTotal:/ { print $2 }' /proc/meminfo)
+set -l available (awk '/MemAvailable:/ { print $2 }' /proc/meminfo)
+jo \
+    total="$total" \
+    available="$available" \
+    used="$(math $total - $available)" \
+    percent="$(math \( $total - $available \) / $total x 100 )"

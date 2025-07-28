@@ -12,8 +12,6 @@ let
         "title"
         "menubar"
         "dnd"
-        "volume"
-        "backlight"
         "inhibitors"
         "notifications"
       ];

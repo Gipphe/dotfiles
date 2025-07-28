@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
-pamixer --get-volume-human | tr -d '%'
+pamixer --get-volume
 
 pactl subscribe | rg --line-buffered "on sink" | while read line
-    pamixer --get-volume-human | tr -d '%'
+    pamixer --get-volume
 end

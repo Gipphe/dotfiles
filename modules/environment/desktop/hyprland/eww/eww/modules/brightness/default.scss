@@ -3,4 +3,17 @@
     font-size: 24px;
     color: $yellow;
   }
+
+  &__scale {
+    trough {
+      highlight {
+        background-image: linear-gradient(
+          to right,
+          $yellow 30%,
+          $peach 50%,
+          $maroon 100%
+        );
+      }
+    }
+  }
 }

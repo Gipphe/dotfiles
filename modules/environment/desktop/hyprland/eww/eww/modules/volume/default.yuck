@@ -1,0 +1,23 @@
+(defvar show-volume-bar false)
+
+(defwidget volume []
+  (horizontal-slider :class "volume"
+                     :scale-class "volume__scale ${volume-muted ? "volume__scale--muted" : ""}"
+                     :icon-class "volume__icon ${volume-muted ? "volume__icon--muted" : ""}"
+                     :show-bar show-volume-bar
+                     :onhover "${EWW_CMD} update show-volume-bar=true"
+                     :onhoverlost "${EWW_CMD} update show-volume-bar=false"
+                     :onchange "pamixer --set-volume {}"
+                     :onclick "pamixer -t && ${EWW_CMD} poll volume-muted"
+                     :value volume
+    (circle-bar :class "volume-indicator ${volume-muted ? "volume-indicator--muted" : ""}"
+                :circle-class "volume-indicator__progress"
+                :button-class "volume-indicator__icon"
+                :value volume
+      (volume-icon))))
+
+(defwidget volume-icon []
+  {volume-muted ? "" :
+   volume-percent > 50 ? "" :
+   volume-percent > 0 ? "" :
+   ""})

@@ -1,8 +1,7 @@
 (deflisten network :initial '{"ssid": "", "signal": "0"}'
   `./data/network.fish`)
 
-(defpoll brightness-percent :interval "5s" :initial 100
-  `brightnessctl -m -d intel_backlight | awk -F, '{print $4}' | tr -d '%'`)
+(defpoll brightness-percent :interval "5s" :initial 100 `./data/brightness.fish`)
 
 (deflisten volume :initial "0" `./data/volume.fish`)
 
@@ -23,3 +22,16 @@
 
 (defpoll wifi-networks :initial '[]' :interval "30s"
   `./data/wifi-networks.fish`)
+
+(defpoll temp :initial '{"temp": "--°C", "tooltip": "-- MHz"}' :interval "10s"
+  `./data/temp.fish`)
+
+(defpoll cpu_freq :initial '0/0 MHz' :interval '30s'
+  `./data/cpu_freq.fish`)
+
+(defpoll cpu_model :initial '' :interval '24h'
+  `./data/cpu_model.fish`)
+
+(deflisten notifications
+  :initial '{"count": 0, "dnd": false, "visible": false, "inhibited": false}'
+  `swaync-client -s`)

@@ -1,18 +1,23 @@
 @import "colors/current.scss";
 @import "modules/app-drawer/default.scss";
-@import "modules/audio/default.scss";
 @import "modules/bar/default.scss";
 @import "modules/battery/default.scss";
 @import "modules/brightness/default.scss";
+@import "modules/circle-bar/default.scss";
+@import "modules/cpu/default.scss";
+@import "modules/horizontal-slider/default.scss";
 @import "modules/memory/default.scss";
 @import "modules/mode-toggle/default.scss";
 @import "modules/music/default.scss";
-@import "modules/network/default.scss";
 @import "modules/notifications/default.scss";
 @import "modules/quick-settings-panel/default.scss";
+@import "modules/section/default.scss";
 @import "modules/system/default.scss";
+@import "modules/temp/default.scss";
 @import "modules/time/default.scss";
 @import "modules/tray/default.scss";
+@import "modules/volume/default.scss";
+@import "modules/wifi/default.scss";
 @import "modules/window-title/default.scss";
 @import "modules/workspaces/default.scss";
 

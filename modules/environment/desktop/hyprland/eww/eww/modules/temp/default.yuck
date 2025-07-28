@@ -1,0 +1,16 @@
+(defwidget temp []
+  (circle-bar :class {EWW_TEMPS.CORETEMP_PACKAGE_ID_0 > 80
+                      ? "temp temp--high"
+                      : "temp"}
+              :circle-class "temp__progress"
+              :button-class "temp__icon"
+              :tooltip "CPU temp: ${EWW_TEMPS.CORETEMP_PACKAGE_ID_0}°C"
+              :value {EWW_TEMPS.CORETEMP_PACKAGE_ID_0}
+    (temp-icon)))
+
+(defwidget temp-icon []
+  (label :text {EWW_TEMPS.CORETEMP_PACKAGE_ID_0 == "--" ? "󱔱" :
+                EWW_TEMPS.CORETEMP_PACKAGE_ID_0 >= 80 ?   "󰸁" :
+                EWW_TEMPS.CORETEMP_PACKAGE_ID_0 >= 70 ?   "󱃂" :
+                EWW_TEMPS.CORETEMP_PACKAGE_ID_0 >= 60 ?   "󰔏" :
+                                                          "󱃃"}))

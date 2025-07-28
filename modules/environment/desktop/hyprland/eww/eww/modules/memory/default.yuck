@@ -1,12 +1,7 @@
 (defwidget memory []
-  (box :class "memory"
-       :vexpand false
-       :hexpand false
-    (circular-progress :value {round(memory.percent, 0)}
-                       :class "memory__progress"
-                       :thickness 4
-      (button :class "memory__button"
-              :tooltip "using ${round(memory.percent, 0)}% RAM"
-              :onclick "EWW_CMD='${EWW_CMD}' ./scripts/pop.sh system"
-        ""))))
-
+  (circle-bar :class "memory"
+              :circle-class "memory__progress"
+              :button-class "memory__button"
+              :tooltip "RAM: ${round(EWW_RAM.used_mem_perc, 2)}%"
+              :value {round(EWW_RAM.used_mem_perc, 0)}
+    "󰘚"))

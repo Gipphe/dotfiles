@@ -1,0 +1,7 @@
+(defwidget cpu []
+  (circle-bar :class "cpu"
+              :circle-class "cpu__progress"
+              :button-class "cpu__icon"
+              :tooltip "CPU: ${round(EWW_CPU.avg, 2)}%"
+              :value {round(EWW_CPU.avg, 0)}
+    "󰍛"))

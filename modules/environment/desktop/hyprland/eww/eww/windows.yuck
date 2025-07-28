@@ -46,7 +46,6 @@
 (defwindow quick-settings-panel
   :geometry (geometry :anchor "top right"
                       :x "18%")
-  :exclusive true
   :stacking "overlay"
   (quick-settings-panel))
 

@@ -1,0 +1,23 @@
+(defwidget horizontal-slider [value onchange ?onclick
+                              show-bar onhover onhoverlost
+                              ?min ?max
+                              ?tooltip
+                              ?class ?scale-class ?icon-class]
+  (eventbox :class "horizontal-slider"
+            :onhover onhover
+            :onhoverlost onhoverlost
+    (box :orientation "h"
+         :space-evenly false
+         :tooltip tooltip
+      (revealer :transition "slideleft"
+                :reveal show-bar
+                :duration "300ms"
+        (scale :class "horizontal-slider__scale ${scale-class ?: ""}"
+               :min {min ?: 0}
+               :max {max ?: 100}
+               :value value
+               :orientation "h"
+               :onchange onchange))
+      (button :class "horizontal-slider__icon ${icon-class ?: ""}"
+              :onclick onclick
+        (children)))))

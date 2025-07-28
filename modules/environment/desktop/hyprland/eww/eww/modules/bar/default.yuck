@@ -9,8 +9,10 @@
   (box :orientation "h"
        :space-evenly false
        :halign "start"
+       :spacing 10
        :class "bar__left"
     (app-drawer)
+    (workspaces)
     (window-title)))
 
 (defwidget center []
@@ -18,7 +20,7 @@
        :space-evenly false
        :halign "center"
        :class "bar__center"
-    (workspaces)))
+    ))
 
 (defwidget right []
   (box :orientation "h"
@@ -26,12 +28,14 @@
        :halign "end"
        :spacing 10
        :class "bar__right"
+    (cpu)
+    (temp)
+    (memory)
+    (sep)
     (brightness)
     (volume)
-    (network)
-    (sep)
+    (wifi)
     (battery)
-    (memory)
     (sep)
     (tray)
     (sep)

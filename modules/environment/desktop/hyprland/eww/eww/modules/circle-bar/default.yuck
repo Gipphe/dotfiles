@@ -1,0 +1,13 @@
+(defwidget circle-bar [?class ?circle-class ?button-class ?tooltip ?onclick value]
+  (box :class "circle-bar ${class ?: ""}"
+       :vexpand false
+       :hexpand false
+    (circular-progress :value value
+                       :class "circle-bar__progress ${circle-class ?: ""}"
+                       :start-at 75
+                       :thickness 4
+      (button :class "circle-bar__button ${button-class ?: ""}"
+              :tooltip tooltip
+              :onclick onclick
+        (children)))))
+

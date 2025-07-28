@@ -1,10 +1,11 @@
-(deflisten notifications
-  :initial '{"count": 0, "dnd": false, "visible": false, "inhibited": false}'
-  `swaync-client -s`)
+(defvar notifications-limit 20)
 
 (defwidget notifications []
-  (button :class "notifications" :onclick "swaync-client -t"
-    (label :class "notifications__icon"
-           :text {notifications.count == 0 ? "" :
-                  notifications.dnd ? "󱏧" :
-                  ""})))
+  (circle-bar :class "notifications"
+              :circle-class "notifications__progress"
+              :button-class "notifications__icon"
+              :value {min(ceil(notifications.count / notifications-limit * 100), 100)}
+              :onclick "swaync-client -t"
+    {notifications.count == 0 ? "" :
+     notifications.dnd ? "󱏧" :
+     ""}))

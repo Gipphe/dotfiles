@@ -1,0 +1,11 @@
+.temp {
+  color: $blue;
+
+  &--high {
+    color: $red;
+  }
+
+  &__progress {
+    background-color: $surface0;
+  }
+}

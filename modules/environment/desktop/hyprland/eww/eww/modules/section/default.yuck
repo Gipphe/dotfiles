@@ -1,0 +1,6 @@
+(defwidget section [?class ?hexpand ?vexpand ?space-evenly]
+  (box :class "section ${class ?: ""}"
+       :vexpand {vexpand ?: true}
+       :hexpand {hexpand ?: true}
+       :space-evenly {space-evenly ?: true}
+    (children)))

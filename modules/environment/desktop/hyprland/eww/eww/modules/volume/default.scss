@@ -1,0 +1,37 @@
+.volume {
+  &__icon {
+    color: $lavender;
+
+    &--muted {
+      color: $maroon;
+    }
+  }
+
+  &__scale {
+    trough {
+      highlight {
+        background-image: linear-gradient(
+          to right,
+          $lavender 30%,
+          $sapphire 50%,
+          $blue 100%
+        );
+      }
+    }
+
+    &--muted trough highlight {
+      background-image: linear-gradient(to right, $red 30%, $maroon 100%);
+    }
+  }
+}
+
+.volume-indicator {
+  &__progress {
+    color: $lavender;
+    background-color: $surface0;
+  }
+
+  &--muted &__progress {
+    color: $maroon;
+  }
+}

@@ -1,0 +1,18 @@
+.horizontal-slider {
+  &__icon {
+    font-size: 30px;
+  }
+
+  &__scale {
+    trough {
+      background-color: $surface1;
+      border-radius: 16px;
+      min-height: 10px;
+      min-width: 70px;
+
+      highlight {
+        border-radius: 16px;
+      }
+    }
+  }
+}
