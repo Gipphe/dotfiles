@@ -35,7 +35,10 @@ util.mkProfile "lovdata" {
               simon = "sis";
             };
           in
-          lib.mapAttrs (name: handle: "mr update --reviewer '${handle}'") team_members
+          lib.mapAttrs' (name: handle: {
+            name = "add_${name}";
+            value = "mr update --reviewer '${handle}'";
+          }) team_members
           // {
             add_team = "mr update --reviewer '${lib.concatStringsSep "," team_members}'";
           };
