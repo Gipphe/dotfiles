@@ -19,26 +19,29 @@ util.mkProfile "lovdata" {
         enable = true;
         lovdata.enable = true;
       };
-      glab.enable = true;
-      glab.settings.hosts."git.lovdata.no" = {
-        git_protocol = "ssh";
-        api_protocol = "https";
-        user = "vnb";
-        token_path = "${config.gipphe.homeDirectory}/.config/sops-nix/secrets/lovdata-gitlab-ci-access-token";
-      };
-      glab.aliases =
-        let
-          team_members = {
-            audun = "agevelt";
-            stian = "stian";
-            simon = "sis";
+      glab = {
+        enable = true;
+        settings.hosts."git.lovdata.no" = {
+          git_protocol = "ssh";
+          api_protocol = "https";
+          user = "vnb";
+          token_path = "${config.gipphe.homeDirectory}/.config/sops-nix/secrets/lovdata-gitlab-ci-access-token";
+        };
+        aliases =
+          let
+            team_members = {
+              audun = "agevelt";
+              stian = "stian";
+              simon = "sis";
+            };
+          in
+          lib.mapAttrs (name: handle: "mr update --reviewer '${handle}'") team_members
+          // {
+            add_team = "mr update --reviewer '${lib.concatStringsSep "," team_members}'";
           };
-        in
-        lib.mapAttrs (name: handle: "mr update --reviewer '${handle}'") team_members;
+      };
     };
-    virtualisation = {
-      docker.enable = true;
-    };
+    virtualisation.docker.enable = true;
     lovdata.files.enable = true;
     networking.lovdata-dns.enable = true;
   };
