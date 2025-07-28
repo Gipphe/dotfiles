@@ -1,4 +1,9 @@
-{ util, ... }:
+{
+  util,
+  lib,
+  config,
+  ...
+}:
 util.mkProfile "lovdata" {
   gipphe = {
     programs = {
@@ -19,7 +24,16 @@ util.mkProfile "lovdata" {
         git_protocol = "ssh";
         api_protocol = "https";
         user = "vnb";
+        token_path = "${config.gipphe.homeDirectory}/.config/sops-nix/secrets/lovdata-gitlab-ci-access-token";
       };
+      glab.aliases =
+        let
+          team_members = {
+            audun = "agevelt";
+            stian = "stian";
+          };
+        in
+        lib.mapAttrs (name: handle: "mr update --reviewer '${handle}'") team_members;
     };
     virtualisation = {
       docker.enable = true;

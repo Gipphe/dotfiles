@@ -149,7 +149,7 @@ util.mkProgram {
         paths = [ pkgs.glab ];
         buildInputs = [ pkgs.makeWrapper ];
         postBuild = ''
-          wrapProgram $out/bin/glab --set GLAB_CONFIG_DIR="${config-dir}"
+          wrapProgram $out/bin/glab --set GLAB_CONFIG_DIR "${config-dir}"
         '';
       };
 
@@ -168,7 +168,8 @@ util.mkProgram {
         ];
         text = ''
           mkdir -p '${config-dir}'
-          chmod -R 755 '${config-dir}' run cp -Lf '${aliases}' '${config-dir}/aliases.yml'
+          chmod -R 755 '${config-dir}'
+          cp -Lf '${aliases}' '${config-dir}/aliases.yml'
           cp -Lf '${settings}' '${config-dir}/config.yml'
           chown -R ${config.gipphe.username}:${config.gipphe.username} '${config-dir}'
           chmod -R 644 ${config-dir}/*
@@ -194,7 +195,7 @@ util.mkProgram {
           set -l host_tokens (jo hosts="$res")
 
           set -l tmp (mktemp)
-          jq --argjson tokens "$host_tokens" '. * $host_tokens' '${config-dir}/config.yml' > $tmp
+          jq --argjson tokens "$host_tokens" '. * $tokens' '${config-dir}/config.yml' > $tmp
           mv $tmp '${config-dir}/config.yml'
         '';
       };
@@ -206,7 +207,6 @@ util.mkProgram {
       };
       home.packages = [
         glab
-        # add-tokens
         (pkgs.writeShellScriptBin "glabl" ''
           export GITLAB_TOKEN="$(cat '${config.sops.secrets.lovdata-gitlab-ci-access-token.path}')"
           export GITLAB_HOST="https://git.lovdata.no"
@@ -214,8 +214,8 @@ util.mkProgram {
           ${glab}/bin/glab "$@"
         '')
       ];
-      # home.activation.glab-config = lib.hm.dag.entryAfter [ "onFilesChanged" ] ''
-      #   run ${add-tokens}/bin/add-tokens
-      # '';
+      home.activation.glab-config = lib.hm.dag.entryAfter [ "onFilesChanged" ] ''
+        run ${add-tokens}/bin/add-tokens
+      '';
     };
 }
