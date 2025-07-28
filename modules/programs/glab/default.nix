@@ -162,9 +162,9 @@ util.mkProgram {
       add-tokens = util.writeFishApplication {
         name = "add-tokens";
         runtimeInputs = with pkgs; [
-          jq
           coreutils
-          mktemp
+          jo
+          jq
         ];
         text = ''
           mkdir -p '${config-dir}'
@@ -173,8 +173,8 @@ util.mkProgram {
           chown -R ${config.gipphe.username}:${config.gipphe.username} '${config-dir}'
           chmod -R 644 ${config-dir}/*
 
-          set -l hosts (jq 'to_entries | map(.key)' '${host-token-paths}')
-          set -l paths (jq 'to_entries | map(.value)' '${host-token-paths}')
+          set -l hosts (jq -r 'to_entries | .[] | .key' '${host-token-paths}')
+          set -l paths (jq -r 'to_entries | .[] | .value' '${host-token-paths}')
           set -l tokens
 
           set -l res
@@ -188,10 +188,10 @@ util.mkProgram {
             set -l host $hosts[$idx]
             set -l path $paths[$idx]
             set -l token (cat $path)
-            set -a res '"'$host'":{"token":"'$token'"}'
+            set -a res (jo "$host"="$(jo token="$token")")
           end
 
-          set -l host_tokens '{ "hosts": {' (string join ',' $res) '}}'
+          set -l host_tokens (jo hosts="$res")
 
           set -l tmp (mktemp)
           jq --argjson tokens "$host_tokens" '. * $host_tokens' '${config-dir}/config.yml' > $tmp
@@ -206,6 +206,7 @@ util.mkProgram {
       };
       home.packages = [
         glab
+        # add-tokens
         (pkgs.writeShellScriptBin "glabl" ''
           export GITLAB_TOKEN="$(cat '${config.sops.secrets.lovdata-gitlab-ci-access-token.path}')"
           export GITLAB_HOST="https://git.lovdata.no"
@@ -213,8 +214,8 @@ util.mkProgram {
           ${glab}/bin/glab "$@"
         '')
       ];
-      home.activation.glab-config = lib.hm.dag.entryAfter [ "onFilesChanged" ] ''
-        run ${add-tokens}/bin/add-tokens
-      '';
+      # home.activation.glab-config = lib.hm.dag.entryAfter [ "onFilesChanged" ] ''
+      #   run ${add-tokens}/bin/add-tokens
+      # '';
     };
 }
