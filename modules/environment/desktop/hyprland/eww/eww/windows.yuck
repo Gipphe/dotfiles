@@ -49,3 +49,7 @@
   :stacking "overlay"
   (quick-settings-panel))
 
+(defwindow wifi-panel
+  :geometry (geometry :anchor "top right")
+  :stacking "overlay"
+  (wifi-panel))

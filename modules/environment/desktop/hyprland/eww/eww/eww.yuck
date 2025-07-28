@@ -17,6 +17,7 @@
 (include "./modules/time/default.yuck")
 (include "./modules/tray/default.yuck")
 (include "./modules/volume/default.yuck")
+(include "./modules/wifi-panel/default.yuck")
 (include "./modules/wifi/default.yuck")
 (include "./modules/window-title/default.yuck")
 (include "./modules/workspaces/default.yuck")
