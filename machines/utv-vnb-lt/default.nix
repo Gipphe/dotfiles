@@ -50,12 +50,22 @@ util.mkToggledModule [ "machines" ] {
     home.packages = [
       (util.GPUOffloadApp pkgs.steam "steam")
     ];
-    wayland.windowManager.hyprland.settings.monitor = [
-      "desc:Dell Inc. DELL U2724D G11T4Z3, preferred, 0x0, 1"
-      "desc:Dell Inc. DELL U2724D G27V4Z3, preferred, auto-right, 1"
-      "desc:Dell Inc. DELL U2724D G15V4Z3, preferred, auto-left, 1"
-      ", preferred, auto-down, 1"
-    ];
+    wayland.windowManager.hyprland.settings = {
+      bind =
+        let
+          brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
+        in
+        [
+          ", code:72, exec, ${brightnessctl} set 10%-"
+          ", code:73, exec, ${brightnessctl} set 10%+"
+        ];
+      monitor = [
+        "desc:Dell Inc. DELL U2724D G11T4Z3, preferred, 0x0, 1"
+        "desc:Dell Inc. DELL U2724D G27V4Z3, preferred, auto-right, 1"
+        "desc:Dell Inc. DELL U2724D G15V4Z3, preferred, auto-left, 1"
+        ", preferred, auto-down, 1"
+      ];
+    };
 
     services.kanshi.settings = [
       {

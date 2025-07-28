@@ -31,7 +31,6 @@ let
   brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
   nmcli = "${pkgs.networkmanager}/bin/nmcli";
   xdotool = "${pkgs.xdotool}/bin/xdotool";
-  hyprlock = "${config.programs.hyprlock.package}/bin/hyprlock";
 in
 util.mkToggledModule
   [
