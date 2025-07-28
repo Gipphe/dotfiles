@@ -172,7 +172,7 @@ util.mkProgram {
           cp -Lf '${aliases}' '${config-dir}/aliases.yml'
           cp -Lf '${settings}' '${config-dir}/config.yml'
           chown -R ${config.gipphe.username}:${config.gipphe.username} '${config-dir}'
-          chmod -R 644 ${config-dir}/*
+          chmod -R 600 ${config-dir}/*
 
           set -l hosts (jq -r 'to_entries | .[] | .key' '${host-token-paths}')
           set -l paths (jq -r 'to_entries | .[] | .value' '${host-token-paths}')
@@ -181,7 +181,6 @@ util.mkProgram {
           set -l res
 
           if test (count $hosts) = 0
-            echo "{}"
             exit
           end
 
