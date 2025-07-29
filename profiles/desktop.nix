@@ -11,6 +11,7 @@ util.mkProfile "desktop" {
       gimp.enable = true;
       hoppscotch.enable = true;
       logseq.enable = true;
+      mpv.enable = true;
       obsidian.enable = true;
       signal.enable = true;
       slack.enable = true;
