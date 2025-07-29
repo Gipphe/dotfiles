@@ -17,8 +17,8 @@
 (deflisten mpris :initial '{ "name":"", "title": "", "artist":"", "artUrl": "", "status":"", "length": "", "lengthStr": "" }'
   `./data/mpris.fish`)
 
-(deflisten wifi :initial '{}'
-  `./data/wifi.fish`)
+(deflisten network :initial '{"wifi": {}, "wired": false}'
+  `./data/network.fish`)
 
 (defpoll wifi-networks :initial '[]' :interval "30s"
   `./data/wifi-networks.fish`)

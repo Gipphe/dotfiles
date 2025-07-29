@@ -1,0 +1,33 @@
+(defwidget network []
+  (circle-bar :class "network"
+              :circle-class "network__progress"
+              :button-class "network__icon"
+              :value {network.wired ? 100 : (network.wifi.signal ?: 0)}
+              :tooltip "Network: ${network.wired ? "wired" : "${network.wifi.signal ?: 0}% on ${network.wifi.ssid}"}"
+              :onclick "wezterm start -- bash -c 'sleep 0.1s && nmtui'"
+    (network-icon :signal {network.wifi.signal ?: 0}
+                  :is-wired {network.wired}
+                  :ssid {network.wired ? "wired" : network.wifi.ssid})))
+
+(defwidget network-icon [?halign ssid signal ?is-wired]
+  (_network-icon :strength {ssid == "" ? 0 : signal}
+                 :is-wired is-wired
+                 :offline "󰣼"
+                 :excellent "󰣺"
+                 :good "󰣸"
+                 :okay "󰣶"
+                 :slow "󰣴"
+                 :wired ""
+                 :halign halign))
+
+(defwidget _network-icon [?halign
+                          strength ?is-wired
+                          offline excellent good okay slow wired]
+  (label :halign {halign ?: "start"}
+         :text {is-wired ? wired :
+                strength == 0 ? offline :
+                strength < 26 ? slow :
+                strength < 51 ? okay :
+                strength < 76 ? good :
+                excellent}))
+
