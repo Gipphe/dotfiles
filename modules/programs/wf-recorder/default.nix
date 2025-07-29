@@ -28,22 +28,26 @@ util.mkProgram {
     (util.writeFishApplication {
       name = "record";
       runtimeInputs = with pkgs; [
+        busybox
         cfg.package
         config.wayland.windowManager.hyprland.package
         coreutils
         ffmpeg
         gum
+        jq
       ];
       text = ''
         set -l monitors (hyprctl monitors -j | jq --argjson nicknames '${builtins.toJSON cfg.nicknames}' 'map({ name: .name, description: .description, nickname: $nicknames[.description] })')
-        set -l options (echo "$monitors" | jq '.[] | .nickname // .description')
-        set -l selection (gum choose $options)
-        set -l selected-monitor (echo "$monitors" | jq -r --arg selection "$selection" 'map(select((.nickname // .description) == $selection)) | .[] | .name')
+        and set -l options (echo "$monitors" | jq -r '.[] | .nickname // .description')
+        and set -l selection (gum choose $options)
+        and set -l selected_monitor (echo "$monitors" | jq -r --arg selection "$selection" 'map(select((.nickname // .description) == $selection)) | .[] | .name')
 
-        set -l filename "$(date +'%F %R:%S').mp4"
-        set -l dest "$HOME/Videos/$filename"
-        mkdir -p "$(dirname -- "$dest")"
-        wf-recorder -f "$dest" -o "$selected-monitor"
+        and set -l filename "$(date +'%F %R:%S').mp4"
+        and set -l dest "$HOME/Videos/$filename"
+        and mkdir -p "$(dirname -- "$dest")"
+        and wf-recorder -f "$dest" -o "$selected_monitor"
+        and clear -x
+        and echo "Video saved to $dest"
       '';
     })
   ];
