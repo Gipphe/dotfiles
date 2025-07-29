@@ -1,3 +1,6 @@
+(defvar max-temp 95)
+(defvar min-temp 20)
+
 (defwidget temp []
   (circle-bar :class {EWW_TEMPS.CORETEMP_PACKAGE_ID_0 > 80
                       ? "temp temp--high"
@@ -5,7 +8,7 @@
               :circle-class "temp__progress"
               :button-class "temp__icon"
               :tooltip "CPU temp: ${EWW_TEMPS.CORETEMP_PACKAGE_ID_0}°C"
-              :value {EWW_TEMPS.CORETEMP_PACKAGE_ID_0}
+              :value {round(((EWW_TEMPS.CORETEMP_PACKAGE_ID_0 - min-temp) / (max-temp - min-temp)) * 100, 0)}
     (temp-icon)))
 
 (defwidget temp-icon []
