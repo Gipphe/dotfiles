@@ -1,7 +1,4 @@
-(deflisten window :initial "..."
-  `./modules/window-title/get-window-title.sh`)
-
 (defwidget window-title []
   (box :class "window-title"
-    (label :truncate true :text window)))
+    (label :truncate true :text {window ?: ""})))
 
