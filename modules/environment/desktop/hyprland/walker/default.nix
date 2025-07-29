@@ -22,7 +22,10 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
     };
   };
   hm = {
-    home.packages = [ cfg.package ];
+    home.packages = [
+      cfg.package
+      pkgs.libqalculate
+    ];
     xdg.configFile = {
       "walker/config.toml".source = writeTOMLFile "walker-config.toml" (
         lib.recursiveUpdate defaultConfig cfg.settings
