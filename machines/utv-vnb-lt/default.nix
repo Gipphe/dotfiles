@@ -67,6 +67,12 @@ util.mkToggledModule [ "machines" ] {
       ];
     };
 
+    gipphe.programs.wf-recorder.nicknames = {
+      "Dell Inc. DELL U2724D G11T4Z3" = "center";
+      "Dell Inc. DELL U2724D G27V4Z3" = "right";
+      "Dell Inc. DELL U2724D G15V4Z3" = "left";
+    };
+
     services.kanshi.settings = [
       {
         output.criteria = "Dell Inc. DELL U2724D G15V4Z3";

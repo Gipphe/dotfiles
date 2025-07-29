@@ -30,6 +30,7 @@ util.mkProfile "desktop-hyprland" {
   };
   gipphe.programs = {
     networkmanagerapplet.enable = false;
+    wf-recorder.enable = true;
     wl-clipboard.enable = true;
   };
 }
