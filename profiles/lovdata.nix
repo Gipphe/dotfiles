@@ -40,7 +40,7 @@ util.mkProfile "lovdata" {
             value = "mr update --reviewer '${handle}'";
           }) team_members
           // {
-            add_team = "mr update --reviewer '${lib.concatStringsSep "," team_members}'";
+            add_team = "mr update --reviewer '${lib.concatStringsSep "," (builtins.attrValues team_members)}'";
           };
       };
     };
