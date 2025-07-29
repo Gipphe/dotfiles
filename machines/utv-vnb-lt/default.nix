@@ -155,6 +155,13 @@ util.mkToggledModule [ "machines" ] {
       };
     };
 
+    boot.kernelModules = [
+      "drm_kms_helper"
+    ];
+    boot.extraModprobeConfig = ''
+      options drm_kms_helper poll=N
+    '';
+
     users.groups.${config.gipphe.username}.gid = 993;
     users.users.${config.gipphe.username}.uid = 1000;
 
