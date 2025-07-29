@@ -29,7 +29,7 @@ util.mkProgram {
       name = "record";
       runtimeInputs = with pkgs; [
         cfg.package
-        config.wayland.windowManagers.hyprland.package
+        config.wayland.windowManager.hyprland.package
         coreutils
         ffmpeg
         gum
