@@ -1,6 +1,7 @@
 { util, ... }:
 util.mkProfile "desktop" {
   gipphe = {
+    environment.gtk.enable = true;
     programs = {
       _1password-gui.enable = true;
       appimage.enable = true;
