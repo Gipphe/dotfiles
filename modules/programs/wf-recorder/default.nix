@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.gipphe.programs.wf-recorder;
+  window_border = config.wayland.windowManager.hyprland.settings.general."col.active_border";
 in
 util.mkProgram {
   name = "wf-recorder";
@@ -38,16 +39,29 @@ util.mkProgram {
       ];
       text = ''
         set -l monitors (hyprctl monitors -j | jq --argjson nicknames '${builtins.toJSON cfg.nicknames}' 'map({ name: .name, description: .description, nickname: $nicknames[.description] })')
-        and set -l options (echo "$monitors" | jq -r '.[] | .nickname // .description')
-        and set -l selection (gum choose $options)
-        and set -l selected_monitor (echo "$monitors" | jq -r --arg selection "$selection" 'map(select((.nickname // .description) == $selection)) | .[] | .name')
+        or echo "Failed to get monitors" >&2 && exit 1
 
-        and set -l filename "$(date +'%F %R:%S').mp4"
-        and set -l dest "$HOME/Videos/$filename"
-        and mkdir -p "$(dirname -- "$dest")"
-        and wf-recorder -f "$dest" -o "$selected_monitor"
-        and clear -x
-        and echo "Video saved to $dest"
+        set -l options (echo "$monitors" | jq -r '.[] | .nickname // .description')
+        set -l selection (gum choose $options)
+        or echo "Cancelled selection" >&2 && exit 1
+
+        set -l selected_monitor (echo "$monitors" | jq -r --arg selection "$selection" 'map(select((.nickname // .description) == $selection)) | .[] | .name')
+
+        set -l filename "$(date +'%F %R:%S').mp4"
+        set -l dest "$HOME/Videos/$filename"
+        mkdir -p "$(dirname -- "$dest")"
+        hyprctl keyword 'general:col.active_border' "rgb(ff0000)"
+
+        function final
+          pkill wf-recorder
+          clear -x
+          hyprctl keyword 'general:col.active_border' "${window_border}"
+          echo "Video saved to $dest"
+        end
+
+        trap final INT
+        wf-recorder -f "$dest" -o "$selected_monitor"
+        final
       '';
     })
   ];
