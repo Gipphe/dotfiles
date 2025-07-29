@@ -1,6 +1,3 @@
-(deflisten network :initial '{"ssid": "", "signal": "0"}'
-  `./data/network.fish`)
-
 (defpoll brightness-percent :interval "5s" :initial 100 `./data/brightness.fish`)
 
 (deflisten volume :initial "0" `./data/volume.fish`)
@@ -17,8 +14,11 @@
 
 (deflisten mode `cat "$HOME/.cache/gipphe/theme" || echo "dark"`)
 
-(deflisten mpris :initial '{ "name":"", "title": "", "artist":"", "artUrl": "", "status":"", "length": "", "lengthStr": "", }'
+(deflisten mpris :initial '{ "name":"", "title": "", "artist":"", "artUrl": "", "status":"", "length": "", "lengthStr": "" }'
   `./data/mpris.fish`)
+
+(deflisten wifi :initial '{}'
+  `./data/wifi.fish`)
 
 (defpoll wifi-networks :initial '[]' :interval "30s"
   `./data/wifi-networks.fish`)

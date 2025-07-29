@@ -2,10 +2,10 @@
   (circle-bar :class "wifi"
               :circle-class "wifi__progress"
               :button-class "wifi__icon"
-              :value {network.signal}
-              :tooltip "Wifi: ${network.signal}% on ${network.ssid}"
+              :value {wifi.signal}
+              :tooltip "Wifi: ${wifi.signal}% on ${wifi.ssid}"
               :onclick "wezterm start -- bash -c 'sleep 0.1s && nmtui'"
-    (wifi-icon :signal {network.signal} :ssid {network.ssid})))
+    (wifi-icon :signal {wifi.signal} :ssid {wifi.ssid})))
 
 (defwidget wifi-icon [?halign ssid signal]
   (_wifi-icon :strength {ssid == "" ? 0 : signal}

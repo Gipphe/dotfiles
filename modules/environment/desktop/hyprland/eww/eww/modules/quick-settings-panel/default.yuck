@@ -25,8 +25,8 @@
                    :on-icon-click ""
             (brightness-icon))
           (setting :class "network-settings"
-                   :value {network.signal}
-            (network-icon)))
+                   :value {wifi.signal}
+            (wifi-icon :signal {wifi.signal} :ssid {wifi.ssid})))
         (mode)))))
 
 
