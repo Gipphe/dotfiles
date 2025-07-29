@@ -16,6 +16,7 @@ util.mkProfile "desktop" {
       signal.enable = true;
       slack.enable = true;
       spotify.enable = true;
+      sxiv.enable = true;
       vivaldi.enable = true;
       wezterm.enable = true;
     };
