@@ -1,8 +1,15 @@
-.bar {
+.bar-part {
   background-color: $crust;
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
   padding: 4px 8px;
+
+  &__left {
+    border-bottom-left-radius: 0;
+  }
+  &__right {
+    border-bottom-right-radius: 0;
+  }
 }
 
 .separator {

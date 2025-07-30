@@ -1,33 +1,19 @@
 (defwidget bar-layout []
-  (centerbox :class "bar ${mode}"
-             :orientation "h"
+  (box :orientation "h"
+       :class ""
     (left)
-    (center)
     (right)))
 
 (defwidget left []
-  (box :orientation "h"
-       :space-evenly false
-       :halign "start"
-       :spacing 10
-       :class "bar__left"
+  (bar-part :halign "start"
+            :class "bar-part__left"
     (app-drawer)
     (workspaces)
     (window-title)))
 
-(defwidget center []
-  (box :orientation "h"
-       :space-evenly false
-       :halign "center"
-       :class "bar__center"
-    ))
-
 (defwidget right []
-  (box :orientation "h"
-       :space-evenly false
-       :halign "end"
-       :spacing 10
-       :class "bar__right"
+  (bar-part :halign "end"
+            :class "bar-part__right"
     (cpu)
     (temp)
     (memory)
@@ -42,6 +28,19 @@
     (notifications)
     (time)))
 
+(defwidget bar-part [?class ?halign]
+  (box :orientation "h"
+       :space-evenly false
+       :class "bar-part ${class ?: ""}"
+       :halign {halign ?: "start"}
+       :valign "start"
+       :spacing 10
+       :height 43
+    (children)))
+
 (defwidget sep []
-  (box :vexpand false :hexpand false
-    (label :class "separator" :text "|")))
+  (box :vexpand false
+       :hexpand false
+       :valign "center"
+    (label :class "separator"
+           :text "|")))

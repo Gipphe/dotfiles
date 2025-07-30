@@ -72,7 +72,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
             script = pkgs.writeShellScriptBin "eww-start" ''
               monitors="$(${hyprctl} monitors -j | jq -r '.[] | .name')"
               for monitor in $monitors; do
-                ${eww}/bin/eww open --no-daemonize --screen "$monitor" --id "bar-$monitor" bar
+                ${eww}/bin/eww open --no-daemonize --screen "$monitor" --id "$monitor" bar
               done
             '';
           in
