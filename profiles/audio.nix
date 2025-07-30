@@ -6,5 +6,6 @@ util.mkProfile "audio" {
     cava.enable = false;
     mpc-cli.enable = true;
     mpd.enable = true;
+    mpris.enable = true;
   };
 }
