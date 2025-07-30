@@ -1,14 +1,7 @@
-{
-  util,
-  config,
-  pkgs,
-  ...
-}:
+{ util, pkgs, ... }:
 let
   reload_hyprpaper_script = pkgs.writeShellScriptBin "reload-hyprpaper.sh" ''
-    ${pkgs.killall}/bin/killall hyprpaper
-    sleep 1
-    ${config.services.hyprpaper.package}/bin/hyprpaper &
+    systemctl --user restart hyprpaper.service
   '';
 in
 util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
@@ -26,10 +19,6 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
         # Reload hyprpaper after changing wallpaper
         "$mod SHIFT, W, exec, ${reload_hyprpaper_script}/bin/reload-hyprpaper.sh"
       ];
-      # Started through systemd by home-manager config
-      # exec-once = [
-      #   "${config.services.hyprpaper.package}/bin/hyprpaper"
-      # ];
     };
   };
 }
