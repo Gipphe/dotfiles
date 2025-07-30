@@ -12,8 +12,10 @@ util.mkToggledModule [ "system" ] {
     services.blueman.enable = true;
     hardware.bluetooth = {
       enable = true;
-      powerOnBoot = false;
+      powerOnBoot = true;
       package = pkgs.bluez5-experimental;
+      # Enable A2DP sinks
+      settings.General.Enable = "Source,Sink,Media,Socket";
     };
   };
 }
