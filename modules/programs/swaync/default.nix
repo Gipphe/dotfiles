@@ -6,7 +6,7 @@
   ...
 }:
 let
-  cfg = config.gipphe.environment.desktop.hyprland.swaync;
+  cfg = config.gipphe.programs.swaync;
   hmCfg = config.services.swaync;
   jsonFormat = pkgs.formats.json { };
   settingsFile = jsonFormat.generate "swaync-config.json" cfg.settings;
@@ -20,9 +20,9 @@ let
     '';
   };
 in
-util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
+util.mkProgram {
   name = "swaync";
-  options.gipphe.environment.desktop.hyprland.swaync = {
+  options.gipphe.programs.swaync = {
     package = lib.mkPackageOption pkgs "swaync" {
       default = [ "swaynotificationcenter" ];
     };
@@ -49,7 +49,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
     };
   };
   hm = {
-    gipphe.environment.desktop.hyprland.swaync = {
+    gipphe.programs.swaync = {
       settings = {
         widgets = [
           "title"

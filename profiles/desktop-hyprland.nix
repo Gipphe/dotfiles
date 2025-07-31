@@ -5,9 +5,6 @@ util.mkProfile "desktop-hyprland" {
       desktop.hyprland = {
         enable = true;
 
-        # Notifications
-        swaync.enable = true;
-
         # Launchers
         rofi.enable = false;
         walker.enable = true;
@@ -26,6 +23,7 @@ util.mkProfile "desktop-hyprland" {
       # Notifications
       dunst.enable = false;
       mako.enable = false;
+      swaync.enable = true;
 
       networkmanagerapplet.enable = false;
       wf-recorder.enable = true;
