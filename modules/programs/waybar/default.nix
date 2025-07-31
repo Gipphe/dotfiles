@@ -6,20 +6,13 @@
 }:
 let
   colors = config.lib.stylix.colors.withHashtag;
-  restart-waybar = pkgs.writeShellScriptBin "restart-waybar" ''
-    ${pkgs.killall}/bin/killall waybar
-    sleep 1s
-    ${config.programs.waybar.package}/bin/waybar
-  '';
 in
-util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
+util.mkProgram {
   name = "waybar";
   hm = {
-    home.packages = [
-      restart-waybar
-    ];
     programs.waybar = {
       enable = true;
+      systemd.enable = true;
       settings.mainBar = {
         "layer" = "top"; # Waybar at top layer
         "position" = "top"; # Waybar position (top|bottom|left|right)
@@ -620,8 +613,5 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
         }
       '';
     };
-    wayland.windowManager.hyprland.settings.exec-once = [
-      "${config.programs.waybar.package}/bin/waybar"
-    ];
   };
 }

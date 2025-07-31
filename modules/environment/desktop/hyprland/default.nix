@@ -49,7 +49,6 @@ util.mkToggledModule
       ./rofi
       ./swaync
       ./walker
-      ./waybar.nix
       ./wlogout.nix
     ];
     hm = {

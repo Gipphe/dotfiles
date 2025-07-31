@@ -29,11 +29,11 @@ util.mkProfile "desktop-hyprland" {
       wl-clipboard.enable = true;
       yazi.enable = true;
       yazi.hyprland.enable = true;
-    };
 
-    # Bars
-    programs.mechabar.enable = false;
-    programs.eww.enable = true;
-    environment.desktop.hyprland.waybar.enable = false;
+      # Bars
+      mechabar.enable = false;
+      eww.enable = true;
+      waybar.enable = false;
+    };
   };
 }
