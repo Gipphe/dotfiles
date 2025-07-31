@@ -1,10 +1,10 @@
 { util, ... }:
 util.mkProfile "desktop-normal" {
   gipphe.environment = {
-    desktop.plasma.enable = true;
     x.enable = true;
   };
   gipphe.programs = {
+    plasma6.enable = true;
     sddm.enable = true;
     wl-clipboard.enable = true;
   };
