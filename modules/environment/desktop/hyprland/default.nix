@@ -42,7 +42,6 @@ util.mkToggledModule
     shared.imports = [
       ./ashell.nix
       ./dunst.nix
-      ./filemanager.nix
       ./hypridle.nix
       ./hyprlock.nix
       ./hyprpaper.nix

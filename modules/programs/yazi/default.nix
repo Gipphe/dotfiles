@@ -1,8 +1,23 @@
-{ util, ... }:
+{
+  lib,
+  util,
+  config,
+  pkgs,
+  ...
+}:
+let
+  cfg = config.gipphe.programs.yazi;
+  file_manager_script = pkgs.writeShellScriptBin "file-manager-script.sh" ''
+    ${config.programs.wezterm.package}/bin/wezterm start -- "${config.programs.yazi.package}/bin/yazi"
+  '';
+in
 util.mkProgram {
   name = "yazi";
-  hm.programs.yazi = {
-    enable = true;
-    enableFishIntegration = true;
+  options.gipphe.programs.yazi.hyprland.enable = lib.mkEnableOption "hyprland integration";
+  hm = {
+    programs.yazi.enable = true;
+    wayland.windowManager.hyprland.settings.bind = lib.mkIf cfg.hyprland.enable [
+      "$mod, E, exec, ${file_manager_script}/bin/file-manager-script.sh"
+    ];
   };
 }

@@ -4,7 +4,6 @@ util.mkProfile "desktop-hyprland" {
     environment = {
       desktop.hyprland = {
         enable = true;
-        filemanager.enable = true;
         hypridle.enable = true;
         hyprlock.enable = true;
         hyprpaper.enable = true;
@@ -28,6 +27,8 @@ util.mkProfile "desktop-hyprland" {
       networkmanagerapplet.enable = false;
       wf-recorder.enable = true;
       wl-clipboard.enable = true;
+      yazi.enable = true;
+      yazi.hyprland.enable = true;
     };
 
     # Bars
