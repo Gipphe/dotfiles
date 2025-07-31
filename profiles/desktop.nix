@@ -14,10 +14,10 @@ util.mkProfile "desktop" {
       mpris.enable = true;
       mpv.enable = true;
       obsidian.enable = true;
+      qimgv.enable = true;
       signal.enable = true;
       slack.enable = true;
       spotify.enable = true;
-      sxiv.enable = true;
       vivaldi.enable = true;
       wezterm.enable = true;
     };
