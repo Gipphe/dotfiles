@@ -4,7 +4,6 @@ util.mkProfile "desktop-hyprland" {
     environment = {
       desktop.hyprland = {
         enable = true;
-        hyprlock.enable = true;
         hyprpaper.enable = true;
         hyprpolkitagent.enable = true;
         wlogout.enable = false;
@@ -23,6 +22,7 @@ util.mkProfile "desktop-hyprland" {
     };
     programs = {
       hypridle.enable = true;
+      hyprlock.enable = true;
 
       # Notifications
       dunst.enable = false;
