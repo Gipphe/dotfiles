@@ -53,6 +53,15 @@ util.mkProgram {
             lib.mkBefore # fish
               ''
                 set fish_greeting ""
+
+                # Work around for the "5u" problem with fish >=4. Remove and
+                # reset this variable once fish 4.1 is out.
+                # 
+                # See:
+                # https://github.com/fish-shell/fish-shell/issues/10994
+                # https://www.reddit.com/r/termux/comments/1j6z371/fish_shell_prompt_issue/
+                # https://github.com/Swordfish90/cool-retro-term/issues/873
+                set -Ua fish_features no-keyboard-protocols
               '';
           interactiveShellInit =
             lib.mkAfter # fish
