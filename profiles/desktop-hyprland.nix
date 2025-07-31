@@ -4,7 +4,6 @@ util.mkProfile "desktop-hyprland" {
     environment = {
       desktop.hyprland = {
         enable = true;
-        hypridle.enable = true;
         hyprlock.enable = true;
         hyprpaper.enable = true;
         hyprpolkitagent.enable = true;
@@ -24,6 +23,8 @@ util.mkProfile "desktop-hyprland" {
       wayland.enable = true;
     };
     programs = {
+      hypridle.enable = true;
+
       networkmanagerapplet.enable = false;
       wf-recorder.enable = true;
       wl-clipboard.enable = true;
