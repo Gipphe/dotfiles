@@ -1,5 +1,5 @@
 { util, ... }:
-util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
+util.mkProgram {
   name = "mako";
   hm.services.mako = {
     enable = true;
