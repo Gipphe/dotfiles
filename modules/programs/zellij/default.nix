@@ -370,7 +370,7 @@ util.mkProgram {
         //   - system (default)
         //   - primary
         // 
-        // copy_clipboard "primary"
+        copy_clipboard "primary"
 
         // Enable automatic copying (and clearing) of selection when releasing mouse
         // Default: true
