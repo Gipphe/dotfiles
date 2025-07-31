@@ -44,7 +44,6 @@ util.mkToggledModule
       ./rofi
       ./swaync
       ./walker
-      ./wlogout.nix
     ];
     hm = {
       home.packages = with pkgs; [ wireplumber ];

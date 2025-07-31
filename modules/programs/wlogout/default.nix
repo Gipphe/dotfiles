@@ -12,7 +12,7 @@ let
   colors = config.lib.stylix.colors.withHashtag;
   raw_colors = config.lib.stylix.colors;
 in
-util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
+util.mkProgram {
   name = "wlogout";
   hm.programs.wlogout = {
     enable = true;
