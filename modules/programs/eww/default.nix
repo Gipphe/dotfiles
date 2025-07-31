@@ -39,6 +39,21 @@ let
     #     --add-flags "--config ${config.gipphe.homeDirectory}/projects/dotfiles/modules/programs/eww/config"
     # '';
   };
+
+  start-eww-bar = util.writeFishApplication {
+    name = "start-eww-bar";
+    runtimeInputs = with pkgs; [
+      wlr-randr
+      jq
+      eww
+    ];
+    text = ''
+      set -l monitors $(wlr-randr --json | jq -r '.[] | select(.enabled) | .name')
+      for monitor in $monitors
+        eww open --no-daemonize --screen "$monitor" --id "$monitor" bar
+      end
+    '';
+  };
 in
 util.mkProgram {
   name = "eww";
@@ -65,28 +80,11 @@ util.mkProgram {
           After = [ "eww-daemon.service" ];
           PartOf = [ "eww-daemon.service" ];
         };
-        Service =
-          let
-            script = util.writeFishApplication {
-              name = "eww-bar";
-              runtimeInputs = with pkgs; [
-                wlr-randr
-                jq
-                eww
-              ];
-              text = ''
-                set -l monitors $(wlr-randr --json | jq -r '.[] | select(.enabled) | .name')
-                for monitor in $monitors
-                  eww open --no-daemonize --screen "$monitor" --id "$monitor" bar
-                end
-              '';
-            };
-          in
-          {
-            ExecStart = "${script}/bin/eww-start";
-            Restart = "on-failure";
-            Type = "simple";
-          };
+        Service = {
+          ExecStart = "${start-eww-bar}/bin/start-eww-bar";
+          Restart = "on-failure";
+          Type = "simple";
+        };
         Install.WantedBy = [ "eww-daemon.service" ];
       };
     };
