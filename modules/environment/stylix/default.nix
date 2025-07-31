@@ -19,12 +19,12 @@ let
         name = "FiraCode Nerd Font Mono";
       };
       sansSerif = {
-        package = pkgs.dejavu_fonts;
-        name = "DejaVu Sans";
+        package = pkgs.source-sans;
+        name = "Source Sans 3";
       };
       serif = {
-        package = pkgs.dejavu_fonts;
-        name = "DejaVu Serif";
+        package = pkgs.source-serif;
+        name = "Source Serif 4";
       };
     };
   };
