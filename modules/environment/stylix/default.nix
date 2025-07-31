@@ -51,8 +51,8 @@ util.mkEnvironment {
       stylix
       {
         cursor = {
-          package = pkgs.vimix-cursors;
-          name = "Vimix-white-cursors";
+          package = pkgs.bibata-cursors;
+          name = "Bibata-Modern-Ice";
           size = 24;
         };
       }
