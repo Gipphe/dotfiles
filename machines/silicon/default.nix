@@ -28,5 +28,11 @@ util.mkToggledModule [ "machines" ] {
 
   system-darwin = {
     nix.settings.auto-optimise-store = lib.mkForce false;
+    system.defaults = {
+      # ".GlobalPreferences"."com.apple.mouse.scaling" = 1;
+      CustomUserPreferences = {
+        "com.apple.dock"."workspaces-swoosh-animation-off" = true;
+      };
+    };
   };
 }
