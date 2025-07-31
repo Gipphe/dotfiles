@@ -15,7 +15,7 @@ let
   kill-waybar = ''
     ${pkgs.procps}/bin/pkill -u $USER -USR2 waybar || true
   '';
-  swaync = "${config.gipphe.environment.desktop.hyprland.swaync.package}/bin/swaync-client";
+  swaync = "${config.gipphe.programs.swaync.package}/bin/swaync-client";
 in
 util.mkProgram {
   name = "mechabar";
