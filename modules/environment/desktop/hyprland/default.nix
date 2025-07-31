@@ -40,7 +40,6 @@ util.mkToggledModule
   {
     name = "hyprland";
     shared.imports = [
-      ./hyprpaper.nix
       ./hyprpolkitagent.nix
       ./mako.nix
       ./rofi
