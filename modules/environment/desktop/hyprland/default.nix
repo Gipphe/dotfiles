@@ -39,9 +39,6 @@ util.mkToggledModule
   ]
   {
     name = "hyprland";
-    shared.imports = [
-      ./walker
-    ];
     hm = {
       home.packages = with pkgs; [ wireplumber ];
       wayland.windowManager.hyprland = {

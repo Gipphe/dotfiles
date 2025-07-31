@@ -2,13 +2,7 @@
 util.mkProfile "desktop-hyprland" {
   gipphe = {
     environment = {
-      desktop.hyprland = {
-        enable = true;
-
-        # Launchers
-        walker.enable = true;
-
-      };
+      desktop.hyprland.enable = true;
       display.enable = true;
       wayland.enable = true;
     };
@@ -21,6 +15,7 @@ util.mkProfile "desktop-hyprland" {
 
       # Launchers
       rofi.enable = false;
+      walker.enable = true;
 
       # Notifications
       dunst.enable = false;

@@ -6,20 +6,21 @@
   ...
 }:
 let
-  cfg = config.gipphe.environment.desktop.hyprland.walker;
+  cfg = config.gipphe.programs.walker;
   inherit (import ../codes.nix) space;
   defaultConfig = import ./config.nix pkgs;
   writeTOMLFile = (pkgs.formats.toml { }).generate;
 in
-util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
+util.mkProgram {
   name = "walker";
-  options.gipphe.environment.desktop.hyprland.walker = {
+  options.gipphe.programs.walker = {
     package = lib.mkPackageOption pkgs "walker" { };
     settings = lib.mkOption {
       type = with lib.types; attrsOf anything;
       default = { };
       description = "Settings for walker's config.toml.";
     };
+    hyprland.enable = lib.mkEnableOption "hyprland integration";
   };
   hm = {
     home.packages = [
@@ -36,7 +37,7 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
       };
     };
 
-    wayland.windowManager.hyprland.settings.bind = [
+    wayland.windowManager.hyprland.settings.bind = lib.mkIf cfg.hyprland.enable [
       "$mod, ${space}, exec, ${cfg.package}/bin/walker"
       "$mod, Tab, exec, ${cfg.package}/bin/walker --modules windows"
     ];
