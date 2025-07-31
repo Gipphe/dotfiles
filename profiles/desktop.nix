@@ -1,7 +1,6 @@
 { util, ... }:
 util.mkProfile "desktop" {
   gipphe = {
-    environment.gtk.enable = true;
     programs = {
       _1password-gui.enable = true;
       appimage.enable = true;
@@ -9,6 +8,7 @@ util.mkProfile "desktop" {
       filen-desktop.enable = true;
       floorp.enable = true;
       gimp.enable = true;
+      gtk.enable = true;
       hoppscotch.enable = true;
       logseq.enable = true;
       mpris.enable = true;

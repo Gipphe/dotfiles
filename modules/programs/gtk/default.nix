@@ -1,5 +1,5 @@
 { util, pkgs, ... }:
-util.mkToggledModule [ "environment" ] {
+util.mkProgram {
   name = "gtk";
   hm.gtk.iconTheme = {
     name = "Adwaita";
