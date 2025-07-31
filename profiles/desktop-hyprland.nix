@@ -34,6 +34,6 @@ util.mkProfile "desktop-hyprland" {
     # Bars
     programs.mechabar.enable = false;
     programs.eww.enable = true;
-    desktop.hyprland.waybar.enable = false;
+    environment.desktop.hyprland.waybar.enable = false;
   };
 }
