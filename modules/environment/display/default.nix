@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  util,
-  ...
-}:
+{ config, util, ... }:
 util.mkEnvironment {
   name = "display";
   system-nixos = {
@@ -19,7 +14,6 @@ util.mkEnvironment {
           user = config.gipphe.username;
         };
       };
-      dbus.packages = [ pkgs.gcr ];
     };
 
     # Workaround for GNOME autologin issue
