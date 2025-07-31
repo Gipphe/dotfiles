@@ -3,7 +3,7 @@ let
   dmenu = "${pkgs.dmenu}/bin/dmenu";
   xdg-open = "${pkgs.xdg-utils}/bin/xdg-open";
 in
-util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
+util.mkProgram {
   name = "dunst";
   hm = {
     services.dunst = {

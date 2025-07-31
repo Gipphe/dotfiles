@@ -10,7 +10,6 @@ util.mkProfile "desktop-hyprland" {
         wlogout.enable = false;
 
         # Notifications
-        dunst.enable = false;
         mako.enable = false;
         swaync.enable = true;
 
@@ -25,9 +24,14 @@ util.mkProfile "desktop-hyprland" {
     programs = {
       hypridle.enable = true;
 
+      # Notifications
+      dunst.enable = false;
+
       networkmanagerapplet.enable = false;
       wf-recorder.enable = true;
       wl-clipboard.enable = true;
+
+      # File manager
       yazi.enable = true;
       yazi.hyprland.enable = true;
 
