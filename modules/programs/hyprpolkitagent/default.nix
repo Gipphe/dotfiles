@@ -1,5 +1,5 @@
 { util, ... }:
-util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
+util.mkProgram {
   name = "hyprpolkitagent";
   hm.services.hyprpolkitagent.enable = true;
 }
