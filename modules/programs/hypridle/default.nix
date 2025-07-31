@@ -3,10 +3,10 @@ let
   hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
   hyprlock = "${config.programs.hyprlock.package}/bin/hyprlock";
 in
-util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
+util.mkProgram {
   name = "hypridle";
   hm.services.hypridle = {
-    enable = config.programs.hyprland.enable;
+    enable = config.gipphe.programs.hyprland.enable;
     settings = {
       general = {
         after_sleep_cmd = "${hyprctl} dispatch dpms on";
