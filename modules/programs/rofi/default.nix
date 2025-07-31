@@ -1,9 +1,9 @@
 { util, config, ... }:
 let
   inherit (config.lib.formats.rasi) mkLiteral;
-  inherit (import ../codes.nix) space;
+  inherit (import ./codes.nix) space;
 in
-util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
+util.mkProgram {
   name = "rofi";
   hm = {
     imports = [ ./1password.nix ];

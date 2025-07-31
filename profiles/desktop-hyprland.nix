@@ -6,7 +6,6 @@ util.mkProfile "desktop-hyprland" {
         enable = true;
 
         # Launchers
-        rofi.enable = false;
         walker.enable = true;
 
       };
@@ -19,6 +18,9 @@ util.mkProfile "desktop-hyprland" {
       hyprpaper.enable = true;
       hyprpolkitagent.enable = true;
       wlogout.enable = false;
+
+      # Launchers
+      rofi.enable = false;
 
       # Notifications
       dunst.enable = false;
