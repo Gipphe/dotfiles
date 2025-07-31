@@ -2,11 +2,11 @@
 util.mkProfile "desktop-hyprland" {
   gipphe = {
     environment = {
-      desktop.hyprland.enable = true;
       wayland.enable = true;
     };
     programs = {
       hypridle.enable = true;
+      hyprland.enable = true;
       hyprlock.enable = true;
       hyprpaper.enable = true;
       hyprpolkitagent.enable = true;

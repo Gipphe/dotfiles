@@ -6,7 +6,7 @@ in
 util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
   name = "hypridle";
   hm.services.hypridle = {
-    enable = config.environment.desktop.hyprland.enable;
+    enable = config.programs.hyprland.enable;
     settings = {
       general = {
         after_sleep_cmd = "${hyprctl} dispatch dpms on";
