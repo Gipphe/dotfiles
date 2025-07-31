@@ -32,7 +32,6 @@ util.mkProfile "desktop-hyprland" {
     };
 
     # Bars
-    desktop.hyprland.ashell.enable = false;
     desktop.hyprland.mechabar.enable = false;
     programs.eww.enable = true;
     desktop.hyprland.waybar.enable = false;
