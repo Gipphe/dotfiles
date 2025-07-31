@@ -23,25 +23,24 @@ let
       walker
       wlr-randr
     ];
-  configDir = "${config.gipphe.homeDirectory}/projects/dotfiles/modules/environment/desktop/hyprland/eww/eww";
   eww = pkgs.symlinkJoin {
     name = "eww";
     paths = [ pkgs.eww ];
     buildInputs = [ pkgs.makeWrapper ];
-    # postBuild = ''
-    #   wrapProgram $out/bin/eww \
-    #     --prefix PATH : "${deps}" \
-    #     --add-flags "--config ${./eww}"
-    # '';
-
     postBuild = ''
       wrapProgram $out/bin/eww \
         --prefix PATH : "${deps}" \
-        --add-flags "--config ${configDir}"
+        --add-flags "--config ${./config}"
     '';
+
+    # postBuild = ''
+    #   wrapProgram $out/bin/eww \
+    #     --prefix PATH : "${deps}" \
+    #     --add-flags "--config ${config.gipphe.homeDirectory}/projects/dotfiles/modules/programs/eww/config"
+    # '';
   };
 in
-util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
+util.mkProgram {
   name = "eww";
   hm = {
     home.packages = [ eww ];
@@ -68,13 +67,20 @@ util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
         };
         Service =
           let
-            hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
-            script = pkgs.writeShellScriptBin "eww-start" ''
-              monitors="$(${hyprctl} monitors -j | jq -r '.[] | .name')"
-              for monitor in $monitors; do
-                ${eww}/bin/eww open --no-daemonize --screen "$monitor" --id "$monitor" bar
-              done
-            '';
+            script = util.writeFishApplication {
+              name = "eww-bar";
+              runtimeInputs = with pkgs; [
+                wlr-randr
+                jq
+                eww
+              ];
+              text = ''
+                set -l monitors $(wlr-randr --json | jq -r '.[] | select(.enabled) | .name')
+                for monitor in $monitors
+                  eww open --no-daemonize --screen "$monitor" --id "$monitor" bar
+                end
+              '';
+            };
           in
           {
             ExecStart = "${script}/bin/eww-start";
