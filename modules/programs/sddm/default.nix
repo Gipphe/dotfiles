@@ -5,6 +5,7 @@ util.mkProgram {
     sddm = {
       enable = true;
       autoNumlock = true;
+      wayland.enable = true;
     };
     autoLogin = {
       enable = true;

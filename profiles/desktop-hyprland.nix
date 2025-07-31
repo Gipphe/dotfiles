@@ -1,40 +1,35 @@
 { util, ... }:
 util.mkProfile "desktop-hyprland" {
-  gipphe = {
-    environment = {
-      wayland.enable = true;
-    };
-    programs = {
-      hypridle.enable = true;
-      hyprland.enable = true;
-      hyprlock.enable = true;
-      hyprpaper.enable = true;
-      hyprpolkitagent.enable = true;
-      wlogout.enable = false;
+  gipphe.programs = {
+    hypridle.enable = true;
+    hyprland.enable = true;
+    hyprlock.enable = true;
+    hyprpaper.enable = true;
+    hyprpolkitagent.enable = true;
+    wlogout.enable = false;
 
-      sddm.enable = true;
+    sddm.enable = true;
 
-      # Launchers
-      rofi.enable = false;
-      walker.enable = true;
+    # Launchers
+    rofi.enable = false;
+    walker.enable = true;
 
-      # Notifications
-      dunst.enable = false;
-      mako.enable = false;
-      swaync.enable = true;
+    # Notifications
+    dunst.enable = false;
+    mako.enable = false;
+    swaync.enable = true;
 
-      networkmanagerapplet.enable = false;
-      wf-recorder.enable = true;
-      wl-clipboard.enable = true;
+    networkmanagerapplet.enable = false;
+    wf-recorder.enable = true;
+    wl-clipboard.enable = true;
 
-      # File manager
-      yazi.enable = true;
-      yazi.hyprland.enable = true;
+    # File manager
+    yazi.enable = true;
+    yazi.hyprland.enable = true;
 
-      # Bars
-      mechabar.enable = false;
-      eww.enable = true;
-      waybar.enable = false;
-    };
+    # Bars
+    mechabar.enable = false;
+    eww.enable = true;
+    waybar.enable = false;
   };
 }
