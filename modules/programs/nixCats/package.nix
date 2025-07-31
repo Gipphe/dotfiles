@@ -325,6 +325,7 @@ let
         extra = {
           nixd = {
             nixpkgs = ''import ${pkgs.path} {}'';
+            home_manager = ''(builtins.getFlake "${inputs.self}").nixosConfigurations.argon.options.home-manager.users.type.getSubOptions []'';
             nixos_options = ''(builtins.getFlake "${inputs.self}").nixosConfigurations.argon.options'';
             darwin_options = ''(builtins.getFlake "${inputs.self}").darwinConfigurations.silicon.options'';
             droid_options = ''(builtins.getFlake "${inputs.self}").nixOnDroidConfigurations.helium.options'';
