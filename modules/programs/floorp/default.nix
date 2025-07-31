@@ -18,13 +18,8 @@ util.mkModule {
       type = lib.types.bool;
       default = true;
     };
-    default = lib.mkEnableOption "Floorp as default browser";
-    package = config.programs.floorp.package;
   };
   hm.config = lib.mkMerge [
-    (lib.mkIf cfg.default {
-      gipphe.default.browser.open = "${cfg.package}/bin/floorp";
-    })
     {
       stylix.targets.floorp.profileNames = [ "default" ];
       programs.floorp = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
