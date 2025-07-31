@@ -7,6 +7,7 @@ util.mkProfile "desktop" {
       cool-retro-term.enable = true;
       filen-desktop.enable = true;
       floorp.enable = true;
+      floorp.default = true;
       gimp.enable = true;
       gtk.enable = true;
       hoppscotch.enable = true;
