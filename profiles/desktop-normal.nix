@@ -1,8 +1,5 @@
 { util, ... }:
 util.mkProfile "desktop-normal" {
-  gipphe.environment = {
-    x.enable = true;
-  };
   gipphe.programs = {
     plasma6.enable = true;
     sddm.enable = true;
