@@ -46,7 +46,6 @@ util.mkToggledModule
       ./hyprpaper.nix
       ./hyprpolkitagent.nix
       ./mako.nix
-      ./mechabar
       ./rofi
       ./swaync
       ./walker

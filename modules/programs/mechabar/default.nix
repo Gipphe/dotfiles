@@ -17,7 +17,7 @@ let
   '';
   swaync = "${config.gipphe.environment.desktop.hyprland.swaync.package}/bin/swaync-client";
 in
-util.mkToggledModule [ "environment" "desktop" "hyprland" ] {
+util.mkProgram {
   name = "mechabar";
   hm = {
     xdg.configFile = {
