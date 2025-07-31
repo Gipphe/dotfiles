@@ -3,7 +3,6 @@ util.mkProfile "desktop-hyprland" {
   gipphe = {
     environment = {
       desktop.hyprland.enable = true;
-      display.enable = true;
       wayland.enable = true;
     };
     programs = {
@@ -12,6 +11,8 @@ util.mkProfile "desktop-hyprland" {
       hyprpaper.enable = true;
       hyprpolkitagent.enable = true;
       wlogout.enable = false;
+
+      sddm.enable = true;
 
       # Launchers
       rofi.enable = false;
