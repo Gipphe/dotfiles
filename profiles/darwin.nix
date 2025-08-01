@@ -1,6 +1,7 @@
 { util, ... }:
-util.mkProfile "darwin" {
-  gipphe.programs = {
+util.mkProfile {
+  name = "darwin";
+  shared.gipphe.programs = {
     alt-tab.enable = true;
     apple = {
       dock.enable = true;

@@ -1,6 +1,7 @@
 { util, ... }:
-util.mkProfile "secrets" {
-  gipphe = {
+util.mkProfile {
+  name = "secrets";
+  shared.gipphe = {
     programs.ssh.enable = true;
     environment.secrets.enable = true;
   };

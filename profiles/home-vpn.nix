@@ -1,4 +1,5 @@
 { util, ... }:
-util.mkProfile "home-vpn" {
-  gipphe.networking.wireguard.enable = true;
+util.mkProfile {
+  name = "home-vpn";
+  shared.gipphe.networking.wireguard.enable = true;
 }

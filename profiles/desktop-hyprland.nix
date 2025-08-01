@@ -1,6 +1,7 @@
 { util, ... }:
-util.mkProfile "desktop-hyprland" {
-  gipphe.programs = {
+util.mkProfile {
+  name = "desktop-hyprland";
+  shared.gipphe.programs = {
     hypridle.enable = true;
     hyprland.enable = true;
     hyprlock.enable = true;

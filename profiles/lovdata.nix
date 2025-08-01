@@ -4,8 +4,9 @@
   config,
   ...
 }:
-util.mkProfile "lovdata" {
-  gipphe = {
+util.mkProfile {
+  name = "lovdata";
+  shared.gipphe = {
     programs = {
       devbox.enable = true;
       idea-ultimate.enable = true;

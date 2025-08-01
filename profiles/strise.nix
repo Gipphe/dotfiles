@@ -1,6 +1,7 @@
 { util, ... }:
-util.mkProfile "strise" {
-  gipphe = {
+util.mkProfile {
+  name = "strise";
+  shared.gipphe = {
     profiles.strise-slim.enable = true;
     programs = {
       code-cursor.enable = true;

@@ -1,1 +1,5 @@
-{ util, ... }: util.mkProfile "systemd" { gipphe.programs.run-as-service.enable = true; }
+{ util, ... }:
+util.mkProfile {
+  name = "systemd";
+  shared.gipphe.programs.run-as-service.enable = true;
+}

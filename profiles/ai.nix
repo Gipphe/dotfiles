@@ -1,6 +1,7 @@
 { util, ... }:
-util.mkProfile "ai" {
-  gipphe.programs = {
+util.mkProfile {
+  name = "ai";
+  shared.gipphe.programs = {
     mods.enable = true;
   };
 }

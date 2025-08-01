@@ -1,6 +1,7 @@
 { util, ... }:
-util.mkProfile "cli" {
-  gipphe.programs = {
+util.mkProfile {
+  name = "cli";
+  shared.gipphe.programs = {
     _1password-cli.enable = true;
     asciinema-agg.enable = true;
     asciinema.enable = true;

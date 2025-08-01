@@ -1,6 +1,7 @@
 { util, lib, ... }:
-util.mkProfile "strise-slim" {
-  gipphe.programs = {
+util.mkProfile {
+  name = "strise-slim";
+  shared.gipphe.programs = {
     google-cloud-sdk.enable = true;
     idea-ultimate.enable = true;
     kubectl.enable = true;

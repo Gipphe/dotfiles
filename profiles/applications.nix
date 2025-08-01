@@ -1,6 +1,7 @@
 { util, ... }:
-util.mkProfile "application" {
-  gipphe = {
+util.mkProfile {
+  name = "application";
+  shared.gipphe = {
     programs = {
       _1password-gui.enable = true;
       appimage.enable = true;

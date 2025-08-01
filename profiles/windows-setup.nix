@@ -1,6 +1,7 @@
 { util, config, ... }:
-util.mkProfile "windows-setup" {
-  gipphe = {
+util.mkProfile {
+  name = "windows-setup";
+  shared.gipphe = {
     programs.floorp.windows = true;
     windows = {
       enable = true;

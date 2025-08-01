@@ -1,6 +1,7 @@
 { util, ... }:
-util.mkProfile "gaming" {
-  gipphe.programs = {
+util.mkProfile {
+  name = "gaming";
+  shared.gipphe.programs = {
     discord.enable = true;
     lutris.enable = true;
     moonlight-qt.enable = true;

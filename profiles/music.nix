@@ -1,5 +1,6 @@
 { util, ... }:
-util.mkProfile "music" {
+util.mkProfile {
+  name = "music";
   # Currently broken.
-  gipphe.programs.spotify-player.enable = false;
+  shared.gipphe.programs.spotify-player.enable = false;
 }

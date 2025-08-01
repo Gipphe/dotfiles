@@ -1,1 +1,5 @@
-{ util, ... }: util.mkProfile "gc" { gipphe.programs.nix.gc.enable = true; }
+{ util, ... }:
+util.mkProfile {
+  name = "gc";
+  shared.gipphe.programs.nix.gc.enable = true;
+}

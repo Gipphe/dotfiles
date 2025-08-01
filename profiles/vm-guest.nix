@@ -1,1 +1,5 @@
-{ util, ... }: util.mkProfile "vm-guest" { gipphe.virtualisation.virtualbox-guest.enable = true; }
+{ util, ... }:
+util.mkProfile {
+  name = "vm-guest";
+  shared.gipphe.virtualisation.virtualbox-guest.enable = true;
+}

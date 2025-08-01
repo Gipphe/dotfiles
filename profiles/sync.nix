@@ -1,4 +1,5 @@
 { util, ... }:
-util.mkProfile "sync" {
-  gipphe.programs.syncthing.enable = true;
+util.mkProfile {
+  name = "sync";
+  shared.gipphe.programs.syncthing.enable = true;
 }

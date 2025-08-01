@@ -105,17 +105,7 @@ let
     imports = [ ({ pkgs, ... }@args: mkSimpleProgram name pkgs.${name} args) ];
   };
 
-  mkProfile = name: cfg: {
-    imports = [
-      (
-        { lib, config, ... }:
-        {
-          options.gipphe.profiles.${name}.enable = lib.mkEnableOption "${name} profile";
-          config = lib.mkIf config.gipphe.profiles.${name}.enable cfg;
-        }
-      )
-    ];
-  };
+  mkProfile = mkToggledModule [ "profiles" ];
 
   mkProgram = mkToggledModule [ "programs" ];
   mkEnvironment = mkToggledModule [ "environment" ];

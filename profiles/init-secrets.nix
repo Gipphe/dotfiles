@@ -1,1 +1,5 @@
-{ util, ... }: util.mkProfile "init-secrets" { gipphe.environment.secrets.enable = true; }
+{ util, ... }:
+util.mkProfile {
+  name = "init-secrets";
+  shared.gipphe.environment.secrets.enable = true;
+}

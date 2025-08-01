@@ -1,6 +1,7 @@
 { util, ... }:
-util.mkProfile "audio" {
-  gipphe.programs = {
+util.mkProfile {
+  name = "audio";
+  shared.gipphe.programs = {
     bcn.enable = true;
     # Temporarily broken
     cava.enable = false;

@@ -1,1 +1,5 @@
-{ util, ... }: util.mkProfile "kvm" { gipphe.programs.barrier.enable = true; }
+{ util, ... }:
+util.mkProfile {
+  name = "kvm";
+  shared.gipphe.programs.barrier.enable = true;
+}

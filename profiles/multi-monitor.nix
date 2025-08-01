@@ -1,4 +1,5 @@
 { util, ... }:
-util.mkProfile "multi-monitor" {
-  gipphe.programs.kanshi.enable = true;
+util.mkProfile {
+  name = "multi-monitor";
+  shared.gipphe.programs.kanshi.enable = true;
 }
