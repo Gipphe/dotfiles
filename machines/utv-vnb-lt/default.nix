@@ -44,6 +44,10 @@ util.mkToggledModule [ "machines" ] {
       sync.enable = true;
       systemd.enable = true;
     };
+    programs = {
+      floorp.default = false;
+      vivaldi.default = true;
+    };
   };
 
   hm = {
