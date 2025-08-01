@@ -26,6 +26,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
     networkmanagerapplet.enable = false;
     wf-recorder.enable = true;
     wl-clipboard.enable = true;
+    grimblast.enable = true;
 
     # File manager
     yazi = {

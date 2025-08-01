@@ -6,7 +6,6 @@
   ...
 }:
 let
-  grimblast = lib.getExe pkgs.grimblast;
   inherit (builtins) concatLists genList toString;
 
   # sioodmy's implementation
@@ -44,11 +43,6 @@ util.mkProgram {
         # See https://wiki.hyprland.org/Configuring/Monitors
         monitor = lib.mkDefault ",preferred,auto,1";
         bind = workspaces ++ [
-          ", Print, exec, ${grimblast} copy area"
-          "Alt_L, Print, exec, ${grimblast} copy screen"
-          # Logitech MX Keys screenshot hotkey sends SUPER_L+SHIFT_L+S
-          "SUPER_L SHIFT_L, S, exec, ${grimblast} copy area"
-          "SUPER_L SHIFT_L ALT_L, S, exec, ${grimblast} copy screen"
           "$mod, RETURN, exec, ${config.programs.wezterm.package}/bin/wezterm"
           "$mod, Q, killactive" # Close current window
           "$mod SHIFT, Q, forcekillactive" # Force close current window
