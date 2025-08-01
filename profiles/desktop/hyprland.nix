@@ -1,6 +1,6 @@
 { util, ... }:
-util.mkProfile {
-  name = "desktop-hyprland";
+util.mkToggledModule [ "profiles" "desktop" ] {
+  name = "hyprland";
   shared.gipphe.programs = {
     hypridle.enable = true;
     hyprland.enable = true;

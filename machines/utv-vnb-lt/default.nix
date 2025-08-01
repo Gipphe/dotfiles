@@ -31,7 +31,7 @@ util.mkToggledModule [ "machines" ] {
       audio.enable = true;
       cli.enable = true;
       core.enable = true;
-      desktop-hyprland.enable = true;
+      desktop.hyprland.enable = true;
       fonts.enable = true;
       gaming.enable = true;
       gc.enable = true;
