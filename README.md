@@ -5,43 +5,58 @@
       <br>
       <h1>Gipphe's dotfiles</h1>
     </td>
-    <td>
+  </tr>
+  <tr>
+    <td align="center">
       <a href="./LICENSE">
         <img src="https://img.shields.io/static/v1.svg?style=for-the-badge&label=License&message=ISC&logoColor=ca9ee6&colorA=313244&colorB=cba6f7"
       </a>
-      <br>
       <a href="https://nixos.org">
         <img src="https://img.shields.io/badge/NixOS-unstable-blue.svg?style=for-the-badge&labelColor=303446&logo=NixOS&logoColor=white&color=91D7E3">
       </a>
     </td>
   </tr>
   <tr>
-    <td colspan="2" align="center">
+    <td align="center">
       <a href="https://catppuccin.com">
         <img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/palette/macchiato.png" width="600px" align="center">
       </a>
     </td>
   </tr>
   <tr>
-    <td colspan="2" align="center">
-      Nix configuration for NixOS, nix-darwin and nixos-wsl.
+    <td align="center">
+      Nix configuration for NixOS, nix-darwin, nix-on-droid and nixos-wsl.
     </td>
   </tr>
 </table>
 
 ## Getting started
 
-To start using this dotfiles repo on a machine of yours, run `./setup.sh` to
-ensure `nix` is installed, as well as `nix-darwin` or `home-manager`. After
-ensuring `nix` is available, it bootstraps the system using `nixos-rebuild`,
-`darwin-rebuild` or `home-manager`.
+From NixOS:
+
+```
+nixos-rebuild switch --flake .#<hostname>
+```
+
+From MacOS and other non-NixOS Linux distros:
+
+```
+./install.sh
+```
+
+From Android's nix-on-droid:
+
+```
+nix-on-droid switch --flake .#<hostname>
+```
 
 ## Machines
 
-This dotfiles repo consists of NixOS configurations and nix-darwin
-configurations for a variety of machines.
+This dotfiles repo consists of configurations for NixOS, nix-darwin, and
+nix-on-droid machines.
 
-Machines are named according to elements from the periodic table.
+Machines are named according to elements from the periodic table, where
+applicable.
 
 Machine configs are located in [`./machines`](./machines).
 
@@ -55,6 +70,8 @@ Located in [`./machines/argon`](./machines/argon).
 
 ### silicon
 
+_No longer in use, but kept as reference for future nix-darwin machines._
+
 Corporate-issued Macbook Pro with nix-darwin.
 
 Located in [`./machines/silicon`](./machines/silicon).
@@ -67,19 +84,42 @@ Lenovo Ideapad laptop running NixOS.
 
 Located in [`./machines/cobalt`](./machines/cobalt).
 
+### utv-vnb-lt
+
+Corporate-issued Dell Precision 7680 running NixOS.
+
+Located in [`./machines/utv-vnb-lt`](./machines/utv-vnb-lt).
+
+<img src="./assets/utv-vnb-lt-neofetch.png" width="600px">
+
+### helium
+
+_No longer in use._
+
+Samsung Galaxy S21 Ultra running nix-on-droid on stock Android.
+
+Located in [`./machines/helium`](./machines/helium).
+
+### carbon
+
+Google Pixel 9 Pro XL running nix-on-droid on GrapheneOS.
+
+Located in [`./machines/carbon`](./machines/carbon).
+
 ## Architecture
 
-To support NixOS, nix-darwin _and_ nixos-wsl, some choices have been made in
+To support NixOS, nix-darwin, nix-on-droid _and_ nixos-wsl, some choices have been made in
 these dotfiles that might be of interest to others.
 
 - Modules generally abstract over a feature.
 - A module _must_ not cause any errors when enabled on systems that do not
   support it.
-- Modules are enabled through profiles.
-  - The only exception to this is the machine hostname, which is set in the
-    machine's config directly.
+  - Modules are themselves responsible for not breaking in on unsupported
+    systems.
+- Modules are (mostly) enabled and configured through profiles.
 - A profile can enable one or many modules.
 - A machine configuration enables one or more profiles.
+- A machine configuration may contain machine-specific configs, if necessary.
 - Machine configurations are distinct based on the hostname of the machine.
 - Each machine I have uses one and only one machine config each.
 
@@ -105,8 +145,8 @@ their type.
 
 ### Profiles
 
-- A profile can _only_ toggle modules, nothing else.
-- A profile can overlap with another profile.
+- A profile can toggle and configure modules, nothing else.
+- A profile may overlap with another profile.
 
 All profiles are located in [`./profiles`](./profiles).
 
