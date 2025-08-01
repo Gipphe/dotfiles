@@ -7,14 +7,12 @@
 }:
 let
   cfg = config.gipphe.programs.wezterm;
+  hmCfg = config.programs.wezterm;
 in
 util.mkProgram {
   name = "wezterm";
   options.gipphe.programs.wezterm = {
     default = lib.mkEnableOption "default terminal";
-    package = lib.mkPackageOption pkgs "wezterm" { } // {
-      default = config.programs.wezterm.package;
-    };
   };
   hm = {
     xdg.configFile = {
@@ -107,12 +105,12 @@ util.mkProgram {
     };
 
     gipphe.default.terminal = lib.mkIf cfg.default {
-      open = "${cfg.package}/bin/wezterm";
+      open = "${hmCfg.package}/bin/wezterm";
     };
 
     home.packages = lib.mkIf cfg.default [
       (pkgs.writeShellScriptBin "x-terminal-emulator" ''
-        ${cfg.package}/bin/wezterm start "$@"
+        ${hmCfg.package}/bin/wezterm start "$@"
       '')
     ];
 

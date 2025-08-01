@@ -21,6 +21,7 @@ util.mkProfile "desktop" {
       spotify.enable = true;
       vivaldi.enable = true;
       wezterm.enable = true;
+      wezterm.default = true;
     };
   };
 }
