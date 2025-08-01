@@ -8,11 +8,11 @@ util.mkToggledModule [ "machines" ] {
     hostName = "silicon";
     profiles = {
       ai.enable = true;
+      application.enable = true;
       cli.enable = true;
       containers.enable = true;
       core.enable = true;
       darwin.enable = true;
-      desktop.enable = true;
       game-dev.enable = true;
       home-vpn.enable = true;
       k8s.enable = true;
@@ -21,8 +21,8 @@ util.mkToggledModule [ "machines" ] {
       music.enable = true;
       rice.enable = true;
       secrets.enable = true;
-      windows-setup.enable = true;
       strise.enable = true;
+      windows-setup.enable = true;
     };
   };
 

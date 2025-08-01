@@ -1,5 +1,5 @@
 { util, ... }:
-util.mkProfile "desktop" {
+util.mkProfile "application" {
   gipphe = {
     programs = {
       _1password-gui.enable = true;

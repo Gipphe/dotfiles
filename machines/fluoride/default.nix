@@ -14,12 +14,11 @@ util.mkToggledModule [ "machines" ] {
         system.enable = true;
       };
       ai.enable = true;
+      application.enable = true;
       audio.enable = true;
       cli.enable = true;
       core.enable = true;
-      # desktop-hyprland.enable = true;
       desktop-normal.enable = true;
-      desktop.enable = true;
       fonts.enable = true;
       gaming.enable = true;
       gc.enable = true;
@@ -28,8 +27,8 @@ util.mkToggledModule [ "machines" ] {
       secrets.enable = true;
       sync.enable = true;
       systemd.enable = true;
-      windows-setup.enable = true;
       vm-guest.enable = true;
+      windows-setup.enable = true;
     };
   };
 }
