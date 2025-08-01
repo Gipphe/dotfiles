@@ -26,7 +26,9 @@ util.mkModule {
   hm.config = lib.mkMerge [
     {
       gipphe.default.browser = lib.mkIf cfg.default {
-        open = "${cfg.package}/bin/floorp";
+        name = "Floorp";
+        package = cfg.package;
+        actions.open = "${cfg.package}/bin/floorp";
       };
       stylix.targets.floorp.profileNames = [ "default" ];
       programs.floorp = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {

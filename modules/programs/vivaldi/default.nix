@@ -17,7 +17,9 @@ util.mkProgram {
   hm = {
     home.packages = [ pkgs.vivaldi ];
     gipphe.default.browser = lib.mkIf cfg.default {
-      open = "${cfg.package}/bin/vivaldi";
+      name = "Vivaldi";
+      package = cfg.package;
+      actions.open = "${cfg.package}/bin/vivaldi";
     };
   };
 }
