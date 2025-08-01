@@ -9,6 +9,7 @@ util.mkProfile {
   shared.gipphe = {
     programs = {
       devbox.enable = true;
+      docker.enable = true;
       idea-ultimate.enable = true;
       java_21.enable = true;
       mattermost.enable = true;
@@ -45,7 +46,6 @@ util.mkProfile {
           };
       };
     };
-    virtualisation.docker.enable = true;
     lovdata.files.enable = true;
     networking.lovdata-dns.enable = true;
   };

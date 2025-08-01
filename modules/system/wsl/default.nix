@@ -37,7 +37,7 @@ util.mkToggledModule [ "system" ] {
         ];
       };
 
-      virtualisation.docker = lib.mkIf config.gipphe.virtualisation.docker.enable {
+      virtualisation.docker = lib.mkIf config.gipphe.programs.docker.enable {
         enable = true;
         enableOnBoot = true;
         autoPrune.enable = true;
