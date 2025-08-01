@@ -1,4 +1,4 @@
-{ util, ... }:
+{ util, lib, ... }:
 util.mkToggledModule [ "profiles" "desktop" ] {
   name = "hyprland";
   shared.gipphe.programs = {
@@ -31,6 +31,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
     yazi = {
       enable = true;
       hyprland.enable = true;
+      default = lib.mkDefault true;
     };
 
     # Bars
