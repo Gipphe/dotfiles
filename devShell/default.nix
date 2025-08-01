@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 let
   util = pkgs.callPackage ../util.nix { };
-  cmd = opts: lib.getExe (util.writeFishApplication opts);
+  cmd = opts: lib.getExe (util.writeFishApplication (opts // { inheritPath = true; }));
   build =
     { name, ask }:
     cmd {
@@ -10,7 +10,6 @@ let
         nh
         jq
       ];
-      inheritPath = true;
       text =
         # fish
         ''
