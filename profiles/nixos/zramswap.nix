@@ -1,7 +1,5 @@
-{ lib, config, ... }:
-{
-  options.gipphe.profiles.nixos.zramswap.enable = lib.mkEnableOption "nixos.zramswap";
-  config = lib.mkIf config.gipphe.profiles.nixos.zramswap.enable {
-    gipphe.system.zramswap.enable = true;
-  };
+{ util, ... }:
+util.mkToggledModule [ "profiles" "nixos" ] {
+  name = "zramswap";
+  shared.gipphe.system.zramswap.enable = true;
 }
