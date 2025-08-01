@@ -10,6 +10,7 @@ let
         nh
         jq
       ];
+      inheritPath = true;
       text =
         # fish
         ''
