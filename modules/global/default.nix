@@ -51,8 +51,13 @@ util.mkModule {
   hm = {
     options.gipphe.default = lib.mapAttrs (name: actions: opt name actions) defaults;
     config = {
-      home.variables = {
-        BROWSER = lib.mkIf (config.global.default.browser != null) config.gipphe.default.browser.open;
+      home.sessionVariables = {
+        BROWSER = lib.mkIf (
+          config.gipphe.default.browser != null
+        ) config.gipphe.default.browser.actions.open;
+        TERMINAL = lib.mkIf (
+          config.gipphe.default.terminal != null
+        ) config.gipphe.default.terminal.actions.open;
       };
     };
   };
