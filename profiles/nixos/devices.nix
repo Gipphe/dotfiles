@@ -1,5 +1,5 @@
 { util, ... }:
 util.mkToggledModule [ "profiles" "nixos" ] {
   name = "devices";
-  shared.gipphe.system.udisks2.enable = true;
+  shared.gipphe.programs.udisks2.enable = true;
 }
