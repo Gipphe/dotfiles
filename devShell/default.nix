@@ -63,7 +63,7 @@ in
   shellCommands = [
     # Build
     rec {
-      help = "Rebuild the system using nh, darwin-rebuild or home-manager, whichever is applicable";
+      help = "Rebuild NixOS, nix-darwin or nix-on-droid system.";
       name = "sw";
       command = build {
         inherit name;
@@ -72,7 +72,7 @@ in
       category = "build";
     }
     rec {
-      help = "Rebuild the system using nh os switch --ask";
+      help = "Rebuild NixOS, nix-darwin or nix-on-droid system, asking first.";
       name = "swa";
       command = build {
         inherit name;
