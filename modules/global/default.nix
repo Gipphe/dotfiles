@@ -27,17 +27,20 @@ let
       type = with lib.types; either str path;
     };
   defaults = {
-    "browser" = {
+    browser = {
       open = scriptOpt "open browser";
     };
-    "filemanager" = {
+    filemanager = {
       open = scriptOpt "open";
     };
-    "lockscreen" = {
+    lockscreen = {
       lock = scriptOpt "lock screen";
+    };
+    terminal = {
+      open = scriptOpt "open";
     };
   };
 in
 util.mkModule {
-  options.gipphe.default = lib.mapAttrs (name: actions: opt name actions) defaults;
+  hm.options.gipphe.default = lib.mapAttrs (name: actions: opt name actions) defaults;
 }

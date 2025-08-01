@@ -5,8 +5,17 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.gipphe.programs.wezterm;
+in
 util.mkProgram {
   name = "wezterm";
+  options.gipphe.programs.wezterm = {
+    default = lib.mkEnableOption "default terminal";
+    package = lib.mkPackageOption pkgs "wezterm" { } // {
+      default = config.programs.wezterm.package;
+    };
+  };
   hm = {
     xdg.configFile = {
       "wezterm/os-utils.lua".text =
@@ -96,6 +105,16 @@ util.mkProgram {
           return baseConfig
         '';
     };
+
+    gipphe.default.terminal = lib.mkIf cfg.default {
+      open = "${cfg.package}/bin/wezterm";
+    };
+
+    home.packages = lib.mkIf cfg.default [
+      (pkgs.writeShellScriptBin "x-terminal-emulator" ''
+        ${cfg.package}/bin/wezterm start "$@"
+      '')
+    ];
 
     gipphe.windows.home.file = lib.pipe config.xdg.configFile [
       (lib.filterAttrs (path: _: lib.hasPrefix "wezterm/" path))

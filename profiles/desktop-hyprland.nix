@@ -12,7 +12,10 @@ util.mkProfile "desktop-hyprland" {
 
     # Launchers
     rofi.enable = false;
-    walker.enable = true;
+    walker = {
+      enable = true;
+      hyprland.enable = true;
+    };
 
     # Notifications
     dunst.enable = false;
@@ -24,8 +27,10 @@ util.mkProfile "desktop-hyprland" {
     wl-clipboard.enable = true;
 
     # File manager
-    yazi.enable = true;
-    yazi.hyprland.enable = true;
+    yazi = {
+      enable = true;
+      hyprland.enable = true;
+    };
 
     # Bars
     mechabar.enable = false;

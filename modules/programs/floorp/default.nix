@@ -19,13 +19,15 @@ util.mkModule {
       default = true;
     };
     default = lib.mkEnableOption "Floorp as default browser";
-    package = config.programs.floorp.package;
+    package = lib.mkPackageOption pkgs "floorp" { } // {
+      default = config.programs.floorp.finalPackage;
+    };
   };
   hm.config = lib.mkMerge [
-    (lib.mkIf cfg.default {
-      gipphe.default.browser.open = "${cfg.package}/bin/floorp";
-    })
     {
+      gipphe.default.browser = lib.mkIf cfg.default {
+        open = "${cfg.package}/bin/floorp";
+      };
       stylix.targets.floorp.profileNames = [ "default" ];
       programs.floorp = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         enable = cfg.enable || cfg.windows;

@@ -7,7 +7,7 @@
 }:
 let
   cfg = config.gipphe.programs.walker;
-  inherit (import ../codes.nix) space;
+  inherit (import ./codes.nix) space;
   defaultConfig = import ./config.nix pkgs;
   writeTOMLFile = (pkgs.formats.toml { }).generate;
 in
