@@ -7,8 +7,8 @@ util.mkProfile {
       appimage.enable = true;
       cool-retro-term.enable = true;
       filen-desktop.enable = true;
-      floorp.enable = true;
       floorp.default = true;
+      floorp.enable = true;
       gimp.enable = true;
       gtk.enable = true;
       hoppscotch.enable = true;
@@ -21,8 +21,8 @@ util.mkProfile {
       slack.enable = true;
       spotify.enable = true;
       vivaldi.enable = true;
-      wezterm.enable = true;
       wezterm.default = true;
+      wezterm.enable = true;
     };
   };
 }
