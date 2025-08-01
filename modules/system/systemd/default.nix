@@ -1,21 +1,8 @@
 { util, ... }:
-let
-  settings = {
-    Manager = {
-      DefaultTimeoutStopSec = "16s";
-    };
-  };
-in
 util.mkToggledModule [ "system" ] {
   name = "systemd";
   system-nixos = {
     systemd = {
-      inherit settings;
-      user = {
-        extraConfig = ''
-          DefaultTimeoutStopSec=16s
-        '';
-      };
       services = {
         "getty@tty1".enable = false;
         "autovt@tty1".enable = false;
