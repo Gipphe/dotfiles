@@ -1,20 +1,16 @@
 { util, ... }:
 let
-  settings = {
-    Manager = {
-      DefaultTimeoutStopSec = "16s";
-    };
-  };
+  extraConfig = ''
+    DefaultTimeoutStopSec=16s
+  '';
 in
 util.mkToggledModule [ "system" ] {
   name = "systemd";
   system-nixos = {
     systemd = {
-      inherit settings;
+      inherit extraConfig;
       user = {
-        extraConfig = ''
-          DefaultTimeoutStopSec=16s
-        '';
+        inherit extraConfig;
       };
       services = {
         "getty@tty1".enable = false;
@@ -27,6 +23,9 @@ util.mkToggledModule [ "system" ] {
       # Fedora enables these options by deafult. See the 10-oomd-* files here:
       # https://src.fedoraproject.org/rpms/systemd/tree/acb90c49c42276b06375a66c73673ac3510255
       oomd.enableRootSlice = true;
+
+      # TODO: channels-to-flakes
+      tmpfiles.rules = [ "D /nix/var/nix/profiles/per-user/root 755 root root - -" ];
     };
   };
 }
