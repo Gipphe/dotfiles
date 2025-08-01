@@ -1,4 +1,9 @@
-{ util, lib, ... }:
+{
+  util,
+  lib,
+  config,
+  ...
+}:
 let
   opt =
     desc: actions:
@@ -6,7 +11,7 @@ let
       description = "Default ${desc}.";
       type =
         with lib.types;
-        submodule {
+        nullOr (submodule {
           options = {
             name = lib.mkOption {
               type = lib.types.str;
@@ -18,7 +23,8 @@ let
             };
             inherit actions;
           };
-        };
+        });
+      default = null;
     };
   scriptOpt =
     action:
@@ -42,5 +48,12 @@ let
   };
 in
 util.mkModule {
-  hm.options.gipphe.default = lib.mapAttrs (name: actions: opt name actions) defaults;
+  hm = {
+    options.gipphe.default = lib.mapAttrs (name: actions: opt name actions) defaults;
+    config = {
+      home.variables = {
+        BROWSER = lib.mkIf (config.global.default.browser != null) config.gipphe.default.browser.open;
+      };
+    };
+  };
 }
