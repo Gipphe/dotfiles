@@ -1,6 +1,6 @@
 { util, ... }:
-util.mkToggledModule [ "system" ] {
-  name = "audio";
+util.mkProgram {
+  name = "pipewire";
   system-nixos = {
     # Enable sound with pipewire.
     security.rtkit.enable = true;
