@@ -10,6 +10,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
     wlogout.enable = false;
 
     sddm.enable = true;
+    greetd.enable = false;
 
     # Launchers
     rofi.enable = false;
