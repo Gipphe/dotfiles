@@ -7,9 +7,9 @@ util.mkProgram {
       autoNumlock = true;
       wayland.enable = true;
     };
-    autoLogin = {
-      enable = true;
-      user = config.gipphe.username;
-    };
+    # autoLogin = {
+    #   enable = true;
+    #   user = config.gipphe.username;
+    # };
   };
 }
