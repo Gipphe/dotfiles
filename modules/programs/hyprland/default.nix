@@ -39,6 +39,8 @@ util.mkProgram {
       enable = true;
       settings = {
         "$mod" = "SUPER";
+
+        debug.disable_logs = false;
         # Monitor
         # See https://wiki.hyprland.org/Configuring/Monitors
         monitor = lib.mkDefault ",preferred,auto,1";
