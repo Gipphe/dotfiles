@@ -35,6 +35,7 @@ util.mkProgram {
   name = "hyprland";
   hm = {
     home.packages = with pkgs; [ wireplumber ];
+    wayland.systemd.target = "hyprland-session.target";
     wayland.windowManager.hyprland = {
       enable = true;
       settings = {
