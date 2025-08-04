@@ -67,6 +67,7 @@
         { pkgs, ... }:
         {
           minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
+          monocraft-no-ligatures-font = pkgs.callPackage ./packages/monocraft-no-ligatures.nix { };
           treefmt = treefmt-nix.lib.mkWrapper pkgs {
             projectRootFile = "flake.nix";
 
