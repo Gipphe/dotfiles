@@ -26,7 +26,6 @@ let
     ) 10
   );
 
-  wpctl = "${pkgs.wireplumber}/bin/wpctl";
   brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
   nmcli = "${pkgs.networkmanager}/bin/nmcli";
   xdotool = "${pkgs.xdotool}/bin/xdotool";
@@ -55,12 +54,8 @@ util.mkProgram {
           "$mod, J, togglesplit, # dwindle"
           "$mod, B, exec, ${config.programs.vivaldi.package}/bin/vivaldi # Opens the browser"
 
-          ", XF86AudioRaiseVolume, exec, ${wpctl} set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+"
-          ", XF86AudioLowerVolume, exec, ${wpctl} set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-"
           ", XF86MonBrightnessUp, exec, ${brightnessctl} set 10%+"
           ", XF86MonBrightnessDown, exec, ${brightnessctl} set 10%-"
-          ", XF86AudioMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
-          ", XF86AudioMicMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
           ", XF86WLAN, exec, ${nmcli} radio wifi toggle"
           ", XF86Refresh, exec, ${xdotool} key F5"
 
