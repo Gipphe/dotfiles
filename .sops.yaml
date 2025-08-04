@@ -35,6 +35,16 @@ creation_rules:
       - age:
           - *utv-vnb-lt
 
+  - path_regex: secrets/git-ssh-signing-key\.key
+    key_groups:
+      - age:
+          - *cobalt
+          - *argon
+          - *silicon
+          - *helium
+          - *fluoride
+          - *utv-vnb-lt
+
   - path_regex: secrets/mods-cli-openai-api\.key
     key_groups:
       - age:

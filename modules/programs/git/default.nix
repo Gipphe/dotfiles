@@ -69,6 +69,11 @@ util.mkProgram {
         ci
         commit
       ];
+
+    sops.secrets.git-signing-key = {
+      sopsFile = ../../../secrets/git-ssh-signing-key.key;
+      format = "binary";
+    };
     programs.git = {
       enable = true;
       userName = "Victor Nascimento Bakke";
@@ -81,7 +86,8 @@ util.mkProgram {
         ".vscode/"
       ];
       signing = {
-        key = "23723701395B436C";
+        format = "ssh";
+        key = config.sops.secrets.git-signing-key.path;
         signByDefault = true;
       };
       extraConfig = {
