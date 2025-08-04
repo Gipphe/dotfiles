@@ -74,6 +74,10 @@ util.mkProgram {
       sopsFile = ../../../secrets/git-ssh-signing-key.key;
       format = "binary";
     };
+    # Public key for secrets/git-ssh-signing-key.key
+    xdg.configFile."git/allowed_signers".text = ''
+      gipphe@gmail.com namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINzkW4CGcY2zjXnWx1o7uy85D0O7OvjzTa51GLtA0uQv
+    '';
     programs.git = {
       enable = true;
       userName = "Victor Nascimento Bakke";
@@ -109,6 +113,7 @@ util.mkProgram {
         branch.autosetupmerge = "true";
         credential.credentialStore = "gpg";
         init.defaultBranch = "main";
+        gpg.ssh.allowedSignersFile = config.xdg.configFile."git/allowed_signers".source.outPath;
         rerere = {
           enabled = true;
           autoUpdate = true;
