@@ -18,7 +18,7 @@ util.mkModule {
         NH_FLAKE = "${config.home.homeDirectory}/projects/dotfiles";
         # Help dynamically linked libraries and other libraries depending upon the
         # c++ stdenv find their stuff
-        LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
+        # LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
       };
       packages = with pkgs; [ xdg-utils ];
     };
