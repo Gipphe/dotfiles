@@ -18,7 +18,9 @@ util.mkModule {
       type = lib.types.bool;
       default = true;
     };
-    default = lib.mkEnableOption "Floorp as default browser";
+    default = lib.mkEnableOption "Floorp as default browser" // {
+      default = true;
+    };
     package = lib.mkPackageOption pkgs "floorp" { } // {
       default = config.programs.floorp.finalPackage;
     };

@@ -1,6 +1,17 @@
-{ util, config, ... }:
+{
+  util,
+  config,
+  lib,
+  ...
+}:
 util.mkProgram {
   name = "clipse";
+  options.gipphe.programs.clipse = {
+    hyprland.enable = lib.mkEnableOption "Hyprland integration" // {
+      default = config.programs.hyprland.enable;
+      defaultText = "config.programs.hyprland.enable";
+    };
+  };
   hm = {
     services.clipse = {
       enable = true;

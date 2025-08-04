@@ -12,7 +12,9 @@ in
 util.mkProgram {
   name = "wezterm";
   options.gipphe.programs.wezterm = {
-    default = lib.mkEnableOption "default terminal";
+    default = lib.mkEnableOption "default terminal" // {
+      default = true;
+    };
   };
   hm = {
     xdg.configFile = {

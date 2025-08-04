@@ -14,8 +14,13 @@ in
 util.mkProgram {
   name = "yazi";
   options.gipphe.programs.yazi = {
-    hyprland.enable = lib.mkEnableOption "hyprland integration";
-    default = lib.mkEnableOption "default file manager";
+    hyprland.enable = lib.mkEnableOption "hyprland integration" // {
+      default = config.programs.hyprland.enable;
+      defaultText = "config.programs.hyprland.enable";
+    };
+    default.enable = lib.mkEnableOption "default file manager" // {
+      default = true;
+    };
   };
   hm = {
     programs.yazi.enable = true;

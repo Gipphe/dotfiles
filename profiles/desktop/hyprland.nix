@@ -16,10 +16,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
 
     # Launchers
     rofi.enable = false;
-    walker = {
-      enable = true;
-      hyprland.enable = true;
-    };
+    walker.enable = true;
 
     # Notifications
     dunst.enable = false;
@@ -27,21 +24,22 @@ util.mkToggledModule [ "profiles" "desktop" ] {
     swaync.enable = true;
 
     networkmanagerapplet.enable = false;
+
+    # Screenshotting and recording
     wf-recorder.enable = true;
-    wl-clipboard.enable = true;
     grimblast.enable = true;
+
+    # Clipboard
+    wl-clipboard.enable = true;
     cliphist.enable = true;
+    clipse.enable = false;
 
     # Pinentry
     pinentry-curses.enable = true;
     wayprompt.enable = false;
 
     # File manager
-    yazi = {
-      enable = true;
-      hyprland.enable = true;
-      default = lib.mkDefault true;
-    };
+    yazi.enable = true;
 
     # Bars
     mechabar.enable = false;

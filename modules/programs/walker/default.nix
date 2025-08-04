@@ -20,7 +20,10 @@ util.mkProgram {
       default = { };
       description = "Settings for walker's config.toml.";
     };
-    hyprland.enable = lib.mkEnableOption "hyprland integration";
+    hyprland.enable = lib.mkEnableOption "hyprland integration" // {
+      default = config.programs.hyprland.enable;
+      defaultText = "config.programs.hyprland.enable";
+    };
   };
   hm = {
     home.packages = [
