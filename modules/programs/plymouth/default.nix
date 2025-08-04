@@ -1,9 +1,16 @@
-{ util, pkgs, ... }:
+{
+  util,
+  pkgs,
+  lib,
+  ...
+}:
 util.mkProgram {
   name = "plymouth";
   system-nixos.boot.plymouth = {
     enable = true;
-    theme = "catppuccin-macchiato";
-    themePackages = pkgs.catppuccin-plymouth.override { variant = "macchiato"; };
+    theme = lib.mkForce "catppuccin-macchiato";
+    themePackages = lib.mkForce [
+      (pkgs.catppuccin-plymouth.override { variant = "macchiato"; })
+    ];
   };
 }
