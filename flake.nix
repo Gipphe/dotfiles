@@ -41,21 +41,22 @@
               name = "dotfiles";
               commands = extra.shellCommands;
               env = extra.shellEnv;
-              packages =
-                [ config.treefmt.build.wrapper ] # treewide formatter
-                ++ (with pkgs; [
-                  nh # better nix CLI
-                  nix-output-monitor # pretty nix output
-                  nix-tree
-                  entr # run commands on file changes
-                  nixfmt-rfc-style # nix formatter
-                  git # flake requires git
-                  statix # lints and suggestions
-                  deadnix # clean up unused nix code
-                  nvd # Diff nix results
-                  sops
-                  vulnix # Vulnerability scanner
-                ]);
+              packages = [
+                config.treefmt.build.wrapper
+              ] # treewide formatter
+              ++ (with pkgs; [
+                nh # better nix CLI
+                nix-output-monitor # pretty nix output
+                nix-tree
+                entr # run commands on file changes
+                nixfmt-rfc-style # nix formatter
+                git # flake requires git
+                statix # lints and suggestions
+                deadnix # clean up unused nix code
+                nvd # Diff nix results
+                sops
+                vulnix # Vulnerability scanner
+              ]);
             };
 
           treefmt = {
