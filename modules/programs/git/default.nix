@@ -121,7 +121,7 @@ util.mkProgram {
             user = {
               name = "Victor Nascimento Bakke";
               email = "vnb@lovdata.no";
-              signingKey = "03F37B072C391203";
+              signingKey = config.sops.secrets.git-signing-key.path;
             };
           };
         }
