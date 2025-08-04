@@ -7,8 +7,7 @@ util.mkProgram {
   name = "sddm";
   system-nixos = {
     environment.systemPackages = [
-      pkgs.catppuccin-sddm.override
-      {
+      (pkgs.catppuccin-sddm.override {
         flavor = "macchiato";
         font = "Noto Sans";
         fontSize = "12";
@@ -21,13 +20,14 @@ util.mkProgram {
           }
         }/src/backgrounds/wall.png";
         loginBackground = true;
-      }
+      })
     ];
     services.displayManager = {
       sddm = {
         enable = true;
         autoNumlock = true;
         wayland.enable = true;
+        theme = "catppuccin-macchiato";
       };
       # autoLogin = {
       #   enable = true;
