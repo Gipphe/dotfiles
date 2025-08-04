@@ -12,6 +12,8 @@ util.mkToggledModule [ "profiles" "desktop" ] {
     sddm.enable = true;
     greetd.enable = false;
 
+    plymouth.enable = true;
+
     # Launchers
     rofi.enable = false;
     walker = {
