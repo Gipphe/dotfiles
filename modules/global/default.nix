@@ -45,6 +45,9 @@ let
     terminal = {
       open = scriptOpt "open";
     };
+    pinentry = {
+      open = scriptOpt "open";
+    };
   };
 in
 util.mkModule {

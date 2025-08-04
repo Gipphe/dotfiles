@@ -29,6 +29,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
     wl-clipboard.enable = true;
     grimblast.enable = true;
     clipse.enable = true;
+    wayprompt.enable = true;
 
     # File manager
     yazi = {

@@ -4,6 +4,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
   shared.gipphe.programs = {
     plasma6.enable = true;
     sddm.enable = true;
+    pinentry-curses.enable = true;
     wl-clipboard.enable = true;
   };
 }
