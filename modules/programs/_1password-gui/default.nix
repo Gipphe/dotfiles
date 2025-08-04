@@ -25,9 +25,15 @@ util.mkProgram {
       bind = [
         "CTRL SHIFT,code:65,exec,${lib.getExe quick-access}"
       ];
-      windowrule = [
-        "stayfocused, title:Quick Access - 1Password, class:(1Password)"
-      ];
+      windowrule =
+        let
+          selector = "title:(Quick Access - 1Password), class:(1Password)";
+        in
+        [
+          "float, ${selector}"
+          "stayfocused, ${selector}"
+          "allowsinput on, ${selector}"
+        ];
     };
 
     systemd.user.services._1password = lib.mkIf config.gipphe.programs._1password-gui.startOnBoot {
