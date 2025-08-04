@@ -1,15 +1,8 @@
-{
-  util,
-  pkgs,
-  self,
-  ...
-}:
+{ util, pkgs, ... }:
 util.mkToggledModule [ "system" ] {
   name = "console";
   system-nixos.console = {
-    font = "${
-      self.packages.${pkgs.system}.monocraft-no-ligatures-font
-    }/share/consolefonts/Monocraft-no-ligatures.psf.gz";
+    font = "${pkgs.terminus_font}/share/consolefonts/ter-u24n.psf.gz";
     earlySetup = true;
   };
 }
