@@ -35,6 +35,7 @@ util.mkProfile {
               audun = "agevelt";
               stian = "stian";
               simon = "sis";
+              christian = "cekrem";
             };
           in
           lib.mapAttrs' (name: handle: {
