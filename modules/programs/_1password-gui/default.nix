@@ -21,9 +21,14 @@ util.mkProgram {
   hm = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     home.packages = with pkgs; [ _1password-gui ];
 
-    wayland.windowManager.hyprland.settings.bind = [
-      "CTRL SHIFT,code:65,exec,${lib.getExe quick-access}"
-    ];
+    wayland.windowManager.hyprland.settings = {
+      bind = [
+        "CTRL SHIFT,code:65,exec,${lib.getExe quick-access}"
+      ];
+      windowrule = [
+        "stayfocused, title:Quick Access - 1Password, class:(1Password)"
+      ];
+    };
 
     systemd.user.services._1password = lib.mkIf config.gipphe.programs._1password-gui.startOnBoot {
       Unit = {
