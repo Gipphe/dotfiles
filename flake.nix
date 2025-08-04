@@ -74,6 +74,8 @@
               "hardware-configuration.nix"
             ];
           };
+
+          packages.minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
         };
 
       flake =
