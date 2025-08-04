@@ -1,4 +1,4 @@
-{ util, lib, ... }:
+{ util, ... }:
 util.mkToggledModule [ "profiles" "desktop" ] {
   name = "hyprland";
   shared.gipphe.programs = {
