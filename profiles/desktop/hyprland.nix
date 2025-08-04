@@ -28,6 +28,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
     wf-recorder.enable = true;
     wl-clipboard.enable = true;
     grimblast.enable = true;
+    clipse.enable = true;
 
     # File manager
     yazi = {
