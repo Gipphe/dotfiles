@@ -1,6 +1,7 @@
 {
   pkgs,
   util,
+  config,
   ...
 }:
 util.mkProgram {
@@ -29,10 +30,10 @@ util.mkProgram {
         wayland.enable = true;
         theme = "catppuccin-macchiato";
       };
-      # autoLogin = {
-      #   enable = true;
-      #   user = config.gipphe.username;
-      # };
+      autoLogin = {
+        enable = false;
+        user = config.gipphe.username;
+      };
     };
   };
 }
