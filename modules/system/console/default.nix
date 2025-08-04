@@ -9,6 +9,5 @@ util.mkToggledModule [ "system" ] {
   system-nixos.console = {
     font = "${self.packages.${pkgs.system}.minecraftia-font}/share/consolefonts/minecraftia.psf.gz";
     earlySetup = true;
-    keyMap = "no";
   };
 }
