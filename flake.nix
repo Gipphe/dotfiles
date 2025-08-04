@@ -2,47 +2,49 @@
   description = "Home Manager configuration of gipphe";
 
   outputs =
-    inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } (_: {
+    inputs@{
+      self,
+      treefmt-nix,
+      nixpkgs,
+      ...
+    }:
+    let
       systems = [
         "aarch64-darwin"
         "aarch64-linux"
         "x86_64-linux"
       ];
+      eachSystem =
+        f:
+        nixpkgs.lib.genAttrs systems (
+          system:
+          f {
+            inherit system;
+            pkgs = nixpkgs.legacyPackages.${system};
+          }
+        );
+      hosts = import ./hosts.nix inputs;
+    in
 
-      imports = [
+    {
+      formatter = eachSystem ({ system, ... }: self.packages.${system}.treefmt);
+
+      devShells = eachSystem (
+        { pkgs, system }:
         {
-          config._module.args._inputs = inputs // {
-            inherit (inputs) self;
-          };
-        }
-
-        inputs.treefmt-nix.flakeModule
-      ];
-
-      perSystem =
-        {
-          inputs',
-          config,
-          pkgs,
-          ...
-        }:
-        {
-          formatter = pkgs.nixfmt-rfc-style;
-
-          devShells.default =
+          default =
             let
               extra = import ./devShell {
-                inherit pkgs config;
+                inherit pkgs;
                 inherit (pkgs) lib;
               };
             in
-            inputs'.devshell.legacyPackages.mkShell {
+            inputs.devshell.legacyPackages.${system}.mkShell {
               name = "dotfiles";
               commands = extra.shellCommands;
               env = extra.shellEnv;
               packages = [
-                config.treefmt.build.wrapper
+                self.packages.${system}.treefmt
               ] # treewide formatter
               ++ (with pkgs; [
                 nh # better nix CLI
@@ -58,8 +60,14 @@
                 vulnix # Vulnerability scanner
               ]);
             };
+        }
+      );
 
-          treefmt = {
+      packages = eachSystem (
+        { pkgs, ... }:
+        {
+          minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
+          treefmt = treefmt-nix.lib.mkWrapper pkgs {
             projectRootFile = "flake.nix";
 
             programs = {
@@ -75,22 +83,15 @@
               "hardware-configuration.nix"
             ];
           };
+        }
+      );
 
-          packages.minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
-        };
-
-      flake =
-        let
-          hosts = import ./hosts.nix inputs;
-        in
-        {
-          inherit (hosts)
-            darwinConfigurations
-            nixOnDroidConfigurations
-            nixosConfigurations
-            ;
-        };
-    });
+      inherit (hosts)
+        darwinConfigurations
+        nixOnDroidConfigurations
+        nixosConfigurations
+        ;
+    };
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -125,11 +126,6 @@
     nix-index-db = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
     treefmt-nix = {
