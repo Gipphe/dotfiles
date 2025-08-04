@@ -19,7 +19,7 @@ util.mkProgram {
         enable = true;
         defaultCacheTtl = 1800;
         grabKeyboardAndMouse = false;
-        pinentry.program = "pinentry-wayprompt";
+        pinentry.program = config.gipphe.default.pinentry.name;
         pinentry.package = config.gipphe.default.pinentry.package;
       };
     })
