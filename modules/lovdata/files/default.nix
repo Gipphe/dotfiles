@@ -1,56 +1,17 @@
 {
   config,
-  lib,
   util,
   pkgs,
   ...
 }:
 let
-  lovdata-documents-options = "IdentityFile=${config.sops.secrets.lovdata-ssh-key.path},uid=1000,gid=993,allow_other,default_permissions,reconnect,follow_symlinks,compression=no";
   lovdata-documents = "/app/lovdata-documents";
-  options = "${lovdata-documents-options},ro";
   dirs = [
     "/app/lovdata-import/ld/utf8-mor"
     "/app/lovdata-webdata"
     "/app/lovdata-static"
     "/app/lovdata-apidata"
   ];
-  base-mount = {
-    Mount = {
-      Type = "fuse.sshfs";
-      Options = options;
-    };
-    Unit = {
-      After = [ "network-online.target" ];
-      Wants = [ "network-online.target" ];
-    };
-  };
-  readonly-mounts = builtins.listToAttrs (
-    builtins.map (dir: {
-      name = lib.removePrefix "-" (lib.replaceStrings [ "/" "." ] [ "-" "-" ] dir);
-      value = {
-        Unit = base-mount.Unit // {
-          Description = "Remote ${dir} mount";
-        };
-        Mount = base-mount.Mount // {
-          What = "vnb@stage02.lovdata.c.bitbit.net:${dir}";
-          Where = dir;
-        };
-      };
-    }) dirs
-  );
-  lovdata-documents-mount = {
-    app-lovdata-documents = {
-      Unit = base-mount.Unit // {
-        Description = "Remote ${lovdata-documents} mount";
-      };
-      Mount = base-mount.Mount // {
-        Options = lovdata-documents-options;
-        What = "vnb@stage02.lovdata.c.bitbit.net:${lovdata-documents}";
-        Where = lovdata-documents;
-      };
-    };
-  };
 in
 util.mkToggledModule [ "lovdata" ] {
   name = "files";
@@ -96,13 +57,12 @@ util.mkToggledModule [ "lovdata" ] {
 
     systemd.user = {
       # mounts = readonly-mounts // lovdata-documents-mount;
-      tmpfiles.rules =
-        [
-          "d /app 755 ${config.gipphe.username} ${config.gipphe.username} - -"
-        ]
-        ++ (builtins.map (dir: "d ${dir} 755 ${config.gipphe.username} ${config.gipphe.username} - -") (
-          dirs ++ [ lovdata-documents ]
-        ));
+      tmpfiles.rules = [
+        "d /app 755 ${config.gipphe.username} ${config.gipphe.username} - -"
+      ]
+      ++ (builtins.map (dir: "d ${dir} 755 ${config.gipphe.username} ${config.gipphe.username} - -") (
+        dirs ++ [ lovdata-documents ]
+      ));
     };
 
     sops.secrets.lovdata-ssh-key = {

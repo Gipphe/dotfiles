@@ -14,7 +14,7 @@ util.mkProgram {
       sentinelOneManagementTokenPath = config.sops.secrets.utv-vnb-lt-sentinelagent-token.path;
       email = "vnb@lovdata.no";
       serialNumber = "2Q2C594";
-      package = inputs.sentinelone.packages.${pkgs.system}.sentinelone.overrideAttrs (old: {
+      package = inputs.sentinelone.packages.${pkgs.system}.sentinelone.overrideAttrs (_: {
         version = "24.2.2.20";
         src = pkgs.fetchurl {
           url = "https://databra007.se/s1/SentinelAgent_linux_x86_64_v24_2_2_20.deb";

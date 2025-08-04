@@ -6,6 +6,7 @@
   ...
 }:
 let
+  cfg = config.gipphe.programs.eww;
   deps =
     with pkgs;
     lib.makeBinPath [
@@ -27,17 +28,19 @@ let
     name = "eww";
     paths = [ pkgs.eww ];
     buildInputs = [ pkgs.makeWrapper ];
-    postBuild = ''
-      wrapProgram $out/bin/eww \
-        --prefix PATH : "${deps}" \
-        --add-flags "--config ${./config}"
-    '';
-
-    # postBuild = ''
-    #   wrapProgram $out/bin/eww \
-    #     --prefix PATH : "${deps}" \
-    #     --add-flags "--config ${config.gipphe.homeDirectory}/projects/dotfiles/modules/programs/eww/config"
-    # '';
+    postBuild =
+      if cfg.dev then
+        ''
+          wrapProgram $out/bin/eww \
+            --prefix PATH : "${deps}" \
+            --add-flags "--config ${./config}"
+        ''
+      else
+        ''
+          wrapProgram $out/bin/eww \
+            --prefix PATH : "${deps}" \
+            --add-flags "--config ${config.gipphe.homeDirectory}/projects/dotfiles/modules/programs/eww/config"
+        '';
   };
 
   start-eww-bar = util.writeFishApplication {
@@ -57,6 +60,9 @@ let
 in
 util.mkProgram {
   name = "eww";
+  options.gipphe.programs.eww = {
+    dev = lib.mkEnableOption "dev mode";
+  };
   hm = {
     home.packages = [ eww ];
     systemd.user.services = {
