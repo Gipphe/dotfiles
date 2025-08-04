@@ -16,7 +16,7 @@ util.mkProgram {
             owner = "catppuccin";
             repo = "sddm";
             rev = "master";
-            hash = "";
+            hash = "sha256-J2DkKptVjWFcA2R71Vv7e0DCZJKeIl5TwjbnzI1kYmw=";
           }
         }/src/backgrounds/wall.png";
         loginBackground = true;
