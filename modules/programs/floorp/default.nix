@@ -29,7 +29,7 @@ util.mkModule {
     {
       gipphe.default.browser = lib.mkIf cfg.default {
         name = "Floorp";
-        package = cfg.package;
+        inherit (cfg) package;
         actions.open = "${cfg.package}/bin/floorp";
       };
       stylix.targets.floorp.profileNames = [ "default" ];

@@ -12,7 +12,7 @@ util.mkProgram {
   };
   hm = {
     programs.hyprlock = {
-      enable = config.gipphe.programs.hyprland.enable;
+      inherit (config.gipphe.programs.hyprland) enable;
       settings = {
         background = {
           monitor = "";

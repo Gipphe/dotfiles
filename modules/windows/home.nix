@@ -129,7 +129,7 @@ util.mkToggledModule [ "windows" ] {
             $Config.Install()
           '';
 
-      home.activation = lib.mkIf (config.gipphe.windows.enable) (
+      home.activation = lib.mkIf config.gipphe.windows.enable (
         lib.mapAttrs' (path: v: {
           name = "copy-windows-file-${normalize path}";
           value =

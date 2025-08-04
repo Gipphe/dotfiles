@@ -29,7 +29,7 @@ util.mkProgram {
     ];
     gipphe.default.filemanager = lib.mkIf cfg.default {
       name = "yazi";
-      package = config.programs.yazi.package;
+      inherit (config.programs.yazi) package;
       actions.open = "${config.programs.yazi.package}/bin/yazi";
     };
   };

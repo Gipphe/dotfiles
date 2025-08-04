@@ -38,7 +38,7 @@ util.mkProgram {
       '';
     };
     settings = lib.mkOption {
-      type = jsonFormat.type;
+      inherit (jsonFormat) type;
       default = { };
       description = ''
         Configuration file for swaync.
@@ -59,7 +59,7 @@ util.mkProgram {
           "notifications"
         ];
       };
-      style = hmCfg.style;
+      inherit (hmCfg) style;
     };
     home.packages = [ package ];
     systemd.user.services.swaync = {

@@ -6,7 +6,7 @@ in
 util.mkProgram {
   name = "hypridle";
   hm.services.hypridle = {
-    enable = config.gipphe.programs.hyprland.enable;
+    inherit (config.gipphe.programs.hyprland) enable;
     settings = {
       general = {
         after_sleep_cmd = "${hyprctl} dispatch dpms on";

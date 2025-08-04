@@ -24,7 +24,7 @@ util.mkProgram {
     };
     gipphe.default.pinentry = {
       name = "pinentry-wayprompt";
-      package = config.programs.wayprompt.package;
+      inherit (config.programs.wayprompt) package;
       actions.open = "${cfg.package}/pinentry-wayprompt";
     };
   };

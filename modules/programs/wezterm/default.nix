@@ -108,7 +108,7 @@ util.mkProgram {
 
     gipphe.default.terminal = lib.mkIf cfg.default {
       name = "Wezterm";
-      package = hmCfg.package;
+      inherit (hmCfg) package;
       actions.open = "${hmCfg.package}/bin/wezterm";
     };
 

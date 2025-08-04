@@ -161,15 +161,21 @@ util.mkToggledModule [ "machines" ] {
       };
     };
 
-    boot.kernelModules = [
-      "drm_kms_helper"
-    ];
-    boot.extraModprobeConfig = ''
-      options drm_kms_helper poll=N
-    '';
+    boot = {
+      kernelModules = [
+        "drm_kms_helper"
+      ];
+      extraModprobeConfig = ''
+        options drm_kms_helper poll=N
+      '';
+      initrd.luks.devices."luks-03a05c7c-fec2-435a-a17c-40693494c8ea".device =
+        "/dev/disk/by-uuid/03a05c7c-fec2-435a-a17c-40693494c8ea";
+    };
 
-    users.groups.${config.gipphe.username}.gid = 993;
-    users.users.${config.gipphe.username}.uid = 1000;
+    users = {
+      groups.${config.gipphe.username}.gid = 993;
+      users.${config.gipphe.username}.uid = 1000;
+    };
 
     # Override Intel GPU driver from common-cpu-intel-raptor-lake module.
     environment.variables.VDPAU_DRIVER = lib.mkIf config.hardware.graphics.enable (
@@ -179,9 +185,6 @@ util.mkToggledModule [ "machines" ] {
     services.thermald.enable = true;
     # powersave or performance.
     powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
-
-    boot.initrd.luks.devices."luks-03a05c7c-fec2-435a-a17c-40693494c8ea".device =
-      "/dev/disk/by-uuid/03a05c7c-fec2-435a-a17c-40693494c8ea";
 
     system.stateVersion = "25.05";
   };
