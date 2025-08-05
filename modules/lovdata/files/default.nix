@@ -46,11 +46,12 @@ util.mkToggledModule [ "lovdata" ] {
           RO_OPTIONS = "${OPTIONS},ro";
         in
         ''
-          sshfs -o "${RO_OPTIONS}" vnb@stage:/app/lovdata-import/ld/utf8-mor/ /app/lovdata-import/ld/utf8-mor/
-          sshfs -o "${RO_OPTIONS}" vnb@stage:/app/lovdata-webdata /app/lovdata-webdata
-          sshfs -o "${RO_OPTIONS}" vnb@stage:/app/lovdata-static /app/lovdata-static
-          sshfs -o "${RO_OPTIONS}" vnb@stage:/app/lovdata-apidata /app/lovdata-apidata
-          sshfs -o "${OPTIONS}" vnb@stage:/app/lovdata-documents /app/lovdata-documents
+          stage="stage02.lovdata.c.bitbit.net"
+          sshfs -o "${RO_OPTIONS}" "vnb@$stage:/app/lovdata-import/ld/utf8-mor/" /app/lovdata-import/ld/utf8-mor/
+          sshfs -o "${RO_OPTIONS}" "vnb@$stage:/app/lovdata-webdata" /app/lovdata-webdata
+          sshfs -o "${RO_OPTIONS}" "vnb@$stage:/app/lovdata-static" /app/lovdata-static
+          sshfs -o "${RO_OPTIONS}" "vnb@$stage:/app/lovdata-apidata" /app/lovdata-apidata
+          sshfs -o "${OPTIONS}" "vnb@$stage:/app/lovdata-documents" /app/lovdata-documents
         ''
       ))
     ];
