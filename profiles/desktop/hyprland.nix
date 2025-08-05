@@ -45,6 +45,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
     mechabar.enable = false;
     eww.enable = true;
     eww.dev = true;
+    quickshell.enable = true;
     waybar.enable = false;
   };
 }
