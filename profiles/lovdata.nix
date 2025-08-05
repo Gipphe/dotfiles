@@ -32,10 +32,11 @@ util.mkProfile {
         aliases =
           let
             team_members = {
+              andre = "amb";
               audun = "agevelt";
-              stian = "stian";
-              simon = "sis";
               christian = "cekrem";
+              simon = "sis";
+              stian = "stian";
             };
           in
           lib.mapAttrs' (name: handle: {
