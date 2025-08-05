@@ -27,6 +27,9 @@ util.mkToggledModule [ "system" ] {
       # Fedora enables these options by deafult. See the 10-oomd-* files here:
       # https://src.fedoraproject.org/rpms/systemd/tree/acb90c49c42276b06375a66c73673ac3510255
       oomd.enableRootSlice = true;
+
+      # TODO: channels-to-flakes
+      tmpfiles.rules = [ "D /nix/var/nix/profiles/per-user/root 755 root root - -" ];
     };
   };
 }
