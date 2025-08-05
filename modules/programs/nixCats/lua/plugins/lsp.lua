@@ -141,6 +141,7 @@ return {
         elmls = {},
         jsonls = {},
         html = {},
+        qmlls = {},
         java_language_server = {},
         lemminx = {},
         eslint = {},
