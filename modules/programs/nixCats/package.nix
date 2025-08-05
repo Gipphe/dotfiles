@@ -119,6 +119,7 @@ let
           gopls
           haskellPackages.cabal-fmt
           java-language-server
+          kdePackages.qtdeclarative
           lemminx
           lua-language-server
           markdownlint-cli
