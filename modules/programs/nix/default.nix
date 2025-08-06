@@ -32,7 +32,6 @@ let
       extra-experimental-features = [
         "flakes"
         "nix-command"
-        "recursive-nix"
         "ca-derivations"
         "pipe-operators"
       ];
@@ -144,7 +143,7 @@ in
 
       system-droid = {
         nix.extraOptions = ''
-          experimental-features = nix-command flakes recursive-nix ca-derivations pipe-operators
+          experimental-features = nix-command flakes ca-derivations pipe-operators
         '';
       };
     })
