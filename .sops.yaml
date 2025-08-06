@@ -47,10 +47,6 @@ creation_rules:
     key_groups:
       - age: *all
 
-  - path_regex: secrets/strise-milkyway-translations-openai-api-key\.key
-    key_groups:
-      - age: *all
-
   - path_regex: secrets/syncthing-password
     key_groups:
       - age: *all
