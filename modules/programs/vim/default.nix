@@ -3,7 +3,7 @@ util.mkProgram {
   name = "vim";
   hm = {
     programs.vim = {
-      enable = false;
+      enable = true;
       settings = {
         # Size of a hard tabstop
         tabstop = 4;
