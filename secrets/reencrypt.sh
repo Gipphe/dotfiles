@@ -1,5 +1,6 @@
 #!/usr/bin/env nix
 #! nix --extra-experimental-features ``flakes nix-command`` shell nixpkgs#sops nixpkgs#coreutils --command bash
+# shellcheck shell=bash
 
 if test "$#" -gt 0; then
   echo 'This script does not expect any arguments.' >&2

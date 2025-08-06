@@ -1,5 +1,6 @@
 #!/usr/bin/env nix
 #! nix --extra-experimental-features ``flakes nix-command`` shell nixpkgs#openssh nixpkgs#sops nixpkgs#coreutils --command bash
+# shellcheck shell=bash
 
 log() {
   echo "$@" >&2

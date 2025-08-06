@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2016
 
 hyprctl monitors -j | jq '.[] | select(.focused) | .activeWorkspace.id'
 

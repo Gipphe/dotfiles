@@ -191,16 +191,15 @@ let
         (
           { lib, flags, ... }:
           {
-            imports =
-              [
-                { inherit options; }
-                shared
-              ]
-              ++ lib.optional flags.isHm hm
-              ++ lib.optional (flags.isSystem && flags.isNixos) system-nixos
-              ++ lib.optional (flags.isSystem && flags.isNixDarwin) system-darwin
-              ++ lib.optional (flags.isSystem && flags.isNixOnDroid) system-droid
-              ++ lib.optional flags.isSystem system-all;
+            imports = [
+              { inherit options; }
+              shared
+            ]
+            ++ lib.optional flags.isHm hm
+            ++ lib.optional (flags.isSystem && flags.isNixos) system-nixos
+            ++ lib.optional (flags.isSystem && flags.isNixDarwin) system-darwin
+            ++ lib.optional (flags.isSystem && flags.isNixOnDroid) system-droid
+            ++ lib.optional flags.isSystem system-all;
           }
         )
       ];
@@ -283,17 +282,16 @@ let
   storeFileName =
     prefix: path:
     let
-      safeChars =
-        [
-          "+"
-          "."
-          "_"
-          "?"
-          "="
-        ]
-        ++ lib.lowerChars
-        ++ lib.upperChars
-        ++ lib.stringToCharacters "0123456789";
+      safeChars = [
+        "+"
+        "."
+        "_"
+        "?"
+        "="
+      ]
+      ++ lib.lowerChars
+      ++ lib.upperChars
+      ++ lib.stringToCharacters "0123456789";
       empties = l: lib.genList (_: "") (lib.length l);
       unsafeInName = lib.stringToCharacters (lib.replaceStrings safeChars (empties safeChars) path);
       safeName = lib.replaceStrings unsafeInName (empties unsafeInName) path;

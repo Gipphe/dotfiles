@@ -1,5 +1,6 @@
 #!/usr/bin/env nix
 #! nix --extra-experimental-features ``flakes nix-command`` shell nixpkgs#age --command bash
+# shellcheck shell=bash
 
 mkdir -p ~/.config/sops/age
 

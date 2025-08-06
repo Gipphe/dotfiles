@@ -24,7 +24,8 @@ util.mkProgram {
         prc = "pr create -d --fill-first --assignee @me --no-maintainer-edit";
         prm = "pr merge --auto -sd";
         addme = "pr edit --add-assignee @me";
-      } // config.gipphe.programs.gh.settings.aliases;
+      }
+      // config.gipphe.programs.gh.settings.aliases;
     };
   };
 }
