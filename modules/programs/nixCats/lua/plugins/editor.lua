@@ -383,4 +383,10 @@ return {
       end,
     },
   },
+
+  {
+    'calops/hmts.nvim',
+    version = '*',
+    ft = 'nix',
+  },
 }
