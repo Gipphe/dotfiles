@@ -1,9 +1,18 @@
-{ util, ... }:
+{
+  util,
+  lib,
+  config,
+  ...
+}:
+let
+  cfg = config.gipphe.programs.vim;
+in
 util.mkProgram {
   name = "vim";
+  options.gipphe.programs.vim.configOnly = lib.mkEnableOption "config only, no program";
   hm = {
     programs.vim = {
-      enable = true;
+      enable = !cfg.configOnly;
       settings = {
         # Size of a hard tabstop
         tabstop = 4;

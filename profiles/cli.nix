@@ -17,6 +17,7 @@ util.mkProfile {
       timg.enable = true;
       vhs.enable = true;
       vim.enable = true;
+      vim.configOnly = true;
     };
   };
 }
