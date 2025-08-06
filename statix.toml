@@ -1,4 +1,7 @@
-disabled = []
-nix_version = '2.4'
+disabled = [
+  # Produces false positives
+  "manual_inherit",
+  "manual_inherit_from"
+]
+nix_version = '2.24'
 ignore = ['.direnv', 'modules/system/hardware-configuration', 'hardware-configuration.nix']
-

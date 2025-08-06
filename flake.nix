@@ -47,6 +47,7 @@
                 with self.packages.${system};
                 [
                   treefmt # treewide formatter
+                  statix # lints and suggestions
                   deadnix # clean up unused nix code
                 ]
                 ++ (with pkgs; [
@@ -56,7 +57,6 @@
                   entr # run commands on file changes
                   nixfmt # nix formatter
                   git # flake requires git
-                  statix # lints and suggestions
                   nvd # Diff nix results
                   sops
                   vulnix # Vulnerability scanner
@@ -70,6 +70,7 @@
         {
           minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
           monocraft-no-ligatures-font = pkgs.callPackage ./packages/monocraft-no-ligatures.nix { };
+          statix = pkgs.callPackage ./packages/statix.nix { };
           deadnix = pkgs.callPackage ./packages/deadnix.nix { };
           treefmt =
             (treefmt-nix.lib.evalModule pkgs {
