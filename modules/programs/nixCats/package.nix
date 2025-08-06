@@ -125,6 +125,7 @@ let
           markdownlint-cli
           marksman
           metals
+          nil
           nix-doc
           nixd
           nixfmt-rfc-style

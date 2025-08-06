@@ -249,10 +249,8 @@ return {
             },
           },
         },
+        nil_ls = {},
         rnix = {
-          enabled = not require('nixCatsUtils').isNixCats,
-        },
-        nil_ls = {
           enabled = not require('nixCatsUtils').isNixCats,
         },
       },
