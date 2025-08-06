@@ -106,8 +106,9 @@ util.mkToggledModule [ "windows" ] {
               $this.Logger.Info(" Setting registry entries...")
               $ChildLogger = $this.Logger.ChildLogger()
 
-              ${lib.pipe regs [
-                (builtins.map (x: ''
+              ${
+                regs
+                |> builtins.map (x: ''
                   # ${x.description}
                   $this.StampEntry(
                     $ChildLogger,
@@ -117,9 +118,9 @@ util.mkToggledModule [ "windows" ] {
                     "${x.type}",
                     "${if (!builtins.isString x.data) then builtins.toString x.data else x.data}"
                   )
-                ''))
-                (lib.concatStringsSep "\n")
-              ]}
+                '')
+                |> lib.concatStringsSep "\n"
+              }
 
               ${lib.optionalString cfg.enableAutoLogin # powershell
                 ''

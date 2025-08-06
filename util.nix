@@ -65,14 +65,13 @@ let
   # `./foo/quux`, we do not traverse further down that part of the file tree.
   recurseFirstMatching =
     file: dir:
-    lib.pipe dir [
-      readDir
-      (filterAttrs (_: type: type == "directory"))
-      attrNames
-      (map (d: /.${dir}/${d}))
-      (map (recurseFirstMatchingIncludingSibling file))
-      flatten
-    ];
+    dir
+    |> readDir
+    |> filterAttrs (_: type: type == "directory")
+    |> attrNames
+    |> map (d: /.${dir}/${d})
+    |> map (recurseFirstMatchingIncludingSibling file)
+    |> flatten;
   recurseFirstMatchingIncludingSibling =
     file: dir:
     let
@@ -272,12 +271,11 @@ let
     };
   findSiblings =
     path:
-    lib.pipe path [
-      readDir
-      (lib.attrsets.filterAttrs (name: _: name != "default.nix"))
-      attrNames
-      (map (x: /.${path}/${x}))
-    ];
+    path
+    |> readDir
+    |> lib.attrsets.filterAttrs (name: _: name != "default.nix")
+    |> attrNames
+    |> map (x: /.${path}/${x});
 
   storeFileName =
     prefix: path:
