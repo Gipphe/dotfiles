@@ -3,7 +3,11 @@ let
   util = pkgs.callPackage ../util.nix { };
   cmd = opts: lib.getExe (util.writeFishApplication (opts // { inheritPath = true; }));
   build =
-    { name, ask }:
+    {
+      name,
+      command ? "switch",
+      ask ? false,
+    }:
     cmd {
       inherit name;
       runtimeInputs = with pkgs; [
@@ -14,15 +18,12 @@ let
         # fish
         ''
           if command -q nixos-rebuild || command -q darwin-rebuild
-            set -l args
-            if test '${builtins.toString ask}' = 'true'
-              set -a args '--ask'
-            end
+            set -l args ${if ask then "--ask" else ""}
 
             if command -q nixos-rebuild
-              nh os switch $args
+              nh os ${command} $args
             else
-              nh darwin switch $args
+              nh darwin ${command} $args
             end
           else if command -v nix-on-droid &>/dev/null
             set -l hostname $(jq '.hostname' env.json)
@@ -96,6 +97,15 @@ in
               exit 1
             end
           '';
+      };
+      category = "build";
+    }
+    rec {
+      help = "Test new configuration without saving to bootloader";
+      name = "swt";
+      command = build {
+        inherit name;
+        command = "test";
       };
       category = "build";
     }
