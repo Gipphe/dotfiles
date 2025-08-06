@@ -1,5 +1,5 @@
 { util, ... }:
-util.mkToggledModule [ "environment" ] {
+util.mkEnvironment {
   name = "android";
   system-droid = {
     android-integration = {
