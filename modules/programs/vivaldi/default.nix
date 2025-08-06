@@ -15,7 +15,7 @@ util.mkProgram {
     default = lib.mkEnableOption "Vivaldi as default browser";
   };
   hm = {
-    home.packages = [ pkgs.vivaldi ];
+    home.packages = [ cfg.package ];
     gipphe.default.browser = lib.mkIf cfg.default {
       name = "Vivaldi";
       inherit (cfg) package;
