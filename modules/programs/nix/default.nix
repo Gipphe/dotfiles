@@ -34,6 +34,7 @@ let
         "nix-command"
         "recursive-nix"
         "ca-derivations"
+        "pipe-operators"
       ];
 
       # use binary cache, its not gentoo
@@ -143,7 +144,7 @@ in
 
       system-droid = {
         nix.extraOptions = ''
-          experimental-features = nix-command flakes recursive-nix ca-derivations
+          experimental-features = nix-command flakes recursive-nix ca-derivations pipe-operators
         '';
       };
     })
