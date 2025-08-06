@@ -1,0 +1,22 @@
+{ lib, util, ... }:
+util.mkToggledModule [ "machines" ] {
+  name = "carbon";
+  shared = {
+    gipphe = {
+      username = "nix-on-droid";
+      homeDirectory = "/data/data/com.termux.nix/files/home";
+      hostName = "carbon";
+      profiles = {
+        cli.enable = true;
+        core.enable = true;
+        fonts.enable = true;
+        gc.enable = true;
+        rice.enable = false;
+        secrets.enable = false;
+      };
+    };
+    # SSH setup requires sops-nix, which isn't supported on nix-on-droid
+    gipphe.programs.ssh.enable = lib.mkForce false;
+  };
+  system-droid.system.stateVersion = lib.mkForce "24.05";
+}

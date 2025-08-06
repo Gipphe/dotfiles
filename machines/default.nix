@@ -2,6 +2,7 @@
 {
   imports = [
     ./argon
+    ./carbon
     ./cobalt
     ./fluoride
     ./helium

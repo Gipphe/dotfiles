@@ -3,6 +3,8 @@ let
   machines = {
     argon.system = "x86_64-linux";
     argon.machine = "nixos";
+    carbon.system = "aarch64-linux";
+    carbon.machine = "nix-on-droid";
     cobalt.system = "x86_64-linux";
     cobalt.machine = "nixos";
     fluoride.system = "x86_64-linux";
