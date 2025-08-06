@@ -41,6 +41,7 @@ util.mkProfile {
     mprocs.enable = true;
     nh.enable = true;
     nixCats.enable = true;
+    nushell.enable = true;
     pay-respects.enable = true;
     procs.enable = true;
     pv.enable = true;
