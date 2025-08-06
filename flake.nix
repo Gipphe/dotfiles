@@ -35,30 +35,32 @@
           default =
             let
               extra = import ./devShell {
-                inherit pkgs;
                 inherit (pkgs) lib;
+                pkgs = pkgs.extend (_: _: self.packages.${system});
               };
             in
             inputs.devshell.legacyPackages.${system}.mkShell {
               name = "dotfiles";
               commands = extra.shellCommands;
               env = extra.shellEnv;
-              packages = [
-                self.packages.${system}.treefmt
-              ] # treewide formatter
-              ++ (with pkgs; [
-                nh # better nix CLI
-                nix-output-monitor # pretty nix output
-                nix-tree
-                entr # run commands on file changes
-                nixfmt # nix formatter
-                git # flake requires git
-                statix # lints and suggestions
-                deadnix # clean up unused nix code
-                nvd # Diff nix results
-                sops
-                vulnix # Vulnerability scanner
-              ]);
+              packages =
+                with self.packages.${system};
+                [
+                  treefmt # treewide formatter
+                  deadnix # clean up unused nix code
+                ]
+                ++ (with pkgs; [
+                  nh # better nix CLI
+                  nix-output-monitor # pretty nix output
+                  nix-tree
+                  entr # run commands on file changes
+                  nixfmt # nix formatter
+                  git # flake requires git
+                  statix # lints and suggestions
+                  nvd # Diff nix results
+                  sops
+                  vulnix # Vulnerability scanner
+                ]);
             };
         }
       );
@@ -68,6 +70,7 @@
         {
           minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
           monocraft-no-ligatures-font = pkgs.callPackage ./packages/monocraft-no-ligatures.nix { };
+          deadnix = pkgs.callPackage ./packages/deadnix.nix { };
           treefmt =
             (treefmt-nix.lib.evalModule pkgs {
               projectRootFile = "flake.nix";

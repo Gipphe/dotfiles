@@ -8,7 +8,7 @@
 }:
 let
   cfg = config.gipphe.programs.floorp;
-  windows = import ./windows.nix;
+  # windows = import ./windows.nix;
   pkg = if (pkgs.stdenv.hostPlatform.isLinux && cfg.enable) then pkgs.floorp else null;
 in
 util.mkModule {

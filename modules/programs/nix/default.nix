@@ -115,7 +115,7 @@ in
 
               # This will additionally add your inputs to the system's legacy channels
               # Making legacy nix commands consistent as well, awesome!
-              nixPath = lib.mapAttrsToList (key: value: { key = value.to.path; }) config.nix.registry;
+              nixPath = lib.mapAttrsToList (_: value: { key = value.to.path; }) config.nix.registry;
 
               settings = {
                 # Nix on darwin experiences issues with too long S-expressions passed to

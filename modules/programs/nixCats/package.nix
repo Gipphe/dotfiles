@@ -1,5 +1,4 @@
 {
-  self,
   nixpkgs,
   nixCats,
   ...
