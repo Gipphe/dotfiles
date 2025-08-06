@@ -2,23 +2,23 @@
 #! nix --extra-experimental-features ``flakes nix-command`` shell nixpkgs#openssh nixpkgs#sops nixpkgs#coreutils --command bash
 
 log() {
-    echo "$@" >&2
+  echo "$@" >&2
 }
 
 help() {
-    log "Usage: generate-ssh-key.sh <key_name>"
-    log ""
-    log "Generates a new key pair and encrypts them with sops."
-    log ""
-    log "Arguments:"
-    log "  key_name: string, required"
+  log "Usage: generate-ssh-key.sh <key_name>"
+  log ""
+  log "Generates a new key pair and encrypts them with sops."
+  log ""
+  log "Arguments:"
+  log "  key_name: string, required"
 }
 
 key_name="$1"
 if test -z "$key_name" || test "$key_name" == "--help"; then
-    echo "Missing key_name arg".
-    help
-    exit 1
+  echo "Missing key_name arg".
+  help
+  exit 1
 fi
 
 temp_key=$(mktemp)

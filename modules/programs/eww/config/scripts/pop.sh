@@ -8,7 +8,7 @@ calendar() {
   }
 
   # Open widgets
-  if [[ ! -f "$LOCK_FILE" ]]; then
+  if [[ ! -f $LOCK_FILE ]]; then
     ${EWW_CMD} close system music_win audio_ctl
     touch "$LOCK_FILE"
     run && echo "ok good!"
@@ -26,7 +26,7 @@ system() {
   }
 
   # Open widgets
-  if [[ ! -f "$LOCK_FILE_MEM" ]]; then
+  if [[ ! -f $LOCK_FILE_MEM ]]; then
     ${EWW_CMD} close calendar music_win audio_ctl
     touch "$LOCK_FILE_MEM"
     run && echo "ok good!"
@@ -44,7 +44,7 @@ music() {
   }
 
   # Open widgets
-  if [[ ! -f "$LOCK_FILE_SONG" ]]; then
+  if [[ ! -f $LOCK_FILE_SONG ]]; then
     ${EWW_CMD} close system calendar
     touch "$LOCK_FILE_SONG"
     run && echo "ok good!"
@@ -62,7 +62,7 @@ audio() {
   }
 
   # Open widgets
-  if [[ ! -f "$LOCK_FILE_AUDIO" ]]; then
+  if [[ ! -f $LOCK_FILE_AUDIO ]]; then
     ${EWW_CMD} close system calendar music
     touch "$LOCK_FILE_AUDIO"
     run && echo "ok good!"
