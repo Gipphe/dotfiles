@@ -61,9 +61,7 @@ util.mkProgram {
                 # https://github.com/fish-shell/fish-shell/issues/10994
                 # https://www.reddit.com/r/termux/comments/1j6z371/fish_shell_prompt_issue/
                 # https://github.com/Swordfish90/cool-retro-term/issues/873
-                if ! contains no-keyboard-protocols $fish_features
-                  set -Ua fish_features no-keyboard-protocols
-                end
+                set -U fish_features no-keyboard-protocols
               '';
           interactiveShellInit =
             lib.mkAfter # fish
