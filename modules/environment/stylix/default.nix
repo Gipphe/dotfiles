@@ -32,14 +32,6 @@ in
 util.mkEnvironment {
   name = "stylix";
 
-  hm = {
-    # imports = [ inputs.stylix.homeManagerModules.stylix ];
-    # stylix.enable = pkgs.system != "aarch64-linux";
-    # stylix = {
-    #   base16Scheme = lib.mkForce stylix.base16Scheme;
-    # };
-  };
-
   system-darwin = {
     imports = [ inputs.stylix.darwinModules.stylix ];
     inherit stylix;

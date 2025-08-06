@@ -3,6 +3,7 @@
   config,
   lib,
   pkgs,
+  flags,
   ...
 }:
 let
@@ -32,7 +33,6 @@ util.mkModule {
         inherit (cfg) package;
         actions.open = "${cfg.package}/bin/floorp";
       };
-      stylix.targets.floorp.profileNames = [ "default" ];
       programs.floorp = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         enable = cfg.enable || cfg.windows;
         package = pkg;
@@ -154,6 +154,9 @@ util.mkModule {
           MOZ_LEGACY_PROFILES=1 open -na "Floorp.app"
         '')
       ];
+    })
+    (lib.optionalAttrs (!flags.isNixOnDroid) {
+      stylix.targets.floorp.profileNames = [ "default" ];
     })
   ];
   system-darwin = lib.mkIf cfg.enable { homebrew.casks = [ "floorp" ]; };
