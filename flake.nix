@@ -68,22 +68,23 @@
         {
           minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
           monocraft-no-ligatures-font = pkgs.callPackage ./packages/monocraft-no-ligatures.nix { };
-          treefmt = treefmt-nix.lib.mkWrapper pkgs {
-            projectRootFile = "flake.nix";
+          treefmt =
+            (treefmt-nix.lib.evalModule pkgs {
+              projectRootFile = "flake.nix";
 
-            programs = {
-              nixfmt-rfc-style.enable = true;
-              black.enable = true;
-              deadnix.enable = false;
-              shellcheck.enable = true;
-              shfmt.enable = true;
-            };
+              programs = {
+                nixfmt-rfc-style.enable = true;
+                black.enable = true;
+                deadnix.enable = false;
+                shellcheck.enable = true;
+                shfmt.enable = true;
+              };
 
-            settings.formatter.nixfmt-rfc-style.excludes = [
-              "root/modules/system/hardware-configuration/*.nix"
-              "hardware-configuration.nix"
-            ];
-          };
+              settings.formatter.nixfmt-rfc-style.excludes = [
+                "root/modules/system/hardware-configuration/*.nix"
+                "hardware-configuration.nix"
+              ];
+            }).config.build.wrapper;
         }
       );
 
