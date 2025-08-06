@@ -166,6 +166,39 @@ in
 
     # Linting
     rec {
+      help = "Check .nix files with nil";
+      name = "lint:nil";
+      command = cmd {
+        inherit name;
+        runtimeInputs = with pkgs; [
+          git
+          gnugrep
+          nil
+        ];
+        text = ''
+          nil diagnostics $(git ls-files | grep '\.nix$' | grep -v 'hardware-configuration/.*\.nix')
+        '';
+      };
+      category = "lint";
+    }
+    rec {
+      help = "Check .nix files with nil, watching";
+      name = "lint:nil:watch";
+      command = cmd {
+        inherit name;
+        runtimeInputs = with pkgs; [
+          git
+          gnugrep
+          nil
+          entr
+        ];
+        text = ''
+          git ls-files | grep '\.nix$' | grep -v 'hardware-configuration/.*\.nix' | entr nil diagnostics /_
+        '';
+      };
+      category = "lint";
+    }
+    rec {
       help = "Check .nix files with statix";
       name = "lint:statix";
       command = cmd {
