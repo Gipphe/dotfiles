@@ -9,6 +9,8 @@
 util.mkToggledModule [ "system" ] {
   name = "wsl";
 
+  hm.programs.fish.shellAbbrs.rmz = "find . -name '*Zone.Identifier' -type f -delete";
+
   system-nixos = {
     imports = [
       # include NixOS-WSL modules

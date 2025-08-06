@@ -14,6 +14,7 @@ util.mkProgram {
     imports = [ nixCats.homeModules.default ];
     config = {
       home.sessionVariables.EDITOR = "nvim";
+      programs.fish.shellAbbrs.vim = "nvim";
       nvim = {
         enable = true;
         packageDefinitions.merge = {
