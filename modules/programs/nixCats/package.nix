@@ -128,7 +128,7 @@ let
           nil
           nix-doc
           nixd
-          nixfmt-rfc-style
+          nixfmt
           opentofu
           prettierd
           ripgrep

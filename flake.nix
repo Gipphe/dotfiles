@@ -51,7 +51,7 @@
                 nix-output-monitor # pretty nix output
                 nix-tree
                 entr # run commands on file changes
-                nixfmt-rfc-style # nix formatter
+                nixfmt # nix formatter
                 git # flake requires git
                 statix # lints and suggestions
                 deadnix # clean up unused nix code
@@ -69,22 +69,25 @@
           minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
           monocraft-no-ligatures-font = pkgs.callPackage ./packages/monocraft-no-ligatures.nix { };
           treefmt =
-            (treefmt-nix.lib.evalModule pkgs {
-              projectRootFile = "flake.nix";
+            (treefmt-nix.lib.evalModule pkgs (
+              { pkgs, ... }:
+              {
+                projectRootFile = "flake.nix";
 
-              programs = {
-                nixfmt-rfc-style.enable = true;
-                black.enable = true;
-                deadnix.enable = false;
-                shellcheck.enable = true;
-                shfmt.enable = true;
-              };
+                programs = {
+                  nixfmt.enable = true;
+                  black.enable = true;
+                  deadnix.enable = false;
+                  shellcheck.enable = true;
+                  shfmt.enable = true;
+                };
 
-              settings.formatter.nixfmt-rfc-style.excludes = [
-                "modules/system/hardware-configuration/*.nix"
-                "hardware-configuration.nix"
-              ];
-            }).config.build.wrapper;
+                settings.formatter.nixfmt.excludes = [
+                  "modules/system/hardware-configuration/*.nix"
+                  "hardware-configuration.nix"
+                ];
+              }
+            )).config.build.wrapper;
         }
       );
 

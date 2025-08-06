@@ -162,7 +162,7 @@ util.mkModule {
     "workbench.colorTheme" = "Catppuccin Macchiato";
     "workbench.activityBar.orientation" = "vertical";
     "nix.enableLanguageServer" = true;
-    "nix.formatterPath" = "${lib.getExe pkgs.nixfmt-rfc-style}";
+    "nix.formatterPath" = "${lib.getExe pkgs.nixfmt}";
     "nix.serverPath" = "${lib.getExe pkgs.nixd}";
     "typescript.preferences.importModuleSpecifier" = "non-relative";
     "[javascript]" = {
