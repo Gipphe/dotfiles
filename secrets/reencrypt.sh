@@ -1,6 +1,12 @@
 #!/usr/bin/env nix
 #! nix --extra-experimental-features ``flakes nix-command`` shell nixpkgs#sops nixpkgs#coreutils --command bash
 
+if test "$#" -gt 0; then
+    echo 'This script does not expect any arguments.' >&2
+    echo 'It will merely re-encrypt all secrets contained in secrets/' >&2
+    exit 0
+fi
+
 process_file() {
     echo "Processing $1"
     backup=$(mktemp)
@@ -16,7 +22,9 @@ process_file() {
 }
 export -f process_file
 
-find . -type f ! \( -iname '*.nix' -o -iname '*.sh' \) -print0 |
+dir="$(dirname -- "${BASH_SOURCE[0]}")"
+
+find "$dir" -type f ! \( -iname '*.nix' -o -iname '*.sh' \) -print0 |
     while IFS= read -r -d '' file; do
         process_file "$file"
     done
