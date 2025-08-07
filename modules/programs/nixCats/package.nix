@@ -222,7 +222,7 @@ let
         ];
 
         haskell = [
-          haskell-scope-highlighting-nvim
+          # haskell-scope-highlighting-nvim
           haskell-tools-nvim
           telescope-nvim
         ];

@@ -54,7 +54,7 @@ return {
           library = {
             -- adds type hints for nixCats global
             { path = (nixCats.nixCatsPath or '') .. '/lua', words = { 'nixCats' } },
-            { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+            { path = '${3rd}/luv/library',                  words = { 'vim%.uv' } },
           },
         },
       },
@@ -148,7 +148,8 @@ return {
         gopls = {},
         rust_analyzer = {},
         tailwindcss = {
-          filetypes = vim.tbl_deep_extend('force', require('lspconfig.configs.tailwindcss').default_config.filetypes, { 'elm' }),
+          filetypes = vim.tbl_deep_extend('force', require('lspconfig.configs.tailwindcss').default_config.filetypes,
+            { 'elm' }),
           settings = {
             tailwindCSS = {
               includeLanguages = {
@@ -299,7 +300,8 @@ return {
           vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code action', buffer = true })
 
           vim.keymap.set({ 'n', 'v' }, '<leader>cc', vim.lsp.codelens.run, { desc = 'Run codelens', buffer = true })
-          vim.keymap.set('n', '<leader>cC', vim.lsp.codelens.refresh, { desc = 'Refresh & display codelens', buffer = true })
+          vim.keymap.set('n', '<leader>cC', vim.lsp.codelens.refresh,
+            { desc = 'Refresh & display codelens', buffer = true })
           vim.keymap.set('n', '<leader>cA', function()
             vim.lsp.buf.code_action { context = { only = { 'source' }, diagnostics = {} } }
           end, { desc = 'Source action', buffer = true })
@@ -308,11 +310,13 @@ return {
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
-          vim.keymap.set('n', '<leader>cy', require('telescope.builtin').lsp_document_symbols, { desc = 'Document symbols', buffer = true })
+          vim.keymap.set('n', '<leader>cy', require('telescope.builtin').lsp_document_symbols,
+            { desc = 'Document symbols', buffer = true })
 
           -- Fuzzy find all the symbols in your current workspace.
           --  Similar to document symbols, except searches over your entire project.
-          vim.keymap.set('n', '<leader>cY', require('telescope.builtin').lsp_dynamic_workspace_symbols, { desc = '[W]orkspace [S]ymbols', buffer = true })
+          vim.keymap.set('n', '<leader>cY', require('telescope.builtin').lsp_dynamic_workspace_symbols,
+            { desc = '[W]orkspace [S]ymbols', buffer = true })
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
@@ -432,7 +436,7 @@ return {
   {
     'mrcjkb/haskell-tools.nvim',
     enabled = require('nixCatsUtils').enableForCategory 'haskell',
-    version = '^4',
+    version = '^6',
     lazy = false, -- This plugin is already lazy
     config = function()
       vim.api.nvim_create_autocmd('FileType', {
@@ -462,15 +466,15 @@ return {
     ft = { 'haskell' },
   },
 
-  {
-    'kiyoon/haskell-scope-highlighting.nvim',
-    enabled = require('nixCatsUtils').enableForCategory 'haskell',
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    init = function()
-      vim.cmd [[autocmd FileType haskell syntax off]]
-      vim.cmd [[autocmd FileType haskell TSDisable highlight]]
-    end,
-  },
+  -- {
+  --   'kiyoon/haskell-scope-highlighting.nvim',
+  --   enabled = require('nixCatsUtils').enableForCategory 'haskell',
+  --   dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  --   init = function()
+  --     vim.cmd [[autocmd FileType haskell syntax off]]
+  --     vim.cmd [[autocmd FileType haskell TSDisable highlight]]
+  --   end,
+  -- },
 
   {
     'jmbuhr/otter.nvim',
