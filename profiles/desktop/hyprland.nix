@@ -36,7 +36,6 @@ util.mkToggledModule [ "profiles" "desktop" ] {
 
     # Pinentry
     pinentry-curses.enable = true;
-    wayprompt.enable = false;
 
     # File manager
     yazi.enable = true;
