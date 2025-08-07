@@ -108,8 +108,8 @@ in
               };
 
               # Make builds run with low priority so my system stays responsive
-              # daemonProcessType = "Background";
-              # daemonIOLowPriority = true;
+              daemonProcessType = "Background";
+              daemonIOLowPriority = true;
 
               # This will additionally add your inputs to the system's legacy channels
               # Making legacy nix commands consistent as well, awesome!
