@@ -2,7 +2,6 @@
   lib,
   pkgs,
   util,
-  config,
   ...
 }:
 let
@@ -19,8 +18,7 @@ util.mkProgram {
         enable = true;
         defaultCacheTtl = 1800;
         grabKeyboardAndMouse = false;
-        pinentry.program = config.gipphe.default.pinentry.name;
-        pinentry.package = config.gipphe.default.pinentry.package;
+        pinentry.package = pkgs.pinentry-curses;
       };
     })
 
@@ -31,7 +29,7 @@ util.mkProgram {
 
       home.file.".gnupg/gpg-agent.conf".text = ''
         default-cache-ttl 1800
-        pinentry-program ${config.gipphe.default.pinentry.package}
+        pinentry-program ${pkgs.pinentry-curses}/bin/pinentry
       '';
     })
   ];

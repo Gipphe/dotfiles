@@ -27,10 +27,5 @@ util.mkProgram {
     wayland.windowManager.hyprland.settings.bind = lib.mkIf cfg.hyprland.enable [
       "$mod, E, exec, ${file_manager_script}/bin/file-manager-script.sh"
     ];
-    gipphe.default.filemanager = lib.mkIf cfg.default {
-      name = "yazi";
-      inherit (config.programs.yazi) package;
-      actions.open = "${config.programs.yazi.package}/bin/yazi";
-    };
   };
 }

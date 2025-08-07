@@ -106,10 +106,8 @@ util.mkProgram {
         '';
     };
 
-    gipphe.default.terminal = lib.mkIf cfg.default {
-      name = "Wezterm";
-      inherit (hmCfg) package;
-      actions.open = "${hmCfg.package}/bin/wezterm";
+    home.sessionVariables = lib.mkIf cfg.default {
+      TERMINAL = "${hmCfg.package}/bin/wezterm";
     };
 
     home.packages = lib.mkIf cfg.default [

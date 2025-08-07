@@ -16,10 +16,8 @@ util.mkProgram {
   };
   hm = {
     home.packages = [ cfg.package ];
-    gipphe.default.browser = lib.mkIf cfg.default {
-      name = "Vivaldi";
-      inherit (cfg) package;
-      actions.open = "${cfg.package}/bin/vivaldi";
+    home.sessionVariables = lib.mkIf cfg.default {
+      BROWSER = "${cfg.package}/bin/vivaldi";
     };
   };
 }

@@ -29,10 +29,8 @@ util.mkModule {
     };
     config = lib.mkMerge [
       {
-        gipphe.default.browser = lib.mkIf cfg.default {
-          name = "Floorp";
-          inherit (cfg) package;
-          actions.open = "${cfg.package}/bin/floorp";
+        home.sessionVariables = lib.mkIf cfg.default {
+          BROWSER = "${cfg.package}/bin/floorp";
         };
         programs.floorp = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
           enable = cfg.enable || cfg.windows;
