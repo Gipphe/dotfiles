@@ -87,14 +87,14 @@ util.mkProgram {
               ''
                 set -l old_pid (${pgrep} 'ssh-agent')
                 if ${test} -n "$old_pid"
-                  echo "ssh-agent: untracked agent already running. Killing it."
+                  echo "ssh-agent: untracked agent already running. Killing it." >&2
                   ${kill} $old_pid
                 end
-                echo "ssh-agent: starting new agent..."
+                echo "ssh-agent: starting new agent..." >&2
                 ${ssh-agent} | ${sed} 's/^echo/#echo/' >"${ssh-env-path}"
                 ${chmod} 600 "${ssh-env-path}"
                 read-ssh-env "${ssh-env-path}"
-                echo "ssh-agent: started"
+                echo "ssh-agent: started" >&2
               '';
             init-ssh-agent = # fish
               ''
