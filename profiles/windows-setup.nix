@@ -2,7 +2,7 @@
 util.mkProfile {
   name = "windows-setup";
   shared.gipphe = {
-    programs.floorp.windows = true;
+    programs.floorp.windows.enable = true;
     windows = {
       enable = true;
       destination = "${config.gipphe.homeDirectory}/projects/dotfiles/windows";

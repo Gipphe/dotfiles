@@ -8,67 +8,32 @@
 }:
 let
   cfg = config.gipphe.programs.floorp;
-  # windows = import ./windows.nix;
-  pkg = if (pkgs.stdenv.hostPlatform.isLinux && cfg.enable) then pkgs.floorp else null;
 in
 util.mkModule {
   options.gipphe.programs.floorp = {
     enable = lib.mkEnableOption "floorp";
-    windows = lib.mkOption {
-      description = "Set up Floorp for Windows";
-      type = lib.types.bool;
-      default = true;
-    };
     default = lib.mkEnableOption "Floorp as default browser" // {
       default = true;
     };
   };
+  shared.imports = [ ./windows.nix ];
   hm = {
-    options.gipphe.programs.floorp.package = lib.mkPackageOption pkgs "floorp" { } // {
-      default = config.programs.floorp.finalPackage;
-    };
     config = lib.mkMerge [
       {
-        home.sessionVariables = lib.mkIf cfg.default {
-          BROWSER = "${cfg.package}/bin/floorp";
-        };
-        programs.floorp = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
-          enable = cfg.enable || cfg.windows;
-          package = pkg;
+        programs.floorp = lib.mkIf (pkgs.stdenv.hostPlatform.isLinux && !flags.isNixOnDroid) {
+          enable = true;
           profiles = {
             default = import ./profile.nix { inherit pkgs; };
           };
         };
-        gipphe.windows = {
-          # environment.variables."MOZ_LEGACY_PROFILES" = "1";
-          chocolatey.programs = [ "floorp" ];
-          # home.file =
-          #   let
-          #     fs = config.home.file;
-          #     optionalFile =
-          #       pathTo: pathFrom:
-          #       if (builtins.hasAttr pathFrom fs) then
-          #         {
-          #           ${pathTo}.source = (builtins.getAttr pathFrom fs).source;
-          #         }
-          #       else
-          #         { };
-          #   in
-          #   {
-          #     "AppData/Roaming/Floorp/profiles.ini".source =
-          #       pkgs.runCommandNoCC "floorp-profiles" { } # bash
-          #         ''
-          #           cat "${fs.".floorp/profiles.ini".source}" >> $out
-          #           echo "" >> $out
-          #           echo "${windows.backgroundTasksProfile}" >> $out
-          #         '';
-          #   }
-          #   // optionalFile "AppData/Roaming/Floorp/Profiles/default/search.json.mozlz4" ".floorp/default/search.json.mozlz4"
-          #   // optionalFile "AppData/Roaming/Floorp/Profiles/default/user.js" ".floorp/default/user.js"
-          #   // optionalFile "AppData/Roaming/Floorp/Profiles/default/chrome/userContent.css" ".floorp/default/chrome/userContent.css"
-          #   // optionalFile "AppData/Roaming/Floorp/Profiles/default/chrome/userChrome.css" ".floorp/default/chrome/userChrome.css";
-        };
       }
+      (lib.optionalAttrs (!flags.isNixOnDroid) (
+        lib.mkIf cfg.default {
+          home.sessionVariables.BROWSER = "${
+            config.programs.floorp.finalPackage or config.programs.floorp.package
+          }/bin/floorp";
+        }
+      ))
       (lib.mkIf (cfg.enable && pkgs.stdenv.hostPlatform.isDarwin) {
         home.packages = [
           (pkgs.writeShellScriptBin "floorp" ''
