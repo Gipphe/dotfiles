@@ -8,10 +8,10 @@
          :space-evenly false
          :vexpand false
          :hexpand false
-      (box :class "music__cover-art"
-           :vexpand false
-           :hexpand false
-           :style "background-image: url('${mpris.artUrl}');")
+      ; (box :class "music__cover-art"
+      ;      :vexpand false
+      ;      :hexpand false
+      ;      :style "background-image: url('${mpris.artUrl}');")
       (button :class "music__song"
               :onclick "EWW_CMD='${EWW_CMD}' ./scripts/pop.sh music"
         {mpris.title})
@@ -31,52 +31,52 @@
                   :onclick "mpc -q next"
             ""))))))
 
-(defwidget music_pop []
-  (box :class "music-pop"
-       :orientation "h"
-       :space-evenly false
-       :vexpand false
-       :hexpand false
-    (box :class "music-pop__cover-art"
-         :vexpand false
-         :hexpand false
-         :style "background-image: url('${mpris.artUrl}');")
-    (box :orientation "v"
-         :spacing 20
-         :space-evenly "false"
-         :vexpand "false"
-         :hexpand "false"
-      (label :halign "center"
-             :class "music-pop__song"
-             :wrap "true"
-             :text {mpris.title})
-      (label :halign "center"
-             :class "music-pop__artist"
-             :wrap "true"
-             :text {mpris.artist})
-      (box :orientation "h"
-           :spacing 15
-           :halign "center"
-           :space-evenly "false"
-           :vexpand "false"
-           :hexpand "false"
-        (button :class "music-pop__prev"
-                :onclick "mpc -q prev"
-          "")
-        (button :class "music-pop__play"
-                :onclick "mpc -q toggle"
-          {mpris.status})
-        (button :class "music-pop__next"
-                :onclick "mpc -q next"
-          ""))
-      (box :class "music-pop__bar"
-           :halign "center"
-           :vexpand "false"
-           :hexpand "false"
-           :space-evenly "false"
-        (scale :onscroll "mpc -q seek {}"
-               :min 0
-               :active "true"
-               :max 100
-               :value
-          {mpris.time})))))
+; (defwidget music_pop []
+;   (box :class "music-pop"
+;        :orientation "h"
+;        :space-evenly false
+;        :vexpand false
+;        :hexpand false
+;     (box :class "music-pop__cover-art"
+;          :vexpand false
+;          :hexpand false
+;          :style "background-image: url('${mpris.artUrl}');")
+;     (box :orientation "v"
+;          :spacing 20
+;          :space-evenly "false"
+;          :vexpand "false"
+;          :hexpand "false"
+;       (label :halign "center"
+;              :class "music-pop__song"
+;              :wrap "true"
+;              :text {mpris.title})
+;       (label :halign "center"
+;              :class "music-pop__artist"
+;              :wrap "true"
+;              :text {mpris.artist})
+;       (box :orientation "h"
+;            :spacing 15
+;            :halign "center"
+;            :space-evenly "false"
+;            :vexpand "false"
+;            :hexpand "false"
+;         (button :class "music-pop__prev"
+;                 :onclick "mpc -q prev"
+;           "")
+;         (button :class "music-pop__play"
+;                 :onclick "mpc -q toggle"
+;           {mpris.status})
+;         (button :class "music-pop__next"
+;                 :onclick "mpc -q next"
+;           ""))
+;       (box :class "music-pop__bar"
+;            :halign "center"
+;            :vexpand "false"
+;            :hexpand "false"
+;            :space-evenly "false"
+;         (scale :onscroll "mpc -q seek {}"
+;                :min 0
+;                :active "true"
+;                :max 100
+;                :value
+;           {mpris.time})))))

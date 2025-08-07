@@ -1,7 +1,8 @@
 (defwidget bar-layout []
-  (box :orientation "h"
+  (centerbox :orientation "h"
        :class ""
     (left)
+    (center)
     (right)))
 
 (defwidget left []
@@ -10,6 +11,11 @@
     (app-drawer)
     (workspaces)
     (window-title)))
+
+(defwidget center []
+  (bar-part :halign "center"
+            :class "bar-part__center"
+    (music)))
 
 (defwidget right []
   (bar-part :halign "end"

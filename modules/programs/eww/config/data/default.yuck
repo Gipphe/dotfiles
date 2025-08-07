@@ -14,8 +14,7 @@
 
 (deflisten mode `cat "$HOME/.cache/gipphe/theme" || echo "dark"`)
 
-(deflisten mpris :initial '{ "name":"", "title": "", "artist":"", "artUrl": "", "status":"", "length": "", "lengthStr": "" }'
-  `./data/mpris.fish`)
+(deflisten mpris :initial '{}' `./data/mpris.fish`)
 
 (deflisten network :initial '{"wifi": {}, "wired": false}'
   `./data/network.fish`)
