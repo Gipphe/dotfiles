@@ -92,10 +92,11 @@
 	useUnicodeRuler = true
 
 [gpg]
-	format = "openpgp"
+	format = "ssh"
 
-[gpg "openpgp"]
-	program = "gpg"
+[gpg "ssh"]
+	allowedSignersFile = "/nix/store/l4410xi28wasnp7d9hdmxj3l41yqzg1i-hm_gitallowed_signers"
+	program = "ssh-keygen"
 
 [init]
 	defaultBranch = "main"
@@ -127,5 +128,5 @@
 [user]
 	email = "gipphe@gmail.com"
 	name = "Victor Nascimento Bakke"
-	signingKey = "23723701395B436C"
+	signingKey = "/home/gipphe/.config/sops-nix/secrets/git-signing-key"
 

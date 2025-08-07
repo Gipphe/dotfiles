@@ -16,6 +16,6 @@ in
     };
 
     gipphe.windows.home.file.".config/starship.toml".source =
-      config.xdg.configFile."starship.toml".source;
+      config.home.file.${config.programs.starship.configPath}.source;
   };
 }
