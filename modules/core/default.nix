@@ -1,4 +1,5 @@
 {
+  flags,
   lib,
   inputs,
   config,
@@ -20,7 +21,7 @@ util.mkModule {
         # c++ stdenv find their stuff
         # LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
       };
-      packages = with pkgs; [ xdg-utils ];
+      packages = lib.optionals (!flags.isNixOnDroid) [ pkgs.xdg-utils ];
     };
 
     # Manage home-manager executable
