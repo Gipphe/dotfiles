@@ -9,7 +9,12 @@
 util.mkToggledModule [ "system" ] {
   name = "wsl";
 
-  hm.programs.fish.shellAbbrs.rmz = "find . -name '*Zone.Identifier' -type f -delete";
+  hm = {
+    # WSL does not have a proper desktop, and uses X systems under the hood, so
+    # we need a clipboard manager.
+    home.packages = [ pkgs.xclip ];
+    programs.fish.shellAbbrs.rmz = "find . -name '*Zone.Identifier' -type f -delete";
+  };
 
   system-nixos = {
     imports = [
