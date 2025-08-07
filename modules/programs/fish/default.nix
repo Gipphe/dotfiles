@@ -95,20 +95,22 @@ util.mkProgram {
         let
           inherit (builtins) readDir attrNames foldl';
           inherit (lib.attrsets) filterAttrs;
+          functions =
+            ./functions
+            |> readDir
+            |> filterAttrs (_: t: t == "regular")
+            |> attrNames
+            |> foldl' (
+              fs: fname:
+              fs
+              // {
+                "fish/functions/${fname}" = {
+                  source = ./functions/${fname};
+                };
+              }
+            ) { };
         in
-        ./functions
-        |> readDir
-        |> filterAttrs (_: t: t == "regular")
-        |> attrNames
-        |> foldl' (
-          fs: fname:
-          fs
-          // {
-            "fish/functions/${fname}" = {
-              source = ./functions/${fname};
-            };
-          }
-        );
+        functions;
     };
   };
 }
