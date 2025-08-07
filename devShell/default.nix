@@ -110,6 +110,17 @@ in
       category = "build";
     }
 
+    rec {
+      help = "Test new configuration without saving to bootloader";
+      name = "swta";
+      command = build {
+        inherit name;
+        command = "test";
+        ask = true;
+      };
+      category = "build";
+    }
+
     # Formatting
     rec {
       help = "Format the source tree with treefmt";
