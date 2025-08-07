@@ -19,6 +19,8 @@ util.mkModule {
         NH_FLAKE = "${config.home.homeDirectory}/projects/dotfiles";
         # Help dynamically linked libraries and other libraries depending upon the
         # c++ stdenv find their stuff
+        # This broke Hyprland in commit af855fa, and the root cause was found
+        # and resolved in 41d13c6.
         # LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
       };
       packages = lib.optionals (!flags.isNixOnDroid) [ pkgs.xdg-utils ];
