@@ -14,6 +14,7 @@ util.mkProfile {
       java_21.enable = true;
       mattermost.enable = true;
       maven.enable = true;
+      maven.lovdata.enable = true;
       memcached.enable = true;
       openconnect.enable = true;
       sentinelagent.enable = true;
@@ -23,6 +24,7 @@ util.mkProfile {
       };
       glab = {
         enable = true;
+        lovdata.enable = true;
         settings.hosts."git.lovdata.no" = {
           git_protocol = "ssh";
           api_protocol = "https";

@@ -11,6 +11,7 @@ in
 util.mkProgram {
   name = "glab";
   options.gipphe.programs.glab = {
+    lovdata.enable = lib.mkEnableOption "Lovdata integration";
     aliases = lib.mkOption {
       type = with lib.types; attrsOf str;
       description = "Aliases that allow you to create nicknames for glab commands.";
@@ -199,22 +200,28 @@ util.mkProgram {
         '';
       };
     in
-    {
-      sops.secrets.lovdata-gitlab-ci-access-token = {
-        format = "binary";
-        sopsFile = ../../../secrets/utv-vnb-lt-gitlab-cli-access-token.txt;
-      };
-      home.packages = [
-        glab
-        (pkgs.writeShellScriptBin "glabl" ''
-          export GITLAB_TOKEN="$(cat '${config.sops.secrets.lovdata-gitlab-ci-access-token.path}')"
-          export GITLAB_HOST="https://git.lovdata.no"
-          export GITLAB_GROUP="ld"
-          ${glab}/bin/glab "$@"
-        '')
-      ];
-      home.activation.glab-config = lib.hm.dag.entryAfter [ "onFilesChanged" ] ''
-        run ${add-tokens}/bin/add-tokens
-      '';
-    };
+    lib.mkMerge [
+      {
+        home.packages = [
+          glab
+        ];
+        home.activation.glab-config = lib.hm.dag.entryAfter [ "onFilesChanged" ] ''
+          run ${add-tokens}/bin/add-tokens
+        '';
+      }
+      (lib.mkIf cfg.lovdata.enable {
+        sops.secrets.lovdata-gitlab-ci-access-token = {
+          format = "binary";
+          sopsFile = ../../../secrets/utv-vnb-lt-gitlab-cli-access-token.txt;
+        };
+        home.packages = [
+          (pkgs.writeShellScriptBin "glabl" ''
+            export GITLAB_TOKEN="$(cat '${config.sops.secrets.lovdata-gitlab-ci-access-token.path}')"
+            export GITLAB_HOST="https://git.lovdata.no"
+            export GITLAB_GROUP="ld"
+            ${glab}/bin/glab "$@"
+          '')
+        ];
+      })
+    ];
 }
