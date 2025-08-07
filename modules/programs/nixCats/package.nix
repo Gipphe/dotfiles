@@ -313,7 +313,7 @@ let
         categories = {
           general = true;
 
-          haskell = false;
+          haskell = true;
           dataform = false;
           ui = false;
           basedpyright = true;
