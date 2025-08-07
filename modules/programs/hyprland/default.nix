@@ -1,4 +1,5 @@
 {
+  inputs,
   util,
   pkgs,
   config,
@@ -7,6 +8,10 @@
 }:
 let
   inherit (builtins) concatLists genList toString;
+
+  package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+  portalPackage =
+    inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
 
   # sioodmy's implementation
   workspaces = concatLists (
@@ -36,6 +41,7 @@ util.mkProgram {
     home.packages = with pkgs; [ wireplumber ];
     wayland.windowManager.hyprland = {
       enable = true;
+      inherit package portalPackage;
       settings = {
         "$mod" = "SUPER";
 
@@ -212,7 +218,10 @@ util.mkProgram {
     home.sessionVariables.NIXOS_OZONE_WL = "1";
   };
   system-nixos = {
-    programs.hyprland.enable = true;
+    programs.hyprland = {
+      enable = true;
+      inherit package portalPackage;
+    };
     nix.settings = {
       substituters = [ "https://hyprland.cachix.org" ];
       trusted-substituters = [ "https://hyprland.cachix.org" ];

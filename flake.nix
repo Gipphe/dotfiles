@@ -114,6 +114,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      # Do _not_ follow nixpkgs for this flake's nixpkgs input! It invalidates
+      # the cachix cache, and will probably break things.
+    };
+
     devshell = {
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs";
