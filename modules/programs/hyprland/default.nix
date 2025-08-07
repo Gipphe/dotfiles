@@ -42,6 +42,13 @@ util.mkProgram {
     wayland.windowManager.hyprland = {
       enable = true;
       inherit package portalPackage;
+      plugins = with inputs.hyprland-plugins.packages.${pkgs.system}; [
+        hyprbars
+        hyprexpo
+        hyprtrails
+        hyprfocus
+        hyprscrolling
+      ];
       settings = {
         "$mod" = "SUPER";
 
