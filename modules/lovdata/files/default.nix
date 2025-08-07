@@ -1,4 +1,5 @@
 {
+  lib,
   config,
   util,
   pkgs,
@@ -46,7 +47,20 @@ util.mkToggledModule [ "lovdata" ] {
           RO_OPTIONS = "${OPTIONS},ro";
         in
         ''
+          export PATH=${
+            lib.makeBinPath [
+              pkgs.sshfs
+              pkgs.fuse.bin
+            ]
+          }:$PATH
           stage="stage02.lovdata.c.bitbit.net"
+
+          fusermount -u /app/lovdata-import/ld/utf8-mor 2>/dev/null || true
+          fusermount -u /app/lovdata-webdata 2>/dev/null || true
+          fusermount -u /app/lovdata-static 2>/dev/null || true
+          fusermount -u /app/lovdata-apidata 2>/dev/null || true
+          fusermount -u /app/lovdata-documents 2>/dev/null || true
+
           sshfs -o "${RO_OPTIONS}" "vnb@$stage:/app/lovdata-import/ld/utf8-mor/" /app/lovdata-import/ld/utf8-mor/
           sshfs -o "${RO_OPTIONS}" "vnb@$stage:/app/lovdata-webdata" /app/lovdata-webdata
           sshfs -o "${RO_OPTIONS}" "vnb@$stage:/app/lovdata-static" /app/lovdata-static
