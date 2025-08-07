@@ -73,11 +73,10 @@ util.mkToggledModule [ "windows" ] {
               $this.Logger.Info(" Setting env vars...")
               $ChildLogger = $this.Logger.ChildLogger()
               $EnvVars = @{
-                ${
-                  envs
-                  |> lib.mapAttrsToList (name: val: "'${name}' = ${toPSValue val.value};")
-                  |> lib.concatStringsSep " "
-                }
+                ${lib.pipe envs [
+                  (lib.mapAttrsToList (name: val: "'${name}' = ${toPSValue val.value};"))
+                  (lib.concatStringsSep " ")
+                ]}
               }
               $EnvVars.GetEnumerator() | ForEach-Object {
                 $key = $_.Key

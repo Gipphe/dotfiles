@@ -64,18 +64,18 @@ util.mkToggledModule [ "windows" ] {
               $ChildLogger = $this.Logger.ChildLogger()
 
               $Programs = @{${
-                progs
-                |> lib.mapAttrsToList (
-                  name: p: # powershell
-                  ''
-                    '${name}' = @{
-                      'URI' = '${p.url}'
-                      'stamp' = '${p.stampName}'
-                    };
-                  ''
-                )
-                |> lib.concatStringsSep "\n"
-
+                lib.pipe progs [
+                  (lib.mapAttrsToList (
+                    name: p: # powershell
+                    ''
+                      '${name}' = @{
+                        'URI' = '${p.url}'
+                        'stamp' = '${p.stampName}'
+                      };
+                    ''
+                  ))
+                  (lib.concatStringsSep "\n")
+                ]
               }}
 
               $Programs.GetEnumerator() | ForEach-Object {

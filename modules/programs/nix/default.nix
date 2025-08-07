@@ -33,7 +33,6 @@ let
         "flakes"
         "nix-command"
         "ca-derivations"
-        "pipe-operators"
       ];
 
       # use binary cache, its not gentoo
@@ -143,7 +142,7 @@ in
 
       system-droid = {
         nix.extraOptions = ''
-          experimental-features = nix-command flakes ca-derivations pipe-operators
+          experimental-features = nix-command flakes ca-derivations
         '';
       };
     })

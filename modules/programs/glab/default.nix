@@ -153,12 +153,12 @@ util.mkProgram {
         '';
       };
 
-      host-token-paths =
-        cfg.settings.hosts
-        |> lib.filterAttrs (_: x: x ? token_path && x.token_path != null && x.token_path != "")
-        |> lib.mapAttrs (_: x: x.token_path)
-        |> builtins.toJSON
-        |> pkgs.writeText "host-token-paths";
+      host-token-paths = lib.pipe cfg.settings.hosts [
+        (lib.filterAttrs (_: x: x ? token_path && x.token_path != null && x.token_path != ""))
+        (lib.mapAttrs (_: x: x.token_path))
+        builtins.toJSON
+        (pkgs.writeText "host-token-paths")
+      ];
       add-tokens = util.writeFishApplication {
         name = "add-tokens";
         runtimeInputs = with pkgs; [

@@ -13,14 +13,14 @@
 }:
 let
   bdf2psf-share = "${bdf2psf}/share/bdf2psf";
-  cleanName =
-    name
-    |> builtins.baseNameOf
-    |> lib.splitStringBy (_: x: x == ".") false
-    |> lib.reverseList
-    |> builtins.tail
-    |> lib.reverseList
-    |> lib.concatStringsSep ".";
+  cleanName = lib.pipe name [
+    builtins.baseNameOf
+    (lib.splitStringBy (_: x: x == ".") false)
+    lib.reverseList
+    builtins.tail
+    lib.reverseList
+    (lib.concatStringsSep ".")
+  ];
 in
 runCommandNoCC "minecraftia-psf" { } ''
   echo "otf2bdf"

@@ -95,12 +95,11 @@ util.mkProgram {
         let
           inherit (builtins) readDir attrNames foldl';
           inherit (lib.attrsets) filterAttrs;
-          functions =
-            ./functions
-            |> readDir
-            |> filterAttrs (_: t: t == "regular")
-            |> attrNames
-            |> foldl' (
+          functions = lib.pipe ./functions [
+            readDir
+            (filterAttrs (_: t: t == "regular"))
+            attrNames
+            (foldl' (
               fs: fname:
               fs
               // {
@@ -108,7 +107,8 @@ util.mkProgram {
                   source = ./functions/${fname};
                 };
               }
-            ) { };
+            ) { })
+          ];
         in
         functions;
     };
