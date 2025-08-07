@@ -68,8 +68,8 @@ let
         src = pkgs.fetchFromGitHub {
           owner = "linux-cultist";
           repo = "venv-selector.nvim";
-          rev = "regexp";
-          hash = "sha256-ogd4T+mIbb86qFUbDczzDra8yWm/bwKmYCRGYCJz6fM=";
+          rev = "8d7224af54a02f9385c4f77eadf21e5b2407d860";
+          hash = "sha256-09Zv4nMl9iw3ZrlGIROERcvlDXf1z5JpAEIyYdaqgIA=";
         };
       };
       dataform-nvim =
