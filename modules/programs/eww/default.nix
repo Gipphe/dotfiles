@@ -70,8 +70,8 @@ let
       end
 
       socat -u "UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock" - | while read -r line
-        if string match -qr 'monitorremovedv2'
-          set -l parts (string sub --start 19 | string split ',')
+        if string match -qr '^monitorremovedv2' "$line"
+          set -l parts (string sub --start 19 "$line" | string split ',')
           set -l monitor_index $parts[1]
           set -l monitor_name $parts[2]
           set -l monitor_desc $parts[3]
@@ -79,12 +79,13 @@ let
           set -l windows (get-active-monitors)
           if contains $monitor_name $windows
             eww close "$monitor_name"
+            echo "Closed bar on disconnected $monitor_name" >&2
           end
         end
 
 
-        if string match -qr 'monitoraddedv2'
-          set -l parts (string sub --start 17 | string split ',')
+        if string match -qr '^monitoraddedv2' "$line"
+          set -l parts (string sub --start 17 "$line" | string split ',')
           set -l monitor_index $parts[1]
           set -l monitor_name $parts[2]
           set -l monitor_desc $parts[3]
@@ -92,6 +93,7 @@ let
           set -l windows (get-active-monitors)
           if ! contains $monitor_name $windows
             eww open --screen "$monitor_name" --id "$monitor_name" bar
+            echo "Opened bar on connected $monitor_name" >&2
           end
         end
       end
