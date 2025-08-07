@@ -33,13 +33,13 @@ let
         ''
           wrapProgram $out/bin/eww \
             --prefix PATH : "${deps}" \
-            --add-flags "--config ${./config}"
+            --add-flags "--config ${config.gipphe.homeDirectory}/projects/dotfiles/modules/programs/eww/config"
         ''
       else
         ''
           wrapProgram $out/bin/eww \
             --prefix PATH : "${deps}" \
-            --add-flags "--config ${config.gipphe.homeDirectory}/projects/dotfiles/modules/programs/eww/config"
+            --add-flags "--config ${./config}"
         '';
   };
 
