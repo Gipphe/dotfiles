@@ -9,13 +9,28 @@ for i in (seq 1 (count players))
         set -e players[$i]
     end
 end
+set -a players spotify
 
-playerctl metadata --follow --player="$(string join ',' $players)" --format '{
-  "name": "{{playerName}}",
-  "title": "{{title}}",
-  "artist": "{{artist}}",
-  "artUrl": "{{mpris:artUrl}}",
-  "status": "{{status}}",
-  "length_us": "{{mpris:length}}",
-  "length_str": "{{duration(mpris:length)}}"
-}' | jq -c '.'
+begin
+    set -l res
+    for x in $players
+        if ! contains $x $res
+            set -a res $x
+        end
+    end
+    set players $res
+end
+
+set -l format '{{playerName}};;;{{title}};;;{{artist}};;;{{mpris:artUrl}};;;{{status}};;;{{mpris:length}};;;{{duration(mpris:length)}}'
+
+playerctl --follow --player=(string join ',' $players) --format "$format" metadata | while read line
+    set -l parts $(echo "$line" | sed 's/;;;/\n/g')
+    jo \
+        playerName="$parts[1]" \
+        title="$parts[2]" \
+        artist="$parts[3]" \
+        artUrl="$parts[4]" \
+        status="$parts[5]" \
+        length_us="$parts[6]" \
+        length_str="$parts[7]"
+end

@@ -1,7 +1,7 @@
 (defvar music_reveal false)
 
 (defwidget music []
-  (eventbox :onhover "${EWW_CMD} update music_reveal=true"
+  (eventbox :onhover `${EWW_CMD} update music_reveal=true`
             :onhoverlost "${EWW_CMD} update music_reveal=false"
     (box :class "music"
          :orientation "h"
@@ -12,24 +12,25 @@
       ;      :vexpand false
       ;      :hexpand false
       ;      :style "background-image: url('${mpris.artUrl}');")
-      (button :class "music__song"
-              :onclick "EWW_CMD='${EWW_CMD}' ./scripts/pop.sh music"
-        {mpris.title})
+      (label :class "music__song"
+              :truncate true
+              :text "${mpris.title != 'null' && mpris.title != '' ? " ${mpris.title}" : ''}")
       (revealer :transition "slideRight"
-                :reveal music_reveal
+                :reveal {music_reveal && mpris?.status != 'null'}
                 :duration "350ms"
-        (box :vexpand false
-             :hexpand false
-             :orientation "h"
+        (box :orientation "h"
+             :style "margin-left: 10px"
+             :spacing 5
           (button :class "music__prev"
-                  :onclick "mpc -q prev"
+                  :onclick "playerctl previous"
             "")
           (button :class "music__play"
-                  :onclick "mpc -q toggle"
-            {mpris.status})
+                  :onclick "playerctl play-pause"
+            {mpris.status == "Paused" ? "" : ""})
           (button :class "music__next"
-                  :onclick "mpc -q next"
-            ""))))))
+                  :onclick "playerctl next"
+            "")))
+            )))
 
 ; (defwidget music_pop []
 ;   (box :class "music-pop"
