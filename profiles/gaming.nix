@@ -2,6 +2,7 @@
 util.mkProfile {
   name = "gaming";
   shared.gipphe.programs = {
+    bolt-launcher.enable = true;
     discord.enable = true;
     heroic.enable = true;
     lutris.enable = true;
