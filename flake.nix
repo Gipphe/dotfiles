@@ -70,6 +70,7 @@
       packages = eachSystem (
         { pkgs, ... }:
         {
+          catppuccin-sddm = pkgs.callPackage ./packages/catppuccin-sddm.nix { };
           minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
           monocraft-no-ligatures-font = pkgs.callPackage ./packages/monocraft-no-ligatures.nix { };
           statix = pkgs.callPackage ./packages/statix.nix { };
