@@ -44,23 +44,25 @@
               commands = extra.shellCommands;
               env = extra.shellEnv;
               packages =
-                with self.packages.${system};
-                [
-                  treefmt # treewide formatter
-                  statix # lints and suggestions
-                  deadnix # clean up unused nix code
-                ]
-                ++ (with pkgs; [
-                  nh # better nix CLI
-                  nix-output-monitor # pretty nix output
-                  nix-tree
-                  entr # run commands on file changes
-                  nixfmt # nix formatter
-                  git # flake requires git
-                  nvd # Diff nix results
-                  sops
-                  vulnix # Vulnerability scanner
-                ]);
+                let
+                  myPackages = with self.packages.${system}; [
+                    treefmt # treewide formatter
+                    statix # lints and suggestions
+                    deadnix # clean up unused nix code
+                  ];
+                  otherPackages = with pkgs; [
+                    nh # better nix CLI
+                    nix-output-monitor # pretty nix output
+                    nix-tree
+                    entr # run commands on file changes
+                    nixfmt # nix formatter
+                    git # flake requires git
+                    nvd # Diff nix results
+                    sops
+                    vulnix # Vulnerability scanner
+                  ];
+                in
+                myPackages ++ otherPackages;
             };
         }
       );
