@@ -42,17 +42,9 @@ util.mkProgram {
     wayland.windowManager.hyprland = {
       enable = true;
       inherit package portalPackage;
-      plugins = with inputs.hyprland-plugins.packages.${pkgs.system}; [
-        hyprbars
-        hyprexpo
-        hyprtrails
-        hyprfocus
-        hyprscrolling
-      ];
       settings = {
         "$mod" = "SUPER";
 
-        debug.disable_logs = false;
         # Monitor
         # See https://wiki.hyprland.org/Configuring/Monitors
         monitor = lib.mkDefault ",preferred,auto,1";

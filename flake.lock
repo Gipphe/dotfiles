@@ -1037,36 +1037,6 @@
         "type": "github"
       }
     },
-    "hyprland-plugins": {
-      "inputs": {
-        "hyprland": [
-          "hyprland"
-        ],
-        "nixpkgs": [
-          "hyprland-plugins",
-          "hyprland",
-          "nixpkgs"
-        ],
-        "systems": [
-          "hyprland-plugins",
-          "hyprland",
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1754517526,
-        "narHash": "sha256-zPfU6I7AqlDpoC0ZLTnayqCOyEn9Emub/ca4ATP/XxY=",
-        "owner": "hyprwm",
-        "repo": "hyprland-plugins",
-        "rev": "c8dc6f3d5437d26fae625c40388ba52e97bc5fdf",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hyprwm",
-        "repo": "hyprland-plugins",
-        "type": "github"
-      }
-    },
     "hyprland-protocols": {
       "inputs": {
         "nixpkgs": [
@@ -1861,7 +1831,6 @@
         "haskell-tools-nvim": "haskell-tools-nvim",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
-        "hyprland-plugins": "hyprland-plugins",
         "mac-app-util": "mac-app-util",
         "nix-index-db": "nix-index-db",
         "nix-on-droid": "nix-on-droid",
