@@ -9,7 +9,7 @@ let
   version = "3.3.0";
 in
 buildNpmPackage {
-  pname = "jdenticon";
+  pname = "jdenticon-cli";
   inherit version;
   src = fetchFromGitHub {
     owner = "dmester";
@@ -27,8 +27,10 @@ buildNpmPackage {
   installPhase = ''
     runHook preInstall
 
-    mkdir -p "$out/lib/jdenticon" "$out/bin"
-    cp -r bin dist node_modules "$out/lib/jdenticon"
+    install -D bin/jdenticon.js "$out/lib/jdenticon/bin/jdenticon.js"
+    install -D dist/jdenticon-node.js "$out/lib/jdenticon/dist/jdenticon-node.js"
+    install -d "$out/lib/jdenticon/node_modules"
+    cp -r node_modules/canvas-renderer  "$out/lib/jdenticon/node_modules"
     makeWrapper "${lib.getExe nodejs}" "$out/bin/jdenticon" \
       --add-flags "$out/lib/jdenticon/bin/jdenticon.js"
 
@@ -40,7 +42,7 @@ buildNpmPackage {
     description = "JavaScript library for generating highly recognizable identicons using HTML5 canvas or SVG.";
     homepage = "https://jdenticon.com/";
     license = licenses.mit;
-    maintainers = with maintainers; [ gipphe ];
+    maintainers = [ ];
     mainProgram = "jdenticon";
   };
 }

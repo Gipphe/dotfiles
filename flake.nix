@@ -73,7 +73,7 @@
           bolt-launcher = pkgs.callPackage ./packages/bolt-launcher.nix { };
           catppuccin-sddm = pkgs.callPackage ./packages/catppuccin-sddm.nix { };
           deadnix = pkgs.callPackage ./packages/deadnix.nix { };
-          jdenticon = pkgs.callPackage ./packages/jdenticon.nix { };
+          jdenticon-cli = pkgs.callPackage ./packages/jdenticon.nix { };
           minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
           monocraft-no-ligatures-font = pkgs.callPackage ./packages/monocraft-no-ligatures.nix { };
           statix = pkgs.callPackage ./packages/statix.nix { };
