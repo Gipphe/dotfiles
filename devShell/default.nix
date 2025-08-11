@@ -297,6 +297,36 @@ in
       };
       category = "docs";
     }
+
+    rec {
+      help = "Generate neofetch output for the current host";
+      name = "md:neofetch";
+      command = cmd {
+        inherit name;
+        runtimeInputs = with pkgs; [
+          coreutils
+          hyprland
+          grim
+          neofetch
+        ];
+        text = ''
+          ${pkgs.wezterm}/bin/wezterm start --class neofetch --always-new-process -- bash -c 'sleep 1s && neofetch && read -p ""' &
+          sleep 5s
+
+          set -l window (hyprctl clients -j | jq -r '.[] | select(.class == "neofetch")')
+
+          set -l window_pid (echo $window | jq '.pid')
+          set -l pos (echo $window | jq -r '.at | (.[0] | tostring) + "," + (.[1] | tostring)')
+          set -l dim (echo $window | jq -r '.at | (.[0] | tostring) + "," + (.[1] | tostring)')
+          set -l g "$pos $dim"
+
+          mkdir -p assets/neofetch
+          grim -g "$g" "assets/neofetch/$(hostname).png"
+
+          kill $window_pid
+        '';
+      };
+    }
   ];
 
   shellEnv = [
