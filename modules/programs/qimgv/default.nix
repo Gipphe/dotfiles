@@ -9,7 +9,7 @@ util.mkProgram {
     xdg.desktopEntries.qimgv = {
       exec = "${pkgs.qimgv}/bin/qimgv";
       name = "qimgv";
-      icon = icon.outPath;
+      inherit icon;
       type = "Application";
       mimeType = [
         "image/avif"
