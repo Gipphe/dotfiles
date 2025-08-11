@@ -270,6 +270,33 @@ in
       };
       category = "lint";
     }
+
+    rec {
+      help = "Generate jdenticons for all hosts";
+      name = "md:icons";
+      command = cmd {
+        inherit name;
+        runtimeInputs = with pkgs; [
+          jdenticon-cli
+          findutils
+        ];
+        text = # fish
+          ''
+            set hosts (find ./machines/* -maxdepth 0 -type d -exec basename {} \;)
+            or begin
+              echo "Machines are not here" >&2
+              exit 1
+            end
+
+            mkdir -p assets/icon
+
+            for host in $hosts
+              jdenticon "$host" -s 100 -o "assets/icon/$host.png"
+            end
+          '';
+      };
+      category = "docs";
+    }
   ];
 
   shellEnv = [

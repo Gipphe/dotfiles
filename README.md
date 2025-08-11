@@ -62,6 +62,8 @@ Machine configs are located in [`./machines`](./machines).
 
 ### argon
 
+![argon jdenticon](./assets/icon/argon.png)
+
 NixOS in WSL on Windows. Supports GUI programs through WSLg.
 
 Located in [`./machines/argon`](./machines/argon).
@@ -69,6 +71,8 @@ Located in [`./machines/argon`](./machines/argon).
 <img src="./assets/argon-neofetch.png" width="600px">
 
 ### silicon
+
+![silicon jdenticon](./assets/icon/silicon.png)
 
 _No longer in use, but kept as reference for future nix-darwin machines._
 
@@ -80,11 +84,15 @@ Located in [`./machines/silicon`](./machines/silicon).
 
 ### cobalt
 
+![cobalt jdenticon](./assets/icon/cobalt.png)
+
 Lenovo Ideapad laptop running NixOS.
 
 Located in [`./machines/cobalt`](./machines/cobalt).
 
 ### utv-vnb-lt
+
+![utv-vnb-lt jdenticon](./assets/icon/utv-vnb-lt.png)
 
 Corporate-issued Dell Precision 7680 running NixOS.
 
@@ -94,6 +102,8 @@ Located in [`./machines/utv-vnb-lt`](./machines/utv-vnb-lt).
 
 ### helium
 
+![helium jdenticon](./assets/icon/helium.png)
+
 _No longer in use._
 
 Samsung Galaxy S21 Ultra running nix-on-droid on stock Android.
@@ -101,6 +111,8 @@ Samsung Galaxy S21 Ultra running nix-on-droid on stock Android.
 Located in [`./machines/helium`](./machines/helium).
 
 ### carbon
+
+![carbon jdenticon](./assets/icon/carbon.png)
 
 Google Pixel 9 Pro XL running nix-on-droid on GrapheneOS.
 
