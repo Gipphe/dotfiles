@@ -1,24 +1,17 @@
 { nixpkgs, self, ... }@inputs:
 let
-  machines = {
-    argon.system = "x86_64-linux";
-    argon.machine = "nixos";
-    carbon.system = "aarch64-linux";
-    carbon.machine = "nix-on-droid";
-    cobalt.system = "x86_64-linux";
-    cobalt.machine = "nixos";
-    fluoride.system = "x86_64-linux";
-    fluoride.machine = "nixos";
-    silicon.system = "aarch64-darwin";
-    silicon.machine = "nix-darwin";
-    utv-vnb-lt.system = "x86_64-linux";
-    utv-vnb-lt.machine = "nixos";
-    helium.system = "aarch64-linux";
-    helium.machine = "nix-on-droid";
-  };
-  inherit (nixpkgs.lib.attrsets) filterAttrs mapAttrs;
-  inherit (nixpkgs.lib) nixosSystem;
+  inherit (nixpkgs) lib;
+  inherit (lib.attrsets) filterAttrs mapAttrs;
+  inherit (lib) nixosSystem;
   inherit (inputs.darwin.lib) darwinSystem;
+
+  machines = lib.pipe ./machines [
+    builtins.readDir
+    (lib.filterAttrs (_: t: t == "directory"))
+    builtins.attrNames
+    (builtins.map (x: (import ./machines/${x}/default.nix).gipphe.host))
+    lib.mergeAttrsList
+  ];
 
   nixOnDroidConfiguration =
     {

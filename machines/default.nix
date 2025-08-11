@@ -1,13 +1,10 @@
 { lib, flags, ... }:
 {
-  imports = [
-    ./argon
-    ./carbon
-    ./cobalt
-    ./fluoride
-    ./helium
-    ./silicon
-    ./utv-vnb-lt
+  imports = lib.pipe ./. [
+    builtins.readDir
+    (lib.filterAttrs (_: t: t == "directory"))
+    builtins.attrNames
+    (builtins.map (n: ./${n}))
   ];
   options.gipphe = {
     username = lib.mkOption {
@@ -29,6 +26,32 @@
       description = "For debugging";
       type = lib.types.anything;
       default = flags;
+    };
+    host = lib.mkOption {
+      description = "Host configuration";
+      type =
+        with lib.types;
+        attrsOf (submodule {
+          options = {
+            system = lib.mkOption {
+              description = "pkgs.system doublet";
+              example = "x86_64-linux";
+              type = lib.types.str;
+            };
+            machine = lib.mkOption {
+              description = "Type of nix machine.";
+              example = "nixos";
+              type =
+                with lib.types;
+                enum [
+                  "nixos"
+                  "nix-on-droid"
+                  "nix-darwin"
+                ];
+            };
+          };
+        });
+      default = { };
     };
   };
 }
