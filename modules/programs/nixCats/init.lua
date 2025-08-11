@@ -95,8 +95,6 @@ require('nixCatsUtils').setup {
 require 'settings'
 require 'filetypes'
 require 'keymaps'
-require 'treesitter'
-require 'health'
 require 'autocommands'
 require 'commands'
 
