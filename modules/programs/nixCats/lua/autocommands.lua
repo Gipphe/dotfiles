@@ -114,3 +114,10 @@ vim.api.nvim_create_autocmd({ 'FocusGained', 'TermClose', 'TermLeave' }, {
     end
   end,
 })
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'hs', 'haskell' },
+  callback = function()
+    vim.b.matchup_matchparen_enabled = 0
+  end,
+})
