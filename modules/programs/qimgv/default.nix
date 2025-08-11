@@ -1,14 +1,6 @@
-{
-  self,
-  util,
-  pkgs,
-  ...
-}:
+{ util, pkgs, ... }:
 let
-  inherit (self.packages.${pkgs.system}) jdenticon-cli;
-  icon = pkgs.runCommand "qimgv-icon" { } ''
-    ${jdenticon-cli}/bin/jdenticon 'qimgv' -s 64 -o $out
-  '';
+  icon = "${pkgs.adwaita-icon-theme}/share/icons/Adwaita/16x16/mimetypes/image-x-generic.png";
 in
 util.mkProgram {
   name = "qimgv";
