@@ -2,6 +2,7 @@
 --  See `:help vim.keymap.set()`
 
 local map = vim.keymap.set
+local util = require 'util'
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
@@ -95,10 +96,22 @@ map('v', '<A-j>', ":m '>+1<cr>gv=gv", { desc = 'Move down' })
 map('v', '<A-k>', ":m '<-2<cr>gv=gv", { desc = 'Move up' })
 
 -- Buffers
-map('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev buffer' })
-map('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next buffer' })
-map('n', '[b', '<cmd>bprevious<cr>', { desc = 'Prev buffer' })
-map('n', ']b', '<cmd>bnext<cr>', { desc = 'Next buffer' })
+map('n', '<S-h>', function()
+  util.close_floating_windows()
+  vim.cmd.bprevious()
+end, { desc = 'Prev buffer' })
+map('n', '<S-l>', function()
+  util.close_floating_windows()
+  vim.cmd.bnext()
+end, { desc = 'Next buffer' })
+map('n', '[b', function()
+  util.close_floating_windows()
+  vim.cmd.bprevious()
+end, { desc = 'Prev buffer' })
+map('n', ']b', function()
+  util.close_floating_windows()
+  vim.cmd.bnext()
+end, { desc = 'Next buffer' })
 map('n', '<leader>bb', '<cmd>e #<cr>', { desc = 'Switch to other buffer' })
 map('n', '<leader>`', '<cmd>e #<cr>', { desc = 'Switch to other buffer' })
 
