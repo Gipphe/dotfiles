@@ -9,8 +9,12 @@ vim.opt.hlsearch = true
 map('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-map('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-map('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+map('n', '[d', function()
+  vim.diagnostic.jump { count = -1, float = true }
+end, { desc = 'Go to previous [D]iagnostic message' })
+map('n', ']d', function()
+  vim.diagnostic.jump { count = 1, float = true }
+end, { desc = 'Go to next [D]iagnostic message' })
 map('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -165,16 +169,16 @@ map('n', ']q', vim.cmd.cnext, { desc = 'Next Quickfix' })
 
 local diagnostic_goto = function(next, severity)
   return function()
-    local go = vim.diagnostic.goto_prev
+    local count = -1
     if next then
-      go = vim.diagnostic.goto_next
+      count = 1
     end
     local sev = nil
     if type(severity) == 'string' then
       sev = vim.diagnostic.severity[severity]
     end
     return function()
-      go { severity = sev }
+      vim.diagnostic.jump { severity = sev, count = count, float = true }
     end
   end
 end
