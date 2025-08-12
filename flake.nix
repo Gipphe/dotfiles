@@ -47,18 +47,18 @@
                 let
                   myPackages = with self.packages.${system}; [
                     treefmt # treewide formatter
-                    statix # lints and suggestions
                     deadnix # clean up unused nix code
                   ];
                   otherPackages = with pkgs; [
+                    entr # run commands on file changes
+                    git # flake requires git
                     nh # better nix CLI
                     nix-output-monitor # pretty nix output
                     nix-tree
-                    entr # run commands on file changes
                     nixfmt # nix formatter
-                    git # flake requires git
                     nvd # Diff nix results
                     sops
+                    statix # lints and suggestions
                     vulnix # Vulnerability scanner
                   ];
                 in
@@ -76,7 +76,6 @@
           jdenticon-cli = pkgs.callPackage ./packages/jdenticon.nix { };
           minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
           monocraft-no-ligatures-font = pkgs.callPackage ./packages/monocraft-no-ligatures.nix { };
-          statix = pkgs.callPackage ./packages/statix.nix { };
           treefmt =
             (treefmt-nix.lib.evalModule pkgs {
               projectRootFile = "flake.nix";
