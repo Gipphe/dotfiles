@@ -50,7 +50,7 @@ function M.get_current_dir()
 end
 
 function M.close_floating_windows()
-  local inactive_floating_wins = vim.fn.filter(vim.api.nvim_list_wins(), function(k, v)
+  local inactive_floating_wins = vim.fn.filter(vim.api.nvim_list_wins(), function(_, v)
     local buf = vim.api.nvim_win_get_buf(v)
     local file_type = vim.api.nvim_get_option_value('filetype', { buf = buf })
     return vim.api.nvim_win_get_config(v).relative ~= '' and v ~= vim.api.nvim_get_current_win() and file_type ~= 'hydra_hint'
