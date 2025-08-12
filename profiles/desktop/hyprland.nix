@@ -23,6 +23,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
     mako.enable = false;
     swaync.enable = true;
 
+    networkmanager.enable = true;
     networkmanagerapplet.enable = false;
 
     # Screenshotting and recording

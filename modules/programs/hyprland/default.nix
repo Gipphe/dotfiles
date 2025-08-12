@@ -30,10 +30,6 @@ let
       ]
     ) 10
   );
-
-  brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
-  nmcli = "${pkgs.networkmanager}/bin/nmcli";
-  xdotool = "${pkgs.xdotool}/bin/xdotool";
 in
 util.mkProgram {
   name = "hyprland";
@@ -49,20 +45,12 @@ util.mkProgram {
         # See https://wiki.hyprland.org/Configuring/Monitors
         monitor = lib.mkDefault ",preferred,auto,1";
         bind = workspaces ++ [
-          "$mod, RETURN, exec, ${config.programs.wezterm.package}/bin/wezterm"
           "$mod, Q, killactive" # Close current window
           "$mod SHIFT, Q, forcekillactive" # Force close current window
-          "$mod, M, exit # Exit Hyprland"
           "$mod, T, togglefloating # Toggle between tiling and floating window"
           "$mod, F, fullscreen # Open the window in fullscreen"
           "$mod, P, pseudo, # dwindle"
           "$mod, J, togglesplit, # dwindle"
-          "$mod, B, exec, ${config.programs.vivaldi.package}/bin/vivaldi # Opens the browser"
-
-          ", XF86MonBrightnessUp, exec, ${brightnessctl} set 10%+"
-          ", XF86MonBrightnessDown, exec, ${brightnessctl} set 10%-"
-          ", XF86WLAN, exec, ${nmcli} radio wifi toggle"
-          ", XF86Refresh, exec, ${xdotool} key F5"
 
           # Move focus with mod + arrow keys
           "$mod, left, movefocus, l # Move focus left"

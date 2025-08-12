@@ -116,6 +116,10 @@ util.mkProgram {
       '')
     ];
 
+    wayland.windowManager.hyprland.settings.bind = [
+      "$mod, RETURN, exec, ${hmCfg.package}/bin/wezterm"
+    ];
+
     gipphe.windows.home.file = lib.pipe config.xdg.configFile [
       (lib.filterAttrs (path: _: lib.hasPrefix "wezterm/" path))
       (lib.mapAttrs' (
