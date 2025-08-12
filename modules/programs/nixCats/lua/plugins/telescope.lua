@@ -65,8 +65,6 @@ return { -- Fuzzy Finder (files, lsp, etc)
       --  All the info you're looking for is in `:help telescope.setup()`
       --
       defaults = {
-        ---@diagnostic disable-next-line: undefined-field
-        border = vim.opt.winborder:get() == '',
         prompt_prefix = ' ',
         selection_caret = ' ',
       },
