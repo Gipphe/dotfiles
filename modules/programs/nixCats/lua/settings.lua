@@ -90,6 +90,9 @@ vim.opt.linebreak = true
 vim.opt.title = true
 vim.opt.titlestring = '%t %h%m%r%w (%{v:progname})'
 
+-- Remember to deactivate native Telescope borders
+vim.opt.winborder = 'rounded'
+
 -- Expand tabs to spaces
 vim.opt.expandtab = true
 
