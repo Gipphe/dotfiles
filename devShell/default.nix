@@ -26,16 +26,16 @@ let
               nh darwin ${command} $args
             end
           else if command -v nix-on-droid &>/dev/null
-            set -l hostname $(jq '.hostname' env.json)
-            if test -z "$hostname"
+            set -l host $(jq '.hostname' env.json)
+            if test -z "$host"
               echo 'Found no hostname in env.json' >&2
               exit 1
             end
 
-            nix-on-droid build --flake "$(pwd)#""$hostname"
+            nix-on-droid build --flake "$(pwd)#""$host"
 
             echo
-            set -l nixOnDroidPkg $(nix path-info --impure "$NH_FLAKE#nixOnDroidConfigurations.$hostname.activationPackage")
+            set -l nixOnDroidPkg $(nix path-info --impure "$NH_FLAKE#nixOnDroidConfigurations.$host.activationPackage")
             nvd diff "$nixOnDroidPkg" result
             echo
 
@@ -50,7 +50,7 @@ let
 
             switch "$(string lower $REPLY)"
               case y
-                nix-on-droid switch --flake "$(pwd)#""$hostname"
+                nix-on-droid switch --flake "$(pwd)#""$host"
             end
             rm -f result
           else
