@@ -69,7 +69,7 @@ let
         eww active-windows | string replace -r ': .*$' ""
       end
 
-      socat -u "UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock" - | while read -r line
+      socat -u "UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock" - | while read line
         if string match -qr '^monitorremovedv2' "$line"
           set -l parts (string sub --start 19 "$line" | string split ',')
           set -l monitor_index $parts[1]
