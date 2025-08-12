@@ -159,7 +159,7 @@ util.mkProgram {
           gaps_in = 2;
           gaps_out = 2;
           border_size = 1;
-          # "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+          "col.active_border" = lib.mkForce "rgb(8aadf4) rgb(c6a0f6) 45deg";
           # "col.inactive_border" = "rgba(595959aa)";
           layout = "dwindle";
           resize_on_border = true;
@@ -183,14 +183,18 @@ util.mkProgram {
 
         animations = {
           enabled = true;
-          bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
+          bezier = [
+            "myBezier, 0.05, 0.9, 0.1, 1.05"
+            "easeOutQuart, 0.25, 1, 0.5, 1"
+            "easeInOutExpo, 0.87, 0, 0.13, 1"
+          ];
           animation = [
-            "windows, 1, 7, myBezier"
-            "windowsOut, 1, 7, default, popin 80%"
-            "border, 1, 10, default"
-            "borderangle, 1, 8, default"
-            "fade, 1, 7, default"
-            "workspaces, 1, 2, default"
+            "windows, 1, 3, easeOutQuart"
+            "windowsOut, 1, 3, easeInOutExpo, popin 80%"
+            "border, 1, 5, easeOutQuart"
+            "borderangle, 1, 4, easeOutQuart"
+            "fade, 1, 4, default"
+            "workspaces, 1, 1, default"
           ];
         };
 
