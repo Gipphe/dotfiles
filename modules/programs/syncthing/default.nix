@@ -1,8 +1,58 @@
 {
+  lib,
   util,
   config,
   ...
 }:
+let
+  folders = {
+    "${config.home.homeDirectory}/Notes" = {
+      id = "notes";
+      label = "Notes";
+      devices = [
+        "carbon"
+        "cobalt"
+        "helium"
+        "titanium"
+        "utv-vnb-lt"
+      ];
+    };
+    "${config.home.homeDirectory}/Dwarf Fortress saves" = {
+      id = "df-saves";
+      label = "Dwarf Fortress saves";
+      devices = [
+        "cobalt"
+        "titanium"
+        "utv-vnb-lt"
+      ];
+    };
+    "${config.home.homeDirectory}/.local/share/Tachiyomi Backups" = {
+      id = "tachiyomi-backups";
+      label = "Tachiyomi Backups";
+      devices = [
+        "carbon"
+        "cobalt"
+        "titanium"
+        "utv-vnb-lt"
+      ];
+    };
+  };
+
+  inherit (builtins) elem filter;
+  inherit (config.gipphe) hostName;
+  inherit (lib) filterAttrs mapAttrs pipe;
+
+  foldersForThisHost = pipe folders [
+    (filterAttrs (_: v: elem hostName v.devices))
+    (mapAttrs (
+      _: v:
+      v
+      // {
+        devices = filter (x: x != hostName) v.devices;
+      }
+    ))
+  ];
+in
 util.mkProgram {
   name = "syncthing";
   hm = {
@@ -18,18 +68,7 @@ util.mkProgram {
           "cobalt".id = "5WAUGFG-XWLSBTV-IJMCB5F-YGN7AZM-RQ2FQOT-7SWUF7Q-7OUZKSR-JBZX3AK";
           "carbon".id = "A7LZMEF-DMVXRLI-KB3RWZ5-QLYUX7R-MK43GT5-TIRZHHD-VY6NIZ6-MRVCZAA";
         };
-        folders = {
-          "${config.home.homeDirectory}/Notes" = {
-            id = "notes";
-            label = "Notes";
-            devices = [
-              "cobalt"
-              "helium"
-              "titanium"
-              "carbon"
-            ];
-          };
-        };
+        folders = foldersForThisHost;
       };
       tray.enable = true;
     };
