@@ -24,19 +24,27 @@ let
         not contains "$choice" $modes
         and set choice (gum choose $modes)
 
+        function info
+          echo $argv >&2
+        end
+
         function is-running
           test -n "$(pgrep openconnect)"
         end
 
         function stop
           sudo pkill openconnect
-          and echo "Stopped openconnect" >&2
+          and info "Stopped openconnect"
+          or begin
+            info "Could not stop openconnect"
+            info "Openconnect might not have been running"
+          end
         end
 
         function start
-          sudo echo "Pre-authenticated sudo" >&2
+          sudo echo "Pre-authenticated with sudo" >&2
           and openconnect-lovdata &>/dev/null &
-          echo "Started openconnect" >&2
+          info "Started openconnect"
         end
 
         switch $choice
@@ -46,9 +54,9 @@ let
             stop
           case status
             if is-running
-              echo "Openconnect is running" >&2
+              info "Openconnect is running"
             else
-              echo "Openconnect is not running" >&2
+              info "Openconnect is not running"
             end
           case toggle
             if is-running
@@ -57,7 +65,19 @@ let
               start
             end
           case '*'
-            echo "Unknown mode: $choice, $argv"
+            info "Unknown mode: $choice, $argv"
+        end
+      '';
+  };
+  reset-network = util.writeFishApplication {
+    name = "reset-network";
+    runtimeInputs = [ pkgs.systemd ];
+    text = # fish
+      ''
+        for s in network-setup NetworkManager nscd
+          systemctl restart network-setup.service
+          systemctl restart NetworkManager.service
+          systemctl restart nscd.service
         end
       '';
   };
@@ -78,6 +98,7 @@ util.mkProgram {
       openconnect-sso
       openconnect-lovdata
       vpn
+      reset-network
     ];
   };
 }
