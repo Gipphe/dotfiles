@@ -36,6 +36,25 @@ util.mkProgram {
         enable = true;
         package = pkgs.openssh;
         addKeysToAgent = "yes";
+        matchBlocks = {
+          "github.com" = {
+            hostname = "github.com";
+            user = "git";
+            identityFile = config.sops.secrets."github.ssh".path;
+          };
+
+          "gitlab.com" = {
+            hostname = "gitlab.com";
+            user = "git";
+            identityFile = config.sops.secrets."gitlab.ssh".path;
+          };
+
+          "codeberg.com" = {
+            hostname = "codeberg.com";
+            user = "git";
+            identityFile = config.sops.secrets."codeberg.ssh".path;
+          };
+        };
       };
       # keychain = {
       #   enable = true;
