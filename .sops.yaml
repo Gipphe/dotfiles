@@ -5,7 +5,7 @@ keys: &all
   - &helium age102w690dszwe3305vg3v084y6z6hstjsxskatz6evguj3utzz6e4s7yfrfr
   - &fluoride age16fmgfwq6hjyps36ar9jvwj7325sjfju3yfxt9df2zlfwu9dzdudqwpsh9f
   - &utv-vnb-lt age19f0gx25ug7r8gczchncs7hmhvff92rhjn748ednp29j68y3jrffqwkl79k
-  - &carbon age1p7arqtvc4xynlway6m2f87r9n4mm9hpgd4yhn8ff3yeemyma0cqqacknxv
+  - &carbon age1qv3gkg44yhuygegjdke8596hcm0mhe5c2ezqcl4jwsg397lpcf8qd9pn0d
 creation_rules:
   - path_regex: secrets/silicon.*
     key_groups:
@@ -35,6 +35,11 @@ creation_rules:
     key_groups:
       - age:
           - *utv-vnb-lt
+
+  - path_regex: secrets/carbon.*
+    key_groups:
+      - age:
+          - *carbon
 
   - path_regex: secrets/git-ssh-signing-key\.key
     key_groups:
