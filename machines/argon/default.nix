@@ -31,7 +31,10 @@
               vm-guest.enable = true;
               windows-setup.enable = true;
             };
-            programs.wezterm.enable = true;
+            programs = {
+              build-host.enable = true;
+              wezterm.enable = true;
+            };
           };
         };
 

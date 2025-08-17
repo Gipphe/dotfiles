@@ -22,6 +22,7 @@
               rice.enable = false;
               secrets.enable = true;
             };
+            prgrams.build-client.enable = true;
           };
           # SSH setup requires sops-nix, which isn't supported on nix-on-droid
           # gipphe.programs.ssh.enable = lib.mkForce false;
