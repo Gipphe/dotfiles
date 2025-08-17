@@ -20,7 +20,7 @@
               fonts.enable = true;
               gc.enable = true;
               rice.enable = false;
-              secrets.enable = false;
+              secrets.enable = true;
             };
           };
           # SSH setup requires sops-nix, which isn't supported on nix-on-droid
