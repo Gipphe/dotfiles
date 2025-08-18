@@ -12,8 +12,7 @@ util.mkProgram {
         name = "qemu-aarch64-static";
 
         src = builtins.fetchurl {
-          url = "https://github.com/multiarch/qemu-user-static/releases/download/v5.
-1.0-7/qemu-aarch64-static";
+          url = "https://github.com/multiarch/qemu-user-static/releases/download/v5.1.0-7/qemu-aarch64-static";
           sha256 = "0yzlrlknslvas58msrbbq3hazphyydrbaqrd840bd1c7vc9lcrh6";
         };
 
@@ -44,7 +43,7 @@ util.mkProgram {
         enable = true;
         hostKeys = [
           {
-            path = config.secrets."argon-sshd.ssh".path;
+            path = config.sops.secrets."argon-sshd.ssh".path;
             type = "ed25519";
           }
         ];
@@ -56,6 +55,7 @@ util.mkProgram {
         "building-carbon.ssh.pub" = {
           format = "binary";
           sopsFile = ../../../secrets/building-carbon.ssh.pub;
+          path = "/etc/gipphe/builder.ssh.pub";
         };
         "argon-sshd.ssh" = {
           format = "binary";
