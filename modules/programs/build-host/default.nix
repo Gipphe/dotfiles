@@ -35,18 +35,15 @@ util.mkProgram {
       users.users.builder = {
         isNormalUser = true;
         createHome = true;
-        openssh.authorizedKeys.keyFiles = [
-          config.sops.secrets."building-carbon.ssh.pub".path
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFZzdNC8yhKhkFcsLOPkKa4xmacFGFY8LLpQ0bPhfRGB"
         ];
       };
       services.openssh = {
         enable = true;
-        hostKeys = [
-          {
-            path = config.sops.secrets."argon-sshd.ssh".path;
-            type = "ed25519";
-          }
-        ];
+        extraConfig = ''
+          HostKey ${config.sops.secrets."argon-sshd.ssh".path}
+        '';
       };
       # Prevent generating host key, and use pregenerated host key instead.
       # This will conflict with all other openssh/sshd configs in this repo.
@@ -55,12 +52,10 @@ util.mkProgram {
         "building-carbon.ssh.pub" = {
           format = "binary";
           sopsFile = ../../../secrets/building-carbon.ssh.pub;
-          path = "/etc/gipphe/builder.ssh.pub";
         };
         "argon-sshd.ssh" = {
           format = "binary";
           sopsFile = ../../../secrets/argon-sshd.ssh;
-          path = "/etc/ssh/build_host_ssh_host_ed25519_key";
         };
       };
     };
