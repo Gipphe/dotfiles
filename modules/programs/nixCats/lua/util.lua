@@ -18,20 +18,20 @@ end
 ---@return boolean
 function M.is_mac()
   ---@diagnostic disable-next-line: undefined-field
-  return vim.uv.os_uname().sysname == 'Darwin'
+  return vim.fn.has 'mac' == 1
 end
 ---Returns `true` if the current OS is a Linux distro. Returns `false` otherwise.
 ---@return boolean
 function M.is_linux()
   ---@diagnostic disable-next-line: undefined-field
-  return vim.uv.os_uname().sysname == 'Linux'
+  return vim.fn.has 'linux' == 1
 end
 
 ---Returns `true` if the current OS is a Windows. Returns `false` otherwise.
 ---@return boolean
 function M.is_windows()
   ---@diagnostic disable-next-line: undefined-field
-  return vim.uv.os_uname().sysname == 'Windows_NT'
+  return vim.fn.has 'win32' == 1
 end
 
 ---Returns the hostname of the machine using libuv.
