@@ -8,7 +8,7 @@ return {
       'folke/lazydev.nvim',
     },
     --- @module 'blink.cmp'
-    --- @type blink.cmd.Config
+    --- @type blink.cmp.Config
     opts = {
       keymap = {
         -- 'default' (recommended) for mappings similar to built-in completions

@@ -89,8 +89,6 @@ return {
       'rcarriga/nvim-notify',
       'folke/which-key.nvim',
     },
-    ---@module 'noice'
-    ---@type noice.NoiceConfig
     opts = {
       presets = {
         bottom_search = true,
