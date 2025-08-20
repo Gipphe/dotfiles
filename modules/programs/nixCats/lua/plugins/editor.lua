@@ -58,7 +58,12 @@ return {
     main = 'marp.nvim',
     version = false,
     dependencies = {
-      'folke/which-key.nvim',
+      {
+        'folke/which-key.nvim',
+        opts = {
+          { '<leader>m', group = 'Marp' },
+        },
+      },
     },
     keys = {
       {
@@ -72,11 +77,7 @@ return {
         desc = 'Stop Marp server',
       },
     },
-    config = function(_, opts)
-      require('marp.nvim').setup(opts or {})
-      require('which-key').add {
-        { '<leader>m', group = 'Marp' },
-      }
+    config = function()
       vim.api.nvim_create_autocmd('VimLeavePre', {
         group = vim.api.nvim_create_augroup('marp', { clear = true }),
         callback = function()
