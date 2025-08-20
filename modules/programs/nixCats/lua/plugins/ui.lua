@@ -220,9 +220,7 @@ return {
   },
 
   {
-    -- TODO Fix python requirement for this.
     'gelguy/wilder.nvim',
-    enabled = false,
     opts = {
       modes = {
         '/',
