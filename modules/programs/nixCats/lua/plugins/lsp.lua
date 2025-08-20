@@ -32,38 +32,7 @@ return {
         opts = {},
       },
 
-      -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
-      -- used for completion, annotations and signatures of Neovim apis
-      {
-        'folke/lazydev.nvim',
-        dependencies = {
-          {
-            'saghen/blink.cmp',
-            opts = {
-              sources = {
-                default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
-                providers = {
-                  lazydev = {
-                    name = 'LazyDev',
-                    module = 'lazydev.integrations.blink',
-                    -- make lazydev completions top priority (see `:h blink.cmp`)
-                    score_offset = 100,
-                  },
-                },
-              },
-            },
-          },
-        },
-        ft = 'lua',
-        ---@type lazydev.Config
-        opts = {
-          library = {
-            -- adds type hints for nixCats global
-            { path = (nixCats.nixCatsPath or '') .. '/lua', words = { 'nixCats' } },
-            { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-          },
-        },
-      },
+      'folke/lazydev.nvim',
 
       {
         'lukahartwig/pnpm.nvim',
@@ -430,6 +399,40 @@ return {
     end,
   },
 
+  -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
+  -- used for completion, annotations and signatures of Neovim apis
+  {
+    'folke/lazydev.nvim',
+    dependencies = {
+      {
+        'saghen/blink.cmp',
+        opts = {
+          sources = {
+            default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+            providers = {
+              lazydev = {
+                name = 'LazyDev',
+                module = 'lazydev.integrations.blink',
+                -- make lazydev completions top priority (see `:h blink.cmp`)
+                score_offset = 100,
+              },
+            },
+          },
+        },
+      },
+    },
+    ft = 'lua',
+    ---@module 'lazydev'
+    ---@type lazydev.Config
+    opts = {
+      library = {
+        -- adds type hints for nixCats global
+        { path = (nixCats.nixCatsPath or '') .. '/lua', words = { 'nixCats' } },
+        { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+      },
+    },
+  },
+
   {
     'mrcjkb/haskell-tools.nvim',
     enabled = require('nixCatsUtils').enableForCategory 'haskell',
@@ -487,19 +490,4 @@ return {
     'elkowar/yuck.vim',
     ft = { 'yuck' },
   },
-
-  -- TODO Are LSPs good enough?
-  -- {
-  --   'mfussenegger/nvim-lint',
-  --   config = function()
-  --     require('lint').linters_by_ft = {
-  --       fish = { 'fish' },
-  --     }
-  --     vim.api.nvim_create_autocmd({ 'BufWritePost', 'BufReadPost', 'InsertLeave' }, {
-  --       callback = function()
-  --         require('lint').try_lint()
-  --       end,
-  --     })
-  --   end,
-  -- },
 }
