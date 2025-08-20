@@ -8,7 +8,7 @@ return {
         -- NOTE: nixCats: use lazyAdd to only enable mason if nix wasnt involved.
         -- because we will be using nix to download things instead.
         enabled = require('nixCatsUtils').lazyAdd(true, false),
-        config = true,
+        opts = {},
       }, -- NOTE: Must be loaded before dependants
 
       {
@@ -58,7 +58,6 @@ return {
           },
         },
       },
-      -- kickstart.nvim was still on neodev. lazydev is the new version of neodev
 
       {
         'lukahartwig/pnpm.nvim',
