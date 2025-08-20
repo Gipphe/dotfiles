@@ -387,7 +387,7 @@ return {
       if require('nixCatsUtils').isNixCats then
         for server_name, _ in pairs(servers) do
           local server = servers[server_name] or {}
-          vim.lsp.enable(server_name, server.enabled or true)
+          vim.lsp.enable(server_name, server.enabled ~= nil and server.enabled)
           vim.lsp.config(server_name, {
             capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {}),
             settings = server.settings,
