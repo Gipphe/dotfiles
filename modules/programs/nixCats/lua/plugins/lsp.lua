@@ -114,7 +114,7 @@ return {
       -- Some languages (like typescript) have entire language plugins that can be useful:
       --    https://github.com/pmizio/typescript-tools.nvim
       -- }}}
-      ---@type { [string]: lspconfig.Config }
+      ---@type { [string]: vim.lsp.Config }
       servers = {
         basedpyright = {
           enabled = require('nixCatsUtils').enableForCategory 'basedpyright',
@@ -381,21 +381,21 @@ return {
 
       local servers = opts.servers
 
-      -- NOTE: nixCats: if nix, use lspconfig instead of mason
+      -- NOTE: nixCats: if nix, use vim.lsp instead of mason
       -- You could MAKE it work, using lspsAndRuntimeDeps and sharedLibraries in nixCats
       -- but don't... its not worth it. Just add the lsp to lspsAndRuntimeDeps.
       if require('nixCatsUtils').isNixCats then
         for server_name, _ in pairs(servers) do
           local server = servers[server_name] or {}
-          if server.enabled == nil or server.enabled == true then
-            require('lspconfig')[server_name].setup {
-              capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {}),
-              settings = server.settings,
-              filetypes = server.filetypes,
-              cmd = server.cmd,
-              root_pattern = server.root_pattern,
-            }
-          end
+          vim.lsp.enable(server_name, server.enabled or true)
+          vim.lsp.config(server_name, {
+            capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {}),
+            settings = server.settings,
+            filetypes = server.filetypes,
+            cmd = server.cmd,
+            root_dir = server.root_dir,
+            root_markers = server.root_markers,
+          })
         end
       else
         -- NOTE: nixCats: and if no nix, do it the normal way
@@ -417,10 +417,12 @@ return {
         require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
         require('mason-lspconfig').setup {
+          ensure_installed = {},
+          automatic_installation = false,
           handlers = {
             function(server_name)
               local server = servers[server_name] or {}
-              if server.enabled == nil or server.enabled == true then
+              if server.enabled ~= false then
                 -- This handles overriding only values explicitly passed
                 -- by the server configuration above. Useful when disabling
                 -- certain features of an LSP (for example, turning off formatting for tsserver)
