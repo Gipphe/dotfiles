@@ -38,14 +38,20 @@ return {
         'folke/lazydev.nvim',
         dependencies = {
           {
-            'hrsh7th/nvim-cmp',
-            opts = function(_, opts)
-              opts.sources = opts.sources or {}
-              table.insert(opts.sources, {
-                name = 'lazydev',
-                group_index = 0, -- set group index to 0 to skip loading LuaLS completions
-              })
-            end,
+            'saghen/blink.cmp',
+            opts = {
+              sources = {
+                default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+                providers = {
+                  lazydev = {
+                    name = 'LazyDev',
+                    module = 'lazydev.integrations.blink',
+                    -- make lazydev completions top priority (see `:h blink.cmp`)
+                    score_offset = 100,
+                  },
+                },
+              },
+            },
           },
         },
         ft = 'lua',
@@ -94,7 +100,7 @@ return {
         },
       },
 
-      -- TODO Add cmp_nvim_lsp to deps list here
+      'saghen/blink.cmp',
     },
     opts = {
       -- lspconfig {{{
@@ -372,13 +378,7 @@ return {
         },
       }
 
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities.textDocument.foldingRange = {
-        dynamicRegistration = false,
-        lineFoldingOnly = true,
-      }
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
       local servers = opts.servers
 
       -- NOTE: nixCats: if nix, use vim.lsp instead of mason

@@ -160,12 +160,9 @@ let
       # This is for plugins that will load at startup without using packadd:
       startupPlugins = with pkgs.vimPlugins; {
         general = [
+          blink-cmp
           bufferline-nvim
           catppuccin-nvim
-          cmp-buffer
-          cmp-nvim-lsp
-          cmp-path
-          cmp_luasnip
           comment-nvim
           conform-nvim
           fidget-nvim
@@ -179,7 +176,6 @@ let
           marp-nvim
           mini-nvim
           neoconf-nvim
-          nvim-cmp
           nvim-dap
           nvim-dap-python
           nvim-dap-ui
