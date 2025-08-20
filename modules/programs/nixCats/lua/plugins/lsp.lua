@@ -102,7 +102,9 @@ return {
 
       'saghen/blink.cmp',
     },
-    opts = {
+    opts = function(opts)
+      opts = opts or {}
+
       -- lspconfig {{{
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -121,103 +123,100 @@ return {
       --    https://github.com/pmizio/typescript-tools.nvim
       -- }}}
       ---@type { [string]: vim.lsp.Config }
-      servers = {
-        basedpyright = {
-          enabled = require('nixCatsUtils').enableForCategory 'basedpyright',
-        },
-        bashls = {},
-        dockerls = {},
-        elmls = {},
-        jsonls = {},
-        html = {},
-        qmlls = {},
-        java_language_server = {},
-        lemminx = {},
-        eslint = {},
-        gopls = {},
-        rust_analyzer = {},
-        tailwindcss = {
-          filetypes = vim.tbl_deep_extend('force', require('lspconfig.configs.tailwindcss').default_config.filetypes, { 'elm' }),
-          settings = {
-            tailwindCSS = {
-              includeLanguages = {
-                elm = 'html',
-              },
-              experimental = {
-                classRegex = {
-                  { [[\bclass[\s(<|]+"([^"]*)"]] },
-                  { [[\bclass[\s(]+"[^"]*"\s+"([^"]*)"]] },
-                  { [[\bclass[\s<|]+"[^"]*"\s*\+{2}\s*" ([^"]*)"]] },
-                  { [[\bclass[\s<|]+"[^"]*"\s*\+{2}\s*" [^"]*"\s*\+{2}\s*" ([^"]*)"]] },
-                  { [[\bclass[\s<|]+"[^"]*"\s*\+{2}\s*" [^"]*"\s*\+{2}\s*" [^"]*"\s*\+{2}\s*" ([^"]*)"]] },
-                  { [[\bclassList[\s\[\(]+"([^"]*)"]] },
-                  { [[\bclassList[\s\[\(]+"[^"]*",\s[^\)]+\)[\s\[\(,]+"([^"]*)"]] },
-                  { [[\bclassList[\s\[\(]+"[^"]*",\s[^\)]+\)[\s\[\(,]+"[^"]*",\s[^\)]+\)[\s\[\(,]+"([^"]*)"]] },
-                },
+      local servers = {}
+      servers.basedpyright = {}
+      servers.bashls = {}
+      servers.dockerls = {}
+      servers.elmls = {}
+      servers.jsonls = {}
+      servers.html = {}
+      servers.qmlls = {}
+      servers.lemminx = {}
+      servers.eslint = {}
+      servers.gopls = {}
+      servers.rust_analyzer = {}
+      servers.tailwindcss = {
+        filetypes = vim.tbl_deep_extend('force', require('lspconfig.configs.tailwindcss').default_config.filetypes, { 'elm' }),
+        settings = {
+          tailwindCSS = {
+            includeLanguages = {
+              elm = 'html',
+            },
+            experimental = {
+              classRegex = {
+                { [[\bclass[\s(<|]+"([^"]*)"]] },
+                { [[\bclass[\s(]+"[^"]*"\s+"([^"]*)"]] },
+                { [[\bclass[\s<|]+"[^"]*"\s*\+{2}\s*" ([^"]*)"]] },
+                { [[\bclass[\s<|]+"[^"]*"\s*\+{2}\s*" [^"]*"\s*\+{2}\s*" ([^"]*)"]] },
+                { [[\bclass[\s<|]+"[^"]*"\s*\+{2}\s*" [^"]*"\s*\+{2}\s*" [^"]*"\s*\+{2}\s*" ([^"]*)"]] },
+                { [[\bclassList[\s\[\(]+"([^"]*)"]] },
+                { [[\bclassList[\s\[\(]+"[^"]*",\s[^\)]+\)[\s\[\(,]+"([^"]*)"]] },
+                { [[\bclassList[\s\[\(]+"[^"]*",\s[^\)]+\)[\s\[\(,]+"[^"]*",\s[^\)]+\)[\s\[\(,]+"([^"]*)"]] },
               },
             },
           },
         },
-        csharp_ls = {},
-        fish_lsp = {},
-        terraformls = {},
-        metals = {},
-        yamlls = {
-          capabilities = {
-            textDocument = {
-              foldingRange = {
-                dynamicRegistration = false,
-                lineFoldingOnly = true,
-              },
+      }
+      servers.fish_lsp = {}
+      servers.terraformls = {}
+      servers.metals = {}
+      servers.yamlls = {
+        capabilities = {
+          textDocument = {
+            foldingRange = {
+              dynamicRegistration = false,
+              lineFoldingOnly = true,
             },
           },
         },
-        sqls = {},
-        ts_ls = {
-          on_attach = function()
-            vim.keymap.set('n', '<leader>cw', function()
-              require('telescope').extensions.pnpm.workspace()
-            end, { buffer = true, desc = 'Select pnpm workspace', silent = true })
-          end,
-        },
-        marksman = {},
-        ruff = {
-          on_attach = function(client)
-            -- Disable hover in favour of Pyright
-            if require('nixCatsUtils').enableForCategory 'basedpyright' then
-              client.server_capabilities.hoverProvider = false
-            end
-            vim.keymap.set('n', '<leader>co', function()
-              vim.lsp.buf.code_action {
-                apply = true,
-                context = {
-                  only = { 'source.organizeImports' },
-                  diagnostics = {},
-                },
-              }
-            end, { buffer = true, desc = 'Organize imports', silent = true })
-          end,
-        },
-        lua_ls = {
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = 'Replace',
+      }
+      servers.sqls = {}
+      servers.ts_ls = {
+        on_attach = function()
+          vim.keymap.set('n', '<leader>cw', function()
+            require('telescope').extensions.pnpm.workspace()
+          end, { buffer = true, desc = 'Select pnpm workspace', silent = true })
+        end,
+      }
+      servers.marksman = {}
+      servers.ruff = {
+        on_attach = function(client)
+          -- Disable hover in favour of Pyright
+          if require('nixCatsUtils').enableForCategory 'basedpyright' then
+            client.server_capabilities.hoverProvider = false
+          end
+          vim.keymap.set('n', '<leader>co', function()
+            vim.lsp.buf.code_action {
+              apply = true,
+              context = {
+                only = { 'source.organizeImports' },
+                diagnostics = {},
               },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              diagnostics = {
-                globals = { 'nixCats' },
-                disable = { 'missing-fields' },
-              },
+            }
+          end, { buffer = true, desc = 'Organize imports', silent = true })
+        end,
+      }
+      servers.lua_ls = {
+        settings = {
+          Lua = {
+            completion = {
+              callSnippet = 'Replace',
+            },
+            -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+            diagnostics = {
+              globals = { 'nixCats' },
+              disable = { 'missing-fields' },
             },
           },
         },
+      }
+      servers.nil_ls = {}
 
+      if require('nixCatsUtils').isNixCats then
         -- NOTE: nixCats: nixd is not available on mason.
         -- Feel free to check the nixd docs for more configuration options:
         -- https://github.com/nix-community/nixd/blob/main/nixd/docs/configuration.md
-        nixd = {
-          enabled = require('nixCatsUtils').isNixCats,
+        servers.nixd = {
           settings = {
             nixpkgs = {
               expr = nixCats.extra 'nixd.nixpkgs' or 'import <nixpkgs> { }',
@@ -237,13 +236,14 @@ return {
               },
             },
           },
-        },
-        nil_ls = {},
-        rnix = {
-          enabled = not require('nixCatsUtils').isNixCats,
-        },
-      },
-    },
+        }
+      else
+        servers.rnix = {}
+      end
+
+      return vim.tbl_deep_extend('force', {}, opts, { servers = servers })
+    end,
+
     config = function(_, opts)
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
@@ -379,23 +379,16 @@ return {
       }
 
       local capabilities = require('blink.cmp').get_lsp_capabilities()
+      vim.lsp.config('*', { capabilities = capabilities })
       local servers = opts.servers
 
       -- NOTE: nixCats: if nix, use vim.lsp instead of mason
       -- You could MAKE it work, using lspsAndRuntimeDeps and sharedLibraries in nixCats
       -- but don't... its not worth it. Just add the lsp to lspsAndRuntimeDeps.
       if require('nixCatsUtils').isNixCats then
-        for server_name, _ in pairs(servers) do
-          local server = servers[server_name] or {}
-          vim.lsp.enable(server_name, server.enabled ~= nil and server.enabled)
-          vim.lsp.config(server_name, {
-            capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {}),
-            settings = server.settings,
-            filetypes = server.filetypes,
-            cmd = server.cmd,
-            root_dir = server.root_dir,
-            root_markers = server.root_markers,
-          })
+        for server_name, cfg in pairs(servers) do
+          vim.lsp.enable(server_name)
+          vim.lsp.config(server_name, cfg)
         end
       else
         -- NOTE: nixCats: and if no nix, do it the normal way
