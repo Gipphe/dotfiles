@@ -19,7 +19,7 @@ return {
           require('mini.bufremove').delete(n, false)
         end,
         diagnostics = 'nvim_lsp',
-        always_show_bufferline = false,
+        always_show_bufferline = true,
         diagnostics_indicator = function(_, _, diag)
           local ret = (diag.error and icons.diagnostics.Error .. diag.error .. ' ' or '') .. (diag.warning and icons.diagnostics.Warn .. diag.warning or '')
           return vim.trim(ret)
