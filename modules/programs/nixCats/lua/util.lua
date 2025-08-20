@@ -61,6 +61,16 @@ function M.close_floating_windows()
   end
 end
 
+function thunk(f, outerArgs)
+  return function(...)
+    f(table.unpack(vim.extendnew(outerArgs, arg)))
+  end
+end
+
+function M.thunk(f, ...)
+  return thunk(f, arg)
+end
+
 M.icons = {
   misc = {
     dots = '󰇘',
