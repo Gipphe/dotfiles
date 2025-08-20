@@ -153,7 +153,6 @@ let
           fidget-nvim
           flash-nvim
           gitsigns-nvim
-          hmts-nvim
           lazy-nvim
           lazydev-nvim
           lspkind-nvim

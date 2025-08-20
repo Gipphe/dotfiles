@@ -357,12 +357,6 @@ return {
   },
 
   {
-    'calops/hmts.nvim',
-    version = '*',
-    ft = 'nix',
-  },
-
-  {
     'rachartier/tiny-inline-diagnostic.nvim',
     event = 'VeryLazy',
     priority = 1000,
