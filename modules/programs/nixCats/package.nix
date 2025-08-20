@@ -148,7 +148,6 @@ let
           blink-cmp
           bufferline-nvim
           catppuccin-nvim
-          comment-nvim
           conform-nvim
           fidget-nvim
           flash-nvim
@@ -166,7 +165,6 @@ let
           nvim-lspconfig
           nvim-nio
           nvim-spectre
-          nvim-treesitter
           nvim-treesitter-context
           nvim-treesitter-refactor
           nvim-treesitter-textobjects
