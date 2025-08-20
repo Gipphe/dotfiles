@@ -387,8 +387,9 @@ return {
       -- but don't... its not worth it. Just add the lsp to lspsAndRuntimeDeps.
       if require('nixCatsUtils').isNixCats then
         for server_name, cfg in pairs(servers) do
-          vim.lsp.enable(server_name)
-          vim.lsp.config(server_name, cfg)
+          -- vim.lsp.config(server_name, cfg)
+          -- vim.lsp.enable(server_name)
+          require('lspconfig')[server_name].setup(cfg)
         end
       else
         -- NOTE: nixCats: and if no nix, do it the normal way
