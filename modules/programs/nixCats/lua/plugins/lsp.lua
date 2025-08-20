@@ -67,7 +67,8 @@ return {
         end,
       },
 
-      'folke/neoconf.nvim',
+      -- Does not work correctly in Neovim v0.11 with vim.lsp.
+      -- 'folke/neoconf.nvim',
 
       {
         'kevinhwang91/nvim-ufo',
