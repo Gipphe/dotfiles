@@ -33,123 +33,39 @@ return {
       -- Some languages (like typescript) have entire language plugins that can be useful:
       --    https://github.com/pmizio/typescript-tools.nvim
       -- }}}
-      ---@type { [string]: vim.lsp.Config }
-      local servers = {}
-      servers.basedpyright = {}
-      servers.bashls = {}
-      servers.dockerls = {}
-      servers.elmls = {}
-      servers.jsonls = {}
-      servers.html = {}
-      servers.qmlls = {}
-      servers.lemminx = {}
-      servers.eslint = {}
-      servers.gopls = {}
-      servers.rust_analyzer = {}
-      servers.tailwindcss = {
-        filetypes = vim.tbl_deep_extend('force', require('lspconfig.configs.tailwindcss').default_config.filetypes, { 'elm' }),
-        settings = {
-          tailwindCSS = {
-            includeLanguages = {
-              elm = 'html',
-            },
-            experimental = {
-              classRegex = {
-                { [[\bclass[\s(<|]+"([^"]*)"]] },
-                { [[\bclass[\s(]+"[^"]*"\s+"([^"]*)"]] },
-                { [[\bclass[\s<|]+"[^"]*"\s*\+{2}\s*" ([^"]*)"]] },
-                { [[\bclass[\s<|]+"[^"]*"\s*\+{2}\s*" [^"]*"\s*\+{2}\s*" ([^"]*)"]] },
-                { [[\bclass[\s<|]+"[^"]*"\s*\+{2}\s*" [^"]*"\s*\+{2}\s*" [^"]*"\s*\+{2}\s*" ([^"]*)"]] },
-                { [[\bclassList[\s\[\(]+"([^"]*)"]] },
-                { [[\bclassList[\s\[\(]+"[^"]*",\s[^\)]+\)[\s\[\(,]+"([^"]*)"]] },
-                { [[\bclassList[\s\[\(]+"[^"]*",\s[^\)]+\)[\s\[\(,]+"[^"]*",\s[^\)]+\)[\s\[\(,]+"([^"]*)"]] },
-              },
-            },
-          },
-        },
+      local servers = {
+        -- 'basedpyright',
+        'bashls',
+        -- 'dockerls',
+        'elmls',
+        'jsonls',
+        'html',
+        -- 'qmlls',
+        -- 'lemminx',
+        'eslint',
+        -- 'gopls',
+        -- 'rust_analyzer',
+        'tailwindcss',
+        'fish_lsp',
+        'terraformls',
+        -- 'metals',
+        'yamlls',
+        -- 'sqls',
+        'ts_ls',
+        'marksman',
+        'ruff',
+        'lua_ls',
+        'nil_ls',
       }
-      servers.fish_lsp = {}
-      servers.terraformls = {}
-      servers.metals = {}
-      servers.yamlls = {
-        capabilities = {
-          textDocument = {
-            foldingRange = {
-              dynamicRegistration = false,
-              lineFoldingOnly = true,
-            },
-          },
-        },
-      }
-      servers.sqls = {}
-      servers.ts_ls = {
-        on_attach = function()
-          vim.keymap.set('n', '<leader>cw', function()
-            require('telescope').extensions.pnpm.workspace()
-          end, { buffer = true, desc = 'Select pnpm workspace', silent = true })
-        end,
-      }
-      servers.marksman = {}
-      servers.ruff = {
-        on_attach = function(client)
-          -- Disable hover in favour of Pyright
-          if require('nixCatsUtils').enableForCategory 'basedpyright' then
-            client.server_capabilities.hoverProvider = false
-          end
-          vim.keymap.set('n', '<leader>co', function()
-            vim.lsp.buf.code_action {
-              apply = true,
-              context = {
-                only = { 'source.organizeImports' },
-                diagnostics = {},
-              },
-            }
-          end, { buffer = true, desc = 'Organize imports', silent = true })
-        end,
-      }
-      servers.lua_ls = {
-        settings = {
-          Lua = {
-            completion = {
-              callSnippet = 'Replace',
-            },
-            -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-            diagnostics = {
-              globals = { 'nixCats' },
-              disable = { 'missing-fields' },
-            },
-          },
-        },
-      }
-      servers.nil_ls = {}
 
       if require('nixCatsUtils').isNixCats then
         -- NOTE: nixCats: nixd is not available on mason.
         -- Feel free to check the nixd docs for more configuration options:
         -- https://github.com/nix-community/nixd/blob/main/nixd/docs/configuration.md
-        servers.nixd = {
-          settings = {
-            nixpkgs = {
-              expr = nixCats.extra 'nixd.nixpkgs' or 'import <nixpkgs> { }',
-            },
-            formatting = {
-              command = { 'nixfmt' },
-            },
-            options = {
-              nixos = {
-                expr = nixCats.extra 'nixd.nixos_options',
-              },
-              darwin = {
-                expr = nixCats.extra 'nixd.darwin_options',
-              },
-              droid = {
-                expr = nixCats.extra 'nixd.droid_options',
-              },
-            },
-          },
-        }
+        table.insert(servers, 'nixd')
+        table.insert(servers, 'powershell_es')
       else
-        servers.rnix = {}
+        table.insert(servers, 'rnix')
       end
 
       return vim.tbl_deep_extend('force', {}, opts, { servers = servers })
@@ -297,11 +213,12 @@ return {
       -- You could MAKE it work, using lspsAndRuntimeDeps and sharedLibraries in nixCats
       -- but don't... its not worth it. Just add the lsp to lspsAndRuntimeDeps.
       if require('nixCatsUtils').isNixCats then
-        for server_name, cfg in pairs(servers) do
-          -- vim.lsp.config(server_name, cfg)
-          -- vim.lsp.enable(server_name)
-          require('lspconfig')[server_name].setup(cfg)
-        end
+        vim.lsp.enable(servers)
+        -- for server_name, cfg in pairs(servers) do
+        --   -- vim.lsp.config(server_name, cfg)
+        --   -- vim.lsp.enable(server_name)
+        --   require('lspconfig')[server_name].setup(cfg)
+        -- end
       else
         -- NOTE: nixCats: and if no nix, do it the normal way
 
@@ -315,27 +232,15 @@ return {
 
         -- You can add other tools here that you want Mason to install
         -- for you, so that they are available from within Neovim.
-        local ensure_installed = vim.tbl_keys(servers or {})
-        vim.list_extend(ensure_installed, {
+        local ensure_installed = servers
+        vim.fn.extendnew(ensure_installed, {
           'stylua', -- Used to format Lua code
         })
         require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
         require('mason-lspconfig').setup {
           ensure_installed = {},
-          automatic_installation = false,
-          handlers = {
-            function(server_name)
-              local server = servers[server_name] or {}
-              if server.enabled ~= false then
-                -- This handles overriding only values explicitly passed
-                -- by the server configuration above. Useful when disabling
-                -- certain features of an LSP (for example, turning off formatting for tsserver)
-                server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-                require('lspconfig')[server_name].setup(server)
-              end
-            end,
-          },
+          automatic_enable = true,
         }
       end
     end,

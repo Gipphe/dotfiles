@@ -114,6 +114,8 @@ let
           nixd
           nixfmt
           opentofu
+          powershell
+          powershell-editor-services
           prettierd
           ripgrep
           ruff
@@ -288,6 +290,8 @@ let
           have_nerd_font = true;
 
           droid = false;
+
+          powershell_es = "${pkgs.powershell-editor-services}";
         };
 
         extra = {

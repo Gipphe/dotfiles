@@ -63,7 +63,7 @@ end
 
 function thunk(f, outerArgs)
   return function(...)
-    f(table.unpack(vim.extendnew(outerArgs, arg)))
+    f(table.unpack(vim.fn.extendnew(outerArgs, arg)))
   end
 end
 

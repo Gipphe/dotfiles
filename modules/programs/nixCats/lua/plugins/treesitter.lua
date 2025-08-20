@@ -86,7 +86,8 @@ return {
       },
       refactor = {
         highlight_current_scope = {
-          enable = true,
+          -- Basically highlight huge swaths of code all the time.
+          enable = false,
         },
         highlight_definitions = {
           enable = true,
