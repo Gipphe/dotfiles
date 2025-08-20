@@ -55,6 +55,7 @@ return {
 
   {
     'aca/marp.nvim',
+    main = 'marp.nvim',
     version = false,
     dependencies = {
       'folke/which-key.nvim',
@@ -72,7 +73,7 @@ return {
       },
     },
     config = function(_, opts)
-      require('marp').setup(opts or {})
+      require('marp.nvim').setup(opts or {})
       require('which-key').add {
         { '<leader>m', group = 'Marp' },
       }
