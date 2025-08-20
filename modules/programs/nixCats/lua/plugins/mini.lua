@@ -1,5 +1,6 @@
 return { -- Collection of various small independent plugins/modules
   'echasnovski/mini.nvim',
+  version = '*',
   dependencies = {
     'JoosepAlviste/nvim-ts-context-commentstring',
   },
