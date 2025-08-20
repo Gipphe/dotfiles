@@ -72,20 +72,6 @@ let
           hash = "sha256-09Zv4nMl9iw3ZrlGIROERcvlDXf1z5JpAEIyYdaqgIA=";
         };
       };
-      dataform-nvim =
-        (pkgs.vimUtils.buildVimPlugin {
-          pname = "dataform.nvim";
-          version = "2025-04-02";
-          src = pkgs.fetchFromGitHub {
-            owner = "magal1337";
-            repo = "dataform.nvim";
-            rev = "710d68381d089b891b1f60d41af10ab06cbd008d";
-            hash = "sha256-EBvcGo0SJOuGEyjU0FhsJJyXR8TkN7WkM3jpZFyyZ6A=";
-          };
-        }).overrideAttrs
-          {
-            nvimSkipModule = "notify";
-          };
       pnpm-nvim = pkgs.vimUtils.buildVimPlugin {
         pname = "pnpm.nvim";
         version = "2025-04-02";
@@ -223,10 +209,6 @@ let
           telescope-nvim
         ];
 
-        dataform = [
-          dataform-nvim
-        ];
-
         ui = [
           noice-nvim
           nui-nvim
@@ -309,7 +291,6 @@ let
           general = true;
 
           haskell = true;
-          dataform = false;
           ui = false;
           basedpyright = true;
 

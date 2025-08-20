@@ -20,26 +20,6 @@ return {
   },
 
   {
-    'magal1337/dataform.nvim',
-    enabled = require('nixCatsUtils').enableForCategory 'dataform',
-    dependencies = {
-      'rcarriga/nvim-notify',
-      'nvim-telescope/telescope.nvim',
-    },
-    ft = {
-      'dataform',
-      'sqlx',
-      'js',
-      'ts',
-    },
-    keys = {
-      { '<leader>cpa', '<cmd>DataformRunAction<cr>', desc = 'Dataform run currently open action' },
-      { '<leader>cpd', '<cmd>DataformGoToRef<cr>', desc = 'Go to Dataform ref' },
-      { '<leader>cpb', '<cmd>DataformCompileFull<cr>', desc = 'Compile current dataform file and view result' },
-    },
-  },
-
-  {
     'folke/flash.nvim',
     event = 'VeryLazy',
     ---@type Flash.Config
