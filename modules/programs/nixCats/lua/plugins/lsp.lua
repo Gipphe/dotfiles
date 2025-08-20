@@ -277,25 +277,25 @@ return {
 
           map('gK', vim.lsp.buf.signature_help, 'Signature help')
 
-          vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, { desc = 'Signature help', buffer = true })
+          vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, { desc = 'Signature help', buffer = event.buf })
 
-          vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code action', buffer = true })
+          vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code action', buffer = event.buf })
 
-          vim.keymap.set({ 'n', 'v' }, '<leader>cc', vim.lsp.codelens.run, { desc = 'Run codelens', buffer = true })
-          vim.keymap.set('n', '<leader>cC', vim.lsp.codelens.refresh, { desc = 'Refresh & display codelens', buffer = true })
+          vim.keymap.set({ 'n', 'v' }, '<leader>cc', vim.lsp.codelens.run, { desc = 'Run codelens', buffer = event.buf })
+          vim.keymap.set('n', '<leader>cC', vim.lsp.codelens.refresh, { desc = 'Refresh & display codelens', buffer = event.buf })
           vim.keymap.set('n', '<leader>cA', function()
             vim.lsp.buf.code_action { context = { only = { 'source' }, diagnostics = {} } }
-          end, { desc = 'Source action', buffer = true })
+          end, { desc = 'Source action', buffer = event.buf })
 
-          vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = 'Rename', buffer = true })
+          vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = 'Rename', buffer = event.buf })
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
-          vim.keymap.set('n', '<leader>cy', require('telescope.builtin').lsp_document_symbols, { desc = 'Document symbols', buffer = true })
+          vim.keymap.set('n', '<leader>cy', require('telescope.builtin').lsp_document_symbols, { desc = 'Document symbols', buffer = event.buf })
 
           -- Fuzzy find all the symbols in your current workspace.
           --  Similar to document symbols, except searches over your entire project.
-          vim.keymap.set('n', '<leader>cY', require('telescope.builtin').lsp_dynamic_workspace_symbols, { desc = '[W]orkspace [S]ymbols', buffer = true })
+          vim.keymap.set('n', '<leader>cY', require('telescope.builtin').lsp_dynamic_workspace_symbols, { desc = '[W]orkspace [S]ymbols', buffer = event.buf })
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
