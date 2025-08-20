@@ -40,17 +40,6 @@ return {
     },
   },
 
-  { -- Add indentation guides even on blank lines
-    'lukas-reineke/indent-blankline.nvim',
-    -- NOTE: nixCats: return true only if category is enabled, else false
-    enabled = require('nixCatsUtils').enableForCategory 'not-snacks',
-    -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help ibl`
-    main = 'ibl',
-    ---@type ibl.config
-    opts = {},
-  },
-
   {
     'catppuccin/nvim',
     name = require('nixCatsUtils').lazyAdd('catppuccin', 'catppuccin-nvim'),
@@ -76,9 +65,6 @@ return {
         native_lsp = {
           enabled = true,
         },
-        navic = {
-          enabled = true,
-        },
         noice = true,
         notify = true,
         telescope = {
@@ -98,7 +84,6 @@ return {
   {
     'folke/noice.nvim',
     event = 'VeryLazy',
-    enabled = require('nixCatsUtils').enableForCategory 'ui',
     dependencies = {
       'MunifTanjim/nui.nvim',
       'rcarriga/nvim-notify',
@@ -204,7 +189,6 @@ return {
 
   {
     'rcarriga/nvim-notify',
-    enabled = require('nixCatsUtils').enableForCategory 'ui',
     dependencies = {
       'nvim-telescope/telescope.nvim',
     },

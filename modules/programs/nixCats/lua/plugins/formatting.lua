@@ -1,7 +1,6 @@
-return { -- Autoformat
+return {
   'stevearc/conform.nvim',
   lazy = false,
-  dependencies = {},
   keys = {
     {
       '<leader>cf',

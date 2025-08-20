@@ -189,6 +189,9 @@ let
           tiny-inline-diagnostic-nvim
           todo-comments-nvim
           trouble-nvim
+          noice-nvim
+          nui-nvim
+          nvim-notify
           undotree
           venv-selector-nvim
           vim-css-color
@@ -206,13 +209,6 @@ let
           # haskell-scope-highlighting-nvim
           haskell-tools-nvim
           telescope-nvim
-        ];
-
-        ui = [
-          noice-nvim
-          nui-nvim
-          nvim-navic
-          nvim-notify
         ];
       };
 
@@ -290,7 +286,6 @@ let
           general = true;
 
           haskell = true;
-          ui = false;
           basedpyright = true;
 
           # we can pass whatever we want actually.
