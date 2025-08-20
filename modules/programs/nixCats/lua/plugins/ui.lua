@@ -8,6 +8,7 @@ return {
       { 'nvim-tree/nvim-web-devicons' },
       { 'echasnovski/mini.nvim', version = '*' },
     },
+    ---@module 'bufferline'
     ---@type bufferline.UserConfig
     opts = {
       options = {
@@ -103,7 +104,8 @@ return {
       'rcarriga/nvim-notify',
       'folke/which-key.nvim',
     },
-    ---@type NoiceConfig
+    ---@module 'noice'
+    ---@type noice.NoiceConfig
     opts = {
       presets = {
         bottom_search = true,
@@ -206,6 +208,7 @@ return {
     dependencies = {
       'nvim-telescope/telescope.nvim',
     },
+    ---@module 'notify'
     ---@type notify.Config
     opts = {
       timeout = 3000,

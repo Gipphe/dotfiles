@@ -43,6 +43,7 @@ return {
     },
     lazy = false,
     branch = require('nixCatsUtils').isNixCats or 'regexp',
+    ---@module 'venv-selector'
     ---@type venv-selector.Config
     opts = {},
     keys = {
