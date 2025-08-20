@@ -8,7 +8,6 @@ return {
       'nvim-telescope/telescope-fzf-native.nvim',
       'nvim-telescope/telescope-ui-select.nvim',
       'nvim-tree/nvim-web-devicons',
-      'nvim-telescope/telescope-github.nvim',
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -51,7 +50,6 @@ return {
       -- Enable Telescope extensions if they are installed
       pcall(require('telescope').load_extension, 'fzf')
       pcall(require('telescope').load_extension, 'ui-select')
-      pcall(require('telescope').load_extension, 'github')
 
       -- TODO Reconsider which of these I need.
       -- See `:help telescope.builtin`
@@ -177,16 +175,4 @@ return {
 
   -- Useful for getting pretty icons, but requires a Nerd Font.
   { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
-
-  {
-    -- TODO Reconsider whether I need this one
-    'nvim-telescope/telescope-github.nvim',
-    enabled = false,
-    keys = {
-      { '<leader>tgi', '<cmd>Telescope gh issues<cr>', desc = 'Find GitHub issues (gh)' },
-      { '<leader>tgp', '<cmd>Telescope gh pull_requests', desc = 'Find GitHub pull requests (gh)' },
-      { '<leader>tgg', '<cmd>Telescope gh gist<cr>', desc = 'Find GitHub gists (gh)' },
-      { '<leader>tgw', '<cmd>Telescope gh run<cr>', desc = 'Find GitHub workflow runs (gh)' },
-    },
-  },
 }

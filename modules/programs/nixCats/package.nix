@@ -183,7 +183,6 @@ let
           promise-async
           snacks-nvim
           telescope-fzf-native-nvim
-          telescope-github-nvim
           telescope-nvim
           telescope-ui-select-nvim
           tiny-inline-diagnostic-nvim
