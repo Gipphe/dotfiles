@@ -1,3 +1,5 @@
+local util = require 'util'
+
 return {
   {
     'nvim-pack/nvim-spectre',
@@ -60,16 +62,12 @@ return {
     keys = {
       {
         '<leader>mpo',
-        function()
-          require('marp.nvim').ServerStart()
-        end,
+        require('marp.nvim').ServerStart,
         desc = 'Start Marp server',
       },
       {
         '<leader>mpc',
-        function()
-          require('marp.nvim').ServerStop()
-        end,
+        require('marp.nvim').ServerStop,
         desc = 'Stop Marp server',
       },
     },
@@ -131,30 +129,22 @@ return {
     keys = {
       {
         '<leader>qs',
-        function()
-          require('persistence').load()
-        end,
+        require('persistence').load,
         desc = 'Restore session',
       },
       {
         '<leader>ql',
-        function()
-          require('persistence').load { last = true }
-        end,
+        util.thunk(require('persistence').load, { last = true }),
         desc = 'Restore last session',
       },
       {
         '<leader>qd',
-        function()
-          require('persistence').stop()
-        end,
+        require('persistence').stop,
         desc = 'Do not save current session',
       },
       {
         '<leader>qp',
-        function()
-          require('persistence').select()
-        end,
+        require('persistence').select,
         desc = 'Select session to restore',
       },
     },
