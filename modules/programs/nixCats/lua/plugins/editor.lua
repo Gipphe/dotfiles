@@ -304,7 +304,7 @@ return {
           else
             gitsigns.nav_hunk 'next'
           end
-        end)
+        end, 'Go to next hunk')
 
         lmap('n', '[c', function()
           if vim.wo.diff then
@@ -312,47 +312,46 @@ return {
           else
             gitsigns.nav_hunk 'prev'
           end
-        end)
+        end, 'Go to previous hunk')
 
         -- Actions
-        lmap('n', '<leader>hs', gitsigns.stage_hunk)
-        lmap('n', '<leader>hr', gitsigns.reset_hunk)
+        lmap('n', '<leader>hs', gitsigns.stage_hunk, 'Stage hunk')
+        lmap('n', '<leader>hr', gitsigns.reset_hunk, 'Reset hunk')
 
         lmap('v', '<leader>hs', function()
           gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
-        end)
+        end, 'Stage selected lines')
 
         lmap('v', '<leader>hr', function()
           gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
-        end)
+        end, 'Reset selected lines')
 
-        lmap('n', '<leader>hS', gitsigns.stage_buffer)
-        lmap('n', '<leader>hR', gitsigns.reset_buffer)
-        lmap('n', '<leader>hp', gitsigns.preview_hunk)
-        lmap('n', '<leader>hi', gitsigns.preview_hunk_inline)
+        lmap('n', '<leader>hS', gitsigns.stage_buffer, 'Stage buffer')
+        lmap('n', '<leader>hR', gitsigns.reset_buffer, 'Reset buffer')
+        lmap('n', '<leader>hp', gitsigns.preview_hunk, 'Preview hunk')
+        lmap('n', '<leader>hi', gitsigns.preview_hunk_inline, 'Preview hunk inline')
 
         lmap('n', '<leader>hb', function()
           gitsigns.blame_line { full = true }
-        end)
+        end, 'Blame current line')
 
-        lmap('n', '<leader>hd', gitsigns.diffthis)
+        lmap('n', '<leader>hd', gitsigns.diffthis, 'Vimdiff file')
 
         lmap('n', '<leader>hD', function()
           gitsigns.diffthis '~'
-        end)
+        end, 'Vimdiff file against previous commit')
 
         lmap('n', '<leader>hQ', function()
           gitsigns.setqflist 'all'
-        end)
-        lmap('n', '<leader>hq', gitsigns.setqflist)
+        end, 'Open QuickFix list with all hunks in all files')
+        lmap('n', '<leader>hq', gitsigns.setqflist, 'Open QuickFix list with all hunks in current buffer')
 
         -- Toggles
-        lmap('n', '<leader>tb', gitsigns.toggle_current_line_blame)
-        -- lmap('n', '<leader>td', gitsigns.toggle_deleted)
-        lmap('n', '<leader>tw', gitsigns.toggle_word_diff)
+        lmap('n', '<leader>tb', gitsigns.toggle_current_line_blame, 'Toggle current line blame virtual text')
+        lmap('n', '<leader>tw', gitsigns.toggle_word_diff, 'Highlight word diffs inline')
 
         -- Text object
-        lmap({ 'o', 'x' }, 'ih', gitsigns.select_hunk)
+        lmap({ 'o', 'x' }, 'ih', gitsigns.select_hunk, 'Select hunk under cursor')
       end,
     },
   },
