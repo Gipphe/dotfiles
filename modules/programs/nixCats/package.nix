@@ -152,6 +152,7 @@ let
           fidget-nvim
           flash-nvim
           gitsigns-nvim
+          guess-indent-nvim
           lazy-nvim
           lazydev-nvim
           lspkind-nvim
@@ -159,11 +160,14 @@ let
           marp-nvim
           mini-nvim
           neoconf-nvim
+          noice-nvim
+          nui-nvim
           nvim-dap
           nvim-dap-python
           nvim-dap-ui
           nvim-lspconfig
           nvim-nio
+          nvim-notify
           nvim-spectre
           nvim-treesitter-context
           nvim-treesitter-refactor
@@ -185,15 +189,11 @@ let
           tiny-inline-diagnostic-nvim
           todo-comments-nvim
           trouble-nvim
-          noice-nvim
-          nui-nvim
-          nvim-notify
           undotree
           venv-selector-nvim
           vim-css-color
           vim-illuminate
           vim-matchup
-          vim-sleuth
           virt-column-nvim
           which-key-nvim
           wilder-nvim
