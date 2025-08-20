@@ -54,6 +54,9 @@ return {
   {
     'aca/marp.nvim',
     version = false,
+    dependencies = {
+      'folke/which-key.nvim',
+    },
     keys = {
       {
         '<leader>mpo',
@@ -69,9 +72,6 @@ return {
         end,
         desc = 'Stop Marp server',
       },
-    },
-    dependencies = {
-      { 'folke/which-key.nvim' },
     },
     config = function(_, opts)
       require('marp').setup(opts or {})
@@ -89,6 +89,10 @@ return {
 
   {
     'stevearc/oil.nvim',
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+    },
+    lazy = false,
     ---@module 'oil'
     ---@type oil.setupOpts
     opts = {
@@ -118,10 +122,6 @@ return {
       { '<leader>e', '<leader>fe', desc = 'Open Oil (parent dir)', remap = true },
       { '<leader>E', '<leader>fE', desc = 'Open Oil (cwd)', remap = true },
     },
-    dependencies = {
-      { 'nvim-tree/nvim-web-devicons', opts = {} },
-    },
-    lazy = false,
   },
 
   {
@@ -160,9 +160,8 @@ return {
     },
   },
 
-  { -- Detect tabstop and shiftwidth automatically
-    'tpope/vim-sleuth',
-  },
+  -- Detect tabstop and shiftwidth automatically
+  'tpope/vim-sleuth',
 
   {
     'folke/trouble.nvim',
@@ -263,7 +262,9 @@ return {
 
   {
     'andymass/vim-matchup',
-    dependencies = 'nvim-treesitter/nvim-treesitter',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+    },
     event = 'BufReadPre',
     config = function()
       vim.g.matchup_matchparen_offscreen = { method = 'popup' }
@@ -379,5 +380,10 @@ return {
       require('tiny-inline-diagnostic').setup()
       vim.diagnostic.config { virtual_text = false }
     end,
+  },
+
+  {
+    'nvim-tree/nvim-web-devicons',
+    opts = {},
   },
 }
