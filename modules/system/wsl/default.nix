@@ -29,7 +29,7 @@ util.mkToggledModule [ "system" ] {
         docker-desktop.enable = false;
         interop = {
           includePath = true;
-          # register = true;
+          register = true;
           # startMenuLaunchers = true;
         };
         extraBin = with pkgs; [
