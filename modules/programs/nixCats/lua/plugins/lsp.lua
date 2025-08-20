@@ -3,45 +3,12 @@ return {
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
-      {
-        'williamboman/mason.nvim',
-        -- NOTE: nixCats: use lazyAdd to only enable mason if nix wasnt involved.
-        -- because we will be using nix to download things instead.
-        enabled = require('nixCatsUtils').lazyAdd(true, false),
-        opts = {},
-      }, -- NOTE: Must be loaded before dependants
-
-      {
-        'williamboman/mason-lspconfig.nvim',
-        -- NOTE: nixCats: use lazyAdd to only enable mason if nix wasnt involved.
-        -- because we will be using nix to download things instead.
-        enabled = require('nixCatsUtils').lazyAdd(true, false),
-      },
-      {
-        'WhoIsSethDaniel/mason-tool-installer.nvim',
-        -- NOTE: nixCats: use lazyAdd to only enable mason if nix wasnt involved.
-        -- because we will be using nix to download things instead.
-        enabled = require('nixCatsUtils').lazyAdd(true, false),
-      },
-
-      -- Useful status updates for LSP.
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      {
-        'j-hui/fidget.nvim',
-        ---@type table See |fidget-options| or |fidget-option.txt|.
-        opts = {},
-      },
-
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
+      'j-hui/fidget.nvim',
       'folke/lazydev.nvim',
-
-      {
-        'lukahartwig/pnpm.nvim',
-        ft = { 'js', 'ts', 'tsx', 'jsx' },
-        config = function()
-          require('telescope').load_extension 'pnpm'
-        end,
-      },
-
+      'lukahartwig/pnpm.nvim',
       -- Does not work correctly in Neovim v0.11 with vim.lsp.
       -- 'folke/neoconf.nvim',
 
@@ -489,5 +456,44 @@ return {
   {
     'elkowar/yuck.vim',
     ft = { 'yuck' },
+  },
+
+  {
+    'lukahartwig/pnpm.nvim',
+    ft = { 'js', 'ts', 'tsx', 'jsx' },
+    config = function()
+      require('telescope').load_extension 'pnpm'
+    end,
+  },
+
+  {
+    -- Automatically install LSPs and related tools to stdpath for Neovim
+    'williamboman/mason.nvim',
+    -- NOTE: nixCats: use lazyAdd to only enable mason if nix wasnt involved.
+    -- because we will be using nix to download things instead.
+    enabled = require('nixCatsUtils').lazyAdd(true, false),
+    opts = {},
+  }, -- NOTE: Must be loaded before dependants
+
+  {
+    'williamboman/mason-lspconfig.nvim',
+    -- NOTE: nixCats: use lazyAdd to only enable mason if nix wasnt involved.
+    -- because we will be using nix to download things instead.
+    enabled = require('nixCatsUtils').lazyAdd(true, false),
+  },
+
+  {
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
+    -- NOTE: nixCats: use lazyAdd to only enable mason if nix wasnt involved.
+    -- because we will be using nix to download things instead.
+    enabled = require('nixCatsUtils').lazyAdd(true, false),
+  },
+
+  -- Useful status updates for LSP.
+  -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+  {
+    'j-hui/fidget.nvim',
+    ---@type table See |fidget-options| or |fidget-option.txt|.
+    opts = {},
   },
 }
