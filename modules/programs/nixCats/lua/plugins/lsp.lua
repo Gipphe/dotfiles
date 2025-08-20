@@ -11,31 +11,6 @@ return {
       'lukahartwig/pnpm.nvim',
       -- Does not work correctly in Neovim v0.11 with vim.lsp.
       -- 'folke/neoconf.nvim',
-
-      {
-        'kevinhwang91/nvim-ufo',
-        dependencies = {
-          'kevinhwang91/promise-async',
-        },
-        config = false,
-        keys = {
-          {
-            'zR',
-            function()
-              require('ufo').openAllFolds()
-            end,
-            desc = 'Open all folds',
-          },
-          {
-            'zM',
-            function()
-              require('ufo').closeAllFolds()
-            end,
-            desc = 'Close all folds',
-          },
-        },
-      },
-
       'saghen/blink.cmp',
     },
     opts = function(opts)

@@ -173,7 +173,6 @@ let
           nvim-treesitter.withAllGrammars
           nvim-ts-autotag
           nvim-ts-context-commentstring
-          nvim-ufo
           nvim-web-devicons
           oil-nvim
           otter-nvim
