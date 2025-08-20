@@ -235,7 +235,6 @@ let
         ui = [
           noice-nvim
           nui-nvim
-          nvim-navbuddy
           nvim-navic
           nvim-notify
         ];

@@ -67,23 +67,6 @@ return {
         end,
       },
 
-      {
-        'SmiteshP/nvim-navbuddy',
-        enabled = require('nixCatsUtils').enableForCategory 'ui',
-        dependencies = {
-          'SmiteshP/nvim-navic',
-          'MunifTanjim/nui.nvim',
-        },
-        opts = {
-          lsp = {
-            auto_attach = true,
-          },
-        },
-        keys = {
-          { '<leader>cn', '<cmd>Navbuddy<cr>', desc = 'Open Navbuddy' },
-        },
-      },
-
       'folke/neoconf.nvim',
 
       {
