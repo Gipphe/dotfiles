@@ -20,6 +20,7 @@ return { -- Collection of various small independent plugins/modules
     }
 
     require('mini.pairs').setup {}
+    vim.g.minipairs_disable = true
 
     require('mini.comment').setup {
       options = {
