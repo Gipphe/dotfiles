@@ -83,6 +83,7 @@ return {
 
   {
     'folke/noice.nvim',
+    enabled = require('nixCatsUtils').enableForCategory 'full',
     event = 'VeryLazy',
     dependencies = {
       'MunifTanjim/nui.nvim',
@@ -187,6 +188,7 @@ return {
 
   {
     'rcarriga/nvim-notify',
+    enabled = require('nixCatsUtils').enableForCategory 'full',
     dependencies = {
       'nvim-telescope/telescope.nvim',
     },

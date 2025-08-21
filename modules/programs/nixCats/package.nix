@@ -95,40 +95,43 @@ let
       # this includes LSPs
       lspsAndRuntimeDeps = with pkgs; {
         general = [
+          fd
+          fourmolu
+          haskellPackages.cabal-fmt
+          markdownlint-cli
+          nix-doc
+          nixfmt
+          prettierd
+          ripgrep
+          shfmt
+          stdenv.cc.cc
+          stylua
+          universal-ctags
+        ];
+
+        full = with pkgs; [
           bash-language-server
           dockerfile-language-server-nodejs
           elmPackages.elm-language-server
-          fd
           fish-lsp
-          fourmolu
           gopls
-          haskellPackages.cabal-fmt
           kdePackages.qtdeclarative
           lemminx
           lua-language-server
-          markdownlint-cli
           marksman
           metals
           nil
-          nix-doc
           nixd
-          nixfmt
           opentofu
           powershell
           powershell-editor-services
-          prettierd
-          ripgrep
           ruff
           rust-analyzer
-          shfmt
           sqls
-          stdenv.cc.cc
-          stylua
           tailwindcss-language-server
           terraform-ls
           tofu-ls
           typescript-language-server
-          universal-ctags
           vscode-langservers-extracted
           yaml-language-server
         ];
@@ -151,25 +154,13 @@ let
           bufferline-nvim
           catppuccin-nvim
           conform-nvim
-          fidget-nvim
           flash-nvim
           gitsigns-nvim
           guess-indent-nvim
           lazy-nvim
-          lazydev-nvim
-          lspkind-nvim
           luasnip
-          marp-nvim
           mini-nvim
           neoconf-nvim
-          noice-nvim
-          nui-nvim
-          nvim-dap
-          nvim-dap-python
-          nvim-dap-ui
-          nvim-lspconfig
-          nvim-nio
-          nvim-notify
           nvim-spectre
           nvim-treesitter-context
           nvim-treesitter-refactor
@@ -179,10 +170,8 @@ let
           nvim-ts-context-commentstring
           nvim-web-devicons
           oil-nvim
-          otter-nvim
           persistence-nvim
           plenary-nvim
-          pnpm-nvim
           promise-async
           snacks-nvim
           telescope-fzf-native-nvim
@@ -192,7 +181,6 @@ let
           todo-comments-nvim
           trouble-nvim
           undotree
-          venv-selector-nvim
           vim-css-color
           vim-illuminate
           vim-matchup
@@ -201,6 +189,24 @@ let
           wilder-nvim
           yuck-vim
           zellij-nav-nvim
+        ];
+
+        full = [
+          fidget-nvim
+          lazydev-nvim
+          lspkind-nvim
+          marp-nvim
+          noice-nvim
+          nui-nvim
+          nvim-dap
+          nvim-dap-python
+          nvim-dap-ui
+          nvim-lspconfig
+          nvim-nio
+          nvim-notify
+          otter-nvim
+          pnpm-nvim
+          venv-selector-nvim
         ];
 
         haskell = [
@@ -282,6 +288,7 @@ let
         };
         categories = {
           general = true;
+          full = true;
 
           haskell = true;
           basedpyright = true;

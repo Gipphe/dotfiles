@@ -37,6 +37,7 @@ return {
 
   {
     'linux-cultist/venv-selector.nvim',
+    enabled = require('nixCatsUtils').enableForCategory 'full',
     dependencies = {
       'neovim/nvim-lspconfig',
       'mfussenegger/nvim-dap',
@@ -55,6 +56,7 @@ return {
 
   {
     'aca/marp.nvim',
+    enabled = require('nixCatsUtils').enableForCategory 'full',
     main = 'marp.nvim',
     version = false,
     dependencies = {

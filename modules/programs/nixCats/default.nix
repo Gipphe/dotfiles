@@ -18,7 +18,10 @@ util.mkProgram {
       nvim = {
         enable = true;
         packageDefinitions.merge = {
-          categories.droid = flags.isNixOnDroid;
+          categories = {
+            droid = flags.isNixOnDroid;
+            full = !flags.isNixOnDroid;
+          };
           extra.nixd = {
             nixpkgs = ''import ${pkgs.path} {}'';
             home_manager = ''(builtins.getFlake "${inputs.self}").nixosConfigurations.argon.options.home-manager.users.type.getSubOptions []'';
