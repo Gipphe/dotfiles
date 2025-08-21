@@ -19,7 +19,7 @@ util.mkProgram {
         };
       };
       userKnownHostsFile = "~/.ssh/known_hosts ${
-        config.xdg.configFile."gipphe/builder-known-hosts".path
+        config.xdg.configFile."gipphe/builder-known-hosts".target
       }";
     };
     xdg.configFile."gipphe/builder-known-hosts".text = ''
