@@ -55,6 +55,100 @@ return {
   },
 
   {
+    'ThePrimagen/harpoon',
+    branch = 'harpoon2',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+    },
+    opts = {},
+    config = function(_, opts)
+      local harpoon = require 'harpoon'
+      harpoon:setup(opts)
+      local conf = require('telescope.config').values
+      local function toggle_telescope(harpoon_files)
+        local file_paths = {}
+        for _, item in ipairs(harpoon_files.items) do
+          table.insert(file_paths, item.value)
+        end
+
+        require('telescope.pickers')
+          .new({}, {
+            prompt_title = 'Harpoon',
+            finder = require('telescope.finders').new_table {
+              results = file_paths,
+            },
+            previewer = conf.file_previewer {},
+            sorter = conf.generic_sorter {},
+          })
+          :find()
+      end
+      vim.keymap.set('n', '<C-e>', function()
+        toggle_telescope(harpoon:list())
+      end, { desc = 'Toggle Harpoon window' })
+    end,
+    keys = {
+      {
+        '<leader>a',
+        function()
+          require('harpoon'):list():add()
+        end,
+        desc = 'Add to Harpoon',
+      },
+      {
+        '<C-e>',
+        -- Uses telescope in the `config` function above.
+        -- function()
+        --   require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())
+        -- end,
+        desc = 'Toggle Harpoon quick menu',
+      },
+      {
+        '<C-1>',
+        function()
+          require('harpoon'):list():select(1)
+        end,
+        desc = 'Go to Harpoon entry 1',
+      },
+      {
+        '<C-2>',
+        function()
+          require('harpoon'):list():select(2)
+        end,
+        desc = 'Go to Harpoon entry 2',
+      },
+      {
+        '<C-3>',
+        function()
+          require('harpoon'):list():select(3)
+        end,
+        desc = 'Go to Harpoon entry 3',
+      },
+      {
+        '<C-4>',
+        function()
+          require('harpoon'):list():select(4)
+        end,
+        desc = 'Go to Harpoon entry 4',
+      },
+      {
+        '<C-S-P>',
+        function()
+          require('harpoon'):list():prev()
+        end,
+        desc = 'Go to previous Harpoon entry',
+      },
+      {
+        '<C-S-N>',
+        function()
+          require('harpoon'):list():next()
+        end,
+        desc = 'Go to next Harpoon entry',
+      },
+    },
+  },
+
+  {
     'aca/marp.nvim',
     enabled = require('nixCatsUtils').enableForCategory 'full',
     main = 'marp.nvim',

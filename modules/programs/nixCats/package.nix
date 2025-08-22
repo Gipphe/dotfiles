@@ -157,6 +157,7 @@ let
           flash-nvim
           gitsigns-nvim
           guess-indent-nvim
+          harpoon2
           lazy-nvim
           luasnip
           mini-nvim
