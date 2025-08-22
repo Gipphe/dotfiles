@@ -471,4 +471,18 @@ return {
     'nvim-tree/nvim-web-devicons',
     opts = {},
   },
+
+  {
+    'windwp/nvim-autopairs',
+    dependencies = {
+      {
+        'saghen/blink.cmp',
+        opts = { completion = { accept = { auto_brackets = { enabled = true } } } },
+      },
+    },
+    event = 'InsertEnter',
+    opts = {
+      disable_filetype = { 'TelescopePrompt', 'vim' },
+    },
+  },
 }
