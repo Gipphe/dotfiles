@@ -15,8 +15,8 @@ end, { desc = 'Go to previous [D]iagnostic message' })
 map('n', ']d', function()
   vim.diagnostic.jump { count = 1, float = true }
 end, { desc = 'Go to next [D]iagnostic message' })
-map('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+map('n', '<leader>de', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
+map('n', '<leader>dq', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -193,3 +193,16 @@ map('n', '[w', diagnostic_goto(false, 'WARN'), { desc = 'Prev warning' })
 
 map('n', '<leader>qq', '<cmd>qa<cr>', { desc = 'Quit all' })
 map('n', '<leader>ui', vim.show_pos, { desc = 'Inspect pos' })
+
+map('n', 'g/', '*')
+map('n', '[/', '[<C-i>')
+map('n', '<C-w>/', function()
+  local word = vim.fn.expand '<cword>'
+  if word ~= '' then
+    vim.cmd('split | silent! ijump /' .. word .. '/')
+  end
+end)
+map('n', '<leader>/', require('snacks').picker.grep)
+map('n', '<leader>g/', require('snacks').picker.grep_word)
+
+map('x', '/', '<esc>/\\%V') -- `:h /\%V`
