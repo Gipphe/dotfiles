@@ -476,6 +476,7 @@ return {
     'windwp/nvim-autopairs',
     dependencies = {
       {
+        -- https://github.com/Saghen/blink.cmp/discussions/157
         'saghen/blink.cmp',
         opts = { completion = { accept = { auto_brackets = { enabled = true } } } },
       },
