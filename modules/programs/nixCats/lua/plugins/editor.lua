@@ -164,12 +164,12 @@ return {
     keys = {
       {
         '<leader>mpo',
-        require('marp.nvim').ServerStart,
+        function() require('marp.nvim').ServerStart() end,
         desc = 'Start Marp server',
       },
       {
         '<leader>mpc',
-        require('marp.nvim').ServerStop,
+        function() require('marp.nvim').ServerStop() end,
         desc = 'Stop Marp server',
       },
     },

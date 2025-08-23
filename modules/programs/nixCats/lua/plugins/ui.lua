@@ -301,6 +301,7 @@ return {
 
   {
     'folke/todo-comments.nvim',
+    enabled = require('nixCatsUtils').enableForCategory 'full',
     event = 'VimEnter',
     dependencies = { 'nvim-lua/plenary.nvim' },
     ---@type TodoOptions
