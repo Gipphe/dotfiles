@@ -13,6 +13,7 @@ util.mkProgram {
           # TODO replace hard-coded builder
           hostname = "titanium.lan";
           user = "builder";
+          port = 9022;
           identitiesOnly = true;
           # TODO replace hard-coded path
           identityFile = config.sops.secrets."building-carbon.ssh".path;

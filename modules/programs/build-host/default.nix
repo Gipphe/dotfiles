@@ -41,6 +41,7 @@ util.mkProgram {
       };
       services.openssh = {
         enable = true;
+        ports = [ 9022 ];
         extraConfig = ''
           HostKey ${config.sops.secrets."argon-sshd.ssh".path}
         '';
