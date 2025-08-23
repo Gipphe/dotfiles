@@ -26,6 +26,7 @@ util.mkProgram {
                 categories = {
                   droid = flags.isNixOnDroid;
                   full = !flags.isNixOnDroid;
+                  haskell = !flags.isNixOnDroid;
                 };
                 extra.nixd = {
                   nixpkgs = ''import ${pkgs.path} {}'';
