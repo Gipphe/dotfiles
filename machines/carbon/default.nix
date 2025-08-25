@@ -1,3 +1,4 @@
+{ lib, config, ... }:
 {
   gipphe.host.carbon = {
     system = "aarch64-linux";
@@ -27,10 +28,17 @@
           # SSH setup requires sops-nix, which isn't supported on nix-on-droid
           # gipphe.programs.ssh.enable = lib.mkForce false;
         };
-        hm.home.sessionVariables.XDG_RUNTIME_DIR = "${config.gipphe.homeDirectory}/.run";
-        hm.programs.fish.shellInit = lib.mkBefore ''
-          mkdir -p '${config.home.sessionVariables."XDG_RUNTIME_DIR"}'
-        '';
+        hm = {
+          home = {
+            sessionVariables.XDG_RUNTIME_DIR = "${config.gipphe.homeDirectory}/.run";
+            activation."sops-nix-droid-fix" = lib.hm.dag.entryAfter [ "filesChanged" ] ''
+              run ${config.systemd.user.services.sops-nix.Service.ExecStart}
+            '';
+          };
+          programs.fish.shellInit = lib.mkBefore ''
+            mkdir -p '${config.home.sessionVariables."XDG_RUNTIME_DIR"}'
+          '';
+        };
         system-droid.system.stateVersion = lib.mkForce "24.05";
       }
     )
