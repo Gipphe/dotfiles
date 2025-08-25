@@ -1,4 +1,3 @@
-{ lib, config, ... }:
 {
   gipphe.host.carbon = {
     system = "aarch64-linux";
@@ -6,7 +5,12 @@
   };
   imports = [
     (
-      { lib, util, ... }:
+      {
+        lib,
+        config,
+        util,
+        ...
+      }:
       util.mkToggledModule [ "machines" ] {
         name = "carbon";
         shared = {
