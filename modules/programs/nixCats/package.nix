@@ -291,7 +291,7 @@ let
         };
         categories = {
           general = true;
-          full = false;
+          full = true;
 
           haskell = true;
           basedpyright = true;
