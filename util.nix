@@ -26,6 +26,8 @@ let
     ;
   inherit (lib.attrsets) foldlAttrs filterAttrs;
 
+  kdl = import ./util/kdl.nix;
+
   setCaskHash =
     cask: hash:
     cask.overrideAttrs (_: {
@@ -312,6 +314,7 @@ in
   inherit
     GPUOffloadApp
     findSiblings
+    kdl
     mkEnvironment
     mkModule
     mkProfile
