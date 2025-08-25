@@ -193,11 +193,12 @@ let
           zellij-nav-nvim
         ];
 
-        full = [
+        full = with pkgs.vimPlugins; [
           fidget-nvim
           lazydev-nvim
           lspkind-nvim
           marp-nvim
+          no-neck-pain-nvim
           noice-nvim
           nui-nvim
           nvim-dap

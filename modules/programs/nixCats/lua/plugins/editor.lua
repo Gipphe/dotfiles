@@ -164,12 +164,16 @@ return {
     keys = {
       {
         '<leader>mpo',
-        function() require('marp.nvim').ServerStart() end,
+        function()
+          require('marp.nvim').ServerStart()
+        end,
         desc = 'Start Marp server',
       },
       {
         '<leader>mpc',
-        function() require('marp.nvim').ServerStop() end,
+        function()
+          require('marp.nvim').ServerStop()
+        end,
         desc = 'Stop Marp server',
       },
     },
@@ -484,6 +488,33 @@ return {
     event = 'InsertEnter',
     opts = {
       disable_filetype = { 'TelescopePrompt', 'vim' },
+    },
+  },
+  {
+    'shortcuts/no-neck-pain.nvim',
+    enabled = nixCats 'full',
+    version = '*',
+    keys = {
+      {
+        '<leader>nn',
+        '<cmd>NoNeckPain<cr>',
+        desc = 'Toggle NoNeckPain',
+      },
+      {
+        '<leader>nk',
+        '<cmd>NoNeckPainWidthUp<cr>',
+        desc = 'Increase NoNeckPain width',
+      },
+      {
+        '<leader>nj',
+        '<cmd>NoNeckPainWidthDown<cr>',
+        desc = 'Decrease NoNeckPain width',
+      },
+      {
+        '<leader>ns',
+        '<cmd>NoNeckPainWidthScratchPad<cr>',
+        desc = 'Use NoNeckPain scratch pad',
+      },
     },
   },
 }
