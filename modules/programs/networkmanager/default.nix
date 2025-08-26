@@ -5,8 +5,11 @@ in
 util.mkProgram {
   name = "networkmanager";
   hm = {
-    wayland.windowManager.hyprland.settings.bind = [
-      ", XF86WLAN, exec, ${pkg}/bin/nmcli radio wifi toggle"
+    gipphe.core.wm.binds = [
+      {
+        key = "XF86WLAN";
+        action.spawn = "${pkg}/bin/nmcli radio wifi toggle";
+      }
     ];
   };
 }

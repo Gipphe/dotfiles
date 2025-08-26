@@ -4,7 +4,7 @@ util.mkProgram {
   hm = {
     home.packages = [ pkgs.runelite ];
     wayland.windowManager.hyprland.settings.windowrule = [
-      "nofocus,floating:1,class:net-runelite-client-RuneLite,title:^(win\d+)$"
+      "nofocus, floating:1, class:net-runelite-client-RuneLite, title:^(win\d+)$"
     ];
   };
 }

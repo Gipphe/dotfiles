@@ -8,7 +8,10 @@
   ...
 }:
 util.mkModule {
-  shared.imports = [ ./fontconfig ];
+  shared.imports = [
+    ./fontconfig
+    ./wm.nix
+  ];
 
   hm = {
     home = {

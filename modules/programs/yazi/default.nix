@@ -24,8 +24,12 @@ util.mkProgram {
   };
   hm = {
     programs.yazi.enable = true;
-    wayland.windowManager.hyprland.settings.bind = lib.mkIf cfg.hyprland.enable [
-      "$mod, E, exec, ${file_manager_script}/bin/file-manager-script.sh"
+    gipphe.core.wm.binds = lib.mkIf cfg.hyprland.enable [
+      {
+        mod = "$mod";
+        key = "E";
+        action.spawn = "${file_manager_script}/bin/file-manager-script.sh";
+      }
     ];
   };
 }

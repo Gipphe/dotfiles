@@ -6,9 +6,15 @@ util.mkProgram {
   name = "brightnessctl";
   hm = {
     home.packages = [ pkg ];
-    wayland.windowManager.hyprland.settings.bind = [
-      ", XF86MonBrightnessUp, exec, ${pkg}/bin/brightnessctl set 10%+"
-      ", XF86MonBrightnessDown, exec, ${pkg}/bin/brightnessctl set 10%-"
+    gipphe.core.wm.binds = [
+      {
+        key = "XF86MonBrightnessUp";
+        action.spawn = "${pkg}/bin/brightnessctl set 10%+";
+      }
+      {
+        key = "XF86MonBrightnessDown";
+        action.spawn = ", exec, ${pkg}/bin/brightnessctl set 10%-";
+      }
     ];
   };
 }

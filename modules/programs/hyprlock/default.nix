@@ -95,8 +95,12 @@ util.mkProgram {
           ];
         };
       };
-      wayland.windowManager.hyprland.settings.bind = [
-        "$mod,L,exec,${config.programs.hyprlock.package}/bin/hyprlock"
+      gipphe.core.wm.binds = [
+        {
+          mod = "Mod";
+          key = "L";
+          action.spawn = "${config.programs.hyprlock.package}/bin/hyprlock";
+        }
       ];
     };
   };

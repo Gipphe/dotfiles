@@ -40,9 +40,17 @@ util.mkProgram {
       };
     };
 
-    wayland.windowManager.hyprland.settings.bind = lib.mkIf cfg.hyprland.enable [
-      "$mod, ${space}, exec, ${cfg.package}/bin/walker"
-      "$mod, Tab, exec, ${cfg.package}/bin/walker --modules windows"
+    gipphe.core.wm.binds = lib.mkIf cfg.hyprland.enable [
+      {
+        mod = "Mod";
+        key = space;
+        action.spawn = "${cfg.package}/bin/walker";
+      }
+      {
+        mod = "Mod";
+        key = "Tab";
+        action.spawn = "${cfg.package}/bin/walker --modules windows";
+      }
     ];
 
     systemd.user.services.walker = {

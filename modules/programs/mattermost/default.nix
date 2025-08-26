@@ -11,8 +11,12 @@ util.mkProgram {
   name = "mattermost";
   hm = {
     home.packages = [ pkgs.mattermost-desktop ];
-    wayland.windowManager.hyprland.settings.bind = [
-      "$mod, M, exec, ${lib.getExe pkg}"
+    gipphe.core.wm.binds = [
+      {
+        mod = "$mod";
+        key = "M";
+        action.spawn = "${lib.getExe pkg}";
+      }
     ];
   };
 }

@@ -20,8 +20,12 @@ util.mkProgram {
     home.sessionVariables = lib.mkIf cfg.default {
       BROWSER = "${cfg.package}/bin/vivaldi";
     };
-    wayland.windowManager.hyprland.settings.bind = [
-      "$mod, B, exec, ${hmCfg.package}/bin/vivaldi # Opens the browser"
+    gipphe.core.wm.binds = [
+      {
+        mod = "Mod";
+        key = "B";
+        action.spawn = "${hmCfg.package}/bin/vivaldi";
+      }
     ];
   };
 }

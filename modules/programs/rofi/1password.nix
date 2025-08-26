@@ -27,8 +27,15 @@ in
       script
       rofi-1p
     ];
-    wayland.windowManager.hyprland.settings.bind = [
-      "$mod SHIFT, P, exec, ${rofi-1p}/bin/rofi-1pass"
+    gipphe.core.wm.binds = [
+      {
+        mod = [
+          "Mod"
+          "SHIFT"
+        ];
+        key = "P";
+        action.spawn = "${rofi-1p}/bin/rofi-1pass";
+      }
     ];
   };
 }

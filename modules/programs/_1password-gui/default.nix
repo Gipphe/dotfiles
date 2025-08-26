@@ -21,20 +21,25 @@ util.mkProgram {
   hm = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     home.packages = with pkgs; [ _1password-gui ];
 
-    wayland.windowManager.hyprland.settings = {
-      bind = [
-        "CTRL SHIFT,code:65,exec,${lib.getExe quick-access}"
-      ];
-      windowrule =
-        let
-          selector = "title:(Quick Access - 1Password), class:(1Password)";
-        in
-        [
-          "float, ${selector}"
-          "stayfocused, ${selector}"
-          "allowsinput on, ${selector}"
+    gipphe.core.wm.binds = [
+      {
+        mod = [
+          "CTRL"
+          "SHIFT"
         ];
-    };
+        key = "code:65";
+        action.spawn = lib.getExe quick-access;
+      }
+    ];
+    wayland.windowManager.hyprland.settings.windowrule =
+      let
+        selector = "title:(Quick Access - 1Password), class:(1Password)";
+      in
+      [
+        "float, ${selector}"
+        "stayfocused, ${selector}"
+        "allowsinput on, ${selector}"
+      ];
 
     systemd.user.services._1password = lib.mkIf config.gipphe.programs._1password-gui.startOnBoot {
       Unit = {

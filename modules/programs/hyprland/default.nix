@@ -7,7 +7,15 @@
   ...
 }:
 let
-  inherit (builtins) concatLists genList toString;
+  inherit (builtins)
+    attrNames
+    concatLists
+    concatStringsSep
+    genList
+    isString
+    toString
+    ;
+  inherit (lib) toLower;
 
   package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
   portalPackage =
@@ -30,6 +38,22 @@ let
       ]
     ) 10
   );
+  toDispatch =
+    action:
+    if action ? spawn then
+      "exec, ${action.spawn}"
+    else
+      abort "Unknown keybind action: ${concatStringsSep ", " (attrNames action)}";
+  replaceMod =
+    s:
+    let
+      lowered = toLower s;
+    in
+    if lowered == "mod" || lowered == "$mod" then "$mod" else s;
+  toMods =
+    mods: if isString mods then replaceMod mods else concatStringsSep " " (map replaceMod mods);
+  toHyprBind = coreBind: "${toMods coreBind.mod}, ${coreBind.key}, ${toDispatch coreBind.action}";
+  coreBinds = map toHyprBind config.gipphe.wm.binds;
 in
 util.mkProgram {
   name = "hyprland";
@@ -44,30 +68,33 @@ util.mkProgram {
         # Monitor
         # See https://wiki.hyprland.org/Configuring/Monitors
         monitor = lib.mkDefault ",preferred,auto,1";
-        bind = workspaces ++ [
-          "$mod, Q, killactive" # Close current window
-          "$mod SHIFT, Q, forcekillactive" # Force close current window
-          "$mod, T, togglefloating # Toggle between tiling and floating window"
-          "$mod, F, fullscreen # Open the window in fullscreen"
-          "$mod, P, pseudo, # dwindle"
-          "$mod, J, togglesplit, # dwindle"
+        bind =
+          workspaces
+          ++ coreBinds
+          ++ [
+            "$mod, Q, killactive" # Close current window
+            "$mod SHIFT, Q, forcekillactive" # Force close current window
+            "$mod, T, togglefloating # Toggle between tiling and floating window"
+            "$mod, F, fullscreen # Open the window in fullscreen"
+            "$mod, P, pseudo, # dwindle"
+            "$mod, J, togglesplit, # dwindle"
 
-          # Move focus with mod + arrow keys
-          "$mod, left, movefocus, l # Move focus left"
-          "$mod, right, movefocus, r # Move focus right"
-          "$mod, up, movefocus, u # Move focus up"
-          "$mod, down, movefocus, d # Move focus down"
+            # Move focus with mod + arrow keys
+            "$mod, left, movefocus, l # Move focus left"
+            "$mod, right, movefocus, r # Move focus right"
+            "$mod, up, movefocus, u # Move focus up"
+            "$mod, down, movefocus, d # Move focus down"
 
-          # Scroll through existing workspaces with mod + scroll
-          "$mod, mouse_down, workspace, e+1"
-          "$mod, mouse_up, workspace, e-1"
+            # Scroll through existing workspaces with mod + scroll
+            "$mod, mouse_down, workspace, e+1"
+            "$mod, mouse_up, workspace, e-1"
 
-          # Cycle to next window with Alt + Tab
-          "Alt_L, Tab, cyclenext,"
-          "Alt_L, Tab, bringactivetotop,"
-          "Alt_L Shift, Tab, cyclenext, prev"
-          "Alt_L Shift, Tab, bringactivetotop,"
-        ];
+            # Cycle to next window with Alt + Tab
+            "Alt_L, Tab, cyclenext,"
+            "Alt_L, Tab, bringactivetotop,"
+            "Alt_L Shift, Tab, cyclenext, prev"
+            "Alt_L Shift, Tab, bringactivetotop,"
+          ];
 
         bindl =
           let

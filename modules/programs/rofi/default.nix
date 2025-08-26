@@ -265,8 +265,12 @@ util.mkProgram {
         #   };
       };
     };
-    wayland.windowManager.hyprland.settings.bind = [
-      "$mod, ${space}, exec, ${config.programs.rofi.package}/bin/rofi -show drun"
+    gipphe.core.wm.binds = [
+      {
+        mod = "Mod";
+        key = space;
+        action.spawn = "${config.programs.rofi.package}/bin/rofi -show drun";
+      }
     ];
   };
 }

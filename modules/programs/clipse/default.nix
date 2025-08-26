@@ -16,14 +16,18 @@ util.mkProgram {
     services.clipse = {
       enable = true;
     };
+    gipphe.core.wm.binds = [
+      {
+        mod = "Mod";
+        key = "V";
+        action.spawn = "${config.programs.wezterm.package}/bin/wezterm start --class clipse clipse";
+      }
+    ];
     wayland.windowManager.hyprland.settings = {
       windowrule = [
         "float, class:(clipse)"
         "size 622 652, class:(clipse)"
         "stayfocused, class:(clipse)"
-      ];
-      bind = [
-        "$mod, V, exec, ${config.programs.wezterm.package}/bin/wezterm start --class clipse clipse"
       ];
     };
   };

@@ -17,14 +17,36 @@ util.mkProgram {
   };
   hm = {
     home.packages = [ cfg.package ];
-    wayland.windowManager.hyprland.settings.bind = [
-      ", Print, exec, ${grimblast} copy area"
-      "Alt_L, Print, exec, ${grimblast} copy screen"
+    gipphe.core.wm.binds = [
+      {
+        key = "Print";
+        action.spawn = "${grimblast} copy area";
+      }
+      {
+        mod = "Alt_L";
+        key = "Print";
+        action.spawn = "${grimblast} copy screen";
+      }
     ]
     ++ lib.optionals cfg.logi-mx-keys [
       # Logitech MX Keys screenshot hotkey sends SUPER_L+SHIFT_L+S
-      "SUPER_L SHIFT_L, S, exec, ${grimblast} copy area"
-      "SUPER_L SHIFT_L ALT_L, S, exec, ${grimblast} copy screen"
+      {
+        mod = [
+          "SUPER_L"
+          "SHIFT_L"
+        ];
+        key = "S";
+        action.spawn = "${grimblast} copy area";
+      }
+      {
+        mod = [
+          "SUPER_L"
+          "SHIFT_L"
+          "ALT_L"
+        ];
+        key = "S";
+        action.spawn = "${grimblast} copy screen";
+      }
     ];
   };
 }

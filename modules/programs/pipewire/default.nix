@@ -16,11 +16,23 @@ util.mkProgram {
       defaultText = "config.programs.hyprland.enable";
     };
   };
-  hm.wayland.windowManager.hyprland.settings.bind = [
-    ", XF86AudioRaiseVolume, exec, ${wpctl} set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+"
-    ", XF86AudioLowerVolume, exec, ${wpctl} set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-"
-    ", XF86AudioMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
-    ", XF86AudioMicMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+  gipphe.core.wm.binds = [
+    {
+      key = "XF86AudioRaiseVolume";
+      action.spawn = "${wpctl} set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+";
+    }
+    {
+      key = "XF86AudioLowerVolume";
+      action.spawn = "${wpctl} set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-";
+    }
+    {
+      key = "XF86AudioMute";
+      action.spawn = "${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle";
+    }
+    {
+      key = "XF86AudioMicMute";
+      action.spawn = "${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+    }
   ];
   system-nixos = {
     # Enable sound with pipewire.
