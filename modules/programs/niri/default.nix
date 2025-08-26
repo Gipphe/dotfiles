@@ -24,7 +24,7 @@ let
   coreBinds = listToAttrs (map toNiriBind config.gipphe.core.wm.binds);
 in
 util.mkModule {
-  imports = [
+  shared.imports = [
     (util.mkProgram {
       name = "niri";
       hm.programs.niri = {
