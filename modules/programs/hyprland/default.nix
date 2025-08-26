@@ -53,7 +53,7 @@ let
   toMods =
     mods: if isString mods then replaceMod mods else concatStringsSep " " (map replaceMod mods);
   toHyprBind = coreBind: "${toMods coreBind.mod}, ${coreBind.key}, ${toDispatch coreBind.action}";
-  coreBinds = map toHyprBind config.gipphe.wm.binds;
+  coreBinds = map toHyprBind config.gipphe.core.wm.binds;
 in
 util.mkProgram {
   name = "hyprland";

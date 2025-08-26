@@ -1,4 +1,5 @@
 {
+  flags,
   pkgs,
   util,
   config,
@@ -28,7 +29,6 @@ util.mkModule {
     (util.mkProgram {
       name = "niri";
       hm.programs.niri = {
-        enable = true;
         settings = {
           binds = coreBinds;
           keyboard = {
@@ -47,9 +47,10 @@ util.mkModule {
           };
         };
       };
+      system-nixos.programs.niri.enable = true;
     })
   ];
-  hm.imports = [ inputs.niri.homeModules.niri ];
+  hm.imports = if !(flags.isNixos) then [ inputs.niri.homeModules.niri ] else [ ];
   system-nixos = {
     imports = [ inputs.niri.nixosModules.niri ];
   };

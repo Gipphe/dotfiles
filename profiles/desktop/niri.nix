@@ -6,7 +6,6 @@ util.mkToggledModule [ "profiles" "desktop" ] {
     niri.enable = true;
     hyprlock.enable = true;
     hyprpaper.enable = true;
-    xwayland-satellite.enable = true;
 
     sddm.enable = true;
 

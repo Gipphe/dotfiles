@@ -16,7 +16,7 @@ util.mkProgram {
       defaultText = "config.programs.hyprland.enable";
     };
   };
-  gipphe.core.wm.binds = [
+  hm.gipphe.core.wm.binds = [
     {
       key = "XF86AudioRaiseVolume";
       action.spawn = "${wpctl} set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+";

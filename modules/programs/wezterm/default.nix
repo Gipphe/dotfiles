@@ -118,8 +118,8 @@ util.mkProgram {
 
     gipphe.core.wm.binds = [
       {
-        mods = "Mod";
-        keys = "Return";
+        mod = "Mod";
+        key = "Return";
         action.spawn = "${hmCfg.package}/bin/wezterm";
       }
     ];
