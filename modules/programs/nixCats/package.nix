@@ -163,6 +163,7 @@ let
           mini-nvim
           neoconf-nvim
           nvim-autopairs
+          nvim-highlight-colors
           nvim-spectre
           nvim-treesitter-context
           nvim-treesitter-refactor
