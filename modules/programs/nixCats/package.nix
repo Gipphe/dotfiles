@@ -197,7 +197,6 @@ let
         full = with pkgs.vimPlugins; [
           fidget-nvim
           lazydev-nvim
-          lspkind-nvim
           marp-nvim
           no-neck-pain-nvim
           noice-nvim
