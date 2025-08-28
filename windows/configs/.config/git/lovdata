@@ -1,4 +1,0 @@
-[user]
-	email = "vnb@lovdata.no"
-	name = "Victor Nascimento Bakke"
-	signingKey = "/home/gipphe/.config/sops-nix/secrets/git-signing-key"

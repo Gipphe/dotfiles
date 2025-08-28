@@ -5,6 +5,9 @@
   util,
   ...
 }:
+let
+  inherit (builtins) elemAt;
+in
 util.mkProgram {
   name = "git";
   options.gipphe.programs.git.windows = {
@@ -252,26 +255,29 @@ util.mkProgram {
     };
 
     gipphe.windows.home.file = {
-      ".config/git/config".source =
-        pkgs.runCommandNoCC "git_config_windows"
-          { config = lib.generators.toGitINI config.programs.git.iniContent; } # bash
-          ''
-            echo "$config" \
-            | sed -r 's!/nix/store/.*/(\S+)!\1!' \
-            | sed "s!/nix/store/.*-hm_gitconfig!./.gitconfig_lovdata!" \
-            | sed "/credentialStore/d" \
-            | sed "/\[credential\]/d" \
-            | sed "/external = \"diff-so-fancy/d" \
-            | sed "/\[diff\]/d" \
-            | sed "/diffFilter =/d" \
-            | sed "/\[interactive\]/d" \
-            | sed "s/gpgSign = true$/gpgSign = false/" \
-            | tee "$out" >/dev/null
-          '';
-      ".config/git/lovdata".text = lib.pipe config.programs.git.includes [
-        (x: (builtins.elemAt x 0).contents)
-        lib.generators.toGitINI
-      ];
+      ".config/git/config".text = lib.generators.toGitINI (
+        let
+          base = builtins.removeAttrs config.programs.git.iniContent [
+            "credential"
+            "diff-so-fancy"
+            "gpg"
+            "interactive"
+            "diff"
+          ];
+        in
+        base
+        // {
+          commit = base.commit // {
+            gpgSign = false;
+          };
+          tag = base.tag // {
+            gpgSign = false;
+          };
+          core = base.core // {
+            pager = "less '--tabs=4' -RFX";
+          };
+        }
+      );
       ".config/git/ignore".source = config.xdg.configFile."git/ignore".source;
     };
   };
