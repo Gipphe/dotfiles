@@ -1,4 +1,5 @@
 {
+  flags,
   pkgs,
   util,
   config,
@@ -26,12 +27,15 @@ in
 util.mkProgram {
   name = "niri";
   hm = {
-    imports = [
-      {
+    imports =
+      lib.optional (!flags.isNixOnDroid) {
         stylix.targets.niri.enable = lib.mkDefault false;
       }
-    ];
-    stylix.targets.niri.enable = true;
+      ++ lib.optional flags.isNixOnDroid inputs.niri.homeModules.config
+      ++ lib.optional (!flags.isNixOnDroid && !flags.isNixos) inputs.niri.homeModules.stylix
+      ++ lib.optional (!flags.isNixOnDroid && config.gipphe.programs.niri.enable) {
+        stylix.targets.niri.enable = true;
+      };
     programs.niri = {
       settings = {
         binds = coreBinds;
