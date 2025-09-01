@@ -27,25 +27,28 @@ util.mkProgram {
     programs.niri = {
       settings = {
         binds = coreBinds;
-        keyboard = {
+        input.keyboard = {
           numlock = true;
           xkb = {
             layout = "no";
           };
         };
-        output = {
-          "Dell Inc. DELL U2724D G11T4Z3" = "center";
-          "Dell Inc. DELL U2724D G27V4Z3" = "right";
-          "Dell Inc. DELL U2724D G15V4Z3" = "left";
-        };
-        xwayland-sattellite = {
-          path = "${pkgs.xwayland-sattellite-unstable}";
+        # outputs = {
+        #   "Dell Inc. DELL U2724D G11T4Z3" = "center";
+        #   "Dell Inc. DELL U2724D G27V4Z3" = "right";
+        #   "Dell Inc. DELL U2724D G15V4Z3" = "left";
+        # };
+        xwayland-satellite = {
+          path = "${lib.getExe inputs.niri.packages.${pkgs.system}.xwayland-satellite-unstable}";
         };
       };
     };
   };
   system-nixos = {
     imports = [ inputs.niri.nixosModules.niri ];
-    programs.niri.enable = true;
+    programs.niri = {
+      enable = true;
+      package = inputs.niri.packages.${pkgs.system}.niri-unstable;
+    };
   };
 }

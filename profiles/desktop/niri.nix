@@ -2,10 +2,10 @@
 util.mkToggledModule [ "profiles" "desktop" ] {
   name = "niri";
   shared.gipphe.programs = {
-    hypridle.enable = true;
+    # hypridle.enable = true;
     niri.enable = true;
-    hyprlock.enable = true;
-    hyprpaper.enable = true;
+    # hyprlock.enable = true;
+    # hyprpaper.enable = true;
 
     sddm.enable = true;
 
