@@ -196,13 +196,10 @@ let
           lazydev-nvim
           marp-nvim
           no-neck-pain-nvim
-          noice-nvim
-          nui-nvim
           nvim-dap
           nvim-dap-python
           nvim-dap-ui
           nvim-lspconfig
-          nvim-nio
           nvim-notify
           otter-nvim
           pnpm-nvim
@@ -210,9 +207,7 @@ let
         ];
 
         haskell = [
-          # haskell-scope-highlighting-nvim
           haskell-tools-nvim
-          telescope-nvim
         ];
       };
 
