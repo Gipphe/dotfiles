@@ -38,7 +38,7 @@
             audio.enable = true;
             cli.enable = true;
             core.enable = true;
-            desktop.niri.enable = true;
+            desktop.hyprland.enable = true;
             fonts.enable = true;
             gaming.enable = true;
             gc.enable = true;
