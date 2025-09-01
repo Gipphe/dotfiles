@@ -31,18 +31,26 @@ util.mkProgram {
         enable = true;
         package = pkgs.openssh;
         addKeysToAgent = "yes";
-        matchBlocks = lib.genAttrs [ "github.com" "gitlab.com" "codeberg.org" ] (
-          hostname:
-          let
-            inherit (builtins) elemAt split;
-            name = elemAt (split "\\." hostname) 0;
-          in
-          {
-            inherit hostname;
-            user = "git";
-            identityFile = config.sops.secrets."${name}.ssh".path;
-          }
-        );
+        matchBlocks =
+          lib.genAttrs [ "github.com" "gitlab.com" "codeberg.org" ] (
+            hostname:
+            let
+              inherit (builtins) elemAt split;
+              name = elemAt (split "\\." hostname) 0;
+            in
+            {
+              inherit hostname;
+              user = "git";
+              identityFile = config.sops.secrets."${name}.ssh".path;
+            }
+          )
+          // lib.optionalAttrs cfg.lovdata.enable {
+            "git.lovdata.no" = {
+              hostname = "git.lovdata.no";
+              user = "git";
+              identityFile = config.sops.secrets."lovdata-gitlab.ssh".path;
+            };
+          };
       };
     };
 
