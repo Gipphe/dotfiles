@@ -67,7 +67,7 @@
             let
               brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
             in
-            [
+            lib.mkIf false [
               {
                 key = "code:72";
                 action.spawn = "${brightnessctl} set 10%-";

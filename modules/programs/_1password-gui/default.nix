@@ -27,7 +27,7 @@ util.mkProgram {
           "CTRL"
           "SHIFT"
         ];
-        key = "code:65";
+        key = "space";
         action.spawn = lib.getExe quick-access;
       }
     ];

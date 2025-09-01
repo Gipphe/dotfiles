@@ -8,21 +8,9 @@
   ...
 }:
 let
-  inherit (builtins) listToAttrs isString concatStringsSep;
-  inherit (lib) toLower;
-  replaceMod =
-    s:
-    let
-      lowered = toLower s;
-    in
-    if lowered == "mod" || lowered == "$mod" then "Mod" else s;
-  toMod =
-    mod: (if isString mod then replaceMod mod else concatStringsSep "+" (map replaceMod mod)) ++ "+";
-  toNiriBind = bind: {
-    name = "${toMod bind.mod}${bind.key}";
-    value = { inherit (bind) action; };
-  };
-  coreBinds = listToAttrs (map toNiriBind config.gipphe.core.wm.binds);
+  inherit (builtins) listToAttrs map;
+  binds = pkgs.callPackage ./binds.nix { };
+  coreBinds = listToAttrs (map binds.toNiriBind config.gipphe.core.wm.binds);
 in
 util.mkProgram {
   name = "niri";

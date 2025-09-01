@@ -7,7 +7,6 @@
 }:
 let
   cfg = config.gipphe.programs.walker;
-  inherit (import ./codes.nix) space;
   defaultConfig = import ./config.nix pkgs;
   writeTOMLFile = (pkgs.formats.toml { }).generate;
 in
@@ -43,7 +42,7 @@ util.mkProgram {
     gipphe.core.wm.binds = lib.mkIf cfg.hyprland.enable [
       {
         mod = "Mod";
-        key = space;
+        key = "space";
         action.spawn = "${cfg.package}/bin/walker";
       }
       {

@@ -1,7 +1,6 @@
 { util, config, ... }:
 let
   inherit (config.lib.formats.rasi) mkLiteral;
-  inherit (import ./codes.nix) space;
 in
 util.mkProgram {
   name = "rofi";
@@ -268,7 +267,7 @@ util.mkProgram {
     gipphe.core.wm.binds = [
       {
         mod = "Mod";
-        key = space;
+        key = "space";
         action.spawn = "${config.programs.rofi.package}/bin/rofi -show drun";
       }
     ];
