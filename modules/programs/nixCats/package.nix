@@ -178,7 +178,6 @@ let
           promise-async
           snacks-nvim
           tiny-inline-diagnostic-nvim
-          todo-comments-nvim
           trouble-nvim
           undotree
           vim-css-color
@@ -203,6 +202,7 @@ let
           nvim-notify
           otter-nvim
           pnpm-nvim
+          todo-comments-nvim
           venv-selector-nvim
         ];
 
