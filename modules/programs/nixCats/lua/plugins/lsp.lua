@@ -370,8 +370,5 @@ return {
     'lukahartwig/pnpm.nvim',
     enabled = require('nixCatsUtils').enableForCategory 'full',
     ft = { 'js', 'ts', 'tsx', 'jsx' },
-    config = function()
-      require('telescope').load_extension 'pnpm'
-    end,
   },
 }
