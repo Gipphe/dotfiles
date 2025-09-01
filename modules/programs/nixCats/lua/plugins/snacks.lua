@@ -2,6 +2,12 @@ return {
   'folke/snacks.nvim',
   lazy = false,
   priority = 1000,
+  dependencies = {
+    {
+      'nvim-tree/nvim-web-devicons',
+      enabled = vim.g.have_nerd_font,
+    },
+  },
   ---@type snacks.Config
   opts = {
     bigfile = {},
@@ -26,25 +32,32 @@ return {
       desc = 'Buffers',
     },
     {
+      '<leader>:',
+      function()
+        require('snacks').picker.command_history()
+      end,
+      desc = 'Commands',
+    },
+    {
       '<leader>/',
       function()
         require('snacks').picker.grep()
       end,
-      desc = 'Grep',
+      desc = 'Grep files',
     },
     {
       '<leader>:',
       function()
         require('snacks').picker.command_history()
       end,
-      desc = 'Command History',
+      desc = 'Command history',
     },
     {
       '<leader>n',
       function()
         require('snacks').picker.notifications()
       end,
-      desc = 'Notification History',
+      desc = 'Notification history',
     },
 
     -- Find
@@ -61,21 +74,21 @@ return {
         ---@diagnostic disable-next-line: assign-type-mismatch
         require('snacks').picker.files { cwd = vim.fn.stdpath 'config' }
       end,
-      desc = 'Find Config File',
+      desc = 'Find config file',
     },
     {
       '<leader>ff',
       function()
         require('snacks').picker.files()
       end,
-      desc = 'Find Files',
+      desc = 'Find files',
     },
     {
       '<leader>fg',
       function()
-        require('snacks').picker.git_files()
+        require('snacks').picker.git_grep()
       end,
-      desc = 'Find Git Files',
+      desc = 'Grep git files',
     },
     {
       '<leader>fp',
@@ -97,49 +110,49 @@ return {
       function()
         require('snacks').picker.git_branches()
       end,
-      desc = 'Git Branches',
+      desc = 'Git branches',
     },
     {
       '<leader>gl',
       function()
         require('snacks').picker.git_log()
       end,
-      desc = 'Git Log',
+      desc = 'Git log',
     },
     {
       '<leader>gL',
       function()
         require('snacks').picker.git_log_line()
       end,
-      desc = 'Git Log Line',
+      desc = 'Git log line',
     },
     {
       '<leader>gs',
       function()
         require('snacks').picker.git_status()
       end,
-      desc = 'Git Status',
+      desc = 'Git status',
     },
     {
       '<leader>gS',
       function()
         require('snacks').picker.git_stash()
       end,
-      desc = 'Git Stash',
+      desc = 'Git stash',
     },
     {
       '<leader>gd',
       function()
         require('snacks').picker.git_diff()
       end,
-      desc = 'Git Diff (Hunks)',
+      desc = 'Git diff (hunks)',
     },
     {
       '<leader>gf',
       function()
         require('snacks').picker.git_log_file()
       end,
-      desc = 'Git Log File',
+      desc = 'Git log file',
     },
     -- Grep
     {
@@ -147,14 +160,14 @@ return {
       function()
         require('snacks').picker.lines()
       end,
-      desc = 'Buffer Lines',
+      desc = 'Buffer lines',
     },
     {
       '<leader>sB',
       function()
         require('snacks').picker.grep_buffers()
       end,
-      desc = 'Grep Open Buffers',
+      desc = 'Grep open buffers',
     },
     {
       '<leader>sg',
@@ -184,7 +197,7 @@ return {
       function()
         require('snacks').picker.search_history()
       end,
-      desc = 'Search History',
+      desc = 'Search history',
     },
     {
       '<leader>sa',
@@ -198,14 +211,14 @@ return {
       function()
         require('snacks').picker.lines()
       end,
-      desc = 'Buffer Lines',
+      desc = 'Buffer lines',
     },
     {
       '<leader>sc',
       function()
         require('snacks').picker.command_history()
       end,
-      desc = 'Command History',
+      desc = 'Command history',
     },
     {
       '<leader>sC',
@@ -226,14 +239,14 @@ return {
       function()
         require('snacks').picker.diagnostics_buffer()
       end,
-      desc = 'Buffer Diagnostics',
+      desc = 'Buffer diagnostics',
     },
     {
       '<leader>sh',
       function()
         require('snacks').picker.help()
       end,
-      desc = 'Help Pages',
+      desc = 'Help pages',
     },
     {
       '<leader>sH',
@@ -268,7 +281,7 @@ return {
       function()
         require('snacks').picker.loclist()
       end,
-      desc = 'Location List',
+      desc = 'Location list',
     },
     {
       '<leader>sm',
@@ -282,21 +295,21 @@ return {
       function()
         require('snacks').picker.man()
       end,
-      desc = 'Man Pages',
+      desc = 'Man pages',
     },
     {
       '<leader>sp',
       function()
         require('snacks').picker.lazy()
       end,
-      desc = 'Search for Plugin Spec',
+      desc = 'Search for plugin spec',
     },
     {
       '<leader>sq',
       function()
         require('snacks').picker.qflist()
       end,
-      desc = 'Quickfix List',
+      desc = 'Quickfix list',
     },
     {
       '<leader>sR',
@@ -310,7 +323,7 @@ return {
       function()
         require('snacks').picker.undo()
       end,
-      desc = 'Undo History',
+      desc = 'Undo history',
     },
     {
       '<leader>uC',

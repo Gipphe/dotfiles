@@ -42,13 +42,17 @@ return {
       'neovim/nvim-lspconfig',
       'mfussenegger/nvim-dap',
       'mfussenegger/nvim-dap-python',
-      'nvim-telescope/telescope.nvim',
+      'folke/snacks.nvim',
     },
     lazy = false,
     branch = require('nixCatsUtils').isNixCats or 'regexp',
     ---@module 'venv-selector'
     ---@type venv-selector.Config
-    opts = {},
+    opts = {
+      options = {
+        picker = 'snacks',
+      },
+    },
     keys = {
       { '<leader>cv', '<cmd>VenvSelect<cr>', desc = 'Select VirtualEnv' },
     },
@@ -59,34 +63,8 @@ return {
     branch = 'harpoon2',
     dependencies = {
       'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
     },
     opts = {},
-    config = function(_, opts)
-      local harpoon = require 'harpoon'
-      harpoon:setup(opts)
-      local conf = require('telescope.config').values
-      local function toggle_telescope(harpoon_files)
-        local file_paths = {}
-        for _, item in ipairs(harpoon_files.items) do
-          table.insert(file_paths, item.value)
-        end
-
-        require('telescope.pickers')
-          .new({}, {
-            prompt_title = 'Harpoon',
-            finder = require('telescope.finders').new_table {
-              results = file_paths,
-            },
-            previewer = conf.file_previewer {},
-            sorter = conf.generic_sorter {},
-          })
-          :find()
-      end
-      vim.keymap.set('n', '<C-e>', function()
-        toggle_telescope(harpoon:list())
-      end, { desc = 'Toggle Harpoon window' })
-    end,
     keys = {
       {
         '<leader>a',
@@ -97,10 +75,9 @@ return {
       },
       {
         '<C-e>',
-        -- Uses telescope in the `config` function above.
-        -- function()
-        --   require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())
-        -- end,
+        function()
+          require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())
+        end,
         desc = 'Toggle Harpoon quick menu',
       },
       {

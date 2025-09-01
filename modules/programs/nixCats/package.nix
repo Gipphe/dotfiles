@@ -177,9 +177,6 @@ let
           plenary-nvim
           promise-async
           snacks-nvim
-          telescope-fzf-native-nvim
-          telescope-nvim
-          telescope-ui-select-nvim
           tiny-inline-diagnostic-nvim
           todo-comments-nvim
           trouble-nvim
