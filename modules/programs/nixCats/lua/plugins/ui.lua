@@ -67,9 +67,6 @@ return {
         },
         noice = true,
         notify = true,
-        telescope = {
-          enabled = true,
-        },
         treesitter = true,
         treesitter_context = true,
         which_key = true,
@@ -233,12 +230,16 @@ return {
       },
       {
         '<leader>st',
-        '<cmd>TodoTelescope<cr>',
+        function()
+          require('snacks').picker.todo_comments()
+        end,
         desc = 'Todo',
       },
       {
         '<leader>sT',
-        '<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr',
+        function()
+          require('snacks').picker.todo_comments { keywords = { 'TODO', 'FIX', 'FIXME' } }
+        end,
         desc = 'Todo/Fix/Fixme',
       },
     },

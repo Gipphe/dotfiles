@@ -114,19 +114,21 @@ return {
           -- This is where a variable was first declared, or where a function is defined, etc.
           -- To jump back, press <C-t>.
           map('gd', function()
-            require('telescope.builtin').lsp_definitions { reuse_win = true }
+            require('snacks').picker.lsp_definitions { reuse_win = true }
           end, 'Goto definition')
 
-          map('gr', '<cmd>Telescope lsp_references<cr>', 'Goto references')
+          map('gr', function()
+            require('snacks').picker.lsp_references()
+          end, 'Goto references')
 
           map('gD', vim.lsp.buf.declaration, 'Goto declaration')
 
           map('gI', function()
-            require('telescope.builtin').lsp_implementations { reuse_win = true }
+            require('snacks').picker.lsp_implementations { reuse_win = true }
           end, 'Goto implementation')
 
           map('gy', function()
-            require('telescope.builtin').lsp_type_definitions { reuse_win = true }
+            require('snacks').picker.lsp_type_definitions { reuse_win = true }
           end, 'Goto type definition')
 
           -- Opens a popup that displays documentation about the word under your cursor
@@ -149,11 +151,11 @@ return {
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
-          vim.keymap.set('n', '<leader>cy', require('telescope.builtin').lsp_document_symbols, { desc = 'Document symbols', buffer = event.buf })
+          -- vim.keymap.set('n', '<leader>cy', require('snacks').picker.lsp_document_symbols, { desc = 'Document symbols', buffer = event.buf })
 
           -- Fuzzy find all the symbols in your current workspace.
           --  Similar to document symbols, except searches over your entire project.
-          vim.keymap.set('n', '<leader>cY', require('telescope.builtin').lsp_dynamic_workspace_symbols, { desc = '[W]orkspace [S]ymbols', buffer = event.buf })
+          -- vim.keymap.set('n', '<leader>cY', require('snacks').picker.lsp_dynamic_workspace_symbols, { desc = '[W]orkspace [S]ymbols', buffer = event.buf })
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
