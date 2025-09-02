@@ -156,8 +156,8 @@ let
           conform-nvim
           flash-nvim
           gitsigns-nvim
+          grapple-nvim
           guess-indent-nvim
-          harpoon2
           lazy-nvim
           luasnip
           mini-nvim

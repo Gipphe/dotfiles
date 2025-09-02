@@ -59,68 +59,36 @@ return {
   },
 
   {
-    'ThePrimagen/harpoon',
-    branch = 'harpoon2',
+    'cbochs/grapple.nvim',
     dependencies = {
-      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons',
     },
-    opts = {},
+    event = { 'BufReadPost', 'BufNewFile' },
+    cmd = 'Grapple',
+    opts = { scope = 'git' },
     keys = {
       {
         '<leader>a',
         function()
-          require('harpoon'):list():add()
+          require('grapple').toggle()
+          vim.notify('Tagged in Grapple', vim.log.levels.INFO)
         end,
-        desc = 'Add to Harpoon',
+        desc = 'Tag a file Grapple',
       },
       {
         '<C-e>',
-        function()
-          require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())
-        end,
-        desc = 'Toggle Harpoon quick menu',
+        '<cmd>Grapple toggle_tags<cr>',
+        desc = 'Toggle tags menu',
       },
       {
-        '<C-1>',
-        function()
-          require('harpoon'):list():select(1)
-        end,
-        desc = 'Go to Harpoon entry 1',
+        '<leader>p',
+        '<cmd>Grapple cycle_tags prev<cr>',
+        desc = 'Go to previous tag',
       },
       {
-        '<C-2>',
-        function()
-          require('harpoon'):list():select(2)
-        end,
-        desc = 'Go to Harpoon entry 2',
-      },
-      {
-        '<C-3>',
-        function()
-          require('harpoon'):list():select(3)
-        end,
-        desc = 'Go to Harpoon entry 3',
-      },
-      {
-        '<C-4>',
-        function()
-          require('harpoon'):list():select(4)
-        end,
-        desc = 'Go to Harpoon entry 4',
-      },
-      {
-        '<C-S-P>',
-        function()
-          require('harpoon'):list():prev()
-        end,
-        desc = 'Go to previous Harpoon entry',
-      },
-      {
-        '<C-S-N>',
-        function()
-          require('harpoon'):list():next()
-        end,
-        desc = 'Go to next Harpoon entry',
+        '<leader>n',
+        '<cmd>Grapple cycle_tags next<cr>',
+        desc = 'Go to next tag',
       },
     },
   },
