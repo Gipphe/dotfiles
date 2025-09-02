@@ -288,7 +288,7 @@ util.mkProgram {
         // Choose the path to the default shell that zellij will use for opening new panes
         // Default: $SHELL
         // 
-        // default_shell "fish"
+        default_shell "fish"
 
         // Choose the path to override cwd that zellij will use for opening new panes
         // 
