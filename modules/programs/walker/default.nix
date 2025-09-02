@@ -9,6 +9,12 @@ let
   cfg = config.gipphe.programs.walker;
   defaultConfig = import ./config.nix pkgs;
   writeTOMLFile = (pkgs.formats.toml { }).generate;
+  theme = pkgs.fetchFromGitHub {
+    owner = "Krymancer";
+    repo = "walker";
+    rev = "15ad25fc3ad5496094ece50300da2ac6bc355efe";
+    hash = "sha256-Fqh6/GEn2y7N5IBLSnva5djzADqpivIE321EREtpCSE=";
+  };
 in
 util.mkProgram {
   name = "walker";
@@ -31,12 +37,10 @@ util.mkProgram {
     ];
     xdg.configFile = {
       "walker/config.toml".source = writeTOMLFile "walker-config.toml" (
-        lib.recursiveUpdate defaultConfig cfg.settings
+        lib.recursiveUpdate defaultConfig cfg.settings // { theme = "catppuccin-macchiato"; }
       );
-      "walker/theme" = {
-        source = ./themes/default;
-        recursive = false;
-      };
+      "walker/themes/catppuccin-macchiato.toml".source = "${theme}/themes/macchiato.toml";
+      "walker/themes/catppuccin-macchiato.css".source = "${theme}/themes/macchiato.css";
     };
 
     gipphe.core.wm.binds = lib.mkIf cfg.hyprland.enable [
@@ -54,7 +58,7 @@ util.mkProgram {
 
     systemd.user.services.walker = {
       Unit = {
-        Description = "Walker service for quicker startup";
+        Description = "Walker - Application Runner";
         Documentation = "https://github.com/abenz1267/walker";
         PartOf = "graphical-session.target";
       };
