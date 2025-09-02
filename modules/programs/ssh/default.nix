@@ -30,7 +30,7 @@ util.mkProgram {
       ssh = {
         enable = true;
         package = pkgs.openssh;
-        addKeysToAgent = "yes";
+        enableDefaultConfig = false;
         matchBlocks =
           lib.genAttrs [ "github.com" "gitlab.com" "codeberg.org" ] (
             hostname:
@@ -42,6 +42,7 @@ util.mkProgram {
               inherit hostname;
               user = "git";
               identityFile = config.sops.secrets."${name}.ssh".path;
+              addKeysToAgent = "yes";
             }
           )
           // lib.optionalAttrs cfg.lovdata.enable {
@@ -49,6 +50,7 @@ util.mkProgram {
               hostname = "git.lovdata.no";
               user = "git";
               identityFile = config.sops.secrets."lovdata-gitlab.ssh".path;
+              addKeysToAgent = "yes";
             };
           };
       };
