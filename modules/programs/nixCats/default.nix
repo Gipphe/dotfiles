@@ -1,6 +1,5 @@
 {
   util,
-  pkgs,
   inputs,
   flags,
   ...

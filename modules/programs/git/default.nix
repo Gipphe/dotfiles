@@ -5,9 +5,6 @@
   util,
   ...
 }:
-let
-  inherit (builtins) elemAt;
-in
 util.mkProgram {
   name = "git";
   options.gipphe.programs.git.windows = {

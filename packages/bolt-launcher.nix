@@ -21,7 +21,7 @@
   enableRS3 ? false,
 }:
 let
-  cef = cef-binary.overrideAttrs (oldAttrs: {
+  cef = cef-binary.overrideAttrs (_: {
     version = "126.2.18";
     __intentionallyOverridingVersion = true; # `cef-binary` uses the overridden `srcHash` values in its source FOD
     gitRevision = "3647d39";
@@ -34,8 +34,6 @@ let
       }
       .${stdenv.hostPlatform.system} or (throw "unsupported system ${stdenv.hostPlatform.system}");
   });
-in
-let
   bolt = stdenv.mkDerivation (finalAttrs: {
     pname = "bolt-launcher";
     version = "0.19.0";
@@ -71,7 +69,7 @@ let
       "-D BOLT_LUAJIT_INCLUDE_DIR=${luajit}/include"
       "-G Ninja"
     ]
-    ++ lib.optionals (stdenv.hostPlatform.isAarch64) [
+    ++ lib.optionals stdenv.hostPlatform.isAarch64 [
       (lib.cmakeFeature "PROJECT_ARCH" "arm64")
     ];
 
