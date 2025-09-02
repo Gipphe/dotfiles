@@ -56,7 +56,7 @@ creation_rules:
           - *argon
           - *carbon
 
-  - path_regex: secrets/git-ssh-signing-key\.key
+  - path_regex: secrets/git-ssh-signing-key.*
     key_groups:
       - age: *all
 
