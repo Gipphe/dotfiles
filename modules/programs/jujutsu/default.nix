@@ -20,7 +20,7 @@ util.mkProgram {
           default-command = "lol";
         };
         git = {
-          auto-local-branch = true;
+          auto-local-bookmark = true;
         };
         signing = {
           behavior = "own";
