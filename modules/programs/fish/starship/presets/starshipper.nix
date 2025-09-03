@@ -1,5 +1,6 @@
 { lib, ... }:
 let
+  inherit (lib) recursiveUpdate;
   inherit (lib.lists) zipLists;
   inherit (builtins)
     concatStringsSep
@@ -10,7 +11,6 @@ let
     hasAttr
     isString
     length
-    listToAttrs
     zipAttrsWith
     ;
 
@@ -121,7 +121,7 @@ let
   formatSection =
     segment:
     lib.pipe segment.modules [
-      (map (x: "\$${x.name}"))
+      (map (x: if x.custom or false then "\$\{custom.${x.name}\}" else "\$${x.name}"))
       (concatStringsSep "")
     ];
   formatSegment =
@@ -142,7 +142,10 @@ let
   correctAttrs =
     section:
     let
-      base = removeAttrs section [ "name" ];
+      base = removeAttrs section [
+        "custom"
+        "name"
+      ];
     in
     if section.name == "username" then
       removeAttrs base [ "style" ]
@@ -160,11 +163,19 @@ let
         bg = "background";
       } section;
       shared = section.shared or { };
-      modules = listToAttrs (
-        map (module: {
-          inherit (module) name;
-          value = correctAttrs ({ inherit style; } // shared // module);
-        }) section.modules
+      modules = foldl' recursiveUpdate { } (
+        map (
+          module:
+          lib.setAttrByPath (
+            if module.custom or false then
+              [
+                "custom"
+                module.name
+              ]
+            else
+              [ module.name ]
+          ) (correctAttrs ({ inherit style; } // shared // module))
+        ) section.modules
       );
     in
     modules;
@@ -174,7 +185,7 @@ let
     let
       sections = filter (x: x.type == "section") segments;
     in
-    zipAttrsWith (_: vs: elemAt vs (length vs - 1)) (map mkSectionSettings sections);
+    zipAttrsWith (_: foldl' recursiveUpdate { }) (map mkSectionSettings sections);
 in
 {
   beginning = beginning: {

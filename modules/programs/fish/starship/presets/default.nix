@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 let
   starshipper = import ./starshipper.nix { inherit lib; };
-  tide-like = import ./tide-like.nix { inherit lib; };
+  tide-like = import ./tide-like.nix { inherit lib pkgs; };
   inherit (starshipper.mkStarship tide-like) format settings;
 
   flavour = "macchiato";
