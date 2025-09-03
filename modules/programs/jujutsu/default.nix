@@ -62,6 +62,7 @@ util.mkProgram {
         git = {
           auto-local-bookmark = false;
         };
+        templates.git_push_bookmark = ''"gipphe/push-" ++ change_id.short()'';
         signing = {
           behavior = "own";
           backend = "ssh";
