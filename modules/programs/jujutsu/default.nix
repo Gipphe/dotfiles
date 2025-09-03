@@ -31,6 +31,14 @@ util.mkProgram {
             "${lib.getExe pkgs.diff-so-fancy} | ${lib.getExe pkgs.less} '--tabs=4' -RFX"
           ];
         };
+        colors = {
+          "diff removed token".bg = "#221111";
+          "diff added token".bg = "#002200";
+          "diff token".underline = false;
+        };
+        diff.color-words = {
+          max-inline-alternation = 0;
+        };
         merge-tools.vimdiff = {
           merge-args = [
             "-f"
