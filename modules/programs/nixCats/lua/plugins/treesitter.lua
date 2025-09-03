@@ -120,6 +120,18 @@ return {
       require('nvim-treesitter.install').prefer_git = not util.is_windows()
       ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup(opts)
+
+      local hl_group = vim.api.nvim_create_augroup('highlight_nbsp', { clear = true })
+      vim.api.nvim_create_autocmd('ColorScheme', {
+        group = hl_group,
+        command = 'highlight BreakSpaceChar ctermbg=red guibg=#f92672',
+      })
+      vim.api.nvim_create_autocmd('BufWinEnter', {
+        group = hl_group,
+        -- This space character is a unicode NBSP character. You can get one by
+        -- pressing AltGr+Space on Linux. Code usually doesn't like it though.
+        command = "call matchadd('BreakSpaceChar', ' ')",
+      })
     end,
   },
 }
