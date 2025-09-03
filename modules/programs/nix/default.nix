@@ -48,9 +48,10 @@ let
         "nixpkgs-unfree.cachix.org-1:hqvoInulhbV4nJ9yJOEr+4wxhDV4xq2d1DK7S6Nj6rs="
       ];
 
-      # Disable generating channel-related files and commands
-      channel.enable = false;
     };
+
+    # Disable generating channel-related files and commands
+    nix.channel.enable = false;
 
     # faster rebuilding
     documentation = {
