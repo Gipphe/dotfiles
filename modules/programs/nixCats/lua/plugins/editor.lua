@@ -462,4 +462,14 @@ return {
       },
     },
   },
+
+  {
+    'julienvincent/hunk.nvim',
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'neo-tree/nvim-web-devicons',
+    },
+    cmd = { 'DiffEditor' },
+    opts = {},
+  },
 }

@@ -1,4 +1,5 @@
 {
+  lib,
   util,
   config,
   pkgs,
@@ -18,6 +19,11 @@ util.mkProgram {
         ui = {
           editor = "nvim";
           default-command = "lol";
+          diff-editor = [
+            "nvim"
+            "-c"
+            "DiffEditor $left $right $output"
+          ];
         };
         git = {
           auto-local-bookmark = true;
