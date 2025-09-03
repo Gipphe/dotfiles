@@ -24,6 +24,32 @@ util.mkProgram {
             "-c"
             "DiffEditor $left $right $output"
           ];
+          merge-tools = "vimdiff";
+          pager = [
+            "sh"
+            "-c"
+            "${lib.getExe pkgs.diff-so-fancy} | ${lib.getExe pkgs.less} '--tabs=4' -RFX"
+          ];
+        };
+        merge-tools.vimdiff = {
+          merge-args = [
+            "-f"
+            "-d"
+            "$output"
+            "-M"
+            "$left"
+            "$base"
+            "$right"
+            "-c"
+            "wincmd J"
+            "-c"
+            "set modifiable"
+            "-c"
+            "set write"
+          ];
+          program = "nvim";
+          diff-invocation-mode = "file-by-file";
+          merge-tool-edits-conflict-markers = true;
         };
         git = {
           auto-local-bookmark = true;
