@@ -60,7 +60,7 @@ util.mkProgram {
           merge-tool-edits-conflict-markers = true;
         };
         git = {
-          auto-local-bookmark = true;
+          auto-local-bookmark = false;
         };
         signing = {
           behavior = "own";
