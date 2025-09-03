@@ -70,7 +70,7 @@ util.mkProgram {
             "all()"
           ];
           sync = [
-            "branch"
+            "bookmark"
             "set"
             "-r"
             "@-"
