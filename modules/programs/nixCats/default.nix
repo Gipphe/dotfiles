@@ -1,11 +1,12 @@
 {
+  self,
   util,
   inputs,
   flags,
   ...
 }:
 let
-  nixCats = import ./package.nix inputs;
+  nixCats = import ./package.nix { inherit self inputs; };
 in
 util.mkProgram {
   name = "nixCats";

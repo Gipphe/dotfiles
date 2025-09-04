@@ -76,6 +76,7 @@
           jdenticon-cli = pkgs.callPackage ./packages/jdenticon.nix { };
           minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
           monocraft-no-ligatures-font = pkgs.callPackage ./packages/monocraft-no-ligatures.nix { };
+          prettier-with-plugins = pkgs.callPackage ./packages/prettier-with-plugins.nix { };
           treefmt =
             (treefmt-nix.lib.evalModule pkgs {
               projectRootFile = "flake.nix";

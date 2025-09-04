@@ -1,9 +1,10 @@
 {
-  nixpkgs,
-  nixCats,
+  inputs,
+  self,
   ...
-}@inputs:
+}:
 let
+  inherit (inputs) nixpkgs nixCats;
   inherit (nixCats) utils;
   luaPath = "${./.}";
   forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
@@ -101,12 +102,12 @@ let
           markdownlint-cli
           nix-doc
           nixfmt
-          prettierd
           ripgrep
           shfmt
           stdenv.cc.cc
           stylua
           universal-ctags
+          self.packages.${pkgs.system}.prettier-with-plugins
         ];
 
         full = with pkgs; [
