@@ -477,7 +477,7 @@ return {
     'fatih/vim-go',
     ft = { 'go', 'html', 'gotmpl', 'gohtmltmpl' },
     config = function()
-      vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufWinEnter', 'BufWritePost' }, {
+      vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufWinEnter', 'BufWritePre' }, {
         group = vim.api.nvim_create_augroup('gotmpl_syntax', { clear = true }),
         pattern = '*.gohtml,*.gotmpl,*.html',
         callback = function(event)
