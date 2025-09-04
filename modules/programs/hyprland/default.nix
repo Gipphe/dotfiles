@@ -218,6 +218,8 @@ util.mkProgram {
           sensitivity = 0; # -1.0 - 1.0, 0 means no modification
         };
 
+        cursor.no_hardware_cursors = true;
+
         general = {
           gaps_in = 2;
           gaps_out = 2;
