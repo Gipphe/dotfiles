@@ -472,4 +472,20 @@ return {
     cmd = { 'DiffEditor' },
     opts = {},
   },
+
+  {
+    'fatih/vim-go',
+    ft = { 'go', 'html', 'gotmpl', 'gohtmltmpl' },
+    config = function()
+      vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+        group = vim.api.nvim_create_augroup('gotmpl_syntax', { clear = true }),
+        pattern = '*.gohtml,*.gotmpl,*.html',
+        callback = function(event)
+          if vim.fn.search('{{.\\+}}', 'nw') ~= 0 then
+            vim.api.nvim_set_option_value('filetype', 'gohtmltmpl', { buf = event.buf })
+          end
+        end,
+      })
+    end,
+  },
 }

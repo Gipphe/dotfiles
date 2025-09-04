@@ -182,6 +182,7 @@ let
           trouble-nvim
           undotree
           vim-css-color
+          vim-go
           vim-illuminate
           vim-matchup
           virt-column-nvim
