@@ -92,6 +92,11 @@ util.mkProgram {
             "git"
             "fetch"
           ];
+          fixup = [
+            "squash"
+            "--use-destination-message"
+            "--into"
+          ];
         };
       };
     };
