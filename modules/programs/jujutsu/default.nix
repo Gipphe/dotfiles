@@ -84,6 +84,14 @@ util.mkProgram {
             "-r"
             "@-"
           ];
+          p = [
+            "git"
+            "push"
+          ];
+          pp = [
+            "git"
+            "fetch"
+          ];
         };
       };
     };
