@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.programs.jujutsu;
+in
 util.mkProgram {
   name = "jujutsu";
 
@@ -79,10 +82,31 @@ util.mkProgram {
             "all()"
           ];
           sync = [
-            "bookmark"
-            "set"
-            "-r"
-            "@-"
+            "util"
+            "exec"
+            "--"
+            (lib.getExe pkgs.fish)
+            "--no-config"
+            "-c"
+            # fish
+            ''
+              set -l bookmarks (${lib.getExe cfg.package} bookmark list -T name)
+              set -l bookmark $argv[1]
+
+              if test -z "$bookmark"
+                echo "Missing bookmark argument" >&2
+                exit 1
+              end
+
+              if not contains $bookmark $bookmarks
+                echo "Can only sync existing bookmarks." >&2
+                echo "The passed bookmark does not exist: $bookmark" >&2
+                exit 2
+              end
+
+              ${lib.getExe cfg.package} bookmark set -r @- $bookmark
+              exit $status
+            ''
           ];
           p = [
             "git"
