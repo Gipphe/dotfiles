@@ -51,19 +51,19 @@ util.mkProgram {
   ];
   system-nixos = lib.mkIf cfg.lovdata.enable {
     security.sudo.extraRules = [
-      # Necessary for openconnect-sso to run as a systemd service, since it uses sudo to invoke openconnect.
       {
         users = [ config.gipphe.username ];
         host = "ALL";
         runAs = "root";
         commands = [
           {
+            # Necessary for openconnect-sso to run as a systemd service, since it uses sudo to invoke openconnect.
             options = [ "NOPASSWD" ];
             command = "${openconnect}/bin/openconnect";
           }
           {
             options = [ "NOPASSWD" ];
-            command = "${pkgs.procps}/bin/pgrep";
+            command = "${pkgs.procps}/bin/pkill openconnect";
           }
         ];
       }
