@@ -89,7 +89,7 @@ in
           package = pkgs.nixVersions.nix_2_30;
 
           # pin the registry to avoid downloading and evaling a new nixpkgs version every time
-          registry = lib.mapAttrs (_: v: { flake = v; }) inputs;
+          registry = lib.mapAttrs (_: v: { flake = v; }) (lib.filterAttrs (x: _: x != "self") inputs);
 
           # This will additionally add your inputs to the system's legacy channels
           # Making legacy nix commands consistent as well, awesome!
