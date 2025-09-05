@@ -119,6 +119,7 @@ vim.opt.fillchars = {
 
 -- Start with all folds open
 vim.opt.foldlevel = 99
+vim.opt.foldmethod = 'indent'
 
 vim.opt.colorcolumn = '80'
 
