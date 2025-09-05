@@ -17,6 +17,7 @@ util.mkProfile {
       maven.lovdata.enable = true;
       memcached.enable = true;
       openconnect.enable = true;
+      openconnect.lovdata.enable = true;
       sentinelagent.enable = true;
       ssh = {
         enable = true;
