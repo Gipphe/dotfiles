@@ -8,6 +8,7 @@ util.mkProfile {
     heroic.enable = true;
     lutris.enable = true;
     moonlight-qt.enable = true;
+    prismlauncher.enable = true;
     runelite.enable = true;
     steam.enable = true;
   };
