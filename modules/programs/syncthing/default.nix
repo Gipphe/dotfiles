@@ -36,6 +36,14 @@ let
         "utv-vnb-lt"
       ];
     };
+    "${config.home.homeDirectory}/.local/share/gdlauncher_carbon/data/instances" = {
+      id = "gdlauncher-instances";
+      label = "GDLauncher instances";
+      devices = [
+        "titanium"
+        "utv-vnb-lt"
+      ];
+    };
   };
 
   inherit (builtins) elem filter;
