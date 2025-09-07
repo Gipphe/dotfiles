@@ -27,7 +27,7 @@ util.mkProgram {
             "-c"
             "DiffEditor $left $right $output"
           ];
-          merge-tools = "vimdiff";
+          merge-editor = "vimdiff";
           pager = [
             "sh"
             "-c"
