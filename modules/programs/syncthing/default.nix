@@ -44,6 +44,14 @@ let
         "utv-vnb-lt"
       ];
     };
+    "${config.home.homeDirectory}/.local/share/PrismLauncher/instances" = {
+      id = "prismlauncher-instances";
+      label = "PrismLauncher instances";
+      devices = [
+        "titanium"
+        "utv-vnb-lt"
+      ];
+    };
   };
 
   inherit (builtins) elem filter;
