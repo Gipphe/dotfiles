@@ -50,6 +50,7 @@
             secrets.enable = true;
             sync.enable = true;
             systemd.enable = true;
+            vm-host.enable = true;
           };
           programs = {
             floorp.default = false;
