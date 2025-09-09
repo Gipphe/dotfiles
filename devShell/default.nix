@@ -145,7 +145,13 @@ in
         text =
           # fish
           ''
-            nix flake update && git commit flake.lock -m "chore: update flake inputs"
+            nix flake update
+            or exit $status
+            if test -d .jj
+              jj commit flake.lock -m 'chore: update flake inputs'
+            else
+              git commit flake.lock -m 'chore: update flake inputs'
+            end
           '';
       };
       category = "utils";
