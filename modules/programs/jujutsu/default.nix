@@ -21,7 +21,7 @@ util.mkProgram {
         };
         ui = {
           editor = "nvim";
-          default-command = "lol";
+          default-command = "status";
           diff-editor = [
             "nvim"
             "-c"
