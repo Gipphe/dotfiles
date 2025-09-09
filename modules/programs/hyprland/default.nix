@@ -273,7 +273,8 @@ util.mkProgram {
         };
 
         gestures = {
-          workspace_swipe = true;
+          workspace_swipe_touch = true;
+          workspace_swipe_create_new = true;
         };
 
         misc = {
