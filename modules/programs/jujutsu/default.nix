@@ -116,6 +116,12 @@ util.mkProgram {
             "git"
             "fetch"
           ];
+          pub = [
+            "git"
+            "push"
+            "--change"
+            "@"
+          ];
           fixup = [
             "squash"
             "--use-destination-message"
