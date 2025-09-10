@@ -42,6 +42,7 @@
             fonts.enable = true;
             gaming.enable = true;
             gc.enable = true;
+            keyring.enable = true;
             logitech.enable = true;
             lovdata.enable = true;
             multi-monitor.enable = true;
