@@ -11,7 +11,7 @@ let
   inherit (inputs.openconnect-sso.packages.${pkgs.system}) openconnect-sso;
   openconnect = inputs.nixpkgs-openconnect-sso.legacyPackages.${pkgs.system}.openconnect;
   openconnect-lovdata = pkgs.writeShellScriptBin "openconnect-lovdata" ''
-    ${openconnect-sso}/bin/openconnect-sso --server lovdataazure.ivpn.se "$@"
+    ${lib.getExe' pkgs.systemd "systemctl"} start --user openconnect-lovdata.service
   '';
   reset-network =
     pkgs.writeShellScriptBin "reset-network" # bash
