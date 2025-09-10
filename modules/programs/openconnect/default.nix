@@ -21,6 +21,21 @@ let
           NetworkManager.service \
           nscd.service
       '';
+
+  start-service =
+    pkgs.writeShellScriptBin "start-service" # bash
+      ''
+        email="$(cat "${config.sops.secrets.lovdata-email.path}")"
+        ${openconnect-sso}/bin/openconnect-sso \
+          --server lovdataazure.ivpn.se \
+          --user "$email" \
+          --browser-display-mode shown \
+          -l DEBUG \
+          -- \
+          -b \
+          -l \
+          --pid-file=/run/ovpn.pid
+      '';
 in
 util.mkProgram {
   name = "openconnect";
@@ -40,12 +55,16 @@ util.mkProgram {
         };
         Service = {
           Type = "simple";
-          ExecStart = "${openconnect-sso}/bin/openconnect-sso -s lovdataazure.ivpn.se --browser-display-mode shown -l DEBUG -- -b -l --pid-file=/run/ovpn.pid";
+          ExecStart = lib.getExe start-service;
           Restart = "on-failure";
           PIDFile = "/run/ovpn.pid";
           ExecStop = ''${lib.getExe pkgs.bash} -c "sudo pkill openconnect"'';
         };
         Install.WantedBy = [ "multi-user.target" ];
+      };
+      sops.secrets.lovdata-email = {
+        format = "binary";
+        sopsFile = ../../../secrets/utv-vnb-lt-lovdata-email.txt;
       };
     })
   ];
