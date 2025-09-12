@@ -1,4 +1,4 @@
-format = "$os$username$hostname$memory_usage$shlvl$directory$fossil_branch$hg_branch$git_branch$pijul_channel$git_status $aws$buf$c$conda$crystal$dart$elixir$elm$fennel$golang$gradle$haskell$haxe$java$julia$kotlin$lua$nim$nodejs$ocaml$perl$php$python$rlang$ruby$rust$scala$swift$zig$package$fill$status$direnv$docker_context$guix_shell$meson$nix_shell$time\n$character"
+format = "$os$username$hostname$memory_usage$shlvl$directory$fossil_branch$hg_branch$git_branch${custom.git_branch}$pijul_channel$git_status${custom.git_status}${custom.jj} $aws$buf$c$conda$crystal$dart$elixir$elm$fennel$golang$gradle$haskell$haxe$java$julia$kotlin$lua$nim$nodejs$ocaml$perl$php$python$rlang$ruby$rust$scala$swift$zig$package$fill$status$direnv$docker_context$guix_shell$meson$nix_shell$time\n$character"
 palette = "catppuccin_macchiato"
 
 [aws]
@@ -25,6 +25,27 @@ symbol = " "
 format = "[$symbol($version) ]($style)"
 style = "fg:peach"
 symbol = " "
+
+[custom.git_branch]
+command = "starship module git_branch"
+description = "Only show git_branch if we're not in a jj repo"
+format = "[$symbol$branch ]($style)"
+style = ""
+when = "! jj --ignore-working-copy root"
+
+[custom.git_status]
+command = "starship module git_status"
+description = "Only show git_status if we're not in a jj repo"
+format = "[$symbol$branch ]($style)"
+style = ""
+when = "! jj --ignore-working-copy root"
+
+[custom.jj]
+command = "/nix/store/dwjka4b89mdjzxnrvgf25pvfnj2jjwbx-jujutsu-0.33.0/bin/jj log --revisions @ --no-graph --ignore-working-copy --color always --limit 1 --template '\n  separate(\" \",\n    change_id.shortest(4),\n    bookmarks,\n    \"|\",\n    concat(\n      if(conflict, \"💥\"),\n      if(divergent, \"🚧\"),\n      if(hidden, \"👻\"),\n      if(immutable, \"🔒\"),\n    ),\n    raw_escape_sequence(\"\\x1b[1;32m\") ++ if(empty, \"(empty)\"),\n    raw_escape_sequence(\"\\x1b[1;32m\") ++ coalesce(\n      truncate_end(29, description.first_line(), \"…\"),\n      \"(no description set)\",\n    ) ++ raw_escape_sequence(\"\\x1b[0m\"),\n  )\n'\n"
+description = "The current jj status"
+style = ""
+symbol = " "
+when = "/nix/store/dwjka4b89mdjzxnrvgf25pvfnj2jjwbx-jujutsu-0.33.0/bin/jj --ignore-working-copy root"
 
 [dart]
 format = "[$symbol($version) ]($style)"
@@ -88,11 +109,13 @@ style = "fg:green"
 symbol = " "
 
 [git_branch]
+disabled = true
 format = "[$symbol$branch ]($style)"
 style = "fg:green"
 symbol = " "
 
 [git_status]
+disabled = true
 format = "[$all_status$ahead_behind ]($style)"
 style = "fg:green"
 
