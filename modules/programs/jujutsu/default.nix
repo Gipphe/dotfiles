@@ -90,7 +90,7 @@ util.mkProgram {
             "-c"
             # fish
             ''
-              set -l bookmarks (${lib.getExe cfg.package} bookmark list -T name)
+              set -l bookmarks (${lib.getExe cfg.package} bookmark list -T 'name ++ "\n"')
               set -l bookmark $argv[1]
 
               if test -z "$bookmark"
