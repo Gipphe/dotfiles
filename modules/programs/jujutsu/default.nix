@@ -127,6 +127,17 @@ util.mkProgram {
             "--use-destination-message"
             "--into"
           ];
+          get-desc = [
+            "util"
+            "exec"
+            "--"
+            (lib.getExe pkgs.dash)
+            "--no-config"
+            "-c"
+            ''
+              ${lib.getExe' cfg.package "jj"} show --template 'description' --no-patch | ${pkgs.wl-clipboard}/bin/wl-copy
+            ''
+          ];
         };
       };
     };
