@@ -112,7 +112,7 @@ let
 
         full = with pkgs; [
           bash-language-server
-          dockerfile-language-server-nodejs
+          dockerfile-language-server
           elmPackages.elm-language-server
           fish-lsp
           gopls
