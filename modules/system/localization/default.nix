@@ -1,18 +1,12 @@
 { util, ... }:
 let
-  tz = "Europe/Oslo";
   defaultLocale = "en_US.UTF-8";
   no = "nb_NO.UTF-8";
 in
 util.mkToggledModule [ "system" ] {
   name = "localization";
   system-nixos = {
-    time = {
-      # Set your time zone.
-      timeZone = tz;
-    };
-    environment.sessionVariables.TZ = tz;
-
+    services.automatic-timezoned.enable = true;
     i18n = {
       inherit defaultLocale;
       extraLocaleSettings = {
