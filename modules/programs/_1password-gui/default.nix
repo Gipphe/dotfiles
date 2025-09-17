@@ -3,6 +3,7 @@
   lib,
   pkgs,
   util,
+  flags,
   ...
 }:
 let
@@ -46,6 +47,7 @@ util.mkProgram {
         Description = "Start 1password in silent mode on boot";
         After = [ "graphical-session.target" ];
         PartOf = [ "graphical-session.target" ];
+        X-Reload-Triggers = lib.optional flags.isNixos "/etc/1password/custom_allowed_browsers";
       };
       Service = {
         ExecStart = "${pkgs.writeShellScriptBin "1password-boot" ''
@@ -58,4 +60,14 @@ util.mkProgram {
   };
 
   system-darwin.homebrew.casks = [ "1password" ];
+  # Allows the 1password browser extension to connect to the GUI app
+  system-nixos.environment.etc."1password/custom_allowed_browsers" = {
+    user = "root";
+    group = "root";
+    mode = "755";
+    text = ''
+      vivaldi-bin
+      floorp-bin
+    '';
+  };
 }
