@@ -32,6 +32,7 @@
               devices.enable = true;
               power.enable = true;
               system.enable = true;
+              time.enable = true;
             };
             ai.enable = true;
             application.enable = true;
