@@ -10,7 +10,6 @@ util.mkToggledModule [ "system" ] {
     time = {
       # Set your time zone.
       timeZone = tz;
-      hardwareClockInLocalTime = true;
     };
     environment.sessionVariables.TZ = tz;
 
