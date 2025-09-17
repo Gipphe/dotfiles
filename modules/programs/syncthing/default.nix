@@ -83,6 +83,7 @@ util.mkProgram {
           "helium".id = "XM4OOHL-EP23EPU-63QRPZY-TLLMY45-JPJ5TDB-MB6LZ6J-3UO7W2A-RLOVVA2";
           "cobalt".id = "5WAUGFG-XWLSBTV-IJMCB5F-YGN7AZM-RQ2FQOT-7SWUF7Q-7OUZKSR-JBZX3AK";
           "carbon".id = "A7LZMEF-DMVXRLI-KB3RWZ5-QLYUX7R-MK43GT5-TIRZHHD-VY6NIZ6-MRVCZAA";
+          "utv-vnb-lt".id = "4AGB4CH-53R7AD2-U6YUREI-QXX77WS-IAZ3YWG-T4OBNWN-VQAVA2P-5FNBGAU";
         };
         folders = foldersForThisHost;
       };
