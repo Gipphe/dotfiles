@@ -23,7 +23,12 @@ in
 util.mkProgram {
   name = "ssh";
 
-  options.gipphe.programs.ssh.lovdata.enable = lib.mkEnableOption "Lovdata configs for SSH";
+  options.gipphe.programs.ssh = {
+    package = lib.mkPackageOption pkgs "ssh" { } // {
+      default = config.programs.ssh.package;
+    };
+    lovdata.enable = lib.mkEnableOption "Lovdata configs for SSH";
+  };
 
   hm = {
     programs = {

@@ -7,21 +7,26 @@
 }:
 util.mkProgram {
   name = "git";
-  options.gipphe.programs.git.windows = {
-    config = lib.mkOption {
-      description = "Config to be used on Windows";
-      type = lib.types.package;
-      internal = true;
+  options.gipphe.programs.git = {
+    package = lib.mkPackageOption pkgs "git" { } // {
+      default = config.programs.git.package;
     };
-    strise = lib.mkOption {
-      description = "Config for Strise to be used on Windows";
-      type = lib.types.package;
-      internal = true;
-    };
-    ignores = lib.mkOption {
-      description = "Git ignore for Windows";
-      type = lib.types.path;
-      internal = true;
+    windows = {
+      config = lib.mkOption {
+        description = "Config to be used on Windows";
+        type = lib.types.package;
+        internal = true;
+      };
+      strise = lib.mkOption {
+        description = "Config for Strise to be used on Windows";
+        type = lib.types.package;
+        internal = true;
+      };
+      ignores = lib.mkOption {
+        description = "Git ignore for Windows";
+        type = lib.types.path;
+        internal = true;
+      };
     };
   };
   hm = {
