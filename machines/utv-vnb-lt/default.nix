@@ -183,8 +183,14 @@
             extraModprobeConfig = ''
               options drm_kms_helper poll=N
             '';
-            initrd.luks.devices."luks-03a05c7c-fec2-435a-a17c-40693494c8ea".device =
-              "/dev/disk/by-uuid/03a05c7c-fec2-435a-a17c-40693494c8ea";
+            initrd = {
+              kernelModules = [
+                "thunderbolt"
+                "i915"
+              ];
+              luks.devices."luks-03a05c7c-fec2-435a-a17c-40693494c8ea".device =
+                "/dev/disk/by-uuid/03a05c7c-fec2-435a-a17c-40693494c8ea";
+            };
           };
 
           users = {
@@ -197,7 +203,13 @@
             lib.mkOverride 990 "nvidia"
           );
 
-          services.thermald.enable = true;
+          services = {
+            thermald.enable = true;
+            logind.settings.Login = {
+              HandleLidSwitchExternalPower = "suspend";
+              HandleLidSwitchDocked = "ignore";
+            };
+          };
           # powersave or performance.
           powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
 
