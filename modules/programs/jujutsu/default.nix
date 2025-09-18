@@ -116,12 +116,58 @@ util.mkProgram {
             "git"
             "fetch"
           ];
-          pub = [
+          pub-change = [
+
             "git"
             "push"
             "--change"
             "@"
           ];
+          pub =
+            let
+              script = util.writeFishApplication {
+                name = "jj-pub";
+                runtimeInputs = [
+                  cfg.package
+                  pkgs.coreutils
+                ];
+                text =
+                  # fish
+                  ''
+                    argparse h/help r/revision -- $argv
+                    or exit 1
+
+                    function info
+                      echo $argv >&2
+                    end
+
+                    if set -ql _flag_help
+                      info "jj-pub [-h|--help] [-r|--revision <jj-revision>]"
+                      info "  -r or --revision REVISION"
+                      info "    Revision to publish. Defaults to @"
+                      info "  -h or --help"
+                      info "    Show this help text"
+                      exit 0
+                    end
+
+                    set -l rev @
+                    if set -ql _flag_revision
+                      set rev $_flag_revision
+                    end
+                    set -l desc (jj show --template description --no-patch "$rev")
+                    or exit 1
+                    set -l sanitized (echo -n "$desc" | tr ' ' '-' | tr -sc '/:[:alnum:]' '-' | tr -s ':' '/')
+                    jj bookmark create -r "$rev" "$sanitized"
+                    jj git push --bookmark "$sanitized" --allow-new
+                  '';
+              };
+            in
+            [
+              "util"
+              "exec"
+              "--"
+              (lib.getExe' script "jj-pub")
+            ];
           fixup = [
             "squash"
             "--use-destination-message"
