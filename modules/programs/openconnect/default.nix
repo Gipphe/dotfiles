@@ -44,7 +44,10 @@ util.mkProgram {
   };
   hm = lib.mkMerge [
     {
-      home.packages = [ reset-network ];
+      home.packages = [
+        reset-network
+        openconnect-sso
+      ];
     }
     (lib.mkIf cfg.lovdata.enable {
       home.packages = [ openconnect-lovdata ];
