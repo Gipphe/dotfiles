@@ -265,6 +265,7 @@ util.mkProgram {
         ui {
             pane_frames {
                 rounded_corners false
+                hide_session_name true
             }
         }
 
