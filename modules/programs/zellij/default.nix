@@ -262,6 +262,7 @@ util.mkProgram {
 
         copy_on_select true
 
+        pane_frames false
         ui {
             pane_frames {
                 rounded_corners false
