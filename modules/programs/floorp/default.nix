@@ -22,9 +22,6 @@ util.mkModule {
       {
         programs.floorp = lib.mkIf (pkgs.stdenv.hostPlatform.isLinux && !flags.isNixOnDroid) {
           enable = true;
-          package = pkgs.wrapFirefox pkgs.floorp-bin-unwrapped {
-            pname = "floorp-bin";
-          };
           profiles = {
             default = import ./profile.nix { inherit pkgs; };
           };
