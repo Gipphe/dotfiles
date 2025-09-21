@@ -21,7 +21,7 @@ util.mkModule {
     ./windows.nix
     ./darwin.nix
   ];
-  hm = lib.mkMerge [
+  hm.config = lib.mkMerge [
     {
       programs.floorp = lib.mkIf (pkgs.stdenv.hostPlatform.isLinux && !flags.isNixOnDroid) {
         enable = true;
