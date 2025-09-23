@@ -8,7 +8,6 @@ util.mkProfile {
   name = "lovdata";
   shared.gipphe = {
     programs = {
-      devbox.enable = true;
       docker.enable = true;
       idea-ultimate.enable = true;
       java_21.enable = true;
