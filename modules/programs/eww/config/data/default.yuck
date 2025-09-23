@@ -14,7 +14,7 @@
 
 (deflisten mode `cat "$HOME/.cache/gipphe/theme" || echo "dark"`)
 
-(deflisten mpris :initial '{}' `./data/mpris.fish`)
+; (deflisten mpris :initial '{}' `./data/mpris.fish`)
 
 (deflisten network :initial '{"wifi": {}, "wired": false}'
   `./data/network.fish`)
@@ -37,3 +37,6 @@
 
 (deflisten window :initial "..."
   `./data/window-title.fish`)
+
+(defpoll audio-sink :interval "5s" :initial "Internal"
+  `pamixer --get-default-sink`)

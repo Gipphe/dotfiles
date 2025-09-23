@@ -1,36 +1,36 @@
 (defvar music_reveal false)
 
-(defwidget music []
-  (eventbox :onhover `${EWW_CMD} update music_reveal=true`
-            :onhoverlost "${EWW_CMD} update music_reveal=false"
-    (box :class "music"
-         :orientation "h"
-         :space-evenly false
-         :vexpand false
-         :hexpand false
-      ; (box :class "music__cover-art"
-      ;      :vexpand false
-      ;      :hexpand false
-      ;      :style "background-image: url('${mpris.artUrl}');")
-      (label :class "music__song"
-              :truncate true
-              :text "${mpris.title != 'null' && mpris.title != '' ? " ${mpris.title}" : ''}")
-      (revealer :transition "slideRight"
-                :reveal {music_reveal && mpris?.status != 'null'}
-                :duration "350ms"
-        (box :orientation "h"
-             :style "margin-left: 10px"
-             :spacing 5
-          (button :class "music__prev"
-                  :onclick "playerctl previous"
-            "")
-          (button :class "music__play"
-                  :onclick "playerctl play-pause"
-            {mpris.status == "Paused" ? "" : ""})
-          (button :class "music__next"
-                  :onclick "playerctl next"
-            "")))
-            )))
+; (defwidget music []
+;   (eventbox :onhover `${EWW_CMD} update music_reveal=true`
+;             :onhoverlost "${EWW_CMD} update music_reveal=false"
+;     (box :class "music"
+;          :orientation "h"
+;          :space-evenly false
+;          :vexpand false
+;          :hexpand false
+;       ; (box :class "music__cover-art"
+;       ;      :vexpand false
+;       ;      :hexpand false
+;       ;      :style "background-image: url('${mpris.artUrl}');")
+;       (label :class "music__song"
+;               :truncate true
+;               :text "${mpris.title != 'null' && mpris.title != '' ? " ${mpris.title}" : ''}")
+;       (revealer :transition "slideRight"
+;                 :reveal {music_reveal && mpris?.status != 'null'}
+;                 :duration "350ms"
+;         (box :orientation "h"
+;              :style "margin-left: 10px"
+;              :spacing 5
+;           (button :class "music__prev"
+;                   :onclick "playerctl previous"
+;             "")
+;           (button :class "music__play"
+;                   :onclick "playerctl play-pause"
+;             {mpris.status == "Paused" ? "" : ""})
+;           (button :class "music__next"
+;                   :onclick "playerctl next"
+;             "")))
+;             )))
 
 ; (defwidget music_pop []
 ;   (box :class "music-pop"
