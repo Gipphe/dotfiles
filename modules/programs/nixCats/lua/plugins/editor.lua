@@ -457,7 +457,7 @@ return {
       },
       {
         '<leader>ns',
-        '<cmd>NoNeckPainWidthScratchPad<cr>',
+        '<cmd>NoNeckPainScratchPad<cr>',
         desc = 'Use NoNeckPain scratch pad',
       },
     },
