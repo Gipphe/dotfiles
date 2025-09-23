@@ -22,11 +22,7 @@ util.mkProgram {
         ui = {
           editor = "nvim";
           default-command = "status";
-          diff-editor = [
-            "nvim"
-            "-c"
-            "DiffEditor $left $right $output"
-          ];
+          diff-editor = ":builtin";
           merge-editor = "vimdiff";
           pager = [
             "sh"
