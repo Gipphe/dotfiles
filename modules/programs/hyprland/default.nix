@@ -54,6 +54,21 @@ let
     mods: if isString mods then replaceMod mods else concatStringsSep " " (map replaceMod mods);
   toHyprBind = coreBind: "${toMods coreBind.mod}, ${coreBind.key}, ${toDispatch coreBind.action}";
   coreBinds = map toHyprBind config.gipphe.core.wm.binds;
+
+  killactive = pkgs.writeShellApplication {
+    name = "killactive";
+    runtimeInputs = [
+      config.wayland.windowManager.hyprland.package
+      pkgs.xdotool
+    ];
+    text = ''
+      if test "$(hyprctl activewindow -j | jq -r '.class')" = 'Steam'; then
+        xdotool getactivewindow windowunmap
+      else
+        hyprctl dispatch killactive ""
+      fi
+    '';
+  };
 in
 util.mkProgram {
   name = "hyprland";
@@ -73,7 +88,7 @@ util.mkProgram {
             workspaces
             ++ coreBinds
             ++ [
-              "$mod, Q, killactive"
+              "$mod, Q, exec, ${killactive}/bin/killactive" # Close current window
               "$mod SHIFT, Q, forcekillactive" # Force close current window
               "$mod, T, togglefloating # Toggle between tiling and floating window"
               "$mod, F, fullscreen # Open the window in fullscreen"
