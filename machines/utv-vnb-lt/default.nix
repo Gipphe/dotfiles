@@ -16,6 +16,11 @@
       }:
       let
         name = "utv-vnb-lt";
+
+        left-monitor = "Dell Inc. DELL U2724D G15V4Z3";
+        right-monitor = "Dell Inc. DELL U2724D G27V4Z3";
+        center-monitor = "Dell Inc. DELL U2724D G11T4Z3";
+        laptop-monitor = "AU Optronics 0x31A6 Unknown";
       in
       util.mkToggledModule [ "machines" ] {
         inherit name;
@@ -81,34 +86,36 @@
                 action.spawn = "${brightnessctl} set 10%+";
               }
             ];
-          wayland.windowManager.hyprland.settings.monitor = [
-            "desc:Dell Inc. DELL U2724D G11T4Z3, preferred, 0x0, 1"
-            "desc:Dell Inc. DELL U2724D G27V4Z3, preferred, auto-right, 1"
-            "desc:Dell Inc. DELL U2724D G15V4Z3, preferred, auto-left, 1"
-            ", preferred, auto-down, 1"
-          ];
+          wayland.windowManager.hyprland.settings = {
+            monitor = [
+              "desc:${center-monitor}, preferred, 0x0, 1"
+              "desc:${right-monitor}, preferred, auto-right, 1"
+              "desc:${left-monitor}, preferred, auto-left, 1"
+              ", preferred, auto-down, 1"
+            ];
+          };
 
           gipphe.programs.wf-recorder.nicknames = {
-            "Dell Inc. DELL U2724D G11T4Z3" = "center";
-            "Dell Inc. DELL U2724D G27V4Z3" = "right";
-            "Dell Inc. DELL U2724D G15V4Z3" = "left";
+            "${center-monitor}" = "center";
+            "${right-monitor}" = "right";
+            "${left-monitor}" = "left";
           };
 
           services.kanshi.settings = [
             {
-              output.criteria = "Dell Inc. DELL U2724D G15V4Z3";
+              output.criteria = left-monitor;
               output.alias = "left";
             }
             {
-              output.criteria = "Dell Inc. DELL U2724D G27V4Z3";
+              output.criteria = right-monitor;
               output.alias = "right";
             }
             {
-              output.criteria = "Dell Inc. DELL U2724D G11T4Z3";
+              output.criteria = center-monitor;
               output.alias = "center";
             }
             {
-              output.criteria = "AU Optronics 0x31A6 Unknown";
+              output.criteria = laptop-monitor;
               output.alias = "laptop";
             }
             {
