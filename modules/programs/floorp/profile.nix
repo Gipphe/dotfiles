@@ -43,7 +43,17 @@
         definedAliases = [ "!nixos" ];
       };
       "NixOS Wiki" = {
-        urls = [ { template = "https://wiki.nixos.org/index.php?search={searchTerms}"; } ];
+        urls = [
+          {
+            template = "https://wiki.nixos.org/index.php";
+            params = [
+              {
+                name = "search";
+                value = "{searchTerms}";
+              }
+            ];
+          }
+        ];
         icon = "https://wiki.nixos.org/favicon.png";
         updateInterval = 24 * 60 * 60 * 1000; # every day
         definedAliases = [ "!nw" ];
@@ -55,23 +65,64 @@
       "BoardGameGeek" = {
         urls = [
           {
-            template = "https://boardgamegeek.com/geeksearch.php?action=search&q={searchTerms}&objecttype=boardgame";
+            template = "https://boardgamegeek.com/geeksearch.php";
+            params = [
+              {
+                name = "action";
+                value = "search";
+              }
+              {
+                name = "q";
+                value = "{searchTerms}";
+              }
+              {
+                name = "objecttype";
+                value = "boardgame";
+              }
+            ];
           }
         ];
         definedAliases = [ "!bgg" ];
       };
       "Hoogle" = {
-        urls = [ { template = "https://hoogle.haskell.org/?hoogle={searchTerms}"; } ];
+        urls = [
+          {
+            template = "https://hoogle.haskell.org/";
+            params = [
+              {
+                name = "hoogle";
+                value = "{searchTerms}";
+              }
+
+            ];
+          }
+        ];
         definedAliases = [ "!hoogle" ];
       };
       "npm" = {
-        urls = [ { template = "https://www.npmjs.com/search?q={searchTerms}"; } ];
+        urls = [
+          {
+            template = "https://www.npmjs.com/search";
+            params = [
+              {
+                name = "q";
+                value = "{searchTerms}";
+              }
+            ];
+          }
+        ];
         definedAliases = [ "!npm" ];
       };
       "Wikipedia" = {
         urls = [
           {
-            template = "https://en.wikipedia.org/w/index.php?search={searchTerms}";
+            template = "https://en.wikipedia.org/w/index.php";
+            params = [
+              {
+                name = "search";
+                value = "{searchTerms}";
+              }
+            ];
           }
         ];
         definedAliases = [
