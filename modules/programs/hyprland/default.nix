@@ -353,6 +353,38 @@ util.mkProgram {
       };
       home.sessionVariables.NIXOS_OZONE_WL = "1";
     }
+    {
+      wayland.windowManager.hyprland.settings =
+        let
+          hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
+          jq = "${pkgs.jq}/bin/jq";
+          set-zoom-factor =
+            jqFilter:
+            "${hyprctl} -q keyword cursor:zoom_factor $(${hyprctl} getoption cursor:zoom_factor -j | ${jq} '${jqFilter}')";
+
+          increase-zoom = set-zoom-factor ".float * 1.1";
+          decrease-zoom = set-zoom-factor "(.float * 0.9) | if . < 1 then 1 else . end";
+          reset-zoom = "${hyprctl} -q keyword cursor:zoom_factor 1";
+        in
+        {
+          bind = [
+
+            "$mod, mouse_down, exec, ${increase-zoom}"
+            "$mod, mouse_up, exec, ${decrease-zoom}"
+            "$mod SHIFT, mouse_up, exec, ${reset-zoom}"
+            "$mod SHIFT, mouse_down, exec, ${reset-zoom}"
+            "$mod SHIFT, minus, exec, ${reset-zoom}"
+            "$mod SHIFT, KP_SUBTRACT, exec, ${reset-zoom}"
+            "$mod SHIFT, 0, exec, ${reset-zoom}"
+          ];
+          binde = [
+            "$mod, equal, exec, ${increase-zoom}"
+            "$mod, minus, exec, ${decrease-zoom}"
+            "$mod, KP_ADD, exec, ${increase-zoom}"
+            "$mod, KP_SUBTRACT, exec, ${decrease-zoom}"
+          ];
+        };
+    }
   ];
   system-nixos = {
     programs.hyprland = {
