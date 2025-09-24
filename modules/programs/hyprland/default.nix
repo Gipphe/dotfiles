@@ -69,6 +69,31 @@ let
       fi
     '';
   };
+
+  gamemode = pkgs.writeShellApplication {
+    name = "gamemode";
+    runtimeInputs = [ config.wayland.windowManager.hyprland.package ];
+    text = ''
+      HYPRGAMEMODE=$(hyprctl getoption animations:enabled | awk 'NR==1{print $2}')
+      if test "$HYPRGAMEMODE" = 1; then
+        hyprctl --batch "\
+          keyword animations:enabled 0; \
+          keyword animation borderangle,0; \
+          keyword decoration:shadow:enabled 0; \
+          keyword decoration:blur:enabled 0; \
+          keyword decoration:fullscreen_opacity 1; \
+          keyword general:gaps_in 0; \
+          keyword general:gaps_out 0; \
+          keyword general:border_size 1; \
+          keyword decoration:rounding 0 \
+        "
+        hyprctl notify 1 5000 "rgb(40a02b)" "Gamemode [ON]"
+      else
+        hyprctl reload
+        hyprctl notify 1 5000 "rgb(d20f39)" "Gamemode [OFF]"
+      fi
+    '';
+  };
 in
 util.mkProgram {
   name = "hyprland";
@@ -94,6 +119,8 @@ util.mkProgram {
               "$mod, F, fullscreen # Open the window in fullscreen"
               "$mod, P, pseudo, # dwindle"
               "$mod, J, togglesplit, # dwindle"
+
+              "$mod, F1, exec, ${gamemode}/bin/gamemode"
 
               # Move focus with mod + arrow keys
               "$mod, left, movefocus, l # Move focus left"
