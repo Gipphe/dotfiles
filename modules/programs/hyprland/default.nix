@@ -57,246 +57,261 @@ let
 in
 util.mkProgram {
   name = "hyprland";
-  hm = {
-    home.packages = with pkgs; [ wireplumber ];
-    wayland.windowManager.hyprland = {
-      enable = true;
-      inherit package portalPackage;
-      settings = {
-        "$mod" = "SUPER";
+  hm.config = lib.mkMerge [
+    {
+      home.packages = with pkgs; [ wireplumber ];
+      wayland.windowManager.hyprland = {
+        enable = true;
+        inherit package portalPackage;
+        settings = {
+          "$mod" = "SUPER";
 
-        # Monitor
-        # See https://wiki.hyprland.org/Configuring/Monitors
-        monitor = lib.mkDefault ",preferred,auto,1";
-        bind =
-          workspaces
-          ++ coreBinds
-          ++ [
-            "$mod, Q, killactive" # Close current window
-            "$mod SHIFT, Q, forcekillactive" # Force close current window
-            "$mod, T, togglefloating # Toggle between tiling and floating window"
-            "$mod, F, fullscreen # Open the window in fullscreen"
-            "$mod, P, pseudo, # dwindle"
-            "$mod, J, togglesplit, # dwindle"
+          # Monitor
+          # See https://wiki.hyprland.org/Configuring/Monitors
+          monitor = lib.mkDefault ",preferred,auto,1";
+          bind =
+            workspaces
+            ++ coreBinds
+            ++ [
+              "$mod, Q, killactive"
+              "$mod SHIFT, Q, forcekillactive" # Force close current window
+              "$mod, T, togglefloating # Toggle between tiling and floating window"
+              "$mod, F, fullscreen # Open the window in fullscreen"
+              "$mod, P, pseudo, # dwindle"
+              "$mod, J, togglesplit, # dwindle"
 
-            # Move focus with mod + arrow keys
-            "$mod, left, movefocus, l # Move focus left"
-            "$mod, right, movefocus, r # Move focus right"
-            "$mod, up, movefocus, u # Move focus up"
-            "$mod, down, movefocus, d # Move focus down"
+              # Move focus with mod + arrow keys
+              "$mod, left, movefocus, l # Move focus left"
+              "$mod, right, movefocus, r # Move focus right"
+              "$mod, up, movefocus, u # Move focus up"
+              "$mod, down, movefocus, d # Move focus down"
 
-            # Scroll through existing workspaces with mod + scroll
-            "$mod, mouse_down, workspace, e+1"
-            "$mod, mouse_up, workspace, e-1"
+              # Scroll through existing workspaces with mod + scroll
+              "$mod, mouse_down, workspace, e+1"
+              "$mod, mouse_up, workspace, e-1"
 
-            # Cycle to next window with Alt + Tab
-            "Alt_L, Tab, cyclenext,"
-            "Alt_L, Tab, bringactivetotop,"
-            "Alt_L Shift, Tab, cyclenext, prev"
-            "Alt_L Shift, Tab, bringactivetotop,"
+              # Cycle to next window with Alt + Tab
+              "Alt_L, Tab, cyclenext,"
+              "Alt_L, Tab, bringactivetotop,"
+              "Alt_L Shift, Tab, cyclenext, prev"
+              "Alt_L Shift, Tab, bringactivetotop,"
+
+            ];
+
+          bindl =
+            let
+              hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
+              lid-switch = util.writeFishApplication {
+                name = "lid-switch";
+                text = ''
+                  set -l monitors "$(${hyprctl} monitors all -j | jq 'length')"
+                  if test $monitors == 1
+                    if test $argv[1] == "close"
+                      systemctl suspend
+                    else
+                      sleep 1 && ${hyprctl} dispatch dpms on eDP-1
+                    end
+                  end
+                '';
+              };
+
+            in
+            [
+              ", switch:off:Lid Switch, exec, ${lid-switch}/bin/lid-switch open"
+              ", switch:on:Lid Switch, exec, ${lid-switch}/bin/lid-switch close"
+            ];
+
+          bindm = [
+            # Move/resize windows with mod + LMB/RMB and dragging
+            "$mod, mouse:272, movewindow"
+            "$mod, mouse:273, resizewindow"
           ];
 
-        bindl =
-          let
-            hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
-            lid-switch = util.writeFishApplication {
-              name = "lid-switch";
-              text = ''
-                set -l monitors "$(${hyprctl} monitors all -j | jq 'length')"
-                if test $monitors == 1
-                  if test $argv[1] == "close"
-                    systemctl suspend
-                  else
-                    sleep 1 && ${hyprctl} dispatch dpms on eDP-1
-                  end
-                end
-              '';
+          env = [
+            # Cursor
+            "XCURSOR_SIZE,24"
+
+            # XDG Desktop Portal
+            "XDG_CURRENT_DESKTOP,Hyprland"
+            "XDG_SESSION_TYPE,wayland"
+            "XDG_SESSION_DESKTOP,Hyprland"
+
+            # QT
+            "QT_QPA_PLATFORM,wayland;xcb"
+            "QT_QPA_PLATFORMTHEME,qt6ct"
+            "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+            "QT_AUTO_SCREEN_SCALE_FACTOR,1"
+
+            # GTK
+            "GDK_SCALE,1"
+
+            # Mozilla
+            "MOZ_ENABLE_WAYLAND,1"
+
+            # Disable appimage launcher by default
+            "APPIMAGELAUNCHER_DISABLE,1"
+
+            # OZONE
+            "OZONE_PLATFORM,wayland"
+          ];
+
+          input = {
+            kb_layout = "no";
+            kb_variant = "";
+            kb_model = "";
+            # xkg options are sparsely documented, from what I can find. The
+            # following descriptions are taken from the following sources:
+            # - https://medium.com/@damko/a-simple-humble-but-comprehensive-guide-to-xkb-for-linux-6f1ad5e13450
+            # - https://wiki.archlinux.org/title/Xorg/Keyboard_configuration
+            #
+            # Seems the `xkeyboard-config` package also has a list of possible rules to use:
+            # /nix/store/<hash>-xkeyboard-config-<version>/share/xkeyboard-config-<major-version>/rules/base.lst
+            # That file lists all rules and a short description for each.
+            #
+            # Options:
+            # - nbsp:none : Disable inputting NBSP when pressing AltGr+Space
+            #
+            # - compose:menu : Use the menu key as the compose key. The compose
+            # key triggers composition mode, where diacritic characters can be
+            # combined with letters, for eaxample. Unsure how to configure compose key combinations in Wayland, but this is usually done through `~/.XCompose`.
+            # See https://wiki.archlinux.org/title/Xorg/Keyboard_configuration#Key_combinations
+            #
+            # - eurosign:5 : Set the lv3 key for the Euro sign character. This
+            # means, with the default lv3 key, you press AltGr+5 to write out a
+            # Euro sign.
+            #
+            # - rupeesign:4 : Set the lv3 key for the Rupee sign character. This
+            # means, with the default lv3 key, you press AltGr+4 to write out a
+            # Rupee sign sign.
+            #
+            # - shift:both_capslock : Activates caps lock by pressing both shift
+            # keys at the same time.
+            #
+            # - lv3:rwin_switch : Sets which key activates the 3rd level modifier.
+            # It is used to printt he symbols displayed on the right side of some
+            # keyboard keys, like "£${}" on Nordic keyboards. In this case, lv3
+            # is the right window key, but you can set it to something else. By
+            # default, I believe this is AltGr. Fun fact, "AltGr" stands for
+            # "Alternate Graphic".
+            #
+            # - grp:<key> : Change keyboard layout with Alt+Shift.
+            # Supports the following keys:
+            #   - alt_shift_toggle : Alt+Shift
+            #   - alts_toggle : Alt. Buggy, do not use.
+            #   - caps_toggle : Caps lock
+            #   - win_space_toggle : Super+Space
+            #   - Possibly others that I have yet to find documented anywhere.
+            #
+            # - terminate:ctrl_alt_bksp : Terminare Xorg with Ctrl+Alt+Backspace.
+            # Unsure what this does in Wayland.
+            #
+            # - ctrl:swapcaps : Swap caps lock with left control.
+            #
+            # - keypad:pointerkeys : Enable mouse keys. Not to be confused with
+            # the actual keys on the mouse; mouse keys moves the mouse on the
+            # screen using keyboard keys. This option makes Shift+NumLock toggle
+            # mouse keys.
+            kb_options = "nbsp:none,compose:menu,eurosign:5,caps:escape";
+            kb_rules = "";
+            numlock_by_default = true;
+
+            follow_mouse = 1;
+
+            touchpad = {
+              natural_scroll = false;
             };
 
-          in
-          [
-            ", switch:off:Lid Switch, exec, ${lid-switch}/bin/lid-switch open"
-            ", switch:on:Lid Switch, exec, ${lid-switch}/bin/lid-switch close"
-          ];
-
-        bindm = [
-          # Move/resize windows with mod + LMB/RMB and dragging
-          "$mod, mouse:272, movewindow"
-          "$mod, mouse:273, resizewindow"
-        ];
-
-        env = [
-          # Cursor
-          "XCURSOR_SIZE,24"
-
-          # XDG Desktop Portal
-          "XDG_CURRENT_DESKTOP,Hyprland"
-          "XDG_SESSION_TYPE,wayland"
-          "XDG_SESSION_DESKTOP,Hyprland"
-
-          # QT
-          "QT_QPA_PLATFORM,wayland;xcb"
-          "QT_QPA_PLATFORMTHEME,qt6ct"
-          "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
-          "QT_AUTO_SCREEN_SCALE_FACTOR,1"
-
-          # GTK
-          "GDK_SCALE,1"
-
-          # Mozilla
-          "MOZ_ENABLE_WAYLAND,1"
-
-          # Disable appimage launcher by default
-          "APPIMAGELAUNCHER_DISABLE,1"
-
-          # OZONE
-          "OZONE_PLATFORM,wayland"
-        ];
-
-        input = {
-          kb_layout = "no";
-          kb_variant = "";
-          kb_model = "";
-          # xkg options are sparsely documented, from what I can find. The
-          # following descriptions are taken from the following sources:
-          # - https://medium.com/@damko/a-simple-humble-but-comprehensive-guide-to-xkb-for-linux-6f1ad5e13450
-          # - https://wiki.archlinux.org/title/Xorg/Keyboard_configuration
-          #
-          # Options:
-          # - nbsp:none : Disable inputting NBSP when pressing AltGr+Space
-          #
-          # - compose:menu : Use the menu key as the compose key. The compose
-          # key triggers composition mode, where diacritic characters can be
-          # combined with letters, for eaxample. Unsure how to configure compose key combinations in Wayland, but this is usually done through `~/.XCompose`.
-          # See https://wiki.archlinux.org/title/Xorg/Keyboard_configuration#Key_combinations
-          #
-          # - eurosign:5 : Set the lv3 key for the Euro sign character. This
-          # means, with the default lv3 key, you press AltGr+5 to write out a
-          # Euro sign.
-          #
-          # - rupeesign:4 : Set the lv3 key for the Rupee sign character. This
-          # means, with the default lv3 key, you press AltGr+4 to write out a
-          # Rupee sign sign.
-          #
-          # - shift:both_capslock : Activates caps lock by pressing both shift
-          # keys at the same time.
-          #
-          # - lv3:rwin_switch : Sets which key activates the 3rd level modifier.
-          # It is used to printt he symbols displayed on the right side of some
-          # keyboard keys, like "£${}" on Nordic keyboards. In this case, lv3
-          # is the right window key, but you can set it to something else. By
-          # default, I believe this is AltGr. Fun fact, "AltGr" stands for
-          # "Alternate Graphic".
-          #
-          # - grp:<key> : Change keyboard layout with Alt+Shift.
-          # Supports the following keys:
-          #   - alt_shift_toggle : Alt+Shift
-          #   - alts_toggle : Alt. Buggy, do not use.
-          #   - caps_toggle : Caps lock
-          #   - win_space_toggle : Super+Space
-          #   - Possibly others that I have yet to find documented anywhere.
-          #
-          # - terminate:ctrl_alt_bksp : Terminare Xorg with Ctrl+Alt+Backspace.
-          # Unsure what this does in Wayland.
-          #
-          # - ctrl:swapcaps : Swap caps lock with left control.
-          #
-          # - keypad:pointerkeys : Enable mouse keys. Not to be confused with
-          # the actual keys on the mouse; mouse keys moves the mouse on the
-          # screen using keyboard keys. This option makes Shift+NumLock toggle
-          # mouse keys.
-          kb_options = "nbsp:none,compose:menu,eurosign:5";
-          kb_rules = "";
-          numlock_by_default = true;
-
-          follow_mouse = 1;
-
-          touchpad = {
-            natural_scroll = false;
+            sensitivity = 0; # -1.0 - 1.0, 0 means no modification
           };
 
-          sensitivity = 0; # -1.0 - 1.0, 0 means no modification
-        };
+          cursor.no_hardware_cursors = true;
 
-        cursor.no_hardware_cursors = true;
+          general = {
+            gaps_in = 2;
+            gaps_out = 2;
+            border_size = 1;
+            "col.active_border" = lib.mkForce "rgb(8aadf4) rgb(c6a0f6) 45deg";
+            # "col.inactive_border" = "rgba(595959aa)";
+            layout = "dwindle";
+            resize_on_border = true;
+          };
 
-        general = {
-          gaps_in = 2;
-          gaps_out = 2;
-          border_size = 1;
-          "col.active_border" = lib.mkForce "rgb(8aadf4) rgb(c6a0f6) 45deg";
-          # "col.inactive_border" = "rgba(595959aa)";
-          layout = "dwindle";
-          resize_on_border = true;
-        };
+          decoration = {
+            rounding = 6;
+            blur = {
+              enabled = true;
+              size = 3;
+              passes = 1;
+            };
 
-        decoration = {
-          rounding = 6;
-          blur = {
+            shadow = {
+              enabled = true;
+              range = 4;
+              render_power = 3;
+              # color = "rgba(1a1a1aee)";
+            };
+          };
+
+          animations = {
             enabled = true;
-            size = 3;
-            passes = 1;
+            bezier = [
+              "myBezier, 0.05, 0.9, 0.1, 1.05"
+              "easeOutQuart, 0.25, 1, 0.5, 1"
+              "easeInOutExpo, 0.87, 0, 0.13, 1"
+            ];
+            animation = [
+              "windows, 1, 3, easeOutQuart"
+              "windowsOut, 1, 3, easeInOutExpo, popin 80%"
+              "border, 1, 5, easeOutQuart"
+              "borderangle, 1, 4, easeOutQuart"
+              "fade, 1, 4, default"
+              "workspaces, 1, 1, default"
+            ];
           };
 
-          shadow = {
-            enabled = true;
-            range = 4;
-            render_power = 3;
-            # color = "rgba(1a1a1aee)";
+          dwindle = {
+            # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
+
+            # master switch for pseudotiling. Enabling is bound to mod + P in the keybinds section below
+            pseudotile = true;
+            # you probably want this
+            preserve_split = true;
           };
-        };
 
-        animations = {
-          enabled = true;
-          bezier = [
-            "myBezier, 0.05, 0.9, 0.1, 1.05"
-            "easeOutQuart, 0.25, 1, 0.5, 1"
-            "easeInOutExpo, 0.87, 0, 0.13, 1"
+          gestures = {
+            workspace_swipe_touch = true;
+            workspace_swipe_create_new = true;
+          };
+
+          misc = {
+            disable_hyprland_logo = true;
+            disable_splash_rendering = true;
+          };
+
+          workspace = [
+            "w[tv1]s[false], gapsout:0, gapsin:0"
+            "f[1]s[false], gapsout:0, gapsin:0"
           ];
-          animation = [
-            "windows, 1, 3, easeOutQuart"
-            "windowsOut, 1, 3, easeInOutExpo, popin 80%"
-            "border, 1, 5, easeOutQuart"
-            "borderangle, 1, 4, easeOutQuart"
-            "fade, 1, 4, default"
-            "workspaces, 1, 1, default"
+          windowrule = [
+            "bordersize 0, floating:0, onworkspace:w[tv1]s[false]"
+            "rounding 0, floating:0, onworkspace:w[tv1]s[false]"
+            "bordersize 0, floating:0, onworkspace:f[1]s[false]"
+            "rounding 0, floating:0, onworkspace:f[1]s[false]"
           ];
         };
-
-        dwindle = {
-          # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
-
-          # master switch for pseudotiling. Enabling is bound to mod + P in the keybinds section below
-          pseudotile = true;
-          # you probably want this
-          preserve_split = true;
-        };
-
-        gestures = {
-          workspace_swipe_touch = true;
-          workspace_swipe_create_new = true;
-        };
-
-        misc = {
-          disable_hyprland_logo = true;
-          disable_splash_rendering = true;
-        };
-
-        workspace = [
-          "w[tv1]s[false], gapsout:0, gapsin:0"
-          "f[1]s[false], gapsout:0, gapsin:0"
-        ];
-        windowrule = [
-          "bordersize 0, floating:0, onworkspace:w[tv1]s[false]"
-          "rounding 0, floating:0, onworkspace:w[tv1]s[false]"
-          "bordersize 0, floating:0, onworkspace:f[1]s[false]"
-          "rounding 0, floating:0, onworkspace:f[1]s[false]"
-        ];
+        extraConfig = # hyprlang
+          ''
+            # Disable keymaps (locked mode)
+            bind = $mod ALT_L, H, submap, locked
+            submap = locked
+            bind = $mod ALT_L, H, submap, reset
+            submap = reset
+          '';
+        xwayland.enable = true;
       };
-      xwayland.enable = true;
-    };
-    home.sessionVariables.NIXOS_OZONE_WL = "1";
-  };
+      home.sessionVariables.NIXOS_OZONE_WL = "1";
+    }
+  ];
   system-nixos = {
     programs.hyprland = {
       enable = true;
