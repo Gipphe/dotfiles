@@ -93,6 +93,11 @@
               "desc:${left-monitor}, preferred, auto-left, 1"
               ", preferred, auto-down, 1"
             ];
+            workspace = [
+              "1, monitor:desc:${center-monitor}"
+              "2, monitor:desc:${left-monitor}"
+              "3, monitor:desc:${right-monitor}"
+            ];
           };
 
           gipphe.programs.wf-recorder.nicknames = {
