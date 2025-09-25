@@ -46,6 +46,7 @@
             core.enable = true;
             desktop.hyprland.enable = true;
             fonts.enable = true;
+            gaming.android.enable = true;
             gaming.enable = true;
             gc.enable = true;
             keyring.enable = true;
