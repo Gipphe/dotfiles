@@ -5,6 +5,7 @@ util.mkProgram {
     virtualisation.waydroid = {
       enable = true;
     };
+    # For sharing clipboard
     environment.systemPackages = [ pkgs.wl-clipboard ];
   };
 }
