@@ -12,8 +12,7 @@ util.mkProgram {
     services.sentinelone = {
       enable = true;
       sentinelOneManagementTokenPath = config.sops.secrets.utv-vnb-lt-sentinelagent-token.path;
-      email = "vnb@lovdata.no";
-      serialNumber = "2Q2C594";
+      customerId = "vnb@lovdata.no-2Q2C594";
       package = inputs.sentinelone.packages.${pkgs.system}.sentinelone.overrideAttrs (_: {
         version = "24.2.2.20";
         src = pkgs.fetchurl {
