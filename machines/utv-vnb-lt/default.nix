@@ -61,8 +61,6 @@
             vm-host.enable = true;
           };
           programs = {
-            floorp.default = false;
-            vivaldi.default = true;
             # Using Logi MX Keys at work
             grimblast.logi-mx-keys = true;
           };
