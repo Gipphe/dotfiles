@@ -9,6 +9,7 @@
 let
   cfg = config.gipphe.programs.floorp;
   hmCfg = config.programs.floorp;
+  pkg = config.programs.floorp.finalPackage or config.programs.floorp.package;
 in
 util.mkModule {
   options.gipphe.programs.floorp = {
@@ -32,10 +33,8 @@ util.mkModule {
     }
     (lib.optionalAttrs (!flags.isNixOnDroid) (
       lib.mkIf cfg.default {
-        home.sessionVariables.BROWSER = "${
-          config.programs.floorp.finalPackage or config.programs.floorp.package
-        }/bin/floorp";
-        gipphe.core.wm.binds = [
+        home.sessionVariables.BROWSER = "${pkg}/bin/floorp";
+        gipphe.core.wm.binds = lib.mkIf cfg.default [
           {
             mod = "Mod";
             key = "B";

@@ -20,7 +20,7 @@ util.mkProgram {
     home.sessionVariables = lib.mkIf cfg.default {
       BROWSER = "${cfg.package}/bin/vivaldi";
     };
-    gipphe.core.wm.binds = [
+    gipphe.core.wm.binds = lib.mkIf cfg.default [
       {
         mod = "Mod";
         key = "B";
