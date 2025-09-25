@@ -25,10 +25,8 @@ let
   start-service =
     pkgs.writeShellScriptBin "start-service" # bash
       ''
-        email="$(cat "${config.sops.secrets.lovdata-email.path}")"
         ${openconnect-sso}/bin/openconnect-sso \
           --server lovdataazure.ivpn.se \
-          --user "$email" \
           --browser-display-mode shown \
           -l DEBUG \
           -- \
@@ -64,10 +62,6 @@ util.mkProgram {
           ExecStop = ''${lib.getExe pkgs.bash} -c "sudo pkill openconnect"'';
         };
         Install.WantedBy = [ "multi-user.target" ];
-      };
-      sops.secrets.lovdata-email = {
-        format = "binary";
-        sopsFile = ../../../secrets/utv-vnb-lt-lovdata-email.txt;
       };
     })
   ];
