@@ -72,9 +72,12 @@ let
 
   gamemode = pkgs.writeShellApplication {
     name = "gamemode";
-    runtimeInputs = [ config.wayland.windowManager.hyprland.package ];
+    runtimeInputs = [
+      config.wayland.windowManager.hyprland.package
+      pkgs.jq
+    ];
     text = ''
-      HYPRGAMEMODE=$(hyprctl getoption animations:enabled | awk 'NR==1{print $2}')
+      HYPRGAMEMODE=$(hyprctl getoption animations:enabled -j | jq -r '.int')
       if test "$HYPRGAMEMODE" = 1; then
         hyprctl --batch "\
           keyword animations:enabled 0; \
