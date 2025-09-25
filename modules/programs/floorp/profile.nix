@@ -1,7 +1,7 @@
 { pkgs }:
 {
   search = {
-    default = "google";
+    default = "startpage";
     force = true;
     engines = {
       "nixpkgs" = {
