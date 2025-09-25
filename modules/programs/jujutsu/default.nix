@@ -132,7 +132,7 @@ util.mkProgram {
                 text =
                   # fish
                   ''
-                    argparse h/help r/revision -- $argv
+                    argparse h/help r/revision= -- $argv
                     or exit 1
 
                     function info
