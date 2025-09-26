@@ -156,7 +156,7 @@ util.mkProgram {
                     or exit 1
 
                     if test -z "$desc"
-                      info "No description"
+                      info "Found no description to base bookmark name on"
                       exit 1
                     end
 
