@@ -14,6 +14,7 @@ util.mkToggledModule [ "lovdata" ] {
       group = "${config.gipphe.username}";
       ssh.username = "vnb";
       configRoot = "/app";
+      scripts.mount-lovdata.enable = true;
     };
   };
 }

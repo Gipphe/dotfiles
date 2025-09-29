@@ -1262,17 +1262,17 @@
         "sentinelone": "sentinelone"
       },
       "locked": {
-        "lastModified": 1759135206,
-        "narHash": "sha256-1KqsVTrVGWmcqCEs3bs1SyJjIvYiwSkGMoyfdmkL0E8=",
+        "lastModified": 1759145769,
+        "narHash": "sha256-HKl5ckMJHMCLygfYJbFbct4Fa6Z6bcGUgL6JeQgWIhM=",
         "ref": "refs/heads/master",
-        "rev": "5aa3d36d67cbed689643cd85f75c8f49b3df9835",
-        "revCount": 29,
+        "rev": "5f549eb59a5dfa8a7c552e0ad700c7c36be20eb6",
+        "revCount": 42,
         "type": "git",
-        "url": "ssh://git@git.lovdata.no/ld/nix-modules"
+        "url": "ssh://git@gitlab.com/Gipphe/lovdata-nix-modules"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@git.lovdata.no/ld/nix-modules"
+        "url": "ssh://git@gitlab.com/Gipphe/lovdata-nix-modules"
       }
     },
     "luvit-meta": {

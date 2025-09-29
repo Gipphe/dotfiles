@@ -120,7 +120,7 @@
     };
 
     lovdata = {
-      url = "git+ssh://git@git.lovdata.no/ld/nix-modules";
+      url = "git+ssh://git@gitlab.com/Gipphe/lovdata-nix-modules";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
