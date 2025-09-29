@@ -42,6 +42,7 @@ util.mkProfile {
       };
       lovdata = {
         dns.enable = true;
+        git.enable = true;
         java_21.enable = true;
         maven.enable = true;
         memcached.enable = true;

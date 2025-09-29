@@ -124,18 +124,6 @@ util.mkProgram {
           autoUpdate = true;
         };
       };
-      includes = [
-        {
-          condition = "gitdir:**/lovdata/**/.git";
-          contents = {
-            user = {
-              name = "Victor Nascimento Bakke";
-              email = "vnb@lovdata.no";
-              signingKey = config.sops.secrets.git-signing-key.path;
-            };
-          };
-        }
-      ];
       aliases = {
         last = "log -1 HEAD";
         st = "status";
