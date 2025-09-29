@@ -15,6 +15,7 @@ util.mkToggledModule [ "lovdata" ] {
       ssh.username = "vnb";
       configRoot = "/app";
       scripts.mount-lovdata.enable = true;
+      cli = true;
     };
   };
 }

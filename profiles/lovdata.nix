@@ -39,6 +39,7 @@ util.mkProfile {
         };
       };
       lovdata = {
+        cli.enable = true;
         dns.enable = true;
         git.enable = true;
         glab.enable = true;

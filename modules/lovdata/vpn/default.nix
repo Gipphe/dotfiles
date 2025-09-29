@@ -17,6 +17,7 @@ util.mkToggledModule [ "lovdata" ] {
         start-vpn.enable = true;
         reset-network.enable = true;
       };
+      cli = true;
     };
   };
 }
