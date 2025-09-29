@@ -13,7 +13,6 @@ util.mkProfile {
         ssh.enable = true;
         glab = {
           enable = true;
-          lovdata.enable = false;
           settings.hosts."git.lovdata.no" = {
             git_protocol = "ssh";
             api_protocol = "https";
@@ -42,6 +41,7 @@ util.mkProfile {
       lovdata = {
         dns.enable = true;
         git.enable = true;
+        glab.enable = true;
         java_21.enable = true;
         maven.enable = true;
         memcached.enable = true;

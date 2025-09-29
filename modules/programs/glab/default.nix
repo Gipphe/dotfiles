@@ -7,11 +7,87 @@
 }:
 let
   cfg = config.gipphe.programs.glab;
+  finalSettings = cfg.settings // {
+    check_update = false;
+    last_update_check_timestamp = "1970-01-01T01:00:00Z";
+    hosts = lib.mapAttrs (
+      host: xs:
+      lib.filterAttrs (n: _: n != "token_path") xs
+      // {
+        api_host = xs.api_host or host;
+      }
+    ) cfg.settings.hosts;
+  };
+
+  aliases = pkgs.writeText "glab-aliases" (builtins.toJSON cfg.aliases);
+  settings = pkgs.writeText "glab-settings" (builtins.toJSON finalSettings);
+  config-dir = "${config.gipphe.homeDirectory}/.config/gipphe/glab-cli";
+  glab =
+    if cfg.writeConfig then
+      pkgs.symlinkJoin {
+        name = "glab";
+        paths = [ pkgs.glab ];
+        buildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/glab --set GLAB_CONFIG_DIR "${config-dir}"
+        '';
+      }
+    else
+      pkgs.glab;
+
+  host-token-paths = lib.pipe cfg.settings.hosts [
+    (lib.filterAttrs (_: x: x ? token_path && x.token_path != null && x.token_path != ""))
+    (lib.mapAttrs (_: x: x.token_path))
+    builtins.toJSON
+    (pkgs.writeText "host-token-paths")
+  ];
+  add-tokens = util.writeFishApplication {
+    name = "add-tokens";
+    runtimeInputs = with pkgs; [
+      coreutils
+      jo
+      jq
+    ];
+    text = ''
+      mkdir -p '${config-dir}'
+      chmod -R 755 '${config-dir}'
+      cp -Lf '${aliases}' '${config-dir}/aliases.yml'
+      cp -Lf '${settings}' '${config-dir}/config.yml'
+      chown -R ${config.gipphe.username}:${config.gipphe.username} '${config-dir}'
+      chmod -R 600 ${config-dir}/*
+
+      set -l hosts (jq -r 'to_entries | .[] | .key' '${host-token-paths}')
+      set -l paths (jq -r 'to_entries | .[] | .value' '${host-token-paths}')
+      set -l tokens
+
+      set -l res
+
+      if test (count $hosts) = 0
+        exit
+      end
+
+      for idx in (seq 1 (count $hosts))
+        set -l host $hosts[$idx]
+        set -l path $paths[$idx]
+        set -l token (cat $path)
+        set -a res (jo "$host"="$(jo token="$token")")
+      end
+
+      set -l host_tokens (jo hosts="$res")
+
+      set -l tmp (mktemp)
+      jq --argjson tokens "$host_tokens" '. * $tokens' '${config-dir}/config.yml' > $tmp
+      mv $tmp '${config-dir}/config.yml'
+    '';
+  };
 in
 util.mkProgram {
   name = "glab";
   options.gipphe.programs.glab = {
-    lovdata.enable = lib.mkEnableOption "Lovdata integration";
+    package = lib.mkPackageOption pkgs "glab" { } // {
+      default = glab;
+    };
+    writeConfig = lib.mkEnableOption "write config file";
     aliases = lib.mkOption {
       type = with lib.types; attrsOf str;
       description = "Aliases that allow you to create nicknames for glab commands.";
@@ -128,100 +204,12 @@ util.mkProgram {
       };
     };
   };
-  hm =
-    let
-      finalSettings = cfg.settings // {
-        check_update = false;
-        last_update_check_timestamp = "1970-01-01T01:00:00Z";
-        hosts = lib.mapAttrs (
-          host: xs:
-          lib.filterAttrs (n: _: n != "token_path") xs
-          // {
-            api_host = xs.api_host or host;
-          }
-        ) cfg.settings.hosts;
-      };
-
-      aliases = pkgs.writeText "glab-aliases" (builtins.toJSON cfg.aliases);
-      settings = pkgs.writeText "glab-settings" (builtins.toJSON finalSettings);
-      config-dir = "${config.gipphe.homeDirectory}/.config/gipphe/glab-cli";
-      glab = pkgs.symlinkJoin {
-        name = "glab";
-        paths = [ pkgs.glab ];
-        buildInputs = [ pkgs.makeWrapper ];
-        postBuild = ''
-          wrapProgram $out/bin/glab --set GLAB_CONFIG_DIR "${config-dir}"
-        '';
-      };
-
-      host-token-paths = lib.pipe cfg.settings.hosts [
-        (lib.filterAttrs (_: x: x ? token_path && x.token_path != null && x.token_path != ""))
-        (lib.mapAttrs (_: x: x.token_path))
-        builtins.toJSON
-        (pkgs.writeText "host-token-paths")
-      ];
-      add-tokens = util.writeFishApplication {
-        name = "add-tokens";
-        runtimeInputs = with pkgs; [
-          coreutils
-          jo
-          jq
-        ];
-        text = ''
-          mkdir -p '${config-dir}'
-          chmod -R 755 '${config-dir}'
-          cp -Lf '${aliases}' '${config-dir}/aliases.yml'
-          cp -Lf '${settings}' '${config-dir}/config.yml'
-          chown -R ${config.gipphe.username}:${config.gipphe.username} '${config-dir}'
-          chmod -R 600 ${config-dir}/*
-
-          set -l hosts (jq -r 'to_entries | .[] | .key' '${host-token-paths}')
-          set -l paths (jq -r 'to_entries | .[] | .value' '${host-token-paths}')
-          set -l tokens
-
-          set -l res
-
-          if test (count $hosts) = 0
-            exit
-          end
-
-          for idx in (seq 1 (count $hosts))
-            set -l host $hosts[$idx]
-            set -l path $paths[$idx]
-            set -l token (cat $path)
-            set -a res (jo "$host"="$(jo token="$token")")
-          end
-
-          set -l host_tokens (jo hosts="$res")
-
-          set -l tmp (mktemp)
-          jq --argjson tokens "$host_tokens" '. * $tokens' '${config-dir}/config.yml' > $tmp
-          mv $tmp '${config-dir}/config.yml'
-        '';
-      };
-    in
-    lib.mkMerge [
-      {
-        home.packages = [
-          glab
-        ];
-        home.activation.glab-config = lib.hm.dag.entryAfter [ "onFilesChanged" ] ''
-          run ${add-tokens}/bin/add-tokens
-        '';
-      }
-      (lib.mkIf cfg.lovdata.enable {
-        sops.secrets.lovdata-gitlab-ci-access-token = {
-          format = "binary";
-          sopsFile = ../../../secrets/utv-vnb-lt-gitlab-cli-access-token.txt;
-        };
-        home.packages = [
-          (pkgs.writeShellScriptBin "glabl" ''
-            export GITLAB_TOKEN="$(cat '${config.sops.secrets.lovdata-gitlab-ci-access-token.path}')"
-            export GITLAB_HOST="https://git.lovdata.no"
-            export GITLAB_GROUP="ld"
-            ${glab}/bin/glab "$@"
-          '')
-        ];
-      })
-    ];
+  hm.home = {
+    packages = [ glab ];
+    activation = lib.mkIf cfg.writeConfig {
+      glab-config = lib.hm.dag.entryAfter [ "onFilesChanged" ] ''
+        run ${add-tokens}/bin/add-tokens
+      '';
+    };
+  };
 }
