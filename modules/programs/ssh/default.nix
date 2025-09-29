@@ -6,7 +6,6 @@
   ...
 }:
 let
-  cfg = config.gipphe.programs.ssh;
   inherit (builtins) map;
   raw_services = [
     "github"
@@ -27,7 +26,6 @@ util.mkProgram {
     package = lib.mkPackageOption pkgs "ssh" { } // {
       default = config.programs.ssh.package;
     };
-    lovdata.enable = lib.mkEnableOption "Lovdata configs for SSH";
   };
 
   hm = {
@@ -36,38 +34,26 @@ util.mkProgram {
         enable = true;
         package = pkgs.openssh;
         enableDefaultConfig = false;
-        matchBlocks =
-          lib.genAttrs [ "github.com" "gitlab.com" "codeberg.org" ] (
-            hostname:
-            let
-              inherit (builtins) elemAt split;
-              name = elemAt (split "\\." hostname) 0;
-            in
-            {
-              inherit hostname;
-              user = "git";
-              identityFile = config.sops.secrets."${name}.ssh".path;
-              addKeysToAgent = "yes";
-            }
-          )
-          // lib.optionalAttrs cfg.lovdata.enable {
-            "git.lovdata.no" = {
-              hostname = "git.lovdata.no";
-              user = "git";
-              identityFile = config.sops.secrets."lovdata-gitlab.ssh".path;
-              addKeysToAgent = "yes";
-            };
-          };
+        matchBlocks = lib.genAttrs [ "github.com" "gitlab.com" "codeberg.org" ] (
+          hostname:
+          let
+            inherit (builtins) elemAt split;
+            name = elemAt (split "\\." hostname) 0;
+          in
+          {
+            inherit hostname;
+            user = "git";
+            identityFile = config.sops.secrets."${name}.ssh".path;
+            addKeysToAgent = "yes";
+          }
+        );
       };
     };
 
-    sops.secrets = lib.mkMerge [
-      (lib.mkIf config.gipphe.environment.secrets.enable (
+    sops.secrets = (
+      lib.mkIf config.gipphe.environment.secrets.enable (
         lib.concatMapAttrs (k: v: { ${k} = v; }) (lib.genAttrs services mkSecret)
-      ))
-      (lib.mkIf cfg.lovdata.enable {
-        "lovdata-gitlab.ssh" = mkSecret "lovdata-gitlab.ssh";
-      })
-    ];
+      )
+    );
   };
 }

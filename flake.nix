@@ -119,6 +119,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    lovdata = {
+      url = "git+ssh://git@git.lovdata.no/ld/nix-modules";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     hyprland = {
       url = "github:hyprwm/Hyprland";
       # Do _not_ follow nixpkgs for this flake's nixpkgs input! It invalidates
