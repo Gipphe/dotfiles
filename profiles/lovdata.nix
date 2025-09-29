@@ -43,6 +43,7 @@ util.mkProfile {
         git.enable = true;
         glab.enable = true;
         java_21.enable = true;
+        mattermost.enable = true;
         maven.enable = true;
         memcached.enable = true;
         mounts.enable = true;

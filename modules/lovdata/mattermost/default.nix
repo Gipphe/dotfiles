@@ -7,7 +7,7 @@
 let
   pkg = pkgs.mattermost-desktop;
 in
-util.mkProgram {
+util.mkToggledModule [ "lovdata" ] {
   name = "mattermost";
   hm = {
     home.packages = [ pkgs.mattermost-desktop ];
