@@ -9,7 +9,6 @@ util.mkProfile {
   shared = {
     gipphe = {
       programs = {
-        docker.enable = true;
         idea-ultimate.enable = true;
         ssh.enable = true;
         glab = {
