@@ -407,8 +407,7 @@ class Choco {
       "windirstat",
       "xnviewmp",
       "zoxide",
-      @("opera-gx", "--params='`"/NoDesktopShortcut /NoTaskbarShortcut`"'"),
-      "signal"
+      @("opera-gx", "--params='`"/NoDesktopShortcut /NoTaskbarShortcut`"'")
     )
 
     $ChildLogger = $this.Logger.ChildLogger()
