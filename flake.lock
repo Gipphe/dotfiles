@@ -1262,11 +1262,11 @@
         "sentinelone": "sentinelone"
       },
       "locked": {
-        "lastModified": 1759228050,
-        "narHash": "sha256-hPv7LT3NbKTx09t9YtnLOz0FdYTPf6TCWhFeM3hvzaw=",
+        "lastModified": 1759262891,
+        "narHash": "sha256-qRyUU/ENjIp3NB3bU2kDMlFJvl4AzyATv/pAEpXkJ0U=",
         "ref": "refs/heads/master",
-        "rev": "5015aa0b77643534e75cdaeb0d2a944d60cb06ed",
-        "revCount": 44,
+        "rev": "e4a24dff8738e5f29259e726c78af956bbc05c00",
+        "revCount": 46,
         "type": "git",
         "url": "ssh://git@gitlab.com/Gipphe/lovdata-nix-modules"
       },
