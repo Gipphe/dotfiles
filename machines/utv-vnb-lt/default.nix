@@ -195,10 +195,6 @@
               options drm_kms_helper poll=N
             '';
             initrd = {
-              kernelModules = [
-                "thunderbolt"
-                "i915"
-              ];
               luks.devices."luks-03a05c7c-fec2-435a-a17c-40693494c8ea".device =
                 "/dev/disk/by-uuid/03a05c7c-fec2-435a-a17c-40693494c8ea";
             };
