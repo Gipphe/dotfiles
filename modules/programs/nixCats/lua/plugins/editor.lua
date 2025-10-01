@@ -323,6 +323,12 @@ return {
 
   {
     'lewis6991/gitsigns.nvim',
+    dependencies = {
+      'folke/which-key.nvim',
+      opts = {
+        { '<leader>h', group = '+git', mode = { 'n', 'v' } },
+      },
+    },
     opts = {
       signs = {
         add = { text = '+' },
@@ -352,6 +358,7 @@ return {
           if vim.wo.diff then
             vim.cmd.normal { ']c', bang = true }
           else
+            ---@diagnostic disable-next-line: param-type-mismatch
             gitsigns.nav_hunk 'next'
           end
         end, 'Go to next hunk')
@@ -360,6 +367,7 @@ return {
           if vim.wo.diff then
             vim.cmd.normal { '[c', bang = true }
           else
+            ---@diagnostic disable-next-line: param-type-mismatch
             gitsigns.nav_hunk 'prev'
           end
         end, 'Go to previous hunk')
@@ -388,17 +396,19 @@ return {
         lmap('n', '<leader>hd', gitsigns.diffthis, 'Vimdiff file')
 
         lmap('n', '<leader>hD', function()
+          ---@diagnostic disable-next-line: param-type-mismatch
           gitsigns.diffthis '~'
         end, 'Vimdiff file against previous commit')
 
         lmap('n', '<leader>hQ', function()
+          ---@diagnostic disable-next-line: param-type-mismatch
           gitsigns.setqflist 'all'
         end, 'Open QuickFix list with all hunks in all files')
         lmap('n', '<leader>hq', gitsigns.setqflist, 'Open QuickFix list with all hunks in current buffer')
 
         -- Toggles
-        lmap('n', '<leader>tb', gitsigns.toggle_current_line_blame, 'Toggle current line blame virtual text')
-        lmap('n', '<leader>tw', gitsigns.toggle_word_diff, 'Highlight word diffs inline')
+        lmap('n', '<leader>hlb', gitsigns.toggle_current_line_blame, 'Toggle current line blame virtual text')
+        lmap('n', '<leader>hiw', gitsigns.toggle_word_diff, 'Highlight word diffs inline')
 
         -- Text object
         lmap({ 'o', 'x' }, 'ih', gitsigns.select_hunk, 'Select hunk under cursor')
@@ -437,26 +447,32 @@ return {
   },
   {
     'shortcuts/no-neck-pain.nvim',
+    dependencies = {
+      'folke/which-key.nvim',
+      opts = {
+        { '<leader>un', group = '+NoNeckPain', mode = 'n' },
+      },
+    },
     enabled = nixCats 'full',
     version = '*',
     keys = {
       {
-        '<leader>nn',
+        '<leader>unn',
         '<cmd>NoNeckPain<cr>',
         desc = 'Toggle NoNeckPain',
       },
       {
-        '<leader>nk',
+        '<leader>unk',
         '<cmd>NoNeckPainWidthUp<cr>',
         desc = 'Increase NoNeckPain width',
       },
       {
-        '<leader>nj',
+        '<leader>unj',
         '<cmd>NoNeckPainWidthDown<cr>',
         desc = 'Decrease NoNeckPain width',
       },
       {
-        '<leader>ns',
+        '<leader>uns',
         '<cmd>NoNeckPainScratchPad<cr>',
         desc = 'Use NoNeckPain scratch pad',
       },

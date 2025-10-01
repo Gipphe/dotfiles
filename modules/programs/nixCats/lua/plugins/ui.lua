@@ -118,8 +118,6 @@ return {
       { '<leader>b', group = '+buffer', mode = { 'n', 'v' } },
       { '<leader>c', group = '+code', mode = { 'n', 'v' } },
       { '<leader>f', group = '+file/find', mode = { 'n', 'v' } },
-      { '<leader>g', group = '+git', mode = { 'n', 'v' } },
-      { '<leader>gh', group = '+hunks', mode = { 'n', 'v' } },
       { '<leader>q', group = '+quit/session', mode = { 'n', 'v' } },
       { '<leader>s', group = '+search', mode = { 'n', 'v' } },
       { '<leader>u', group = '+ui', mode = { 'n', 'v' } },
@@ -139,11 +137,6 @@ return {
       -- { '<leader>t_', hidden = true },
       -- { '<leader>w', group = 'Workspace' },
       -- { '<leader>w_', hidden = true },
-      -- {
-      --   mode = { 'v' },
-      --   { '<leader>h', group = 'Git hunk' },
-      --   { '<leader>h_', hidden = true },
-      -- },
     },
     config = function(_, spec) -- This is the function that runs, AFTER loading
       require('which-key').setup()

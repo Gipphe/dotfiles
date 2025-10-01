@@ -5,6 +5,12 @@ return {
       'nvim-tree/nvim-web-devicons',
       enabled = vim.g.have_nerd_font,
     },
+    {
+      'folke/which-key.nvim',
+      opts = {
+        { '<leader>g', group = '+pickers', mode = { 'n', 'v' } },
+      },
+    },
   },
   ---@type snacks.Config
   opts = {
@@ -23,14 +29,14 @@ return {
       function()
         require('snacks').picker.buffers()
       end,
-      desc = 'Buffers',
+      desc = 'Find buffers',
     },
     {
       '<leader>:',
       function()
         require('snacks').picker.command_history()
       end,
-      desc = 'Commands',
+      desc = 'Find commands',
     },
     {
       '<leader>/',
@@ -44,10 +50,10 @@ return {
       function()
         require('snacks').picker.command_history()
       end,
-      desc = 'Command history',
+      desc = 'Find command history',
     },
     {
-      '<leader>n',
+      '<leader>gn',
       function()
         require('snacks').picker.notifications()
       end,
