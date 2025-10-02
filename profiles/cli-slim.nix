@@ -10,11 +10,9 @@ util.mkProfile {
     dua.enable = true;
     entr.enable = true;
     eza.enable = true;
-    fastgron.enable = true;
     fd.enable = true;
     fish.enable = true;
     fx.enable = true;
-    fzf.enable = true;
     gh.enable = true;
     git.enable = true;
     glab.enable = true;
@@ -28,13 +26,9 @@ util.mkProfile {
     jq.enable = true;
     jujutsu.enable = true;
     less.enable = true;
-    make.enable = true;
     nh.enable = true;
     nixCats.enable = true;
     nushell.enable = true;
-    pay-respects.enable = true;
-    procs.enable = true;
-    pv.enable = true;
     ripgrep.enable = true;
     serpl.enable = true;
     ssh.enable = true;
