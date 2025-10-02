@@ -198,6 +198,12 @@ util.mkProgram {
             ''
           ];
         };
+        "--scope" = [
+          {
+            "--when".repositories = [ "~/projects/lovdata" ];
+            user.email = "vnb@lovdata.no";
+          }
+        ];
       };
     };
     sops.secrets."git-ssh-signing-key.pub" = {
