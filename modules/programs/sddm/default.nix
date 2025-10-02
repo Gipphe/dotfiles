@@ -1,4 +1,5 @@
 {
+  lib,
   self,
   pkgs,
   util,
@@ -23,7 +24,7 @@ util.mkProgram {
     services.displayManager = {
       sddm = {
         enable = true;
-        package = pkgs.kdePackages.sddm;
+        package = lib.mkForce pkgs.kdePackages.sddm;
         autoNumlock = true;
         wayland.enable = true;
         theme = "catppuccin-${flavor}-${accent}";
