@@ -1,4 +1,5 @@
 { util, pkgs, ... }:
-{
-  imports = [ (util.mkSimpleProgram "make" pkgs.gnumake) ];
+util.mkProgram {
+  name = "make";
+  hm.home.packages = [ pkgs.gnumake ];
 }

@@ -1,1 +1,5 @@
-{ util, ... }: util.mkSimpleProgramModule "charm-freeze"
+{ util, pkgs, ... }:
+util.mkProgram {
+  name = "charm-freeze";
+  hm.home.packages = [ pkgs.charm-freeze ];
+}

@@ -91,22 +91,6 @@ let
           acc
       ) [ ] items;
 
-  # Returns a module that merely consists of the package specified, using the
-  # passed name as the name for the module and the module options.
-  mkSimpleProgram =
-    name: package:
-    { lib, config, ... }:
-    mkModule {
-      options.gipphe.programs.${name}.enable = lib.mkEnableOption name;
-      hm = lib.mkIf config.gipphe.programs.${name}.enable { home.packages = [ package ]; };
-    };
-
-  # Version of `mkSimpleProgrma` that uses the passed name to fetch the package
-  # from `pkgs`.
-  mkSimpleProgramModule = name: {
-    imports = [ ({ pkgs, ... }@args: mkSimpleProgram name pkgs.${name} args) ];
-  };
-
   mkProfile = mkToggledModule [ "profiles" ];
 
   mkProgram = mkToggledModule [ "programs" ];
@@ -319,8 +303,6 @@ in
     mkModule
     mkProfile
     mkProgram
-    mkSimpleProgram
-    mkSimpleProgramModule
     mkToggledModule
     mkWallpaper
     patchDesktop

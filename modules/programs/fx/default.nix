@@ -1,1 +1,5 @@
-{ util, ... }: util.mkSimpleProgramModule "fx"
+{ util, pkgs, ... }:
+util.mkProgram {
+  name = "fx";
+  hm.home.packages = [ pkgs.fx ];
+}
