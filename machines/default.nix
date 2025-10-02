@@ -27,31 +27,5 @@
       type = lib.types.anything;
       default = flags;
     };
-    host = lib.mkOption {
-      description = "Host configuration";
-      type =
-        with lib.types;
-        attrsOf (submodule {
-          options = {
-            system = lib.mkOption {
-              description = "pkgs.system doublet";
-              example = "x86_64-linux";
-              type = lib.types.str;
-            };
-            machine = lib.mkOption {
-              description = "Type of nix machine.";
-              example = "nixos";
-              type =
-                with lib.types;
-                enum [
-                  "nixos"
-                  "nix-on-droid"
-                  "nix-darwin"
-                ];
-            };
-          };
-        });
-      default = { };
-    };
   };
 }

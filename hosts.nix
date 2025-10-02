@@ -9,7 +9,9 @@ let
     builtins.readDir
     (lib.filterAttrs (_: t: t == "directory"))
     builtins.attrNames
-    (builtins.map (x: (import ./machines/${x}/default.nix).gipphe.host))
+    (builtins.map (x: {
+      ${x} = import ./machines/${x}/host.nix;
+    }))
     lib.mergeAttrsList
   ];
 

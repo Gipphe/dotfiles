@@ -1,44 +1,34 @@
-{
-  gipphe.host.fluoride = {
-    system = "x86_64-linux";
-    machine = "nixos";
-  };
-  imports = [
-    (
-      { util, ... }:
-      util.mkToggledModule [ "machines" ] {
-        name = "fluoride";
+{ util, ... }:
+util.mkToggledModule [ "machines" ] {
+  name = "fluoride";
 
-        shared.gipphe = {
-          username = "gipphe";
-          homeDirectory = "/home/gipphe";
-          hostName = "fluoride";
-          profiles = {
-            nixos = {
-              audio.enable = true;
-              boot-efi.enable = true;
-              devices.enable = true;
-              system.enable = true;
-            };
-            ai.enable = true;
-            application.enable = true;
-            audio.enable = true;
-            cli.enable = true;
-            core.enable = true;
-            desktop.plasma.enable = true;
-            fonts.enable = true;
-            gaming.enable = true;
-            gc.enable = true;
-            networkmanager.enable = true;
-            rice.enable = true;
-            secrets.enable = true;
-            sync.enable = true;
-            systemd.enable = true;
-            vm-guest.enable = true;
-            windows-setup.enable = true;
-          };
-        };
-      }
-    )
-  ];
+  shared.gipphe = {
+    username = "gipphe";
+    homeDirectory = "/home/gipphe";
+    hostName = "fluoride";
+    profiles = {
+      nixos = {
+        audio.enable = true;
+        boot-efi.enable = true;
+        devices.enable = true;
+        system.enable = true;
+      };
+      ai.enable = true;
+      application.enable = true;
+      audio.enable = true;
+      cli.enable = true;
+      core.enable = true;
+      desktop.plasma.enable = true;
+      fonts.enable = true;
+      gaming.enable = true;
+      gc.enable = true;
+      networkmanager.enable = true;
+      rice.enable = true;
+      secrets.enable = true;
+      sync.enable = true;
+      systemd.enable = true;
+      vm-guest.enable = true;
+      windows-setup.enable = true;
+    };
+  };
 }
