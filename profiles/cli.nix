@@ -8,7 +8,6 @@ util.mkProfile {
       ffmpeg.enable = true;
       imagemagick.enable = true;
       mprocs.enable = true;
-      sd.enable = true;
       vim.enable = true;
       vim.configOnly = true;
     };
