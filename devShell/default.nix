@@ -242,7 +242,10 @@ in
       name = "lint:statix:watch";
       command = cmd {
         inherit name;
-        runtimeInputs = [ pkgs.entr ];
+        runtimeInputs = with pkgs; [
+          entr
+          statix
+        ];
         text =
           # fish
           "find . -type f | entr statix check";
@@ -268,6 +271,7 @@ in
         inherit name;
         runtimeInputs = with pkgs; [
           entr
+          deadnix
           findutils
         ];
         text =
