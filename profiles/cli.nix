@@ -11,7 +11,6 @@ util.mkProfile {
       clipboard-jh.enable = true;
       ffmpeg.enable = true;
       imagemagick.enable = true;
-      kondo.enable = true;
       mprocs.enable = true;
       sd.enable = true;
       timg.enable = true;
