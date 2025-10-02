@@ -75,7 +75,6 @@
           jdenticon-cli = pkgs.callPackage ./packages/jdenticon.nix { };
           minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
           monocraft-no-ligatures-font = pkgs.callPackage ./packages/monocraft-no-ligatures.nix { };
-          prettier-with-plugins = pkgs.callPackage ./packages/prettier-with-plugins.nix { };
           treefmt =
             (treefmt-nix.lib.evalModule pkgs {
               projectRootFile = "flake.nix";
@@ -123,6 +122,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixCats-nvim = {
+      url = "github:Gipphe/nixCats-nvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     hyprland = {
       url = "github:hyprwm/Hyprland";
       # Do _not_ follow nixpkgs for this flake's nixpkgs input! It invalidates
@@ -137,8 +141,6 @@
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nixCats.url = "github:BirdeeHub/nixCats-nvim";
 
     haskell-tools-nvim = {
       url = "github:mrcjkb/haskell-tools.nvim";

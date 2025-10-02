@@ -1569,6 +1569,27 @@
         "type": "github"
       }
     },
+    "nixCats-nvim": {
+      "inputs": {
+        "nixCats": "nixCats",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1759403435,
+        "narHash": "sha256-+AcBH0kjJgEhJi7UY0dnm7k/W9XV4LrYGRn5oIB/NuQ=",
+        "owner": "Gipphe",
+        "repo": "nixCats-nvim",
+        "rev": "d56c57b83d09fb129dc34a47ef668a7453d41f33",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Gipphe",
+        "repo": "nixCats-nvim",
+        "type": "github"
+      }
+    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1759261527,
@@ -2092,7 +2113,7 @@
         "niri": "niri",
         "nix-index-db": "nix-index-db",
         "nix-on-droid": "nix-on-droid",
-        "nixCats": "nixCats",
+        "nixCats-nvim": "nixCats-nvim",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_10",
         "nixpkgs-openconnect-sso": "nixpkgs-openconnect-sso_2",

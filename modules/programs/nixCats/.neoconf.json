@@ -1,7 +1,0 @@
-{
-  "neodev": {
-    "library": {
-      "plugins": ["lazy.nvim"]
-    }
-  }
-}
