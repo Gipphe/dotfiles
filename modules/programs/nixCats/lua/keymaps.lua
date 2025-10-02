@@ -159,9 +159,6 @@ map('i', ';', ';<c-g>u', {})
 
 -- keywordprg
 map('n', '<leader>K', '<cmd>norm! K<cr>', { desc = 'Keywordprg' })
-map('n', 'K', function()
-  vim.lsp.buf.hover { border = 'rounded' }
-end, { desc = 'Hover' })
 
 -- Keep indented text selected with when indenting in visual mode
 map('v', '<', '<gv')

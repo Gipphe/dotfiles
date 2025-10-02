@@ -121,7 +121,9 @@ return {
             require('snacks').picker.lsp_references()
           end, 'Goto references')
 
-          map('gD', vim.lsp.buf.declaration, 'Goto declaration')
+          map('gD', function()
+            vim.lsp.buf.declaration()
+          end, 'Goto declaration')
 
           map('gI', function()
             require('snacks').picker.lsp_implementations { reuse_win = true }
@@ -133,18 +135,32 @@ return {
 
           -- Opens a popup that displays documentation about the word under your cursor
           --  See `:help K` for why this keymap.
-          map('K', vim.lsp.buf.hover, 'Hover documentation')
+          map('K', function()
+            vim.lsp.buf.hover { border = 'rounded' }
+          end, 'Hover documentation')
 
-          map('gK', vim.lsp.buf.signature_help, 'Signature help')
+          map('gK', function()
+            vim.lsp.buf.signature_help { border = 'rounded' }
+          end, 'Signature help')
 
-          vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, { desc = 'Signature help', buffer = event.buf })
+          vim.keymap.set('i', '<C-k>', function()
+            vim.lsp.buf.signature_help { border = 'rounded' }
+          end, { desc = 'Signature help', buffer = event.buf })
 
-          vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code action', buffer = event.buf })
+          vim.keymap.set({ 'n', 'v' }, '<leader>ca', function()
+            vim.lsp.buf.code_action { border = 'rounded' }
+          end, { desc = 'Code action', buffer = event.buf })
 
           vim.keymap.set({ 'n', 'v' }, '<leader>cc', vim.lsp.codelens.run, { desc = 'Run codelens', buffer = event.buf })
           vim.keymap.set('n', '<leader>cC', vim.lsp.codelens.refresh, { desc = 'Refresh & display codelens', buffer = event.buf })
           vim.keymap.set('n', '<leader>cA', function()
-            vim.lsp.buf.code_action { context = { only = { 'source' }, diagnostics = {} } }
+            vim.lsp.buf.code_action {
+              context = {
+                only = { 'source' },
+                diagnostics = {},
+              },
+              border = 'rounded',
+            }
           end, { desc = 'Source action', buffer = event.buf })
 
           vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { desc = 'Rename', buffer = event.buf })
@@ -159,7 +175,9 @@ return {
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
-          map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+          map('gD', function()
+            vim.lsp.buf.declaration { border = 'rounded' }
+          end, 'Goto declaration')
 
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
