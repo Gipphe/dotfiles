@@ -59,6 +59,7 @@
             secrets.enable = true;
             sync.enable = true;
             systemd.enable = true;
+            terminal-capture.enable = true;
             vm-host.enable = true;
           };
           programs = {

@@ -28,6 +28,7 @@
               rice.enable = true;
               secrets.enable = true;
               systemd.enable = true;
+              terminal-capture.enable = true;
               vm-guest.enable = true;
               windows-setup.enable = true;
             };

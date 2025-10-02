@@ -29,6 +29,7 @@
             rice.enable = true;
             secrets.enable = true;
             strise.enable = true;
+            terminal-capture.enable = true;
             windows-setup.enable = true;
           };
         };

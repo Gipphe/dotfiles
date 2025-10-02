@@ -44,6 +44,7 @@
             secrets.enable = true;
             sync.enable = true;
             systemd.enable = true;
+            terminal-capture.enable = true;
             windows-setup.enable = true;
           };
           programs.idea-community.enable = true;
