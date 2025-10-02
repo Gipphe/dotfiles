@@ -47,9 +47,9 @@
                 let
                   myPackages = with self.packages.${system}; [
                     treefmt # treewide formatter
-                    deadnix # clean up unused nix code
                   ];
                   otherPackages = with pkgs; [
+                    deadnix # clean up unused nix code
                     entr # run commands on file changes
                     git # flake requires git
                     nh # better nix CLI
@@ -72,7 +72,6 @@
         {
           bolt-launcher = pkgs.callPackage ./packages/bolt-launcher.nix { };
           catppuccin-sddm = pkgs.callPackage ./packages/catppuccin-sddm.nix { };
-          deadnix = pkgs.callPackage ./packages/deadnix.nix { };
           jdenticon-cli = pkgs.callPackage ./packages/jdenticon.nix { };
           minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
           monocraft-no-ligatures-font = pkgs.callPackage ./packages/monocraft-no-ligatures.nix { };
