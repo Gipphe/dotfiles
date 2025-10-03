@@ -21,7 +21,10 @@ util.mkToggledModule [ "machines" ] {
         bluetooth.enable = true;
         boot-efi.enable = true;
         devices.enable = true;
+        power.enable = true;
         system.enable = true;
+        thumbnails.enable = true;
+        time.enable = true;
       };
       ai.enable = true;
       application.enable = true;
@@ -32,15 +35,15 @@ util.mkToggledModule [ "machines" ] {
       fonts.enable = true;
       gaming.enable = true;
       gc.enable = true;
+      keyring.enable = true;
+      laptop.enable = true;
       networkmanager.enable = true;
       rice.enable = true;
       secrets.enable = true;
       sync.enable = true;
       systemd.enable = true;
       terminal-capture.enable = true;
-      windows-setup.enable = true;
     };
-    programs.idea-community.enable = true;
   };
 
   system-nixos.imports = lib.optionals (hostname == name) (

@@ -30,6 +30,7 @@ util.mkToggledModule [ "machines" ] {
         devices.enable = true;
         power.enable = true;
         system.enable = true;
+        thumbnails.enable = true;
         time.enable = true;
       };
       ai.enable = true;
