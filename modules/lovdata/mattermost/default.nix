@@ -38,7 +38,6 @@ util.mkToggledModule [ "lovdata" ] {
           startInFullscreen = false;
           lovLevel = "info";
           enableMetrics = false;
-          alwaysClose = false;
           trayIconTheme = "use_system";
           alwaysMinimize = true;
         };
