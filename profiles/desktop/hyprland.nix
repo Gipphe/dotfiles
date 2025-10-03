@@ -40,7 +40,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
 
     # File manager
     yazi.enable = true;
-    thunar.enable = true;
+    dolphin.enable = true;
 
     # Bars
     mechabar.enable = false;
