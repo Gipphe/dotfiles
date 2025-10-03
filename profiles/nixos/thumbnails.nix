@@ -1,5 +1,5 @@
 { util, ... }:
-util.mkProfile {
+util.mkToggledModule [ "profiles" "nixos" ] {
   name = "thumbnails";
   shared.gipphe.system.thumbnails = {
     image.enable = true;
