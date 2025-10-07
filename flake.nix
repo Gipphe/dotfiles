@@ -74,7 +74,6 @@
                     nvd # Diff nix results
                     sops
                     statix # lints and suggestions
-                    vulnix # Vulnerability scanner
                   ];
                 in
                 myPackages ++ otherPackages;
