@@ -32,11 +32,23 @@
       apps = eachSystem (
         { pkgs, ... }:
         let
+          inherit (pkgs) lib;
           util = pkgs.callPackage ./util.nix { };
         in
         {
-          md-icons = pkgs.callPackage ./apps/md-icons.nix { inherit (util) writeFishApplication; };
-          md-fastfetch = pkgs.callPackage ./apps/md-fastfetch { inherit (util) writeFishApplication; };
+          md-icons = {
+            type = "app";
+            program = lib.getExe (
+              pkgs.callPackage ./apps/md-icons.nix { inherit (util) writeFishApplication; }
+            );
+          };
+
+          md-fastfetch = {
+            type = "app";
+            program = lib.getExe (
+              pkgs.callPackage ./apps/md-fastfetch.nix { inherit (util) writeFishApplication; }
+            );
+          };
         }
       );
 
