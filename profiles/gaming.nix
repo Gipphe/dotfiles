@@ -6,7 +6,8 @@ util.mkProfile {
     discord.enable = true;
     gdlauncher.enable = true;
     heroic.enable = true;
-    lutris.enable = true;
+    # TODO Currently broken due to allegro breaking
+    lutris.enable = false;
     moonlight-qt.enable = true;
     prismlauncher.enable = true;
     runelite.enable = true;
