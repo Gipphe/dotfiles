@@ -10,7 +10,6 @@ util.mkProgram {
       libvirtd = {
         enable = true;
         onBoot = "ignore";
-        qemu.ovmf.enable = true;
       };
       spiceUSBRedirection.enable = true;
     };
