@@ -14,7 +14,7 @@
   callPackage,
 }:
 let
-  extra = callPackage ./devShell.nix { };
+  extra = callPackage ./devShell.nix { inherit treefmt; };
 in
 mkShell {
   name = "dotfiles";

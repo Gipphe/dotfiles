@@ -1,5 +1,7 @@
 {
   lib,
+  nix,
+  jujutsu,
   callPackage,
   nh,
   jq,
@@ -136,162 +138,118 @@ in
     }
 
     # Formatting
-    rec {
+    {
       help = "Format the source tree with treefmt";
       name = "fmt";
-      command = cmd {
-        inherit name;
-        runtimeInputs = [ treefmt ];
-        text =
-          # fish
-          "treefmt";
-      };
+      command = lib.getExe treefmt;
       category = "formatter";
     }
 
     # Utils
-    rec {
+    {
       help = "Update flake inputs and commit changes";
       name = "update";
-      command = cmd {
-        inherit name;
-        runtimeInputs = [ git ];
-        text =
-          # fish
-          ''
-            nix flake update
-            or exit $status
-            if test -d .jj
-              jj commit flake.lock -m 'chore: update flake inputs'
-            else
-              git commit flake.lock -m 'chore: update flake inputs'
-            end
-          '';
-      };
+      command =
+        # bash
+        ''
+          ${lib.getExe nix} flake update
+          res="$?"
+          if test "$res" != 0; then
+            exit "$res"
+          fi
+          if test -d .jj; then
+            ${lib.getExe jujutsu} commit flake.lock -m 'chore: update flake inputs'
+          else
+            ${lib.getExe git} commit flake.lock -m 'chore: update flake inputs'
+          fi
+        '';
       category = "utils";
     }
 
     # Nix utils
-    rec {
+    {
       help = "Track distribution of PR";
       name = "nix:pr";
-      command = cmd {
-        inherit name;
-        runtimeInputs = [ xdg-utils ];
-        text =
-          # fish
-          ''
-            if test "$(count $argv)" = "0" || test $argv[1] = "--help"
-              echo "Usage: nix:pr <pr number>"
-              exit 1
-            end
-            set -l prg $(command -s open || command -s xdg-open)
-            eval "$prg 'https://nixpk.gs/pr-tracker.html?pr="$argv[1]\'
-          '';
-      };
+      command = # bash
+        ''
+          if [[ $# == 0 || $* == *--help* || $* == *-h* ]]; then
+            echo "Usage: nix:pr <pr number>" >&2
+            exit 1
+          fi
+          pr="$1"
+          ${lib.getExe' xdg-utils "xdg-open"} "https://nixpk.gs/pr-tracker.html?pr=$pr"
+        '';
       category = "nix utils";
     }
-    rec {
+    {
       help = "View store path sizes";
       name = "nix:du";
-      command = cmd {
-        inherit name;
-        text =
-          # fish
-          ''
-            nix path-info -rS /run/current-system | sort -nk2
-          '';
-      };
+      command = # bash
+        ''
+          ${lib.getExe nix} path-info -rS /run/current-system | sort -nk2
+        '';
       category = "nix utils";
     }
 
     # Linting
-    rec {
+    {
       help = "Check .nix files with nil";
       name = "lint:nil";
-      command = cmd {
-        inherit name;
-        runtimeInputs = [
-          git
-          gnugrep
-          nil
-        ];
-        text = ''
-          nil diagnostics $(git ls-files | grep '\.nix$' | grep -v 'hardware-configuration/.*\.nix')
+      command = # bash
+        ''
+          ${lib.getExe nil} diagnostics "$( \
+            ${lib.getExe git} ls-files | \
+            ${lib.getExe gnugrep} '\.nix$' | \
+            ${lib.getExe gnugrep} -v 'hardware-configuration/.*\.nix' \
+          )"
         '';
-      };
       category = "lint";
     }
-    rec {
+    {
       help = "Check .nix files with nil, watching";
       name = "lint:nil:watch";
-      command = cmd {
-        inherit name;
-        runtimeInputs = [
-          git
-          gnugrep
-          nil
-          entr
-        ];
-        text = ''
-          git ls-files | grep '\.nix$' | grep -v 'hardware-configuration/.*\.nix' | entr nil diagnostics /_
+      command = # bash
+        ''
+          ${lib.getExe git} ls-files | \
+            ${lib.getExe gnugrep} '\.nix$' | \
+            ${lib.getExe gnugrep} -v 'hardware-configuration/.*\.nix' | \
+            ${lib.getExe entr} nil diagnostics /_
         '';
-      };
       category = "lint";
     }
-    rec {
+    {
       help = "Check .nix files with statix";
       name = "lint:statix";
-      command = cmd {
-        inherit name;
-        runtimeInputs = [ statix ];
-        text =
-          # fish
-          "statix check";
-      };
+      command = "${lib.getExe statix} check";
       category = "lint";
     }
-    rec {
+    {
       help = "Check .nix files with statix, watching";
       name = "lint:statix:watch";
-      command = cmd {
-        inherit name;
-        runtimeInputs = [
-          entr
-          statix
-        ];
-        text =
-          # fish
-          "find . -type f | entr statix check";
-      };
+      command = ''
+        ${lib.getExe findutils} . -type f | \
+          ${lib.getExe entr} ${lib.getExe statix} check
+      '';
       category = "lint";
     }
-    rec {
+    {
       help = "Check .nix files with deadnix";
       name = "lint:deadnix";
-      command = cmd {
-        inherit name;
-        runtimeInputs = [ deadnix ];
-        text =
-          # fish
-          "deadnix --exclude ./modules/system/hardware-configuration/*.nix";
-      };
+      command = # bash
+        ''
+          ${lib.getExe deadnix} --exclude ./modules/system/hardware-configuration/*.nix
+        '';
       category = "lint";
     }
-    rec {
+    {
       help = "Check .nix files with deadnix, watching";
       name = "lint:deadnix:watch";
-      command = cmd {
-        inherit name;
-        runtimeInputs = [
-          entr
-          deadnix
-          findutils
-        ];
-        text =
-          # fish
-          "find . -type f | entr deadnix --exclude ./modules/system/hardware-configuration/*.nix";
-      };
+      command = # bash
+        ''
+          ${lib.getExe findutils} . -type f | \
+            ${lib.getExe entr} ${lib.getExe deadnix} \
+              --exclude ./modules/system/hardware-configuration/*.nix
+        '';
       category = "lint";
     }
   ];
