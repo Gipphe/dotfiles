@@ -9,7 +9,7 @@ pkgs: {
   as_window = false;
   timeout = 0;
   disable_click_to_close = false;
-  force_keyboard_focus = false;
+  force_keyboard_focus = true;
 
   keys = {
     accept_typeahear = [ "tab" ];
