@@ -47,37 +47,10 @@
       devShells = eachSystem (
         { pkgs, system }:
         {
-          default =
-            let
-              extra = import ./devShell {
-                inherit (pkgs) lib;
-                pkgs = pkgs.extend (_: _: self.packages.${system});
-              };
-            in
-            inputs.devshell.legacyPackages.${system}.mkShell {
-              name = "dotfiles";
-              commands = extra.shellCommands;
-              env = extra.shellEnv;
-              packages =
-                let
-                  myPackages = with self.packages.${system}; [
-                    treefmt # treewide formatter
-                  ];
-                  otherPackages = with pkgs; [
-                    deadnix # clean up unused nix code
-                    entr # run commands on file changes
-                    git # flake requires git
-                    nh # better nix CLI
-                    nix-output-monitor # pretty nix output
-                    nix-tree
-                    nixfmt # nix formatter
-                    nvd # Diff nix results
-                    sops
-                    statix # lints and suggestions
-                  ];
-                in
-                myPackages ++ otherPackages;
-            };
+          default = pkgs.callPackage ./devShells/default.nix {
+            inherit (inputs.devshell.legacyPackages.${system}) mkShell;
+            inherit (self.packages.${system}) treefmt;
+          };
         }
       );
 

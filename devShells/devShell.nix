@@ -1,6 +1,20 @@
-{ pkgs, lib, ... }:
+{
+  lib,
+  callPackage,
+  nh,
+  jq,
+  deadnix,
+  statix,
+  entr,
+  findutils,
+  git,
+  gnugrep,
+  nil,
+  treefmt,
+  xdg-utils,
+}:
 let
-  util = pkgs.callPackage ../util.nix { };
+  util = callPackage ../util.nix { };
   cmd = opts: lib.getExe (util.writeFishApplication (opts // { inheritPath = true; }));
   build =
     {
@@ -10,7 +24,7 @@ let
     }:
     cmd {
       inherit name;
-      runtimeInputs = with pkgs; [
+      runtimeInputs = [
         nh
         jq
       ];
@@ -86,7 +100,7 @@ in
       name = "boot";
       command = cmd {
         inherit name;
-        runtimeInputs = [ pkgs.nh ];
+        runtimeInputs = [ nh ];
         text =
           # fish
           ''
@@ -127,7 +141,7 @@ in
       name = "fmt";
       command = cmd {
         inherit name;
-        runtimeInputs = [ pkgs.treefmt ];
+        runtimeInputs = [ treefmt ];
         text =
           # fish
           "treefmt";
@@ -141,7 +155,7 @@ in
       name = "update";
       command = cmd {
         inherit name;
-        runtimeInputs = [ pkgs.git ];
+        runtimeInputs = [ git ];
         text =
           # fish
           ''
@@ -163,7 +177,7 @@ in
       name = "nix:pr";
       command = cmd {
         inherit name;
-        runtimeInputs = [ pkgs.xdg-utils ];
+        runtimeInputs = [ xdg-utils ];
         text =
           # fish
           ''
@@ -197,7 +211,7 @@ in
       name = "lint:nil";
       command = cmd {
         inherit name;
-        runtimeInputs = with pkgs; [
+        runtimeInputs = [
           git
           gnugrep
           nil
@@ -213,7 +227,7 @@ in
       name = "lint:nil:watch";
       command = cmd {
         inherit name;
-        runtimeInputs = with pkgs; [
+        runtimeInputs = [
           git
           gnugrep
           nil
@@ -230,7 +244,7 @@ in
       name = "lint:statix";
       command = cmd {
         inherit name;
-        runtimeInputs = [ pkgs.statix ];
+        runtimeInputs = [ statix ];
         text =
           # fish
           "statix check";
@@ -242,7 +256,7 @@ in
       name = "lint:statix:watch";
       command = cmd {
         inherit name;
-        runtimeInputs = with pkgs; [
+        runtimeInputs = [
           entr
           statix
         ];
@@ -257,7 +271,7 @@ in
       name = "lint:deadnix";
       command = cmd {
         inherit name;
-        runtimeInputs = [ pkgs.deadnix ];
+        runtimeInputs = [ deadnix ];
         text =
           # fish
           "deadnix --exclude ./modules/system/hardware-configuration/*.nix";
@@ -269,7 +283,7 @@ in
       name = "lint:deadnix:watch";
       command = cmd {
         inherit name;
-        runtimeInputs = with pkgs; [
+        runtimeInputs = [
           entr
           deadnix
           findutils
