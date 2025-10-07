@@ -64,10 +64,10 @@ writeFishApplication {
     # fish
     ''
       function info
-        echo "$args" > &2
+        echo "$argv" > &2
       end
 
-      if contains "--help" $args || contains "-h" $args
+      if contains "--help" $argv || contains "-h" $argv
         info "${name} - ${help}"
         exit 0
       end
