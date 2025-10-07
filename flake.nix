@@ -89,23 +89,7 @@
           jdenticon-cli = pkgs.callPackage ./packages/jdenticon.nix { };
           minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
           monocraft-no-ligatures-font = pkgs.callPackage ./packages/monocraft-no-ligatures.nix { };
-          treefmt =
-            (treefmt-nix.lib.evalModule pkgs {
-              projectRootFile = "flake.nix";
-
-              programs = {
-                nixfmt.enable = true;
-                black.enable = true;
-                deadnix.enable = false;
-                shellcheck.enable = true;
-                shfmt.enable = true;
-              };
-
-              settings.formatter.nixfmt.excludes = [
-                "modules/system/hardware-configuration/*.nix"
-                "hardware-configuration.nix"
-              ];
-            }).config.build.wrapper;
+          treefmt = pkgs.callPackage ./packages/treefmt.nix { inherit treefmt-nix; };
         }
       );
 
