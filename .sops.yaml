@@ -71,3 +71,7 @@ creation_rules:
   - path_regex: secrets/syncthing-password
     key_groups:
       - age: *all
+
+  - path_regex: secrets/pub-.*
+    key_groups:
+      - age: *all
