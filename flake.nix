@@ -84,6 +84,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:nixos/nixos-hardware";
+    nixpkgs-master.url = "github:nixos/nixpkgs/master";
 
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid";

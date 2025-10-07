@@ -1681,6 +1681,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-master": {
+      "locked": {
+        "lastModified": 1759841082,
+        "narHash": "sha256-0t5tBFPxlgy+w3oVC7Y1R9ogRj8viqdqaklB1Y/DGmM=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "8712de255c9d00a242b5c7a6f99706495c808f40",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-openconnect-sso": {
       "locked": {
         "lastModified": 1716361217,
@@ -2133,6 +2149,7 @@
         "nixCats-nvim": "nixCats-nvim",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_10",
+        "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-openconnect-sso": "nixpkgs-openconnect-sso_2",
         "openconnect-sso": "openconnect-sso_2",
         "quickshell": "quickshell",
