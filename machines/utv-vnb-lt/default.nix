@@ -87,11 +87,6 @@ util.mkToggledModule [ "machines" ] {
         "desc:${left-monitor}, preferred, auto-left, 1"
         ", preferred, auto-down, 1"
       ];
-      workspace = [
-        "1, monitor:desc:${center-monitor}, default:true"
-        "2, monitor:desc:${left-monitor}, default:true"
-        "3, monitor:desc:${right-monitor}, default:true"
-      ];
     };
 
     gipphe.programs.wf-recorder.nicknames = {
