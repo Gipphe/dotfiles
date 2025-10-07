@@ -29,6 +29,21 @@
     {
       formatter = eachSystem ({ system, ... }: self.packages.${system}.treefmt);
 
+      apps = eachSystem (
+        { pkgs, ... }:
+        let
+          util = pkgs.callPackage ./util.nix { };
+        in
+        {
+          md-icons = pkgs.callPackage ./apps/md-icons.nix {
+            inherit (util) writeFishApplication;
+          };
+          md-fastfetch = pkgs.callPackage ./apps/md-fastfetch {
+            inherit (util) writeFishApplication;
+          };
+        }
+      );
+
       devShells = eachSystem (
         { pkgs, system }:
         {
