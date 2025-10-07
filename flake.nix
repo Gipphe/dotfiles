@@ -35,12 +35,8 @@
           util = pkgs.callPackage ./util.nix { };
         in
         {
-          md-icons = pkgs.callPackage ./apps/md-icons.nix {
-            inherit (util) writeFishApplication;
-          };
-          md-fastfetch = pkgs.callPackage ./apps/md-fastfetch {
-            inherit (util) writeFishApplication;
-          };
+          md-icons = pkgs.callPackage ./apps/md-icons.nix { inherit (util) writeFishApplication; };
+          md-fastfetch = pkgs.callPackage ./apps/md-fastfetch { inherit (util) writeFishApplication; };
         }
       );
 
