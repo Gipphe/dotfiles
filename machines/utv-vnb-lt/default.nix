@@ -88,9 +88,9 @@ util.mkToggledModule [ "machines" ] {
         ", preferred, auto-down, 1"
       ];
       workspace = [
-        "1, monitor:desc:${center-monitor}"
-        "2, monitor:desc:${left-monitor}"
-        "3, monitor:desc:${right-monitor}"
+        "1, monitor:desc:${center-monitor}, default:true"
+        "2, monitor:desc:${left-monitor}, default:true"
+        "3, monitor:desc:${right-monitor}, default:true"
       ];
     };
 
