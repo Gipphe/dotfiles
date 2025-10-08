@@ -29,29 +29,6 @@
     {
       formatter = eachSystem ({ system, ... }: self.packages.${system}.treefmt);
 
-      apps = eachSystem (
-        { pkgs, ... }:
-        let
-          inherit (pkgs) lib;
-          util = pkgs.callPackage ./util.nix { };
-        in
-        {
-          md-icons = {
-            type = "app";
-            program = lib.getExe (
-              pkgs.callPackage ./apps/md-icons.nix { inherit (util) writeFishApplication; }
-            );
-          };
-
-          md-fastfetch = {
-            type = "app";
-            program = lib.getExe (
-              pkgs.callPackage ./apps/md-fastfetch.nix { inherit (util) writeFishApplication; }
-            );
-          };
-        }
-      );
-
       devShells = eachSystem (
         { pkgs, system }:
         {
@@ -63,7 +40,7 @@
       );
 
       packages = eachSystem (
-        { pkgs, system }:
+        { system, pkgs }:
         let
           pr-tracker = inputs.pr-tracker.packages.${system}.default;
           util = pkgs.callPackage ./util.nix { };
@@ -72,6 +49,8 @@
           bolt-launcher = pkgs.callPackage ./packages/bolt-launcher.nix { };
           catppuccin-sddm = pkgs.callPackage ./packages/catppuccin-sddm.nix { };
           jdenticon-cli = pkgs.callPackage ./packages/jdenticon.nix { };
+          md-fastfetch = pkgs.callPackage ./apps/md-fastfetch.nix { inherit (util) writeFishApplication; };
+          md-icons = pkgs.callPackage ./apps/md-icons.nix { inherit (util) writeFishApplication; };
           minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
           monocraft-no-ligatures-font = pkgs.callPackage ./packages/monocraft-no-ligatures.nix { };
           nix-pr-tracker = pkgs.callPackage ./packages/nix-pr-tracker.nix {
