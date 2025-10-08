@@ -2,8 +2,8 @@
   lib,
   util,
   config,
-  inputs,
   pkgs,
+  self,
   ...
 }:
 let
@@ -11,7 +11,7 @@ let
   nix-pr-tracker = util.writeFishApplication {
     name = "nix-pr-tracker";
     runtimeInputs = [
-      inputs.pr-tracker.packages.${pkgs.system}.default
+      self.packages.${pkgs.system}.nix-pr-tracker
       pkgs.coreutils
     ];
     runtimeEnv = {
@@ -27,19 +27,13 @@ let
           echo "$argv" > &2
         end
 
-        if set -ql _flag_pr || test "$_flag_pr" = ""
+        if test -z "$_flag_pr"
           info "Usage: nix-pr-tracker -p|--pr <pr-number>"
           exit 1
         end
 
-        mkdir -p "$(dirname -- "$repo_path")"
-
-        if ! test -d "$repo_path"
-          info "Cloning nixpkgs repo..."
-          git clone --bare git@github.com:nixos/nixpkgs.git "$repo_path"
-        end
         cat "${config.sops.secrets.pr-tracker-github-token.path}" |
-          pr-tracker --pr "$_flag_pr" --path "$repo_path" --remote "$remote_name" 
+          nix-pr-tracker --pr "$_flag_pr" --path "$repo_path" --remote "$remote_name" 
       '';
   };
 in

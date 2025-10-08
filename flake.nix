@@ -63,13 +63,21 @@
       );
 
       packages = eachSystem (
-        { pkgs, ... }:
+        { pkgs, system }:
+        let
+          pr-tracker = inputs.pr-tracker.packages.${system}.default;
+          util = pkgs.callPackage ./util.nix { };
+        in
         {
           bolt-launcher = pkgs.callPackage ./packages/bolt-launcher.nix { };
           catppuccin-sddm = pkgs.callPackage ./packages/catppuccin-sddm.nix { };
           jdenticon-cli = pkgs.callPackage ./packages/jdenticon.nix { };
           minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
           monocraft-no-ligatures-font = pkgs.callPackage ./packages/monocraft-no-ligatures.nix { };
+          nix-pr-tracker = pkgs.callPackage ./packages/nix-pr-tracker.nix {
+            inherit pr-tracker;
+            inherit (util) writeFishApplication;
+          };
           treefmt = pkgs.callPackage ./packages/treefmt.nix { inherit treefmt-nix; };
         }
       );
