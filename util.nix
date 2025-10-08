@@ -92,7 +92,7 @@ let
       ) [ ] items;
 
   mkProfile = mkToggledModule [ "profiles" ];
-
+  mkHardware = mkToggledModule [ "hardware" ];
   mkProgram = mkToggledModule [ "programs" ];
   mkEnvironment = mkToggledModule [ "environment" ];
   mkWallpaper = mkToggledModule [
@@ -300,6 +300,7 @@ in
     findSiblings
     kdl
     mkEnvironment
+    mkHardware
     mkModule
     mkProfile
     mkProgram

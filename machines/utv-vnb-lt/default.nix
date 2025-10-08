@@ -56,9 +56,8 @@ util.mkToggledModule [ "machines" ] {
       terminal-capture.enable = true;
       vm-host.enable = true;
     };
-    programs = {
-      # Using Logi MX Keys at work
-      grimblast.logi-mx-keys = true;
+    hardware = {
+      logi-mx-keys.enable = true;
     };
   };
 
