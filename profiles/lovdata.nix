@@ -9,7 +9,7 @@ util.mkProfile {
   shared = {
     gipphe = {
       programs = {
-        idea-ultimate.enable = true;
+        idea-ultimate.enable = false;
         ssh.enable = true;
         glab = {
           enable = true;
