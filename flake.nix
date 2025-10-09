@@ -46,7 +46,6 @@
           util = pkgs.callPackage ./util.nix { };
         in
         {
-          jdenticon-cli = pkgs.callPackage ./packages/jdenticon.nix { };
           md-fastfetch = pkgs.callPackage ./apps/md-fastfetch.nix { inherit (util) writeFishApplication; };
           md-icons = pkgs.callPackage ./apps/md-icons.nix { inherit (util) writeFishApplication; };
           minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
