@@ -1,8 +1,13 @@
-{ util, ... }:
+{
+  util,
+  pkgs,
+  ...
+}:
 util.mkProgram {
   name = "atuin";
   hm.programs.atuin = {
     enable = true;
+    package = pkgs.callPackage ./package.nix { };
     settings = {
       style = "compact";
       search_mode_shell_up_key_binding = "prefix";
