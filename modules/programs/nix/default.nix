@@ -60,20 +60,31 @@ let
       man.enable = true;
     };
 
-    nixpkgs.config = {
-      allowUnfree = true;
-      permittedInsecurePackages = [
-        "dotnet-sdk-6.0.428"
-        "electron-27.3.11"
-      ];
+    nixpkgs = {
       overlays = [
-        (_: super: {
-          coreutils = super.uutils-coreutils-noprefix;
-          coreutils-full = super.uutils-coreutils-noprefix;
-          # workaround for: https://github.com/NixOS/nixpkgs/issues/154163
-          makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });
+        (self: super: {
+          # TODO remove once pr 449133 is in nixos-unstable
+          inherit (inputs.nixpkgs-master.legacyPackages.${pkgs.system})
+            intel-graphics-compute
+            intel-compute-runtime
+            ;
         })
       ];
+      config = {
+        allowUnfree = true;
+        permittedInsecurePackages = [
+          "dotnet-sdk-6.0.428"
+          "electron-27.3.11"
+        ];
+        overlays = [
+          (_: super: {
+            coreutils = super.uutils-coreutils-noprefix;
+            coreutils-full = super.uutils-coreutils-noprefix;
+            # workaround for: https://github.com/NixOS/nixpkgs/issues/154163
+            makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });
+          })
+        ];
+      };
     };
   };
 in
