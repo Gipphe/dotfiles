@@ -25,7 +25,6 @@
         );
       hosts = import ./hosts.nix inputs;
     in
-
     {
       formatter = eachSystem ({ system, ... }: self.packages.${system}.treefmt);
 
