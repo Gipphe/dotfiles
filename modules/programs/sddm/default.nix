@@ -1,6 +1,5 @@
 {
   lib,
-  self,
   pkgs,
   util,
   config,
@@ -14,7 +13,7 @@ util.mkProgram {
   name = "sddm";
   system-nixos = {
     environment.systemPackages = [
-      (self.packages.${pkgs.system}.catppuccin-sddm.override {
+      (pkgs.catppuccin-sddm.override {
         inherit flavor accent;
         font = "Noto Sans";
         fontSize = "14";

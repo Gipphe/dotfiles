@@ -46,7 +46,6 @@
           util = pkgs.callPackage ./util.nix { };
         in
         {
-          catppuccin-sddm = pkgs.callPackage ./packages/catppuccin-sddm.nix { };
           jdenticon-cli = pkgs.callPackage ./packages/jdenticon.nix { };
           md-fastfetch = pkgs.callPackage ./apps/md-fastfetch.nix { inherit (util) writeFishApplication; };
           md-icons = pkgs.callPackage ./apps/md-icons.nix { inherit (util) writeFishApplication; };
