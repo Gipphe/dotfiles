@@ -7,7 +7,11 @@ util.mkProgram {
   name = "atuin";
   hm.programs.atuin = {
     enable = true;
-    package = pkgs.callPackage ./package.nix { };
+    package = pkgs.atuin.overrideAttrs {
+      patches = [
+        ./2902.patch
+      ];
+    };
     settings = {
       style = "compact";
       search_mode_shell_up_key_binding = "prefix";
