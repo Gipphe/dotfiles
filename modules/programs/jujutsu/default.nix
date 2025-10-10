@@ -208,7 +208,7 @@ util.mkProgram {
     };
     sops.secrets."git-ssh-signing-key.pub" = {
       format = "binary";
-      sopsFile = ../../../secrets/git-ssh-signing-key.pub;
+      sopsFile = ../../../secrets/pub-git-ssh-signing-key.pub;
     };
   };
 }

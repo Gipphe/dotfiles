@@ -90,7 +90,7 @@ util.mkProgram {
       tray.enable = true;
     };
     sops.secrets."syncthing-password" = {
-      sopsFile = ../../../secrets/syncthing-password;
+      sopsFile = ../../../secrets/pub-syncthing-password;
       mode = "400";
       format = "binary";
     };

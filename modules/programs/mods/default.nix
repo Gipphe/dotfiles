@@ -25,7 +25,7 @@ util.mkProgram {
 
     sops.secrets = lib.mkIf config.gipphe.environment.secrets.enable {
       "mods-cli-openai-api.key" = {
-        sopsFile = ../../../secrets/mods-cli-openai-api.key;
+        sopsFile = ../../../secrets/pub-mods-cli-openai-api.key;
         path = "${config.xdg.configHome}/mods/key";
         mode = "400";
         format = "binary";

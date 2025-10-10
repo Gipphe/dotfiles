@@ -57,22 +57,6 @@ creation_rules:
           - *argon
           - *carbon
 
-  - path_regex: secrets/git-ssh-signing-key.*
-    key_groups:
-      - age: *all
-
-  - path_regex: secrets/mods-cli-openai-api\.key
-    key_groups:
-      - age: *all
-
-  - path_regex: secrets/claude-nvim-api-key\.key
-    key_groups:
-      - age: *all
-
-  - path_regex: secrets/syncthing-password
-    key_groups:
-      - age: *all
-
   - path_regex: secrets/pub-.*
     key_groups:
       - age: *all

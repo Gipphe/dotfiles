@@ -76,10 +76,10 @@ util.mkProgram {
       ];
 
     sops.secrets.git-signing-key = {
-      sopsFile = ../../../secrets/git-ssh-signing-key.key;
+      sopsFile = ../../../secrets/pub-git-ssh-signing-key.key;
       format = "binary";
     };
-    # Public key for secrets/git-ssh-signing-key.key
+    # Public key for secrets/pub-git-ssh-signing-key.key
     xdg.configFile."git/allowed_signers".text = ''
       gipphe@gmail.com namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINzkW4CGcY2zjXnWx1o7uy85D0O7OvjzTa51GLtA0uQv
     '';
