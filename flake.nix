@@ -45,8 +45,10 @@
           util = pkgs.callPackage ./util.nix { };
         in
         {
-          md-fastfetch = pkgs.callPackage ./apps/md-fastfetch.nix { inherit (util) writeFishApplication; };
-          md-icons = pkgs.callPackage ./apps/md-icons.nix { inherit (util) writeFishApplication; };
+          md-fastfetch = pkgs.callPackage ./packages/md-fastfetch.nix {
+            inherit (util) writeFishApplication;
+          };
+          md-icons = pkgs.callPackage ./packages/md-icons.nix { inherit (util) writeFishApplication; };
           minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
           monocraft-no-ligatures-font = pkgs.callPackage ./packages/monocraft-no-ligatures.nix { };
           nix-pr-tracker = pkgs.callPackage ./packages/nix-pr-tracker.nix {
