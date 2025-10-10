@@ -12,9 +12,13 @@ in
     programs.starship = {
       enable = true;
       enableTransience = true;
-      settings = import ./presets { inherit pkgs lib; };
+      settings = import ./preset.nix {
+        inherit lib;
+        inherit (pkgs) jujutsu fetchFromGitHub;
+      };
     };
 
+    stylix.targets.starship.enable = false;
     gipphe.windows.home.file.".config/starship.toml".source =
       config.home.file.${config.programs.starship.configPath}.source;
   };
