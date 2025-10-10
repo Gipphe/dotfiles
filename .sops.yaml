@@ -39,6 +39,7 @@ creation_rules:
     key_groups:
       - age:
           - *utv-vnb-lt
+          - *argon
 
   - path_regex: secrets/carbon.*
     key_groups:
