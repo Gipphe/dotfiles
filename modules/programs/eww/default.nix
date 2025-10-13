@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   util,
   config,
@@ -18,8 +17,7 @@ let
       lm_sensors
       mpc
       networkmanager
-      # TODO: Revert to regular nixpkgs once fixed
-      inputs.nixpkgs-master.legacyPackages.${pkgs.system}.pamixer
+      pamixer
       playerctl
       pulseaudio
       socat
