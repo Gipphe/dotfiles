@@ -23,13 +23,10 @@ mkShell {
   packages = [
     treefmt # treewide formatter
     deadnix # clean up unused nix code
-    entr # run commands on file changes
     git # flake requires git
     nh # better nix CLI
-    nix-output-monitor # pretty nix output
     nix-tree
     nixfmt # nix formatter
-    nvd # Diff nix results
     sops
     statix # lints and suggestions
   ];
