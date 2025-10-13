@@ -8,8 +8,9 @@ util.mkProfile {
       ffmpeg.enable = true;
       imagemagick.enable = true;
       mprocs.enable = true;
-      vim.enable = true;
+      nix-pr-tracker.enable = true;
       vim.configOnly = true;
+      vim.enable = true;
     };
   };
 }

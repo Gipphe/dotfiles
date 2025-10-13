@@ -39,9 +39,8 @@
       );
 
       packages = eachSystem (
-        { system, pkgs }:
+        { pkgs, ... }:
         let
-          pr-tracker = inputs.pr-tracker.packages.${system}.default;
           util = pkgs.callPackage ./util.nix { };
         in
         {
@@ -51,10 +50,6 @@
           md-icons = pkgs.callPackage ./packages/md-icons.nix { inherit (util) writeFishApplication; };
           minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
           monocraft-no-ligatures-font = pkgs.callPackage ./packages/monocraft-no-ligatures.nix { };
-          nix-pr-tracker = pkgs.callPackage ./packages/nix-pr-tracker.nix {
-            inherit pr-tracker;
-            inherit (util) writeFishApplication;
-          };
           treefmt = pkgs.callPackage ./packages/treefmt.nix { inherit treefmt-nix; };
         }
       );
@@ -89,11 +84,6 @@
 
     nixCats-nvim = {
       url = "github:Gipphe/nixCats-nvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    pr-tracker = {
-      url = "github:Gipphe/pr-tracker";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
