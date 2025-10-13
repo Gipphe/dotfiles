@@ -15,7 +15,6 @@
   nix-output-monitor,
   statix,
   treefmt,
-  xdg-utils,
 }:
 let
   util = callPackage ../util.nix { };
@@ -31,6 +30,7 @@ let
       runtimeInputs = [
         nh
         jq
+        nix-output-monitor
       ];
       text =
         # fish
@@ -179,7 +179,12 @@ in
             exit 1
           fi
           pr="$1"
-          ${lib.getExe' xdg-utils "xdg-open"} "https://nixpk.gs/pr-tracker.html?pr=$pr"
+          opener="$(command -v xdg-utils || command -v open)"
+          if test "$?" != 0; then
+            echo "Cannot open link in browser automatically. Copy it yourself:" >&2
+            opener="echo"
+          fi
+          "$opener" "https://nixpk.gs/pr-tracker.html?pr=$pr"
         '';
       category = "nix utils";
     }
