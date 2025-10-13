@@ -43,7 +43,6 @@ util.mkToggledModule [ "profiles" "desktop" ] {
     dolphin.enable = true;
 
     # Bars
-    mechabar.enable = false;
     eww.enable = true;
     eww.dev = true;
     quickshell.enable = false;
