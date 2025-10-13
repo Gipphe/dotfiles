@@ -6,16 +6,16 @@
 util.mkProgram {
   name = "build-client";
   hm = {
-    # TODO fix for other hosts
+    # TODO: fix for other hosts
     programs.ssh = {
       matchBlocks = {
         builder = {
-          # TODO replace hard-coded builder
+          # TODO: replace hard-coded builder
           hostname = "titanium.lan";
           user = "builder";
           port = 9022;
           identitiesOnly = true;
-          # TODO replace hard-coded path
+          # TODO: replace hard-coded path
           identityFile = config.sops.secrets."building-carbon.ssh".path;
         };
       };

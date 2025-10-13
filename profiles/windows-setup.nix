@@ -329,7 +329,7 @@ util.mkProfile {
             type = "REG_DWORD";
             data = 0;
           }
-          # TODO find a way to change the taskbar height with registry entries (or otherwise)
+          # TODO: find a way to change the taskbar height with registry entries (or otherwise)
           {
             enable = false;
             description = "Show all icons in notification area";

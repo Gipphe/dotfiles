@@ -18,7 +18,7 @@ let
       lm_sensors
       mpc
       networkmanager
-      # TODO Revert to regular nixpkgs once fixed
+      # TODO: Revert to regular nixpkgs once fixed
       inputs.nixpkgs-master.legacyPackages.${pkgs.system}.pamixer
       playerctl
       pulseaudio

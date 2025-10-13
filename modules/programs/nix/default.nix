@@ -63,7 +63,7 @@ let
     nixpkgs = {
       overlays = [
         (self: super: {
-          # TODO remove once pr 449133 is in nixos-unstable
+          # TODO: remove once pr 449133 is in nixos-unstable
           inherit (inputs.nixpkgs-master.legacyPackages.${pkgs.system})
             intel-graphics-compute
             intel-compute-runtime
