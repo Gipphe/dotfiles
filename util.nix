@@ -4,6 +4,7 @@
   runCommand,
   lib,
   fish,
+  nushell,
   writeShellScriptBin,
   writeTextFile,
   ...
@@ -256,6 +257,57 @@ let
         else
           checkPhase;
     };
+  writeNushellApplication =
+    {
+      name,
+      text,
+      runtimeInputs ? [ ],
+      runtimeEnv ? null,
+      meta ? { },
+      checkPhase ? null,
+      derivationArgs ? { },
+      inheritPath ? false,
+    }:
+    writeTextFile {
+      inherit name meta derivationArgs;
+      executable = true;
+      destination = "/bin/${name}";
+      allowSubstitutes = true;
+      preferLocalBuild = false;
+      text =
+        let
+          nushell-shell = writeShellScriptBin "nushell-bare" ''
+            ${lib.getExe nushell} --no-config-file --no-history "$@"
+          '';
+        in
+        ''
+          #!${lib.getExe nushell-shell}
+        ''
+        + lib.optionalString (runtimeEnv != null) (
+          lib.concatStrings (
+            lib.mapAttrsToList (name: value: ''
+              ${toFishShellVar name value}; set -gx ${name} ''$${name};
+            '') runtimeEnv
+          )
+        )
+        + lib.optionalString (runtimeInputs != [ ]) ''
+          set -x --path PATH "${lib.makeBinPath runtimeInputs}${lib.optionalString inheritPath ":$PATH"}"
+        ''
+        + ''
+
+          ${text}
+        '';
+      checkPhase =
+        if checkPhase == null then
+          # bash
+          ''
+            runHook preCheck
+            ${lib.getExe nushell} --no-config-file --no-history --commands "nu-check '$target'"
+            runHook postCheck
+          ''
+        else
+          checkPhase;
+    };
   findSiblings =
     path:
     lib.pipe path [
@@ -312,5 +364,6 @@ in
     setCaskHash
     storeFileName
     writeFishApplication
+    writeNushellApplication
     ;
 }
