@@ -177,7 +177,7 @@ in
             exit 1
           fi
           pr="$1"
-          opener="$(command -v xdg-utils || command -v open)"
+          opener="$(command -v open || command -v xdg-open)"
           if test "$?" != 0; then
             echo "Cannot open link in browser automatically. Copy it yourself:" >&2
             opener="echo"
