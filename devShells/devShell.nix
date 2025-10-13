@@ -12,7 +12,6 @@
   nh,
   nil,
   nix,
-  nix-output-monitor,
   statix,
   treefmt,
 }:
@@ -30,7 +29,6 @@ let
       runtimeInputs = [
         nh
         jq
-        nix-output-monitor
       ];
       text =
         # fish
