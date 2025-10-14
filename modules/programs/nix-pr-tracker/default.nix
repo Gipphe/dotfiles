@@ -8,7 +8,10 @@
 let
   cfg = config.gipphe.programs.nix-pr-tracker;
   repo_path =
-    if cfg.repo-path then cfg.repo-path else "${config.xdg.stateHome}/gipphe/nix-pr-tracker/nixpkgs";
+    if cfg.repo-path != null then
+      cfg.repo-path
+    else
+      "${config.xdg.stateHome}/gipphe/nix-pr-tracker/nixpkgs";
   pr-tracker =
     (builtins.getFlake "github:Gipphe/pr-tracker/7889bb3287ec35f570ec7da67a4c6bf91a610cb0")
     .packages.${pkgs.system}.default;
