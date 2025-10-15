@@ -28,7 +28,7 @@ util.mkToggledModule [ "system" ] {
         defaultUser = config.gipphe.username;
         docker-desktop.enable = false;
         interop = {
-          includePath = true;
+          includePath = false;
           register = true;
           # startMenuLaunchers = true;
         };
