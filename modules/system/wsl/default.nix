@@ -10,9 +10,14 @@ util.mkToggledModule [ "system" ] {
   name = "wsl";
 
   hm = {
-    # WSL does not have a proper desktop, and uses X systems under the hood, so
-    # we need a clipboard manager.
-    home.packages = [ pkgs.xclip ];
+    home.packages = [
+      # WSL does not have a proper desktop, and uses X systems under the hood, so
+      # we need a clipboard manager.
+      pkgs.xclip
+      (pkgs.writeShellScriptBin "explorer.exe" ''
+        /mnt/c/WINDOWS/explorer.exe "$@"
+      '')
+    ];
     programs.fish.shellAbbrs.rmz = "find . -name '*Zone.Identifier' -type f -delete";
   };
 
