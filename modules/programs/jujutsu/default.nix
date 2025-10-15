@@ -203,6 +203,13 @@ util.mkProgram {
             "--when".repositories = [ "~/projects/lovdata" ];
             user.email = "vnb@lovdata.no";
           }
+          {
+            "--when".repositories = [
+              "~/projects/tweag"
+              "~/projects/modus-create"
+            ];
+            user.email = "victor.bakke@tweag.io";
+          }
         ];
       };
     };

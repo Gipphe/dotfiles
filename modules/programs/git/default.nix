@@ -17,11 +17,6 @@ util.mkProgram {
         type = lib.types.package;
         internal = true;
       };
-      strise = lib.mkOption {
-        description = "Config for Strise to be used on Windows";
-        type = lib.types.package;
-        internal = true;
-      };
       ignores = lib.mkOption {
         description = "Git ignore for Windows";
         type = lib.types.path;
@@ -82,6 +77,7 @@ util.mkProgram {
     # Public key for secrets/pub-git-ssh-signing-key.key
     xdg.configFile."git/allowed_signers".text = ''
       gipphe@gmail.com namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINzkW4CGcY2zjXnWx1o7uy85D0O7OvjzTa51GLtA0uQv
+      victor.bakke@tweag.io namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINzkW4CGcY2zjXnWx1o7uy85D0O7OvjzTa51GLtA0uQv
     '';
     programs.git = {
       enable = true;
@@ -99,6 +95,16 @@ util.mkProgram {
         key = config.sops.secrets.git-signing-key.path;
         signByDefault = true;
       };
+      includes = [
+        {
+          condition = "gitdir:~/projects/tweag";
+          contents.user.email = "victor.bakke@tweag.io";
+        }
+        {
+          condition = "gitdir:~/projects/modus-create";
+          contents.user.email = "victor.bakke@tweag.io";
+        }
+      ];
       extraConfig = {
         push = {
           default = "upstream";
