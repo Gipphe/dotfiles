@@ -200,10 +200,6 @@ util.mkProgram {
         };
         "--scope" = [
           {
-            "--when".repositories = [ "~/projects/lovdata" ];
-            user.email = "vnb@lovdata.no";
-          }
-          {
             "--when".repositories = [
               "~/projects/tweag"
               "~/projects/modus-create"

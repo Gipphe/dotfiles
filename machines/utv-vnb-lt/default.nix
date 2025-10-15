@@ -46,7 +46,6 @@ util.mkToggledModule [ "machines" ] {
       keyring.enable = true;
       laptop.enable = true;
       logitech.enable = true;
-      lovdata.enable = true;
       multi-monitor.enable = true;
       networkmanager.enable = true;
       rice.enable = true;

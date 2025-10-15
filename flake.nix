@@ -77,11 +77,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    lovdata = {
-      url = "git+ssh://git@gitlab.com/Gipphe/lovdata-nix-modules";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nixCats-nvim = {
       url = "github:Gipphe/nixCats-nvim";
       inputs.nixpkgs.follows = "nixpkgs";
