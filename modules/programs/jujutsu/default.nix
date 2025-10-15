@@ -198,15 +198,6 @@ util.mkProgram {
             ''
           ];
         };
-        "--scope" = [
-          {
-            "--when".repositories = [
-              "~/projects/tweag"
-              "~/projects/modus-create"
-            ];
-            user.email = "victor.bakke@tweag.io";
-          }
-        ];
       };
     };
     sops.secrets."git-ssh-signing-key.pub" = {
