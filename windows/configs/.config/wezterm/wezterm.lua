@@ -78,6 +78,7 @@ local baseConfig = {
   front_end = "WebGpu",
   -- Disable easing for cursor, blinking text and visual bell
   animation_fps = 1,
+  warn_about_missing_glyphs = false,
 }
 for k,v in pairs(windowsConfig.config()) do
   baseConfig[k] = v
