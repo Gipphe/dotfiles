@@ -238,6 +238,7 @@ util.mkProgram {
         # Hide nix flakes from git history while allowing nix to execute the flake as normal
         hide-flake = "!git add --intent-to-add flake.nix flake.lock && git update-index --assume-unchanged flake.nix flake.lock";
       };
+      lfs.enable = true;
     };
 
     gipphe.windows.home.file = {
