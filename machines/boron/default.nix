@@ -8,7 +8,7 @@
   ...
 }:
 let
-  name = "utv-vnb-lt";
+  name = "boron";
 
   left-monitor = "Dell Inc. DELL U2724D G15V4Z3";
   right-monitor = "Dell Inc. DELL U2724D G27V4Z3";

@@ -90,16 +90,6 @@ Lenovo Ideapad laptop running NixOS.
 
 Located in [`./machines/cobalt`](./machines/cobalt).
 
-### utv-vnb-lt
-
-![utv-vnb-lt jdenticon](./assets/icon/utv-vnb-lt.png)
-
-Corporate-issued Dell Precision 7680 running NixOS.
-
-Located in [`./machines/utv-vnb-lt`](./machines/utv-vnb-lt).
-
-<img src="./assets/utv-vnb-lt-neofetch.png" width="600px">
-
 ### helium
 
 ![helium jdenticon](./assets/icon/helium.png)

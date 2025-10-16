@@ -1,5 +1,5 @@
 {
-  name = "utv-vnb-lt";
+  name = "boron";
   system = "x86_64-linux";
   machine = "nixos";
 }

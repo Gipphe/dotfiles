@@ -9,7 +9,7 @@ let
     argon = ./argon.nix;
     cobalt = ./cobalt.nix;
     fluoride = ./fluoride.nix;
-    utv-vnb-lt = ./utv-vnb-lt.nix;
+    boron = ./boron.nix;
   };
 in
 {
