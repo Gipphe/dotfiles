@@ -6,7 +6,10 @@ in
 util.mkToggledModule [ "system" ] {
   name = "localization";
   system-nixos = {
-    services.automatic-timezoned.enable = true;
+    services = {
+      ntp.enable = false;
+      chrony.enable = true;
+    };
     i18n = {
       inherit defaultLocale;
       extraLocaleSettings = {

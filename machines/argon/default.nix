@@ -43,7 +43,5 @@ util.mkToggledModule [ "machines" ] {
         docker.gid = lib.mkForce 996;
       };
     };
-    # TODO: Does not work without a graphical environment? Getting "Permission denied" from DBus.
-    services.automatic-timezoned.enable = lib.mkForce false;
   };
 }
