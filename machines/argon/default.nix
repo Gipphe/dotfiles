@@ -1,11 +1,19 @@
-{ lib, util, ... }:
+{
+  lib,
+  hostname,
+  util,
+  ...
+}:
+let
+  host = import ./host.nix;
+in
 util.mkToggledModule [ "machines" ] {
-  name = "argon";
+  inherit (host) name;
   shared = {
     gipphe = {
       username = "gipphe";
       homeDirectory = "/home/gipphe";
-      hostName = "argon";
+      hostName = host.name;
       profiles = {
         nixos = {
           system.enable = true;
@@ -34,6 +42,7 @@ util.mkToggledModule [ "machines" ] {
   };
 
   system-nixos = {
+    imports = lib.optionals (hostname == host.name) [ ./hardware-configuration.nix ];
     users = {
       users = {
         gipphe.uid = lib.mkForce 1001;

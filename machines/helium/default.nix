@@ -1,11 +1,14 @@
 { lib, util, ... }:
+let
+  host = import ./host.nix;
+in
 util.mkToggledModule [ "machines" ] {
-  name = "helium";
+  inherit (host) name;
   shared = {
     gipphe = {
       username = "nix-on-droid";
       homeDirectory = "/data/data/com.termux.nix/files/home";
-      hostName = "helium";
+      hostName = host.name;
       profiles = {
         android.enable = true;
         cli-slim.enable = true;

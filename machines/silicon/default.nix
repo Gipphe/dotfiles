@@ -1,11 +1,14 @@
 { lib, util, ... }:
+let
+  host = import ./host.nix;
+in
 util.mkToggledModule [ "machines" ] {
-  name = "silicon";
+  inherit (host) name;
 
   shared.gipphe = {
     username = "victor";
     homeDirectory = "/Users/victor";
-    hostName = "silicon";
+    hostName = host.name;
     profiles = {
       ai.enable = true;
       application.enable = true;

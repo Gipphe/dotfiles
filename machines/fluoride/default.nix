@@ -1,11 +1,19 @@
-{ util, ... }:
+{
+  util,
+  hostname,
+  lib,
+  ...
+}:
+let
+  host = import ./host.nix;
+in
 util.mkToggledModule [ "machines" ] {
-  name = "fluoride";
+  inherit (host) name;
 
   shared.gipphe = {
     username = "gipphe";
     homeDirectory = "/home/gipphe";
-    hostName = "fluoride";
+    hostName = host.name;
     profiles = {
       nixos = {
         audio.enable = true;
@@ -31,4 +39,5 @@ util.mkToggledModule [ "machines" ] {
       windows-setup.enable = true;
     };
   };
+  system-nixos.imports = lib.optionals (hostname == host.name) [ ./hardware-configuration.nix ];
 }

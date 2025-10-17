@@ -8,7 +8,7 @@
   ...
 }:
 let
-  name = "boron";
+  host = import ./host.nix;
 
   left-monitor = "Dell Inc. DELL U2724D G15V4Z3";
   right-monitor = "Dell Inc. DELL U2724D G27V4Z3";
@@ -16,12 +16,12 @@ let
   laptop-monitor = "AU Optronics 0x31A6 Unknown";
 in
 util.mkToggledModule [ "machines" ] {
-  inherit name;
+  inherit (host) name;
 
   shared.gipphe = {
     username = "gipphe";
     homeDirectory = "/home/gipphe";
-    hostName = name;
+    hostName = host.name;
     profiles = {
       nixos = {
         audio.enable = true;
@@ -135,7 +135,7 @@ util.mkToggledModule [ "machines" ] {
   };
 
   system-nixos = {
-    imports = lib.optionals (hostname == name) (
+    imports = lib.optionals (hostname == host.name) (
       with inputs.nixos-hardware.nixosModules;
       [
         (import "${inputs.nixos-hardware}/common/cpu/intel/raptor-lake")

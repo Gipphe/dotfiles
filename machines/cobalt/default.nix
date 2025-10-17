@@ -1,20 +1,20 @@
 {
   lib,
-  util,
   hostname,
+  util,
   inputs,
   ...
 }:
 let
-  name = "cobalt";
+  host = import ./host.nix;
 in
 util.mkToggledModule [ "machines" ] {
-  inherit name;
+  inherit (host) name;
 
   shared.gipphe = {
     username = "gipphe";
     homeDirectory = "/home/gipphe";
-    hostName = name;
+    hostName = host.name;
     profiles = {
       nixos = {
         audio.enable = true;
@@ -46,7 +46,7 @@ util.mkToggledModule [ "machines" ] {
     };
   };
 
-  system-nixos.imports = lib.optionals (hostname == name) (
+  system-nixos.imports = lib.optionals (hostname == host.name) (
     with inputs.nixos-hardware.nixosModules;
     [
       common-cpu-intel
