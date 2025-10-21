@@ -1435,11 +1435,11 @@
         "nixpkgs-with-working-ghci-dap": "nixpkgs-with-working-ghci-dap"
       },
       "locked": {
-        "lastModified": 1759849332,
-        "narHash": "sha256-IOhZsOTpk5+mLi5/5pUqnXFPEsI6t+ozTfe9muYNjVA=",
+        "lastModified": 1761033140,
+        "narHash": "sha256-7qmg63DJ9udNME07xCRFYVXOi0ddU0ezP6fXeG1MMAk=",
         "owner": "Gipphe",
         "repo": "nixCats-nvim",
-        "rev": "fdbb1ef569bb3b36881fa417f57aea1f6c07f214",
+        "rev": "4f0b236076612acb980ccf38bb7d7f1880b14cab",
         "type": "github"
       },
       "original": {
