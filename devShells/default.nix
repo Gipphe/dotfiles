@@ -1,13 +1,10 @@
 {
   treefmt,
   deadnix,
-  entr,
   git,
   nh,
-  nix-output-monitor,
   nix-tree,
   nixfmt,
-  nvd,
   sops,
   statix,
   mkShell,
