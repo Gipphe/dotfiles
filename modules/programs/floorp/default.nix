@@ -31,7 +31,7 @@ util.mkModule {
         };
       };
     }
-    (lib.optionalAttrs (!flags.isNixOnDroid) (
+    (lib.optionalAttrs (!flags.isNixOnDroid && !flags.isNixDarwin) (
       lib.mkIf cfg.default {
         home.sessionVariables.BROWSER = "${pkg}/bin/floorp";
         gipphe.core.wm.binds = lib.mkIf cfg.default [

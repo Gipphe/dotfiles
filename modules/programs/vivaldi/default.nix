@@ -3,6 +3,7 @@
   util,
   lib,
   config,
+  flags,
   ...
 }:
 let
@@ -15,7 +16,7 @@ util.mkProgram {
     package = lib.mkPackageOption pkgs "vivaldi" { };
     default = lib.mkEnableOption "Vivaldi as default browser";
   };
-  hm = {
+  hm = lib.optionalAttrs (!flags.isNixDarwin) {
     home.packages = [ cfg.package ];
     home.sessionVariables = lib.mkIf cfg.default {
       BROWSER = "${cfg.package}/bin/vivaldi";

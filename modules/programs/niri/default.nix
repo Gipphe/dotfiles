@@ -14,7 +14,7 @@ let
 in
 util.mkProgram {
   name = "niri";
-  hm = {
+  hm = lib.optionalAttrs (!flags.isNixDarwin) {
     imports =
       lib.optional (!flags.isNixOnDroid) {
         stylix.targets.niri.enable = lib.mkDefault false;
