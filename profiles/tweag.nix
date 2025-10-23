@@ -1,5 +1,8 @@
 { util, ... }:
 util.mkProfile {
   name = "tweag";
-  shared.gipphe.tweag.vcs.enable = true;
+  shared.gipphe.tweag = {
+    gh.enable = true;
+    vcs.enable = true;
+  };
 }
