@@ -6,7 +6,7 @@ util.mkProfile {
     programs = {
       code-cursor.enable = true;
       cyberduck.enable = true;
-      neo4j-desktop.enable = true;
+      # neo4j-desktop.enable = true;
       notion.enable = true;
       openvpn-connect.enable = true;
       slack.enable = true;
