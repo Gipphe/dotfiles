@@ -17,12 +17,7 @@ util.mkModule {
     };
     programs.fish.shellInit = # fish
       ''
-        set -gx SECRETS_DIR
-        if test $(uname) = 'Darwin'
-          set SECRETS_DIR $(getconf DARWIN_USER_TEMP_DIR)
-        else
-          set SECRETS_DIR $XDG_RUNTIME_DIR
-        end
+        set -gx SECRETS_DIR $XDG_RUNTIME_DIR
       '';
   };
   system-nixos = {

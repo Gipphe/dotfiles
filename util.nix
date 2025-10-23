@@ -103,8 +103,7 @@ let
 
   # Creates a module with an automatically created `enable` options for the
   # given name, and injects an `lib.mkIf` into each of `hm`, `system-nixos`,
-  # `system-darwin`, `system-all` and `shared` that toggles the module based on
-  # said option.
+  # `system-all` and `shared` that toggles the module based on said option.
   mkToggledModule =
     type:
     {
@@ -112,7 +111,6 @@ let
       options ? { },
       hm ? { },
       system-nixos ? { },
-      system-darwin ? { },
       system-droid ? { },
       system-all ? { },
       shared ? { },
@@ -148,7 +146,6 @@ let
           mkModule {
             hm = injectMkIf hm;
             system-nixos = injectMkIf system-nixos;
-            system-darwin = injectMkIf system-darwin;
             system-droid = injectMkIf system-droid;
             system-all = injectMkIf system-all;
             shared = {
@@ -168,7 +165,6 @@ let
       options ? { },
       hm ? { },
       system-nixos ? { },
-      system-darwin ? { },
       system-droid ? { },
       system-all ? { },
       shared ? { },
@@ -184,7 +180,6 @@ let
             ]
             ++ lib.optional flags.isHm hm
             ++ lib.optional (flags.isSystem && flags.isNixos) system-nixos
-            ++ lib.optional (flags.isSystem && flags.isNixDarwin) system-darwin
             ++ lib.optional (flags.isSystem && flags.isNixOnDroid) system-droid
             ++ lib.optional flags.isSystem system-all;
           }

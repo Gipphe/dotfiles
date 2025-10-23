@@ -1,13 +1,7 @@
-{
-  util,
-  pkgs,
-  lib,
-  flags,
-  ...
-}:
+{ util, pkgs, ... }:
 util.mkProgram {
   name = "signal";
-  hm = lib.optionalAttrs (!flags.isNixDarwin) {
+  hm = {
     home.packages = [ pkgs.signal-desktop ];
     gipphe.windows.chocolatey.programs = [ "signal" ];
   };

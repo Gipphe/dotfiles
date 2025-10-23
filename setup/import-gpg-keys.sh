@@ -6,9 +6,7 @@ if [ -z "$1" ]; then
 fi
 echo "$dir"
 
-for key in gipphe@gmail.com.key victor@strise.ai.pem; do
-  gpg --import "$dir/$key"
-done
+gpg --import "$dir/gipphe@gmail.com.key"
 
 # Trust all imported keys ultimately
 gpg --list-keys --fingerprint --with-colons |

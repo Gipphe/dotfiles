@@ -1,6 +1,5 @@
 {
   lib,
-  flags,
   pkgs,
   ...
 }:
@@ -13,19 +12,14 @@ let
       _name = "IntelliJIdea";
       _version = majorMinor (getVersion name);
     in
-    if flags.isNixDarwin then "JetBrains/IntelliJIdea2025.1" else "JetBrains/${_name}${_version}";
+    "JetBrains/${_name}${_version}";
   linuxConfigDir = ideaDir;
   linuxOptionsDir = "${ideaDir}/options";
-  darwinOptionsDir = "Library/Application Support/${ideaDir}/options";
 in
 {
   inherit
     ideaDir
     ;
-  darwin = {
-    optionsDir = darwinOptionsDir;
-    configDir = darwinOptionsDir;
-  };
   linux = {
     optionsDir = linuxOptionsDir;
     configDir = linuxConfigDir;

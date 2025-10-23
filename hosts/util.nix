@@ -1,14 +1,23 @@
 { lib, ... }:
+let
+  inherit (lib) pipe filterAttrs mergeAttrsList;
+  inherit (builtins)
+    readDir
+    attrNames
+    map
+    ;
+in
 {
   enumerateMachines =
     path:
-    lib.pipe path [
-      builtins.readDir
-      (lib.filterAttrs (_: t: t == "directory"))
-      builtins.attrNames
-      (builtins.map (x: {
+    pipe path [
+      readDir
+      (filterAttrs (_: t: t == "directory"))
+      attrNames
+      (map (x: {
         ${x} = import "${path}/${x}/host.nix";
       }))
-      lib.mergeAttrsList
+      mergeAttrsList
+      (filterAttrs (_: v: v.enable))
     ];
 }

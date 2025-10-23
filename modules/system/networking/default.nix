@@ -1,10 +1,6 @@
 { config, util, ... }:
-let
-  networking = {
+util.mkModule {
+  system-nixos.networking = {
     inherit (config.gipphe) hostName;
   };
-in
-util.mkModule {
-  system-nixos.networking = networking;
-  system-darwin.networking = networking;
 }

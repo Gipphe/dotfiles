@@ -8,5 +8,4 @@ util.mkProgram {
     docker_pull_images = "docker images --format '{{.Repository}}:{{.Tag}}' | xargs -n 1 -P 1 docker pull";
   };
   system-nixos.virtualisation.docker.enable = true;
-  system-darwin.homebrew.casks = [ "docker" ];
 }

@@ -32,11 +32,6 @@ in
 util.mkEnvironment {
   name = "stylix";
 
-  system-darwin = {
-    imports = [ inputs.stylix.darwinModules.stylix ];
-    inherit stylix;
-  };
-
   system-nixos = {
     imports = [ inputs.stylix.nixosModules.stylix ];
     stylix = lib.mkMerge [

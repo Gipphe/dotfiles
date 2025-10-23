@@ -55,9 +55,6 @@ let
       '';
     };
   inherit (pkgs.stdenv) hostPlatform;
-  darwinConfig = lib.mkIf hostPlatform.isDarwin {
-    home.file = mkConfig paths.darwin;
-  };
   linuxConfig = lib.mkIf hostPlatform.isLinux {
     xdg.configFile = mkConfig paths.linux;
   };
@@ -65,7 +62,6 @@ in
 {
   config = lib.mkIf config.gipphe.programs.idea-ultimate.enable (
     lib.mkMerge [
-      darwinConfig
       linuxConfig
       {
         home.file.".ideavimrc".text = # vim

@@ -27,7 +27,6 @@ util.mkProgram {
                 nixpkgs = ''import ${pkgs.path} {}'';
                 home_manager = ''(builtins.getFlake "${self}").nixosConfigurations.argon.options.home-manager.users.type.getSubOptions []'';
                 nixos_options = ''(builtins.getFlake "${self}").nixosConfigurations.argon.options'';
-                darwin_options = ''(builtins.getFlake "${self}").darwinConfigurations.silicon.options'';
                 droid_options = ''(builtins.getFlake "${self}").nixOnDroidConfigurations.helium.options'';
               };
             };

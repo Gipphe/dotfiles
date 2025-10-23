@@ -10,7 +10,6 @@
     }:
     let
       systems = [
-        "aarch64-darwin"
         "aarch64-linux"
         "x86_64-linux"
       ];
@@ -54,8 +53,22 @@
         }
       );
 
+      checks = eachSystem (
+        { pkgs, ... }:
+        let
+          inherit (pkgs) lib;
+        in
+        lib.mapAttrs' (name: x: {
+          name = "nixos_${name}";
+          value = x.config.system.build.toplevel;
+        }) (lib.filterAttrs (n: _: n != "boron") self.nixosConfigurations)
+        # // lib.mapAttrs (name: x: {
+        #   name = "nix-on-droid_${name}";
+        #   value = x.activationPackage;
+        # }) self.nixOnDroidConfigurations
+      );
+
       inherit (hosts)
-        darwinConfigurations
         nixOnDroidConfigurations
         nixosConfigurations
         ;
@@ -140,29 +153,6 @@
     walker = {
       url = "github:abenz1267/walker";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # MacOS inputs
-
-    darwin = {
-      url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    mac-app-util.url = "github:hraban/mac-app-util";
-
-    brew-nix = {
-      url = "github:BatteredBunny/brew-nix";
-      inputs = {
-        brew-api.follows = "brew-api";
-        nixpkgs.follows = "nixpkgs";
-        nix-darwin.follows = "darwin";
-      };
-    };
-
-    brew-api = {
-      url = "github:BatteredBunny/brew-api";
-      flake = false;
     };
   };
 }

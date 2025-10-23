@@ -20,7 +20,6 @@ util.mkModule {
   };
   shared.imports = [
     ./windows.nix
-    ./darwin.nix
   ];
   hm.config = lib.mkMerge [
     {
@@ -31,7 +30,7 @@ util.mkModule {
         };
       };
     }
-    (lib.optionalAttrs (!flags.isNixOnDroid && !flags.isNixDarwin) (
+    (lib.optionalAttrs (!flags.isNixOnDroid) (
       lib.mkIf cfg.default {
         home.sessionVariables.BROWSER = "${pkg}/bin/floorp";
         gipphe.core.wm.binds = lib.mkIf cfg.default [

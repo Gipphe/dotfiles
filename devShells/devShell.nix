@@ -33,14 +33,10 @@ let
       text =
         # fish
         ''
-          if command -q nixos-rebuild || command -q darwin-rebuild
+          if command -q nixos-rebuild
             set -l args ${if ask then "--ask" else ""}
 
-            if command -q nixos-rebuild
-              nh os ${command} $args
-            else
-              nh darwin ${command} $args
-            end
+            nh os ${command} $args
           else if command -v nix-on-droid &>/dev/null
             set -l host $(jq '.hostname' env.json)
             if test -z "$host"
@@ -70,7 +66,7 @@ let
             end
             rm -f result
           else
-            echo "This is not a NixOS, nix-darwin or nix-on-droid system" >&2
+            echo "This is not a NixOS or nix-on-droid system" >&2
             exit 1
           end
         '';
@@ -80,7 +76,7 @@ in
   shellCommands = [
     # Build
     rec {
-      help = "Rebuild NixOS, nix-darwin or nix-on-droid system.";
+      help = "Rebuild NixOS or nix-on-droid system.";
       name = "sw";
       command = build {
         inherit name;
@@ -89,7 +85,7 @@ in
       category = "build";
     }
     rec {
-      help = "Rebuild NixOS, nix-darwin or nix-on-droid system, asking first.";
+      help = "Rebuild NixOS or nix-on-droid system, asking first.";
       name = "swa";
       command = build {
         inherit name;

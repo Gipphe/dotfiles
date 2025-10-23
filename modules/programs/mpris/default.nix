@@ -1,13 +1,7 @@
-{
-  util,
-  pkgs,
-  flags,
-  lib,
-  ...
-}:
+{ util, pkgs, ... }:
 util.mkProgram {
   name = "mpris";
-  hm = lib.optionalAttrs (!flags.isNixDarwin) {
+  hm = {
     home.packages = [ pkgs.playerctl ];
     services = {
       mpris-proxy.enable = true;

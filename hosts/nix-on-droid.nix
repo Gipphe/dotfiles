@@ -8,7 +8,6 @@ let
 
   flags = {
     isNixos = false;
-    isNixDarwin = false;
     isNixOnDroid = true;
     isHm = false;
     isSystem = true;

@@ -1,17 +1,10 @@
-{
-  util,
-  pkgs,
-  lib,
-  flags,
-
-  ...
-}:
+{ util, pkgs, ... }:
 let
   icon = "${pkgs.adwaita-icon-theme}/share/icons/Adwaita/16x16/mimetypes/image-x-generic.png";
 in
 util.mkProgram {
   name = "qimgv";
-  hm = lib.optionalAttrs (!flags.isNixDarwin) {
+  hm = {
     home.packages = [ pkgs.qimgv ];
     xdg.desktopEntries.qimgv = {
       exec = "${pkgs.qimgv}/bin/qimgv";

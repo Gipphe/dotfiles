@@ -1,13 +1,7 @@
-{
-  pkgs,
-  util,
-  lib,
-  flags,
-  ...
-}:
+{ pkgs, util, ... }:
 util.mkProgram {
   name = "mpv";
-  hm.programs.mpv = lib.optionalAttrs (!flags.isNixDarwin) {
+  hm.programs.mpv = {
     enable = true;
     scripts = [ pkgs.mpvScripts.mpris ];
   };

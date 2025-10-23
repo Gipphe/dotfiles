@@ -25,7 +25,7 @@
   </tr>
   <tr>
     <td align="center">
-      Nix configuration for NixOS, nix-darwin, nix-on-droid and nixos-wsl.
+      Nix configuration for NixOS, nix-on-droid and nixos-wsl.
     </td>
   </tr>
 </table>
@@ -38,7 +38,7 @@ From NixOS:
 nixos-rebuild switch --flake .#<hostname>
 ```
 
-From MacOS and other non-NixOS Linux distros:
+From other non-NixOS Linux distros:
 
 ```
 ./install.sh
@@ -52,8 +52,8 @@ nix-on-droid switch --flake .#<hostname>
 
 ## Machines
 
-This dotfiles repo consists of configurations for NixOS, nix-darwin, and
-nix-on-droid machines.
+This dotfiles repo consists of configurations for NixOS, and nix-on-droid
+machines.
 
 Machines are named according to elements from the periodic table, where
 applicable.
@@ -69,18 +69,6 @@ NixOS in WSL on Windows. Supports GUI programs through WSLg.
 Located in [`./machines/argon`](./machines/argon).
 
 <img src="./assets/argon-neofetch.png" width="600px">
-
-### silicon
-
-![silicon jdenticon](./assets/icon/silicon.png)
-
-_No longer in use, but kept as reference for future nix-darwin machines._
-
-Corporate-issued Macbook Pro with nix-darwin.
-
-Located in [`./machines/silicon`](./machines/silicon).
-
-<img src="./assets/silicon-neofetch.png" width="600px">
 
 ### cobalt
 
@@ -110,7 +98,7 @@ Located in [`./machines/carbon`](./machines/carbon).
 
 ## Architecture
 
-To support NixOS, nix-darwin, nix-on-droid _and_ nixos-wsl, some choices have been made in
+To support NixOS, nix-on-droid _and_ nixos-wsl, some choices have been made in
 these dotfiles that might be of interest to others.
 
 - Modules generally abstract over a feature.
@@ -135,7 +123,7 @@ these dotfiles that might be of interest to others.
   - It is up to the module to ensure the config as a whole is not invalid
     because of it.
   - Modules must account for being used in multiple different contexts: NixOS,
-    nix-darwin, nixos-wsl, home-manager, etc.
+    nixos-wsl, home-manager, etc.
 - Modules should be toggleable. Listing a module in `imports` should not have
   any effect unless the module is explicitly toggled as well.
 - Packages should be encapsulated in a separate module, as far as makes sense.

@@ -17,5 +17,4 @@ util.mkProgram {
       "float, class:(steam), title:(Friends List)"
     ];
   };
-  system-darwin.homebrew.casks = [ "steam" ];
 }

@@ -24,6 +24,4 @@ util.mkToggledModule [ "system" ] {
 
     users.groups.${username} = { };
   };
-
-  system-darwin.users.users.${config.gipphe.username}.home = config.gipphe.homeDirectory;
 }

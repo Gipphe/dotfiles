@@ -67,10 +67,6 @@ util.mkProgram {
         };
       })
 
-      (lib.mkIf hostPlatform.isDarwin {
-        home.file."Library/Application Support/Cursor/User/settings.json".source = cfg.settingsPackage;
-      })
-
       (lib.mkIf hostPlatform.isLinux {
         xdg.configFile."Cursor/User/settings.json".source = cfg.settingsPackage;
       })
@@ -89,5 +85,4 @@ util.mkProgram {
       })
     ]
   );
-  system-darwin.homebrew.casks = lib.mkIf (!cfg.wsl) [ "cursor" ];
 }

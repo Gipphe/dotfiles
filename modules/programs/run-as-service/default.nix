@@ -1,6 +1,5 @@
 {
   lib,
-  flags,
   config,
   pkgs,
   util,
@@ -34,5 +33,5 @@ let
 in
 util.mkProgram {
   name = "run-as-service";
-  hm = lib.mkIf (!flags.isNixDarwin) { home.packages = [ run-as-service ]; };
+  hm.home.packages = [ run-as-service ];
 }

@@ -59,7 +59,6 @@ util.mkProgram {
     };
   };
 
-  system-darwin.homebrew.casks = [ "1password" ];
   # Allows the 1password browser extension to connect to the GUI app
   system-nixos.environment.etc."1password/custom_allowed_browsers" = {
     user = "root";
