@@ -24,6 +24,7 @@ in
     ;
   darwin = {
     optionsDir = darwinOptionsDir;
+    configDir = darwinOptionsDir;
   };
   linux = {
     optionsDir = linuxOptionsDir;
