@@ -3,6 +3,7 @@
   util,
   pkgs,
   config,
+  flags,
   lib,
   ...
 }:
@@ -102,7 +103,7 @@ in
 util.mkProgram {
   name = "hyprland";
   hm.config = lib.mkMerge [
-    {
+    (lib.optionalAttrs (!flags.isNixDarwin) {
       home.packages = with pkgs; [ wireplumber ];
       wayland.windowManager.hyprland = {
         enable = true;
@@ -356,8 +357,8 @@ util.mkProgram {
         xwayland.enable = true;
       };
       home.sessionVariables.NIXOS_OZONE_WL = "1";
-    }
-    {
+    })
+    (lib.optionalAttrs (!flags.isNixDarwin) {
       wayland.windowManager.hyprland.settings =
         let
           hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
@@ -388,7 +389,7 @@ util.mkProgram {
             "$mod, KP_SUBTRACT, exec, ${decrease-zoom}"
           ];
         };
-    }
+    })
   ];
   system-nixos = {
     programs.hyprland = {
