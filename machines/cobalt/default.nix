@@ -53,6 +53,7 @@ util.mkToggledModule [ "machines" ] {
       common-gpu-amd
       common-pc-laptop
       common-pc-laptop-ssd
+      ./hardware-configuration.nix
     ]
   );
 }
