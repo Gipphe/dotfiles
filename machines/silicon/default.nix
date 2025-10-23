@@ -1,12 +1,13 @@
 { lib, util, ... }:
 let
   host = import ./host.nix;
+  username = "victor";
 in
 util.mkToggledModule [ "machines" ] {
   inherit (host) name;
 
   shared.gipphe = {
-    username = "victor";
+    inherit username;
     homeDirectory = "/Users/victor";
     hostName = host.name;
     profiles = {
@@ -32,10 +33,13 @@ util.mkToggledModule [ "machines" ] {
 
   system-darwin = {
     nix.settings.auto-optimise-store = lib.mkForce false;
-    system.defaults = {
-      # ".GlobalPreferences"."com.apple.mouse.scaling" = 1;
-      CustomUserPreferences = {
-        "com.apple.dock"."workspaces-swoosh-animation-off" = true;
+    system = {
+      primaryUser = username;
+      defaults = {
+        # ".GlobalPreferences"."com.apple.mouse.scaling" = 1;
+        CustomUserPreferences = {
+          "com.apple.dock"."workspaces-swoosh-animation-off" = true;
+        };
       };
     };
   };
