@@ -16,12 +16,10 @@ let
     builtins.readFile
     builtins.fromTOML
   ];
-  pallette = {
-    palette = "catppuccin_${flavour}";
-  };
+  palette.palette = lib.mkForce "catppuccin_${flavour}";
 
   tide-like = import ./tide-like.nix {
     inherit lib jujutsu;
   };
 in
-tide-like // pallette // catppuccin-starship-macchiato
+tide-like // palette // catppuccin-starship-macchiato
