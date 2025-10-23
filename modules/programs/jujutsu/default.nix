@@ -152,23 +152,7 @@ util.mkProgram {
                     if set -ql _flag_revision
                       set rev $_flag_revision
                     end
-                    set -l desc (jj show --template description --no-patch "$rev" | head -n 1)
-                    or exit 1
-
-                    if test -z "$desc"
-                      info "Found no description to base bookmark name on"
-                      exit 1
-                    end
-
-                    if test "$(string replace -ra '[^:]+' "" "$desc")" = ":"
-                      set desc (string replace -r '\\)?: ' '/' $desc | string replace -ra '[^\\w/]' '-' | string lower)
-                      set desc (echo -n "$desc" | tr -sc '/:[:alnum:]' '-' | tr -s ':' '/')
-                    else
-                      # Fall back to "gipphe/push-<short_id>" if no description
-                      # is set, or description does not comply with
-                      # conventional commits.
-                      set desc "gipphe/push-$(jj show --template short_id --no-path "$rev")"
-                    end
+                    set -l desc (${./desc-to-branch-name.fish} -r $rev)
 
                     jj bookmark create -r "$rev" "$desc"
                     jj git push --bookmark "$desc" --allow-new
