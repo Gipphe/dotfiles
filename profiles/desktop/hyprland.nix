@@ -15,7 +15,6 @@ util.mkToggledModule [ "profiles" "desktop" ] {
     plymouth.enable = true;
 
     # Launchers
-    rofi.enable = false;
     walker.enable = true;
 
     # Notifications
