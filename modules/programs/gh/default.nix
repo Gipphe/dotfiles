@@ -26,7 +26,11 @@ util.mkProgram {
           let
             script = util.writeFishApplication {
               name = "gh-pr-create-jj";
-              runtimeInputs = [ config.programs.jj.package ];
+              runtimeInputs = [
+                config.gipphe.programs.jujutsu.package
+                config.gipphe.programs.git.package
+                config.gipphe.programs.ssh.package
+              ];
               text = /* fish */ ''
                 argparse h/help r/rev= -- $argv
                 or exit 1
@@ -82,7 +86,7 @@ util.mkProgram {
               '';
             };
           in
-          "pr create -d --fill";
+          lib.getExe script;
         prm = "pr merge --auto -sd";
         addme = "pr edit --add-assignee @me";
       }

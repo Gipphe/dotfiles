@@ -3,6 +3,11 @@ or exit 1
 
 set -l rev $_flag_rev
 
+if test -z "$rev"
+    echo "Missing revision" >&2
+    exit 1
+end
+
 set -l desc (jj show --template description --no-patch "$rev" | head -n 1)
 or exit 1
 
