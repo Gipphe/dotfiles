@@ -53,20 +53,23 @@
         }
       );
 
-      checks = eachSystem (
-        { pkgs, ... }:
+      checks =
         let
-          inherit (pkgs) lib;
+          inherit (nixpkgs) lib;
         in
-        lib.mapAttrs' (name: x: {
-          name = "nixos_${name}";
-          value = x.config.system.build.toplevel;
-        }) (lib.filterAttrs (n: _: n != "boron") self.nixosConfigurations)
-        # // lib.mapAttrs (name: x: {
-        #   name = "nix-on-droid_${name}";
-        #   value = x.activationPackage;
-        # }) self.nixOnDroidConfigurations
-      );
+        {
+          "x86_64-linux" = lib.mapAttrs' (name: x: {
+            name = "nixos_${name}";
+            value = x.config.system.build.toplevel;
+          }) (lib.filterAttrs (n: _: n != "boron") self.nixosConfigurations);
+
+          "aarch64-linux" =
+            lib.mapAttrs (name: x: {
+              name = "nix-on-droid_${name}";
+              value = x.activationPackage;
+            }) self.nixOnDroidConfigurations
+            // self.checks."x86_64-linux";
+        };
 
       inherit (hosts)
         nixOnDroidConfigurations
