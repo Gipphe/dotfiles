@@ -35,7 +35,6 @@ util.mkToggledModule [ "machines" ] {
         windows-setup.enable = true;
       };
       programs = {
-        build-host.enable = true;
         wezterm.enable = true;
       };
     };

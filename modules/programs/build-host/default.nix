@@ -26,12 +26,15 @@ util.mkProgram {
         magicOrExtension = ''\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xb7\x00'';
         mask = ''\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\x00\xff\xfe\xff\xff\xff'';
       };
-      nix.extraOptions = ''
-        extra-platforms = aarch64-linux
-        trusted-users = builder
-        sandbox-paths = /bin/sh=${pkgs.busybox-sandbox-shell}/bin/busybox /run/binfmt/aarch64=${qemu-aarch64-static}/bin/qemu-aarch64-static
-      '';
-      nix.settings.trusted-users = [ "builder" ];
+      nix = {
+        settings = {
+          trusted-users = [ "builder" ];
+          extra-platforms = "aarch64-linux";
+        };
+        extraOptions = ''
+          sandbox-paths = "/bin/sh=${pkgs.busybox-sandbox-shell}/bin/busybox /run/binfmt/aarch64=${qemu-aarch64-static}/bin/qemu-aarch64-static"
+        '';
+      };
       users.users.builder = {
         isNormalUser = true;
         createHome = true;

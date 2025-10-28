@@ -21,7 +21,6 @@ util.mkToggledModule [ "system" ] {
         "wheel"
       ];
     };
-    nix.settings.trusted-users = [ username ];
 
     users.groups.${username} = { };
   };
