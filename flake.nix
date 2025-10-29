@@ -98,6 +98,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    pr-tracker = {
+      url = "github:Gipphe/pr-tracker";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     hyprland = {
       url = "github:hyprwm/Hyprland";
       # Do _not_ follow nixpkgs for this flake's nixpkgs input! It invalidates

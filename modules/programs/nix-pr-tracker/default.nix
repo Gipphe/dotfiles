@@ -1,5 +1,6 @@
 {
   lib,
+  inputs,
   util,
   config,
   pkgs,
@@ -12,16 +13,17 @@ let
       cfg.repo-path
     else
       "${config.xdg.stateHome}/gipphe/nix-pr-tracker/nixpkgs";
-  pr-tracker =
-    (builtins.getFlake "github:Gipphe/pr-tracker/7889bb3287ec35f570ec7da67a4c6bf91a610cb0")
-    .packages.${pkgs.system}.default;
   nix-pr-tracker = util.writeFishApplication {
     name = "nix-pr-tracker";
     runtimeInputs = [
-      pr-tracker
-      pkgs.git
-      pkgs.coreutils
-    ];
+      inputs.pr-tracker.packages.${pkgs.system}.default
+    ]
+    ++ builtins.attrValues {
+      inherit (pkgs) git coreutils;
+    };
+    runtimeEnv = {
+      inherit repo_path;
+    };
     text = # fish
       ''
         argparse h/help p/pr= -- $argv
@@ -61,7 +63,7 @@ let
 
         if ! test -d "$repo_path"
           info "Cloning nixpkgs repo..."
-          git clone --bare git@github.com:nixos/nixpkgs.git "$repo_path"
+          git clone --bare https://github.com/nixos/nixpkgs.git "$repo_path"
           or exit 1
         end
         cat "${config.sops.secrets.pr-tracker-github-token.path}" |
