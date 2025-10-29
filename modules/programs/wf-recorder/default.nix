@@ -27,15 +27,20 @@ util.mkProgram {
     cfg.package
     (util.writeFishApplication {
       name = "record";
-      runtimeInputs = with pkgs; [
-        busybox
-        cfg.package
-        config.wayland.windowManager.hyprland.package
-        coreutils
-        ffmpeg
-        gum
-        slurp
-      ];
+      runtimeInputs =
+        builtins.attrValues {
+          inherit (pkgs)
+            busybox
+            coreutils
+            ffmpeg
+            gum
+            slurp
+            ;
+        }
+        ++ [
+          cfg.package
+          config.wayland.windowManager.hyprland.package
+        ];
       runtimeEnv = {
         nicknames = builtins.toJSON cfg.nicknames;
         window_border = config.wayland.windowManager.hyprland.settings.general."col.active_border";

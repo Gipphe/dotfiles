@@ -104,7 +104,7 @@ util.mkProgram {
   name = "hyprland";
   hm.config = lib.mkMerge [
     {
-      home.packages = with pkgs; [ wireplumber ];
+      home.packages = [ pkgs.wireplumber ];
       wayland.windowManager.hyprland = {
         enable = true;
         inherit package portalPackage;

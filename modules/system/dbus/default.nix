@@ -3,10 +3,6 @@ util.mkToggledModule [ "system" ] {
   name = "dbus";
   system-nixos.services.dbus = {
     enable = true;
-    packages = with pkgs; [
-      dconf
-      udisks2
-      gcr
-    ];
+    packages = builtins.attrValues { inherit (pkgs) dconf udisks2 gcr; };
   };
 }

@@ -7,7 +7,7 @@
 util.mkProgram {
   name = "appimage";
   system-nixos = {
-    environment.systemPackages = with pkgs; [ appimage-run ];
+    environment.systemPackages = [ pkgs.appimage-run ];
     boot.binfmt.registrations =
       lib.genAttrs
         [

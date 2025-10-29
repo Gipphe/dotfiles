@@ -19,7 +19,7 @@ util.mkProgram {
     imports = [ ./starship ];
 
     config = {
-      home.packages = with pkgs; [ procps ];
+      home.packages = [ pkgs.procps ];
 
       programs = {
         bash = {

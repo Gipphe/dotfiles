@@ -43,11 +43,13 @@ let
   ];
   add-tokens = util.writeFishApplication {
     name = "add-tokens";
-    runtimeInputs = with pkgs; [
-      coreutils
-      jo
-      jq
-    ];
+    runtimeInputs = builtins.attrValues {
+      inherit (pkgs)
+        coreutils
+        jo
+        jq
+        ;
+    };
     text = ''
       mkdir -p '${config-dir}'
       chmod -R 755 '${config-dir}'
@@ -109,7 +111,7 @@ util.mkProgram {
       };
       editor = lib.mkOption {
         type = with lib.types; nullOr str;
-        description = "What editor glab should run when creating issues, merge requests, etc. This global config cannot be overriden by hostname.";
+        description = "What editor glab should run when creating issues, merge requests, etc. This global config cannot be overridden by hostname.";
         example = "vim";
         default = null;
       };

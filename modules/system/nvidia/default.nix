@@ -9,11 +9,9 @@ util.mkToggledModule [ "system" ] {
       LIBVA_DRIVER_NAME = "nvidia";
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";
     };
-    environment.systemPackages = with pkgs; [
-      vulkan-loader
-      vulkan-validation-layers
-      vulkan-tools
-    ];
+    environment.systemPackages = builtins.attrValues {
+      inherit (pkgs) vulkan-loader vulkan-validation-layers vulkan-tools;
+    };
 
     hardware = {
       nvidia = {
@@ -23,7 +21,7 @@ util.mkToggledModule [ "system" ] {
         # Most wayland compositors need this
         modesetting.enable = true;
       };
-      opengl.extraPackages = with pkgs; [ nvidia-vaapi-driver ];
+      opengl.extraPackages = [ pkgs.nvidia-vaapi-driver ];
     };
   };
 }

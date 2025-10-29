@@ -7,23 +7,25 @@
 }:
 let
   cfg = config.gipphe.programs.eww;
-  deps =
-    with pkgs;
-    lib.makeBinPath [
-      brightnessctl
-      calc
-      gawk
-      jo
-      lm_sensors
-      mpc
-      networkmanager
-      pamixer
-      playerctl
-      pulseaudio
-      socat
-      walker
-      wlr-randr
-    ];
+  deps = lib.makeBinPath (
+    builtins.attrValues {
+      inherit (pkgs)
+        brightnessctl
+        calc
+        gawk
+        jo
+        lm_sensors
+        mpc
+        networkmanager
+        pamixer
+        playerctl
+        pulseaudio
+        socat
+        walker
+        wlr-randr
+        ;
+    }
+  );
   eww = pkgs.symlinkJoin {
     name = "eww";
     paths = [ pkgs.eww ];
@@ -45,11 +47,13 @@ let
 
   start-eww-bar = util.writeFishApplication {
     name = "start-eww-bar";
-    runtimeInputs = with pkgs; [
-      wlr-randr
-      jq
-      eww
-    ];
+    runtimeInputs = builtins.attrValues {
+      inherit (pkgs)
+        wlr-randr
+        jq
+        eww
+        ;
+    };
     text = ''
       set -l monitors $(wlr-randr --json | jq -r '.[] | select(.enabled) | .name')
       for monitor in $monitors
@@ -60,9 +64,9 @@ let
 
   eww-watch-monitors = util.writeFishApplication {
     name = "eww-watch-monitors";
-    runtimeInputs = with pkgs; [
+    runtimeInputs = [
       eww
-      socat
+      pkgs.socat
     ];
     text = ''
       function get-active-monitors

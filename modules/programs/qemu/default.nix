@@ -2,8 +2,8 @@
 util.mkProgram {
   name = "qemu";
   system-nixos = {
-    # environment.systemPackages = with pkgs; [
-    #   virt-viewer
+    # environment.systemPackages = [
+    #   pkgs.virt-viewer
     # ];
     programs.virt-manager.enable = true;
     virtualisation = {

@@ -1,5 +1,5 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "discord";
-  hm.home.packages = with pkgs; [ discord ];
+  hm.home.packages = [ pkgs.discord ];
 }

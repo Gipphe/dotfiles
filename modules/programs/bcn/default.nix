@@ -4,12 +4,14 @@ util.mkProgram {
   hm.home.packages = [
     (pkgs.writeShellApplication {
       name = "bcn";
-      runtimeInputs = with pkgs; [
-        bluez
-        libnotify
-        gnugrep
-        gawk
-      ];
+      runtimeInputs = builtins.attrValues {
+        inherit (pkgs)
+          bluez
+          libnotify
+          gnugrep
+          gawk
+          ;
+      };
       text = ''
         #bcn, Bluetooth Connect
 

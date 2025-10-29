@@ -20,7 +20,7 @@ util.mkProgram {
     };
 
   hm = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
-    home.packages = with pkgs; [ _1password-gui ];
+    home.packages = [ pkgs._1password-gui ];
 
     gipphe.core.wm.binds = [
       {

@@ -2,5 +2,5 @@
 util.mkProgram {
   name = "libgcc";
 
-  hm.home.packages = with pkgs; [ libgcc ];
+  hm.home.packages = [ pkgs.libgcc ];
 }

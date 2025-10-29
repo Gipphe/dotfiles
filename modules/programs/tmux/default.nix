@@ -13,10 +13,10 @@ util.mkProgram {
       escapeTime = 10;
       mouse = true;
       keyMode = "vi";
-      plugins = with pkgs.tmuxPlugins; [
-        { plugin = sensible; }
-        { plugin = vim-tmux-navigator; }
-        { plugin = yank; }
+      plugins = [
+        { plugin = pkgs.tmuxPlugins.sensible; }
+        { plugin = pkgs.tmuxPlugins.vim-tmux-navigator; }
+        { plugin = pkgs.tmuxPlugins.yank; }
       ];
       extraConfig = readFile ./tmux.conf;
       tmuxinator.enable = true;

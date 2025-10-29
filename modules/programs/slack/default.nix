@@ -3,6 +3,6 @@ util.mkProgram {
   name = "slack";
 
   hm.config = {
-    home.packages = with pkgs; [ slack ];
+    home.packages = [ pkgs.slack ];
   };
 }
