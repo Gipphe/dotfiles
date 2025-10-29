@@ -17,6 +17,9 @@ util.mkToggledModule [ "system" ] {
       (pkgs.writeShellScriptBin "explorer.exe" ''
         /mnt/c/WINDOWS/explorer.exe "$@"
       '')
+      (pkgs.writeShellScriptBin "rundll32.exe" ''
+        /mnt/c/WINDOWS/system32/rundll32.exe "$@"
+      '')
     ];
     programs.fish.shellAbbrs.rmz = "find . -name '*Zone.Identifier' -type f -delete";
   };
