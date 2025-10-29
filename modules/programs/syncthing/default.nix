@@ -10,6 +10,7 @@ let
       id = "notes";
       label = "Notes";
       devices = [
+        "argon"
         "carbon"
         "cobalt"
         "helium"
