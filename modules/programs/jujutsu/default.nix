@@ -72,10 +72,8 @@ util.mkProgram {
               allowed-signers = config.xdg.configFile."git/allowed_signers".source.outPath;
             };
           };
-          revsets = {
-            log = "present(@) | trunk()::present(@) | bases | bookmarks | curbookmark::@ | @::nextbookmark | downstream(@, bookmarksandheads)";
-          };
           revset-aliases = {
+            log_branches = "present(@) | trunk()::present(@) | bases | bookmarks | curbookmark::@ | @::nextbookmark | downstream(@, bookmarksandheads)";
             bases = "present(dev) | present(trunk())";
             "downstream(x,y)" = "(x::y) & y";
             bookmarks = "downstream(trunk(), bookmarks())";
