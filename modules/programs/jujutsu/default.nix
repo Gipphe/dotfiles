@@ -30,11 +30,6 @@ util.mkProgram {
             default-command = "status";
             diff-editor = ":builtin";
             merge-editor = "vimdiff";
-            pager = [
-              "sh"
-              "-c"
-              "${lib.getExe pkgs.diff-so-fancy} | ${lib.getExe pkgs.less} '--tabs=4' -RFX"
-            ];
           };
           colors = {
             "diff removed token".bg = "#221111";
