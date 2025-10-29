@@ -28,6 +28,7 @@ util.mkToggledModule [ "machines" ] {
         gc.enable = true;
         rice.enable = true;
         secrets.enable = true;
+        sync.enable = true;
         systemd.enable = true;
         terminal-capture.enable = true;
         tweag.enable = true;
@@ -38,6 +39,9 @@ util.mkToggledModule [ "machines" ] {
         wezterm.enable = true;
       };
     };
+  };
+  hm = {
+    services.syncthing.tray.enable = lib.mkForce false;
   };
 
   system-nixos = {
