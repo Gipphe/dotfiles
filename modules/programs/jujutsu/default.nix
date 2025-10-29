@@ -73,15 +73,16 @@ util.mkProgram {
             };
           };
           revsets = {
-            log = "@ | bases | bookmarks | curbookmark::@ | @::nextbookmark | downstream(@, bookmarksandheads)";
+            log = "present(@) | trunk()::present(@) | bases | bookmarks | curbookmark::@ | @::nextbookmark | downstream(@, bookmarksandheads)";
           };
           revset-aliases = {
-            bases = "present(dev) | present(main)";
+            bases = "present(dev) | present(trunk())";
             "downstream(x,y)" = "(x::y) & y";
-            bookmarks = "downstream(trunk(), bookmarks()) & mine()";
-            bookmarksandheads = "bookmarks | (heads(trunk()::) & mine())";
+            bookmarks = "downstream(trunk(), bookmarks())";
+            bookmarksandheads = "bookmarks | heads(trunk()::)";
             curbookmark = "latest(bookmarks::@- & bookmarks)";
             nextbookmark = "roots(@:: & bookmarksandheads)";
+            default = "present(@) | ancestors(immutable_heads()::, 2) | present(trunk())";
           };
           aliases = {
             lol = [
