@@ -103,6 +103,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    atuin = {
+      url = "github:atuinsh/atuin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     hyprland = {
       url = "github:hyprwm/Hyprland";
       # Do _not_ follow nixpkgs for this flake's nixpkgs input! It invalidates

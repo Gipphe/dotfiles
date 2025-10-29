@@ -1,5 +1,6 @@
 {
   util,
+  inputs,
   pkgs,
   ...
 }:
@@ -7,11 +8,8 @@ util.mkProgram {
   name = "atuin";
   hm.programs.atuin = {
     enable = true;
-    package = pkgs.atuin.overrideAttrs {
-      patches = [
-        ./2902.patch
-      ];
-    };
+    # TODO: Replace with upstream once atuin 18.10.0 is in `nixos-unstable`.
+    package = inputs.atuin.packages.${pkgs.system}.atuin;
     settings = {
       style = "compact";
       search_mode_shell_up_key_binding = "prefix";
