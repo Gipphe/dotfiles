@@ -9,7 +9,7 @@ Create a jj descripton using conventional commit format.
 4. Commit with a HEREDOC to preserve formatting:
 
 ```
-jj describe -m "$(cat <<'EOF'
+jj commit -m "$(cat <<'EOF'
 <type>: <concise summary>
 
 <optional body with more details>
