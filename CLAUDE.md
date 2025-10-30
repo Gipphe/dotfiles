@@ -27,6 +27,8 @@ boot
 update
 ```
 
+Prefer to use `swt` for testing new configurations, if possible. Use `boot` after a `swt` to effectively "save" a tested configuration as the new config.
+
 ### Formatting and Linting
 
 ```bash
