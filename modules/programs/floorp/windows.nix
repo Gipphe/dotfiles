@@ -27,7 +27,7 @@ util.mkToggledModule [ "programs" "floorp" ] {
       #   in
       #   {
       #     "AppData/Roaming/Floorp/profiles.ini".source =
-      #       pkgs.runCommandNoCC "floorp-profiles" { } # bash
+      #       pkgs.runCommand "floorp-profiles" { } # bash
       #         ''
       #           cat "${fs.".floorp/profiles.ini".source}" >> $out
       #           echo "" >> $out

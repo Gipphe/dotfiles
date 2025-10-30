@@ -8,7 +8,7 @@
 let
   cfg = config.gipphe.programs.code-cursor;
   settingsPackage =
-    pkgs.runCommandNoCC "code-cursor-settings.json" { settings = builtins.toJSON cfg.settings; }
+    pkgs.runCommand "code-cursor-settings.json" { settings = builtins.toJSON cfg.settings; }
       ''
         echo "$settings" | ${pkgs.jq}/bin/jq '.' > $out
       '';
@@ -44,7 +44,7 @@ util.mkProgram {
     gipphe.programs.code-cursor = {
       inherit settingsPackage;
       windowsSettingsPackage =
-        pkgs.runCommandNoCC "code-cursor-settings.windows.json"
+        pkgs.runCommand "code-cursor-settings.windows.json"
           { settings = builtins.toJSON (cfg.settings // cfg.windowsSettings); }
           ''
             echo "$settings" \

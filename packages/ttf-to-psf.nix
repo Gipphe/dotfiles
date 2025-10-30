@@ -1,5 +1,5 @@
 {
-  runCommandNoCC,
+  runCommand,
   gnused,
   otf2bdf,
   bdf2psf,
@@ -22,7 +22,7 @@ let
     (lib.concatStringsSep ".")
   ];
 in
-runCommandNoCC "minecraftia-psf" { } ''
+runCommand "minecraftia-psf" { } ''
   echo "otf2bdf"
   (set +e; set +o pipefail; ${otf2bdf}/bin/otf2bdf -v -r ${resolution} -p ${pointSize} -c C "${pkg}/share/fonts/truetype/${name}" |
     ${gnused}/bin/sed -e "s/AVERAGE_WIDTH.*/AVERAGE_WIDTH 80/" > font.bdf

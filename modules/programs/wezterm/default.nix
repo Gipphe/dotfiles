@@ -143,7 +143,7 @@ util.mkProgram {
       (lib.mapAttrs' (
         p: v: {
           name = ".config/${p}";
-          value.source = pkgs.runCommandNoCC "windows-wezterm-config-${builtins.baseNameOf p}" { } ''
+          value.source = pkgs.runCommand "windows-wezterm-config-${builtins.baseNameOf p}" { } ''
             sed -r 's!/nix/store/.*/bin/(\S+)!\1!' "${v.source}" \
             | tee "$out" >/dev/null
           '';
