@@ -90,6 +90,7 @@ nix-on-droid build --flake .#<hostname>
 ### Platform Compatibility
 
 Modules must work across:
+
 - NixOS (standard Linux)
 - nixos-wsl (NixOS in WSL with systemd)
 - nix-on-droid (Android with Termux)
@@ -99,6 +100,7 @@ Use `flags.isNixos`, `flags.isNixOnDroid`, `flags.isHm`, `flags.isSystem` to con
 ## Machine Naming
 
 Machines follow periodic table naming:
+
 - **argon** - NixOS in WSL (Windows), supports GUI via WSLg
 - **cobalt** - Lenovo Ideapad laptop
 - **carbon** - Google Pixel 9 Pro XL (nix-on-droid on GrapheneOS)
@@ -132,7 +134,13 @@ modules/
 
 ## Module Development Guidelines
 
-1. Always use `util.mkProgram` or similar from `util.nix`
+1. Always use appropriate utilities from `util.nix`:
+   - `util.mkProgram` - For `modules/programs/` modules
+   - `util.mkEnvironment` - For `modules/environment/` modules
+   - `util.mkHardware` - For `modules/hardware/` modules
+   - `util.mkProfile` - For `profiles/` modules
+   - `util.mkToggledModule` - For machine configs or when no shorthand exists
+   - `util.mkModule` - Generic module creation without auto-enable option
 2. Place module in appropriate category directory
 3. Implement platform-specific logic in separate sections:
    - `hm` - Home Manager config
@@ -153,6 +161,7 @@ modules/
 ## Flake Inputs
 
 Key dependencies:
+
 - `nixpkgs` - Main package source (nixos-unstable)
 - `home-manager` - User environment management
 - `nix-on-droid` - Android support
@@ -164,6 +173,7 @@ Key dependencies:
 ## Testing Configurations
 
 The flake checks build all configurations:
+
 - All NixOS configs except "boron" on x86_64-linux
 - All nix-on-droid configs on aarch64-linux
 
