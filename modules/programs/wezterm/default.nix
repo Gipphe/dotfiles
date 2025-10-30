@@ -84,6 +84,7 @@ util.mkProgram {
       enable = true;
       extraConfig = # lua
         ''
+          local wezterm = require 'wezterm'
           local windowsConfig = require 'windows-config'
           local linuxConfig = require 'linux-config'
           local baseConfig = {
@@ -97,6 +98,18 @@ util.mkProgram {
             animation_fps = 1,
             warn_about_missing_glyphs = false,
           }
+
+          -- Strip Zellij session name from window title
+          wezterm.on('format-window-title', function(tab, pane, tabs, panes, config)
+            local title = tab.active_pane.title
+            -- Remove Zellij session name pattern: "session-name | actual-title"
+            local stripped = title:match("^[^|]+%|%s*(.+)$")
+            if stripped then
+              return stripped
+            end
+            return title
+          end)
+
           for k,v in pairs(windowsConfig.config()) do
             baseConfig[k] = v
           end

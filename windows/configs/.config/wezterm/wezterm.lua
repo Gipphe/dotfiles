@@ -67,7 +67,8 @@ for key, value in pairs(stylix_base_config) do
     config[key] = value
 end
 local function stylix_wrapped_config()
-    local windowsConfig = require 'windows-config'
+    local wezterm = require 'wezterm'
+local windowsConfig = require 'windows-config'
 local linuxConfig = require 'linux-config'
 local baseConfig = {
   hide_tab_bar_if_only_one_tab = true,
@@ -80,6 +81,18 @@ local baseConfig = {
   animation_fps = 1,
   warn_about_missing_glyphs = false,
 }
+
+-- Strip Zellij session name from window title
+wezterm.on('format-window-title', function(tab, pane, tabs, panes, config)
+  local title = tab.active_pane.title
+  -- Remove Zellij session name pattern: "session-name | actual-title"
+  local stripped = title:match("^[^|]+%|%s*(.+)$")
+  if stripped then
+    return stripped
+  end
+  return title
+end)
+
 for k,v in pairs(windowsConfig.config()) do
   baseConfig[k] = v
 end
