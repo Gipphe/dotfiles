@@ -140,19 +140,17 @@ util.mkToggledModule [ "machines" ] {
     #     ];
     #   }
     # ];
+    wayland.windowManager.hyprland.settings.input.kb_layout = lib.mkForce "us";
   };
 
   system-nixos = {
-    imports = lib.optionals (hostname == host.name) (
-      # with inputs.nixos-hardware.nixosModules;
-      [
-        # (import "${inputs.nixos-hardware}/common/cpu/intel/raptor-lake")
-        # common-pc-laptop
-        # common-pc-ssd
-        # common-gpu-nvidia
-        inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-11th-gen
-        ./hardware-configuration.nix
-      ]);
+    imports = lib.optionals (hostname == host.name) [
+      inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-11th-gen
+      ./hardware-configuration.nix
+    ];
+
+    services.xserver.xkb.layout = lib.mkForce "us";
+    console.keyMap = lib.mkForce "us";
 
     # services.xserver.videoDrivers = [
     #   "modesetting"

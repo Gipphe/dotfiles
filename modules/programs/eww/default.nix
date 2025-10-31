@@ -47,13 +47,11 @@ let
 
   start-eww-bar = util.writeFishApplication {
     name = "start-eww-bar";
-    runtimeInputs = builtins.attrValues {
-      inherit (pkgs)
-        wlr-randr
-        jq
-        eww
-        ;
-    };
+    runtimeInputs = [
+      eww
+      pkgs.jq
+      pkgs.wlr-randr
+    ];
     text = ''
       set -l monitors $(wlr-randr --json | jq -r '.[] | select(.enabled) | .name')
       for monitor in $monitors
