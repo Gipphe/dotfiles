@@ -5,7 +5,7 @@ util.mkProfile {
     bcn.enable = true;
     # Temporarily broken
     cava.enable = false;
-    mpc-cli.enable = true;
+    mpc.enable = true;
     mpd.enable = true;
     mpris.enable = true;
   };
