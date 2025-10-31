@@ -20,6 +20,7 @@ util.mkProgram {
           keybinds clear-defaults=true {
               locked {
                   bind "Ctrl g" { SwitchToMode "normal"; }
+                  bind "Alt g" { Write 7; } // Write ^G
               }
               pane {
                   bind "left" { MoveFocus "left"; }
@@ -181,7 +182,7 @@ util.mkProgram {
                   bind "Alt o" { MoveTab "right"; }
               }
               shared_except "locked" "renametab" "renamepane" {
-                  bind "Ctrl g" { SwitchToMode "locked"; }
+                  bind "Ctrl g" { WriteChars "^A"; SwitchToMode "locked"; }
                   bind "Ctrl q" { Quit; }
               }
               shared_except "locked" "entersearch" {
