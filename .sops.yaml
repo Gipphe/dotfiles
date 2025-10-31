@@ -6,6 +6,7 @@ keys: &all
   - &fluoride age16fmgfwq6hjyps36ar9jvwj7325sjfju3yfxt9df2zlfwu9dzdudqwpsh9f
   - &utv-vnb-lt age19f0gx25ug7r8gczchncs7hmhvff92rhjn748ednp29j68y3jrffqwkl79k
   - &carbon age1qv3gkg44yhuygegjdke8596hcm0mhe5c2ezqcl4jwsg397lpcf8qd9pn0d
+  - &boron age1x9wkzr3hu2vk92nx3q0h0v9amd9v5p44pz3gpecvx88z7kf4ta7qchkjfy
 creation_rules:
   - path_regex: secrets/.*\.ssh\.pub
     key_groups:
@@ -34,6 +35,11 @@ creation_rules:
     key_groups:
       - age:
           - *fluoride
+
+  - path_regex: secrets/boron.*
+    key_groups:
+      - age:
+          - *boron
 
   - path_regex: secrets/utv-vnb-lt.*
     key_groups:
