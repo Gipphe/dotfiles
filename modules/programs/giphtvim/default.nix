@@ -8,11 +8,11 @@
   ...
 }:
 util.mkProgram {
-  name = "nixCats";
-  options.gipphe.programs.nixCats.plugins.nixd.docs.options.enable =
+  name = "giphtvim";
+  options.gipphe.programs.giphtvim.plugins.nixd.docs.options.enable =
     lib.mkEnableOption "documentation for options";
   hm = {
-    imports = [ inputs.nixCats-nvim.homeModules.default ];
+    imports = [ inputs.giphtvim.homeModules.default ];
     config = {
       home.sessionVariables.EDITOR = "nvim";
       programs.fish.shellAbbrs.vim = "nvim";
@@ -31,7 +31,7 @@ util.mkProgram {
                 {
                   nixpkgs = ''import ${pkgs.path} {}'';
                 }
-                (lib.mkIf (config.gipphe.programs.nixCats.plugins.nixd.docs.options.enable) {
+                (lib.mkIf (config.gipphe.programs.giphtvim.plugins.nixd.docs.options.enable) {
                   home_manager = ''(builtins.getFlake "${self}").nixosConfigurations.argon.options.home-manager.users.type.getSubOptions []'';
                   nixos_options = ''(builtins.getFlake "${self}").nixosConfigurations.argon.options'';
                   droid_options = ''(builtins.getFlake "${self}").nixOnDroidConfigurations.helium.options'';

@@ -14,6 +14,7 @@ util.mkProfile {
     fish.enable = true;
     fx.enable = true;
     gh.enable = true;
+    giphtvim.enable = true;
     git.enable = true;
     glab.enable = true;
     glow.enable = true;
@@ -27,7 +28,6 @@ util.mkProfile {
     jujutsu.enable = true;
     less.enable = true;
     nh.enable = true;
-    nixCats.enable = true;
     nushell.enable = true;
     ripgrep.enable = true;
     serpl.enable = true;

@@ -575,6 +575,28 @@
         "type": "github"
       }
     },
+    "giphtvim": {
+      "inputs": {
+        "nixCats": "nixCats",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-with-working-ghci-dap": "nixpkgs-with-working-ghci-dap"
+      },
+      "locked": {
+        "lastModified": 1762154895,
+        "narHash": "sha256-/p+itcyxXOdkzzqna6y997YR7TehoKsdx+Gy3Yak7YI=",
+        "owner": "Gipphe",
+        "repo": "giphtvim",
+        "rev": "8e6e59f18d435ca4db6d4511dbac47421f5a94c3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Gipphe",
+        "repo": "giphtvim",
+        "type": "github"
+      }
+    },
     "git-hooks": {
       "inputs": {
         "flake-compat": "flake-compat_3",
@@ -1272,28 +1294,6 @@
         "type": "github"
       }
     },
-    "nixCats-nvim": {
-      "inputs": {
-        "nixCats": "nixCats",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "nixpkgs-with-working-ghci-dap": "nixpkgs-with-working-ghci-dap"
-      },
-      "locked": {
-        "lastModified": 1761820061,
-        "narHash": "sha256-d4YHhKJV2TP6ogESHYX7G+4NO8KqtmgGAxx3iEGjqp8=",
-        "owner": "Gipphe",
-        "repo": "nixCats-nvim",
-        "rev": "cfa1229fe2456d73d6441c116226f6eb7934f38d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Gipphe",
-        "repo": "nixCats-nvim",
-        "type": "github"
-      }
-    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1761933221,
@@ -1675,13 +1675,13 @@
       "inputs": {
         "atuin": "atuin",
         "devshell": "devshell",
+        "giphtvim": "giphtvim",
         "haskell-tools-nvim": "haskell-tools-nvim",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
         "niri": "niri",
         "nix-index-db": "nix-index-db",
         "nix-on-droid": "nix-on-droid",
-        "nixCats-nvim": "nixCats-nvim",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_7",
         "nixpkgs-master": "nixpkgs-master",

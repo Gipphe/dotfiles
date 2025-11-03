@@ -93,8 +93,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixCats-nvim = {
-      url = "github:Gipphe/nixCats-nvim";
+    giphtvim = {
+      url = "github:Gipphe/giphtvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
