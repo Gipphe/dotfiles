@@ -17,6 +17,7 @@ util.mkToggledModule [ "machines" ] {
       profiles = {
         nixos = {
           system.enable = true;
+          time.enable = true;
           wsl.enable = true;
         };
         ai.enable = true;
