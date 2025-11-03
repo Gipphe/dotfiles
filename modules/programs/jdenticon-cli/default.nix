@@ -6,5 +6,5 @@
 }:
 util.mkProgram {
   name = "jdenticon-cli";
-  hm.home.packages = [ self.packages.${pkgs.system}.jdenticon-cli ];
+  hm.home.packages = [ self.packages.${pkgs.stdenv.hostPlatform.system}.jdenticon-cli ];
 }

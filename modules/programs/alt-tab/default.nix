@@ -6,5 +6,5 @@
 }:
 util.mkProgram {
   name = "alt-tab";
-  hm.home.packages = [ inputs.brew-nix.packages.${pkgs.system}.alt-tab ];
+  hm.home.packages = [ inputs.brew-nix.packages.${pkgs.stdenv.hostPlatform.system}.alt-tab ];
 }

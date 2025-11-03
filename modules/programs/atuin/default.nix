@@ -9,7 +9,7 @@ util.mkProgram {
   hm.programs.atuin = {
     enable = true;
     # TODO: Replace with upstream once atuin 18.10.0 is in `nixos-unstable`.
-    package = inputs.atuin.packages.${pkgs.system}.atuin;
+    package = inputs.atuin.packages.${pkgs.stdenv.hostPlatform.system}.atuin;
     settings = {
       style = "compact";
       search_mode_shell_up_key_binding = "prefix";

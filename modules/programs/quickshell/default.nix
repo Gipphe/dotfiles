@@ -7,7 +7,7 @@
   ...
 }:
 let
-  pkg = inputs.quickshell.packages.${pkgs.system}.default;
+  pkg = inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 util.mkProgram {
   name = "quickshell";

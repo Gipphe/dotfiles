@@ -7,7 +7,7 @@
 util.mkProgram {
   name = "linearmouse";
   hm = {
-    home.packages = [ inputs.brew-nix.packages.${pkgs.system}.linearmouse ];
+    home.packages = [ inputs.brew-nix.packages.${pkgs.stdenv.hostPlatform.system}.linearmouse ];
     xdg.configFile."linearmouse/linearmouse.json".text = builtins.toJSON {
       schemes = [
         {

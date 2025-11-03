@@ -16,7 +16,7 @@ let
   nix-pr-tracker = util.writeFishApplication {
     name = "nix-pr-tracker";
     runtimeInputs = [
-      inputs.pr-tracker.packages.${pkgs.system}.default
+      inputs.pr-tracker.packages.${pkgs.stdenv.hostPlatform.system}.default
     ]
     ++ builtins.attrValues {
       inherit (pkgs) git coreutils;

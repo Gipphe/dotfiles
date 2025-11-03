@@ -215,7 +215,9 @@ util.mkProgram {
         #   "Dell Inc. DELL U2724D G15V4Z3" = "left";
         # };
         xwayland-satellite = {
-          path = "${lib.getExe inputs.niri.packages.${pkgs.system}.xwayland-satellite-unstable}";
+          path = "${lib.getExe
+            inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.xwayland-satellite-unstable
+          }";
         };
       };
     };
@@ -224,7 +226,7 @@ util.mkProgram {
     imports = [ inputs.niri.nixosModules.niri ];
     programs.niri = {
       enable = true;
-      package = inputs.niri.packages.${pkgs.system}.niri-unstable;
+      package = inputs.niri.packages.${pkgs.stdenv.hostPlatform.system}.niri-unstable;
     };
   };
 }
