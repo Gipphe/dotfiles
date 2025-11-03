@@ -1,4 +1,5 @@
 {
+  flags,
   inputs,
   pkgs,
   config,
@@ -32,6 +33,12 @@ in
 util.mkEnvironment {
   name = "stylix";
 
+  hm = lib.optionalAttrs (flags.isNixOnDroid) {
+    imports = [ inputs.stylix.homeModules.stylix ];
+    config = {
+      inherit stylix;
+    };
+  };
   system-nixos = {
     imports = [ inputs.stylix.nixosModules.stylix ];
     stylix = lib.mkMerge [
