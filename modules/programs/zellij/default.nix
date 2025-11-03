@@ -182,7 +182,7 @@ util.mkProgram {
                   bind "Alt o" { MoveTab "right"; }
               }
               shared_except "locked" "renametab" "renamepane" {
-                  bind "Ctrl g" { WriteChars "^A"; SwitchToMode "locked"; }
+                  bind "Ctrl g" { Write 7; SwitchToMode "locked"; }
                   bind "Ctrl q" { Quit; }
               }
               shared_except "locked" "entersearch" {
