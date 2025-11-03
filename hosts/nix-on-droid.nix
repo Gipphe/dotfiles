@@ -20,7 +20,7 @@ let
     in
     inputs.nix-on-droid.lib.nixOnDroidConfiguration {
       pkgs = import nixpkgs {
-        system = "aarch64-linix";
+        system = "aarch64-linux";
         config.allowUnfree = true;
       };
       extraSpecialArgs = {
