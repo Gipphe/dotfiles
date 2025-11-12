@@ -16,10 +16,7 @@ util.mkToggledModule [ "system" ] {
       description = "Victor Nascimento Bakke";
       home = lib.mkDefault homeDirectory;
       group = username;
-      extraGroups = [
-        "networkmanager"
-        "wheel"
-      ];
+      extraGroups = [ "wheel" ];
     };
 
     users.groups.${username} = { };

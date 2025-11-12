@@ -1,4 +1,4 @@
-{ util, ... }:
+{ util, config, ... }:
 util.mkToggledModule [ "networking" ] {
   name = "networkmanager";
   system-nixos = {
