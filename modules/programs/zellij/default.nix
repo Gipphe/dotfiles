@@ -14,7 +14,7 @@ util.mkProgram {
           keybinds = {
             locked = {
               bind = {
-                _args = "Alt g";
+                _args = [ "Alt g" ];
                 Write = 7;
               };
             };
