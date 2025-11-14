@@ -53,6 +53,14 @@ let
         "boron"
       ];
     };
+    "${config.home.homeDirectory}/Lorelei and the Laser Eyes notes" = {
+      id = "lorelei-and-the-laser-eyes-notes";
+      label = "Lorelei and the Laser Eyes";
+      devices = [
+        "titanium"
+        "boron"
+      ];
+    };
   };
 
   inherit (builtins) elem filter;
