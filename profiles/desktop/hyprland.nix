@@ -22,7 +22,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
     mako.enable = false;
     swaync.enable = true;
 
-    networkmanagerapplet.enable = false;
+    networkmanagerapplet.enable = true;
 
     # Screenshotting and recording
     wf-recorder.enable = true;

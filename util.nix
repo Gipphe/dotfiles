@@ -100,6 +100,7 @@ let
     "environment"
     "wallpaper"
   ];
+  mkSystem = mkToggledModule [ "system" ];
 
   # Creates a module with an automatically created `enable` options for the
   # given name, and injects an `lib.mkIf` into each of `hm`, `system-nixos`,
@@ -351,6 +352,7 @@ in
     mkModule
     mkProfile
     mkProgram
+    mkSystem
     mkToggledModule
     mkWallpaper
     patchDesktop
