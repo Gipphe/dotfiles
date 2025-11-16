@@ -18,6 +18,7 @@ util.mkToggledModule [ "machines" ] {
       nixos = {
         audio.enable = true;
         boot-efi.enable = true;
+        networking.enable = true;
         devices.enable = true;
         system.enable = true;
       };
@@ -30,7 +31,6 @@ util.mkToggledModule [ "machines" ] {
       fonts.enable = true;
       gaming.enable = true;
       gc.enable = true;
-      networkmanager.enable = true;
       rice.enable = true;
       secrets.enable = true;
       sync.enable = true;

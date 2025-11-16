@@ -17,8 +17,6 @@ util.mkToggledModule [ "profiles" "desktop" ] {
     # Notifications
     swaync.enable = true;
 
-    networkmanager.enable = true;
-
     # Screenshotting and recording
     wf-recorder.enable = true;
     grimblast.enable = true;

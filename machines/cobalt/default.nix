@@ -21,6 +21,7 @@ util.mkToggledModule [ "machines" ] {
         bluetooth.enable = true;
         boot-efi.enable = true;
         devices.enable = true;
+        networking.enable = true;
         power.enable = true;
         system.enable = true;
         thumbnails.enable = true;
@@ -37,7 +38,6 @@ util.mkToggledModule [ "machines" ] {
       gc.enable = true;
       keyring.enable = true;
       laptop.enable = true;
-      networkmanager.enable = true;
       rice.enable = true;
       secrets.enable = true;
       sync.enable = true;

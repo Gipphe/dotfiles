@@ -28,6 +28,7 @@ util.mkToggledModule [ "machines" ] {
         bluetooth.enable = true;
         boot-efi.enable = true;
         devices.enable = true;
+        networking.enable = true;
         power.enable = true;
         system.enable = true;
         thumbnails.enable = true;
@@ -47,7 +48,6 @@ util.mkToggledModule [ "machines" ] {
       laptop.enable = true;
       # logitech.enable = true;
       # multi-monitor.enable = true;
-      networkmanager.enable = true;
       rice.enable = true;
       secrets.enable = true;
       sync.enable = true;
