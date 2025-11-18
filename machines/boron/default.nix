@@ -64,14 +64,14 @@ util.mkToggledModule [ "machines" ] {
       ];
     wayland.windowManager.hyprland.settings = {
       monitor = [
-        ", preferred, auto-down, 1"
+        ", preferred, auto-down, auto"
       ];
       monitorv2 = [
         {
           output = "desc:Samsung Display Corp. 0x4193";
           mode = "preferred";
           position = "0x0";
-          scale = "1.5";
+          scale = "auto";
         }
       ];
     };
