@@ -28,7 +28,7 @@ util.mkProgram {
                 }
                 {
                   bind = {
-                    _args = [ "\\" ];
+                    _args = [ "\\\\" ];
                     PreviousSwapLayout = { };
                   };
                 }
