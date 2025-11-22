@@ -75,13 +75,14 @@ util.mkToggledModule [ "machines" ] {
     console.keyMap = lib.mkForce "us";
 
     services = {
+      auto-cpufreq.enable = true;
       thermald.enable = true;
       logind.settings.Login = {
         HandleLidSwitchExternalPower = "suspend";
         HandleLidSwitchDocked = "ignore";
       };
+      tlp.enable = true;
     };
-    powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
     system.stateVersion = "25.05";
   };
 }
