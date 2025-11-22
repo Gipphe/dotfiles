@@ -48,20 +48,6 @@ util.mkToggledModule [ "machines" ] {
   };
 
   hm = {
-    gipphe.core.wm.binds =
-      let
-        brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
-      in
-      lib.mkIf false [
-        {
-          key = "code:72";
-          action.spawn = "${brightnessctl} set 10%-";
-        }
-        {
-          key = "code:73";
-          action.spawn = "${brightnessctl} set 10%+";
-        }
-      ];
     wayland.windowManager.hyprland.settings = {
       monitor = [
         ", preferred, auto-down, auto"
