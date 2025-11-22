@@ -45,6 +45,7 @@ util.mkToggledModule [ "machines" ] {
       systemd.enable = true;
       terminal-capture.enable = true;
     };
+    programs.pipewire.highQuantum.enable = true;
   };
 
   hm = {
