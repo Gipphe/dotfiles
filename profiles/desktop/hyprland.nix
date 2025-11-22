@@ -9,7 +9,8 @@ util.mkToggledModule [ "profiles" "desktop" ] {
     hyprpolkitagent.enable = true;
     wlogout.enable = false;
 
-    sddm.enable = true;
+    ly.enable = true;
+    sddm.enable = false;
     greetd.enable = false;
 
     plymouth.enable = true;
