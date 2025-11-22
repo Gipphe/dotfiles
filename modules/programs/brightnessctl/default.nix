@@ -13,7 +13,7 @@ util.mkProgram {
       }
       {
         key = "XF86MonBrightnessDown";
-        action.spawn = ", exec, ${pkg}/bin/brightnessctl set 10%-";
+        action.spawn = "${pkg}/bin/brightnessctl set 10%-";
       }
     ];
   };
