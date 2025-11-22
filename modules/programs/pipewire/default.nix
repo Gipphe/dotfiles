@@ -46,44 +46,41 @@ util.mkProgram {
         };
       };
     }
-    (
-
-      lib.mkIf cfg.highQuantum.enable {
-        extraConfig = {
-          client."10-resample"."stream.properties"."resample.quality" = 10;
-          # higher quantum to fix audio crackling
-          pipewire."92-quantum" = {
-            "context.properties" = {
-              "default.clock.rate" = 48000;
-              "default.clock.quantum" = 256;
-              "default.clock.min-quantum" = 256;
-              "default.clock.max-quantum" = 512;
+    (lib.mkIf cfg.higherQuantum.enable {
+      services.pipewire.extraConfig = {
+        client."10-resample"."stream.properties"."resample.quality" = 10;
+        # higher quantum to fix audio crackling
+        pipewire."92-quantum" = {
+          "context.properties" = {
+            "default.clock.rate" = 48000;
+            "default.clock.quantum" = 256;
+            "default.clock.min-quantum" = 256;
+            "default.clock.max-quantum" = 512;
+          };
+        };
+        pipewire-pulse."92-quantum" =
+          let
+            qr = "256/48000";
+          in
+          {
+            "context.properties" = [
+              {
+                name = "libpipewire-module-protocol-pulse";
+                args = { };
+              }
+            ];
+            "pulse.properties" = lib.genAttrs [
+              "pulse.default.req"
+              "pulse.min.req"
+              "pulse.max.req"
+              "pulse.min.quantum"
+              "pulse.max.quantum"
+            ] (_: qr);
+            "stream.properties" = {
+              "node.latency" = qr;
             };
           };
-          pipewire-pulse."92-quantum" =
-            let
-              qr = "256/48000";
-            in
-            {
-              "context.properties" = [
-                {
-                  name = "libpipewire-module-protocol-pulse";
-                  args = { };
-                }
-              ];
-              "pulse.properties" = lib.genAttrs [
-                "pulse.default.req"
-                "pulse.min.req"
-                "pulse.max.req"
-                "pulse.min.quantum"
-                "pulse.max.quantum"
-              ] (_: qr);
-              "stream.properties" = {
-                "node.latency" = qr;
-              };
-            };
-        };
-      }
-    )
+      };
+    })
   ];
 }

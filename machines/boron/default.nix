@@ -1,5 +1,4 @@
 {
-  pkgs,
   hostname,
   util,
   inputs,
@@ -45,7 +44,7 @@ util.mkToggledModule [ "machines" ] {
       systemd.enable = true;
       terminal-capture.enable = true;
     };
-    programs.pipewire.highQuantum.enable = true;
+    programs.pipewire.higherQuantum.enable = true;
   };
 
   hm = {
