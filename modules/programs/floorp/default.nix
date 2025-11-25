@@ -32,6 +32,9 @@ util.mkModule {
         profiles = {
           default = import ./profile.nix { inherit pkgs; };
         };
+        nativeMessagingHosts = [
+          pkgs.tridactyl-native
+        ];
       };
     }
     (lib.optionalAttrs (!flags.isNixOnDroid) (
