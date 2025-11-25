@@ -80,7 +80,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:nixos/nixos-hardware";
-    nixpkgs-master.url = "github:nixos/nixpkgs/master";
     nixpkgs-with-working-floorp.url = "github:nixos/nixpkgs/1dcdb7dcba947f9607911f3394b19c8f61d716cb";
 
     nix-on-droid = {
@@ -104,11 +103,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    atuin = {
-      url = "github:atuinsh/atuin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     hyprland = {
       url = "github:hyprwm/Hyprland";
       # Do _not_ follow nixpkgs for this flake's nixpkgs input! It invalidates
@@ -121,11 +115,6 @@
 
     devshell = {
       url = "github:numtide/devshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    haskell-tools-nvim = {
-      url = "github:mrcjkb/haskell-tools.nvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
