@@ -81,6 +81,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nixpkgs-master.url = "github:nixos/nixpkgs/master";
+    nixpkgs-with-working-floorp.url = "github:nixos/nixpkgs/1dcdb7dcba947f9607911f3394b19c8f61d716cb";
 
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid";
