@@ -18,7 +18,7 @@ else
     # Fall back to "gipphe/push-<short_id>" if no description
     # is set, or description does not comply with
     # conventional commits.
-    set desc "gipphe/push-$(jj show --template short_id --no-path "$rev")"
+    set desc "gipphe/push-$(jj show --template short_id --no-patch "$rev")"
 end
 
 echo "$desc"
