@@ -75,13 +75,16 @@ util.mkToggledModule [ "machines" ] {
     console.keyMap = lib.mkForce "us";
 
     services = {
+      # Regulates cpu frequencies to reduce battery usage
       auto-cpufreq.enable = true;
+      # Recommended to be used with auto-cpufreq
       thermald.enable = true;
       logind.settings.Login = {
         HandleLidSwitchExternalPower = "suspend";
         HandleLidSwitchDocked = "ignore";
       };
-      tlp.enable = true;
+      # Must be disabled when using auto-cpufreq
+      tlp.enable = false;
     };
     system.stateVersion = "25.05";
   };
