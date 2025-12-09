@@ -12,6 +12,7 @@
   nh,
   nil,
   nix,
+  nvd,
   statix,
   treefmt,
 }:
@@ -29,6 +30,7 @@ let
       runtimeInputs = [
         nh
         jq
+        nvd
       ];
       text =
         # fish
@@ -37,6 +39,7 @@ let
             set -l args ${if ask then "--ask" else ""}
 
             nh os ${command} $args
+            or exit 1
           else if command -v nix-on-droid &>/dev/null
             set -l host $(jq '.hostname' env.json)
             if test -z "$host"
@@ -45,10 +48,12 @@ let
             end
 
             nix-on-droid build --flake "$(pwd)#""$host"
+            or exit 1
 
             echo
             set -l nixOnDroidPkg $(nix path-info --impure "$NH_FLAKE#nixOnDroidConfigurations.$host.activationPackage")
             nvd diff "$nixOnDroidPkg" result
+            or exit 1
             echo
 
             set -l REPLY
@@ -63,6 +68,7 @@ let
             switch "$(string lower $REPLY)"
               case y
                 nix-on-droid switch --flake "$(pwd)#""$host"
+                or exit 1
             end
             rm -f result
           else
