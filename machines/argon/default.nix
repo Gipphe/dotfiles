@@ -16,6 +16,7 @@ util.mkToggledModule [ "machines" ] {
       hostName = host.name;
       profiles = {
         nixos = {
+          networking.enable = true;
           system.enable = true;
           time.enable = true;
           wsl.enable = true;
