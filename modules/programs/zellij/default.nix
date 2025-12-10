@@ -454,8 +454,8 @@ util.mkProgram {
       zellij.enable = true;
 
       fish.shellAbbrs = {
-        zq = "${lib.getExe config.programs.zellij.package} kill-session $ZELLIJ_SESSION_NAME";
-        zj = "${lib.getExe config.programs.zellij.package}";
+        zq = "zellij kill-session $ZELLIJ_SESSION_NAME";
+        zj = "zellij";
       };
     };
   };
