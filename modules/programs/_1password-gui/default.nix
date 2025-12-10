@@ -33,7 +33,7 @@ util.mkProgram {
       }
     ];
     wayland.windowManager.hyprland.settings.windowrule = [
-      "float, stay_focused, allows_input, match:title (Quick Access - 1Password), match:class (1Password)"
+      "float true, stay_focused true, allows_input true, match:title (Quick Access - 1Password), match:class (1Password)"
     ];
 
     systemd.user.services._1password = lib.mkIf config.gipphe.programs._1password-gui.startOnBoot {

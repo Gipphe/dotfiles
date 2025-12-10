@@ -25,7 +25,7 @@ util.mkProgram {
     ];
     wayland.windowManager.hyprland.settings = {
       windowrule = [
-        "float, size 622 652, stay_focused, match:class (clipse)"
+        "float true, size 622 652, stay_focused true, match:class (clipse)"
       ];
     };
   };
