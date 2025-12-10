@@ -61,8 +61,6 @@ util.mkToggledModule [ "machines" ] {
         }
       ];
     };
-
-    wayland.windowManager.hyprland.settings.input.kb_layout = lib.mkForce "us";
   };
 
   system-nixos = {
@@ -70,9 +68,6 @@ util.mkToggledModule [ "machines" ] {
       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-11th-gen
       ./hardware-configuration.nix
     ];
-
-    services.xserver.xkb.layout = lib.mkForce "us";
-    console.keyMap = lib.mkForce "us";
 
     services = {
       # Regulates cpu frequencies to reduce battery usage
