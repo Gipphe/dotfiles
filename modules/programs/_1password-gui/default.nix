@@ -32,15 +32,9 @@ util.mkProgram {
         action.spawn = lib.getExe quick-access;
       }
     ];
-    wayland.windowManager.hyprland.settings.windowrule =
-      let
-        selector = "title:(Quick Access - 1Password), class:(1Password)";
-      in
-      [
-        "float, ${selector}"
-        "stayfocused, ${selector}"
-        "allowsinput on, ${selector}"
-      ];
+    wayland.windowManager.hyprland.settings.windowrule = [
+      "float, stay_focused, allows_input, match:title (Quick Access - 1Password), match:class (1Password)"
+    ];
 
     systemd.user.services._1password = lib.mkIf config.gipphe.programs._1password-gui.startOnBoot {
       Unit = {

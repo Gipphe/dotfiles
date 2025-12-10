@@ -14,7 +14,7 @@ util.mkProgram {
   hm = {
     home.packages = [ cfg.package ];
     wayland.windowManager.hyprland.settings.windowrule = [
-      "float, class:(steam), title:(Friends List)"
+      "float, match:class steam, match:title (Friends List)"
     ];
   };
 }
