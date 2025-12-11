@@ -26,9 +26,6 @@ util.mkModule {
     {
       programs.floorp = lib.mkIf (pkgs.stdenv.hostPlatform.isLinux && !flags.isNixOnDroid) {
         enable = true;
-        # TODO: remove this once floorp 12.7.0 is in `nixos-unstable`
-        package =
-          inputs.nixpkgs-with-working-floorp.legacyPackages.${pkgs.stdenv.hostPlatform.system}.floorp-bin;
         profiles = {
           default = import ./profile.nix { inherit pkgs; };
         };
