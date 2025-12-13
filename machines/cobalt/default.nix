@@ -44,6 +44,7 @@ util.mkToggledModule [ "machines" ] {
       systemd.enable = true;
       terminal-capture.enable = true;
     };
+    system.cpu.enable = true;
   };
 
   system-nixos.imports = lib.optionals (hostname == host.name) (
