@@ -21,6 +21,7 @@ util.mkToggledModule [ "machines" ] {
         biometrics.enable = true;
         bluetooth.enable = true;
         boot-efi.enable = true;
+        camera.enable = true;
         devices.enable = true;
         networking.enable = true;
         power.enable = true;
