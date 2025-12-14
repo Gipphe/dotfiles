@@ -18,7 +18,7 @@ util.mkToggledModule [ "machines" ] {
     profiles = {
       nixos = {
         audio.enable = true;
-        biometrics.enable = true;
+        biometrics.enable = false;
         bluetooth.enable = true;
         boot-efi.enable = true;
         camera.enable = true;
