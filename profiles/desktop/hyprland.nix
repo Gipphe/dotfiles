@@ -63,6 +63,9 @@ util.mkToggledModule [ "profiles" "desktop" ] {
         # Bars
         eww.enable = true;
         eww.dev = true;
+        waybar.enable = false;
+        quickshell.enable = false;
+        quickshell.dev = true;
       })
 
       (lib.mkIf cfg.caelestia.enable {

@@ -3,11 +3,10 @@
   util,
   inputs,
   config,
-  pkgs,
   ...
 }:
 let
-  ipc = "${lib.getExe' pkgs.quickshell "qs"} -p '${config.programs.noctalia-shell.package}/share/noctalia-shell' ipc call";
+  ipc = "${lib.getExe' config.programs.noctalia-shell.package "noctalia-shell"} -p '${config.programs.noctalia-shell.package}/share/noctalia-shell' ipc call";
 in
 util.mkProgram {
   name = "noctalia-shell";
