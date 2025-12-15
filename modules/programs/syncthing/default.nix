@@ -57,8 +57,9 @@ let
       id = "lorelei-and-the-laser-eyes-notes";
       label = "Lorelei and the Laser Eyes";
       devices = [
-        "titanium"
         "boron"
+        "cobalt"
+        "titanium"
       ];
     };
   };
