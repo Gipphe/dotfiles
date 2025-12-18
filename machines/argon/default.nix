@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   hostname,
   util,
@@ -44,10 +45,20 @@ util.mkToggledModule [ "machines" ] {
   };
   hm = {
     services.syncthing.tray.enable = lib.mkForce false;
+    programs.ssh.matchBlocks."sodium.lan" = {
+      hostname = "sodium.lan";
+      user = "gipphe";
+      identityFile = config.sops.secrets."argon-sodium.ssh".path;
+    };
+    sops.secrets."argon-sodium.ssh" = {
+      format = "binary";
+      sopsFile = ../../secrets/argon-sodium.ssh;
+    };
   };
 
   system-nixos = {
     imports = lib.optionals (hostname == host.name) [ ./hardware-configuration.nix ];
+    boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
     users = {
       users = {
         gipphe.uid = lib.mkForce 1001;
