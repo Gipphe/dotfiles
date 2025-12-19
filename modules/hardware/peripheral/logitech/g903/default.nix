@@ -52,23 +52,10 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
         echo "Restarted. Hoping the scrollwheel works now!" >&2
       '')
 
-      # `hyprctl devices` output when it works:
-      #
-      # mice:
-      #         Mouse at 56634e532790:
-      #                 logitech-usb-receiver
-      #                         default speed: 0.00000
-      #                         scroll factor: -1.00
-      #         Mouse at 56634e579140:
-      #                 logitech-usb-receiver-keyboard-1
-      #                         default speed: 0.00000
-      #                         scroll factor: -1.00
-      #         Mouse at 56634eb8e260:
-      #                 logitech-g903-ls-1
-      #                         default speed: 0.00000
-      #                         scroll factor: -1.00
       (pkgs.writeShellScriptBin "debug-mouse-scroll" ''
-        sudo ${pkgs.libinput}/bin/libinput debug-events | ${pkgs.gnugrep}/bin/grep POINTER_SCROLL
+        echo "0003:046D:C539.0003" | sudo tee /sys/bus/hid/drivers/logitech-djreceiver/unbind
+        sleep 0.5
+        echo "0003:046D:C539.0003" | sudo tee /sys/bus/hid/drivers/logitech-djreceiver/bind
       '')
     ];
     security.sudo.extraRules = [
