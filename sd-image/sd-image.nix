@@ -3,14 +3,16 @@
   imports = [
     <nixpkgs/nixos/modules/installer/sd-card/sd-image-aarch64.nix>
   ];
-  networking.hostName = "sodium";
-  networking.wireless = {
-    enable = true;
-    userControlled.enable = true;
-    iwd.enable = false;
-    scanOnLowSignal = false;
-    networks = {
-      "GiphtNet".psk = "<wifi-pw>";
+  networking = {
+    hostName = "sodium";
+    wireless = {
+      enable = true;
+      userControlled.enable = true;
+      iwd.enable = false;
+      scanOnLowSignal = false;
+      networks = {
+        "GiphtNet".psk = import ./sd-image-wifi-pw.nix;
+      };
     };
   };
   users.users.gipphe = {
@@ -23,4 +25,6 @@
     ];
   };
   users.groups.gipphe = { };
+  services.openssh.enable = true;
+  system.stateVersion = "26.05";
 }
