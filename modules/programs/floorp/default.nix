@@ -24,7 +24,7 @@ util.mkModule {
   ];
   hm.config = lib.mkMerge [
     {
-      programs.floorp = lib.mkIf (pkgs.stdenv.hostPlatform.isLinux && !flags.isNixOnDroid) {
+      programs.floorp = lib.mkIf (pkgs.stdenv.hostPlatform.isLinux && !flags.isNixOnDroid && cfg.enable) {
         enable = true;
         # TODO: remove this once floorp 12.7.0 is in `nixos-unstable`
         package =
@@ -38,9 +38,9 @@ util.mkModule {
       };
     }
     (lib.optionalAttrs (!flags.isNixOnDroid) (
-      lib.mkIf cfg.default {
+      lib.mkIf (cfg.enable && cfg.default) {
         home.sessionVariables.BROWSER = "${pkg}/bin/floorp";
-        gipphe.core.wm.binds = lib.mkIf cfg.default [
+        gipphe.core.wm.binds = [
           {
             mod = "Mod";
             key = "B";
@@ -49,7 +49,7 @@ util.mkModule {
         ];
       }
     ))
-    (lib.optionalAttrs (!flags.isNixOnDroid) {
+    (lib.optionalAttrs (!flags.isNixOnDroid && flags.stylix) {
       stylix.targets.floorp.profileNames = [ "default" ];
     })
   ];

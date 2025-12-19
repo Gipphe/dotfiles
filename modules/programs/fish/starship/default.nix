@@ -39,7 +39,7 @@ in
               }
             );
       }
-      (lib.mkIf flags.isNixos {
+      (lib.optionalAttrs (flags.isNixos && flags.stylix) {
         stylix.targets.starship.enable = false;
       })
     ]

@@ -12,7 +12,7 @@ util.mkWallpaper {
     type = lib.types.path;
     default = ./wallpaper/Macchiato-hald8-wall.png;
   };
-  hm = lib.optionalAttrs (!flags.isNixOnDroid) {
+  hm = lib.optionalAttrs (!flags.isNixOnDroid && flags.stylix) {
     stylix.image = config.environment.wallpaper.small-memory.image;
   };
 }
