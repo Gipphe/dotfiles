@@ -7,6 +7,7 @@ keys: &all
   - &utv-vnb-lt age19f0gx25ug7r8gczchncs7hmhvff92rhjn748ednp29j68y3jrffqwkl79k
   - &carbon age1qv3gkg44yhuygegjdke8596hcm0mhe5c2ezqcl4jwsg397lpcf8qd9pn0d
   - &boron age1x9wkzr3hu2vk92nx3q0h0v9amd9v5p44pz3gpecvx88z7kf4ta7qchkjfy
+  - &sodium age1weteferxc26l4fzcc3nfprqwjc3r85d4vd6enqcjhvnccu7k3q7q3uu2ty
 creation_rules:
   - path_regex: secrets/.*\.ssh\.pub
     key_groups:
@@ -51,6 +52,11 @@ creation_rules:
     key_groups:
       - age:
           - *carbon
+
+  - path_regex: secrets/sodium.*
+    key_groups:
+      - age:
+          - *sodium
 
   - path_regex: secrets/building-carbon\.ssh
     key_groups:
