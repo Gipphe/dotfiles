@@ -1,5 +1,4 @@
 {
-  inputs,
   util,
   config,
   lib,
@@ -9,7 +8,6 @@
 }:
 let
   cfg = config.gipphe.programs.floorp;
-  hmCfg = config.programs.floorp;
   pkg = config.programs.floorp.finalPackage or config.programs.floorp.package;
 in
 util.mkModule {
@@ -24,7 +22,7 @@ util.mkModule {
   ];
   hm.config = lib.mkMerge [
     {
-      programs.floorp = lib.mkIf (pkgs.stdenv.hostPlatform.isLinux && !flags.isNixOnDroid) {
+      programs.floorp = lib.mkIf (pkgs.stdenv.hostPlatform.isLinux && !flags.isNixOnDroid && cfg.enable) {
         enable = true;
         profiles = {
           default = import ./profile.nix { inherit pkgs; };
@@ -35,12 +33,12 @@ util.mkModule {
       };
     }
     (lib.optionalAttrs (!flags.isNixOnDroid) (
-      lib.mkIf cfg.default {
+      lib.mkIf (cfg.enable && cfg.default) {
         home.sessionVariables = {
           BROWSER = lib.getExe' pkg "floorp";
           DEFAULT_BROWSER = lib.getExe' pkg "floorp";
         };
-        gipphe.core.wm.binds = lib.mkIf cfg.default [
+        gipphe.core.wm.binds = [
           {
             mod = "Mod";
             key = "B";
@@ -50,7 +48,7 @@ util.mkModule {
         xdg.mimeApps.defaultApplicationPackages = [ pkg ];
       }
     ))
-    (lib.optionalAttrs (!flags.isNixOnDroid) {
+    (lib.optionalAttrs (!flags.isNixOnDroid && flags.stylix) {
       stylix.targets.floorp.profileNames = [ "default" ];
     })
   ];

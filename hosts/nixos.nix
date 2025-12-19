@@ -25,9 +25,12 @@ let
           inputs
           self
           hostname
-          flags
           util
           ;
+        flags = flags // {
+          hostName = hostname;
+          stylix = if config ? stylix then config.stylix else true;
+        };
       };
       modules = [
         ../root.nix

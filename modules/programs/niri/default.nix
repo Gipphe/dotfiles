@@ -15,14 +15,17 @@ let
 in
 util.mkProgram {
   name = "niri";
-  hm = {
+  # TODO: Fix for non-stylix stuff
+  hm = lib.optionalAttrs (flags.stylix) {
     imports =
-      lib.optional (!flags.isNixOnDroid) {
+      lib.optional flags.isNixOnDroid inputs.niri.homeModules.config
+      ++ lib.optional (!flags.isNixOnDroid && flags.stylix) {
         stylix.targets.niri.enable = lib.mkDefault false;
       }
-      ++ lib.optional flags.isNixOnDroid inputs.niri.homeModules.config
-      ++ lib.optional (!flags.isNixOnDroid && !flags.isNixos) inputs.niri.homeModules.stylix
-      ++ lib.optional (!flags.isNixOnDroid) {
+      ++ lib.optional (
+        !flags.isNixOnDroid && !flags.isNixos && flags.stylix
+      ) inputs.niri.homeModules.stylix
+      ++ lib.optional (!flags.isNixOnDroid && flags.stylix) {
         config = lib.mkIf config.gipphe.programs.niri.enable {
           stylix.targets.niri.enable = true;
         };
@@ -329,7 +332,7 @@ util.mkProgram {
       };
     };
   };
-  system-nixos = {
+  system-nixos = lib.optionalAttrs flags.stylix {
     imports = [ inputs.niri.nixosModules.niri ];
     programs.niri = {
       enable = true;
