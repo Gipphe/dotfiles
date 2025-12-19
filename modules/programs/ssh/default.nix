@@ -6,7 +6,6 @@
   ...
 }:
 let
-  inherit (builtins) map;
   raw_services = [
     "github"
     "gitlab"
@@ -35,18 +34,20 @@ util.mkProgram {
           enable = true;
           package = pkgs.openssh;
           enableDefaultConfig = false;
-          matchBlocks = lib.genAttrs [ "github.com" "gitlab.com" "codeberg.org" ] (
-            hostname:
-            let
-              inherit (builtins) elemAt split;
-              name = elemAt (split "\\." hostname) 0;
-            in
-            {
-              inherit hostname;
-              user = "git";
-              identityFile = config.sops.secrets."${name}.ssh".path;
-              addKeysToAgent = "yes";
-            }
+          matchBlocks = lib.filterAttrs (_: x: x.identityFile != null) (
+            lib.genAttrs [ "github.com" "gitlab.com" "codeberg.org" ] (
+              hostname:
+              let
+                inherit (builtins) elemAt split;
+                name = elemAt (split "\\." hostname) 0;
+              in
+              {
+                inherit hostname;
+                user = "git";
+                identityFile = config.sops.secrets."${name}.ssh".path or null;
+                addKeysToAgent = "yes";
+              }
+            )
           );
         };
       };

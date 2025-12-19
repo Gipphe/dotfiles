@@ -1,4 +1,5 @@
 {
+  lib,
   util,
   inputs,
   config,
@@ -18,7 +19,7 @@ util.mkProgram {
       settings = {
         color_theme = "stylix";
       };
-      themes = {
+      themes = lib.mkIf config.gipphe.environment.stylix.enable {
         stylix = config.programs.btop.themes.stylix;
       };
     };

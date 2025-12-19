@@ -105,6 +105,19 @@ util.mkToggledModule [ "machines" ] {
       settings.folders."${config.home.homeDirectory}/Documents/Notes".path =
         "/mnt/oldone/Filen/Area/Notes";
     };
+
+    programs = {
+      ssh.matchBlocks."sodium.lan" = {
+        hostname = "sodium.lan";
+        user = "gipphe";
+        identityFile = config.sops.secrets."titanium-sodium.ssh".path;
+      };
+    };
+
+    sops.secrets."titanium-sodium.ssh" = {
+      format = "binary";
+      sopsFile = ../../secrets/titanium-sodium.ssh;
+    };
   };
 
   system-nixos = {
@@ -126,5 +139,7 @@ util.mkToggledModule [ "machines" ] {
     hardware.nvidia.prime.nvidiaBusId = "PCI:1@0:0:0";
 
     system.stateVersion = "26.05";
+
+    boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
 }

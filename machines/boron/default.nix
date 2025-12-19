@@ -1,4 +1,5 @@
 {
+  config,
   hostname,
   util,
   inputs,
@@ -69,6 +70,19 @@ util.mkToggledModule [ "machines" ] {
         scale = "auto";
       }
     ];
+
+    programs = {
+      ssh.matchBlocks."sodium.lan" = {
+        hostname = "sodium.lan";
+        user = "gipphe";
+        identityFile = config.sops.secrets."boron-sodium.ssh".path;
+      };
+    };
+
+    sops.secrets."boron-sodium.ssh" = {
+      format = "binary";
+      sopsFile = ../../secrets/boron-sodium.ssh;
+    };
   };
 
   system-nixos = {
@@ -76,6 +90,7 @@ util.mkToggledModule [ "machines" ] {
       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-11th-gen
       ./hardware-configuration.nix
     ];
+    boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
     system.stateVersion = "25.05";
     users = {

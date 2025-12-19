@@ -80,6 +80,8 @@
             // self.checks."x86_64-linux";
         };
 
+      images.sodium = self.nixosConfigurations.sodium.config.system.build.image;
+
       inherit (hosts)
         nixOnDroidConfigurations
         nixosConfigurations
