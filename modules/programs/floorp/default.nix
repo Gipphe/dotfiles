@@ -26,7 +26,7 @@ util.mkModule {
           nativeMessagingHosts = [ pkgs.tridactyl-native ];
         };
       }
-      (lib.optionalAttrs (!flags.isNixOnDroid) {
+      (lib.optionalAttrs (!flags.isNixOnDroid && flags.stylix) {
         stylix.targets.floorp.profileNames = [ "default" ];
       })
     ];
