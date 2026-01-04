@@ -148,11 +148,15 @@ in
       name = "lint:nil";
       command = # bash
         ''
-          ${lib.getExe nil} diagnostics "$( \
+          mapfile -t files < <( \
             ${lib.getExe gitMinimal} ls-files | \
             ${lib.getExe gnugrep} '\.nix$' | \
-            ${lib.getExe gnugrep} -v 'hardware-configuration/.*\.nix' \
-          )"
+            ${lib.getExe gnugrep} -v 'hardware-configuration/.*\.nix' | \
+            ${lib.getExe gnugrep} -v 'hardware-configuration\.nix$' \
+          )
+          for file in "''${files[@]}"; do
+            ${lib.getExe nil} diagnostics "$file"
+          done
         '';
       category = "lint";
     }
@@ -188,7 +192,7 @@ in
       name = "lint:deadnix";
       command = # bash
         ''
-          ${lib.getExe deadnix} --exclude ./modules/system/hardware-configuration/*.nix
+          ${lib.getExe deadnix} --exclude ./machines/*/hardware-configuration.nix
         '';
       category = "lint";
     }

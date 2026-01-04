@@ -1,4 +1,4 @@
-{ util, pkgs, ... }:
+{ util, ... }:
 util.mkProgram {
   name = "qemu";
   system-nixos = {

@@ -3,7 +3,6 @@
   util,
   lib,
   config,
-  flags,
   ...
 }:
 let

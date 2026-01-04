@@ -1,9 +1,4 @@
-{
-  util,
-  inputs,
-  pkgs,
-  ...
-}:
+{ util, ... }:
 util.mkProgram {
   name = "atuin";
   hm.programs.atuin = {

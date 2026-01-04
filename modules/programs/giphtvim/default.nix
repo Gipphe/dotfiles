@@ -31,7 +31,7 @@ util.mkProgram {
                 {
                   nixpkgs = ''import ${pkgs.path} {}'';
                 }
-                (lib.mkIf (config.gipphe.programs.giphtvim.plugins.nixd.docs.options.enable) {
+                (lib.mkIf config.gipphe.programs.giphtvim.plugins.nixd.docs.options.enable {
                   home_manager = ''(builtins.getFlake "${self}").nixosConfigurations.argon.options.home-manager.users.type.getSubOptions []'';
                   nixos_options = ''(builtins.getFlake "${self}").nixosConfigurations.argon.options'';
                   droid_options = ''(builtins.getFlake "${self}").nixOnDroidConfigurations.helium.options'';

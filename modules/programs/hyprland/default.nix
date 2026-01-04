@@ -3,7 +3,6 @@
   util,
   pkgs,
   config,
-  flags,
   lib,
   ...
 }:
@@ -14,7 +13,6 @@ let
     concatStringsSep
     genList
     isString
-    toString
     ;
   inherit (lib) toLower;
 

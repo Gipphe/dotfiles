@@ -51,10 +51,8 @@ util.mkProgram {
         };
       };
 
-      sops.secrets = (
-        lib.mkIf config.gipphe.environment.secrets.enable (
-          lib.concatMapAttrs (k: v: { ${k} = v; }) (lib.genAttrs services mkSecret)
-        )
+      sops.secrets = lib.mkIf config.gipphe.environment.secrets.enable (
+        lib.concatMapAttrs (k: v: { ${k} = v; }) (lib.genAttrs services mkSecret)
       );
     };
   };

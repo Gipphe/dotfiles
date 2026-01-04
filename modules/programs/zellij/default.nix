@@ -1,10 +1,4 @@
-{
-  pkgs,
-  lib,
-  util,
-  config,
-  ...
-}:
+{ pkgs, util, ... }:
 let
   zellij-forgot = import ./plugins/zellij-forgot.nix { inherit pkgs; };
   room = import ./plugins/room.nix { inherit pkgs; };
