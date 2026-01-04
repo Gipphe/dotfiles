@@ -1,11 +1,11 @@
 {
   lib,
-  callPackage,
+  writeShellApplication,
 
   deadnix,
   entr,
   findutils,
-  git,
+  gitMinimal,
   gnugrep,
   jq,
   jujutsu,
@@ -17,125 +17,69 @@
   treefmt,
 }:
 let
-  util = callPackage ../util.nix { };
-  cmd = opts: lib.getExe (util.writeFishApplication (opts // { inheritPath = true; }));
   build =
-    {
-      name,
-      command ? "switch",
-      ask ? false,
-    }:
-    cmd {
-      inherit name;
-      runtimeInputs = [
-        nh
-        jq
-        nvd
-      ];
-      text =
-        # fish
-        ''
-          if command -q nixos-rebuild
-            set -l args ${if ask then "--ask" else ""}
-
-            nh os ${command} $args
-            or exit 1
-          else if command -v nix-on-droid &>/dev/null
-            set -l host $(jq '.hostname' env.json)
-            if test -z "$host"
-              echo 'Found no hostname in env.json' >&2
-              exit 1
-            end
-
-            nix-on-droid build --flake "$(pwd)#""$host"
-            or exit 1
-
-            echo
-            set -l nixOnDroidPkg $(nix path-info --impure "$NH_FLAKE#nixOnDroidConfigurations.$host.activationPackage")
-            nvd diff "$nixOnDroidPkg" result
-            or exit 1
-            echo
-
-            set -l REPLY
-            if test '${builtins.toString ask}' = 'true'
-              echo "Apply the config?"
-              read -r -p "[y/N]" -n 1 REPLY
-              echo
-            else
-              set REPLY y
-            end
-
-            switch "$(string lower $REPLY)"
-              case y
-                nix-on-droid switch --flake "$(pwd)#""$host"
-                or exit 1
-            end
-            rm -f result
-          else
-            echo "This is not a NixOS or nix-on-droid system" >&2
-            exit 1
-          end
-        '';
-    };
+    let
+      script = writeShellApplication {
+        name = "switch-build";
+        runtimeInputs = [
+          nh
+          jq
+          nvd
+        ];
+        text = builtins.readFile ./build.sh;
+      };
+    in
+    lib.getExe script;
 in
 {
   shellCommands = [
     # Build
-    rec {
+    {
       help = "Rebuild NixOS or nix-on-droid system.";
       name = "sw";
-      command = build {
-        inherit name;
-        ask = false;
-      };
+      command = ''
+        ${build} switch
+      '';
       category = "build";
     }
-    rec {
+    {
       help = "Rebuild NixOS or nix-on-droid system, asking first.";
       name = "swa";
-      command = build {
-        inherit name;
-        ask = true;
-      };
+      command = ''
+        ${build} switch --ask
+      '';
       category = "build";
     }
-    rec {
+    {
       help = "Rebuild the system using nh os boot";
       name = "boot";
-      command = cmd {
-        inherit name;
-        runtimeInputs = [ nh ];
-        text =
-          # fish
-          ''
-            if command -q nixos-rebuild
-              nh os boot
-            else
-              echo "This is not a NixOS system" >&2
-              exit 1
-            end
-          '';
-      };
+      command =
+        # bash
+        ''
+          if command -v nixos-rebuild &>/dev/null; then
+            ${lib.getExe nh} os boot
+          else
+            echo "This is not a NixOS system" >&2
+            exit 1
+          fi
+        '';
       category = "build";
     }
-    rec {
+    {
       help = "Test new configuration without saving to bootloader";
       name = "swt";
-      command = build {
-        inherit name;
-        command = "test";
-      };
+      command = ''
+        ${build} test
+      '';
       category = "build";
     }
 
-    rec {
+    {
       help = "Test new configuration without saving to bootloader";
       name = "swta";
-      command = build {
-        inherit name;
-        command = "test";
-        ask = true;
-      };
+      command = ''
+        ${build} test --ask
+      '';
       category = "build";
     }
 
@@ -162,7 +106,7 @@ in
           if test -d .jj; then
             ${lib.getExe jujutsu} commit flake.lock -m 'chore: update flake inputs'
           else
-            ${lib.getExe git} commit flake.lock -m 'chore: update flake inputs'
+            ${lib.getExe gitMinimal} commit flake.lock -m 'chore: update flake inputs'
           fi
         '';
       category = "utils";
@@ -205,7 +149,7 @@ in
       command = # bash
         ''
           ${lib.getExe nil} diagnostics "$( \
-            ${lib.getExe git} ls-files | \
+            ${lib.getExe gitMinimal} ls-files | \
             ${lib.getExe gnugrep} '\.nix$' | \
             ${lib.getExe gnugrep} -v 'hardware-configuration/.*\.nix' \
           )"
@@ -217,7 +161,7 @@ in
       name = "lint:nil:watch";
       command = # bash
         ''
-          ${lib.getExe git} ls-files | \
+          ${lib.getExe gitMinimal} ls-files | \
             ${lib.getExe gnugrep} '\.nix$' | \
             ${lib.getExe gnugrep} -v 'hardware-configuration/.*\.nix' | \
             ${lib.getExe entr} nil diagnostics /_

@@ -3,9 +3,9 @@
   gnused,
   runCommand,
   lib,
-  fish,
+  fishMinimal,
   nushell,
-  writeShellScriptBin,
+  writeShellScript,
   writeTextFile,
   ...
 }:
@@ -15,7 +15,6 @@ let
     isList
     isAttrs
     hasAttr
-    map
     concatStringsSep
     readDir
     ;
@@ -128,7 +127,7 @@ let
               let
                 imports = mod.imports or [ ];
                 config =
-                  mod.config or (builtins.removeAttrs mod [
+                  mod.config or (removeAttrs mod [
                     "imports"
                     "options"
                   ]);
@@ -221,12 +220,12 @@ let
       preferLocalBuild = false;
       text =
         let
-          fishShell = writeShellScriptBin "fish-bare" ''
-            ${lib.getExe fish} --no-config --private "$@"
+          fishShell = writeShellScript "fish-bare" ''
+            ${lib.getExe fishMinimal} --no-config --private "$@"
           '';
         in
         ''
-          #!${lib.getExe fishShell}
+          #!${fishShell}
         ''
         + lib.optionalString (runtimeEnv != null) (
           lib.concatStrings (
@@ -247,7 +246,7 @@ let
           # bash
           ''
             runHook preCheck
-            ${lib.getExe fish} --no-execute "$target"
+            ${lib.getExe fishMinimal} --no-execute "$target"
             runHook postCheck
           ''
         else
@@ -272,12 +271,12 @@ let
       preferLocalBuild = false;
       text =
         let
-          nushell-shell = writeShellScriptBin "nushell-bare" ''
+          nushell-shell = writeShellScript "nushell-bare" ''
             ${lib.getExe nushell} --no-config-file --no-history "$@"
           '';
         in
         ''
-          #!${lib.getExe nushell-shell}
+          #!${nushell-shell}
         ''
         + lib.optionalString (runtimeEnv != null) (
           lib.concatStrings (
@@ -305,16 +304,16 @@ let
           checkPhase;
     };
   findSiblings =
-    path:
-    lib.pipe path [
+    p:
+    lib.pipe p [
       readDir
       (lib.attrsets.filterAttrs (name: _: name != "default.nix"))
       attrNames
-      (map (x: /.${path}/${x}))
+      (map (x: /.${p}/${x}))
     ];
 
   storeFileName =
-    prefix: path:
+    prefix: p:
     let
       safeChars = [
         "+"
@@ -327,8 +326,8 @@ let
       ++ lib.upperChars
       ++ lib.stringToCharacters "0123456789";
       empties = l: lib.genList (_: "") (lib.length l);
-      unsafeInName = lib.stringToCharacters (lib.replaceStrings safeChars (empties safeChars) path);
-      safeName = lib.replaceStrings unsafeInName (empties unsafeInName) path;
+      unsafeInName = lib.stringToCharacters (lib.replaceStrings safeChars (empties safeChars) p);
+      safeName = lib.replaceStrings unsafeInName (empties unsafeInName) p;
     in
     "${prefix}${safeName}";
 

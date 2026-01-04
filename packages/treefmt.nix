@@ -4,7 +4,6 @@
 
   programs = {
     nixfmt.enable = true;
-    black.enable = true;
     deadnix.enable = false;
     shellcheck.enable = true;
     shfmt.enable = true;
