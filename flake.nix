@@ -95,7 +95,8 @@
 
     giphtvim = {
       url = "github:Gipphe/giphtvim";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # Overriding nixpkgs here might break some things in the neovim config
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
 
     pr-tracker = {
