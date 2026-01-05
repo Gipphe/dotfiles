@@ -68,5 +68,6 @@ util.mkToggledModule [ "machines" ] {
         docker.gid = lib.mkForce 996;
       };
     };
+    networking.wireless.enable = lib.mkForce false;
   };
 }
