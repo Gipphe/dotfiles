@@ -250,11 +250,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1767540843,
-        "narHash": "sha256-KTInjZYaDbFKkNUHlpr/kC5QwXqh6SVbTIgd6Zq8SBU=",
+        "lastModified": 1767607864,
+        "narHash": "sha256-6Mm95VQ0UqMwMHuNhoyEtyFBBwtFx0hcrsr4dNxlwHs=",
         "owner": "Gipphe",
         "repo": "giphtvim",
-        "rev": "5afcb8d04ca818fc3a7d3cbbdbd494011112625a",
+        "rev": "6aa7502523932d95e44daae6500f81affdeb3b3f",
         "type": "github"
       },
       "original": {
