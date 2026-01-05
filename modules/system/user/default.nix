@@ -12,6 +12,7 @@ util.mkToggledModule [ "system" ] {
 
   system-nixos = {
     users.users.${username} = {
+      uid = 1010;
       isNormalUser = true;
       description = "Victor Nascimento Bakke";
       home = lib.mkDefault homeDirectory;
@@ -19,6 +20,8 @@ util.mkToggledModule [ "system" ] {
       extraGroups = [ "wheel" ];
     };
 
-    users.groups.${username} = { };
+    users.groups.${username} = {
+      gid = 1010;
+    };
   };
 }
