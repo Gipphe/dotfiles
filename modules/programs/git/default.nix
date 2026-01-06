@@ -90,6 +90,7 @@ util.mkProgram {
             "**/*Zone.Identifier"
             ".idea/"
             ".vscode/"
+            "Session.vim"
           ];
           signing = {
             format = "ssh";
