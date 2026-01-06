@@ -59,11 +59,7 @@ util.mkToggledModule [ "machines" ] {
   system-nixos = {
     imports = lib.optionals (hostname == host.name) [ ./hardware-configuration.nix ];
     boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-    users = {
-      group = {
-        docker.gid = lib.mkForce 996;
-      };
-    };
+    users.groups.docker.gid = lib.mkForce 996;
     networking.wireless.enable = lib.mkForce false;
   };
 }
