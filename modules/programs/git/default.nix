@@ -255,7 +255,7 @@ util.mkProgram {
       gipphe.windows.home.file = {
         ".config/git/config".text = lib.generators.toGitINI (
           let
-            base = builtins.removeAttrs config.programs.git.iniContent [
+            base = removeAttrs config.programs.git.iniContent [
               "credential"
               "diff-so-fancy"
               "gpg"
