@@ -14,7 +14,6 @@
   nix,
   nvd,
   statix,
-  treefmt,
 }:
 let
   build =
@@ -81,14 +80,6 @@ in
         ${build} test --ask
       '';
       category = "build";
-    }
-
-    # Formatting
-    {
-      help = "Format the source tree with treefmt";
-      name = "fmt";
-      command = lib.getExe treefmt;
-      category = "formatter";
     }
 
     # Utils

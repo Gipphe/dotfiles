@@ -16,7 +16,6 @@ mkShell {
   commands = extra.shellCommands;
   env = extra.shellEnv;
   packages = [
-    treefmt # treewide formatter
     deadnix # clean up unused nix code
     nix-tree
     nixfmt # nix formatter
