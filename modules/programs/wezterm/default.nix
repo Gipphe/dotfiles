@@ -15,78 +15,27 @@ util.mkProgram {
     default = lib.mkEnableOption "default terminal" // {
       default = true;
     };
+    settings = lib.mkOption {
+      type = with lib.types; attrsOf anything;
+      description = "Extra options to set.";
+      default = { };
+    };
   };
   hm = {
     xdg.configFile = {
-      "wezterm/os-utils.lua".text =
-        # lua
-        ''
-          local M = {}
-
-          function M.isWindows()
-            return os.getenv("COMSPEC") ~= nil and os.getenv("USERPROFILE") ~= nil
-          end
-
-          function M.isLinux()
-            return not M.isWindows()
-          end
-
-          return M
-        '';
-      "wezterm/windows-config.lua".text =
-        # lua
-        ''
-          local wezterm = require 'wezterm'
-          local OSUtils = require 'os-utils'
-          local act = wezterm.action
-
-          local M = {}
-
-          function M.config()
-            if not OSUtils.isWindows() then
-              return {}
-            end
-
-            return {
-              font_size = 9.0,
-              initial_rows = 40,
-              initial_cols = 200,
-              default_prog = { 'C:\\Program Files\\PowerShell\\7\\pwsh.exe' },
-              keys = {
-                { key = 'V', mods = 'CTRL', action = act.PasteFrom 'Clipboard' },
-              }
-            }
-          end
-
-          return M
-        '';
-      "wezterm/linux-config.lua".text = # lua
-        ''
-          local wezterm = require 'wezterm'
-          local OSUtils = require 'os-utils'
-
-          local M = {}
-
-          function M.config()
-            if not OSUtils.isLinux() then
-              return {}
-            end
-
-            return {
-              enable_wayland = false,
-            }
-          end
-
-          return M
-        '';
+      "wezterm/utils.lua".source = ./utils.lua;
+      "wezterm/windows-config.lua".source = ./windows-config.lua;
+      "wezterm/linux-config.lua".source = ./linux-config.lua;
     };
     programs.wezterm = {
       enable = true;
       extraConfig = # lua
         ''
           local wezterm = require 'wezterm'
+          local utils = require 'utils'
           local windowsConfig = require 'windows-config'
           local linuxConfig = require 'linux-config'
+
           local baseConfig = {
             hide_tab_bar_if_only_one_tab = true,
             send_composed_key_when_left_alt_is_pressed = true,
@@ -99,6 +48,9 @@ util.mkProgram {
             warn_about_missing_glyphs = false,
           }
 
+          baseConfig = utils.tbl_deep_extend(baseConfig, windowsConfig.config(), 'force')
+          baseConfig = utils.tbl_deep_extend(baseConfig, linuxConfig.config(), 'force')
+
           -- Strip Zellij session name from window title
           wezterm.on('format-window-title', function(tab, pane, tabs, panes, config)
             local title = tab.active_pane.title
@@ -110,12 +62,6 @@ util.mkProgram {
             return title
           end)
 
-          for k,v in pairs(windowsConfig.config()) do
-            baseConfig[k] = v
-          end
-          for k,v in pairs(linuxConfig.config()) do
-            baseConfig[k] = v
-          end
           return baseConfig
         '';
     };
