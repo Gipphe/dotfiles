@@ -3,8 +3,6 @@
   writeShellApplication,
 
   deadnix,
-  entr,
-  findutils,
   gitMinimal,
   gnugrep,
   jq,
@@ -152,30 +150,9 @@ in
       category = "lint";
     }
     {
-      help = "Check .nix files with nil, watching";
-      name = "lint:nil:watch";
-      command = # bash
-        ''
-          ${lib.getExe gitMinimal} ls-files | \
-            ${lib.getExe gnugrep} '\.nix$' | \
-            ${lib.getExe gnugrep} -v 'hardware-configuration/.*\.nix' | \
-            ${lib.getExe entr} nil diagnostics /_
-        '';
-      category = "lint";
-    }
-    {
       help = "Check .nix files with statix";
       name = "lint:statix";
       command = "${lib.getExe statix} check";
-      category = "lint";
-    }
-    {
-      help = "Check .nix files with statix, watching";
-      name = "lint:statix:watch";
-      command = ''
-        ${lib.getExe findutils} . -type f | \
-          ${lib.getExe entr} ${lib.getExe statix} check
-      '';
       category = "lint";
     }
     {
@@ -184,17 +161,6 @@ in
       command = # bash
         ''
           ${lib.getExe deadnix} --exclude ./machines/*/hardware-configuration.nix
-        '';
-      category = "lint";
-    }
-    {
-      help = "Check .nix files with deadnix, watching";
-      name = "lint:deadnix:watch";
-      command = # bash
-        ''
-          ${lib.getExe findutils} . -type f | \
-            ${lib.getExe entr} ${lib.getExe deadnix} \
-              --exclude ./modules/system/hardware-configuration/*.nix
         '';
       category = "lint";
     }
