@@ -74,8 +74,8 @@ util.mkToggledModule [ "machines" ] {
 
     system.stateVersion = "25.05";
     users = {
-      users.gipphe.uid = lib.mkForce 993;
-      groups.gipphe.gid = lib.mkForce 1000;
+      users.gipphe.uid = lib.mkForce null;
+      groups.gipphe.gid = lib.mkForce null;
     };
   };
 }
