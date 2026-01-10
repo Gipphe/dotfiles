@@ -48,11 +48,11 @@ util.mkProgram {
             warn_about_missing_glyphs = false,
             keys = {
               ${
-                lib.optionalString (config.gipphe.claude-code.enable) /* lua */ ''
+                lib.optionalString (config.gipphe.programs.claude-code.enable) /* lua */ ''
                   {
                     key = "Enter",
                     mods = "SHIFT",
-                    action = wezterm.action { SendString = "\x1b\r" },
+                    action = wezterm.action { SendString = "\\x1b\\r" },
                   }
                 ''
               };
