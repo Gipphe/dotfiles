@@ -115,6 +115,13 @@ util.mkProgram {
                 exit $status
               ''
             ];
+            rebase-all = [
+              "rebase"
+              "-s"
+              "bookmarks() ~ trunk()"
+              "-d"
+              "trunk()"
+            ];
             p = [
               "git"
               "push"
