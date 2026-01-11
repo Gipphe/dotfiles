@@ -23,9 +23,17 @@ util.mkModule {
             description = "Action to perform when keybind is pressed";
             type = oneOf [
               (submodule {
-                options.spawn = lib.mkOption {
-                  type = str;
-                  description = "Spawn a process or call a program.";
+                options = {
+                  spawn = lib.mkOption {
+                    type = nullOr str;
+                    description = "Spawn a process or call a program.";
+                    default = null;
+                  };
+                  shortcut = lib.mkOption {
+                    type = nullOr str;
+                    description = "Invoke a DBus global shortcut.";
+                    default = null;
+                  };
                 };
               })
             ];

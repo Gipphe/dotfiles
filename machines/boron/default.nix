@@ -35,6 +35,7 @@ util.mkToggledModule [ "machines" ] {
       cli.enable = true;
       core.enable = true;
       desktop.hyprland.enable = true;
+      desktop.hyprland.caelestia.enable = true;
       fonts.enable = true;
       gaming.enable = true;
       gc.enable = true;

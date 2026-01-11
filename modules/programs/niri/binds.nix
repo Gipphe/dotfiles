@@ -47,7 +47,7 @@ let
     {
       name = "${toMod mod}${key}";
       value =
-        if action ? spawn then
+        if isString action.spawn then
           {
             action.spawn = [
               "${bash}/bin/bash"
@@ -55,6 +55,8 @@ let
               action.spawn
             ];
           }
+        else if isString action.shortcut then
+          abort "DBus global shortcuts have not been implemented for Niri"
         else
           { inherit action; };
     };

@@ -39,8 +39,10 @@ let
   );
   toDispatch =
     action:
-    if action ? spawn then
+    if isString action.spawn then
       "exec, ${action.spawn}"
+    else if isString action.shortcut then
+      "global, ${action.shortcut}"
     else
       abort "Unknown keybind action: ${concatStringsSep ", " (attrNames action)}";
   replaceMod =
@@ -60,7 +62,7 @@ let
       config.wayland.windowManager.hyprland.package
       pkgs.xdotool
     ];
-    text = ''
+    text = /* bash */ ''
       if test "$(hyprctl activewindow -j | jq -r '.class')" = 'Steam'; then
         xdotool getactivewindow windowunmap
       else
@@ -75,7 +77,7 @@ let
       config.wayland.windowManager.hyprland.package
       pkgs.jq
     ];
-    text = ''
+    text = /* bash */ ''
       HYPRGAMEMODE=$(hyprctl getoption animations:enabled -j | jq -r '.int')
       if test "$HYPRGAMEMODE" = 1; then
         hyprctl --batch "\
