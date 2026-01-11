@@ -14,48 +14,47 @@ util.mkProgram {
       enable = true;
       systemd.enable = true;
       settings.mainBar = {
-        "layer" = "top"; # Waybar at top layer
-        "position" = "top"; # Waybar position (top|bottom|left|right)
-        # "height" = 30; # Waybar height (to be removed for auto height)
-        # "width"= 1280, // Waybar width
-        "spacing" = 4; # Gaps between modules (4px)
+        layer = "top";
+        position = "top";
+        spacing = 10;
+        height = 43;
 
-        "modules-left" = [
+        # Match eww bar layout: left (app-drawer, workspaces, window-title), center (empty), right (modules)
+        modules-left = [
           "custom/appmenu"
-          "group/quicklinks"
+          "hyprland/workspaces"
           "hyprland/window"
         ];
-        "modules-center" = [
-          "hyprland/workspaces"
-        ];
-        "modules-right" = [
-          "mpd"
+        modules-center = [ ];
+        modules-right = [
+          "cpu"
+          "temperature"
+          "memory"
+          "custom/separator"
+          "backlight"
           "pulseaudio"
           "network"
-          "cpu"
-          "memory"
-          "keyboard-state"
           "battery"
-          "clock"
+          "custom/separator2"
           "tray"
-          "custom/exit"
+          "custom/separator3"
+          "custom/notifications"
+          "clock"
         ];
 
+        # Workspaces - equivalent to eww workspaces module
         "hyprland/workspaces" = {
           on-click = "activate";
           active-only = false;
           all-outputs = true;
-          format = "{}";
+          format = "{icon}";
           format-icons = {
-            urgent = "";
             active = "";
             default = "";
           };
-          persistent-workspaces = {
-            "*" = 2;
-          };
         };
 
+        # Window title - equivalent to eww window-title module
         "hyprland/window" = {
           rewrite = {
             "(.*) - Brave" = "$1";
@@ -68,548 +67,299 @@ util.mkProgram {
           separate-outputs = true;
         };
 
-        # Rofi Application Launcher
+        # App Drawer - equivalent to eww app-drawer (launches walker)
         "custom/appmenu" = {
-          format = "Apps";
-          tooltip-format = "Left: Open the application launcher\nRight: Show all keybindings";
-          on-click = "rofi -show drun -replace";
-          on-click-right = "~/.config/ml4w/scripts/keybindings.sh";
+          format = "󱗼";
+          tooltip = false;
+          on-click = "${pkgs.walker}/bin/walker";
+        };
+
+        # CPU - equivalent to eww cpu module
+        cpu = {
+          interval = 2;
+          format = " {usage}%";
           tooltip = false;
         };
 
-        # Power Menu
-        "custom/exit" = {
-          format = "";
-          tooltip-format = "Powermenu";
-          on-click = "wlogout -b 4";
+        # Temperature - equivalent to eww temp module
+        temperature = {
+          interval = 10;
+          thermal-zone = 0;
+          format = "{icon} {temperatureC}°C";
+          format-icons = [
+            "󱃃" # < 60°C - cool
+            "󰔏" # 60-69°C - moderate
+            "󱃂" # 70-79°C - warm
+            "󰸁" # >= 80°C - hot
+          ];
+          tooltip-format = "{temperatureC}°C";
+        };
+
+        # Memory - equivalent to eww memory module
+        memory = {
+          interval = 15;
+          format = " {percentage}%";
+          tooltip-format = "{used:0.1f}G / {total:0.1f}G used";
+        };
+
+        # Backlight/Brightness - equivalent to eww brightness module
+        backlight = {
+          device = "intel_backlight";
+          format = "{icon} {percent}%";
+          format-icons = [ "󰛨" ]; # Single icon for all brightness levels
           tooltip = false;
         };
 
-        # Keyboard State
-        keyboard-state = {
-          numlock = true;
-          capslock = true;
-          format = "{name} {icon}";
+        # Pulseaudio/Volume - equivalent to eww volume module
+        pulseaudio = {
+          format = "{icon} {volume}%";
+          format-muted = " {volume}%";
           format-icons = {
-            locked = "";
-            unlocked = "";
+            default = [
+              "" # 0%
+              "" # 1-50%
+              "" # > 50%
+            ];
           };
+          on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
+          tooltip-format = "{desc}";
         };
 
-        # System tray
+        # Network - equivalent to eww network module
+        network = {
+          interval = 5;
+          format-wifi = "  {signalStrength}%";
+          format-ethernet = "󰈁 {ipaddr}";
+          format-disconnected = "󰖪";
+          tooltip-format-wifi = "{essid} ({signalStrength}%)";
+          tooltip-format-ethernet = "{ifname}: {ipaddr}/{cidr}";
+          tooltip-format-disconnected = "Disconnected";
+          on-click = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
+        };
+
+        # Battery - equivalent to eww battery module
+        battery = {
+          interval = 60;
+          states = {
+            warning = 30;
+            critical = 15;
+          };
+          format = "{icon} {capacity}%";
+          format-charging = "󰂄 {capacity}%";
+          format-plugged = "󰂄 {capacity}%";
+          format-icons = [
+            "󰂃" # 0-9%
+            "󰁺" # 10-19%
+            "󰁻" # 20-29%
+            "󰁼" # 30-39%
+            "󰁽" # 40-49%
+            "󰁾" # 50-59%
+            "󰁿" # 60-69%
+            "󰂀" # 70-79%
+            "󰂁" # 80-89%
+            "󰂂" # 90-99%
+            "󰁹" # 100%
+          ];
+          tooltip-format = "{timeTo}, {capacity}%";
+        };
+
+        # System tray - equivalent to eww tray module
         tray = {
-          # icon-size= 21;
           spacing = 10;
         };
 
-        # Clock
+        # Notifications - equivalent to eww notifications module (uses swaync)
+        "custom/notifications" = {
+          tooltip = false;
+          format = "{icon}";
+          format-icons = {
+            notification = "<span foreground='red'><sup></sup></span>";
+            none = "";
+            dnd-notification = "<span foreground='red'><sup></sup></span>";
+            dnd-none = "󱏧";
+            inhibited-notification = "<span foreground='red'><sup></sup></span>";
+            inhibited-none = "";
+            dnd-inhibited-notification = "<span foreground='red'><sup></sup></span>";
+            dnd-inhibited-none = "󱏧";
+          };
+          return-type = "json";
+          exec-if = "which ${pkgs.swaynotificationcenter}/bin/swaync-client";
+          exec = "${pkgs.swaynotificationcenter}/bin/swaync-client -swb";
+          on-click = "${pkgs.swaynotificationcenter}/bin/swaync-client -t -sw";
+          on-click-right = "${pkgs.swaynotificationcenter}/bin/swaync-client -d -sw";
+          escape = true;
+        };
+
+        # Clock - equivalent to eww time module
         clock = {
-          # timezone= "America/New_York";
+          interval = 60;
+          format = "{:%H:%M}";
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
           format-alt = "{:%Y-%m-%d}";
         };
 
-        # System
-        "custom/system" = {
-          format = "";
+        # Separators - equivalent to eww sep widget
+        "custom/separator" = {
+          format = "|";
           tooltip = false;
         };
-
-        # CPU
-        cpu = {
-          format = "/ C {usage}% ";
-          on-click = "alacritty -e htop";
+        "custom/separator2" = {
+          format = "|";
+          tooltip = false;
         };
-
-        # Memory
-        memory = {
-          format = "/ M {}% ";
-          on-click = "alacritty -e htop";
-        };
-
-        # Harddisc space used
-        disk = {
-          interval = 30;
-          format = "D {percentage_used}% ";
-          path = "/";
-          on-click = "alacritty -e htop";
-        };
-
-        "hyprland/language" = {
-          format = "/ K {short}";
-        };
-
-        # Group Hardware
-        "group/hardware" = {
-          orientation = "inherit";
-          drawer = {
-            transition-duration = 300;
-            children-class = "not-memory";
-            transition-left-to-right = false;
-          };
-          modules = [
-            "custom/system"
-            "disk"
-            "cpu"
-            "memory"
-            "hyprland/language"
-          ];
-        };
-
-        # Network
-        network = {
-          format = "{ifname}";
-          format-wifi = "   {signalStrength}%";
-          format-ethernet = "󰈁  {ipaddr}";
-          format-disconnected = "Not connected"; # An empty format will hide the module.
-          tooltip-format = " {ifname} via {gwaddri}";
-          tooltip-format-wifi = "   {essid} ({signalStrength}%)";
-          tooltip-format-ethernet = "󰈁  {ifname} ({ipaddr}/{cidr})";
-          tooltip-format-disconnected = "Disconnected";
-          max-length = 50;
-          on-click = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
-        };
-
-        # Battery
-        battery = {
-          states = {
-            # good= 95;
-            warning = 30;
-            critical = 15;
-          };
-          format = "{icon}  {capacity}%";
-          format-charging = "󰂄  {capacity}%";
-          format-plugged = "  {capacity}%";
-          format-alt = "{icon}  {time}";
-          # format-good= ""; // An empty format will hide the module
-          # format-full= "";
-          format-icons = [
-            " "
-            " "
-            " "
-            " "
-            " "
-          ];
-        };
-
-        # Pulseaudio
-        pulseaudio = {
-          # "scroll-step"= 1; // %, can be a float
-          format = "{icon}  {volume}%";
-          format-bluetooth = "{volume}% {icon} {format_source}";
-          format-bluetooth-muted = " {icon} {format_source}";
-          format-muted = " {format_source}";
-          format-source = "{volume}% ";
-          format-source-muted = "";
-          format-icons = {
-            headphone = "";
-            hands-free = "";
-            headset = "󰋎";
-            phone = "";
-            portable = "";
-            car = "";
-            default = [
-              ""
-              " "
-              " "
-            ];
-          };
-          on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
-        };
-
-        # Bluetooth
-        bluetooth = {
-          format-disabled = "";
-          format-off = "";
-          interval = 30;
-          on-click = "${pkgs.blueman}/bin/blueman-manager";
-          format-no-controller = "";
-        };
-
-        # Other
-        user = {
-          format = "{user}";
-          interval = 60;
-          icon = false;
-        };
-
-        # Idle Inhibator
-        idle_inhibitor = {
-          format = "{icon}";
-          tooltip = true;
-          format-icons = {
-            activated = "";
-            deactivated = "";
-          };
-          on-click-right = "${config.programs.hyprlock.package}/bin/hyprlock";
-        };
-
-        "custom/quicklink1" = {
-          format = " ";
-          on-click = "${config.programs.vivaldi.package}/bin/vivaldi";
-          tooltip-format = "Open the browser";
-        };
-        "custom/quicklink2" = {
-          format = " ";
-          on-click = "${config.programs.wezterm.package}/bin/wezterm start -- yazi";
-          tooltip-format = "Open the filemanager";
-        };
-        "custom/quicklinkempty" = { };
-        "group/quicklinks" = {
-          orientation = "horizontal";
-          modules = [
-            "custom/quicklink1"
-            "custom/quicklink2"
-            "custom/quicklinkempty"
-          ];
+        "custom/separator3" = {
+          format = "|";
+          tooltip = false;
         };
       };
-      style = ''
-        @define-color backgroundlight ${colors.base04};
-        @define-color backgrounddark ${colors.base00};
-        @define-color workspacesbackground1 ${colors.base01};
-        @define-color workspacesbackground2 ${colors.base03};
-        @define-color bordercolor ${colors.base0D};
-        @define-color textcolor1 ${colors.base05};
-        @define-color textcolor2 ${colors.base05};
-        @define-color textcolor3 ${colors.base04};
-        @define-color iconcolor ${colors.base05};
-        @define-color textPrimary ${colors.base05};
-        @define-color textSecondary ${colors.base04};
 
-        /* -----------------------------------------------------
-         * General
-         * ----------------------------------------------------- */
+      # Style matching eww bar appearance
+      style = /* css */ ''
+        @define-color base00 ${colors.base00};
+        @define-color base01 ${colors.base01};
+        @define-color base02 ${colors.base02};
+        @define-color base03 ${colors.base03};
+        @define-color base04 ${colors.base04};
+        @define-color base05 ${colors.base05};
+        @define-color base0D ${colors.base0D};
 
         * {
-            font-family: "Fira Sans Semibold", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-            border: none;
-            border-radius: 0px;
+          font-family: "Fira Sans", "Font Awesome 6 Free", sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+          border: none;
+          border-radius: 0;
+          min-height: 0;
         }
 
         window#waybar {
-            background-color: rgba(0,0,0,0.2);
-            border-bottom: 0px solid #ffffff;
-            /* color: #FFFFFF; */
-            transition-property: background-color;
-            transition-duration: .5s;
+          background-color: transparent;
         }
 
-        /* -----------------------------------------------------
-         * Workspaces
-         * ----------------------------------------------------- */
+        #workspaces,
+        #window,
+        #custom-appmenu,
+        #cpu,
+        #temperature,
+        #memory,
+        #backlight,
+        #pulseaudio,
+        #network,
+        #battery,
+        #tray,
+        #custom-notifications,
+        #clock {
+          padding: 8px 12px;
+          margin: 5px 0;
+          background-color: @base01;
+          color: @base05;
+          border-radius: 8px;
+        }
+
+        #custom-separator,
+        #custom-separator2,
+        #custom-separator3 {
+          padding: 0 5px;
+          margin: 0;
+          background-color: transparent;
+          color: @base04;
+        }
 
         #workspaces {
-            margin: 5px 1px 6px 1px;
-            padding: 0px 1px;
-            border-radius: 0px;
-            border: 0px;
-            font-weight: bold;
-            font-style: normal;
-            font-size: 16px;
-            color: @textPrimary;
+          padding: 0;
+          margin-right: 10px;
         }
 
-        #workspaces button:not(:last-child) {
-            margin-right: 3px;
-        }
         #workspaces button {
-            padding: 4px 8px;
-            margin-top: 0px;
-            margin-bottom: 0px;
-            margin-left: 0px;
-            border-radius: 0px;
-            border: 0px;
-            transition: all 0.3s ease-in-out;
-            color: @textSecondary;
+          padding: 8px 12px;
+          margin: 0 2px;
+          background-color: transparent;
+          color: @base04;
+          border-radius: 8px;
+          transition: all 0.3s ease;
         }
 
         #workspaces button.active {
-            border-bottom: 2px solid #fff;
-            color: @textPrimary;
+          background-color: @base0D;
+          color: @base00;
         }
 
         #workspaces button:hover {
-            border-bottom: 1px solid #fff;
-            color: @textPrimary;
+          background-color: @base02;
+          color: @base05;
         }
-
-        /* -----------------------------------------------------
-         * Tooltips
-         * ----------------------------------------------------- */
-
-        tooltip {
-            border-radius: 10px;
-            background-color: @backgroundlight;
-            padding: 20px;
-            margin: 0px;
-            color: @textSecondary;
-        }
-
-        tooltip label {
-            color: @textPrimary;
-        }
-
-        /* -----------------------------------------------------
-         * Window
-         * ----------------------------------------------------- */
-
-        #window {
-            background: @backgroundlight;
-            margin: 10px 15px 10px 0px;
-            padding: 2px 10px 0px 10px;
-            border-radius: 12px;
-            color: @textPrimary;
-            font-size: 16px;
-            font-weight: normal;
-        }
-
-        window#waybar.empty #window {
-            background-color: transparent;
-        }
-
-        /* -----------------------------------------------------
-         * Taskbar
-         * ----------------------------------------------------- */
-
-        #taskbar {
-            background: @backgroundlight;
-            margin: 6px 15px 6px 0px;
-            padding: 0px;
-            border-radius: 15px;
-            font-weight: normal;
-            font-style: normal;
-            border: 3px solid @backgroundlight;
-        }
-
-        #taskbar button {
-            margin: 0;
-            border-radius: 15px;
-            padding: 0px 5px 0px 5px;
-        }
-
-        /* -----------------------------------------------------
-         * Modules
-         * ----------------------------------------------------- */
-
-        .modules-left > widget:first-child > #workspaces {
-            margin-left: 0;
-        }
-
-        .modules-right > widget:last-child > #workspaces {
-            margin-right: 0;
-        }
-
-        /* -----------------------------------------------------
-         * Custom Quicklinks
-         * ----------------------------------------------------- */
-
-        #custom-browser,
-        #custom-filemanager,
-        #network,
-        #pulseaudio,
-        #battery,
-        #custom-appmenu,
-        #clock {
-            margin-right: 20px;
-            font-size: 20px;
-            font-weight: bold;
-            color: @iconcolor;
-            padding: 4px 10px 2px 10px;
-            font-size: 16px;
-        }
-
-        #custom-quicklink1,
-        #custom-quicklink2,
-        #custom-quicklink3,
-        #custom-quicklink4,
-        #custom-quicklink5,
-        #custom-quicklink6,
-        #custom-quicklink7,
-        #custom-quicklink8,
-        #custom-quicklink9,
-        #custom-quicklink10 {
-            padding: 0px;
-            margin-right: 7px;
-            font-size: 20px;
-            color: @iconcolor;
-        }
-
-        /* -----------------------------------------------------
-         * Custom Modules
-         * ----------------------------------------------------- */
 
         #custom-appmenu {
-            background-color: @backgrounddark;
-            color: @textcolor1;
-            border-radius: 15px;
-            margin: 10px 10px 10px 10px;
+          font-size: 18px;
+          padding: 8px 14px;
         }
 
-        /* -----------------------------------------------------
-         * Custom Exit
-         * ----------------------------------------------------- */
-
-        #custom-exit {
-            margin: 2px 20px 0px 0px;
-            padding: 0px;
-            font-size: 20px;
-            color: @iconcolor;
+        #cpu {
+          color: @base0D;
         }
 
-        /* -----------------------------------------------------
-         * Hardware Group
-         * ----------------------------------------------------- */
-
-        #disk,#memory,#cpu,#language {
-            margin: 0px;
-            padding: 0px;
-            font-size: 16px;
-            color: @iconcolor;
+        #temperature {
+          color: @base05;
         }
 
-        #language {
-            margin-right: 10px;
-        }
-
-        /* -----------------------------------------------------
-         * Clock
-         * ----------------------------------------------------- */
-
-        #clock {
-            background-color: @backgrounddark;
-            font-size: 16px;
-            color: @textPrimary;
-            border-radius: 15px;
-            margin: 10px 7px 10px 0px;
-        }
-
-        /* -----------------------------------------------------
-         * Pulseaudio
-         * ----------------------------------------------------- */
-
-        #pulseaudio {
-            background-color: @backgroundlight;
-            font-size: 16px;
-            color: @textPrimary;
-            border-radius: 15px;
-            margin: 10px 10px 10px 0px;
-        }
-
-        #pulseaudio.muted {
-            background-color: @backgrounddark;
-            color: @textcolor1;
-        }
-
-        /* -----------------------------------------------------
-         * Network
-         * ----------------------------------------------------- */
-
-        #network {
-            background-color: @backgroundlight;
-            font-size: 16px;
-            color: @textSecondary;
-            border-radius: 15px;
-            margin: 10px 10px 10px 0px;
-        }
-
-        #network.ethernet {
-            background-color: @backgroundlight;
-            color: @textSecondary;
-        }
-
-        #network.wifi {
-            background-color: @backgroundlight;
-            color: @textSecondary;
-        }
-
-        /* -----------------------------------------------------
-         * Bluetooth
-         * ----------------------------------------------------- */
-
-         #bluetooth, #bluetooth.on, #bluetooth.connected {
-            background-color: @backgroundlight;
-            font-size: 16px;
-            color: @textSecondary;
-            border-radius: 15px;
-            margin: 10px 15px 10px 0px;
-        }
-
-        #bluetooth.off {
-            background-color: transparent;
-            padding: 0px;
-            margin: 0px;
-        }
-
-        /* -----------------------------------------------------
-         * Battery
-         * ----------------------------------------------------- */
-
-        #battery {
-            background-color: @backgroundlight;
-            font-size: 16px;
-            color: @textcolor2;
-            border-radius: 15px;
-            margin: 10px 15px 10px 0px;
-        }
-
-        #battery.charging, #battery.plugged {
-            color: @textSecondary;
-            background-color: @backgroundlight;
-        }
-
-        @keyframes blink {
-            to {
-                background-color: @backgroundlight;
-                color: @textPrimary;
-            }
-        }
-
-        #battery.critical:not(.charging) {
-            background-color: #f53c3c;
-            color: @textPrimary;
-            animation-name: blink;
-            animation-duration: 0.5s;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-            animation-direction: alternate;
-        }
-
-        /* -----------------------------------------------------
-         * Tray
-         * ----------------------------------------------------- */
-
-        #tray {
-            margin:0px 10px 0px 0px;
-        }
-
-        #tray > .passive {
-            -gtk-icon-effect: dim;
-        }
-
-        #tray > .needs-attention {
-            -gtk-icon-effect: highlight;
-            background-color: #eb4d4b;
-        }
-
-        /* -----------------------------------------------------
-         * Other
-         * ----------------------------------------------------- */
-
-        label:focus {
-            background-color: #000000;
+        #memory {
+          color: @base0D;
         }
 
         #backlight {
-            background-color: #90b1b1;
+          color: @base05;
+        }
+
+        #pulseaudio {
+          color: @base05;
+        }
+
+        #pulseaudio.muted {
+          color: @base04;
         }
 
         #network {
-            background-color: #2980b9;
+          color: @base05;
         }
 
         #network.disconnected {
-            background-color: #f53c3c;
+          color: @base04;
+        }
+
+        #battery {
+          color: @base05;
+        }
+
+        #battery.charging,
+        #battery.plugged {
+          color: @base0D;
+        }
+
+        #battery.warning:not(.charging) {
+          color: #f9e2af;
+        }
+
+        #battery.critical:not(.charging) {
+          color: #f38ba8;
+          animation: blink 1s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+          50% {
+            opacity: 0.5;
+          }
+        }
+
+        #clock {
+          margin-right: 10px;
+        }
+
+        #tray > .passive {
+          -gtk-icon-effect: dim;
+        }
+
+        #tray > .needs-attention {
+          -gtk-icon-effect: highlight;
         }
       '';
     };
