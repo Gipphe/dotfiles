@@ -10,8 +10,23 @@ util.mkProgram {
       enable = true;
       settings = {
         paths.wallpaperDir = "~/Pictures/Wallpapers";
-        general.apps = {
-          terminal = [ "wezterm" ];
+        general = {
+          apps = {
+            terminal = [ "wezterm" ];
+          };
+          idle = {
+            timeouts = [
+              {
+                timeout = 900;
+                idleAction = "lock";
+              }
+              {
+                timeout = 1200;
+                idleAction = "dpms off";
+                returnAction = "dpms on";
+              }
+            ];
+          };
         };
         bar = {
           workspaces = {
