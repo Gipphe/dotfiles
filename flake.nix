@@ -32,7 +32,6 @@
         {
           default = pkgs.callPackage ./devShells/default.nix {
             inherit (inputs.devshell.legacyPackages.${system}) mkShell;
-            inherit (self.packages.${system}) treefmt;
           };
         }
       );
