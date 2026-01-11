@@ -1,15 +1,15 @@
 {
-  treefmt,
+  callPackage,
+  mkShell,
+
   deadnix,
   nix-tree,
   nixfmt,
   sops,
   statix,
-  mkShell,
-  callPackage,
 }:
 let
-  extra = callPackage ./devShell.nix { inherit treefmt; };
+  extra = callPackage ./devShell.nix { };
 in
 mkShell {
   name = "dotfiles";
