@@ -12,10 +12,6 @@
                 :initial `{"total": 0, "available": 0, "used": 0, "percent": 0}`
   `./data/memory.fish`)
 
-(deflisten mode `cat "$HOME/.cache/gipphe/theme" || echo "dark"`)
-
-; (deflisten mpris :initial '{}' `./data/mpris.fish`)
-
 (deflisten network :initial '{"wifi": {}, "wired": false}'
   `./data/network.fish`)
 

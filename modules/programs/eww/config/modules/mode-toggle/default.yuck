@@ -1,9 +1,0 @@
-(defwidget mode []
-  (button :class "mode-toggle"
-          :hexpand false
-          :vexpand false
-          :halign "center"
-          :onclick `./modules/mode-toggle/theme.fish`
-    (label :hexpand false
-           :vexpand false
-           :text {mode == 'light' ? '󰃠' : '󰃛'})))

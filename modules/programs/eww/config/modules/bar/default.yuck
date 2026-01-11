@@ -15,14 +15,6 @@
 (defwidget center []
   "")
 
-; (defwidget center []
-;   (revealer :reveal {mpris.status != 'null'}
-;             :transition "slideDown"
-;             :duration "300ms"
-;     (bar-part :halign "center"
-;               :class "bar-part__center"
-;       (music))))
-
 (defwidget right []
   (bar-part :halign "end"
             :class "bar-part__right"
