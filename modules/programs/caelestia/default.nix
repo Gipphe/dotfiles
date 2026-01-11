@@ -30,8 +30,8 @@ util.mkProgram {
         };
         bar = {
           workspaces = {
-            shown = 4;
-            showWindows = false;
+            shown = 3;
+            showWindows = true;
           };
         };
       };
