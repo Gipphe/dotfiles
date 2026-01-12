@@ -6,7 +6,7 @@
 }:
 let
   folders = {
-    "${config.home.homeDirectory}/Notes" = {
+    "${config.home.homeDirectory}/Documents/Notes" = {
       id = "notes";
       label = "Notes";
       devices = [
@@ -51,15 +51,6 @@ let
       devices = [
         "titanium"
         "boron"
-      ];
-    };
-    "${config.home.homeDirectory}/Lorelei and the Laser Eyes notes" = {
-      id = "lorelei-and-the-laser-eyes-notes";
-      label = "Lorelei and the Laser Eyes";
-      devices = [
-        "boron"
-        "cobalt"
-        "titanium"
       ];
     };
   };
