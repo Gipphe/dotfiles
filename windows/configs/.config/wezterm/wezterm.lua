@@ -68,8 +68,10 @@ for key, value in pairs(stylix_base_config) do
 end
 local function stylix_wrapped_config()
     local wezterm = require 'wezterm'
+local utils = require 'utils'
 local windowsConfig = require 'windows-config'
 local linuxConfig = require 'linux-config'
+
 local baseConfig = {
   hide_tab_bar_if_only_one_tab = true,
   send_composed_key_when_left_alt_is_pressed = true,
@@ -80,7 +82,18 @@ local baseConfig = {
   -- Disable easing for cursor, blinking text and visual bell
   animation_fps = 1,
   warn_about_missing_glyphs = false,
+  keys = {
+    {
+  key = "Enter",
+  mods = "SHIFT",
+  action = wezterm.action { SendString = "\\x1b\\r" },
 }
+;
+  },
+}
+
+baseConfig = utils.tbl_deep_extend(baseConfig, windowsConfig.config(), 'force')
+baseConfig = utils.tbl_deep_extend(baseConfig, linuxConfig.config(), 'force')
 
 -- Strip Zellij session name from window title
 wezterm.on('format-window-title', function(tab, pane, tabs, panes, config)
@@ -93,12 +106,6 @@ wezterm.on('format-window-title', function(tab, pane, tabs, panes, config)
   return title
 end)
 
-for k,v in pairs(windowsConfig.config()) do
-  baseConfig[k] = v
-end
-for k,v in pairs(linuxConfig.config()) do
-  baseConfig[k] = v
-end
 return baseConfig
 
 end
