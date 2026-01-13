@@ -174,7 +174,7 @@ util.mkProgram {
                       set -l desc (fish ${./desc-to-branch-name.fish} -r $rev)
 
                       jj bookmark create -r "$rev" "$desc"
-                      jj bookmark track "$desc@origin"
+                      jj bookmark track --remote origin "$desc"
                       jj git push --bookmark "$desc"
                     '';
                 };
