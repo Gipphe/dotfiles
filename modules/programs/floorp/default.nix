@@ -36,14 +36,18 @@ util.mkModule {
     }
     (lib.optionalAttrs (!flags.isNixOnDroid) (
       lib.mkIf cfg.default {
-        home.sessionVariables.BROWSER = "${pkg}/bin/floorp";
+        home.sessionVariables = {
+          BROWSER = lib.getExe' pkg "floorp";
+          DEFAULT_BROWSER = lib.getExe' pkg "floorp";
+        };
         gipphe.core.wm.binds = lib.mkIf cfg.default [
           {
             mod = "Mod";
             key = "B";
-            action.spawn = "${hmCfg.package}/bin/floorp";
+            action.spawn = lib.getExe' pkg "floorp";
           }
         ];
+        xdg.mimeApps.defaultApplicationPackages = [ pkg ];
       }
     ))
     (lib.optionalAttrs (!flags.isNixOnDroid) {
