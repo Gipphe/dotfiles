@@ -24,6 +24,7 @@ util.mkToggledModule [ "machines" ] {
         camera.enable = true;
         devices.enable = true;
         networking.enable = true;
+        printing.enable = true;
         power.enable = true;
         system.enable = true;
         thumbnails.enable = true;

@@ -6,8 +6,7 @@
   ...
 }:
 let
-  inherit (lib) concatStringsSep;
-  inherit (builtins) toString;
+  inherit (builtins) concatStringsSep;
   apply-hm-env = pkgs.writeShellScript "apply-hm-env" ''
     ${lib.optionalString (config.home.sessionPath != [ ]) ''
       export PATH=${concatStringsSep ":" config.home.sessionPath}:$PATH
