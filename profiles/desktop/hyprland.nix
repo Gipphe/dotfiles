@@ -52,7 +52,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
       dolphin.enable = true;
 
       # Bars
-      eww.enable = false;
+      eww.enable = true;
       eww.dev = true;
     })
 
