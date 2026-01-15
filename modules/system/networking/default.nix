@@ -18,9 +18,45 @@ util.mkToggledModule [ "system" ] {
     ];
   };
   system-nixos = {
+    sops.secrets.networkmanager-secrets = {
+      format = "binary";
+      sopsFile = ../../../secrets/pub-networkmanager-secrets.txt;
+    };
     networking = {
       inherit (config.gipphe) hostName;
-      networkmanager.enable = true;
+      networkmanager = {
+        enable = true;
+        ensureProfiles = {
+          environmentFiles = [ config.sops.secrets.networkmanager-secrets.path ];
+          profiles = {
+            "GiphtNet" = {
+              connection = {
+                id = "GiphtNet";
+                type = "wifi";
+              };
+              ipv4 = {
+                dns-search = "";
+                method = "auto";
+              };
+              ipv6 = {
+                addr-gen-mode = "stable-privacy";
+                dns-search = "";
+                method = "auto";
+              };
+              wifi = {
+                mode = "infrastructure";
+                ssid = "GiphtNet";
+                mac-address-blacklist = "";
+              };
+              wifi-security = {
+                auth-alg = "open";
+                key-mgmt = "wpa-psk";
+                psk = "$PSK_GIPHTNET";
+              };
+            };
+          };
+        };
+      };
     };
     users.users.${config.gipphe.username}.extraGroups = [ "networkmanager" ];
 
