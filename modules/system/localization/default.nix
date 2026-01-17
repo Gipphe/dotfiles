@@ -9,7 +9,6 @@ util.mkToggledModule [ "system" ] {
     i18n = {
       defaultLocale = no;
       extraLocaleSettings = {
-        LANG = defaultLocale;
         LC_COLLATE = defaultLocale;
         LC_CTYPE = defaultLocale;
         LC_MESSAGES = defaultLocale;
