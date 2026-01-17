@@ -7,7 +7,7 @@ util.mkToggledModule [ "system" ] {
   name = "localization";
   system-nixos = {
     i18n = {
-      inherit defaultLocale;
+      defaultLocale = no;
       extraLocaleSettings = {
         LANG = defaultLocale;
         LC_COLLATE = defaultLocale;
