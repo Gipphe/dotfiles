@@ -74,6 +74,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
       })
 
       (lib.mkIf cfg.noctalia.enable {
+        grimblast.enable = true;
         noctalia-shell.enable = true;
         wezterm.enable = true;
       })
