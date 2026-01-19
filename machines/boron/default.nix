@@ -46,7 +46,7 @@ util.mkToggledModule [ "machines" ] {
       secrets.enable = true;
       sync.enable = true;
       systemd.enable = true;
-      terminal-capture.enable = true;
+      terminal-capture.enable = false;
     };
     programs.pipewire.higherQuantum.enable = true;
     system.cpu.enable = true;
