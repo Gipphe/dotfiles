@@ -37,6 +37,8 @@ util.mkToggledModule [ "profiles" "desktop" ] {
         cliphist.enable = true;
         clipse.enable = false;
 
+        dolphin.enable = true;
+
         # Pinentry
         pinentry-curses.enable = true;
 
@@ -58,7 +60,6 @@ util.mkToggledModule [ "profiles" "desktop" ] {
 
         networkmanagerapplet.enable = true;
         grimblast.enable = true;
-        dolphin.enable = true;
 
         # Bars
         eww.enable = true;
