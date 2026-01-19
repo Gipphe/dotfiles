@@ -5,8 +5,7 @@ util.mkProfile {
     bolt-launcher.enable = true;
     discord.enable = true;
     heroic.enable = true;
-    # TODO: Broken dependency
-    lutris.enable = false;
+    lutris.enable = true;
     moonlight-qt.enable = true;
     prismlauncher.enable = true;
     runelite.enable = true;
