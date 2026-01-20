@@ -4,40 +4,34 @@ util.mkToggledModule [ "profiles" "desktop" ] {
   shared.gipphe = {
     system.xdg.enable = true;
     programs = {
-      # hypridle.enable = true;
       niri.enable = true;
-      # hyprlock.enable = true;
-      # hyprpaper.enable = true;
 
+      # polkit agent
+      soteria.enable = true;
       sddm.enable = true;
-
       plymouth.enable = true;
 
-      # Launchers
-      walker.enable = true;
-
-      # Notifications
-      swaync.enable = true;
+      brightnessctl.enable = true;
 
       # Screenshotting and recording
       wf-recorder.enable = true;
-      grimblast.enable = true;
 
       # Clipboard
       wl-clipboard.enable = true;
       cliphist.enable = true;
       clipse.enable = false;
 
+      dolphin.enable = true;
+
       # Pinentry
       pinentry-curses.enable = true;
 
-      # File manager
       yazi.enable = true;
-      dolphin.enable = true;
 
-      # Bars
-      eww.enable = true;
-      eww.dev = true;
+      # TODO: Niri comes with its own screenshotting capabilities.
+      # grimblast.enable = true;
+      noctalia-shell.enable = true;
+      wezterm.enable = true;
     };
   };
 }

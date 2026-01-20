@@ -86,7 +86,7 @@ util.mkProgram {
       }
       {
         mod = "Mod";
-        key = "c";
+        key = "C";
         action.spawn = "${ipc} launcher clipboard";
       }
     ];
