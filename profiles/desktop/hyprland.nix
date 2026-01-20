@@ -20,6 +20,8 @@ util.mkToggledModule [ "profiles" "desktop" ] {
       {
         hyprland.enable = true;
         hyprpolkitagent.enable = true;
+        hypridle.enable = true;
+        hyprlock.enable = true;
 
         ly.enable = false;
         sddm.enable = true;
@@ -46,8 +48,6 @@ util.mkToggledModule [ "profiles" "desktop" ] {
       }
 
       (lib.mkIf useDefault {
-        hypridle.enable = true;
-        hyprlock.enable = true;
         hyprpaper.enable = true;
 
         # Launchers
