@@ -1,5 +1,4 @@
 {
-  self,
   config,
   util,
   lib,
@@ -29,12 +28,13 @@ util.mkProgram {
               };
               extra.nixd = lib.mkMerge [
                 {
-                  nixpkgs = ''import ${pkgs.path} {}'';
+                  nixpkgs = "import ${pkgs.path} {}";
                 }
                 (lib.mkIf config.gipphe.programs.giphtvim.plugins.nixd.docs.options.enable {
-                  home_manager = ''(builtins.getFlake "${self}").nixosConfigurations.argon.options.home-manager.users.type.getSubOptions []'';
-                  nixos_options = ''(builtins.getFlake "${self}").nixosConfigurations.argon.options'';
-                  droid_options = ''(builtins.getFlake "${self}").nixOnDroidConfigurations.helium.options'';
+
+                  home_manager = ''(builtins.getFlake "${inputs.self}").nixosConfigurations.argon.options.home-manager.users.type.getSubOptions []'';
+                  nixos_options = ''(builtins.getFlake "${inputs.self}").nixosConfigurations.argon.options'';
+                  droid_options = ''(builtins.getFlake "${inputs.self}").nixOnDroidConfigurations.helium.options'';
                 })
               ];
             };
