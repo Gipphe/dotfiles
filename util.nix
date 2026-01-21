@@ -6,6 +6,7 @@
   fishMinimal,
   nushell,
   writeShellScript,
+  writeShellScriptBin,
   writeTextFile,
   ...
 }:
@@ -340,6 +341,12 @@ let
       ''
     );
   GPUOffloadApp = pkg: desktopName: patchDesktop pkg desktopName "^Exec=" "Exec=nvidia-offload ";
+
+  mkOnDemand =
+    pkg:
+    writeShellScriptBin "${pkg.name}-ondemand" ''
+      nix run nixpkgs#${pkg.pname} -- "$@"
+    '';
 in
 {
   inherit
@@ -349,6 +356,7 @@ in
     mkEnvironment
     mkHardware
     mkModule
+    mkOnDemand
     mkProfile
     mkProgram
     mkSystem
