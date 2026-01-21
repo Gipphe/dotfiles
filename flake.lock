@@ -294,11 +294,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1768987354,
-        "narHash": "sha256-faXQkcW7yslRw8gZVEkFQ8guh6A6/cTjezIxbHWKHN0=",
+        "lastModified": 1768993483,
+        "narHash": "sha256-qmKbsB899tP3fcvGkX8j4HbnSgxjCXOKXPeSIWQM0Zs=",
         "owner": "Gipphe",
         "repo": "giphtvim",
-        "rev": "0f320aef68c0a1bfdf6311e8b998331eb57b1000",
+        "rev": "d52433ecd68a0da2737d2a2d2f46a3ffd03a24fc",
         "type": "github"
       },
       "original": {
