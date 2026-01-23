@@ -6,6 +6,9 @@ util.mkToggledModule [ "profiles" "desktop" ] {
     programs = {
       niri.enable = true;
 
+      hypridle.enable = true;
+      hyprlock.enable = true;
+
       # polkit agent
       soteria.enable = true;
       sddm.enable = true;
