@@ -19,6 +19,11 @@ util.mkModule {
             description = "Key for the key binding";
             example = "T";
           };
+          args = lib.mkOption {
+            description = "Extra arguments passed to the compositor when registering the bind";
+            type = with lib.types; attrsOf anything;
+            default = { };
+          };
           action = lib.mkOption {
             description = "Action to perform when keybind is pressed";
             type = oneOf [

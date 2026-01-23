@@ -7,14 +7,7 @@
   ...
 }:
 let
-  inherit (builtins)
-    attrNames
-    concatLists
-    concatStringsSep
-    genList
-    isString
-    ;
-  inherit (lib) toLower;
+  inherit (builtins) concatLists genList;
 
   package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
   portalPackage =
@@ -37,24 +30,8 @@ let
       ]
     ) 10
   );
-  toDispatch =
-    action:
-    if isString action.spawn then
-      "exec, ${action.spawn}"
-    else if isString action.shortcut then
-      "global, ${action.shortcut}"
-    else
-      abort "Unknown keybind action: ${concatStringsSep ", " (attrNames action)}";
-  replaceMod =
-    s:
-    let
-      lowered = toLower s;
-    in
-    if lowered == "mod" || lowered == "$mod" then "$mod" else s;
-  toMods =
-    mods: if isString mods then replaceMod mods else concatStringsSep " " (map replaceMod mods);
-  toHyprBind = coreBind: "${toMods coreBind.mod}, ${coreBind.key}, ${toDispatch coreBind.action}";
-  coreBinds = map toHyprBind config.gipphe.core.wm.binds;
+  binds = import ./binds.nix { inherit lib; };
+  coreBinds = map binds.toHyprBind config.gipphe.core.wm.binds;
 
   killactive = pkgs.writeShellApplication {
     name = "killactive";

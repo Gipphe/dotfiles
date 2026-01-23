@@ -43,6 +43,7 @@ let
       key,
       mod ? [ ],
       action,
+      args ? { },
     }:
     {
       name = "${toMod mod}${key}";
@@ -58,7 +59,7 @@ let
         else if isString action.shortcut then
           abort "DBus global shortcuts have not been implemented for Niri"
         else
-          { inherit action; };
+          args // { inherit action; };
     };
 in
 {
