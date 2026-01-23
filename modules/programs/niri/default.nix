@@ -11,6 +11,7 @@ let
   inherit (builtins) listToAttrs;
   binds = pkgs.callPackage ./binds.nix { };
   coreBinds = listToAttrs (map binds.toNiriBind config.gipphe.core.wm.binds);
+  gaps = 8;
 in
 util.mkProgram {
   name = "niri";
@@ -27,16 +28,63 @@ util.mkProgram {
         };
       };
 
+    home.sessionVariables.ELECTRON_OZONE_PLATFORM_HINT = "auto";
+
     programs.niri = {
       settings = {
+        layout = {
+          inherit gaps;
+          struts = lib.genAttrs [ "top" "left" "right" "bottom" ] (_: -gaps);
+          always-center-single-column = true;
+          center-focused-column = "on-overflow";
+          default-column-display = "normal";
+          border = {
+            width = 1;
+            active.gradient = {
+              from = "#8aadf4";
+              to = "#c6a0f6";
+              # in' = "oklch longer hue";
+              angle = 45;
+              relative-to = "workspace-view";
+            };
+            inactive.gradient = {
+              from = "#666666";
+              to = "#aaaaaa";
+              # in' = "oklch longer hue";
+              angle = 45;
+              relative-to = "workspace-view";
+            };
+            urgent.gradient = {
+              from = "#f48aad";
+              to = "#f6c6a0";
+              # in' = "oklch longer hue";
+              angle = 45;
+              relative-to = "workspace-view";
+            };
+          };
+          focus-ring.enable = false;
+          tab-indicator = {
+            hide-when-single-tab = true;
+          };
+        };
+        gestures = {
+          dnd-edge-view-scroll = {
+            delay-ms = 1000;
+            max-speed = 80;
+            trigger-width = 50;
+          };
+          dnd-edge-workspace-switch = {
+            delay-ms = 1000;
+            max-speed = 80;
+            trigger-height = 50;
+          };
+        };
         binds =
           coreBinds
           // (with config.lib.niri.actions; {
             "Mod+Shift+Slash".action = show-hotkey-overlay;
 
             # Suggested binds for running programs: terminal, app launcher, screen locker.
-            "Mod+T".action.spawn = [ "wezterm" ];
-            "Mod+D".action.spawn = [ "walker" ];
             # "Super+Alt+L".action = spawn "swaylock";
 
             # You can also use a shell:
@@ -171,7 +219,9 @@ util.mkProgram {
 
             "Mod+R".action.switch-preset-column-width = { };
             "Mod+F".action.maximize-column = { };
+            "Mod+Ctrl+F".action.maximize-window-to-edges = { };
             "Mod+Shift+F".action.fullscreen-window = { };
+            "Mod+Ctrl+Shift+F".action.toggle-windowed-fullscreen = { };
             "Mod+C".action.center-column = { };
 
             # Finer width adjustments.
@@ -214,6 +264,19 @@ util.mkProgram {
             # is working.
             # "Mod+Shift+Ctrl+T".action = toggle-debug-tint;
           });
+        hotkey-overlay.skip-at-startup = true;
+        window-rules = [
+          {
+            matches = [ ];
+            clip-to-geometry = true;
+            geometry-corner-radius = lib.genAttrs [
+              "bottom-right"
+              "bottom-left"
+              "top-left"
+              "top-right"
+            ] (_: 12.0);
+          }
+        ];
         input.keyboard = {
           numlock = true;
           xkb = {
@@ -231,7 +294,7 @@ util.mkProgram {
     xdg.portal = {
       config = {
         common = {
-          default = [
+          default = lib.mkForce [
             "gnome"
             "gtk"
           ];
