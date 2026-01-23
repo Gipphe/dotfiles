@@ -1,5 +1,10 @@
-{ pkgs, util, ... }:
+{ util, osConfig, ... }:
 util.mkProgram {
   name = "lutris";
-  hm.home.packages = [ pkgs.lutris ];
+  hm = {
+    programs.lutris = {
+      enable = true;
+      steamPackage = osConfig.programs.steam.package;
+    };
+  };
 }
