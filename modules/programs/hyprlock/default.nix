@@ -5,6 +5,9 @@
   config,
   ...
 }:
+let
+  cfg = config.gipphe.programs.hyprlock;
+in
 util.mkProgram {
   name = "hyprlock";
   hm = {
@@ -13,7 +16,7 @@ util.mkProgram {
     };
     config = {
       programs.hyprlock = {
-        inherit (config.gipphe.programs.hyprland) enable;
+        enable = true;
         settings = {
           background = {
             monitor = "";
@@ -97,9 +100,15 @@ util.mkProgram {
       };
       gipphe.core.wm.binds = [
         {
-          mod = "Mod";
+          mod = [
+            "Mod"
+            "Alt"
+          ];
           key = "L";
-          action.spawn = "${config.programs.hyprlock.package}/bin/hyprlock";
+          args = {
+            allow-when-locked = true;
+          };
+          action.spawn = lib.getExe cfg.package;
         }
       ];
     };
