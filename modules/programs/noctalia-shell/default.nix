@@ -7,7 +7,7 @@
   ...
 }:
 let
-  ipc = "${lib.getExe' config.programs.noctalia-shell.package "noctalia-shell"} -p '${config.programs.noctalia-shell.package}/share/noctalia-shell' ipc call";
+  ipc = "${lib.getExe' config.programs.noctalia-shell.package "noctalia-shell"} ipc call";
   wallpaperDir = "Pictures/wallpapers";
 in
 util.mkProgram {
