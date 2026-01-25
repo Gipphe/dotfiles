@@ -74,7 +74,7 @@ util.mkProgram {
           diff -u \
             <(jq -S . "$HOME/.config/noctalia/settings.json") \
             <(jq -S . "$HOME/.config/noctalia/gui-settings.json") \
-            | colordiff
+            | colordiff --nobanner
         '';
       })
     ];

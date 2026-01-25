@@ -38,7 +38,7 @@
     marginHorizontal = 4;
     marginVertical = 4;
     monitors = [ ];
-    outerCorners = true;
+    outerCorners = false;
     position = "top";
     showCapsule = true;
     showOutline = false;
@@ -124,6 +124,7 @@
           showUnreadBadge = true;
         }
         {
+          deviceNativePath = "";
           displayMode = "alwaysShow";
           hideIfNotDetected = true;
           id = "Battery";
