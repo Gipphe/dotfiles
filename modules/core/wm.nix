@@ -1,68 +1,84 @@
 { lib, util, ... }:
 util.mkModule {
-  options.gipphe.core.wm.binds = lib.mkOption {
-    type =
+  options.gipphe.core.wm = {
+    actions =
       with lib.types;
-      listOf (submodule {
+      submodule {
         options = {
-          mod = lib.mkOption {
-            type = either (listOf str) str;
-            description = "Modifier keys for the key binding";
-            default = [ ];
-            example = [
-              "Mod"
-              "Alt"
-            ];
-          };
-          key = lib.mkOption {
+          monitors-off = lib.mkOption {
             type = str;
-            description = "Key for the key binding";
-            example = "T";
+            description = "Command to turn off all monitors";
           };
-          args = lib.mkOption {
-            description = "Extra arguments passed to the compositor when registering the bind";
-            type = with lib.types; attrsOf anything;
-            default = { };
-          };
-          action = lib.mkOption {
-            description = "Action to perform when keybind is pressed";
-            type = oneOf [
-              (submodule {
-                options = {
-                  spawn = lib.mkOption {
-                    type = nullOr str;
-                    description = "Spawn a process or call a program.";
-                    default = null;
-                  };
-                  shortcut = lib.mkOption {
-                    type = nullOr str;
-                    description = "Invoke a DBus global shortcut.";
-                    default = null;
-                  };
-                };
-              })
-            ];
+          monitors-on = lib.mkOption {
+            type = str;
+            description = "Command to turn on all monitors";
           };
         };
-      });
-    default = [ ];
-    description = ''
-      WM-agnostic keybindings. Key codes are to be interpreted by the WM in question.
-    '';
-    example = [
-      {
-        mod = "Mod";
-        keys = "Return";
-        action.spawn = "wezterm";
-      }
-      {
-        mod = [
-          "Alt"
-          "Shift"
-        ];
-        keys = "Tab";
-        action.spawn = "...";
-      }
-    ];
+      };
+    binds = lib.mkOption {
+      type =
+        with lib.types;
+        listOf (submodule {
+          options = {
+            mod = lib.mkOption {
+              type = either (listOf str) str;
+              description = "Modifier keys for the key binding";
+              default = [ ];
+              example = [
+                "Mod"
+                "Alt"
+              ];
+            };
+            key = lib.mkOption {
+              type = str;
+              description = "Key for the key binding";
+              example = "T";
+            };
+            args = lib.mkOption {
+              description = "Extra arguments passed to the compositor when registering the bind";
+              type = with lib.types; attrsOf anything;
+              default = { };
+            };
+            action = lib.mkOption {
+              description = "Action to perform when keybind is pressed";
+              type = oneOf [
+                (submodule {
+                  options = {
+                    spawn = lib.mkOption {
+                      type = nullOr str;
+                      description = "Spawn a process or call a program.";
+                      default = null;
+                    };
+                    shortcut = lib.mkOption {
+                      type = nullOr str;
+                      description = "Invoke a DBus global shortcut.";
+                      default = null;
+                    };
+                  };
+                })
+              ];
+            };
+          };
+        });
+      default = [ ];
+      description = ''
+        WM-agnostic keybindings. Key codes are to be interpreted by the WM in question.
+      '';
+      example = [
+        {
+          mod = "Mod";
+          keys = "Return";
+          action.spawn = "wezterm";
+        }
+        {
+          mod = [
+            "Alt"
+            "Shift"
+          ];
+          keys = "Tab";
+          action.spawn = "...";
+        }
+      ];
+    };
   };
 }

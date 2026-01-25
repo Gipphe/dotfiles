@@ -30,6 +30,15 @@ util.mkProgram {
 
     home.sessionVariables.ELECTRON_OZONE_PLATFORM_HINT = "auto";
 
+    gipphe.core.wm.actions =
+      let
+        niri = lib.getExe' config.programs.niri.package "niri";
+      in
+      {
+        monitors-on = "${niri} msg action power-on-monitors";
+        monitors-off = "${niri} msg action power-off-monitors";
+      };
+
     programs.niri = {
       settings = {
         layout = {
@@ -265,18 +274,18 @@ util.mkProgram {
             # "Mod+Shift+Ctrl+T".action = toggle-debug-tint;
           });
         hotkey-overlay.skip-at-startup = true;
-        window-rules = [
-          {
-            matches = [ ];
-            clip-to-geometry = true;
-            geometry-corner-radius = lib.genAttrs [
-              "bottom-right"
-              "bottom-left"
-              "top-left"
-              "top-right"
-            ] (_: 12.0);
-          }
-        ];
+        # window-rules = [
+        #   {
+        #     matches = [ ];
+        #     clip-to-geometry = true;
+        #     geometry-corner-radius = lib.genAttrs [
+        #       "bottom-right"
+        #       "bottom-left"
+        #       "top-left"
+        #       "top-right"
+        #     ] (_: 12.0);
+        #   }
+        # ];
         input.keyboard = {
           numlock = true;
           xkb = {

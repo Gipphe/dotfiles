@@ -282,7 +282,7 @@
     boxRadiusRatio = 1;
     compactLockScreen = false;
     dimmerOpacity = 0.2;
-    enableShadows = true;
+    enableShadows = false;
     forceBlackScreenCorners = false;
     iRadiusRatio = 1;
     language = "";
