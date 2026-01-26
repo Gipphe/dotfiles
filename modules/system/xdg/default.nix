@@ -1,11 +1,17 @@
-{ util, pkgs, ... }:
+{
+  flags,
+  util,
+  pkgs,
+  lib,
+  ...
+}:
 util.mkSystem {
   name = "xdg";
   hm = {
     xdg = {
       enable = true;
       mimeApps.enable = true;
-      portal = {
+      portal = lib.mkIf (!flags.isNixOnDroid) {
         enable = true;
         xdgOpenUsePortal = true;
         config = {
