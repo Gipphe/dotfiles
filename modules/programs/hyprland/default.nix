@@ -82,6 +82,14 @@ util.mkProgram {
   hm.config = lib.mkMerge [
     {
       home.packages = [ pkgs.wireplumber ];
+      gipphe.core.wm.actions =
+        let
+          hyprctl = lib.getExe' package "hyprctl";
+        in
+        {
+          monitors-on = "${hyprctl} dispatch dpms on";
+          monitors-off = "${hyprctl} dispatch dpms off";
+        };
       wayland.windowManager.hyprland = {
         enable = true;
         inherit package portalPackage;

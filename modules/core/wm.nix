@@ -1,20 +1,16 @@
 { lib, util, ... }:
 util.mkModule {
   options.gipphe.core.wm = {
-    actions =
-      with lib.types;
-      submodule {
-        options = {
-          monitors-off = lib.mkOption {
-            type = str;
-            description = "Command to turn off all monitors";
-          };
-          monitors-on = lib.mkOption {
-            type = str;
-            description = "Command to turn on all monitors";
-          };
-        };
+    actions = {
+      monitors-off = lib.mkOption {
+        type = lib.types.str;
+        description = "Command to turn off all monitors";
       };
+      monitors-on = lib.mkOption {
+        type = lib.types.str;
+        description = "Command to turn on all monitors";
+      };
+    };
     binds = lib.mkOption {
       type =
         with lib.types;

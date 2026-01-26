@@ -12,6 +12,24 @@ util.mkModule {
     ./wm.nix
   ];
 
+  options.gipphe.core.xdg = {
+    stateDir = lib.mkOption {
+      type = lib.types.path;
+      description = "Path to XDG_STATE_DIRS directory for own state";
+      default = "${config.xdg.stateHome}/gipphe";
+    };
+    configDir = lib.mkOption {
+      type = lib.types.path;
+      description = "Path to XDG_CONFIG_DIRS directory for own config";
+      default = "${config.xdg.configHome}/gipphe";
+    };
+    shareDir = lib.mkOption {
+      type = lib.types.path;
+      description = "Path to XDG_SHARE_DIRS directory for own shared files";
+      default = "${config.xdg.shareHome}/gipphe";
+    };
+  };
+
   hm = {
     home = {
       inherit (config.gipphe) username homeDirectory;
