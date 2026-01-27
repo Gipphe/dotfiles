@@ -152,6 +152,7 @@ let
       style = "";
       symbol = " ";
       when = "${jj} --ignore-working-copy root";
+      ignore_timeout = true;
     };
   };
 
@@ -299,6 +300,7 @@ let
   };
 in
 {
+  scan_timeout = 100;
   format = lib.concatStrings [
     machine_format
     shell_format
