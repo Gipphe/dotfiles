@@ -216,6 +216,8 @@ util.mkProgram {
             "Mod+Ctrl+8".action.move-column-to-workspace = 8;
             "Mod+Ctrl+9".action.move-column-to-workspace = 9;
 
+            "Mod+T".action.toggle-window-floating = { };
+
             # Alternatively, there are commands to move just a single window:
             # "Mod+Ctrl+1".action = move-window-to-workspace 1;
 
