@@ -11,7 +11,7 @@ ansi = [
 ]
 background = "24273a"
 brights = [
-    "494d64",
+    "6e738d",
     "ed8796",
     "a6da95",
     "eed49f",
@@ -24,22 +24,22 @@ compose_cursor = "f4dbd6"
 cursor_bg = "cad3f5"
 cursor_fg = "24273a"
 foreground = "cad3f5"
-scrollbar_thumb = "1e2030"
+scrollbar_thumb = "363a4f"
 selection_bg = "cad3f5"
 selection_fg = "24273a"
-split = "494d64"
+split = "6e738d"
 visual_bell = "f5a97f"
 
 [colors.tab_bar]
-background = "1e2030"
-inactive_tab_edge = "1e2030"
+background = "363a4f"
+inactive_tab_edge = "363a4f"
 
 [colors.tab_bar.active_tab]
 bg_color = "24273a"
 fg_color = "cad3f5"
 
 [colors.tab_bar.inactive_tab]
-bg_color = "494d64"
+bg_color = "6e738d"
 fg_color = "cad3f5"
 
 [colors.tab_bar.inactive_tab_hover]
@@ -47,7 +47,7 @@ bg_color = "cad3f5"
 fg_color = "24273a"
 
 [colors.tab_bar.new_tab]
-bg_color = "494d64"
+bg_color = "6e738d"
 fg_color = "cad3f5"
 
 [colors.tab_bar.new_tab_hover]

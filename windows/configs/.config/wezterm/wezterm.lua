@@ -10,31 +10,31 @@ local stylix_base_config = {
 
     color_scheme = "stylix",
     window_frame = {
-        active_titlebar_bg = "494d64",
+        active_titlebar_bg = "6e738d",
         active_titlebar_fg = "cad3f5",
-        active_titlebar_border_bottom = "494d64",
-        border_left_color = "1e2030",
-        border_right_color = "1e2030",
-        border_bottom_color = "1e2030",
-        border_top_color = "1e2030",
-        button_bg = "1e2030",
+        active_titlebar_border_bottom = "6e738d",
+        border_left_color = "363a4f",
+        border_right_color = "363a4f",
+        border_bottom_color = "363a4f",
+        border_top_color = "363a4f",
+        button_bg = "363a4f",
         button_fg = "cad3f5",
         button_hover_bg = "cad3f5",
-        button_hover_fg = "494d64",
-        inactive_titlebar_bg = "1e2030",
+        button_hover_fg = "6e738d",
+        inactive_titlebar_bg = "363a4f",
         inactive_titlebar_fg = "cad3f5",
-        inactive_titlebar_border_bottom = "494d64",
+        inactive_titlebar_border_bottom = "6e738d",
     },
     colors = {
       tab_bar = {
-        background = "1e2030",
-        inactive_tab_edge = "1e2030",
+        background = "363a4f",
+        inactive_tab_edge = "363a4f",
         active_tab = {
           bg_color = "24273a",
           fg_color = "cad3f5",
         },
         inactive_tab = {
-          bg_color = "494d64",
+          bg_color = "6e738d",
           fg_color = "cad3f5",
         },
         inactive_tab_hover = {
@@ -42,7 +42,7 @@ local stylix_base_config = {
           fg_color = "24273a",
         },
         new_tab = {
-          bg_color = "494d64",
+          bg_color = "6e738d",
           fg_color = "cad3f5",
         },
         new_tab_hover = {
@@ -51,7 +51,7 @@ local stylix_base_config = {
         },
       },
     },
-    command_palette_bg_color = "1e2030",
+    command_palette_bg_color = "363a4f",
     command_palette_fg_color = "cad3f5",
     
     font = wezterm.font_with_fallback {
