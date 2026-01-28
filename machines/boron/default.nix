@@ -67,7 +67,7 @@ util.mkToggledModule [ "machines" ] {
         }
       ];
     };
-    programs.niri.settings.output."Samsung Display Corp. 0x4193" = {
+    programs.niri.settings.outputs."Samsung Display Corp. 0x4193" = {
       scale = 2;
     };
   };

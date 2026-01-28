@@ -8,7 +8,7 @@ util.mkProgram {
     enable = true;
     settings = {
       general = {
-        after_sleep_cmd = config.gipphe.core.wm.action.monitors-on;
+        after_sleep_cmd = config.gipphe.core.wm.actions.monitors-on;
         before_sleep_cmd = hyprlock;
         ignore_dbus_inhibit = false;
         lock_cmd = hyprlock;
@@ -20,8 +20,8 @@ util.mkProgram {
         }
         {
           timeout = 1200;
-          on-timeout = config.gipphe.core.wm.action.monitors-off;
-          on-resume = config.gipphe.core.wm.action.monitors-on;
+          on-timeout = config.gipphe.core.wm.actions.monitors-off;
+          on-resume = config.gipphe.core.wm.actions.monitors-on;
         }
       ];
     };
