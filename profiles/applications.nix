@@ -15,6 +15,7 @@ util.mkProfile {
       mpris.enable = true;
       mpv.enable = true;
       qimgv.enable = true;
+      qt.enable = true;
       signal.enable = true;
       slack.enable = true;
       spotify.enable = true;
