@@ -28,6 +28,8 @@ let
         name = "Source Serif 4";
       };
     };
+
+    polarity = "dark";
   };
 in
 util.mkEnvironment {
