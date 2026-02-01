@@ -288,10 +288,15 @@ util.mkProgram {
         #     ] (_: 12.0);
         #   }
         # ];
-        input.keyboard = {
-          numlock = true;
-          xkb = {
-            layout = "no";
+        input = {
+          keyboard = {
+            numlock = true;
+            xkb = {
+              layout = "no";
+            };
+          };
+          touchpad = {
+            natural-scroll = false;
           };
         };
         xwayland-satellite = {
