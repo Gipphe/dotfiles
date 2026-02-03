@@ -22,9 +22,12 @@ util.mkProgram {
             { pkgs, ... }:
             {
               categories = {
+                general = true;
                 droid = flags.isNixOnDroid;
                 full = !flags.isNixOnDroid;
                 haskell = !flags.isNixOnDroid;
+                go = false;
+                elm = false;
               };
               extra.nixd = lib.mkMerge [
                 {
