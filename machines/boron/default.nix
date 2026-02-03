@@ -35,8 +35,8 @@ util.mkToggledModule [ "machines" ] {
       audio.enable = true;
       cli.enable = true;
       core.enable = true;
-      desktop.plasma.enable = true;
-      desktop.niri.enable = false;
+      desktop.plasma.enable = false;
+      desktop.niri.enable = true;
       desktop.hyprland.enable = false;
       desktop.hyprland.noctalia.enable = true;
       fonts.enable = true;
