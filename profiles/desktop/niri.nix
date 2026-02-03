@@ -4,6 +4,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
   shared.gipphe = {
     system.xdg.enable = true;
     programs = {
+      gtk.enable = true;
       niri.enable = true;
 
       hypridle.enable = true;

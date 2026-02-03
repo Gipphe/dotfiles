@@ -18,6 +18,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
     system.xdg.enable = true;
     programs = lib.mkMerge [
       {
+        gtk.enable = true;
         hyprland.enable = true;
         hyprpolkitagent.enable = true;
         hypridle.enable = true;

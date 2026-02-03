@@ -9,7 +9,6 @@ util.mkProfile {
       floorp.default = lib.mkDefault true;
       floorp.enable = true;
       gimp.enable = true;
-      gtk.enable = true;
       localsend.enable = true;
       logseq.enable = true;
       mpris.enable = true;
