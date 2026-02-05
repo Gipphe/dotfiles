@@ -91,6 +91,7 @@ util.mkProgram {
             ".idea/"
             ".vscode/"
             "Session.vim"
+            ".claude/*.local.*"
           ];
           signing = {
             format = "ssh";

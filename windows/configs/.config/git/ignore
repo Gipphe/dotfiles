@@ -3,3 +3,4 @@
 .idea/
 .vscode/
 Session.vim
+.claude/*.local.*
