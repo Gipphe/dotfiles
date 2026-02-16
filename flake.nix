@@ -94,7 +94,7 @@
 
     giphtvim = {
       url = "github:Gipphe/giphtvim";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
 
     pr-tracker = {
