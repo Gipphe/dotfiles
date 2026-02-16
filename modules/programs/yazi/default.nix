@@ -23,7 +23,10 @@ util.mkProgram {
     };
   };
   hm = {
-    programs.yazi.enable = true;
+    programs.yazi = {
+      enable = true;
+      shellWrapperName = "y";
+    };
     gipphe.core.wm.binds = lib.mkIf cfg.hyprland.enable [
       {
         mod = "$mod";
