@@ -1,5 +1,6 @@
-{ nixpkgs, self, ... }@inputs:
+{ nixpkgs-last-working-for-nix-on-droid, self, ... }@inputs:
 let
+  nixpkgs = nixpkgs-last-working-for-nix-on-droid;
   inherit (nixpkgs) lib;
   inherit (lib.attrsets) filterAttrs mapAttrs;
   inherit (import ./util.nix { inherit lib; }) enumerateMachines;
