@@ -1,5 +1,5 @@
 #!/usr/bin/env nix
-#! nix --extra-experimental-features ``flakes nix-command`` shell nixpkgs#openssh nixpkgs#sops nixpkgs#coreutils --command bash
+#! nix --extra-experimental-features ``flakes nix-command`` shell nixpkgs#openssh nixpkgs#sops nixpkgs#coreutils nixpkgs#age --command bash
 # shellcheck shell=bash
 
 log() {
