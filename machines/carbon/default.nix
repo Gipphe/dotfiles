@@ -16,14 +16,23 @@ util.mkToggledModule [ "machines" ] {
       hostName = host.name;
       profiles = {
         android.enable = true;
-        cli-slim.enable = true;
         core.enable = true;
-        fonts.enable = true;
         gc.enable = true;
-        rice.enable = false;
         secrets.enable = true;
       };
-      programs.build-client.enable = false;
+      programs = {
+        atuin.enable = true;
+        direnv.enable = true;
+        eza.enable = true;
+        fish.enable = true;
+        giphtvim.enable = true;
+        git.enable = true;
+        jq.enable = true;
+        jujutsu.enable = true;
+        less.enable = true;
+        ssh.enable = true;
+        zoxide.enable = true;
+      };
     };
     # SSH setup requires sops-nix, which isn't supported on nix-on-droid
     # gipphe.programs.ssh.enable = lib.mkForce false;
@@ -39,5 +48,5 @@ util.mkToggledModule [ "machines" ] {
       mkdir -p '${config.home.sessionVariables."XDG_RUNTIME_DIR"}'
     '';
   };
-  system-droid.system.stateVersion = lib.mkForce "24.05";
+  system-droid.system.stateVersion = lib.mkForce "26.05";
 }
