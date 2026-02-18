@@ -16,19 +16,11 @@ util.mkProgram {
       home.sessionVariables.EDITOR = "nvim";
       programs.fish.shellAbbrs.vim = "nvim";
       nvim = {
-        enable = true;
+        enable = !flags.isNixOnDroid;
         packageDefinitions.replace = {
           nvim =
             { pkgs, ... }:
             {
-              categories = {
-                general = true;
-                droid = flags.isNixOnDroid;
-                full = !flags.isNixOnDroid;
-                haskell = !flags.isNixOnDroid;
-                go = false;
-                elm = false;
-              };
               extra.nixd = lib.mkMerge [
                 {
                   nixpkgs = "import ${pkgs.path} {}";
@@ -43,6 +35,7 @@ util.mkProgram {
             };
         };
       };
+      droid.enable = flags.isNixOnDroid;
     };
   };
 }
