@@ -17,6 +17,7 @@ util.mkToggledModule [ "machines" ] {
       profiles = {
         android.enable = true;
         core.enable = true;
+        fonts.enable = true;
         gc.enable = true;
         secrets.enable = true;
       };
