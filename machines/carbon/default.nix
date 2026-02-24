@@ -2,6 +2,7 @@
   lib,
   config,
   util,
+  pkgs,
   ...
 }:
 let
@@ -37,11 +38,17 @@ util.mkToggledModule [ "machines" ] {
   hm = {
     home = {
       sessionVariables.XDG_RUNTIME_DIR = "${config.gipphe.homeDirectory}/.run";
-      activation."sops-nix-droid-fix" = lib.hm.dag.entryAfter [ "filesChanged" ] ''
-        run mkdir -p '${config.home.sessionVariables."XDG_RUNTIME_DIR"}'
-        export XDG_RUNTIME_DIR="${config.home.sessionVariables."XDG_RUNTIME_DIR"}"
-        run ${builtins.elemAt config.systemd.user.services.sops-nix.Service.ExecStart 0}
-      '';
+      activation."sops-nix-droid-fix" =
+        let
+          script = pkgs.writeShellScript "exec-secrets" ''
+            export XDG_RUNTIME_DIR="${config.home.sessionVariables."XDG_RUNTIME_DIR"}"
+            mkdir -p "$XDG_RUNTIME_DIR"
+            ${builtins.elemAt config.systemd.user.services.sops-nix.Service.ExecStart 0}
+          '';
+        in
+        lib.hm.dag.entryAfter [ "filesChanged" ] ''
+          run ${script}
+        '';
     };
     programs.fish.shellInit = lib.mkBefore ''
       mkdir -p '${config.home.sessionVariables."XDG_RUNTIME_DIR"}'
