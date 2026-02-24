@@ -48,9 +48,6 @@ util.mkModule {
 
     # Manage home-manager executable
     programs.home-manager.enable = true;
-
-    # Manage XDG directories and configs
-    xdg.enable = true;
   };
 
   system-nixos = {
