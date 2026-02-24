@@ -38,6 +38,8 @@ util.mkToggledModule [ "machines" ] {
     home = {
       sessionVariables.XDG_RUNTIME_DIR = "${config.gipphe.homeDirectory}/.run";
       activation."sops-nix-droid-fix" = lib.hm.dag.entryAfter [ "filesChanged" ] ''
+        run mkdir -p '${config.home.sessionVariables."XDG_RUNTIME_DIR"}'
+        export XDG_RUNTIME_DIR="${config.home.sessionVariables."XDG_RUNTIME_DIR"}"
         run ${builtins.elemAt config.systemd.user.services.sops-nix.Service.ExecStart 0}
       '';
     };
