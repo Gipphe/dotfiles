@@ -18,11 +18,9 @@ util.mkToggledModule [ "machines" ] {
         android.enable = true;
         core.enable = true;
         fonts.enable = true;
-        gc.enable = true;
         secrets.enable = true;
       };
       programs = {
-        atuin.enable = true;
         direnv.enable = true;
         eza.enable = true;
         fish.enable = true;
@@ -35,8 +33,6 @@ util.mkToggledModule [ "machines" ] {
         zoxide.enable = true;
       };
     };
-    # SSH setup requires sops-nix, which isn't supported on nix-on-droid
-    # gipphe.programs.ssh.enable = lib.mkForce false;
   };
   hm = {
     home = {
