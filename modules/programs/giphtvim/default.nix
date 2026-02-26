@@ -34,10 +34,11 @@ util.mkProgram {
                     nixpkgs = "import ${pkgs.path} {}";
                   }
                   (lib.mkIf config.gipphe.programs.giphtvim.plugins.nixd.docs.options.enable {
-
-                    home_manager = ''(builtins.getFlake "${inputs.self}").nixosConfigurations.argon.options.home-manager.users.type.getSubOptions []'';
-                    nixos_options = ''(builtins.getFlake "${inputs.self}").nixosConfigurations.argon.options'';
-                    droid_options = ''(builtins.getFlake "${inputs.self}").nixOnDroidConfigurations.helium.options'';
+                    options = {
+                      home_manager = ''(builtins.getFlake "${inputs.self}").nixosConfigurations.argon.options.home-manager.users.type.getSubOptions []'';
+                      nixos = ''(builtins.getFlake "${inputs.self}").nixosConfigurations.argon.options'';
+                      droid = ''(builtins.getFlake "${inputs.self}").nixOnDroidConfigurations.helium.options'';
+                    };
                   })
                 ];
               };
