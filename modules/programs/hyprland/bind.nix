@@ -1,6 +1,6 @@
 { lib }:
 let
-  inherit (lib) toLower assertMsg;
+  inherit (lib) toLower;
   inherit (builtins)
     concatStringsSep
     isString
@@ -24,12 +24,10 @@ let
     mods: if isString mods then replaceMod mods else concatStringsSep " " (map replaceMod mods);
   toHyprBind =
     coreBind:
-    assert assertMsg (
-      coreBind.args == { }
-    ) "Corebinds \"args\" is not supported in our Hyprland bind implementation yet";
-    "${toMods coreBind.mod}, ${coreBind.key}, ${toDispatch coreBind.action}";
+    lib.warnIf (coreBind.args == { })
+      "Corebinds \"args\" is not supported in our Hyprland bind implementation yet"
+      "${toMods coreBind.mod}, ${coreBind.key}, ${toDispatch coreBind.action}";
 in
 {
-
   inherit toHyprBind;
 }
