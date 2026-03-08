@@ -4,10 +4,11 @@
   util,
   inputs,
   config,
+  osConfig,
   ...
 }:
 let
-  ipc = "${lib.getExe' config.programs.noctalia-shell.package "noctalia-shell"} ipc call";
+  ipc = "${lib.getExe' osConfig.services.noctalia-shell.package "noctalia-shell"} ipc call";
   wallpaperDir = "Pictures/wallpapers";
   noctalia-copy-gui-settings = pkgs.writeShellApplication {
     name = "noctalia-copy-gui-settings";
@@ -44,7 +45,7 @@ util.mkProgram {
         enable = true;
         # Uses nixos module package.
         package = null;
-        systemd.enable = true;
+        # systemd.enable = true;
         settings = {
           bar = {
             backgroundOpacity = lib.mkForce 1;
