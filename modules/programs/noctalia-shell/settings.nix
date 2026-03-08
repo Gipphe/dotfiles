@@ -38,7 +38,7 @@
     marginHorizontal = 4;
     marginVertical = 4;
     monitors = [ ];
-    outerCorners = false;
+    outerCorners = true;
     position = "top";
     showCapsule = true;
     showOutline = false;
@@ -282,7 +282,7 @@
     boxRadiusRatio = 1;
     compactLockScreen = false;
     dimmerOpacity = 0.2;
-    enableShadows = false;
+    enableShadows = true;
     forceBlackScreenCorners = false;
     iRadiusRatio = 1;
     language = "";
