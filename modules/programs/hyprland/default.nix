@@ -339,7 +339,7 @@ in
                 in
                 [
                   "r[1], layout:scrolling"
-                  "r[2], on-created-empty:${lib.getExe config.programs.wezterm.finalPackage}"
+                  "r[2], on-created-empty:${lib.getExe config.programs.wezterm.package}"
                   "r[3], on-created-empty:${lib.getExe floorpPkg}"
                   "w[tv1]s[false], gapsout:0, gapsin:0"
                   "f[1]s[false], gapsout:0, gapsin:0"
