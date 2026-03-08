@@ -92,12 +92,17 @@ util.mkProgram {
     ];
   };
   system-nixos = {
+    imports = [
+      inputs.noctalia-shell.nixosModules.default
+    ];
     networking.networkmanager.enable = true;
     hardware.bluetooth.enable = true;
     services = {
       auto-cpufreq.enable = lib.mkForce false;
       power-profiles-daemon.enable = true;
       upower.enable = true;
+
+      noctalia-shell.enable = true;
     };
   };
 }

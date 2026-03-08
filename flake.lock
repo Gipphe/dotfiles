@@ -1031,16 +1031,15 @@
     "noctalia-qs": {
       "inputs": {
         "nixpkgs": [
-          "noctalia-shell",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1772673824,
-        "narHash": "sha256-TLHXPoELZA6VeuzC1Zpx+MnSsYzrJs+DSieMgfjAOJc=",
+        "lastModified": 1772940994,
+        "narHash": "sha256-VwM1+5dwxIhZ0ahTlHnlMOC/Mgn8wGwcPKhM93Q+w9s=",
         "owner": "noctalia-dev",
         "repo": "noctalia-qs",
-        "rev": "f8531192cd09b9ea2e78d18e9cfc9d3dba498690",
+        "rev": "b58414209fce1669cff818e50468e926613baa10",
         "type": "github"
       },
       "original": {
@@ -1054,7 +1053,9 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "noctalia-qs": "noctalia-qs"
+        "noctalia-qs": [
+          "noctalia-qs"
+        ]
       },
       "locked": {
         "lastModified": 1772925400,
@@ -1174,6 +1175,7 @@
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-last-working-for-nix-on-droid": "nixpkgs-last-working-for-nix-on-droid",
         "nixpkgs-with-working-floorp": "nixpkgs-with-working-floorp",
+        "noctalia-qs": "noctalia-qs",
         "noctalia-shell": "noctalia-shell",
         "pr-tracker": "pr-tracker",
         "solaar": "solaar",
