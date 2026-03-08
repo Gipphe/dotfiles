@@ -1,9 +1,7 @@
 {
   appLauncher = {
     autoPasteClipboard = false;
-
     clipboardWrapText = true;
-
     customLaunchPrefix = "";
     customLaunchPrefixEnabled = false;
     enableClipPreview = true;
@@ -160,14 +158,10 @@
           usePrimaryColor = false;
         }
       ];
-
     };
-
   };
-
   brightness = {
     brightnessStep = 5;
-
     enableDdcSupport = false;
     enforceMinimum = true;
   };
@@ -227,29 +221,15 @@
     position = "close_to_bar_button";
     shortcuts = {
       left = [
-        {
-          id = "Network";
-        }
-        {
-          id = "Bluetooth";
-        }
-        {
-          id = "WallpaperSelector";
-        }
+        { id = "Network"; }
+        { id = "Bluetooth"; }
+        { id = "WallpaperSelector"; }
       ];
       right = [
-        {
-          id = "Notifications";
-        }
-        {
-          id = "PowerProfile";
-        }
-        {
-          id = "KeepAwake";
-        }
-        {
-          id = "NightLight";
-        }
+        { id = "Notifications"; }
+        { id = "PowerProfile"; }
+        { id = "KeepAwake"; }
+        { id = "NightLight"; }
       ];
     };
   };
@@ -472,7 +452,7 @@
     wifiDetailsViewMode = "grid";
   };
   wallpaper = {
-    directory = "/home/gipphe/Pictures/Wallpapers";
+    directory = "/home/gipphe/Pictures/wallpapers";
     enableMultiMonitorDirectories = false;
     enabled = true;
     fillColor = "#000000";
