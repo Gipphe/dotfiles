@@ -332,10 +332,18 @@ in
                 disable_splash_rendering = true;
               };
 
-              workspace = [
-                "w[tv1]s[false], gapsout:0, gapsin:0"
-                "f[1]s[false], gapsout:0, gapsin:0"
-              ];
+              workspace =
+                let
+                  floorp = config.programs.floorp;
+                  floorpPkg = floorp.finalPackage or floorp.package;
+                in
+                [
+                  "r[1], layout:scrolling"
+                  "r[2], on-created-empty:${lib.getExe config.programs.wezterm.finalPackage}"
+                  "r[3], on-created-empty:${lib.getExe floorpPkg}"
+                  "w[tv1]s[false], gapsout:0, gapsin:0"
+                  "f[1]s[false], gapsout:0, gapsin:0"
+                ];
               windowrule = [
                 "border_size 0, match:float 0, match:workspace w[tv1]s[false]"
                 "rounding 0, match:float 0, match:workspace w[tv1]s[false]"
