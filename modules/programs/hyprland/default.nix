@@ -309,7 +309,7 @@ in
                   "border, 1, 5, easeOutQuart"
                   "borderangle, 1, 4, easeOutQuart"
                   "fade, 1, 4, default"
-                  "workspaces, 1, 1, default"
+                  "workspaces, 1, 1, default, slidevert"
                 ];
               };
 
