@@ -18,7 +18,7 @@ in
 
       system-all = lib.mkIf config.gipphe.programs.nix.enable {
         nix = {
-          package = pkgs.nixVersions.nix_2_30;
+          package = pkgs.nix;
 
           # pin the registry to avoid downloading and evaling a new nixpkgs version every time
           registry = lib.mapAttrs (_: v: { flake = v; }) (lib.filterAttrs (x: _: x != "self") inputs);
