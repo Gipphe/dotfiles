@@ -9,6 +9,31 @@
 let
   ipc = "${lib.getExe' config.programs.noctalia-shell.package "noctalia-shell"} ipc call";
   wallpaperDir = "Pictures/wallpapers";
+  noctalia-copy-gui-settings = pkgs.writeShellApplication {
+    name = "noctalia-copy-gui-settings";
+    runtimeInputs = [ pkgs.nix ];
+    runtimeEnv.dest = "${config.home.homeDirectory}/projects/dotfiles/modules/programs/noctalia-shell/settings.nix";
+    text = /* bash */ ''
+      nix eval --expr 'builtins.fromJSON (builtins.readFile "${config.xdg.configHome}/noctalia/gui-settings.json")' --impure > "$dest"
+      nixfmt "$dest"
+    '';
+  };
+  noctalia-diff-settings = pkgs.writeShellApplication {
+    name = "noctalia-diff-settings";
+    runtimeInputs = builtins.attrValues {
+      inherit (pkgs)
+        colordiff
+        diffutils
+        jq
+        ;
+    };
+    text = /* bash */ ''
+      diff -u \
+        <(jq -S . "$HOME/.config/noctalia/settings.json") \
+        <(jq -S . "$HOME/.config/noctalia/gui-settings.json") \
+        | colordiff --nobanner
+    '';
+  };
 in
 util.mkProgram {
   name = "noctalia-shell";
@@ -17,6 +42,8 @@ util.mkProgram {
     programs.noctalia-shell = lib.mkMerge [
       {
         enable = true;
+        # Uses nixos module package.
+        package = null;
         systemd.enable = true;
         settings = {
           bar = {
@@ -47,37 +74,16 @@ util.mkProgram {
         settings = import ./settings.nix;
       }
     ];
-    home.file = {
-      ".face".source = ../../../assets/profile.png;
-      "${wallpaperDir}/small-memory.png".source = config.stylix.image;
+    home = {
+      file = {
+        ".face".source = ../../../assets/profile.png;
+        "${wallpaperDir}/small-memory.png".source = config.stylix.image;
+      };
+      packages = [
+        noctalia-copy-gui-settings
+        noctalia-diff-settings
+      ];
     };
-    home.packages = [
-      (pkgs.writeShellApplication {
-        name = "noctalia-copy-gui-settings";
-        runtimeInputs = [ pkgs.nix ];
-        runtimeEnv.dest = "${config.home.homeDirectory}/projects/dotfiles/modules/programs/noctalia-shell/settings.nix";
-        text = /* bash */ ''
-          nix eval --expr 'builtins.fromJSON (builtins.readFile "${config.xdg.configHome}/noctalia/gui-settings.json")' --impure > "$dest"
-          nixfmt "$dest"
-        '';
-      })
-      (pkgs.writeShellApplication {
-        name = "noctalia-diff-settings";
-        runtimeInputs = builtins.attrValues {
-          inherit (pkgs)
-            colordiff
-            diffutils
-            jq
-            ;
-        };
-        text = /* bash */ ''
-          diff -u \
-            <(jq -S . "$HOME/.config/noctalia/settings.json") \
-            <(jq -S . "$HOME/.config/noctalia/gui-settings.json") \
-            | colordiff --nobanner
-        '';
-      })
-    ];
     gipphe.core.wm.binds = [
       {
         mod = "Mod";
