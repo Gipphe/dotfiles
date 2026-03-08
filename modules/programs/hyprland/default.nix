@@ -120,7 +120,7 @@ in
                   "$mod, T, togglefloating # Toggle between tiling and floating window"
                   "$mod, F, fullscreen # Open the window in fullscreen"
                   "$mod, P, pseudo, # dwindle"
-                  "$mod, J, togglesplit, # dwindle"
+                  "$mod, J, layoutmsg, togglesplit, # dwindle"
 
                   "$mod, F1, exec, ${gamemode}/bin/gamemode"
 
@@ -147,7 +147,7 @@ in
                   hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
                   lid-switch = util.writeFishApplication {
                     name = "lid-switch";
-                    text = ''
+                    text = /* fish */ ''
                       set -l monitors "$(${hyprctl} monitors all -j | jq 'length')"
                       if test $monitors == 1
                         if test $argv[1] == "close"
@@ -370,7 +370,6 @@ in
             in
             {
               bind = [
-
                 "$mod, mouse_down, exec, ${increase-zoom}"
                 "$mod, mouse_up, exec, ${decrease-zoom}"
                 "$mod SHIFT, mouse_up, exec, ${reset-zoom}"
@@ -392,11 +391,6 @@ in
         programs.hyprland = {
           enable = true;
           inherit package portalPackage;
-        };
-        nix.settings = {
-          substituters = [ "https://hyprland.cachix.org" ];
-          trusted-substituters = [ "https://hyprland.cachix.org" ];
-          trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
         };
       };
     })
