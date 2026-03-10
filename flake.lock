@@ -294,11 +294,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1773095220,
-        "narHash": "sha256-BwvTct97jEuFSwY74Ig9obmZ+xQ7z+HcK5AG6TRAusI=",
+        "lastModified": 1773102399,
+        "narHash": "sha256-p61+vKXf9XrlNOIuSXAggdWe59ZndpRlalOpqnMVcu8=",
         "owner": "Gipphe",
         "repo": "giphtvim",
-        "rev": "bab052f0dc18c654f6d5e79352752989f4b97f85",
+        "rev": "6967481bbbfd9636bcaf4b464e5cb085b1ae70a6",
         "type": "github"
       },
       "original": {
@@ -1230,11 +1230,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1772944399,
-        "narHash": "sha256-xTzsSd3r5HBeufSZ3fszAn0ldfKctvsYG7tT2YJg5gY=",
+        "lastModified": 1773096132,
+        "narHash": "sha256-M3zEnq9OElB7zqc+mjgPlByPm1O5t2fbUrH3t/Hm5Ag=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "c8e69670b316d6788e435a3aa0bda74eb1b82cc0",
+        "rev": "d1ff3b1034d5bab5d7d8086a7803c5a5968cd784",
         "type": "github"
       },
       "original": {
