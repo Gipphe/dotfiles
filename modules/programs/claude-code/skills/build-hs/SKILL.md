@@ -1,3 +1,9 @@
+---
+name: build-hs
+description: Build GHC project with ghcid.
+disable-model-invocation: true
+---
+
 Start a ghcid session to monitor the build.
 
 **Before starting**: Verify which command is actually allowed in

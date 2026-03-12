@@ -1,3 +1,9 @@
+---
+name: commit
+description: Create a jujutsu commit for the user.
+disable-model-invocation: true
+---
+
 Create a jj descripton using conventional commit format.
 
 1. Run `jj status` and `jj diff` to see staged changes
@@ -8,17 +14,17 @@ Create a jj descripton using conventional commit format.
    - Add details in body if needed
 4. Commit with a HEREDOC to preserve formatting:
 
-```
-jj commit -m "$(cat <<'EOF'
-<type>: <concise summary>
+   ```
+   jj commit -m "$(cat <<'EOF'
+   <type>: <concise summary>
 
-<optional body with more details>
-EOF
-)"
-```
+   <optional body with more details>
+   EOF
+   )"
+   ```
 
 **IMPORTANT**:
 
 - Never include Claude, AI, or co-authorship mentions
 - Follow the repository's existing commit style
-- Do NOT run `jj git push` or `git push` unless explicitly requested
+- Do NOT run `jj git push`, `jj p` or `git push` unless explicitly requested
