@@ -1,0 +1,110 @@
+{
+    "cardano-api": {
+        "branch": "master",
+        "description": "Cardano API",
+        "homepage": null,
+        "owner": "IntersectMBO",
+        "repo": "cardano-api",
+        "rev": "034d1d7eee86be409a51309ba5fa1a788879928a",
+        "sha256": "1d8q5lsdk6vi6frikkp8bm6ywxiaff48lgfp8i7vn3rv5yvicqg8",
+        "type": "tarball",
+        "url": "https://github.com/IntersectMBO/cardano-api/archive/034d1d7eee86be409a51309ba5fa1a788879928a.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "cardano-base": {
+        "branch": "master",
+        "description": "Code used throughout the Cardano eco-system",
+        "homepage": "http://base.cardano.intersectmbo.org/",
+        "owner": "IntersectMBO",
+        "repo": "cardano-base",
+        "rev": "db52f43b38ba5d8927feb2199d4913fe6c0f974d",
+        "sha256": "0kgabshqdmb81a41n5j09j7w3m7pi42fg6gw2ma45dlkzb7nn4gz",
+        "type": "tarball",
+        "url": "https://github.com/IntersectMBO/cardano-base/archive/db52f43b38ba5d8927feb2199d4913fe6c0f974d.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "cardano-formal-specifications": {
+        "branch": "main",
+        "description": "Formal specifications for the Cardano Blockchain",
+        "homepage": "",
+        "owner": "IntersectMBO",
+        "repo": "cardano-formal-specifications",
+        "rev": "909f0cc981d5e38a6de1791860ccd7249ade3aa4",
+        "sha256": "03ap0rsbv197fnsif3d637rgcyp052y4cvj71bvkn0crcyk84h5r",
+        "type": "tarball",
+        "url": "https://github.com/IntersectMBO/cardano-formal-specifications/archive/909f0cc981d5e38a6de1791860ccd7249ade3aa4.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "cardano-ledger": {
+        "branch": "master",
+        "description": "The ledger implementation and specifications of the Cardano blockchain.",
+        "homepage": "",
+        "owner": "IntersectMBO",
+        "repo": "cardano-ledger",
+        "rev": "b5d3b4b1638af928830a629fdcd950640fac3334",
+        "sha256": "1p5nj5j4yyy0cxy390n6vm3v0z5y9dx772rnfmbnwazxyh58amq7",
+        "type": "tarball",
+        "url": "https://github.com/IntersectMBO/cardano-ledger/archive/b5d3b4b1638af928830a629fdcd950640fac3334.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "cardano-node": {
+        "branch": "master",
+        "description": "The core component that is used to participate in a Cardano decentralised blockchain.",
+        "homepage": "https://cardano.org",
+        "owner": "IntersectMBO",
+        "repo": "cardano-node",
+        "rev": "10051dec74b21ff042b00e25239eb00fcbfc5556",
+        "sha256": "1dbshnz52phylyyvp1wiv6jczm4x5snbljm3ygb3x0349j5y93im",
+        "type": "tarball",
+        "url": "https://github.com/IntersectMBO/cardano-node/archive/10051dec74b21ff042b00e25239eb00fcbfc5556.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "formal-ledger-specifications": {
+        "branch": "master",
+        "description": "Formal specifications of the Cardano ledger",
+        "homepage": "https://intersectmbo.github.io/formal-ledger-specifications/",
+        "owner": "IntersectMBO",
+        "repo": "formal-ledger-specifications",
+        "rev": "95fb087a0a88dd2ae569ae61dc31e713e749c7b0",
+        "sha256": "0x0fx72gdaa6z3r99gcs07ibjp9gsfdzvqfaj4v4yll84klpvjk6",
+        "type": "tarball",
+        "url": "https://github.com/IntersectMBO/formal-ledger-specifications/archive/95fb087a0a88dd2ae569ae61dc31e713e749c7b0.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "nixpkgs": {
+        "branch": "nixos-unstable",
+        "description": "Nix Packages collection",
+        "homepage": null,
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "62dc67aa6a52b4364dd75994ec00b51fbf474e50",
+        "sha256": "03isdzcpspnkkjd2m2r2190pchgkhpdd8ars6rmjmi3a4l3qg2hl",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/62dc67aa6a52b4364dd75994ec00b51fbf474e50.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "ouroboros-consensus": {
+        "branch": "main",
+        "description": "Implementation of a Consensus Layer for the Ouroboros family of protocols",
+        "homepage": "https://ouroboros-consensus.cardano.intersectmbo.org",
+        "owner": "IntersectMBO",
+        "repo": "ouroboros-consensus",
+        "rev": "3d32643b7fa46db63ff82fdac2c50c23584e839e",
+        "sha256": "03grhxs11v294fb4zxra6nf5nk4kr5nv34xhns2lqmsvrgmm444n",
+        "type": "tarball",
+        "url": "https://github.com/IntersectMBO/ouroboros-consensus/archive/3d32643b7fa46db63ff82fdac2c50c23584e839e.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "ouroboros-network": {
+        "branch": "main",
+        "description": "Specifications of network protocols and implementations of components running these protocols which support a family of Ouroboros Consesus protocols; the diffusion layer of the Cardano Node.",
+        "homepage": "https://ouroboros-network.cardano.intersectmbo.org",
+        "owner": "IntersectMBO",
+        "repo": "ouroboros-network",
+        "rev": "38894b286110f5f4548c960d6a2652c2b9cdf53d",
+        "sha256": "0v4nk6yzwyhb282pbqh4xbch1hsbsgmdffzywqmypnap1hy33d30",
+        "type": "tarball",
+        "url": "https://github.com/IntersectMBO/ouroboros-network/archive/38894b286110f5f4548c960d6a2652c2b9cdf53d.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    }
+}
