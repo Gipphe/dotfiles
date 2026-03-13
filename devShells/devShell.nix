@@ -172,5 +172,9 @@ in
       name = "DIRENV_LOG_FORMAT";
       value = "";
     }
+    {
+      name = "NH_SHOW_ACTIVATION_LOGS";
+      value = "1";
+    }
   ];
 }
