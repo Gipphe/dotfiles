@@ -174,7 +174,7 @@ in
     }
     {
       name = "NH_SHOW_ACTIVATION_LOGS";
-      value = "1";
+      value = "true";
     }
   ];
 }
