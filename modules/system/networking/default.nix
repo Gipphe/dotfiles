@@ -24,6 +24,9 @@ util.mkToggledModule [ "system" ] {
     };
     networking = {
       inherit (config.gipphe) hostName;
+      nameservers = [
+        "194.242.2.2" # dns.mullvad.net
+      ];
       networkmanager = {
         enable = true;
         ensureProfiles = {
