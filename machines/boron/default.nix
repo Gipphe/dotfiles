@@ -35,10 +35,10 @@ util.mkToggledModule [ "machines" ] {
       audio.enable = true;
       cli.enable = true;
       core.enable = true;
-      desktop.plasma.enable = false;
-      desktop.niri.enable = false;
       desktop.hyprland.enable = true;
       desktop.hyprland.noctalia.enable = true;
+      desktop.niri.enable = false;
+      desktop.plasma.enable = false;
       fonts.enable = true;
       gaming.enable = true;
       gc.enable = true;
@@ -49,6 +49,7 @@ util.mkToggledModule [ "machines" ] {
       sync.enable = true;
       systemd.enable = true;
       terminal-capture.enable = false;
+      torrent.enable = true;
     };
     programs.pipewire.higherQuantum.enable = true;
     system.cpu.enable = true;
