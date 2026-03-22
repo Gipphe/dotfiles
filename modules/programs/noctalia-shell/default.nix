@@ -8,7 +8,7 @@
   ...
 }:
 let
-  ipc = "${lib.getExe' osConfig.services.noctalia-shell.package "noctalia-shell"} ipc call";
+  ipc = "${lib.getExe' config.services.noctalia-shell.package "noctalia-shell"} ipc call";
   wallpaperDir = "Pictures/wallpapers";
   noctalia-copy-gui-settings = pkgs.writeShellApplication {
     name = "noctalia-copy-gui-settings";
@@ -39,13 +39,11 @@ in
 util.mkProgram {
   name = "noctalia-shell";
   hm = {
-    imports = [ inputs.noctalia-shell.homeModules.default ];
+    imports = [ inputs.noctalia.homeModules.default ];
     programs.noctalia-shell = lib.mkMerge [
       {
         enable = true;
-        # Uses nixos module package.
-        package = null;
-        # systemd.enable = true;
+        systemd.enable = true;
         settings = {
           bar = {
             backgroundOpacity = lib.mkForce 1;
@@ -99,9 +97,9 @@ util.mkProgram {
     ];
   };
   system-nixos = {
-    imports = [
-      inputs.noctalia-shell.nixosModules.default
-    ];
+    # imports = [
+    #   inputs.noctalia.nixosModules.default
+    # ];
     networking.networkmanager.enable = true;
     hardware.bluetooth.enable = true;
     services = {
@@ -109,7 +107,7 @@ util.mkProgram {
       power-profiles-daemon.enable = true;
       upower.enable = true;
 
-      noctalia-shell.enable = true;
+      # noctalia-shell.enable = true;
     };
   };
 }
