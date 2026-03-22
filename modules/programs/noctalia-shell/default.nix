@@ -12,7 +12,7 @@ let
   wallpaperDir = "Pictures/wallpapers";
   noctalia-copy-gui-settings = pkgs.callPackage ./scripts/noctalia-copy-gui-settings.nix { };
   noctalia-diff-settings = pkgs.callPackage ./scripts/noctalia-diff-settings.nix {
-    noctalia-shell = config.services.noctalia-shell.package;
+    noctalia-shell = config.programs.noctalia-shell.package;
   };
 in
 util.mkProgram {
