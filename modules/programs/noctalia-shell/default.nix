@@ -77,14 +77,18 @@ util.mkProgram {
       ];
       triggers.on-load =
         let
-          startup = pkgs.writeShellScript "noctalia-startup" ''
-            noctalia-shell kill || true
-            sleep 2s
-            noctalia-shell
-          '';
+          startup = pkgs.writeShellApplication {
+            name = "noctalia-startup";
+            runtimeInputs = [ config.programs.noctalia-shell.package ];
+            text = ''
+              noctalia-shell kill || true
+              sleep 2s
+              noctalia-shell
+            '';
+          };
         in
         {
-          noctalia-startup.command = "${startup}";
+          noctalia-startup.command = lib.getExe startup;
         };
     };
   };
