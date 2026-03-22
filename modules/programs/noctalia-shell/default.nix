@@ -10,30 +10,9 @@
 let
   ipc = "${lib.getExe' config.services.noctalia-shell.package "noctalia-shell"} ipc call";
   wallpaperDir = "Pictures/wallpapers";
-  noctalia-copy-gui-settings = pkgs.writeShellApplication {
-    name = "noctalia-copy-gui-settings";
-    runtimeInputs = [ pkgs.nix ];
-    runtimeEnv.dest = "${config.home.homeDirectory}/projects/dotfiles/modules/programs/noctalia-shell/settings.nix";
-    text = /* bash */ ''
-      nix eval --expr 'builtins.fromJSON (builtins.readFile "${config.xdg.configHome}/noctalia/gui-settings.json")' --impure > "$dest"
-      nixfmt "$dest"
-    '';
-  };
-  noctalia-diff-settings = pkgs.writeShellApplication {
-    name = "noctalia-diff-settings";
-    runtimeInputs = builtins.attrValues {
-      inherit (pkgs)
-        colordiff
-        diffutils
-        jq
-        ;
-    };
-    text = /* bash */ ''
-      diff -u \
-        <(jq -S . "$HOME/.config/noctalia/settings.json") \
-        <(jq -S . "$HOME/.config/noctalia/gui-settings.json") \
-        | colordiff --nobanner
-    '';
+  noctalia-copy-gui-settings = pkgs.callPackage ./scripts/noctalia-copy-gui-settings.nix { };
+  noctalia-diff-settings = pkgs.callPackage ./scripts/noctalia-diff-settings {
+    noctalia-shell = config.services.noctalia-shell.package;
   };
 in
 util.mkProgram {
