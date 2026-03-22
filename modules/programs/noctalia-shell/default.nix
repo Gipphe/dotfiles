@@ -4,7 +4,6 @@
   util,
   inputs,
   config,
-  osConfig,
   ...
 }:
 let
