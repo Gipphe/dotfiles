@@ -10,7 +10,9 @@
 let
   ipc = "${lib.getExe' config.programs.noctalia-shell.package "noctalia-shell"} ipc call";
   wallpaperDir = "Pictures/wallpapers";
-  noctalia-copy-gui-settings = pkgs.callPackage ./scripts/noctalia-copy-gui-settings.nix { };
+  noctalia-copy-gui-settings = pkgs.callPackage ./scripts/noctalia-copy-gui-settings.nix {
+    noctalia-shell = config.programs.noctalia-shell.package;
+  };
   noctalia-diff-settings = pkgs.callPackage ./scripts/noctalia-diff-settings.nix {
     noctalia-shell = config.programs.noctalia-shell.package;
   };

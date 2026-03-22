@@ -1,12 +1,21 @@
 {
+  jq,
   nix,
+  noctalia-shell,
   writeShellApplication,
 }:
 writeShellApplication {
   name = "noctalia-copy-gui-settings";
-  runtimeInputs = [ nix ];
+  runtimeInputs = [
+    noctalia-shell
+    nix
+    jq
+  ];
   text = /* bash */ ''
-    nix eval --expr 'builtins.fromJSON (builtins.readFile "$XDG_CONFIG_HOME/noctalia/gui-settings.json")' --impure > "$HOME/projects/dotfiles/modules/programs/noctalia-shell/settings.nix"
+    dest="$HOME/projects/dotfiles/modules/programs/noctalia-shell/settings.nix"
+    file="$(mktemp)"
+    noctalia-shell ipc call state all | jq .settings > "$file"
+    nix eval --expr "builtins.fromJSON (builtins.readFile \"$file\")" --impure > "$dest"
     nixfmt "$dest"
   '';
 }
