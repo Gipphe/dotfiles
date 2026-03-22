@@ -30,52 +30,7 @@ let
       ]
     ) 10
   );
-  binds = import ./bind.nix { inherit lib; };
-  coreBinds = map binds.toHyprBind config.gipphe.core.wm.binds;
 
-  killactive = pkgs.writeShellApplication {
-    name = "killactive";
-    runtimeInputs = [
-      config.wayland.windowManager.hyprland.package
-      pkgs.xdotool
-    ];
-    text = /* bash */ ''
-      if test "$(hyprctl activewindow -j | jq -r '.class')" = 'Steam'; then
-        xdotool getactivewindow windowunmap
-      else
-        hyprctl dispatch killactive ""
-      fi
-    '';
-  };
-
-  gamemode = pkgs.writeShellApplication {
-    name = "gamemode";
-    runtimeInputs = [
-      config.wayland.windowManager.hyprland.package
-      pkgs.jq
-    ];
-    text = /* bash */ ''
-      HYPRGAMEMODE=$(hyprctl getoption animations:enabled -j | jq -r '.int')
-      if test "$HYPRGAMEMODE" = 1; then
-        hyprctl --batch "\
-          keyword animations:enabled 0; \
-          keyword animation borderangle,0; \
-          keyword decoration:shadow:enabled 0; \
-          keyword decoration:blur:enabled 0; \
-          keyword decoration:fullscreen_opacity 1; \
-          keyword general:gaps_in 0; \
-          keyword general:gaps_out 0; \
-          keyword general:border_size 1; \
-          keyword decoration:rounding 0; \
-          keyword input:touchpad:disable_while_typing false \
-        "
-        hyprctl notify 1 5000 "rgb(40a02b)" "Gamemode [ON]"
-      else
-        hyprctl reload
-        hyprctl notify 1 5000 "rgb(d20f39)" "Gamemode [OFF]"
-      fi
-    '';
-  };
 in
 {
   imports = [
@@ -112,6 +67,54 @@ in
               # See https://wiki.hyprland.org/Configuring/Monitors
               monitor = lib.mkDefault ",preferred,auto,1";
               bind =
+                let
+                  killactive = pkgs.writeShellApplication {
+                    name = "killactive";
+                    runtimeInputs = [
+                      config.wayland.windowManager.hyprland.package
+                      pkgs.xdotool
+                    ];
+                    text = /* bash */ ''
+                      if test "$(hyprctl activewindow -j | jq -r '.class')" = 'Steam'; then
+                        xdotool getactivewindow windowunmap
+                      else
+                        hyprctl dispatch killactive ""
+                      fi
+                    '';
+                  };
+
+                  gamemode = pkgs.writeShellApplication {
+                    name = "gamemode";
+                    runtimeInputs = [
+                      config.wayland.windowManager.hyprland.package
+                      pkgs.jq
+                    ];
+                    text = /* bash */ ''
+                      HYPRGAMEMODE=$(hyprctl getoption animations:enabled -j | jq -r '.int')
+                      if test "$HYPRGAMEMODE" = 1; then
+                        hyprctl --batch "\
+                          keyword animations:enabled 0; \
+                          keyword animation borderangle,0; \
+                          keyword decoration:shadow:enabled 0; \
+                          keyword decoration:blur:enabled 0; \
+                          keyword decoration:fullscreen_opacity 1; \
+                          keyword general:gaps_in 0; \
+                          keyword general:gaps_out 0; \
+                          keyword general:border_size 1; \
+                          keyword decoration:rounding 0; \
+                          keyword input:touchpad:disable_while_typing false \
+                        "
+                        hyprctl notify 1 5000 "rgb(40a02b)" "Gamemode [ON]"
+                      else
+                        hyprctl reload
+                        hyprctl notify 1 5000 "rgb(d20f39)" "Gamemode [OFF]"
+                      fi
+                    '';
+                  };
+
+                  binds = import ./bind.nix { inherit lib; };
+                  coreBinds = map binds.toHyprBind config.gipphe.core.wm.binds;
+                in
                 workspaces
                 ++ coreBinds
                 ++ [
@@ -362,6 +365,23 @@ in
             xwayland.enable = true;
           };
           home.sessionVariables.NIXOS_OZONE_WL = "1";
+        }
+        {
+          wayland.windowManager.hyprland.settings =
+            let
+              inherit (config.gipphe.core.wm) triggers;
+              trigger = import ./trigger.nix;
+              triggerMapToExecs =
+                triggers:
+                lib.pipe triggers [
+                  builtins.attrValues
+                  (map trigger.toHyprTrigger)
+                ];
+            in
+            {
+              exec = triggerMapToExecs triggers.on-load;
+              exec-once = triggerMapToExecs triggers.on-startup;
+            };
         }
         {
           wayland.windowManager.hyprland.settings =

@@ -76,5 +76,30 @@ util.mkModule {
         }
       ];
     };
+    triggers =
+      let
+        eventListener =
+          with lib.types;
+          submodule {
+            options = {
+              command = lib.mkOption {
+                type = str;
+                description = "Command to run on event";
+              };
+            };
+          };
+      in
+      {
+        on-startup = lib.mkOption {
+          type = with lib.types; attrsOf eventListener;
+          description = "Triggers to run on startup of the WM";
+          default = { };
+        };
+        on-load = lib.mkOption {
+          type = with lib.types; attrsOf eventListener;
+          description = "Triggers to run for each reload of the WM configuration";
+          default = { };
+        };
+      };
   };
 }

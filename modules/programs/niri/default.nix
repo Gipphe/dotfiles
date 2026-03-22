@@ -299,6 +299,19 @@ util.mkProgram {
             natural-scroll = false;
           };
         };
+        spawn-at-startup =
+          let
+
+            inherit (config.gipphe.core.wm) triggers;
+            trigger = import ./trigger.nix;
+            triggerMapToSpawns =
+              triggers:
+              lib.pipe triggers [
+                builtins.attrValues
+                (map trigger.toNiriTrigger)
+              ];
+          in
+          triggerMapToSpawns triggers.on-startup ++ triggerMapToSpawns triggers.on-load;
         xwayland-satellite = {
           path =
             lib.getExe

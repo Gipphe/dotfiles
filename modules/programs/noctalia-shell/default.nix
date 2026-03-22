@@ -23,7 +23,6 @@ util.mkProgram {
     programs.noctalia-shell = lib.mkMerge [
       {
         enable = true;
-        systemd.enable = true;
         settings = {
           bar = {
             backgroundOpacity = lib.mkForce 1;
@@ -63,31 +62,38 @@ util.mkProgram {
         noctalia-diff-settings
       ];
     };
-    gipphe.core.wm.binds = [
-      {
-        mod = "Mod";
-        key = "space";
-        action.spawn = "${ipc} launcher toggle";
-      }
-      {
-        mod = "Mod";
-        key = "C";
-        action.spawn = "${ipc} launcher clipboard";
-      }
-    ];
+    gipphe.core.wm = {
+      binds = [
+        {
+          mod = "Mod";
+          key = "space";
+          action.spawn = "${ipc} launcher toggle";
+        }
+        {
+          mod = "Mod";
+          key = "C";
+          action.spawn = "${ipc} launcher clipboard";
+        }
+      ];
+      triggers.on-load =
+        let
+          startup = pkgs.writeShellScript "noctalia-startup" ''
+            noctalia-shell kill
+            noctalia-shell
+          '';
+        in
+        {
+          noctalia-startup.command = "${startup}";
+        };
+    };
   };
   system-nixos = {
-    # imports = [
-    #   inputs.noctalia.nixosModules.default
-    # ];
     networking.networkmanager.enable = true;
     hardware.bluetooth.enable = true;
     services = {
       auto-cpufreq.enable = lib.mkForce false;
       power-profiles-daemon.enable = true;
       upower.enable = true;
-
-      # noctalia-shell.enable = true;
     };
   };
 }
