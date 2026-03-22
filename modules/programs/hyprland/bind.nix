@@ -22,12 +22,17 @@ let
     if lowered == "mod" || lowered == "$mod" then "$mod" else s;
   toMods =
     mods: if isString mods then replaceMod mods else concatStringsSep " " (map replaceMod mods);
-  toHyprBind =
+  toHyprBind = coreBind: "${toMods coreBind.mod}, ${coreBind.key}, ${toDispatch coreBind.action}";
+  toWarningMsgs =
     coreBind:
-    lib.warnIf (coreBind.args == { })
-      "Corebinds \"args\" is not supported in our Hyprland bind implementation yet"
-      "${toMods coreBind.mod}, ${coreBind.key}, ${toDispatch coreBind.action}";
+    let
+      mod = toMods coreBind.mod;
+    in
+    lib.optional (hasUnsupportedArgs coreBind) ''
+      Corebind ${if mod == "" then "" else "${mod}+"}${coreBind.key} has unsupported "args"
+    '';
+  hasUnsupportedArgs = coreBind: coreBind.args != { };
 in
 {
-  inherit toHyprBind;
+  inherit toHyprBind toWarningMsgs hasUnsupportedArgs;
 }

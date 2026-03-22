@@ -13,24 +13,8 @@ let
   portalPackage =
     inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
 
-  # sioodmy's implementation
-  workspaces = concatLists (
-    genList (
-      x:
-      let
-        ws =
-          let
-            c = (x + 1) / 10;
-          in
-          toString (x + 1 - (c * 10));
-      in
-      [
-        "$mod, ${ws}, workspace, ${toString (x + 1)}"
-        "$mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
-      ]
-    ) 10
-  );
-
+  binds = import ./bind.nix { inherit lib; };
+  coreBinds = map binds.toHyprBind config.gipphe.core.wm.binds;
 in
 {
   imports = [
@@ -48,6 +32,15 @@ in
       name = "hyprland";
       hm.config = lib.mkMerge [
         {
+          warnings =
+            let
+              bindsWithArgs =
+                builtins.length (builtins.filter binds.hasUnsupportedArgs config.gipphe.core.wm.binds) > 0;
+            in
+            lib.optional bindsWithArgs ''
+              Our Hyprland implementation for corebinds does not support "args" for bings.
+            ''
+            ++ builtins.concatMap binds.toWarningMsgs config.gipphe.core.wm.binds;
           home.packages = [ pkgs.wireplumber ];
           gipphe.core.wm.actions =
             let
@@ -112,8 +105,24 @@ in
                     '';
                   };
 
-                  binds = import ./bind.nix { inherit lib; };
-                  coreBinds = map binds.toHyprBind config.gipphe.core.wm.binds;
+                  # sioodmy's implementation
+                  workspaces = concatLists (
+                    genList (
+                      x:
+                      let
+                        ws =
+                          let
+                            c = (x + 1) / 10;
+                          in
+                          toString (x + 1 - (c * 10));
+                      in
+                      [
+                        "$mod, ${ws}, workspace, ${toString (x + 1)}"
+                        "$mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
+                      ]
+                    ) 10
+                  );
+
                 in
                 workspaces
                 ++ coreBinds
