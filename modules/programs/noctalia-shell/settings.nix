@@ -122,8 +122,8 @@
           showUnreadBadge = true;
         }
         {
-          deviceNativePath = "";
-          displayMode = "alwaysShow";
+          deviceNativePath = "__default__";
+          displayMode = "graphic";
           hideIfNotDetected = true;
           id = "Battery";
           showNoctaliaPerformance = true;
