@@ -1,5 +1,4 @@
 {
-  inputs,
   util,
   config,
   lib,
@@ -9,7 +8,6 @@
 }:
 let
   cfg = config.gipphe.programs.floorp;
-  hmCfg = config.programs.floorp;
   pkg = config.programs.floorp.finalPackage or config.programs.floorp.package;
 in
 util.mkModule {
@@ -20,6 +18,7 @@ util.mkModule {
     };
   };
   shared.imports = [
+    ./extensions.nix
     ./windows.nix
   ];
   hm.config = lib.mkMerge [
@@ -32,6 +31,15 @@ util.mkModule {
         nativeMessagingHosts = [
           pkgs.tridactyl-native
         ];
+        policies = {
+          DisableTelemetry = true;
+          DNSOverHTTPS = {
+            ProviderURL = "https://dns.mullvad.net/dns-query";
+            Fallback = false;
+          };
+          OfferToSaveLogins = false;
+          PasswordManagerEnabled = false;
+        };
       };
     }
     (lib.optionalAttrs (!flags.isNixOnDroid) (
