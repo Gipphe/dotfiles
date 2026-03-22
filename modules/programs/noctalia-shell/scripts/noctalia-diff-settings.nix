@@ -15,9 +15,10 @@ writeShellApplication {
     nix
     noctalia-shell
   ];
+  runtimeEnv.settings_file = ../settings.nix;
   text = /* bash */ ''
-    json-diff -u \
-      <(jq -S . <(nix eval --json --file "${../settings.nix}")) \
+    json-diff \
+      <(jq -S . <(nix eval --json --file "$settings_file")) \
       <(noctalia-shell ipc call state all | jq -S .settings) \
       | colordiff --nobanner
   '';
