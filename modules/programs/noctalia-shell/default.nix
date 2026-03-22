@@ -78,7 +78,8 @@ util.mkProgram {
       triggers.on-load =
         let
           startup = pkgs.writeShellScript "noctalia-startup" ''
-            noctalia-shell kill
+            noctalia-shell kill || true
+            sleep 2s
             noctalia-shell
           '';
         in
