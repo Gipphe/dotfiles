@@ -43,6 +43,7 @@ util.mkToggledModule [ "machines" ] {
       };
     };
   };
+
   hm = {
     services.syncthing.tray.enable = lib.mkForce false;
     programs.ssh.matchBlocks."sodium.lan" = {
@@ -54,6 +55,7 @@ util.mkToggledModule [ "machines" ] {
       format = "binary";
       sopsFile = ../../secrets/argon-sodium.ssh;
     };
+    gtk.gtk4.theme = null;
   };
 
   system-nixos = {
