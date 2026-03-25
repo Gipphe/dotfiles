@@ -14,7 +14,7 @@ let
   };
   catppuccin-starship-macchiato = lib.pipe "${catppuccin-starship}/themes/${flavour}.toml" [
     builtins.readFile
-    builtins.fromTOML
+    fromTOML
   ];
   palette.palette = lib.mkForce "catppuccin_${flavour}";
 
