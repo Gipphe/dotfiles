@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   config,
   util,
@@ -22,45 +23,49 @@ util.mkToggledModule [ "system" ] {
       format = "binary";
       sopsFile = ../../../secrets/pub-networkmanager-secrets.txt;
     };
-    networking = {
-      inherit (config.gipphe) hostName;
-      nameservers = [
-        "194.242.2.2" # dns.mullvad.net
-      ];
-      networkmanager = {
-        enable = true;
-        ensureProfiles = {
-          environmentFiles = [ config.sops.secrets.networkmanager-secrets.path ];
-          profiles = {
-            "GiphtNet" = {
-              connection = {
-                id = "GiphtNet";
-                type = "wifi";
-              };
-              ipv4 = {
-                dns-search = "";
-                method = "auto";
-              };
-              ipv6 = {
-                addr-gen-mode = "stable-privacy";
-                dns-search = "";
-                method = "auto";
-              };
-              wifi = {
-                mode = "infrastructure";
-                ssid = "GiphtNet";
-                mac-address-blacklist = "";
-              };
-              wifi-security = {
-                auth-alg = "open";
-                key-mgmt = "wpa-psk";
-                psk = "$PSK_GIPHTNET";
+    networking = lib.mkMerge [
+      {
+        inherit (config.gipphe) hostName;
+        networkmanager = {
+          enable = true;
+          ensureProfiles = {
+            environmentFiles = [ config.sops.secrets.networkmanager-secrets.path ];
+            profiles = {
+              "GiphtNet" = {
+                connection = {
+                  id = "GiphtNet";
+                  type = "wifi";
+                };
+                ipv4 = {
+                  dns-search = "";
+                  method = "auto";
+                };
+                ipv6 = {
+                  addr-gen-mode = "stable-privacy";
+                  dns-search = "";
+                  method = "auto";
+                };
+                wifi = {
+                  mode = "infrastructure";
+                  ssid = "GiphtNet";
+                  mac-address-blacklist = "";
+                };
+                wifi-security = {
+                  auth-alg = "open";
+                  key-mgmt = "wpa-psk";
+                  psk = "$PSK_GIPHTNET";
+                };
               };
             };
           };
         };
-      };
-    };
+      }
+      (lib.mkIf (!config.wsl.enable) {
+        nameservers = [
+          "194.242.2.2" # dns.mullvad.net
+        ];
+      })
+    ];
     users.users.${config.gipphe.username}.extraGroups = [ "networkmanager" ];
 
     # slows down boot time
