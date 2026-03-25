@@ -1,4 +1,9 @@
-{ util, pkgs, ... }:
+{
+  util,
+  pkgs,
+  config,
+  ...
+}:
 util.mkProgram {
   name = "gtk";
   hm = {
@@ -8,6 +13,7 @@ util.mkProgram {
         name = "Adwaita";
         package = pkgs.adwaita-icon-theme;
       };
+      gtk4.theme = config.gtk.theme;
     };
   };
 }
