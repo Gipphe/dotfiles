@@ -34,7 +34,6 @@ let
         "carbon"
         "cobalt"
         "titanium"
-        "boron"
       ];
     };
     "${config.home.homeDirectory}/.local/share/gdlauncher_carbon/data/instances" = {
