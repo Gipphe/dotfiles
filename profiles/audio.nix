@@ -8,5 +8,6 @@ util.mkProfile {
     mpc.enable = true;
     mpd.enable = true;
     mpris.enable = true;
+    qpwgraph.enable = true;
   };
 }
