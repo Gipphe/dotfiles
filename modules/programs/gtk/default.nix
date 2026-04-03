@@ -1,7 +1,6 @@
 {
   util,
   pkgs,
-  config,
   ...
 }:
 util.mkProgram {
@@ -13,7 +12,7 @@ util.mkProgram {
         name = "Adwaita";
         package = pkgs.adwaita-icon-theme;
       };
-      gtk4.theme = config.gtk.theme;
+      gtk4.theme = null;
     };
   };
 }
