@@ -30,7 +30,7 @@ util.mkToggledModule [ "machines" ] {
         thumbnails.enable = true;
         time.enable = true;
       };
-      ai.enable = true;
+      ai.enable = false;
       application.enable = true;
       audio.enable = true;
       cli.enable = true;
