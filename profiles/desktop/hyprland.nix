@@ -6,12 +6,11 @@
 }:
 let
   cfg = config.gipphe.profiles.desktop.hyprland;
-  useDefault = !(cfg.caelestia.enable || cfg.noctalia.enable);
+  useDefault = !cfg.noctalia.enable;
 in
 util.mkToggledModule [ "profiles" "desktop" ] {
   name = "hyprland";
   options.gipphe.profiles.desktop.hyprland = {
-    caelestia.enable = lib.mkEnableOption "caelestia shell";
     noctalia.enable = lib.mkEnableOption "noctalia shell";
   };
   shared.gipphe = {
@@ -68,11 +67,6 @@ util.mkToggledModule [ "profiles" "desktop" ] {
         waybar.enable = false;
         quickshell.enable = false;
         quickshell.dev = true;
-      })
-
-      (lib.mkIf cfg.caelestia.enable {
-        wezterm.enable = true;
-        caelestia-shell.enable = true;
       })
 
       (lib.mkIf cfg.noctalia.enable {
