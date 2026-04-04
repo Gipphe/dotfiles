@@ -2,21 +2,28 @@
   lib,
   pkgs,
   util,
+  config,
   ...
 }:
 util.mkProgram {
   name = "fish";
-  options.gipphe.programs.fish.prompt = lib.mkOption {
-    description = "Which prompt to use";
-    type = lib.types.enum [
-      "tide"
-      "starship"
-    ];
-    default = "starship";
-    example = "tide";
+  options.gipphe.programs.fish = {
+    prompt = lib.mkOption {
+      description = "Which prompt to use";
+      type = lib.types.enum [
+        "tide"
+        "starship"
+      ];
+      default = "starship";
+      example = "tide";
+    };
   };
   hm = {
     imports = [ ./starship ];
+
+    options.gipphe.programs.fish.package = lib.mkPackageOption pkgs "fish" { } // {
+      default = config.programs.fish.package;
+    };
 
     config = {
       home.packages = [ pkgs.procps ];

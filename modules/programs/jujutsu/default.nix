@@ -1,24 +1,32 @@
 {
+  inputs,
   lib,
   util,
   config,
   pkgs,
   ...
 }:
-let
-  cfg = config.programs.jujutsu;
-in
 util.mkProgram {
   name = "jujutsu";
 
   hm = {
     options.gipphe.programs.jujutsu = {
       package = lib.mkPackageOption pkgs "jujutsu" { } // {
-        default = config.programs.jujutsu.package;
+        default = config.wrappers.jujutsu.package;
       };
     };
+    imports = [
+      (inputs.wlib.lib.mkInstallModule {
+        loc = [
+          "home"
+          "packages"
+        ];
+        name = "jujutsu";
+        value = inputs.wlib.lib.wrapperModules.jujutsu;
+      })
+    ];
     config = {
-      programs.jujutsu = {
+      wrappers.jujutsu = {
         enable = true;
         settings = {
           user = {
@@ -97,7 +105,7 @@ util.mkProgram {
               "-c"
               # fish
               ''
-                set -l bookmarks (${lib.getExe cfg.package} bookmark list -T 'name ++ "\n"')
+                set -l bookmarks (${lib.getExe pkgs.jujutsu} bookmark list -T 'name ++ "\n"')
                 set -l bookmark $argv[1]
 
                 if test -z "$bookmark"
@@ -111,7 +119,7 @@ util.mkProgram {
                   exit 2
                 end
 
-                ${lib.getExe cfg.package} bookmark set -r @- $bookmark
+                ${lib.getExe pkgs.jujutsu} bookmark set -r @- $bookmark
                 exit $status
               ''
             ];
@@ -142,11 +150,11 @@ util.mkProgram {
                 script = util.writeFishApplication {
                   name = "jj-pub";
                   runtimeInputs = [
-                    cfg.package
-                    pkgs.coreutils
+                    config.gipphe.programs.fish.package
                     config.gipphe.programs.git.package
                     config.gipphe.programs.ssh.package
-                    pkgs.fish
+                    pkgs.coreutils
+                    pkgs.jujutsu
                   ];
                   text =
                     # fish
@@ -183,7 +191,7 @@ util.mkProgram {
                 "util"
                 "exec"
                 "--"
-                (lib.getExe' script "jj-pub")
+                (lib.getExe script)
               ];
             fixup = [
               "squash"
@@ -198,7 +206,7 @@ util.mkProgram {
               "--no-config"
               "-c"
               ''
-                ${lib.getExe' cfg.package "jj"} show --template 'description' --no-patch | ${pkgs.wl-clipboard}/bin/wl-copy
+                ${lib.getExe pkgs.jujutsu} show --template 'description' --no-patch | ${pkgs.wl-clipboard}/bin/wl-copy
               ''
             ];
           };
