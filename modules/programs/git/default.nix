@@ -1,10 +1,14 @@
 {
+  inputs,
   lib,
   config,
   pkgs,
   util,
   ...
 }:
+let
+  cfg = config.wrappers.git;
+in
 util.mkProgram {
   name = "git";
   options.gipphe.programs.git = {
@@ -22,49 +26,38 @@ util.mkProgram {
     };
   };
   hm = {
+    imports = [
+      (inputs.wlib.lib.mkInstallModule {
+        name = "git";
+        loc = [
+          "home"
+          "packages"
+        ];
+        value = inputs.wlib.lib.wrapperModules.git;
+      })
+      ./lfs.nix
+    ];
     options.gipphe.programs.git = {
       package = lib.mkPackageOption pkgs "git" { } // {
-        default = config.programs.git.package;
+        default = config.wrappers.git.package;
       };
     };
     config = {
+      gipphe.programs.git.lfs.enable = true;
       home.packages =
         let
-          ci = util.writeFishApplication {
-            name = "ci";
+          commit = util.writeFishApplication {
+            name = "commit";
             runtimeInputs = [
               pkgs.gum
-              config.programs.git.package
+              cfg.package
             ];
-            text = # bash
-              ''
-                if test (count $argv) != 0
-                  echo "This script expects no arguments" >&2
-                  exit 1
-                end
-
-                set -l type $(gum choose "fix" "feat" "refactor" "docs" "test" "style" "chore" "revert")
-                or exit $status
-                set -l scope $(gum input --placeholder "scope")
-                or exit $status
-
-                if test -n "$scope"
-                  set scope "($scope)"
-                end
-
-                set -l summary $(gum input --value "$type$scope: " --placeholder "Summary of this change.")
-                or exit $status
-                set -l description $(gum write --placeholder "Details of this change.")
-                or exit $status
-
-                gum confirm "Commit changes?" && git commit -m "$summary" -m "$description"
-                or exit $status
-              '';
+            text = builtins.readFile ./commit.fish;
           };
-          commit = pkgs.linkFarm "commit" [
+          ci = pkgs.linkFarm "ci" [
             {
-              name = "bin/commit";
-              path = lib.getExe ci;
+              name = "bin/ci";
+              path = lib.getExe commit;
             }
           ];
         in
@@ -77,51 +70,61 @@ util.mkProgram {
         sopsFile = ../../../secrets/pub-git-ssh-signing-key.key;
         format = "binary";
       };
-      # Public key for secrets/pub-git-ssh-signing-key.key
-      xdg.configFile."git/allowed_signers".text = ''
-        gipphe@gmail.com namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINzkW4CGcY2zjXnWx1o7uy85D0O7OvjzTa51GLtA0uQv
-        victor.bakke@tweag.io namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINzkW4CGcY2zjXnWx1o7uy85D0O7OvjzTa51GLtA0uQv
-      '';
-      programs = {
-        git = {
+
+      wrappers.git =
+        let
+          # Public key for secrets/pub-git-ssh-signing-key.key
+          allowed_signers = pkgs.writeTextFile "git_allowed_signers" ''
+            gipphe@gmail.com namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINzkW4CGcY2zjXnWx1o7uy85D0O7OvjzTa51GLtA0uQv
+            victor.bakke@tweag.io namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINzkW4CGcY2zjXnWx1o7uy85D0O7OvjzTa51GLtA0uQv
+          '';
+          git_ignore = pkgs.writeTextFile "git_ignore" /* gitignore */ ''
+            .DS_Store
+            **/*Zone.Identifier
+            .idea/
+            .vscode/
+            Session.vim
+            .claude/*.local.*
+          '';
+        in
+        {
           enable = true;
-          ignores = [
-            ".DS_Store"
-            "**/*Zone.Identifier"
-            ".idea/"
-            ".vscode/"
-            "Session.vim"
-            ".claude/*.local.*"
-          ];
-          signing = {
-            format = "ssh";
-            key = config.sops.secrets.git-signing-key.path;
-            signByDefault = true;
-          };
           settings = {
-            user = {
-              name = "Victor Nascimento Bakke";
-              email = "gipphe@gmail.com";
-            };
-            push = {
-              default = "upstream";
-              followTags = true;
-            };
-            pull.ff = "only";
             core = {
               safecrlf = false;
               autocrlf = false;
               eol = "lf";
               editor = "nvim";
               whitespace = "fix,-indent-with-non-tab,trailing-space,cr-at-eol";
+              excludesFile = git_ignore;
             };
+            user = {
+              name = "Victor Nascimento Bakke";
+              email = "gipphe@gmail.com";
+              signingKey = config.sops.secrets.git-signing-key.path;
+            };
+            commit = {
+              gpgSign = true;
+            };
+            tag = {
+              gpgSign = true;
+            };
+            gpg = {
+              format = "ssh";
+              ssh.program = lib.getExe' pkgs.openssh "ssh-keygen";
+              ssh.allowedSignersFile = allowed_signers;
+            };
+            push = {
+              default = "upstream";
+              followTags = true;
+            };
+            pull.ff = "only";
             repack.usedeltabaseoffset = "true";
             rebase.autoSquash = "true";
             merge.stat = "true";
             branch.autosetupmerge = "true";
             credential.credentialStore = "gpg";
             init.defaultBranch = "main";
-            gpg.ssh.allowedSignersFile = config.xdg.configFile."git/allowed_signers".source.outPath;
             rerere = {
               enabled = true;
               autoUpdate = true;
@@ -245,6 +248,11 @@ util.mkProgram {
               hide-flake = "!git add --intent-to-add flake.nix flake.lock && git update-index --assume-unchanged flake.nix flake.lock";
             };
           };
+        };
+
+      programs = {
+        git = {
+          enable = true;
           lfs.enable = true;
         };
         diff-so-fancy = {
