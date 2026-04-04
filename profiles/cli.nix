@@ -9,8 +9,6 @@ util.mkProfile {
       imagemagick.enable = true;
       mprocs.enable = true;
       nix-pr-tracker.enable = true;
-      vim.configOnly = true;
-      vim.enable = true;
     };
   };
 }

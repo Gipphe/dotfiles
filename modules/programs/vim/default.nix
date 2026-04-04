@@ -1,33 +1,29 @@
-{
-  util,
-  lib,
-  config,
-  ...
-}:
-let
-  cfg = config.gipphe.programs.vim;
-in
+{ inputs, util, ... }:
 util.mkProgram {
   name = "vim";
-  options.gipphe.programs.vim.configOnly = lib.mkEnableOption "config only, no program";
   hm = {
-    programs.vim = {
-      enable = !cfg.configOnly;
-      settings = {
-        # Size of a hard tabstop
-        tabstop = 4;
-        # Size of an 'indent'
-        shiftwidth = 4;
-        # always use tabs instead of spaces
-        expandtab = false;
-      };
-      extraConfig = ''
+    imports = [
+      (inputs.wlib.lib.mkInstallModule {
+        loc = [
+          "home"
+          "packages"
+        ];
+        name = "vim";
+        value = inputs.wlib.lib.wrapperModules.vim;
+      })
+    ];
+    wrappers.vim = {
+      enable = true;
+      vimrc = /* vim */ ''
         scriptencoding utf-8
         set encoding=utf-8
 
         " A combination of spaces and tabs are used to simulate tab stops at a width
         " other than the (hard)tabstop
         set softtabstop=0
+        set tagstop=4
+        set shftwidth=4
+        set expandtab
 
         set list listchars=tab:▸\ ,trail:·,precedes:←,extends:→
 
