@@ -1,4 +1,9 @@
-{ pkgs, util, ... }:
+{
+  inputs,
+  pkgs,
+  util,
+  ...
+}:
 let
   inherit (builtins) readFile;
 in
@@ -6,9 +11,21 @@ util.mkProgram {
   name = "tmux";
 
   hm = {
-    programs.tmux = {
+    imports = [
+      (inputs.wlib.lib.mkInstallModule {
+        loc = [
+          "home"
+          "packages"
+        ];
+        name = "tmux";
+        value = inputs.wlib.lib.wrapperModules.tmux;
+      })
+    ];
+    wrappers.tmux = {
       enable = true;
       baseIndex = 1;
+      paneBaseIndex = 1;
+      terminalOverrides = ",xterm*:Tc";
       clock24 = true;
       escapeTime = 10;
       mouse = true;
@@ -18,7 +35,7 @@ util.mkProgram {
         { plugin = pkgs.tmuxPlugins.vim-tmux-navigator; }
         { plugin = pkgs.tmuxPlugins.yank; }
       ];
-      extraConfig = readFile ./tmux.conf;
+      configAfter = readFile ./tmux.conf;
       tmuxinator.enable = true;
     };
     programs.fish = {
