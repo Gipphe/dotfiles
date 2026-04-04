@@ -69,7 +69,7 @@ util.mkProgram {
             key = config.sops.secrets.git-signing-key.path;
             backends.ssh = {
               program = "${pkgs.openssh}/bin/ssh-keygen";
-              allowed-signers = config.xdg.configFile."git/allowed_signers".source.outPath;
+              allowed-signers = config.wrappers.git.settings.gpg.ssh.allowedSignersFile;
             };
           };
           revset-aliases = {

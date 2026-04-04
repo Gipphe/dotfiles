@@ -72,15 +72,16 @@
 	autocrlf = false
 	editor = "nvim"
 	eol = "lf"
+	excludesFile = "/nix/store/q7nhyy1x72pb9sly09mp14w0ppcva59v-git_ignore"
 	pager = "less '--tabs=4' -RFX"
 	safecrlf = false
 	whitespace = "fix,-indent-with-non-tab,trailing-space,cr-at-eol"
 
 [filter "lfs"]
-	clean = "git-lfs clean -- %f"
-	process = "git-lfs filter-process"
+	clean = "/nix/store/qyv53700yp88g7wr0wamdab5v6cv6hq1-git-lfs-3.7.1/bin/git-lfs clean -- %f"
+	process = "/nix/store/qyv53700yp88g7wr0wamdab5v6cv6hq1-git-lfs-3.7.1/bin/git-lfs filter-process"
 	required = true
-	smudge = "git-lfs smudge -- %f"
+	smudge = "/nix/store/qyv53700yp88g7wr0wamdab5v6cv6hq1-git-lfs-3.7.1/bin/git-lfs smudge -- %f"
 
 [init]
 	defaultBranch = "main"

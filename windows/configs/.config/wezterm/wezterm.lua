@@ -82,14 +82,7 @@ local baseConfig = {
   -- Disable easing for cursor, blinking text and visual bell
   animation_fps = 1,
   warn_about_missing_glyphs = false,
-  keys = {
-    {
-  key = "Enter",
-  mods = "SHIFT",
-  action = wezterm.action { SendString = "\\x1b\\r" },
-}
-;
-  },
+  keys = {},
 }
 
 baseConfig = utils.tbl_deep_extend(baseConfig, windowsConfig.config(), 'force')
