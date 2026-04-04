@@ -1,4 +1,5 @@
 {
+  inputs,
   lib,
   config,
   util,
@@ -21,100 +22,91 @@ util.mkProgram {
       default = { };
     };
   };
-  hm.config = lib.mkMerge [
-    {
-      xdg.configFile = {
-        "wezterm/utils.lua".source = ./utils.lua;
-        "wezterm/windows-config.lua".source = ./windows-config.lua;
-        "wezterm/linux-config.lua".source = ./linux-config.lua;
-      };
-      programs.wezterm = {
-        enable = true;
-        extraConfig =
-          let
-            claude_code_keys =
-              if config.gipphe.programs.claude-code.enable then
-                /* lua */ ''
-                  {
-                    {
-                      key = "Enter",
-                      mods = "SHIFT",
-                      action = wezterm.action { SendString = "\\x1b\\r" },
-                    };
-                  }
-                ''
-              else
-                "{}";
-          in
-          # lua
-          ''
-            local wezterm = require 'wezterm'
-            local utils = require 'utils'
-            local windowsConfig = require 'windows-config'
-            local linuxConfig = require 'linux-config'
+  hm = {
+    imports = [
+      (inputs.wlib.lib.mkInstallModule {
+        loc = [
+          "home"
+          "packages"
+        ];
+        name = "wezterm";
+        value = inputs.wlib.lib.wrapperModules.wezterm;
+      })
+    ];
+    config = lib.mkMerge [
+      {
+        wrappers.wezterm = {
+          enable = true;
+          "wezterm.lua".content = /* lua */ ''
+            local wezterm = require("wezterm")
+            local stylix_config = require("stylix")
+            local user_config = require("config")
 
-            local baseConfig = {
-              hide_tab_bar_if_only_one_tab = true,
-              send_composed_key_when_left_alt_is_pressed = true,
-              send_composed_key_when_right_alt_is_pressed = false,
-              default_cursor_style = 'BlinkingBar',
-              -- See https://github.com/wez/wezterm/issues/5990
-              front_end = "WebGpu",
-              -- Disable easing for cursor, blinking text and visual bell
-              animation_fps = 1,
-              warn_about_missing_glyphs = false,
-              keys = ${claude_code_keys},
-            }
+            local config = wezterm.config_builder and wezterm.config_builder() or {}
+            for k, v in pairs(stylix_config)
+              config[k] = v
+            end
+            for k, v in pairs(user_config)
+              config[k] = v
+            end
 
-            baseConfig = utils.tbl_deep_extend(baseConfig, windowsConfig.config(), 'force')
-            baseConfig = utils.tbl_deep_extend(baseConfig, linuxConfig.config(), 'force')
-
-            -- Strip Zellij session name from window title
-            wezterm.on('format-window-title', function(tab, pane, tabs, panes, config)
-              local title = tab.active_pane.title
-              -- Remove Zellij session name pattern: "session-name | actual-title"
-              local stripped = title:match("^[^|]+%|%s*(.+)$")
-              if stripped then
-                return stripped
-              end
-              return title
-            end)
-
-            return baseConfig
+            return config
           '';
-      };
+          constructFiles = {
+            config = {
+              relPath = "config.lua";
+              content = builtins.readFile ./wezterm.lua;
+            };
+            stylix = {
+              relPath = "stylix.lua";
+              content = /* lua */ ''
+                return {
+                  ${config.stylix.targets.wezterm.luaBody}
+                }
+              '';
+            };
+          };
+        };
 
-      gipphe.core.wm.binds = [
-        {
-          mod = "Mod";
-          key = "Return";
-          action.spawn = "${hmCfg.package}/bin/wezterm";
-        }
-      ];
-
-      gipphe.windows.home.file = lib.pipe config.xdg.configFile [
-        (lib.filterAttrs (p: _: lib.hasPrefix "wezterm/" p))
-        (lib.mapAttrs' (
-          p: v: {
-            name = ".config/${p}";
-            value.source = pkgs.runCommand "windows-wezterm-config-${baseNameOf p}" { } ''
-              sed -r 's!/nix/store/.*/bin/(\S+)!\1!' "${v.source}" \
-              | tee "$out" >/dev/null
-            '';
+        gipphe.core.wm.binds = [
+          {
+            mod = "Mod";
+            key = "Return";
+            action.spawn = "${hmCfg.package}/bin/wezterm";
           }
-        ))
-      ];
-    }
-    (lib.mkIf cfg.default {
-      home.sessionVariables.TERMINAL = "${hmCfg.package}/bin/wezterm";
+        ];
 
-      home.packages = [
-        (pkgs.writeShellScriptBin "x-terminal-emulator" ''
-          ${hmCfg.package}/bin/wezterm start "$@"
-        '')
-      ];
+        gipphe.windows.home.file =
+          let
+            mkFile =
+              name: src:
+              pkgs.runCommand "windows-wezterm-config-${name}" { } /* bash */ ''
+                sed -r 's!/nix/store/.*/bin/(\S+)!\1!' <"${src}" |
+                sed -r 's!/nix/store/[a-z0-9]-(.*)!\1!' >"$out"
+              '';
+          in
+          {
+            ".config/wezterm/wezterm.lua".source = mkFile "wezterm.lua" (
+              pkgs.writeText "wezterm.lua" config.wrappers.wezterm."wezterm.lua".content
+            );
+            ".config/wezterm/stylix.lua".source =
+              mkFile "stylix.lua" config.wrappers.wezterm.constructFiles.stylix.outPath;
+            ".config/wezterm/config.lua".source =
+              mkFile "config.lua" config.wrappers.wezterm.constructFiles.config.outPath;
+          };
+      }
 
-      xdg.terminal-exec.settings.default = [ "wezterm.desktop" ];
-    })
-  ];
+      (lib.mkIf cfg.default {
+        home.sessionVariables.TERMINAL = "${hmCfg.package}/bin/wezterm";
+
+        home.packages = [
+          (pkgs.writeShellScriptBin "x-terminal-emulator" ''
+            ${hmCfg.package}/bin/wezterm start "$@"
+          '')
+        ];
+
+        xdg.terminal-exec.settings.default = [ "wezterm.desktop" ];
+      })
+    ];
+  };
 }
