@@ -95,6 +95,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    wlib = {
+      url = "github:BirdeeHub/nix-wrapper-modules";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     giphtvim = {
       url = "github:Gipphe/giphtvim";
       # inputs.nixpkgs.follows = "nixpkgs";
