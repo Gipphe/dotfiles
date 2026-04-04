@@ -1,4 +1,5 @@
 {
+  inputs,
   util,
   pkgs,
   lib,
@@ -21,13 +22,22 @@ in
 util.mkProgram {
   name = "claude-code";
   hm = {
-    home = {
-      packages = [ pkgs.claude-code ];
-      file = skills // {
-        ".claude/settings.json".text = builtins.toJSON {
-          alwaysThinkingEnabled = true;
-        };
+    imports = [
+      (inputs.wlib.lib.mkInstallModule {
+        loc = [
+          "home"
+          "packages"
+        ];
+        name = "claude-code";
+        value = inputs.wlib.lib.wrapperModules.claude-code;
+      })
+    ];
+    wrappers.claude-code = {
+      enable = true;
+      settings = {
+        alwaysThinkingEnabled = true;
       };
     };
+    home.file = skills;
   };
 }
