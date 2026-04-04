@@ -1,5 +1,17 @@
-{ util, pkgs, ... }:
+{ util, inputs, ... }:
 util.mkProgram {
   name = "cava";
-  hm.home.packages = [ pkgs.cava ];
+  hm = {
+    imports = [
+      (inputs.wlib.lib.mkInstallModule {
+        loc = [
+          "home"
+          "packages"
+        ];
+        name = "cava";
+        value = inputs.wlib.lib.wrapperModules.cava;
+      })
+    ];
+    wrappers.cava.enable = true;
+  };
 }
