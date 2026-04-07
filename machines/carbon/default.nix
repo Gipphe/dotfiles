@@ -50,7 +50,7 @@ util.mkToggledModule [ "machines" ] {
           run ${script}
         '';
     };
-    programs.fish.shellInit = lib.mkBefore ''
+    wrappers.fish.init.shell = lib.mkBefore ''
       mkdir -p '${config.home.sessionVariables."XDG_RUNTIME_DIR"}'
     '';
   };

@@ -28,6 +28,6 @@ util.mkProgram {
         mkdir -p "$(dirname "$2")" && cp "$1" "$2" && (${lib.getExe' pkgs.mako "makoctl"} reload || true)
       '';
     };
-    dbus.packages = [ config.wrappers.mako.package ];
+    dbus.packages = [ config.wrappers.mako.wrapper ];
   };
 }

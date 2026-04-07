@@ -11,7 +11,7 @@ util.mkProgram {
     imports = [ inputs.giphtvim.homeModules.default ];
     config = {
       home.sessionVariables.EDITOR = "nvim";
-      programs.fish.shellAbbrs.vim = "nvim";
+      wrappers.fish.shellAbbrs.vim = "nvim";
       nvim = {
         enable = true;
         packageNames = lib.mkIf flags.isNixOnDroid [ "droid" ];

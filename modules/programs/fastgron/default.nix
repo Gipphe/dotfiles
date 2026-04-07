@@ -3,6 +3,6 @@ util.mkProgram {
   name = "fastgron";
   hm = {
     home.packages = [ pkgs.fastgron ];
-    programs.fish.shellAbbrs.gron = "fastgron";
+    wrappers.fish.init.shellAbbrs.gron = "fastgron";
   };
 }

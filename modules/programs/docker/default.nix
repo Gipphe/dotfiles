@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkProgram {
   name = "docker";
-  hm.programs.fish.shellAbbrs = {
+  hm.wrappers.fish.init.shellAbbrs = {
     docker_clean_images = "docker rmi (docker images -a --filter=dangling=true -q)";
     docker_clean_ps = "docker rm (docker ps --filter=status=exited --filter=status=created -q)";
     docker_clean_testcontainer = ''docker rmi -f (docker images --filter="reference=*-*-*-*-*:*-*-*-*-*" --format "{{ .ID }}" | sort | uniq)'';

@@ -9,7 +9,7 @@ util.mkProgram {
   name = "kubectl";
   hm = {
     home.packages = lib.optional (!config.gipphe.programs.google-cloud-sdk.enable) [ pkgs.kubectl ];
-    programs.fish = {
+    wrappers.fish = {
       shellAbbrs.k = "kubectl";
       functions.kube_get_secret = # fish
         ''

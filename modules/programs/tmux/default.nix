@@ -34,13 +34,12 @@ util.mkProgram {
       configAfter = readFile ./tmux.conf;
       tmuxinator.enable = true;
     };
-    programs.fish = {
-      shellInit = # fish
-        ''
-          if test -n "$TMUX"
-              set -x DISABLE_AUTO_TITLE true
-          end
-        '';
+    wrappers.fish.init = {
+      shell = /* fish */ ''
+        if test -n "$TMUX"
+            set -x DISABLE_AUTO_TITLE true
+        end
+      '';
       shellAbbrs = {
         mux = "tmuxinator s";
         tq = "tmux kill-session";

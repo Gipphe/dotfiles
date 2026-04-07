@@ -12,7 +12,7 @@ util.mkProgram {
   hm = {
     options.gipphe.programs.jujutsu = {
       package = lib.mkPackageOption pkgs "jujutsu" { } // {
-        default = config.wrappers.jujutsu.package;
+        default = config.wrappers.jujutsu.wrapper;
       };
     };
     imports = [
@@ -101,7 +101,7 @@ util.mkProgram {
               "-c"
               # fish
               ''
-                set -l bookmarks (${lib.getExe pkgs.jujutsu} bookmark list -T 'name ++ "\n"')
+                set -l bookmarks (${lib.getExe config.wrappers.jujutsu.package} bookmark list -T 'name ++ "\n"')
                 set -l bookmark $argv[1]
 
                 if test -z "$bookmark"
@@ -115,7 +115,7 @@ util.mkProgram {
                   exit 2
                 end
 
-                ${lib.getExe pkgs.jujutsu} bookmark set -r @- $bookmark
+                ${lib.getExe config.wrappers.jujutsu.package} bookmark set -r @- $bookmark
                 exit $status
               ''
             ];
@@ -151,10 +151,10 @@ util.mkProgram {
                 script = util.writeFishApplication {
                   name = "jj-pub";
                   runtimeInputs = [
-                    config.gipphe.programs.fish.package
                     config.gipphe.programs.git.package
                     config.gipphe.programs.ssh.package
                     pkgs.coreutils
+                    pkgs.fish
                     pkgs.jujutsu
                   ];
                   text =
@@ -180,7 +180,7 @@ util.mkProgram {
                       if set -ql _flag_revision
                         set rev $_flag_revision
                       end
-                      set -l desc (fish ${./desc-to-branch-name.fish} -r $rev)
+                      set -l desc (fish --no-config ${./desc-to-branch-name.fish} -r $rev)
 
                       jj bookmark create -r "$rev" "$desc"
                       jj bookmark track --remote origin "$desc"
@@ -207,7 +207,7 @@ util.mkProgram {
               "--no-config"
               "-c"
               ''
-                ${lib.getExe pkgs.jujutsu} show --template 'description' --no-patch | ${pkgs.wl-clipboard}/bin/wl-copy
+                ${lib.getExe config.wrappers.jujutsu.package} show --template 'description' --no-patch | ${pkgs.wl-clipboard}/bin/wl-copy
               ''
             ];
           };

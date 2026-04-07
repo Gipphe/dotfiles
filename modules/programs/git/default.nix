@@ -26,7 +26,7 @@ util.mkProgram {
   hm = {
     options.gipphe.programs.git = {
       package = lib.mkPackageOption pkgs "git" { } // {
-        default = config.wrappers.git.package;
+        default = config.wrappers.git.wrapper;
       };
     };
     imports = [

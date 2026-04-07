@@ -15,7 +15,7 @@ util.mkModule {
     sops = {
       age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
     };
-    programs.fish.shellInit = # fish
+    wrappers.fish.init.shell = # fish
       ''
         set -gx SECRETS_DIR $XDG_RUNTIME_DIR
       '';
