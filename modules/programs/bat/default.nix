@@ -12,9 +12,7 @@ util.mkProgram {
         ${pkgs.man-db}/bin/man "$@" | ${pkgs.unixtools.col}/bin/col -bx | ${config.programs.bat.package}/bin/bat -l man -p
       '')
     ];
-    programs = {
-      fish.shellAbbrs.cat = "bat";
-      bat.enable = true;
-    };
+    programs.bat.enable = true;
+    wrappers.fish.init.shellAbbrs.cat = "bat";
   };
 }

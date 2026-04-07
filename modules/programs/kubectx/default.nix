@@ -3,7 +3,7 @@ util.mkProgram {
   name = "kubectx";
   homeManager = {
     home.packages = [ pkgs.kubectx ];
-    programs.fish.shellAbbrs = {
+    wrappers.fish.init.shellAbbrs = {
       kcx = "kubectx";
       kn = "kubens";
     };

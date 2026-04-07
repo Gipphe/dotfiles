@@ -19,7 +19,7 @@ util.mkModule {
   homeManager = {
     imports = [ inputs.sops-nix.homeManagerModules.sops ];
     inherit sops;
-    programs.fish.shellInit = # fish
+    wrappers.fish.init.shell = # fish
       ''
         set -gx SECRETS_DIR $XDG_RUNTIME_DIR
       '';

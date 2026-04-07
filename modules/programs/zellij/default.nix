@@ -444,13 +444,11 @@ util.mkProgram {
         '';
     };
 
-    programs = {
-      zellij.enable = true;
+    programs.zellij.enable = true;
 
-      fish.shellAbbrs = {
-        zq = "zellij kill-session $ZELLIJ_SESSION_NAME";
-        zj = "zellij";
-      };
+    wrappers.fish.init.shellAbbrs = {
+      zq = "zellij kill-session $ZELLIJ_SESSION_NAME";
+      zj = "zellij";
     };
   };
 }

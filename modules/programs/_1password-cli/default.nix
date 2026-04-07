@@ -5,7 +5,7 @@ in
 util.mkProgram {
   name = "_1password-cli";
   homeManager = {
-    programs.fish = {
+    wrappers.fish = {
       functions = {
         opon = # fish
           ''
