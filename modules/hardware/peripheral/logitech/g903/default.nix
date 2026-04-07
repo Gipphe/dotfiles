@@ -21,6 +21,7 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
       AttrEventCode=-REL_WHEEL_HI_RES;
     '';
     services = {
+      ratbagd.enable = true;
       libinput.enable = true;
       udev.extraRules = ''
         ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="c539", ATTR{power/autosuspend}="-1"
