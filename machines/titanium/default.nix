@@ -57,7 +57,10 @@ util.mkToggledModule [ "machines" ] {
 
   system-nixos = {
     imports = lib.optionals (hostname == host.name) (
-      [ ./hardware-configuration.nix ]
+      [
+        ./hardware-configuration.nix
+        ./disk-config.nix
+      ]
       ++ builtins.attrValues {
         inherit (inputs.nixos-hardware.nixosModules)
           common-cpu-intel-comet-lake

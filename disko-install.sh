@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+host="$1"
+disk_device="$2"
+
+info() {
+  echo "$@" >&2
+}
+print_help() {
+  info "Usage: ./disko-install.sh <hostname> <disk_device_path>"
+  info "  hostname:"
+  info "    hostname of the machine to install"
+  info "  disk_device_path:"
+  info "    Device path to disk to install on."
+  info "    Example: /dev/sda"
+}
+
+if test -z "$host"; then
+  info "Missing host argument"
+  print_help
+  exit 1
+fi
+
+if test -z "$disk_device"; then
+  info "Missing disk_device_path argument"
+  print_help
+  exit 1
+fi
+
+key="$(sudo bash -c 'echo $HOME')/.config/sops/age/keys.txt"
+sudo mkdir -p "$(dirname -- "$key")"
+sudo nix --extra-experimental-features shell nixpkgs#age -c age-keygen -o "$key"
+sudo nix --extra-experimental-features run 'flakes nix-command' 'github:nix-community/disko/latest#disko-install' -- --flake "github:Gipphe/dotfiles#$host" --disk "main" "$disk_device"
+
+mkdir -p /tmp/built-system
+mount "$disk_device" /tmp/built-system
+dest_key="/tmp/built-system/home/gipphe/.config/sops/age/keys.txt"
+mkdir -p "$(dirname -- "$dest_key")"
+sudo cp "$key" "$dest_key"
+sudo chown gipphe:gipphe "$dest_key"
