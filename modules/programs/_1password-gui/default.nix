@@ -60,7 +60,9 @@ util.mkProgram {
     mode = "755";
     text = ''
       vivaldi-bin
+      vivaldi
       floorp-bin
+      floorp
     '';
   };
 }
