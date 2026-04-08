@@ -4,7 +4,6 @@ util.mkProfile {
   shared.gipphe = {
     programs = {
       _1password-gui.enable = true;
-      appimage.enable = true;
       filen-desktop.enable = true;
       floorp.default = lib.mkDefault true;
       floorp.enable = true;
