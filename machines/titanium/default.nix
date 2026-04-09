@@ -27,7 +27,6 @@ util.mkToggledModule [ "machines" ] {
         devices.enable = true;
         networking.enable = true;
         printing.enable = true;
-        power.enable = true;
         system.enable = true;
         thumbnails.enable = true;
         time.enable = true;
@@ -44,7 +43,6 @@ util.mkToggledModule [ "machines" ] {
       gaming.enable = true;
       gc.enable = true;
       keyring.enable = true;
-      laptop.enable = true;
       logitech.enable = true;
       rice.enable = true;
       secrets.enable = true;
