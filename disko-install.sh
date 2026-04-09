@@ -37,7 +37,7 @@ fi
 
 export SOPS_AGE_KEY_FILE="$key"
 sudo chown root:root "$key"
-sudo --preserve-env=SOPS_AGE_KEY_FILE nix --extra-experimental-features 'flakes nix-command' run 'github:nix-community/disko/latest#disko-install' -- --write-efi-boot-entries --flake "github:Gipphe/dotfiles#$host" --disk "main" "$disk_device"
+sudo --preserve-env=SOPS_AGE_KEY_FILE nix --extra-experimental-features 'flakes nix-command' run 'github:nix-community/disko/latest#disko-install' -- --write-efi-boot-entries --flake ".#$host" --disk "main" "$disk_device"
 
 mkdir -p /tmp/built-system
 sudo mount "$disk_device" /tmp/built-system
