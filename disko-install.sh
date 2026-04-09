@@ -31,7 +31,10 @@ fi
 
 key="/tmp/keys.txt"
 mkdir -p "$(dirname -- "$key")"
-nix --extra-experimental-features 'flakes nix-command' shell nixpkgs#age -c age-keygen -o "$key"
+if test ! -f "$key"; then
+  nix --extra-experimental-features 'flakes nix-command' shell "nixpkgs#age" -c age-keygen -o "$key"
+fi
+
 export SOPS_AGE_KEY_FILE="$key"
 sudo chown root:root "$key"
 sudo --preserve-env=SOPS_AGE_KEY_FILE nix --extra-experimental-features 'flakes nix-command' run 'github:nix-community/disko/latest#disko-install' -- --write-efi-boot-entries --flake "github:Gipphe/dotfiles#$host" --disk "main" "$disk_device"
@@ -41,4 +44,4 @@ sudo mount "$disk_device" /tmp/built-system
 dest_key="/tmp/built-system/home/gipphe/.config/sops/age/keys.txt"
 mkdir -p "$(dirname -- "$dest_key")"
 sudo cp "$key" "$dest_key"
-sudo chown gipphe:gipphe "$dest_key"
+sudo chown 1000:1000 "$dest_key"
