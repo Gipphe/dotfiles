@@ -30,7 +30,7 @@ fi
 key="$(sudo bash -c 'echo $HOME')/.config/sops/age/keys.txt"
 sudo mkdir -p "$(dirname -- "$key")"
 sudo nix --extra-experimental-features shell nixpkgs#age -c age-keygen -o "$key"
-sudo nix --extra-experimental-features run 'flakes nix-command' 'github:nix-community/disko/latest#disko-install' -- --flake "github:Gipphe/dotfiles#$host" --disk "main" "$disk_device"
+sudo nix --extra-experimental-features run 'flakes nix-command' 'github:nix-community/disko/latest#disko-install' -- --write-efi-boot-entries --flake "github:Gipphe/dotfiles#$host" --disk "main" "$disk_device"
 
 mkdir -p /tmp/built-system
 mount "$disk_device" /tmp/built-system
