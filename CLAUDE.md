@@ -166,7 +166,7 @@ Key dependencies:
 - `home-manager` - User environment management
 - `nix-on-droid` - Android support
 - `wsl` - WSL support
-- `hyprland`, `niri` - Wayland compositors
+- `hyprland` - Wayland compositor
 - `stylix` - System-wide theming
 - `sops-nix` - Secrets management
 

@@ -37,7 +37,6 @@ util.mkToggledModule [ "machines" ] {
       core.enable = true;
       desktop.hyprland.enable = true;
       desktop.hyprland.noctalia.enable = true;
-      desktop.niri.enable = false;
       desktop.plasma.enable = false;
       fonts.enable = true;
       gaming.enable = true;
@@ -68,9 +67,6 @@ util.mkToggledModule [ "machines" ] {
           scale = "auto";
         }
       ];
-    };
-    programs.niri.settings.outputs."Samsung Display Corp. 0x4193" = {
-      scale = 2;
     };
   };
 

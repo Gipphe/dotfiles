@@ -18,21 +18,6 @@ util.mkProgram {
     wayland.windowManager.hyprland.settings.windowrule = [
       "float true, match:class steam, match:title (Friends List)"
     ];
-    programs.niri.settings.window-rules = [
-      {
-        matches = [
-          {
-            app-id = "steam";
-            title = "^notificationtoasts_\\d+_desktop$";
-          }
-        ];
-        default-floating-position = {
-          relative-to = "bottom-right";
-          x = 10;
-          y = 10;
-        };
-      }
-    ];
   };
   system-nixos = {
     programs.steam = {

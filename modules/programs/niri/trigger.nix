@@ -1,7 +1,0 @@
-{
-  toNiriTrigger =
-    { command }:
-    {
-      sh = command;
-    };
-}

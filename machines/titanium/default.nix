@@ -37,7 +37,6 @@ util.mkToggledModule [ "machines" ] {
       core.enable = true;
       desktop.hyprland.enable = true;
       desktop.hyprland.noctalia.enable = true;
-      desktop.niri.enable = false;
       desktop.plasma.enable = false;
       fonts.enable = true;
       gaming.enable = true;
