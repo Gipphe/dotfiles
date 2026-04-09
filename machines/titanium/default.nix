@@ -59,7 +59,13 @@ util.mkToggledModule [ "machines" ] {
     imports = lib.optionals (hostname == host.name) (
       [
         ./hardware-configuration.nix
-        ./disk-config.nix
+        {
+          imports = [
+            inputs.disko.nixosModules.disko
+            ./disk-config.nix
+          ];
+        }
+
         # "${inputs.nixos-hardware}/common/gpu/nvidia/ampere"
       ]
       ++ builtins.attrValues {
