@@ -72,9 +72,5 @@ util.mkToggledModule [ "machines" ] {
     );
 
     system.stateVersion = "26.05";
-    users = {
-      users.gipphe.uid = 1000;
-      groups.gipphe.gid = 1000;
-    };
   };
 }
