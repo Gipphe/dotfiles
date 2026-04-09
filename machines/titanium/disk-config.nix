@@ -21,7 +21,7 @@
               size = "100%";
               content = {
                 type = "luks";
-                name = "encrypted";
+                name = "quark";
                 settings = {
                   allowDiscards = true;
                   # keyFile = "/tmp/secret.key";

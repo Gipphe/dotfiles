@@ -23,21 +23,20 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/mapper/encrypted";
+    device = "/dev/mapper/quark";
     fsType = "btrfs";
     options = [ "subvol=root" ];
   };
-  boot.initrd.luks.devices."encrypted".device =
-    "/dev/disk/by-uuid/eff1f7ce-0bdd-451c-ab6a-8f59b71eb366";
+  boot.initrd.luks.devices."quark".device = "/dev/disk/by-uuid/eff1f7ce-0bdd-451c-ab6a-8f59b71eb366";
 
   fileSystems."/home" = {
-    device = "/dev/mapper/encrypted";
+    device = "/dev/mapper/quark";
     fsType = "btrfs";
     options = [ "subvol=home" ];
   };
 
   fileSystems."/nix" = {
-    device = "/dev/mapper/encrypted";
+    device = "/dev/mapper/quark";
     fsType = "btrfs";
     options = [ "subvol=nix" ];
   };
