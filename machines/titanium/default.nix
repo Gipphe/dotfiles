@@ -41,6 +41,7 @@ util.mkToggledModule [ "machines" ] {
       desktop.plasma.enable = false;
       fonts.enable = true;
       gaming.enable = true;
+      gaming.streaming.enable = true;
       gc.enable = true;
       keyring.enable = true;
       logitech.enable = true;
