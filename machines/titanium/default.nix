@@ -60,12 +60,13 @@ util.mkToggledModule [ "machines" ] {
       [
         ./hardware-configuration.nix
         ./disk-config.nix
-        "${inputs.nixos-hardware}/common/gpu/nvidia/ampere"
+        # "${inputs.nixos-hardware}/common/gpu/nvidia/ampere"
       ]
       ++ builtins.attrValues {
         inherit (inputs.nixos-hardware.nixosModules)
           common-cpu-intel
-          common-gpu-nvidia
+          common-gpu-intel-comet-lake
+          # common-gpu-nvidia
           common-pc
           common-pc-ssd
           ;
