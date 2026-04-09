@@ -57,6 +57,23 @@ util.mkToggledModule [ "machines" ] {
     system.cpu.enable = true;
   };
 
+  hm = {
+    wayland.windowManager.hyprland.settings.monitorv2 = [
+      {
+        output = "desc:${monitors.left}";
+        mode = "preferred";
+        position = "0x0";
+        scale = 1;
+      }
+      {
+        output = "desc:${monitors.right}";
+        mode = "preferred";
+        position = "auto-right";
+        scale = 1;
+      }
+    ];
+  };
+
   system-nixos = {
     imports = lib.optionals (hostname == host.name) (
       [
@@ -80,21 +97,6 @@ util.mkToggledModule [ "machines" ] {
           ;
       }
     );
-
-    programs.hyprland.settings.monitorsv2 = [
-      {
-        output = "desc:${monitors.left}";
-        mode = "preferred";
-        position = "0x0";
-        scale = 1;
-      }
-      {
-        output = "desc:${monitors.right}";
-        mode = "preferred";
-        position = "auto-right";
-        scale = 1;
-      }
-    ];
 
     system.stateVersion = "26.05";
   };
