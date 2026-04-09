@@ -8,7 +8,47 @@
   modulesPath,
   ...
 }:
-
 {
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "ahci"
+    "nvme"
+    "usbhid"
+    "usb_storage"
+    "sd_mod"
+  ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
 
+  fileSystems."/" = {
+    device = "/dev/mapper/encrypted";
+    fsType = "btrfs";
+    options = [ "subvol=root" ];
+  };
+  boot.initrd.luks.devices."encrypted".device =
+    "/dev/disk/by-uuid/eff1f7ce-0bdd-451c-ab6a-8f59b71eb366";
+
+  fileSystems."/home" = {
+    device = "/dev/mapper/encrypted";
+    fsType = "btrfs";
+    options = [ "subvol=home" ];
+  };
+
+  fileSystems."/nix" = {
+    device = "/dev/mapper/encrypted";
+    fsType = "btrfs";
+    options = [ "subvol=nix" ];
+  };
+
+  swapDevices = [
+    {
+      device = "/.swapvol/swap";
+      size = 8 * 1024;
+    }
+  ];
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
