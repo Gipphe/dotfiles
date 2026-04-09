@@ -3,8 +3,7 @@
     disk = {
       main = {
         type = "disk";
-        # TODO: Set this device once the device path is known
-        # device = "/dev/sda";
+        device = "/dev/nvme1n1";
         content = {
           type = "gpt";
           partitions = {
