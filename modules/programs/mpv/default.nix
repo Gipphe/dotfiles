@@ -19,7 +19,7 @@ util.mkProgram {
     ];
     wrappers.mpv = {
       enable = true;
-      scripts = [ pkgs.mpvScripts.mpris ];
+      script.mpris.path = pkgs.mpvScripts.mpris;
     };
   };
 }
