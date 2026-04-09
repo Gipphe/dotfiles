@@ -45,6 +45,7 @@ util.mkToggledModule [ "machines" ] {
       gc.enable = true;
       keyring.enable = true;
       laptop.enable = true;
+      logitech.enable = true;
       rice.enable = true;
       secrets.enable = true;
       sync.enable = true;
