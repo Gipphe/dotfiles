@@ -64,7 +64,7 @@ util.mkToggledModule [ "machines" ] {
       ++ builtins.attrValues {
         inherit (inputs.nixos-hardware.nixosModules)
           common-cpu-intel
-          common-gpu-nvidia-ampere
+          common-gpu-nvidia
           common-pc
           common-pc-ssd
           ;
