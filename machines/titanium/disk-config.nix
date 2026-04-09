@@ -26,7 +26,7 @@
                   allowDiscards = true;
                   # keyFile = "/tmp/secret.key";
                 };
-                passwordFile = "/tmp/secret.key";
+                # passwordFile = "/tmp/secret.key";
                 content = {
                   type = "btrfs";
                   extraArgs = [ "-f" ];
