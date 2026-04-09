@@ -7,6 +7,8 @@
 }:
 let
   host = import ./host.nix;
+  monitors.left = "ASUSTek COMPUTER INC VG248 L9LMQS203421";
+  monitors.right = "ASUSTek COMPUTER INC VG248 L9LMQS203414";
 in
 util.mkToggledModule [ "machines" ] {
   inherit (host) name;
@@ -77,6 +79,21 @@ util.mkToggledModule [ "machines" ] {
           ;
       }
     );
+
+    programs.hyprland.settings.monitorsv2 = [
+      {
+        output = "desc:${monitors.left}";
+        mode = "preferred";
+        position = "0x0";
+        scale = 1;
+      }
+      {
+        output = "desc:${monitors.right}";
+        mode = "preferred";
+        position = "auto-right";
+        scale = 1;
+      }
+    ];
 
     system.stateVersion = "26.05";
   };
