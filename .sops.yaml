@@ -8,6 +8,7 @@ keys: &all
   - &carbon age1e7lyn2pxceswwtugyw4yx35jl9z2y5cezsa89fppjfalpvycu4pqumajmt
   - &boron age1x9wkzr3hu2vk92nx3q0h0v9amd9v5p44pz3gpecvx88z7kf4ta7qchkjfy
   - &sodium age1weteferxc26l4fzcc3nfprqwjc3r85d4vd6enqcjhvnccu7k3q7q3uu2ty
+  - &titanium age1fyc87dzwgcjdzs54d2yvngsgq6kyhqyppptmeyht0yul3l8qqfgqx6tqxt
 creation_rules:
   - path_regex: secrets/.*\.ssh\.pub
     key_groups:
@@ -57,6 +58,11 @@ creation_rules:
     key_groups:
       - age:
           - *sodium
+
+  - path_regex: secrets/titanium.*
+    key_groups:
+      - age:
+          - *titanium
 
   - path_regex: secrets/building-carbon\.ssh
     key_groups:
