@@ -31,7 +31,7 @@ fi
 
 key="/tmp/keys.txt"
 mkdir -p "$(dirname -- "$key")"
-nix --extra-experimental-features shell nixpkgs#age -c age-keygen -o "$key"
+nix --extra-experimental-features 'flakes nix-command' shell nixpkgs#age -c age-keygen -o "$key"
 export SOPS_AGE_KEY_FILE="$key"
 sudo chown root:root "$key"
 sudo --preserve-env=SOPS_AGE_KEY_FILE nix --extra-experimental-features 'flakes nix-command' run 'github:nix-community/disko/latest#disko-install' -- --write-efi-boot-entries --flake "github:Gipphe/dotfiles#$host" --disk "main" "$disk_device"
