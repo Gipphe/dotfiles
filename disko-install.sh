@@ -27,10 +27,11 @@ if test -z "$disk_device"; then
   exit 1
 fi
 
-key="$(sudo bash -c 'echo $HOME')/.config/sops/age/keys.txt"
-sudo mkdir -p "$(dirname -- "$key")"
-sudo nix --extra-experimental-features shell nixpkgs#age -c age-keygen -o "$key"
-sudo nix --extra-experimental-features run 'flakes nix-command' 'github:nix-community/disko/latest#disko-install' -- --write-efi-boot-entries --flake "github:Gipphe/dotfiles#$host" --disk "main" "$disk_device"
+key="/tmp/keys.txt"
+mkdir -p "$(dirname -- "$key")"
+nix --extra-experimental-features shell nixpkgs#age -c age-keygen -o "$key"
+export SOPS_AGE_KEY_FILE="$key"
+sudo --preserve-env=SOPS_AGE_KEY_FILE nix --extra-experimental-features run 'flakes nix-command' 'github:nix-community/disko/latest#disko-install' -- --write-efi-boot-entries --flake "github:Gipphe/dotfiles#$host" --disk "main" "$disk_device"
 
 mkdir -p /tmp/built-system
 mount "$disk_device" /tmp/built-system
