@@ -35,7 +35,6 @@ util.mkToggledModule [ "machines" ] {
       sync.enable = true;
       systemd.enable = true;
       vm-guest.enable = true;
-      windows-setup.enable = true;
     };
     hardware.disk.enable = true;
   };

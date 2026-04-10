@@ -19,7 +19,6 @@ util.mkModule {
   };
   shared.imports = [
     ./extensions.nix
-    ./windows.nix
   ];
   hm.config = lib.mkMerge [
     {

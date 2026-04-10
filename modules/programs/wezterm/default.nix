@@ -75,25 +75,6 @@ util.mkProgram {
             action.spawn = "${hmCfg.package}/bin/wezterm";
           }
         ];
-
-        gipphe.windows.home.file =
-          let
-            mkFile =
-              name: src:
-              pkgs.runCommand "windows-wezterm-config-${name}" { } /* bash */ ''
-                sed -r 's!/nix/store/.*/bin/(\S+)!\1!' <"${src}" |
-                sed -r 's!/nix/store/[a-z0-9]-(.*)!\1!' >"$out"
-              '';
-          in
-          {
-            ".config/wezterm/wezterm.lua".source = mkFile "wezterm.lua" (
-              pkgs.writeText "wezterm.lua" config.wrappers.wezterm."wezterm.lua".content
-            );
-            ".config/wezterm/stylix.lua".source =
-              mkFile "stylix.lua" config.wrappers.wezterm.constructFiles.stylix.outPath;
-            ".config/wezterm/config.lua".source =
-              mkFile "config.lua" config.wrappers.wezterm.constructFiles.config.outPath;
-          };
       }
 
       (lib.mkIf cfg.default {

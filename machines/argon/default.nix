@@ -36,7 +36,6 @@ util.mkToggledModule [ "machines" ] {
         terminal-capture.enable = true;
         tweag.enable = true;
         vm-guest.enable = true;
-        windows-setup.enable = true;
       };
       programs = {
         wezterm.enable = true;

@@ -66,7 +66,7 @@ nix-on-droid build --flake .#<hostname>
    - Must not break on unsupported systems
    - Use `util.mkProgram`, `util.mkEnvironment`, etc. from `util.nix`
    - Toggleable via enable options (no effect when just imported)
-   - Categories: `boot/`, `core/`, `environment/`, `hardware/`, `networking/`, `programs/`, `system/`, `windows/`
+   - Categories: `boot/`, `core/`, `environment/`, `hardware/`, `networking/`, `programs/`, `system/`
 
 2. **Profiles** (`./profiles/`) - Collections of modules
    - Only toggle and configure modules
@@ -153,7 +153,6 @@ modules/
 
 ## Special Features
 
-- **Windows interop**: `profiles/windows-setup.nix` manages Windows configuration via PowerShell/Scoop
 - **Secrets**: Managed with sops-nix, enabled via `profiles/secrets.nix`
 - **Theming**: Catppuccin Macchiato theme via stylix input
 - **Custom packages**: `packages/` directory with treefmt, custom fonts, Fish utilities

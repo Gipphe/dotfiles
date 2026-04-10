@@ -5,6 +5,5 @@ util.mkProgram {
     home.packages = [
       pkgs.jetbrains.rider
     ];
-    gipphe.windows.chocolatey.programs = [ "jetbrains-rider" ];
   };
 }

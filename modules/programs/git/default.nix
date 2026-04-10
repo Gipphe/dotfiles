@@ -23,20 +23,6 @@ let
 in
 util.mkProgram {
   name = "git";
-  options.gipphe.programs.git = {
-    windows = {
-      config = lib.mkOption {
-        description = "Config to be used on Windows";
-        type = lib.types.package;
-        internal = true;
-      };
-      ignores = lib.mkOption {
-        description = "Git ignore for Windows";
-        type = lib.types.path;
-        internal = true;
-      };
-    };
-  };
   hm = {
     options.gipphe.programs.git = {
       package = lib.mkPackageOption pkgs "git" { } // {
@@ -255,33 +241,6 @@ util.mkProgram {
       sops.secrets.git-signing-key = {
         sopsFile = ../../../secrets/pub-git-ssh-signing-key.key;
         format = "binary";
-      };
-
-      gipphe.windows.home.file = {
-        ".config/git/config".text = lib.generators.toGitINI (
-          let
-            base = removeAttrs config.wrappers.git.settings [
-              "credential"
-              "diff-so-fancy"
-              "gpg"
-              "interactive"
-              "diff"
-            ];
-          in
-          base
-          // {
-            commit = base.commit // {
-              gpgSign = false;
-            };
-            tag = base.tag // {
-              gpgSign = false;
-            };
-            core = base.core // {
-              pager = "less '--tabs=4' -RFX";
-            };
-          }
-        );
-        ".config/git/ignore".source = ignoreFile;
       };
     };
   };
