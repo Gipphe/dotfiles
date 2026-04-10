@@ -149,3 +149,27 @@ All profiles are located in [`./profiles`](./profiles).
 - A machine configuration may include extra machine-specific options if
   necessary. Generally, this should be kept to a minimum, or preferrably
   avoided entirely.
+
+## Disko and disks
+
+Disko does not have good support for _changing_ an existing disk setup, but it is possible to _add_ disks rather easily.
+
+Create a new `.nix` file with your new disk's configuration only, making sure that the specified `device` is correct, and just do
+
+```bash
+nix run github:nix-community/disko/latest -- --mode destroy,format,mount --root-mountpoint / ./path/to/your/disk-config.nix
+```
+
+Make sure that no disks you want to preserve are in that config, otherwise you're going to nuke your partition table, and won't be able to reboot.
+
+### Oh no, you just nuked your partition table
+
+This is more of a postmortem than a proper guide.
+
+I had specified the wrong disk in my new disk's configuration, and ran disko with `destroy,format,mount` on my existing disk that was currently running the system.
+
+I failed to notice the "Could not update current partitions because the kernel is using them. You will have to reboot" message, but found it strange that the disk I thought I had just formatted still seemed to not be formatted correctly. I assumed it was me just messing things up. Took me a few minutes (luckily without rebooting) before I realized what I had done, and a simple `sudo nix run nixpkgs#parted /dev/<main-drive> -- print` confirmed my fears: disko had _wiped_ the partition table, and subsequently failed to properly partition the drive afterwards, so the drive had no partitions.
+
+I was extra nervous considering the main partition was encrypted with luks, so I feared there would be issues recovering that partition and the encryption key. Granted, I don't know all too well how luks works, so all those assumptions might be invalid for all I know.
+
+I still had the disko configuration for the drive in my repo, and as long as I didn't reboot my computer the machine still knew where things were on the drive. So I just ran `disko --mode format ./path/to/main/disk-config.nix`, verified that the partition table was back in place with `parted`, and it all seemed good to go. No need to reinstall the system and go through the rather cumbersome process of fiddling with `age` keys to decrypt machine secrets!
