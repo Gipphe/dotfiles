@@ -51,6 +51,7 @@ util.mkToggledModule [ "machines" ] {
       torrent.enable = true;
     };
     programs.pipewire.higherQuantum.enable = true;
+    programs.librewolf.enable = true;
     hardware = {
       gpu.nvidia.rtx3070.enable = true;
       peripheral.logitech = {
