@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This is a NixOS dotfiles repository that supports multiple platforms: NixOS, nixos-wsl, and nix-on-droid. The architecture is based on a module system with profiles that configure machines.
+This is a NixOS dotfiles repository that supports multiple platforms: NixOS,
+and nix-on-droid. The architecture is based on a module system with profiles
+that configure machines.
 
 ## Development Commands
 
@@ -92,7 +94,6 @@ nix-on-droid build --flake .#<hostname>
 Modules must work across:
 
 - NixOS (standard Linux)
-- nixos-wsl (NixOS in WSL with systemd)
 - nix-on-droid (Android with Termux)
 
 Use `flags.isNixos`, `flags.isNixOnDroid`, `flags.isHm`, `flags.isSystem` to conditionally enable features.
@@ -163,7 +164,6 @@ Key dependencies:
 - `nixpkgs` - Main package source (nixos-unstable)
 - `home-manager` - User environment management
 - `nix-on-droid` - Android support
-- `wsl` - WSL support
 - `hyprland` - Wayland compositor
 - `stylix` - System-wide theming
 - `sops-nix` - Secrets management

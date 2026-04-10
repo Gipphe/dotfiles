@@ -25,7 +25,7 @@
   </tr>
   <tr>
     <td align="center">
-      Nix configuration for NixOS, nix-on-droid and nixos-wsl.
+      Nix configuration for NixOS and nix-on-droid.
     </td>
   </tr>
 </table>
@@ -100,7 +100,7 @@ Located in [`./machines/helium`](./machines/helium).
 
 ## Architecture
 
-To support NixOS, nix-on-droid _and_ nixos-wsl, some choices have been made in
+To support NixOS and nix-on-droid, some choices have been made in
 these dotfiles that might be of interest to others.
 
 - Modules generally abstract over a feature.
@@ -125,7 +125,7 @@ these dotfiles that might be of interest to others.
   - It is up to the module to ensure the config as a whole is not invalid
     because of it.
   - Modules must account for being used in multiple different contexts: NixOS,
-    nixos-wsl, home-manager, etc.
+    home-manager, etc.
 - Modules should be toggleable. Listing a module in `imports` should not have
   any effect unless the module is explicitly toggled as well.
 - Packages should be encapsulated in a separate module, as far as makes sense.
