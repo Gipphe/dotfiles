@@ -1,15 +1,10 @@
 {
   util,
-  config,
   lib,
   pkgs,
   flags,
   ...
 }:
-let
-  cfg = config.gipphe.programs.floorp;
-  pkg = config.programs.floorp.finalPackage or config.programs.floorp.package;
-in
 util.mkModule {
   options.gipphe.programs.floorp = {
     enable = lib.mkEnableOption "floorp";
@@ -18,47 +13,22 @@ util.mkModule {
     };
   };
   shared.imports = [
+    ./default-opts.nix
     ./extensions.nix
+    ./policies.nix
+    ./profile.nix
   ];
-  hm.config = lib.mkMerge [
-    {
-      programs.floorp = lib.mkIf (pkgs.stdenv.hostPlatform.isLinux && !flags.isNixOnDroid) {
-        enable = true;
-        profiles = {
-          default = import ./profile.nix { inherit pkgs; };
+  hm = {
+    config = lib.mkMerge [
+      {
+        programs.floorp = lib.mkIf (pkgs.stdenv.hostPlatform.isLinux && !flags.isNixOnDroid) {
+          enable = true;
+          nativeMessagingHosts = [ pkgs.tridactyl-native ];
         };
-        nativeMessagingHosts = [
-          pkgs.tridactyl-native
-        ];
-        policies = {
-          DisableTelemetry = true;
-          DNSOverHTTPS = {
-            ProviderURL = "https://dns.mullvad.net/dns-query";
-            Fallback = false;
-          };
-          OfferToSaveLogins = false;
-          PasswordManagerEnabled = false;
-        };
-      };
-    }
-    (lib.optionalAttrs (!flags.isNixOnDroid) (
-      lib.mkIf cfg.default {
-        home.sessionVariables = {
-          BROWSER = lib.getExe' pkg "floorp";
-          DEFAULT_BROWSER = lib.getExe' pkg "floorp";
-        };
-        gipphe.core.wm.binds = lib.mkIf cfg.default [
-          {
-            mod = "Mod";
-            key = "B";
-            action.spawn = lib.getExe' pkg "floorp";
-          }
-        ];
-        xdg.mimeApps.defaultApplicationPackages = [ pkg ];
       }
-    ))
-    (lib.optionalAttrs (!flags.isNixOnDroid) {
-      stylix.targets.floorp.profileNames = [ "default" ];
-    })
-  ];
+      (lib.optionalAttrs (!flags.isNixOnDroid) {
+        stylix.targets.floorp.profileNames = [ "default" ];
+      })
+    ];
+  };
 }
