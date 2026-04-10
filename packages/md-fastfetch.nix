@@ -64,7 +64,7 @@ writeFishApplication {
     # fish
     ''
       function info
-        echo "$argv" > &2
+        echo "$argv" >&2
       end
 
       if contains -- "--help" $argv || contains -- "-h" $argv

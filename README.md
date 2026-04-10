@@ -60,15 +60,27 @@ applicable.
 
 Machine configs are located in [`./machines`](./machines).
 
+### titanium
+
+![titanium jdenticon](./assets/icon/titanium.png)
+
+NixOS on custom built desktop.
+
+Located in [`./machines/titanium`](./machines/titanium).
+
+<img src="./assets/neofetch/titanium.png" width="600px">
+
 ### argon
 
 ![argon jdenticon](./assets/icon/argon.png)
+
+_No longer in use._
 
 NixOS in WSL on Windows. Supports GUI programs through WSLg.
 
 Located in [`./machines/argon`](./machines/argon).
 
-<img src="./assets/argon-neofetch.png" width="600px">
+<img src="./assets/neofetch/argon.png" width="600px">
 
 ### cobalt
 
