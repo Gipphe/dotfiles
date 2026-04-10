@@ -24,7 +24,6 @@ util.mkToggledModule [ "machines" ] {
         bluetooth.enable = true;
         boot-efi.enable = true;
         camera.enable = true;
-        devices.enable = true;
         networking.enable = true;
         printing.enable = true;
         system.enable = true;
@@ -44,7 +43,6 @@ util.mkToggledModule [ "machines" ] {
       gaming.stream-host.enable = true;
       gc.enable = true;
       keyring.enable = true;
-      logitech.enable = true;
       rice.enable = true;
       secrets.enable = true;
       sync.enable = true;
@@ -53,7 +51,15 @@ util.mkToggledModule [ "machines" ] {
       torrent.enable = true;
     };
     programs.pipewire.higherQuantum.enable = true;
-    system.cpu.enable = true;
+    hardware = {
+      gpu.nvidia.rtx3070.enable = true;
+      peripheral.logitech.g903 = {
+        enable = true;
+        id = "046d:c539";
+      };
+      cpu.intel.comet-lake.enable = true;
+      disk.enable = true;
+    };
   };
 
   hm = {
@@ -83,19 +89,16 @@ util.mkToggledModule [ "machines" ] {
             ./disk-config.nix
           ];
         }
-
-        # "${inputs.nixos-hardware}/common/gpu/nvidia/ampere"
       ]
       ++ builtins.attrValues {
         inherit (inputs.nixos-hardware.nixosModules)
-          common-cpu-intel
-          common-gpu-intel-comet-lake
-          # common-gpu-nvidia
           common-pc
           common-pc-ssd
           ;
       }
     );
+
+    hardware.nvidia.prime.nvidiaBusId = "PCI:1@0:0:0";
 
     system.stateVersion = "26.05";
   };

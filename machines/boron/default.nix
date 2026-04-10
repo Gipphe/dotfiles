@@ -22,7 +22,6 @@ util.mkToggledModule [ "machines" ] {
         bluetooth.enable = true;
         boot-efi.enable = true;
         camera.enable = true;
-        devices.enable = true;
         networking.enable = true;
         printing.enable = true;
         power.enable = true;
@@ -52,6 +51,7 @@ util.mkToggledModule [ "machines" ] {
     };
     programs.pipewire.higherQuantum.enable = true;
     system.cpu.enable = true;
+    hardware.disk.enable = true;
   };
 
   hm = {

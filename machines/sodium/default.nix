@@ -22,7 +22,6 @@ util.mkToggledModule [ "machines" ] {
         bluetooth.enable = true;
         boot-efi.enable = true;
         camera.enable = true;
-        devices.enable = true;
         networking.enable = true;
         power.enable = true;
         system.enable = true;
@@ -38,6 +37,7 @@ util.mkToggledModule [ "machines" ] {
       secrets.enable = true;
     };
     # system.cpu.enable = true;
+    hardware.disk.enable = true;
   };
 
   hm = {

@@ -19,7 +19,6 @@ util.mkToggledModule [ "machines" ] {
         audio.enable = true;
         boot-efi.enable = true;
         networking.enable = true;
-        devices.enable = true;
         system.enable = true;
       };
       ai.enable = true;
@@ -38,6 +37,7 @@ util.mkToggledModule [ "machines" ] {
       vm-guest.enable = true;
       windows-setup.enable = true;
     };
+    hardware.disk.enable = true;
   };
   system-nixos.imports = lib.optionals (hostname == host.name) [ ./hardware-configuration.nix ];
 }

@@ -20,7 +20,6 @@ util.mkToggledModule [ "machines" ] {
         audio.enable = true;
         bluetooth.enable = true;
         boot-efi.enable = true;
-        devices.enable = true;
         networking.enable = true;
         power.enable = true;
         system.enable = true;
@@ -45,6 +44,7 @@ util.mkToggledModule [ "machines" ] {
       terminal-capture.enable = true;
     };
     system.cpu.enable = true;
+    hardware.disk.enable = true;
   };
 
   system-nixos.imports = lib.optionals (hostname == host.name) (
