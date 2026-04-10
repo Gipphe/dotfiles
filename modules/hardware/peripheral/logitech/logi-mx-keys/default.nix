@@ -4,7 +4,7 @@
   config,
   ...
 }:
-util.mkHardware {
+util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
   name = "logi-mx-keys";
   hm.config = lib.mkMerge [
     (
