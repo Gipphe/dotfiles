@@ -53,9 +53,12 @@ util.mkToggledModule [ "machines" ] {
     programs.pipewire.higherQuantum.enable = true;
     hardware = {
       gpu.nvidia.rtx3070.enable = true;
-      peripheral.logitech.g903 = {
-        enable = true;
-        id = "046d:c539";
+      peripheral.logitech = {
+        g903 = {
+          enable = true;
+          id = "046d:c539";
+        };
+        g935.enable = true;
       };
       cpu.intel.comet-lake.enable = true;
       disk.enable = true;
