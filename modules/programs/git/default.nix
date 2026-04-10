@@ -46,27 +46,6 @@ util.mkProgram {
         lfs.enable = true;
         diff-so-fancy.enable = true;
       };
-      home.packages =
-        let
-          commit = util.writeFishApplication {
-            name = "commit";
-            runtimeInputs = [
-              pkgs.gum
-              config.wrappers.git.package
-            ];
-            text = builtins.readFile ./commit.fish;
-          };
-          ci = pkgs.linkFarm "ci" [
-            {
-              name = "bin/ci";
-              path = lib.getExe commit;
-            }
-          ];
-        in
-        [
-          ci
-          commit
-        ];
 
       wrappers.git = {
         enable = true;
