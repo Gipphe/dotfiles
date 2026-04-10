@@ -86,12 +86,8 @@ util.mkToggledModule [ "machines" ] {
     imports = lib.optionals (hostname == host.name) (
       [
         ./hardware-configuration.nix
-        {
-          imports = [
-            inputs.disko.nixosModules.disko
-            ./disk-config.nix
-          ];
-        }
+        inputs.disko.nixosModules.disko
+        ./disks
       ]
       ++ builtins.attrValues {
         inherit (inputs.nixos-hardware.nixosModules)
