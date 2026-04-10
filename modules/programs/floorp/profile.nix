@@ -81,6 +81,20 @@
         urls = [ { template = "https://github.com/{searchTerms}"; } ];
         definedAliases = [ "!gh" ];
       };
+      "GitHub search" = {
+        urls = [
+          {
+            template = "https://github.com/search";
+            params = [
+              {
+                name = "q";
+                value = "{searchTerms}";
+              }
+            ];
+          }
+        ];
+        definedAliases = [ "!ghs" ];
+      };
       "BoardGameGeek" = {
         urls = [
           {
