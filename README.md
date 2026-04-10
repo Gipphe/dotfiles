@@ -70,18 +70,6 @@ Located in [`./machines/titanium`](./machines/titanium).
 
 <img src="./assets/neofetch/titanium.png" width="600px">
 
-### argon
-
-![argon jdenticon](./assets/icon/argon.png)
-
-_No longer in use._
-
-NixOS in WSL on Windows. Supports GUI programs through WSLg.
-
-Located in [`./machines/argon`](./machines/argon).
-
-<img src="./assets/neofetch/argon.png" width="600px">
-
 ### cobalt
 
 ![cobalt jdenticon](./assets/icon/cobalt.png)
@@ -90,16 +78,6 @@ Lenovo Ideapad laptop running NixOS.
 
 Located in [`./machines/cobalt`](./machines/cobalt).
 
-### helium
-
-![helium jdenticon](./assets/icon/helium.png)
-
-_No longer in use._
-
-Samsung Galaxy S21 Ultra running nix-on-droid on stock Android.
-
-Located in [`./machines/helium`](./machines/helium).
-
 ### carbon
 
 ![carbon jdenticon](./assets/icon/carbon.png)
@@ -107,6 +85,28 @@ Located in [`./machines/helium`](./machines/helium).
 Google Pixel 9 Pro XL running nix-on-droid on GrapheneOS.
 
 Located in [`./machines/carbon`](./machines/carbon).
+
+## Defunct machine configurations
+
+_These machine configurations are no longer in use._
+
+### argon
+
+![argon jdenticon](./assets/icon/argon.png)
+
+NixOS in WSL on Windows. Supports GUI programs through WSLg.
+
+Located in [`./machines/argon`](./machines/argon).
+
+<img src="./assets/neofetch/argon.png" width="600px">
+
+### helium
+
+![helium jdenticon](./assets/icon/helium.png)
+
+Samsung Galaxy S21 Ultra running nix-on-droid on stock Android.
+
+Located in [`./machines/helium`](./machines/helium).
 
 ## Architecture
 
