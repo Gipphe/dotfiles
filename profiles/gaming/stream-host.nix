@@ -1,6 +1,6 @@
 { util, ... }:
 util.mkToggledModule [ "profiles" "gaming" ] {
-  name = "streaming";
+  name = "stream-host";
   shared.gipphe = {
     programs.sunshine.enable = true;
   };
