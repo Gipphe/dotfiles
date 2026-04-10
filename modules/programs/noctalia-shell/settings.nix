@@ -217,7 +217,7 @@
         {
           clockColor = "none";
           customFont = "";
-          formatHorizontal = "HH:mm ddd, yyyy-MM-dd";
+          formatHorizontal = "HH:mm - ddd MMM dd";
           formatVertical = "HH mm - dd MM";
           id = "Clock";
           tooltipFormat = "HH:mm ddd, yyyy-MM-dd";
