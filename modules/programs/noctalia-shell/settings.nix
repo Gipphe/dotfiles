@@ -47,7 +47,7 @@
     contentPadding = 2;
     density = "comfortable";
     displayMode = "always_visible";
-    enableExclusionZoneInset = true;
+    enableExclusionZoneInset = false;
     fontScale = 1;
     frameRadius = 12;
     frameThickness = 8;
@@ -99,6 +99,7 @@
       left = [
         {
           colorizeSystemIcon = "none";
+          colorizeSystemText = "none";
           customIconPath = "";
           enableColorization = false;
           icon = "rocket";
@@ -135,6 +136,7 @@
           maxWidth = 145;
           scrollingMode = "hover";
           showIcon = true;
+          showText = true;
           textColor = "none";
           useFixedWidth = false;
         }
@@ -199,6 +201,7 @@
         {
           colorizeDistroLogo = false;
           colorizeSystemIcon = "none";
+          colorizeSystemText = "none";
           customIconPath = "";
           enableColorization = false;
           icon = "noctalia";
@@ -247,6 +250,7 @@
     monitorForColors = "";
     predefinedScheme = "Catppuccin";
     schedulingMode = "off";
+    syncGsettings = true;
     useWallpaperColors = true;
   };
   controlCenter = {
@@ -345,7 +349,7 @@
     enableBlurBehind = true;
     enableLockScreenCountdown = true;
     enableLockScreenMediaControls = false;
-    enableShadows = true;
+    enableShadows = false;
     forceBlackScreenCorners = false;
     iRadiusRatio = 1;
     keybinds = {
@@ -379,6 +383,7 @@
     showHibernateOnLockScreen = false;
     showScreenCorners = false;
     showSessionButtonsOnLockScreen = true;
+    smoothScrollEnabled = true;
     telemetryEnabled = true;
   };
   hooks = {
@@ -409,6 +414,7 @@
   };
   location = {
     analogClockInCalendar = false;
+    autoLocate = false;
     firstDayOfWeek = -1;
     hideWeatherCityName = false;
     hideWeatherTimezone = false;
@@ -420,6 +426,7 @@
     useFahrenheit = false;
     weatherEnabled = true;
     weatherShowEffects = true;
+    weatherTaliaMascotAlways = false;
   };
   network = {
     airplaneModeEnabled = false;
@@ -599,6 +606,7 @@
     fillColor = "#000000";
     fillMode = "crop";
     hideWallpaperFilenames = false;
+    linkLightAndDarkWallpapers = true;
     monitorDirectories = [ ];
     overviewBlur = 0.4;
     overviewEnabled = false;
@@ -620,6 +628,7 @@
       "pixelate"
       "honeycomb"
     ];
+    useOriginalImages = false;
     useSolidColor = false;
     useWallhaven = false;
     viewMode = "single";
