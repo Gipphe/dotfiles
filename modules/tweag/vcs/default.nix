@@ -2,7 +2,7 @@
 util.mkToggledModule [ "tweag" ] {
   name = "vcs";
   hm = {
-    programs = {
+    wrappers = {
       git.includes = [
         {
           condition = "gitdir:~/projects/tweag";
