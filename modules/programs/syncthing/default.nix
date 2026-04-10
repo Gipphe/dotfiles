@@ -52,6 +52,22 @@ let
         "boron"
       ];
     };
+    "/mnt/oldone/Filen/Archive/Backup/PhoneProfilesPlus settings" = {
+      id = "phone-profiles-plus-settings";
+      lable = "PhoneProfilesPlus settings";
+      devices = [
+        "titanium"
+        "carbon"
+      ];
+    };
+    "/mnt/oldone/Filen/Archive/Backup/AnkiDroid" = {
+      id = "ankidroid";
+      lable = "AnkiDroid";
+      devices = [
+        "titanium"
+        "carbon"
+      ];
+    };
   };
 
   inherit (builtins) elem filter;
