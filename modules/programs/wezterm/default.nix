@@ -53,18 +53,15 @@ util.mkProgram {
           enable = true;
           luaInfo = {
             color_scheme = "Catppuccin Macchiato";
-            enable_wayland = false;
             hide_tab_bar_if_only_one_tab = true;
             send_composed_key_when_left_alt_is_pressed = true;
             send_composed_key_when_right_alt_is_pressed = false;
             default_cursor_style = "BlinkingBar";
-            # See https://github.com/wez/wezterm/issues/5990
-            front_end = "WebGpu";
             # Disable easing for cursor; blinking text and visual bell
             animation_fps = 1;
             warn_about_missing_glyphs = false;
             # claude-code shift-enter fix
-            keys = [
+            keys = lib.mkIf config.gipphe.programs.claude-code.enable [
               {
                 key = "Enter";
                 mods = "SHIFT";
