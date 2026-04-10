@@ -1,4 +1,5 @@
 {
+  config,
   hostname,
   util,
   inputs,
@@ -66,20 +67,26 @@ util.mkToggledModule [ "machines" ] {
   };
 
   hm = {
-    wayland.windowManager.hyprland.settings.monitorv2 = [
-      {
-        output = "desc:${monitors.left}";
-        mode = "preferred";
-        position = "0x0";
-        scale = 1;
-      }
-      {
-        output = "desc:${monitors.right}";
-        mode = "preferred";
-        position = "auto-right";
-        scale = 1;
-      }
-    ];
+    wayland.windowManager.hyprland.settings = {
+      monitorv2 = [
+        {
+          output = "desc:${monitors.left}";
+          mode = "preferred";
+          position = "0x0";
+          scale = 1;
+        }
+        {
+          output = "desc:${monitors.right}";
+          mode = "preferred";
+          position = "auto-right";
+          scale = 1;
+        }
+      ];
+    };
+    services.syncthing = {
+      settings.folders."${config.home.homeDirectory}/Documents/Notes".path =
+        "/mnt/oldone/Filen/Area/Notes";
+    };
   };
 
   system-nixos = {
