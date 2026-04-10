@@ -27,7 +27,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
         sddm.enable = true;
         greetd.enable = false;
 
-        plymouth.enable = true;
+        plymouth.enable = false;
 
         brightnessctl.enable = true;
 
