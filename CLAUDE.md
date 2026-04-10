@@ -101,7 +101,6 @@ Use `flags.isNixos`, `flags.isNixOnDroid`, `flags.isHm`, `flags.isSystem` to con
 
 Machines follow periodic table naming:
 
-- **argon** - NixOS in WSL (Windows), supports GUI via WSLg
 - **cobalt** - Lenovo Ideapad laptop
 - **carbon** - Google Pixel 9 Pro XL (nix-on-droid on GrapheneOS)
 - **helium** - Samsung Galaxy S21 Ultra (deprecated)

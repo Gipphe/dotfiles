@@ -1,6 +1,5 @@
 keys: &all
   - &silicon age1hvcmce9e4tkhm2ue2nh7tan6qxy7dewyf8rkentshf20qlt3x5aszkpn7c
-  - &argon age1akwhlc7p3nmvty78nvqj9egdamvt86r6pkljjry9846f5uxju4hsnzr5pq
   - &cobalt age12ewxc5y60mgvu240gvjnnc6uufvjrh757kad7dkzlwm64fcd4v4qtmvpy5
   - &helium age102w690dszwe3305vg3v084y6z6hstjsxskatz6evguj3utzz6e4s7yfrfr
   - &fluoride age16fmgfwq6hjyps36ar9jvwj7325sjfju3yfxt9df2zlfwu9dzdudqwpsh9f
@@ -18,10 +17,6 @@ creation_rules:
     key_groups:
       - age:
           - *silicon
-  - path_regex: secrets/argon.*
-    key_groups:
-      - age:
-          - *argon
 
   - path_regex: secrets/cobalt.*
     key_groups:
@@ -47,7 +42,6 @@ creation_rules:
     key_groups:
       - age:
           - *utv-vnb-lt
-          - *argon
 
   - path_regex: secrets/carbon.*
     key_groups:
@@ -72,7 +66,6 @@ creation_rules:
   - path_regex: secrets/building-carbon\.ssh\.pub
     key_groups:
       - age:
-          - *argon
           - *carbon
 
   - path_regex: secrets/pub-.*

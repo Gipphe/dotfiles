@@ -90,16 +90,6 @@ Located in [`./machines/carbon`](./machines/carbon).
 
 _These machine configurations are no longer in use._
 
-### argon
-
-![argon jdenticon](./assets/icon/argon.png)
-
-NixOS in WSL on Windows. Supports GUI programs through WSLg.
-
-Located in [`./machines/argon`](./machines/argon).
-
-<img src="./assets/neofetch/argon.png" width="600px">
-
 ### helium
 
 ![helium jdenticon](./assets/icon/helium.png)
