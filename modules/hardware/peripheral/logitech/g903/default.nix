@@ -34,6 +34,7 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
       udev.extraRules = ''
         ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="c539", ATTR{power/autosuspend}="-1"
       '';
+      hardware.openrgb.enable = true;
     };
   };
 }
