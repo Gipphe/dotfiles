@@ -14,6 +14,8 @@ util.mkProgram {
         OfferToSaveLogins = false;
         PasswordManagerEnabled = false;
       };
+      profiles.default = { };
     };
+    stylix.targets.librewolf.profileNames = [ "default" ];
   };
 }
