@@ -76,7 +76,7 @@
       center = [
         {
           characterCount = 2;
-          colorizeIcons = false;
+          colorizeIcons = true;
           emptyColor = "secondary";
           enableScrollWheel = true;
           focusedColor = "primary";
@@ -89,7 +89,7 @@
           labelMode = "index";
           occupiedColor = "secondary";
           pillSize = 0.6;
-          showApplications = false;
+          showApplications = true;
           showApplicationsHover = false;
           showBadge = true;
           showLabelsOnlyWhenOccupied = true;
@@ -174,6 +174,12 @@
           id = "NotificationHistory";
           showUnreadBadge = true;
           unreadBadgeColor = "primary";
+        }
+        {
+          displayMode = "onhover";
+          iconColor = "none";
+          id = "Network";
+          textColor = "none";
         }
         {
           deviceNativePath = "__default__";
@@ -429,7 +435,6 @@
     weatherTaliaMascotAlways = false;
   };
   network = {
-    airplaneModeEnabled = false;
     bluetoothAutoConnect = true;
     bluetoothDetailsViewMode = "grid";
     bluetoothHideUnnamedDevices = false;
@@ -438,7 +443,6 @@
     disableDiscoverability = false;
     networkPanelView = "wifi";
     wifiDetailsViewMode = "grid";
-    wifiEnabled = true;
   };
   nightLight = {
     autoSchedule = true;
