@@ -9,6 +9,7 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
     };
   };
   system-nixos = {
+    hardware.libinput.enable = true;
     hardware.logitech.wireless = {
       enable = true;
       enableGraphical = true;
@@ -19,6 +20,9 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
       [Logitech G903 LS]
       MatchName=Logitech G903 LS
       AttrEventCode=-REL_WHEEL_HI_RES;
+    '';
+    services.udev.extraRules = ''
+      ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="c539", ATTR{power/autosuspend}="-1"
     '';
   };
 }
