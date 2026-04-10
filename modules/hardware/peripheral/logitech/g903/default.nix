@@ -1,4 +1,9 @@
-{ util, lib, ... }:
+{
+  util,
+  lib,
+  pkgs,
+  ...
+}:
 util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
   name = "g903";
   options.gipphe.hardware.peripheral.logitech.g903 = {
@@ -7,6 +12,9 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
       description = "ID of the device as reported by lsusb";
       example = "046d:c539";
     };
+  };
+  hm = {
+    home.packages = [ pkgs.piper ];
   };
   system-nixos = {
     hardware.logitech.wireless = {
