@@ -49,15 +49,6 @@ util.mkProgram {
 
       wrappers.git = {
         enable = true;
-        configFile.content = /* ini */ ''
-          [credential "https://gist.github.com"]
-            helper = ""
-            helper = "${lib.getExe pkgs.gh} auth git-credential"
-
-          [credential "https://github.com"]
-            helper = ""
-            helper = "${lib.getExe pkgs.gh} auth git-credential"
-        '';
         settings = {
           branch.autosetupmerge = "true";
           core = {
