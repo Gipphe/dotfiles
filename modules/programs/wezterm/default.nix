@@ -8,7 +8,21 @@
 }:
 let
   cfg = config.gipphe.programs.wezterm;
-  hmCfg = config.programs.wezterm;
+  formatWindowTitle = /* lua */ ''
+    do
+      local wezterm = require("wezterm")
+      -- Strip Zellij session name from window title
+      wezterm.on("format-window-title", function(tab, _pane, _tabs, _panes, _config)
+        local title = tab.active_pane.title
+        -- Remove Zellij session name pattern: "session-name | actual-title"
+        local stripped = title:match("^[^|]+%|%s*(.+)$")
+        if stripped then
+          return stripped
+        end
+        return title
+      end)
+    end
+  '';
 in
 util.mkProgram {
   name = "wezterm";
@@ -37,52 +51,48 @@ util.mkProgram {
       {
         wrappers.wezterm = {
           enable = true;
-          "wezterm.lua".content = /* lua */ ''
-            local wezterm = require("wezterm")
-            local stylix_config = require("stylix")
-            local user_config = require("config")
-
-            local config = wezterm.config_builder and wezterm.config_builder() or {}
-            for k, v in pairs(stylix_config)
-              config[k] = v
-            end
-            for k, v in pairs(user_config)
-              config[k] = v
-            end
-
-            return config
-          '';
-          constructFiles = {
-            config = {
-              relPath = "config.lua";
-              content = builtins.readFile ./wezterm.lua;
-            };
-            stylix = {
-              relPath = "stylix.lua";
-              content = /* lua */ ''
-                return {
-                  ${config.stylix.targets.wezterm.luaBody}
-                }
-              '';
-            };
+          luaInfo = {
+            color_scheme = "Catppuccin Macchiato";
+            enable_wayland = false;
+            hide_tab_bar_if_only_one_tab = true;
+            send_composed_key_when_left_alt_is_pressed = true;
+            send_composed_key_when_right_alt_is_pressed = false;
+            default_cursor_style = "BlinkingBar";
+            # See https://github.com/wez/wezterm/issues/5990
+            front_end = "WebGpu";
+            # Disable easing for cursor; blinking text and visual bell
+            animation_fps = 1;
+            warn_about_missing_glyphs = false;
+            # claude-code shift-enter fix
+            keys = [
+              {
+                key = "Enter";
+                mods = "SHIFT";
+                action = lib.mkLuaInline ''wezterm.action({ SendString = "\\x1b\\r" })'';
+              }
+            ];
           };
+          "wezterm.lua".content = /* lua */ ''
+            ${formatWindowTitle}
+            return require('nix-info')
+          '';
         };
 
         gipphe.core.wm.binds = [
           {
             mod = "Mod";
             key = "Return";
-            action.spawn = "${hmCfg.package}/bin/wezterm";
+            action.spawn = "${config.wrappers.wezterm.wrapper}/bin/wezterm";
           }
         ];
       }
 
       (lib.mkIf cfg.default {
-        home.sessionVariables.TERMINAL = "${hmCfg.package}/bin/wezterm";
+        home.sessionVariables.TERMINAL = "${config.wrappers.wezterm.wrapper}/bin/wezterm";
 
         home.packages = [
           (pkgs.writeShellScriptBin "x-terminal-emulator" ''
-            ${hmCfg.package}/bin/wezterm start "$@"
+            ${config.wrappers.wezterm.wrapper}/bin/wezterm start "$@"
           '')
         ];
 
