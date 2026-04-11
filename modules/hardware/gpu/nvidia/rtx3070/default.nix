@@ -1,13 +1,7 @@
-{
-  inputs,
-  util,
-  pkgs,
-  ...
-}:
+{ util, pkgs, ... }:
 util.mkToggledModule [ "hardware" "gpu" "nvidia" ] {
   name = "rtx3070";
   system-nixos = {
-    imports = [ "${inputs.nixos-hardware}/common/gpu/nvidia/ampere" ];
     services.xserver.videoDrivers = [ "nvidia" ];
     environment.variables = {
       GBM_BACKEND = "nvidia-drm";

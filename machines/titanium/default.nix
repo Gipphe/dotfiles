@@ -95,6 +95,7 @@ util.mkToggledModule [ "machines" ] {
         ./hardware-configuration.nix
         inputs.disko.nixosModules.disko
         ./disks
+        "${inputs.nixos-hardware}/common/gpu/nvidia/ampere"
       ]
       ++ builtins.attrValues {
         inherit (inputs.nixos-hardware.nixosModules)
