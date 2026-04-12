@@ -14,10 +14,10 @@ util.mkProgram {
         lock_cmd = hyprlock;
       };
       listener = [
-        {
-          timeout = 900;
-          on-timeout = hyprlock;
-        }
+        # {
+        #   timeout = 900;
+        #   on-timeout = hyprlock;
+        # }
         {
           timeout = 1200;
           on-timeout = config.gipphe.core.wm.actions.monitors-off;
