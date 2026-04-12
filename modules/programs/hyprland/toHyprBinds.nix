@@ -22,17 +22,17 @@ let
     if lowered == "mod" || lowered == "$mod" then "$mod" else s;
   toMods =
     mods: if isString mods then replaceMod mods else concatStringsSep " " (map replaceMod mods);
-  toHyprBind = coreBind: "${toMods coreBind.mod}, ${coreBind.key}, ${toDispatch coreBind.action}";
-  toWarningMsgs =
+  toHyprBindConfig = coreBind: {
+    ${pickBindType coreBind} = [
+      "${toMods coreBind.mod}, ${coreBind.key}, ${toDispatch coreBind.action}"
+    ];
+  };
+  pickBindType =
     coreBind:
-    let
-      mod = toMods coreBind.mod;
-    in
-    lib.optional (hasUnsupportedArgs coreBind) ''
-      Corebind ${if mod == "" then "" else "${mod}+"}${coreBind.key} has unsupported "args"
-    '';
-  hasUnsupportedArgs = coreBind: coreBind.args != { };
+    if coreBind.args ? allow-when-locked && coreBind.args.allow-when-locked then "bindl" else "bind";
 in
 {
-  inherit toHyprBind toWarningMsgs hasUnsupportedArgs;
+  inherit
+    toHyprBindConfig
+    ;
 }

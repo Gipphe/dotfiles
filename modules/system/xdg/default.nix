@@ -19,6 +19,7 @@ util.mkSystem {
             default = [ "gtk" ];
           };
         };
+        # TODO: Do I need gtk portal?
         extraPortals = builtins.attrValues {
           inherit (pkgs)
             xdg-desktop-portal

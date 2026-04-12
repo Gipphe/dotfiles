@@ -32,7 +32,17 @@ util.mkModule {
             };
             args = lib.mkOption {
               description = "Extra arguments passed to the compositor when registering the bind";
-              type = with lib.types; attrsOf anything;
+              type =
+                with lib.types;
+                submodule {
+                  options = {
+                    allow-when-locked = lib.mkOption {
+                      type = bool;
+                      default = false;
+                      description = "Whether the keybind is available while the session is locked.";
+                    };
+                  };
+                };
               default = { };
             };
             action = lib.mkOption {
