@@ -5,6 +5,7 @@ util.mkProfile {
     programs = {
       _1password-gui.enable = true;
       filen-desktop.enable = true;
+      flatpak.enable = true;
       floorp.default = lib.mkDefault true;
       floorp.enable = true;
       gimp.enable = true;
