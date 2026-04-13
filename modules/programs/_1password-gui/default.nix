@@ -29,6 +29,7 @@ util.mkProgram {
     ];
 
     wayland.windowManager.hyprland.settings = {
+      exec-once = "1password --silent";
       windowrule = [
         "float true, stay_focused true, allows_input true, match:title (Quick Access - 1Password), match:class (1Password)"
       ];
