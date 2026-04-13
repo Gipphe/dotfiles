@@ -1,5 +1,9 @@
-{ util, pkgs, ... }:
+{ util, ... }:
 util.mkProgram {
   name = "discord";
-  hm.home.packages = [ pkgs.discord ];
+  hm = {
+    programs.discord = {
+      enable = true;
+    };
+  };
 }
