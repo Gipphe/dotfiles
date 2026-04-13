@@ -52,6 +52,7 @@ util.mkProgram {
         wrappers.wezterm = {
           enable = true;
           luaInfo = {
+            font_size = 10.0;
             color_scheme = "Catppuccin Macchiato";
             hide_tab_bar_if_only_one_tab = true;
             send_composed_key_when_left_alt_is_pressed = true;
