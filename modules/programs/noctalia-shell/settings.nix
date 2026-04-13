@@ -60,7 +60,7 @@
     monitors = [ ];
     mouseWheelAction = "none";
     mouseWheelWrap = true;
-    outerCorners = true;
+    outerCorners = false;
     position = "top";
     reverseScroll = false;
     rightClickAction = "controlCenter";
