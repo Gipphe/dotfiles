@@ -16,7 +16,7 @@ util.mkModule {
     ./default-opts.nix
     ./extensions.nix
     ./policies.nix
-    ./profile.nix
+    ./profile
   ];
   hm = {
     config = lib.mkMerge [
