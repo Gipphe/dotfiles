@@ -9,7 +9,7 @@ util.mkModule {
   system-nixos = lib.mkIf config.gipphe.programs.nix.gc.enable {
     programs.nh.clean = {
       enable = true;
-      extraArgs = "--nogcroots --keep 3 --keep-since 8d";
+      extraArgs = "--optimise --nogcroots --keep 3 --keep-since 8d";
       dates = "weekly";
     };
 
