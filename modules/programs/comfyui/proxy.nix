@@ -16,9 +16,11 @@ let
             flow.request.headers["Authorization"] = f"Bearer {TOKEN}"
   '';
   userGroup = "cai-proxy";
+  bundlePath = "/run/nix-daemon-ca/ca-bundle.crt";
+  proxyAddress = "http://127.0.0.1:${toString mitm_port}";
 in
 util.mkModule {
-  system-nixos = {
+  system-nixos.config = lib.mkIf config.gipphe.programs.comfyui.enable {
     sops.useSystemdActivation = true;
     sops.secrets = {
       cai-api-key = {
@@ -35,6 +37,14 @@ util.mkModule {
         format = "binary";
         sopsFile = ../../../secrets/pub-cai-mitm-ca.pem;
       };
+    };
+    environment.variables = {
+      CURL_CA_BUNDLE = bundlePath;
+      NIX_SSL_CERT_FILE = bundlePath;
+    };
+    networking.proxy = {
+      httpProxy = proxyAddress;
+      httpsProxy = proxyAddress;
     };
     systemd.services = {
       cai-proxy = {
@@ -71,11 +81,6 @@ util.mkModule {
       };
       nix-daemon = {
         after = [ config.systemd.services.nix-daemon-ca-bundle.name ];
-        environment = {
-          https_proxy = "http://127.0.0.1:${toString mitm_port}";
-          CURL_CA_BUNDLE = lib.mkForce "/run/nix-daemon-ca/ca-bundle.crt";
-          NIX_SSL_CERT_FILE = lib.mkForce "/run/nix-daemon-ca/ca-bundle.crt";
-        };
       };
       nix-daemon-ca-bundle = {
         description = "Build CA bundle for nix-daemon including mitmproxy cert";
@@ -90,7 +95,7 @@ util.mkModule {
             mkdir -p /run/nix-daemon-ca
             cat ${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt \
                 ${config.sops.secrets.cai-mitmproxy-ca-cert.path} \
-                > /run/nix-daemon-ca/ca-bundle.crt
+                > ${bundlePath}
           '';
         };
       };
