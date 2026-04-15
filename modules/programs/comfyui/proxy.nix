@@ -15,14 +15,16 @@ let
         if TOKEN and "civitai.com" in flow.request.pretty_host:
             flow.request.headers["Authorization"] = f"Bearer {TOKEN}"
   '';
+  userGroup = "cai-proxy";
 in
 util.mkModule {
   system-nixos = {
+    sops.useSystemdActivation = true;
     sops.secrets = {
       cai-api-key = {
         format = "binary";
         sopsFile = ../../../secrets/pub-cai-api-key.txt;
-        owner = "cai-proxy";
+        owner = userGroup;
       };
       cai-mitmproxy-ca-cert = {
         mode = "0444";
@@ -30,25 +32,25 @@ util.mkModule {
         sopsFile = ../../../secrets/pub-cai-mitm-ca.crt;
       };
       cai-mitmproxy-ca = {
-        owner = "cai-proxy";
         format = "binary";
         sopsFile = ../../../secrets/pub-cai-mitm-ca.pem;
       };
     };
     systemd.services = {
       cai-proxy = {
-        description = "mitmproxy proxy injecting CivitAI bearer auth";
+        description = "mitmproxy proxy injecting auth";
         wantedBy = [ "multi-user.target" ];
         after = [ "network.target" ];
 
         serviceConfig = {
           # mitmproxy expects mitmproxy-ca.pem (cert + key) in confdir;
           # copy it from the sops secret before starting
-          ExecStartPre = pkgs.writeShellScript "setup-mitm-confdir" ''
-            mkdir -p /var/lib/cai-proxy/conf
-            cp ${config.sops.secrets.cai-mitmproxy-ca.path} \
-               /var/lib/cai-proxy/conf/mitmproxy-ca.pem
-          '';
+          ExecStartPre = "+${pkgs.writeShellScript "setup-mitm-confdir" ''
+            install -d -m 750 -o ${userGroup} -g ${userGroup} /var/lib/cai-proxy/conf
+            install -m 600 -o ${userGroup} -g ${userGroup} \
+              ${config.sops.secrets.cai-mitmproxy-ca.path} \
+              /var/lib/cai-proxy/conf/mitmproxy-ca.pem
+          ''}";
           ExecStart = lib.escapeShellArgs [
             "${pkgs.mitmproxy}/bin/mitmdump"
             "--listen-host"
@@ -61,8 +63,8 @@ util.mkModule {
             "${mitm_script}"
           ];
           StateDirectory = "cai-proxy";
-          User = "cai-proxy";
-          Group = "cai-proxy";
+          User = userGroup;
+          Group = userGroup;
           Restart = "on-failure";
           RestartSec = "3s";
         };
@@ -78,6 +80,7 @@ util.mkModule {
         description = "Build CA bundle for nix-daemon including mitmproxy cert";
         wantedBy = [ "multi-user.target" ];
         before = [ config.systemd.services.nix-daemon.name ];
+        after = [ config.systemd.services.sops-install-secrets.name ];
         serviceConfig = {
           Type = "oneshot";
           RemainAfterExit = true;
