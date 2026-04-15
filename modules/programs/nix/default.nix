@@ -53,7 +53,6 @@ in
           extra-experimental-features = [
             "flakes"
             "nix-command"
-            "ca-derivations"
           ];
 
           # use binary cache, its not gentoo
