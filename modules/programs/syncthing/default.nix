@@ -92,7 +92,10 @@ util.mkProgram {
       enable = true;
       overrideDevices = true;
       overrideFolders = true;
-      passwordFile = config.sops.secrets."syncthing-password".path;
+      guiCredentials = {
+        username = "syncthing";
+        passwordFile = config.sops.secrets."syncthing-password".path;
+      };
       settings = {
         devices = removeAttrs {
           argon.id = "GKVPGI5-YOS5SQK-VFMDIPM-EIQ4NOI-72TYKH3-TU7FR4X-IUOX55J-7NEEYQY";
