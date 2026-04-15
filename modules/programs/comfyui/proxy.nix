@@ -74,6 +74,7 @@ util.mkModule {
         environment = {
           https_proxy = "http://127.0.0.1:${toString mitm_port}";
           CURL_CA_BUNDLE = lib.mkForce "/run/nix-daemon-ca/ca-bundle.crt";
+          NIX_SSL_CERT_FILE = lib.mkForce "/run/nix-daemon-ca/ca-bundle.crt";
         };
       };
       nix-daemon-ca-bundle = {
