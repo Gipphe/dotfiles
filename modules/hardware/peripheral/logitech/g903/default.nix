@@ -36,5 +36,13 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
       '';
       hardware.openrgb.enable = true;
     };
+    environment.systemPackages = [
+      (pkgs.writeShellScriptBin "reset-mouse-kernel-module" ''
+        echo "Restarting the hid_logitech_dj kernel module..." >&2
+        sudo ${pkgs.kmod}/bin/rmmod hid_logitech_dj
+        sudo ${pkgs.kmod}/bin/modprobe hid_logitech_dj
+        echo "Restarted. Hoping the scrollwheel works now!" >&2
+      '')
+    ];
   };
 }
