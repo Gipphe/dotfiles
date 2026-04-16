@@ -9,6 +9,7 @@ util.mkProfile {
       imagemagick.enable = true;
       mprocs.enable = true;
       nix-pr-tracker.enable = true;
+      tricorder.enable = true;
     };
   };
 }

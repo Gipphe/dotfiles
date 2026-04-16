@@ -158,5 +158,10 @@
       url = "github:noctalia-dev/noctalia-qs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    atelier = {
+      url = "github:atelier-hub/atelier";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 }
