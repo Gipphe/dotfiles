@@ -18,6 +18,7 @@ tricorder is a daemon-based GHCi build monitor. It exposes build state over a Un
 - `tricorder status --json` — output full build state as JSON
 - `tricorder status --wait --json` — wait then output JSON
 - `tricorder status --verbose` / `-v` — print full GHC message body under each diagnostic
+- `tricorder source MODULE...` — print Haskell source for one or more installed modules (e.g. `tricorder source Data.Map.Strict`)
 - `tricorder watch` — auto-refreshing terminal display (for humans)
 
 ## Checking Build Status
@@ -42,6 +43,14 @@ A clean build prints:
 All good. (71 modules, 17.3s)
 ```
 
+If test suites are configured, their results follow the build summary:
+
+```
+All good. (71 modules, 17.3s)
+test:my-test  passed
+test:other-test  failed
+```
+
 With `--wait`, if a build is in progress `Building...` is printed immediately before blocking.
 
 With `--verbose`, the full GHC message body is printed under each diagnostic:
@@ -53,7 +62,7 @@ Variable not in scope: something
 1 error(s), 0 warning(s) (71 modules, 1.2s)
 ```
 
-**Exit code**: 1 when any errors are present, 0 otherwise (warnings alone → 0).
+**Exit code**: 1 when any errors are present or any test suite fails, 0 otherwise (warnings alone → 0).
 
 ### JSON output (`--json`)
 
