@@ -5,9 +5,6 @@ in
 util.mkProgram {
   name = "comfyui";
   system-nixos = {
-    programs.comfyui = {
-      enable = true;
-    };
     sops.secrets.cai_api_key = {
       format = "binary";
       sopsFile = ../../../secrets/pub-cai-api-key.txt;
