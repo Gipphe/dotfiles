@@ -105,6 +105,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    comfyui = {
+      url = "github:utensils/comfyui-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     giphtvim = {
       url = "github:Gipphe/giphtvim";
       # inputs.nixpkgs.follows = "nixpkgs";

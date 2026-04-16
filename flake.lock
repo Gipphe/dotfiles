@@ -193,6 +193,27 @@
         "type": "github"
       }
     },
+    "comfyui": {
+      "inputs": {
+        "flake-parts": "flake-parts",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1775530069,
+        "narHash": "sha256-LuWit2RDTkiwwHwAhqfPcfo6ZUcV931XXijeQqD6FTM=",
+        "owner": "utensils",
+        "repo": "comfyui-nix",
+        "rev": "255224118c3a7d7514c4f0d975120feb3cb16b58",
+        "type": "github"
+      },
+      "original": {
+        "owner": "utensils",
+        "repo": "comfyui-nix",
+        "type": "github"
+      }
+    },
     "devshell": {
       "inputs": {
         "nixpkgs": [
@@ -300,6 +321,24 @@
       }
     },
     "flake-parts": {
+      "inputs": {
+        "nixpkgs-lib": "nixpkgs-lib"
+      },
+      "locked": {
+        "lastModified": 1767609335,
+        "narHash": "sha256-feveD98mQpptwrAEggBQKJTYbvwwglSbOv53uCfH9PY=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "250481aafeb741edfe23d29195671c19b36b6dca",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-parts_2": {
       "inputs": {
         "nixpkgs-lib": [
           "stylix",
@@ -1454,6 +1493,21 @@
         "type": "github"
       }
     },
+    "nixpkgs-lib": {
+      "locked": {
+        "lastModified": 1765674936,
+        "narHash": "sha256-k00uTP4JNfmejrCLJOwdObYC9jHRrr/5M/a/8L2EIdo=",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "rev": "2075416fcb47225d9b68ac469a5c4801a9c4dd85",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "type": "github"
+      }
+    },
     "nixpkgs-nixos-unstable": {
       "locked": {
         "lastModified": 1774709303,
@@ -1706,6 +1760,7 @@
     "root": {
       "inputs": {
         "atelier": "atelier",
+        "comfyui": "comfyui",
         "devshell": "devshell",
         "disko": "disko",
         "giphtvim": "giphtvim",
@@ -1785,7 +1840,7 @@
         "base16-helix": "base16-helix",
         "base16-vim": "base16-vim",
         "firefox-gnome-theme": "firefox-gnome-theme",
-        "flake-parts": "flake-parts",
+        "flake-parts": "flake-parts_2",
         "gnome-shell": "gnome-shell",
         "nixpkgs": [
           "nixpkgs"
