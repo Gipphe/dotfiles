@@ -1,28 +1,28 @@
 ---
-name: ghcib
-description: Check GHCi build status using the ghcib daemon. Use when asked to check the build, see compiler errors/warnings, or run ghcib.
+name: tricorder
+description: Check GHCi build status using the tricorder daemon. Use when asked to check the build, see compiler errors/warnings, or run tricorder.
 user-invocable: true
-allowed-tools: Bash(ghcib *)
+allowed-tools: Bash(tricorder *)
 ---
 
-# Using ghcib to Check Build Status
+# Using tricorder to Check Build Status
 
-ghcib is a daemon-based GHCi build monitor. It exposes build state over a Unix socket and outputs human-readable text by default, or JSON with `--json` for tool integration.
+tricorder is a daemon-based GHCi build monitor. It exposes build state over a Unix socket and outputs human-readable text by default, or JSON with `--json` for tool integration.
 
 ## Commands
 
-- `ghcib start` — start the daemon (no-op if already running)
-- `ghcib stop` — stop the daemon
-- `ghcib status` — print current build state as text (auto-starts daemon if not running)
-- `ghcib status --wait` — same, but blocks until the current build cycle finishes
-- `ghcib status --json` — output full build state as JSON
-- `ghcib status --wait --json` — wait then output JSON
-- `ghcib status --verbose` / `-v` — print full GHC message body under each diagnostic
-- `ghcib watch` — auto-refreshing terminal display (for humans)
+- `tricorder start` — start the daemon (no-op if already running)
+- `tricorder stop` — stop the daemon
+- `tricorder status` — print current build state as text (auto-starts daemon if not running)
+- `tricorder status --wait` — same, but blocks until the current build cycle finishes
+- `tricorder status --json` — output full build state as JSON
+- `tricorder status --wait --json` — wait then output JSON
+- `tricorder status --verbose` / `-v` — print full GHC message body under each diagnostic
+- `tricorder watch` — auto-refreshing terminal display (for humans)
 
 ## Checking Build Status
 
-Run `ghcib status --wait` after making edits. The `--wait` flag ensures you get the result of the build triggered by your changes, not a stale one.
+Run `tricorder status --wait` after making edits. The `--wait` flag ensures you get the result of the build triggered by your changes, not a stale one.
 
 ### Text output (default)
 
@@ -96,12 +96,12 @@ Each diagnostic in `diagnostics`:
 ## Workflow
 
 1. Edit source files
-2. Run `ghcib status --wait` — blocks until ghcib finishes recompiling
+2. Run `tricorder status --wait` — blocks until tricorder finishes recompiling
 3. If errors are shown, fix them and repeat
 4. `All good.` means the build is clean
 
 ## Notes
 
 - The daemon is per-project, scoped by the current working directory
-- `ghcib status` auto-starts the daemon if it isn't running
+- `tricorder status` auto-starts the daemon if it isn't running
 - Use `--json` only when you need to parse the full build state; the default text output is sufficient for most workflows
