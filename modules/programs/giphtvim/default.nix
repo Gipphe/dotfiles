@@ -1,5 +1,4 @@
 {
-  config,
   util,
   lib,
   inputs,
@@ -8,8 +7,6 @@
 }:
 util.mkProgram {
   name = "giphtvim";
-  options.gipphe.programs.giphtvim.plugins.nixd.docs.options.enable =
-    lib.mkEnableOption "documentation for options";
   hm = {
     imports = [ inputs.giphtvim.homeModules.default ];
     config = {
@@ -22,27 +19,6 @@ util.mkProgram {
 
         (lib.mkIf flags.isNixOnDroid {
           packageNames = [ "droid" ];
-        })
-
-        (lib.mkIf (!flags.isNixOnDroid) {
-          packageDefinitions.replace = {
-            nvim =
-              { pkgs, ... }:
-              {
-                extra.nixd = lib.mkMerge [
-                  {
-                    nixpkgs = "import ${pkgs.path} {}";
-                  }
-                  (lib.mkIf config.gipphe.programs.giphtvim.plugins.nixd.docs.options.enable {
-                    options = {
-                      home_manager = ''(builtins.getFlake "${inputs.self}").nixosConfigurations.argon.options.home-manager.users.type.getSubOptions []'';
-                      nixos = ''(builtins.getFlake "${inputs.self}").nixosConfigurations.argon.options'';
-                      droid = ''(builtins.getFlake "${inputs.self}").nixOnDroidConfigurations.helium.options'';
-                    };
-                  })
-                ];
-              };
-          };
         })
       ];
     };
