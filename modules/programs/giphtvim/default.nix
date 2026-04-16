@@ -12,15 +12,10 @@ util.mkProgram {
     config = {
       home.sessionVariables.EDITOR = "nvim";
       programs.fish.shellAbbrs.vim = "nvim";
-      nvim = lib.mkMerge [
-        {
-          enable = true;
-        }
-
-        (lib.mkIf flags.isNixOnDroid {
-          packageNames = [ "droid" ];
-        })
-      ];
+      nvim = {
+        enable = true;
+        packageNames = lib.mkIf flags.isNixOnDroid [ "droid" ];
+      };
     };
   };
 }
