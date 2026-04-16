@@ -15,7 +15,10 @@ writeShellApplication {
     nix
     noctalia-shell
   ];
-  runtimeEnv.settings_file = ../settings.nix;
+  runtimeEnv.settings_file = builtins.path {
+    path = ../settings.nix;
+    name = "noctalia-settings.nix";
+  };
   text = /* bash */ ''
     json-diff \
       <(jq -S . <(nix eval --json --file "$settings_file")) \
