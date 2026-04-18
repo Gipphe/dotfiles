@@ -54,6 +54,7 @@ util.mkToggledModule [ "machines" ] {
     programs.pipewire.higherQuantum.enable = true;
     programs.librewolf.enable = true;
     programs.comfyui.enable = true;
+    programs.tricorder.enable = true;
     hardware = {
       gpu.nvidia.rtx3070.enable = true;
       peripheral.logitech = {
