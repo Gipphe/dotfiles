@@ -44,7 +44,6 @@ util.mkToggledModule [ "machines" ] {
       gaming.stream-host.enable = true;
       gc.enable = true;
       keyring.enable = true;
-      rdp.client.enable = true;
       rdp.server.enable = true;
       rice.enable = true;
       secrets.enable = true;
