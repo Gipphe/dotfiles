@@ -4,7 +4,7 @@
     (util.mkToggledModule [ "profiles" "rdp" ] {
       name = "server";
       shared.gipphe.programs.sunshine.enable = true;
-      hm.services.sunshine.autoStart = true;
+      system-nixos.services.sunshine.autoStart = true;
     })
     (util.mkToggledModule [ "profiles" "rdp" ] {
       name = "client";
