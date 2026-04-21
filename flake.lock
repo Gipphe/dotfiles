@@ -201,15 +201,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1775530069,
-        "narHash": "sha256-LuWit2RDTkiwwHwAhqfPcfo6ZUcV931XXijeQqD6FTM=",
-        "owner": "utensils",
+        "lastModified": 1776763268,
+        "narHash": "sha256-ABFOVWoJaPkj3xxWMDu4ZV0XMP5zs2PSB8MxgP+s6ak=",
+        "owner": "Gipphe",
         "repo": "comfyui-nix",
-        "rev": "255224118c3a7d7514c4f0d975120feb3cb16b58",
+        "rev": "e8a9db8dea826afbdf44b42e66de211c58b5a4e0",
         "type": "github"
       },
       "original": {
-        "owner": "utensils",
+        "owner": "Gipphe",
         "repo": "comfyui-nix",
         "type": "github"
       }

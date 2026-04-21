@@ -1,5 +1,5 @@
 {
-  # inputs,
+  inputs,
   config,
   util,
   ...
@@ -9,18 +9,13 @@ let
   mod = util.mkProgram {
     name = "comfyui";
     system-nixos = {
-      # imports = [
-      #   inputs.comfyui.nixosModules.default
-      # ];
-      # services.comfyui = {
-      #   enable = true;
-      #   dataDir = "/mnt/sub/projects/stable-diffusion/AltXL2/ComfyUI/";
-      #   openFirewall = true;
-      #   listenAddress = "0.0.0.0";
-      #   port = 8189;
-      #   enableManager = true;
-      #   gpuSupport = "cuda";
-      # };
+      environment.systemPackages = [
+        inputs.comfyui.packages.cuda
+      ];
+      networking.firewall.allowedTCPPorts = [
+        8188
+        8189
+      ];
       sops.secrets.cai_api_key = {
         format = "binary";
         sopsFile = ../../../secrets/pub-cai-api-key.txt;

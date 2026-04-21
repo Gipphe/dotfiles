@@ -106,7 +106,7 @@
     };
 
     comfyui = {
-      url = "github:utensils/comfyui-nix";
+      url = "github:Gipphe/comfyui-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
