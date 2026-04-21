@@ -106,7 +106,6 @@
 
     comfyui = {
       url = "github:Gipphe/comfyui-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     giphtvim = {

@@ -52,10 +52,12 @@ util.mkToggledModule [ "machines" ] {
       terminal-capture.enable = false;
       torrent.enable = true;
     };
-    programs.pipewire.higherQuantum.enable = true;
-    programs.librewolf.enable = true;
-    programs.comfyui.enable = true;
-    programs.tricorder.enable = true;
+    programs = {
+      comfyui.enable = true;
+      librewolf.enable = true;
+      pipewire.higherQuantum.enable = true;
+      tricorder.enable = true;
+    };
     hardware = {
       gpu.nvidia.rtx3070.enable = true;
       peripheral.logitech = {
