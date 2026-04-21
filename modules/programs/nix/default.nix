@@ -60,13 +60,6 @@ util.mkModule {
 
     };
 
-    # faster rebuilding
-    documentation = {
-      enable = true;
-      doc.enable = false;
-      man.enable = true;
-    };
-
     nixpkgs.config.allowUnfree = true;
     nix = {
       # Disable generating channel-related files and commands
