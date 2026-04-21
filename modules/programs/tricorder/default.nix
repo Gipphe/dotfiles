@@ -14,7 +14,7 @@ util.mkProgram {
   hm = {
     options.gipphe.programs.tricorder = {
       package = lib.mkPackageOption pkgs "tricorder" { } // {
-        default = inputs.atelier.packages.${pkgs.stdenv.hostPlatform.system}.tricorder;
+        default = inputs.tricorder.packages.${pkgs.stdenv.hostPlatform.system}.tricorder;
       };
     };
     config = {
