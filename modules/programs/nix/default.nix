@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   inputs,
   util,
   ...
@@ -9,105 +8,78 @@
 let
   mb = x: x * 1024 * 1024;
 in
-{
-  imports = [
-    ./nix-gc
+util.mkModule {
+  options.gipphe.programs.nix.enable = lib.mkEnableOption "nix";
+  shared.imports = [ ./nix-gc ];
 
-    (util.mkModule {
-      options.gipphe.programs.nix.enable = lib.mkEnableOption "nix";
+  system-all = lib.mkIf config.gipphe.programs.nix.enable {
+    nix = {
+      # pin the registry to avoid downloading and evaling a new nixpkgs version every time
+      registry = lib.mapAttrs (_: v: { flake = v; }) (lib.filterAttrs (x: _: x != "self") inputs);
 
-      system-all = lib.mkIf config.gipphe.programs.nix.enable {
-        nix = {
-          package = pkgs.nix;
+      # This will additionally add your inputs to the system's legacy channels
+      # Making legacy nix commands consistent as well, awesome!
+      nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+    };
+  };
 
-          # pin the registry to avoid downloading and evaling a new nixpkgs version every time
-          registry = lib.mapAttrs (_: v: { flake = v; }) (lib.filterAttrs (x: _: x != "self") inputs);
+  system-nixos = lib.mkIf config.gipphe.programs.nix.enable {
+    nix.settings = {
+      min-free = toString (mb 100);
+      max-free = toString (mb 1024);
 
-          # This will additionally add your inputs to the system's legacy channels
-          # Making legacy nix commands consistent as well, awesome!
-          nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
-        };
-      };
+      flake-registry = "/etc/nix/registry.json";
+      auto-optimise-store = true;
 
-      system-nixos = lib.mkIf config.gipphe.programs.nix.enable {
-        nix.settings = {
-          # Free up to 1GiB whenever there is less than 100MiB left
-          keep-outputs = true;
-          warn-dirty = false;
-          keep-derivations = true;
-          min-free = toString (mb 100);
-          max-free = toString (mb 1024);
+      # allow sudo users to mark the following values as trusted
+      allowed-users = [ "@wheel" ];
+      trusted-users = [ "@wheel" ];
+      sandbox = lib.mkDefault true;
+      max-jobs = "auto";
 
-          flake-registry = "/etc/nix/registry.json";
-          auto-optimise-store = true;
+      # continue building derivations if one fails
+      # keep-going = true;
+      log-lines = 30;
+      extra-experimental-features = [
+        "flakes"
+        "nix-command"
+      ];
 
-          # allow sudo users to mark the following values as trusted
-          allowed-users = [ "@wheel" ];
-          trusted-users = [ "@wheel" ];
-          sandbox = lib.mkDefault true;
-          max-jobs = "auto";
+      # use binary cache, its not gentoo
+      builders-use-substitutes = true;
+      substituters = [
+        "https://cache.nixos.org"
+        "https://nix-community.cachix.org"
+        "https://nixpkgs-unfree.cachix.org"
+      ];
+      trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "nixpkgs-unfree.cachix.org-1:hqvoInulhbV4nJ9yJOEr+4wxhDV4xq2d1DK7S6Nj6rs="
+      ];
 
-          # continue building derivations if one fails
-          # keep-going = true;
-          log-lines = 30;
-          extra-experimental-features = [
-            "flakes"
-            "nix-command"
-          ];
+    };
 
-          # use binary cache, its not gentoo
-          builders-use-substitutes = true;
-          substituters = [
-            "https://cache.nixos.org"
-            "https://nix-community.cachix.org"
-            "https://nixpkgs-unfree.cachix.org"
-          ];
-          trusted-public-keys = [
-            "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-            "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-            "nixpkgs-unfree.cachix.org-1:hqvoInulhbV4nJ9yJOEr+4wxhDV4xq2d1DK7S6Nj6rs="
-          ];
+    # faster rebuilding
+    documentation = {
+      enable = true;
+      doc.enable = false;
+      man.enable = true;
+    };
 
-        };
+    nixpkgs.config.allowUnfree = true;
+    nix = {
+      # Disable generating channel-related files and commands
+      channel.enable = false;
+      # Make builds run with low priority so my system stays responsive
+      daemonCPUSchedPolicy = "idle";
+      daemonIOSchedClass = "idle";
+    };
+  };
 
-        # faster rebuilding
-        documentation = {
-          enable = true;
-          doc.enable = false;
-          man.enable = true;
-        };
-
-        nixpkgs = {
-          config = {
-            allowUnfree = true;
-            permittedInsecurePackages = [
-              "dotnet-sdk-6.0.428"
-              "electron-27.3.11"
-            ];
-            overlays = [
-              (_: super: {
-                coreutils = super.uutils-coreutils-noprefix;
-                coreutils-full = super.uutils-coreutils-noprefix;
-                # workaround for: https://github.com/NixOS/nixpkgs/issues/154163
-                makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });
-              })
-            ];
-          };
-        };
-        nix = {
-          # Disable generating channel-related files and commands
-          channel.enable = false;
-          # Make builds run with low priority so my system stays responsive
-          daemonCPUSchedPolicy = "idle";
-          daemonIOSchedClass = "idle";
-        };
-      };
-
-      system-droid = {
-        nix.extraOptions = ''
-          experimental-features = nix-command flakes ca-derivations
-        '';
-      };
-    })
-  ];
+  system-droid = {
+    nix.extraOptions = ''
+      experimental-features = nix-command flakes ca-derivations
+    '';
+  };
 }
