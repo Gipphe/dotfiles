@@ -32,6 +32,7 @@
         {
           default = pkgs.callPackage ./devShells/default.nix {
             inherit (inputs.devshell.legacyPackages.${system}) mkShell;
+            inherit (self.packages.${system}) jujutsu;
           };
         }
       );
@@ -50,6 +51,15 @@
           monocraft-no-ligatures-font = pkgs.callPackage ./packages/monocraft-no-ligatures.nix { };
           treefmt = pkgs.callPackage ./packages/treefmt.nix { inherit treefmt-nix; };
         }
+        // (
+          let
+            x = self.nixosConfigurations.titanium.config.home-manager.users.gipphe.wrappers;
+          in
+          {
+            jujutsu = x.jujutsu.wrapper;
+            git = x.git.wrapper;
+          }
+        )
       );
 
       checks =

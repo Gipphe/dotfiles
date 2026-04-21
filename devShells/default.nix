@@ -2,6 +2,7 @@
   callPackage,
   mkShell,
 
+  jujutsu,
   deadnix,
   nix-tree,
   nixfmt,
@@ -9,7 +10,7 @@
   statix,
 }:
 let
-  extra = callPackage ./devShell.nix { };
+  extra = callPackage ./devShell.nix { inherit jujutsu; };
 in
 mkShell {
   name = "dotfiles";
