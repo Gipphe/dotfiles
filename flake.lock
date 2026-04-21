@@ -1540,22 +1540,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-with-working-floorp": {
-      "locked": {
-        "lastModified": 1763383378,
-        "narHash": "sha256-IKULzG2wmOaF0BQz2ADZfkAlnlLNFegZAMFCZcrVoGg=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "1dcdb7dcba947f9607911f3394b19c8f61d716cb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "1dcdb7dcba947f9607911f3394b19c8f61d716cb",
-        "type": "github"
-      }
-    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1775423009,
@@ -1771,7 +1755,6 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-last-working-for-nix-on-droid": "nixpkgs-last-working-for-nix-on-droid",
-        "nixpkgs-with-working-floorp": "nixpkgs-with-working-floorp",
         "noctalia": "noctalia",
         "noctalia-qs": "noctalia-qs",
         "pr-tracker": "pr-tracker",
