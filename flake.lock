@@ -2040,6 +2040,8 @@
         "hackage": "hackage",
         "haskell-nix": "haskell-nix",
         "nixpkgs": [
+          "tricorder",
+          "haskell-nix",
           "nixpkgs"
         ],
         "nixpkgs-nixos-unstable": "nixpkgs-nixos-unstable",

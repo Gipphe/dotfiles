@@ -172,9 +172,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    tricorder = {
-      url = "github:atelier-hub/tricorder";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    tricorder.url = "github:atelier-hub/tricorder";
   };
 }
