@@ -138,6 +138,11 @@ util.mkProgram {
               "git"
               "fetch"
             ];
+            pa = [
+              "git"
+              "fetch"
+              "--all"
+            ];
             pub-change = [
 
               "git"
