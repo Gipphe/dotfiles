@@ -7,9 +7,11 @@
 util.mkToggledModule [ "system" ] {
   name = "bluetooth";
   options.gipphe.system.bluetooth.blueman.package = lib.mkPackageOption pkgs "blueman" { };
-  hm.services.blueman-applet.enable = true;
   system-nixos = {
-    services.blueman.enable = true;
+    services.blueman = {
+      enable = true;
+      withApplet = true;
+    };
     hardware.bluetooth = {
       enable = true;
       powerOnBoot = true;
