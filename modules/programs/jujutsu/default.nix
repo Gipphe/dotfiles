@@ -140,7 +140,7 @@ util.mkProgram {
             ];
             pa = [
               "git"
-              "fetch"
+              "push"
               "--all"
             ];
             pub-change = [
