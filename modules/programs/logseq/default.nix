@@ -30,7 +30,15 @@ util.mkProgram {
         themes = {
           mode = "dark";
           light = null;
-          dark = null;
+          dark = {
+            name = "Default Dark Theme";
+            url = null;
+            description = "Logseq default dark theme.";
+            mode = "dark";
+            selected = true;
+            group-first = true;
+            group-desc = "dark themes";
+          };
         };
         externals = [ ];
       };
