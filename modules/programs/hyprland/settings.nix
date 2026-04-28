@@ -80,7 +80,6 @@ util.mkProgram {
           };
 
           dwindle = {
-            pseudotile = true;
             preserve_split = true;
           };
 
