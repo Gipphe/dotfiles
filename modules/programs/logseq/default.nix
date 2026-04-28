@@ -25,23 +25,6 @@ util.mkProgram {
   };
   hm = {
     gipphe.programs.logseq = {
-      preferences = {
-        theme = null;
-        themes = {
-          mode = "dark";
-          light = null;
-          dark = {
-            name = "Default Dark Theme";
-            url = null;
-            description = "Logseq default dark theme.";
-            mode = "dark";
-            selected = true;
-            group-first = true;
-            group-desc = "dark themes";
-          };
-        };
-        externals = [ ];
-      };
       settings = /* clojure */ ''
         {:meta/version 1
          :preferred-workflow :todo
@@ -59,10 +42,6 @@ util.mkProgram {
       file.".logseq/config/config.edn" = {
         enable = cfg.settings != "";
         text = cfg.settings;
-      };
-      file.".logseq/preferences.json" = {
-        enable = cfg.preferences != { };
-        source = json.generate "logseq-preferences.json" cfg.preferences;
       };
     };
   };
