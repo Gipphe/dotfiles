@@ -92,6 +92,10 @@ util.mkModule {
                     name = "q";
                     value = "{searchTerms}";
                   }
+                  {
+                    name = "type";
+                    value = "code";
+                  }
                 ];
               }
             ];
