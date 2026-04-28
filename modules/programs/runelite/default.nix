@@ -19,8 +19,13 @@ util.mkProgram {
         })
       ];
     };
-    wayland.windowManager.hyprland.settings.windowrule = [
-      "no_focus true, match:float yes, match:class net-runelite-client-RuneLite, match:title ^(win\d+)$"
+    gipphe.programs.hyprland.settings.windowRules = [
+      {
+        match.float = true;
+        match.class = "net-runelite-client-RuneLite";
+        match.title = "^(win\\d+)$";
+        no_focus = true;
+      }
     ];
   };
 }

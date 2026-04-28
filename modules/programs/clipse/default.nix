@@ -23,10 +23,16 @@ util.mkProgram {
         action.spawn = "${config.programs.wezterm.package}/bin/wezterm start --class clipse clipse";
       }
     ];
-    wayland.windowManager.hyprland.settings = {
-      windowrule = [
-        "float true, size 622 652, stay_focused true, match:class (clipse)"
-      ];
-    };
+    gipphe.programs.hyprland.settings.windowRules = [
+      {
+        match.class = "eclipse";
+        float = true;
+        size = [
+          622
+          652
+        ];
+        stay_focused = true;
+      }
+    ];
   };
 }

@@ -41,11 +41,14 @@ util.mkToggledModule [ "machines" ] {
   };
 
   hm = {
-    wayland.windowManager.hyprland.settings = {
-      monitor = [
-        ", preferred, auto-down, auto"
-      ];
-    };
+    gipphe.programs.hyprland.settings.monitors = [
+      {
+        output = "";
+        mode = "preferred";
+        position = "auto-down";
+        scale = "auto";
+      }
+    ];
   };
 
   system-nixos = {

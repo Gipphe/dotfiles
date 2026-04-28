@@ -22,7 +22,7 @@ util.mkModule {
               default = [ ];
               example = [
                 "Mod"
-                "Alt"
+                "ALT_L"
               ];
             };
             key = lib.mkOption {
@@ -78,7 +78,7 @@ util.mkModule {
         }
         {
           mod = [
-            "Alt"
+            "ALT_L"
             "Shift"
           ];
           keys = "Tab";

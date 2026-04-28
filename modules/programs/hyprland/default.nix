@@ -1,6 +1,6 @@
 {
   imports = [
     ./cache.nix
-    ./settings.nix
+    ./lua/settings.nix
   ];
 }

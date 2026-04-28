@@ -15,6 +15,8 @@ util.mkProgram {
   name = "filen-desktop";
   hm = {
     home.packages = [ pkg ];
-    wayland.windowManager.hyprland.settings.exec-once = [ "filen-desktop" ];
+    gipphe.programs.hyprland.settings.exec.onStartup = [
+      "filen-desktop"
+    ];
   };
 }

@@ -55,19 +55,20 @@ util.mkToggledModule [ "machines" ] {
   };
 
   hm = {
-    wayland.windowManager.hyprland.settings = {
-      monitor = [
-        ", preferred, auto-down, auto"
-      ];
-      monitorv2 = [
-        {
-          output = "desc:Samsung Display Corp. 0x4193";
-          mode = "preferred";
-          position = "0x0";
-          scale = "auto";
-        }
-      ];
-    };
+    gipphe.programs.hyprland.settings.monitors = [
+      {
+        output = "";
+        mode = "preferred";
+        position = "auto-down";
+        scale = "auto";
+      }
+      {
+        output = "desc:Samsung Display Corp. 0x4193";
+        mode = "preferred";
+        position = "0x0";
+        scale = "auto";
+      }
+    ];
   };
 
   system-nixos = {

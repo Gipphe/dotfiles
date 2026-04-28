@@ -15,8 +15,12 @@ util.mkProgram {
     default = pkg;
   };
   hm = {
-    wayland.windowManager.hyprland.settings.windowrule = [
-      "float true, match:class steam, match:title (Friends List)"
+    gipphe.programs.hyprland.settings.windowRules = [
+      {
+        match.title = "Friends List";
+        match.class = "steam";
+        float = true;
+      }
     ];
   };
   system-nixos = {

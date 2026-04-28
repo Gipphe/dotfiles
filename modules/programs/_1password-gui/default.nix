@@ -28,10 +28,16 @@ util.mkProgram {
       }
     ];
 
-    wayland.windowManager.hyprland.settings = {
-      exec-once = [ "1password --silent" ];
-      windowrule = [
-        "float true, stay_focused true, allows_input true, match:title (Quick Access - 1Password), match:class (1Password)"
+    gipphe.programs.hyprland.settings = {
+      exec.onStartup = [ "1password --silent" ];
+      windowRules = [
+        {
+          match.title = "Quick Access - 1Password";
+          match.class = "1Password";
+          float = true;
+          stay_focused = true;
+          allows_input = true;
+        }
       ];
     };
   };

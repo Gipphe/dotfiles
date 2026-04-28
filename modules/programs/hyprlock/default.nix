@@ -102,7 +102,7 @@ util.mkProgram {
         {
           mod = [
             "Mod"
-            "Alt"
+            "ALT_L"
           ];
           key = "L";
           args = {
