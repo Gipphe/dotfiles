@@ -3,11 +3,7 @@ util.mkProgram {
   name = "vim";
   hm = {
     imports = [
-      (inputs.wlib.lib.mkInstallModule {
-        loc = [
-          "home"
-          "packages"
-        ];
+      (inputs.wlib.lib.getInstallModule {
         name = "vim";
         value = inputs.wlib.lib.wrapperModules.vim;
       })

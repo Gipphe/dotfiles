@@ -8,11 +8,7 @@ util.mkProgram {
   name = "mpv";
   hm = {
     imports = [
-      (inputs.wlib.lib.mkInstallModule {
-        loc = [
-          "home"
-          "packages"
-        ];
+      (inputs.wlib.lib.getInstallModule {
         name = "mpv";
         value = inputs.wlib.lib.wrapperModules.mpv;
       })

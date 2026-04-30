@@ -19,11 +19,7 @@ util.mkProgram {
   name = "claude-code";
   hm = {
     imports = [
-      (inputs.wlib.lib.mkInstallModule {
-        loc = [
-          "home"
-          "packages"
-        ];
+      (inputs.wlib.lib.getInstallModule {
         name = "claude-code";
         value = inputs.wlib.lib.wrapperModules.claude-code;
       })

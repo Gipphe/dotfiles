@@ -38,11 +38,7 @@ util.mkProgram {
   };
   hm = {
     imports = [
-      (inputs.wlib.lib.mkInstallModule {
-        loc = [
-          "home"
-          "packages"
-        ];
+      (inputs.wlib.lib.getInstallModule {
         name = "wezterm";
         value = inputs.wlib.lib.wrapperModules.wezterm;
       })

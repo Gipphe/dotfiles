@@ -30,11 +30,7 @@ util.mkProgram {
       };
     };
     imports = [
-      (inputs.wlib.lib.mkInstallModule {
-        loc = [
-          "home"
-          "packages"
-        ];
+      (inputs.wlib.lib.getInstallModule {
         name = "git";
         value = inputs.wlib.lib.wrapperModules.git;
       })

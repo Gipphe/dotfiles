@@ -8,11 +8,7 @@ util.mkProgram {
   name = "btop";
   hm = {
     imports = [
-      (inputs.wlib.lib.mkInstallModule {
-        loc = [
-          "home"
-          "packages"
-        ];
+      (inputs.wlib.lib.getInstallModule {
         name = "btop";
         value = inputs.wlib.lib.wrapperModules.btop;
       })

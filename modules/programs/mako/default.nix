@@ -10,11 +10,7 @@ util.mkProgram {
   name = "mako";
   hm = {
     imports = [
-      (inputs.wlib.lib.mkInstallModule {
-        loc = [
-          "home"
-          "packages"
-        ];
+      (inputs.wlib.lib.getInstallModule {
         name = "mako";
         value = inputs.wlib.lib.wrapperModules.mako;
       })

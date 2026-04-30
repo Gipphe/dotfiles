@@ -12,11 +12,7 @@ util.mkProgram {
 
   hm = {
     imports = [
-      (inputs.wlib.lib.mkInstallModule {
-        loc = [
-          "home"
-          "packages"
-        ];
+      (inputs.wlib.lib.getInstallModule {
         name = "tmux";
         value = inputs.wlib.lib.wrapperModules.tmux;
       })

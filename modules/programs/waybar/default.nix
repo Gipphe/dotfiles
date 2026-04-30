@@ -12,11 +12,7 @@ util.mkProgram {
   name = "waybar";
   hm = {
     imports = [
-      (inputs.wlib.lib.mkInstallModule {
-        loc = [
-          "home"
-          "packages"
-        ];
+      (inputs.wlib.lib.getInstallModule {
         name = "waybar";
         value = inputs.wlib.lib.wrapperModules.waybar;
       })

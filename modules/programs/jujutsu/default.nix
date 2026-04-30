@@ -16,11 +16,7 @@ util.mkProgram {
       };
     };
     imports = [
-      (inputs.wlib.lib.mkInstallModule {
-        loc = [
-          "home"
-          "packages"
-        ];
+      (inputs.wlib.lib.getInstallModule {
         name = "jujutsu";
         value = inputs.wlib.lib.wrapperModules.jujutsu;
       })

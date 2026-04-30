@@ -3,11 +3,7 @@ util.mkProgram {
   name = "nushell";
   hm = {
     imports = [
-      (inputs.wlib.lib.mkInstallModule {
-        loc = [
-          "home"
-          "packages"
-        ];
+      (inputs.wlib.lib.getInstallModule {
         name = "nushell";
         value = inputs.wlib.lib.wrapperModules.nushell;
       })

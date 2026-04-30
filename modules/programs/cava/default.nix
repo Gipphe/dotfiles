@@ -3,11 +3,7 @@ util.mkProgram {
   name = "cava";
   hm = {
     imports = [
-      (inputs.wlib.lib.mkInstallModule {
-        loc = [
-          "home"
-          "packages"
-        ];
+      (inputs.wlib.lib.getInstallModule {
         name = "cava";
         value = inputs.wlib.lib.wrapperModules.cava;
       })

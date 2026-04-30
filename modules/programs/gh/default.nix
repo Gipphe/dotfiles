@@ -9,11 +9,7 @@ util.mkProgram {
   name = "gh";
   hm = {
     imports = [
-      (inputs.wlib.lib.mkInstallModule {
-        loc = [
-          "home"
-          "packages"
-        ];
+      (inputs.wlib.lib.getInstallModule {
         name = "gh";
         value = ./wrapper.nix;
       })

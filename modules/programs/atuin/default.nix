@@ -8,11 +8,7 @@ util.mkProgram {
   name = "atuin";
   hm = {
     imports = [
-      (inputs.wlib.lib.mkInstallModule {
-        loc = [
-          "home"
-          "packages"
-        ];
+      (inputs.wlib.lib.getInstallModule {
         name = "atuin";
         value = ./wrapper.nix;
       })
