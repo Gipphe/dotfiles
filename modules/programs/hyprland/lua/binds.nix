@@ -17,13 +17,10 @@ let
         pkgs.xdotool
       ];
       text = /* bash */ ''
-        force="''${1:-no}"
         if test "$(hyprctl activewindow -j | jq -r '.class')" = 'Steam'; then
           xdotool getactivewindow windowunmap
-        elif test "$force" = 'force'; then
-          hyprctl dispatch forcekillactive ""
         else
-          hyprctl dispatch killactive ""
+          hyprctl dispatch 'hl.dsp.close()'
         fi
       '';
     }
