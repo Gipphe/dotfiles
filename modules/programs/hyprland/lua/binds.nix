@@ -33,35 +33,35 @@ let
         config.wayland.windowManager.hyprland.package
         pkgs.jq
       ];
-      runtimeEnv.gamemode_config = lib.generators.toLua { } {
-        animations.enabled = false;
-        decoration = {
-          shadow.enable = false;
-          blur.enabled = false;
-          fullscreen_opacity = 1.0;
-          rounding = 0;
-        };
-        general = {
-          gaps_in = 0;
-          gaps_out = 0;
-          border_size = 1;
-        };
-        input.touchpad.disable_while_typing = false;
-      };
-      text =
-        let
-        in
-        /* bash */ ''
-          HYPRGAMEMODE=$(hyprctl getoption animations:enabled -j | jq -r '.bool')
-          if test "$HYPRGAMEMODE" = "true"; then
-            hyprctl eval "hl.config($gamemode_config)"
-            hyprctl evan "hl.animation { leaf = "borderangle", enabled = 0 }"
-            hyprctl notify 1 5000 "rgb(40a02b)" "Gamemode [ON]"
-          else
-            hyprctl reload
-            hyprctl notify 1 5000 "rgb(d20f39)" "Gamemode [OFF]"
-          fi
-        '';
+      text = /* bash */ ''
+        ${lib.toShellVar "gamemode_config" (
+          lib.generators.toLua { } {
+            animations.enabled = false;
+            decoration = {
+              shadow.enabled = false;
+              blur.enabled = false;
+              fullscreen_opacity = 1.0;
+              rounding = 0;
+            };
+            general = {
+              gaps_in = 0;
+              gaps_out = 0;
+              border_size = 1;
+            };
+            input.touchpad.disable_while_typing = false;
+          }
+        )}
+
+        HYPRGAMEMODE=$(hyprctl getoption animations:enabled -j | jq -r '.bool')
+        if test "$HYPRGAMEMODE" = "true"; then
+          hyprctl eval "hl.config($gamemode_config)"
+          hyprctl eval "hl.animation { leaf = 'borderangle', enabled = 0 }"
+          hyprctl notify 1 5000 "rgb(40a02b)" "Gamemode [ON]"
+        else
+          hyprctl reload
+          hyprctl notify 1 5000 "rgb(d20f39)" "Gamemode [OFF]"
+        fi
+      '';
     }
   );
 
@@ -82,7 +82,6 @@ let
     }
   );
 
-  hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
   set-zoom-factor =
     jqFilter:
     lib.getExe (
@@ -94,12 +93,13 @@ let
         ];
         runtimeEnv.jq_filter = jqFilter;
         text = ''
-          zoom_factor="$(hyprctl getoption cursor:zoom_factor -j | jq "$jq_Filter")"
+          zoom_factor="$(hyprctl getoption cursor:zoom_factor -j | jq "$jq_filter")"
           hyprctl eval "hl.config { cursor = { zoom_factor = '$zoom_factor' } }"
         '';
       }
     );
 
+  hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
   increase-zoom = set-zoom-factor ".float * 1.1";
   decrease-zoom = set-zoom-factor "(.float * 0.9) | if . < 1 then 1 else . end";
   reset-zoom = "${hyprctl} eval 'hl.config {cursor = {zoom_factor = 1}}'";
