@@ -24,6 +24,9 @@ let
         {
           enable = true;
           package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs {
+            # Personal patch from https://github.com/Gipphe/noctalia-shell/tree/gipphe/feat/support-hyprland-with-lua-config
+            # TODO: Remove this patch once noctalia-shell supports Hyprland's
+            # Lua config and dispatcher syntax natively.
             patches = [ ./patches/hyprland-lua.patch ];
           };
           settings = {
