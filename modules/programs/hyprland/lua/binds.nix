@@ -83,14 +83,26 @@ let
   );
 
   hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
-  jq = "${pkgs.jq}/bin/jq";
   set-zoom-factor =
     jqFilter:
-    "${hyprctl} -q keyword cursor:zoom_factor $(${hyprctl} getoption cursor:zoom_factor -j | ${jq} '${jqFilter}')";
+    lib.getExe (
+      pkgs.writeShellApplication {
+        name = "set-zoom-factor";
+        runtimeInputs = [
+          pkgs.jq
+          config.wayland.windowManager.hyprland.package
+        ];
+        runtimeEnv.jq_filter = jqFilter;
+        text = ''
+          zoom_factor="$(hyprctl getoption cursor:zoom_factor -j | jq "$jq_Filter")"
+          hyprctl eval "hl.config { cursor = { zoom_factor = '$zoom_factor' } }"
+        '';
+      }
+    );
 
   increase-zoom = set-zoom-factor ".float * 1.1";
   decrease-zoom = set-zoom-factor "(.float * 0.9) | if . < 1 then 1 else . end";
-  reset-zoom = "${hyprctl} -q keyword cursor:zoom_factor 1";
+  reset-zoom = "${hyprctl} eval 'hl.config {cursor = {zoom_factor = 1}}'";
 
   workspaceSwitching =
     # sioodmy's implementation

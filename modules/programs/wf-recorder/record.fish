@@ -6,7 +6,7 @@ function print-help
     info ""
     info "Options:"
     info "  -h, --help               Print this help."
-    info "  -a, --area [<area>]      Record only part of screen. Format: x,y WxH."
+    info "  -a, --area=[<area>]      Record only part of screen. Format: x,y WxH."
     info "  -s, --screen <screen>    Select screen to record. Ignored if -a or --area is specified."
     info "  -o, --output <filepath>  Path to the saved video. Defaults to '~/Videos/<current date and time>.mp4'."
 end
@@ -46,11 +46,11 @@ if test -z "$dest"
 end
 set -a opts -f "$dest"
 mkdir -p "$(dirname -- "$dest")"
-hyprctl keyword 'general:col.active_border' "rgb(ff0000)"
+hyprctl eval "hl.config { general = {['col.active_border'] = 'rgb(ff0000)'}}"
 
 function final
     pkill wf-recorder
-    hyprctl keyword 'general:col.active_border' "$window_border" &>/dev/null
+    hyprctl reload
     echo "Video saved to $dest"
 end
 
