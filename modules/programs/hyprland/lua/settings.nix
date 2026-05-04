@@ -205,6 +205,11 @@ util.mkProgram {
         xwayland.enable = true;
       };
     };
+    home.packages = [
+      (pkgs.writeShellScriptBin "hyprstart" ''
+        ${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch "hl.dsp.exec_cmd('$1')"
+      '')
+    ];
   };
   system-nixos = {
     programs.hyprland = {
