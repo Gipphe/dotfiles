@@ -3,12 +3,11 @@
   imports = [
     (util.mkToggledModule [ "profiles" "rdp" ] {
       name = "server";
-      shared.gipphe.programs.sunshine.enable = true;
-      system-nixos.services.sunshine.autoStart = true;
+      shared.gipphe.programs.rustdesk-client.enable = true;
     })
     (util.mkToggledModule [ "profiles" "rdp" ] {
       name = "client";
-      shared.gipphe.programs.moonlight-qt.enable = true;
+      shared.gipphe.programs.rustdesk-client.enable = true;
     })
   ];
 }
