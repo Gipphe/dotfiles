@@ -178,11 +178,11 @@ util.mkModule {
 
   hm = {
     gipphe.programs.hyprland.settings.rendered = lib.mkMerge [
-      (lib.mkIf (cfg.settings.animations != [ ]) ''
-        ${builtins.concatStringsSep "\n" (map toAnimation cfg.settings.animations)}
-      '')
       (lib.mkIf (cfg.settings.curves != [ ]) ''
         ${builtins.concatStringsSep "\n" (lib.mapAttrsToList toCurve cfg.settings.curves)}
+      '')
+      (lib.mkIf (cfg.settings.animations != [ ]) ''
+        ${builtins.concatStringsSep "\n" (map toAnimation cfg.settings.animations)}
       '')
     ];
   };
