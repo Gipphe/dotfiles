@@ -1,3 +1,0 @@
-{
-  toHyprTrigger = { command }: command;
-}
