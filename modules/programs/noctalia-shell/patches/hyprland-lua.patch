@@ -1,0 +1,350 @@
+From ce6e713e8f13716056cc6b0c8cfd66c8b2f2a0f0 Mon Sep 17 00:00:00 2001
+From: Victor Nascimento Bakke <gipphe@gmail.com>
+Date: Mon, 4 May 2026 09:32:03 +0200
+Subject: [PATCH] feat: support hyprland with lua config
+
+---
+ Assets/Templates/hyprland.conf          |  25 -----
+ Assets/Templates/hyprland.lua           |  25 +++++
+ Assets/Templates/yazi.toml              |   4 +-
+ Scripts/bash/template-apply.sh          | 124 ++++++++++++------------
+ Services/Compositor/HyprlandService.qml |  19 ++--
+ Services/Theming/TemplateRegistry.qml   |   4 +-
+ 6 files changed, 101 insertions(+), 100 deletions(-)
+ delete mode 100644 Assets/Templates/hyprland.conf
+ create mode 100644 Assets/Templates/hyprland.lua
+
+diff --git a/Assets/Templates/hyprland.conf b/Assets/Templates/hyprland.conf
+deleted file mode 100644
+index ad8d2915bf..0000000000
+--- a/Assets/Templates/hyprland.conf
++++ /dev/null
+@@ -1,25 +0,0 @@
+-$primary = rgb({{colors.primary.default.hex_stripped}})
+-$surface = rgb({{colors.surface.default.hex_stripped}})
+-$secondary = rgb({{colors.secondary.default.hex_stripped}})
+-$error = rgb({{colors.error.default.hex_stripped}})
+-$tertiary = rgb({{colors.tertiary.default.hex_stripped}})
+-$surface_lowest = rgb({{colors.surface_container_lowest.default.hex_stripped}})
+-
+-general {
+-    col.active_border = $primary
+-    col.inactive_border = $surface
+-}
+-
+-group {
+-    col.border_active = $secondary
+-    col.border_inactive = $surface
+-    col.border_locked_active = $error
+-    col.border_locked_inactive = $surface
+-
+-    groupbar {
+-        col.active = $secondary
+-        col.inactive = $surface
+-        col.locked_active = $error
+-        col.locked_inactive = $surface
+-    }
+-}
+diff --git a/Assets/Templates/hyprland.lua b/Assets/Templates/hyprland.lua
+new file mode 100644
+index 0000000000..db22430aa7
+--- /dev/null
++++ b/Assets/Templates/hyprland.lua
+@@ -0,0 +1,25 @@
++local primary = rgb({{colors.primary.default.hex_stripped}})
++local surface = rgb({{colors.surface.default.hex_stripped}})
++local secondary = rgb({{colors.secondary.default.hex_stripped}})
++local error = rgb({{colors.error.default.hex_stripped}})
++local tertiary = rgb({{colors.tertiary.default.hex_stripped}})
++local surface_lowest = rgb({{colors.surface_container_lowest.default.hex_stripped}})
++
++hl.config({
++    general = {
++        ["col.active_border"] = primary,
++        ["col.inactive_border"] = surface,
++    },
++    group = {
++        ["col.border_active"] = secondary,
++        ["col.border_inactive"] = surface,
++        ["col.border_locked_active"] = error,
++        ["col.border_locked_inactive"] = surface,
++        groupbar = {
++            ["col.active"] = secondary,
++            ["col.inactive"] = surface,
++            ["col.locked_active"] = error,
++            ["col.locked_inactive"] = surface,
++        },
++    },
++})
+diff --git a/Assets/Templates/yazi.toml b/Assets/Templates/yazi.toml
+index 3fc26cf86f..1880c69262 100644
+--- a/Assets/Templates/yazi.toml
++++ b/Assets/Templates/yazi.toml
+@@ -307,7 +307,7 @@ files = [
+ 	{ name = "gulpfile.js", text = "", fg = "{{colors.primary.default.hex}}" },
+ 	{ name = "gulpfile.ts", text = "", fg = "{{colors.primary.default.hex}}" },
+ 	{ name = "hypridle.conf", text = "", fg = "{{colors.primary.default.hex}}" },
+-	{ name = "hyprland.conf", text = "", fg = "{{colors.primary.default.hex}}" },
++	{ name = "hyprland.lua", text = "", fg = "{{colors.primary.default.hex}}" },
+ 	{ name = "hyprlandd.conf", text = "", fg = "{{colors.primary.default.hex}}" },
+ 	{ name = "hyprlock.conf", text = "", fg = "{{colors.primary.default.hex}}" },
+ 	{ name = "hyprpaper.conf", text = "", fg = "{{colors.primary.default.hex}}" },
+@@ -516,7 +516,7 @@ exts = [
+ 	{ name = "dxf", text = "󰻫", fg = "{{colors.primary.default.hex}}" },
+ 	{ name = "ebook", text = "", fg = "{{colors.primary.default.hex}}" },
+ 	{ name = "ebuild", text = "", fg = "{{colors.primary.default.hex}}" },
+-	{ name = "edn", text = "", fg = "{{colors.primary.default.hex}}" },
++	{ name = "end", text = "", fg = "{{colors.primary.default.hex}}" },
+ 	{ name = "eex", text = "", fg = "{{colors.primary.default.hex}}" },
+ 	{ name = "ejs", text = "", fg = "{{colors.primary.default.hex}}" },
+ 	{ name = "el", text = "", fg = "{{colors.primary.default.hex}}" },
+diff --git a/Scripts/bash/template-apply.sh b/Scripts/bash/template-apply.sh
+index b7fc92dfc8..1a24f0fdc7 100755
+--- a/Scripts/bash/template-apply.sh
++++ b/Scripts/bash/template-apply.sh
+@@ -334,10 +334,10 @@ niri)
+ hyprland)
+     echo "🎨 Applying 'noctalia' theme to Hyprland..."
+     CONFIG_DIR="$HOME/.config/hypr"
+-    CONFIG_FILE="$CONFIG_DIR/hyprland.conf"
+-    THEME_FILE="$CONFIG_DIR/noctalia/noctalia-colors.conf"
++    CONFIG_FILE="$CONFIG_DIR/hyprland.lua"
++    THEME_FILE="$CONFIG_DIR/noctalia/noctalia-colors.lua"
+
+-    INCLUDE_LINE="source = $THEME_FILE"
++    INCLUDE_LINE="require('$THEME_FILE')"
+
+     # Check if the config file exists.
+     if [ ! -f "$CONFIG_FILE" ]; then
+@@ -347,7 +347,7 @@ hyprland)
+         echo "Created new config file with noctalia theme."
+     else
+         # Check if noctalia theme source already exists (flexible matching)
+-        if grep -qE 'source\s*=\s*.*noctalia.*\.conf' "$CONFIG_FILE"; then
++        if grep -qE 'require\(.*noctalia.*\.lua\)' "$CONFIG_FILE"; then
+             echo "Theme already included, skipping modification."
+         else
+             # Only convert symlink when we actually need to write (NixOS read-only symlinks)
+@@ -544,73 +544,73 @@ zathura)
+     ;;
+
+ starship)
+-            PALETTE_FILE="$HOME/.cache/noctalia/starship-palette.toml"
+-
+-            # Respect STARSHIP_CONFIG env var, then fall back to standard lookup order
+-            if [ -n "$STARSHIP_CONFIG" ]; then
+-                CONFIG_FILE="$STARSHIP_CONFIG"
+-            elif [ -f "$HOME/.config/starship.toml" ]; then
+-                CONFIG_FILE="$HOME/.config/starship.toml"
+-            elif [ -f "$HOME/.config/starship/starship.toml" ]; then
+-                CONFIG_FILE="$HOME/.config/starship/starship.toml"
+-            else
+-                CONFIG_FILE="$HOME/.config/starship.toml"
+-            fi
++    PALETTE_FILE="$HOME/.cache/noctalia/starship-palette.toml"
++
++    # Respect STARSHIP_CONFIG env var, then fall back to standard lookup order
++    if [ -n "$STARSHIP_CONFIG" ]; then
++        CONFIG_FILE="$STARSHIP_CONFIG"
++    elif [ -f "$HOME/.config/starship.toml" ]; then
++        CONFIG_FILE="$HOME/.config/starship.toml"
++    elif [ -f "$HOME/.config/starship/starship.toml" ]; then
++        CONFIG_FILE="$HOME/.config/starship/starship.toml"
++    else
++        CONFIG_FILE="$HOME/.config/starship.toml"
++    fi
+
+-            if [ ! -f "$PALETTE_FILE" ]; then
+-                echo "Error: Starship palette file not found at $PALETTE_FILE" >&2
+-                return 1
+-            fi
++    if [ ! -f "$PALETTE_FILE" ]; then
++        echo "Error: Starship palette file not found at $PALETTE_FILE" >&2
++        return 1
++    fi
+
+-            MARKER_BEGIN='# >>> NOCTALIA STARSHIP PALETTE >>>'
+-            MARKER_END='# <<< NOCTALIA STARSHIP PALETTE <<<'
+-
+-            # Create config file from scratch if it doesn't exist yet
+-            if [ ! -f "$CONFIG_FILE" ]; then
+-                mkdir -p "$(dirname "$CONFIG_FILE")"
+-                {
+-                    printf 'palette = "noctalia"\n\n'
+-                    printf '%s\n' "$MARKER_BEGIN"
+-                    cat "$PALETTE_FILE"
+-                    printf '%s\n' "$MARKER_END"
+-                } > "$CONFIG_FILE"
+-                return 0
+-            fi
++    MARKER_BEGIN='# >>> NOCTALIA STARSHIP PALETTE >>>'
++    MARKER_END='# <<< NOCTALIA STARSHIP PALETTE <<<'
+
+-            # Follow symlinks so we edit the real file (safe for stow / dotfile managers)
+-            if [ -L "$CONFIG_FILE" ]; then
+-                CONFIG_FILE="$(readlink -f "$CONFIG_FILE")"
+-            fi
++    # Create config file from scratch if it doesn't exist yet
++    if [ ! -f "$CONFIG_FILE" ]; then
++        mkdir -p "$(dirname "$CONFIG_FILE")"
++        {
++            printf 'palette = "noctalia"\n\n'
++            printf '%s\n' "$MARKER_BEGIN"
++            cat "$PALETTE_FILE"
++            printf '%s\n' "$MARKER_END"
++        } >"$CONFIG_FILE"
++        return 0
++    fi
+
+-            # Set or insert top-level  palette = "noctalia"
+-            if grep -qE '^[[:space:]]*palette[[:space:]]*=' "$CONFIG_FILE"; then
+-                sed -i -E 's/^([[:space:]]*)palette([[:space:]]*)=.*/\1palette\2= "noctalia"/' "$CONFIG_FILE"
+-            elif grep -qE '^[[:space:]]*"\$schema"' "$CONFIG_FILE"; then
+-                sed -i '/^[[:space:]]*"\$schema"/a palette = "noctalia"' "$CONFIG_FILE"
+-            else
+-                sed -i '1i palette = "noctalia"' "$CONFIG_FILE"
+-            fi
++    # Follow symlinks so we edit the real file (safe for stow / dotfile managers)
++    if [ -L "$CONFIG_FILE" ]; then
++        CONFIG_FILE="$(readlink -f "$CONFIG_FILE")"
++    fi
++
++    # Set or insert top-level  palette = "noctalia"
++    if grep -qE '^[[:space:]]*palette[[:space:]]*=' "$CONFIG_FILE"; then
++        sed -i -E 's/^([[:space:]]*)palette([[:space:]]*)=.*/\1palette\2= "noctalia"/' "$CONFIG_FILE"
++    elif grep -qE '^[[:space:]]*"\$schema"' "$CONFIG_FILE"; then
++        sed -i '/^[[:space:]]*"\$schema"/a palette = "noctalia"' "$CONFIG_FILE"
++    else
++        sed -i '1i palette = "noctalia"' "$CONFIG_FILE"
++    fi
+
+-            # Remove existing palette block using awk for literal string matching
+-            # (avoids sed misinterpreting >, #, or other chars in the markers as regex)
+-            if grep -qF "$MARKER_BEGIN" "$CONFIG_FILE"; then
+-                awk -v begin="$MARKER_BEGIN" -v end="$MARKER_END" '
++    # Remove existing palette block using awk for literal string matching
++    # (avoids sed misinterpreting >, #, or other chars in the markers as regex)
++    if grep -qF "$MARKER_BEGIN" "$CONFIG_FILE"; then
++        awk -v begin="$MARKER_BEGIN" -v end="$MARKER_END" '
+                     $0 == begin { skip = 1; next }
+                     $0 == end   { skip = 0; next }
+                     !skip
+-                ' "$CONFIG_FILE" > "${CONFIG_FILE}.noctalia.tmp" \
+-                    && mv "${CONFIG_FILE}.noctalia.tmp" "$CONFIG_FILE"
+-            fi
++                ' "$CONFIG_FILE" >"${CONFIG_FILE}.noctalia.tmp" &&
++            mv "${CONFIG_FILE}.noctalia.tmp" "$CONFIG_FILE"
++    fi
+
+-            # Append fresh palette block, ensuring a clean newline boundary
+-            {
+-                printf '\n%s\n' "$MARKER_BEGIN"
+-                cat "$PALETTE_FILE"
+-                # Guard: ensure palette file ends with newline before closing marker
+-                tail -c1 "$PALETTE_FILE" | grep -q $'\n' || printf '\n'
+-                printf '%s\n' "$MARKER_END"
+-            } >> "$CONFIG_FILE"
+-            ;;
++    # Append fresh palette block, ensuring a clean newline boundary
++    {
++        printf '\n%s\n' "$MARKER_BEGIN"
++        cat "$PALETTE_FILE"
++        # Guard: ensure palette file ends with newline before closing marker
++        tail -c1 "$PALETTE_FILE" | grep -q $'\n' || printf '\n'
++        printf '%s\n' "$MARKER_END"
++    } >>"$CONFIG_FILE"
++    ;;
+
+ *)
+     # Handle unknown application names.
+diff --git a/Services/Compositor/HyprlandService.qml b/Services/Compositor/HyprlandService.qml
+index 19cd804809..8be3f8b40c 100644
+--- a/Services/Compositor/HyprlandService.qml
++++ b/Services/Compositor/HyprlandService.qml
+@@ -528,10 +528,10 @@ Item {
+   function switchToWorkspace(workspace) {
+     try {
+       if (workspace.name) {
+-        Hyprland.dispatch(`workspace ${workspace.name}`);
++        Hyprland.dispatch(`hl.dsp.focus {workspace = '${workspace.name}'}`);
+         return;
+       }
+-      Hyprland.dispatch(`workspace ${workspace.idx}`);
++      Hyprland.dispatch(`hl.dsp.focus {workspace = '${workspace.idx}'}`);
+     } catch (e) {
+       Logger.e("HyprlandService", "Failed to switch workspace:", e);
+     }
+@@ -545,8 +545,8 @@ Item {
+       }
+
+       const windowId = window.id.toString();
+-      Hyprland.dispatch(`focuswindow address:0x${windowId}`);
+-      Hyprland.dispatch(`alterzorder top,address:0x${windowId}`); // Bring the focused window to the top (essential for Float Mode)
++      Hyprland.dispatch(`hl.dsp.focus {window = 'address:0x${windowId}'}`);
++      Hyprland.dispatch(`hl.dsp.window.alter_zorder {mode = 'top', window = 'address:0x${windowId}'}`); // Bring the focused window to the top (essential for Float Mode)
+     } catch (e) {
+       Logger.e("HyprlandService", "Failed to switch window:", e);
+     }
+@@ -554,7 +554,7 @@ Item {
+
+   function closeWindow(window) {
+     try {
+-      Hyprland.dispatch(`killwindow address:0x${window.id}`);
++      Hyprland.dispatch(`hl.dsp.window.kill {window = 'address:0x${window.id}'}`);
+     } catch (e) {
+       Logger.e("HyprlandService", "Failed to close window:", e);
+     }
+@@ -562,7 +562,7 @@ Item {
+
+   function turnOffMonitors() {
+     try {
+-      Quickshell.execDetached(["hyprctl", "dispatch", "dpms", "off"]);
++      Hyprland.dispatch("hl.dsp.dpms { action = 'off' }");
+     } catch (e) {
+       Logger.e("HyprlandService", "Failed to turn off monitors:", e);
+     }
+@@ -570,7 +570,7 @@ Item {
+
+   function turnOnMonitors() {
+     try {
+-      Quickshell.execDetached(["hyprctl", "dispatch", "dpms", "on"]);
++      Hyprland.dispatch("hl.dsp.dpms { action = 'on' }");
+     } catch (e) {
+       Logger.e("HyprlandService", "Failed to turn on monitors:", e);
+     }
+@@ -578,7 +578,7 @@ Item {
+
+   function logout() {
+     try {
+-      Quickshell.execDetached(["hyprctl", "dispatch", "exit"]);
++      Hyprland.dispatch("hl.dsp.exit()");
+     } catch (e) {
+       Logger.e("HyprlandService", "Failed to logout:", e);
+     }
+@@ -607,7 +607,8 @@ Item {
+
+   function spawn(command) {
+     try {
+-      Quickshell.execDetached(["hyprctl", "dispatch", "--", "exec"].concat(command));
++      const cmd = command[0]
++      Quickshell.execDetached(["hyprctl", "dispatch", `hl.dsp.exec_cmd("${cmd.replace(/"/g, '\\"')}")`]);
+     } catch (e) {
+       Logger.e("HyprlandService", "Failed to spawn command:", e);
+     }
+diff --git a/Services/Theming/TemplateRegistry.qml b/Services/Theming/TemplateRegistry.qml
+index d60ea01639..1bc091792e 100644
+--- a/Services/Theming/TemplateRegistry.qml
++++ b/Services/Theming/TemplateRegistry.qml
+@@ -380,10 +380,10 @@ Singleton {
+       "id": "hyprland",
+       "name": "Hyprland",
+       "category": "compositor",
+-      "input": "hyprland.conf",
++      "input": "hyprland.lua",
+       "outputs": [
+         {
+-          "path": "~/.config/hypr/noctalia/noctalia-colors.conf"
++          "path": "~/.config/hypr/noctalia/noctalia-colors.lua"
+         }
+       ],
+       "postProcess": () => `${templateApplyScript} hyprland`

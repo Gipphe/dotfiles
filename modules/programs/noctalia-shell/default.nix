@@ -23,6 +23,9 @@ let
       programs.noctalia-shell = lib.mkMerge [
         {
           enable = true;
+          package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs {
+            patches = [ ./patches/hyprland-lua.patch ];
+          };
           settings = {
             bar = {
               backgroundOpacity = lib.mkForce 1;
