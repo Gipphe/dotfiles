@@ -20,7 +20,7 @@ let
         if test "$(hyprctl activewindow -j | jq -r '.class')" = 'Steam'; then
           xdotool getactivewindow windowunmap
         else
-          hyprctl dispatch 'hl.dsp.close()'
+          hyprctl dispatch 'hl.dsp.window.close()'
         fi
       '';
     }
