@@ -8,9 +8,7 @@ let
   inherit (import ./utils.nix) removeNullAttrs;
   cfg = config.gipphe.programs.hyprland;
   toLua = lib.generators.toLua { };
-  toDevice = device: /* lua */ ''
-    hl.device(${toLua (removeNullAttrs device)})
-  '';
+  toDevice = device: "hl.device(${toLua (removeNullAttrs device)})";
 in
 util.mkModule {
   options.gipphe.programs.hyprland.settings.devices = lib.mkOption {
@@ -489,8 +487,8 @@ util.mkModule {
   };
 
   hm = {
-    gipphe.programs.hyprland.settings.rendered = lib.mkIf (cfg.settings.devices != [ ]) ''
-      ${builtins.concatStringsSep "\n" (map toDevice cfg.settings.devices)}
-    '';
+    gipphe.programs.hyprland.settings.rendered = lib.mkIf (cfg.settings.devices != [ ]) (
+      builtins.concatStringsSep "\n" (map toDevice cfg.settings.devices)
+    );
   };
 }

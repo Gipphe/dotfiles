@@ -1,4 +1,5 @@
 {
+  pkgs,
   util,
   lib,
   config,
@@ -6,6 +7,15 @@
 }:
 let
   cfg = config.gipphe.programs.hyprland;
+
+  hmCfg = config.wayland.windowManager.hyprland;
+  variables = builtins.concatStringsSep " " hmCfg.systemd.variables;
+  extraCommands = builtins.concatStringsSep " " (map (f: "&& ${f}") hmCfg.systemd.extraCommands);
+  systemdActivation = ''
+    hl.on('hyprland.start', function()
+      hl.exec_cmd('${pkgs.dbus}/bin/dbus-update-activation-environment --systemd ${variables} ${extraCommands}')
+    end)
+  '';
 in
 util.mkModule {
   shared.imports = [
@@ -41,7 +51,6 @@ util.mkModule {
         '';
       };
       post = lib.mkOption {
-
         type = lib.types.lines;
         description = ''
           Extra literal Lua configuration to append to the end of the rendered
@@ -56,11 +65,11 @@ util.mkModule {
   };
   hm = {
     xdg.configFile = {
-      "hypr/hyprland.lua".text = ''
-        ${cfg.settings.extra.pre}
-        ${cfg.settings.rendered}
-        ${cfg.settings.extra.post}
-      '';
+      "hypr/hyprland.lua".text =
+        lib.optionalString (hmCfg.systemd.enable) systemdActivation
+        + lib.optionalString (cfg.settings.extra.pre != "") cfg.settings.extra.pre
+        + lib.optionalString (cfg.settings.rendered != "") cfg.settings.rendered
+        + lib.optionalString (cfg.settings.extra.post != "") cfg.settings.extra.post;
       "hypr/hyprland.conf".enable = false;
     };
   };

@@ -7,11 +7,7 @@
 let
   cfg = config.gipphe.programs.hyprland;
   toLua = lib.generators.toLua { };
-  toOn = on: /* lua */ ''
-    hl.on(${toLua on.event}, function(...)
-      (${on.action})(...)
-    end)
-  '';
+  toOn = on: "hl.on(${toLua on.event}, ${toLua on.action})";
 in
 util.mkModule {
   options.gipphe.programs.hyprland.settings = {
@@ -24,7 +20,7 @@ util.mkModule {
             event = "window.destroy";
             action = '''
               function(ws)
-                hl.dsp.exec_cmd("echo foo")
+                hl.exec_cmd("echo foo")
               end
             ''';
           }
@@ -101,12 +97,21 @@ util.mkModule {
             };
 
             action = lib.mkOption {
-              description = "Inline Lua function definition to execute on said event.";
-              type = lines;
-              example = ''
-                function(ws)
-                  hl.dsp.exec_cmd("foo")
-                end
+              description = ''
+                Inline Lua function definition to execute on said event.
+
+                ::: {.note}
+                If you want to use dispatchers from `hl.dsp`, remember to pass
+                them to `hl.dispatch`, otherwise they are not executed.
+                :::
+              '';
+              type = luaInline;
+              example = lib.literalExpression ''
+                lib.mkLuaInline '''
+                  function(ws)
+                    hl.exec_cmd("foo")
+                  end
+                '''
               '';
             };
           };
@@ -128,16 +133,16 @@ util.mkModule {
   };
   hm = {
     gipphe.programs.hyprland.settings = {
-      rendered = lib.mkIf (cfg.settings.on != [ ]) ''
-        ${builtins.concatStringsSep "\n" (map toOn cfg.settings.on)}
-      '';
+      rendered = lib.mkIf (cfg.settings.on != [ ]) (
+        builtins.concatStringsSep "\n" (map toOn cfg.settings.on)
+      );
       on =
         let
           toCommand = event: cmd: {
             inherit event;
-            action = ''
+            action = lib.mkLuaInline ''
               function()
-                hl.dsp.exec_cmd(${toLua cmd})
+                hl.exec_cmd(${toLua cmd})
               end
             '';
           };

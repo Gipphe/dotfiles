@@ -17,9 +17,7 @@ let
         else
           removeNullAttrs (gesture // gesture.action);
     in
-    /* lua */ ''
-      hl.gesture(${toLua renderedGesture})
-    '';
+    "hl.gesture(${toLua renderedGesture})";
 in
 util.mkModule {
   options.gipphe.programs.hyprland.settings.gestures = lib.mkOption {
@@ -168,8 +166,8 @@ util.mkModule {
       });
   };
   hm = {
-    gipphe.programs.hyprland.settings.rendered = ''
-      ${builtins.concatStringsSep "\n" (map toGesture cfg.settings.gestures)}
-    '';
+    gipphe.programs.hyprland.settings.rendered = lib.mkIf (cfg.settings.gestures != [ ]) (
+      builtins.concatStringsSep "\n" (map toGesture cfg.settings.gestures)
+    );
   };
 }

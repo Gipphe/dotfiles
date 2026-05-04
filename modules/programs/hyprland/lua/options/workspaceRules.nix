@@ -8,9 +8,7 @@ let
   inherit (import ./utils.nix) removeNullAttrs;
   cfg = config.gipphe.programs.hyprland;
   toLua = lib.generators.toLua { };
-  toWorkspaceRule = rule: /* lua */ ''
-    hl.workspace_rule(${toLua (removeNullAttrs rule)})
-  '';
+  toWorkspaceRule = rule: "hl.workspace_rule(${toLua (removeNullAttrs rule)})";
 in
 util.mkModule {
   options.gipphe.programs.hyprland.settings.workspaceRules = lib.mkOption {
@@ -175,8 +173,8 @@ util.mkModule {
       });
   };
   hm = {
-    gipphe.programs.hyprland.settings.rendered = ''
-      ${builtins.concatStringsSep "\n" (map toWorkspaceRule cfg.settings.workspaceRules)}
-    '';
+    gipphe.programs.hyprland.settings.rendered = lib.mkIf (cfg.settings.workspaceRules != [ ]) (
+      builtins.concatStringsSep "\n" (map toWorkspaceRule cfg.settings.workspaceRules)
+    );
   };
 }

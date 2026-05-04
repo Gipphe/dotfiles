@@ -8,12 +8,8 @@ let
   inherit (import ./utils.nix) removeNullAttrs;
   cfg = config.gipphe.programs.hyprland;
   toLua = lib.generators.toLua { };
-  toAnimation = animation: ''
-    hl.animation(${toLua (removeNullAttrs animation)})
-  '';
-  toCurve = curveName: curve: ''
-    hl.curve(${toLua curveName}, ${toLua (removeNullAttrs curve)})
-  '';
+  toAnimation = animation: "hl.animation(${toLua (removeNullAttrs animation)})";
+  toCurve = curveName: curve: "hl.curve(${toLua curveName}, ${toLua (removeNullAttrs curve)})";
   lit = x: lib.types.enum [ x ];
 in
 util.mkModule {
@@ -177,13 +173,13 @@ util.mkModule {
   };
 
   hm = {
-    gipphe.programs.hyprland.settings.rendered = lib.mkMerge [
-      (lib.mkIf (cfg.settings.curves != [ ]) ''
-        ${builtins.concatStringsSep "\n" (lib.mapAttrsToList toCurve cfg.settings.curves)}
-      '')
-      (lib.mkIf (cfg.settings.animations != [ ]) ''
-        ${builtins.concatStringsSep "\n" (map toAnimation cfg.settings.animations)}
-      '')
-    ];
+    gipphe.programs.hyprland.settings.rendered =
+      lib.optionalString (cfg.settings.curves != [ ]) (
+        builtins.concatStringsSep "\n" (lib.mapAttrsToList toCurve cfg.settings.curves)
+      )
+      + "\n"
+      + lib.optionalString (cfg.settings.animations != [ ]) (
+        builtins.concatStringsSep "\n" (map toAnimation cfg.settings.animations)
+      );
   };
 }

@@ -8,12 +8,8 @@ let
   inherit (import ./utils.nix) removeNullAttrsRecursive;
   cfg = config.gipphe.programs.hyprland;
   toLua = lib.generators.toLua { };
-  toWindowRule = rule: /* lua */ ''
-    hl.window_rule(${toLua (removeNullAttrsRecursive rule)})
-  '';
-  toLayerRule = rule: /* lua */ ''
-    hl.layer_rule(${toLua (removeNullAttrsRecursive rule)})
-  '';
+  toWindowRule = rule: "hl.window_rule(${toLua (removeNullAttrsRecursive rule)})";
+  toLayerRule = rule: "hl.layer_rule(${toLua (removeNullAttrsRecursive rule)})";
 in
 util.mkModule {
   options.gipphe.programs.hyprland.settings = {
@@ -788,9 +784,13 @@ util.mkModule {
     };
   };
   hm = {
-    gipphe.programs.hyprland.settings.rendered = ''
-      ${builtins.concatStringsSep "\n" (map toLayerRule cfg.settings.layerRules)}
-      ${builtins.concatStringsSep "\n" (map toWindowRule cfg.settings.windowRules)}
-    '';
+    gipphe.programs.hyprland.settings.rendered =
+      lib.optionalString (cfg.settings.layerRules != [ ]) (
+        builtins.concatStringsSep "\n" (map toLayerRule cfg.settings.layerRules)
+      )
+      + "\n"
+      + lib.optionalString (cfg.settings.windowRules != [ ]) (
+        builtins.concatStringsSep "\n" (map toWindowRule cfg.settings.windowRules)
+      );
   };
 }

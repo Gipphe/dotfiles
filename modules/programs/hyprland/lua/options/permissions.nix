@@ -8,9 +8,7 @@ let
   inherit (import ./utils.nix) removeNullAttrs;
   cfg = config.gipphe.programs.hyprland;
   toLua = lib.generators.toLua { };
-  toPermission = permission: /* lua */ ''
-    hl.permission(${toLua (removeNullAttrs permission)})
-  '';
+  toPermission = permission: "hl.permission(${toLua (removeNullAttrs permission)})";
 in
 util.mkModule {
   options.gipphe.programs.hyprland.settings.permissions = lib.mkOption {
@@ -132,8 +130,8 @@ util.mkModule {
   };
 
   hm = {
-    gipphe.programs.hyprland.settings.rendered = lib.mkIf (cfg.settings.permissions != [ ]) ''
-      ${builtins.concatStringsSep "\n" (map toPermission cfg.settings.permissions)}
-    '';
+    gipphe.programs.hyprland.settings.rendered = lib.mkIf (cfg.settings.permissions != [ ]) (
+      builtins.concatStringsSep "\n" (map toPermission cfg.settings.permissions)
+    );
   };
 }

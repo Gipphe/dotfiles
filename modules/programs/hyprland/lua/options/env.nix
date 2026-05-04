@@ -7,9 +7,7 @@
 let
   cfg = config.gipphe.programs.hyprland;
   toLua = lib.generators.toLua { };
-  toEnv = name: val: /* lua */ ''
-    hl.env(${toLua name}, ${toLua val})
-  '';
+  toEnv = name: val: "hl.env(${toLua name}, ${toLua val})";
 in
 util.mkModule {
   options.gipphe.programs.hyprland.settings.env = lib.mkOption {
@@ -21,8 +19,8 @@ util.mkModule {
     type = with lib.types; attrsOf (either luaInline str);
   };
   hm = {
-    gipphe.programs.hyprland.settings.rendered = lib.mkIf (cfg.settings.env != { }) ''
-      ${builtins.concatStringsSep "\n" (lib.mapAttrsToList toEnv cfg.settings.env)}
-    '';
+    gipphe.programs.hyprland.settings.rendered = lib.mkIf (cfg.settings.env != { }) (
+      builtins.concatStringsSep "\n" (lib.mapAttrsToList toEnv cfg.settings.env)
+    );
   };
 }

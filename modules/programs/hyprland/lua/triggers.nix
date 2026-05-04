@@ -8,12 +8,12 @@ util.mkModule {
   hm = {
     gipphe.programs.hyprland.settings.on =
       let
-        dispatch = import ./options/dispatchers.nix { inherit lib; };
         inherit (config.gipphe.core.wm) triggers;
-        triggerToDispatcher = { command }: dispatch.exec_cmd command;
+        toLua = lib.generators.toLua { };
+        triggerToExec = { command }: "hl.exec_cmd(${toLua command})";
         toEvent = event: action: {
           inherit event;
-          action = ''
+          action = lib.mkLuaInline ''
             function()
               ${action}
             end
@@ -23,8 +23,7 @@ util.mkModule {
           event: triggers:
           lib.pipe triggers [
             builtins.attrValues
-            (map triggerToDispatcher)
-            (map (x: x.expr))
+            (map triggerToExec)
             (builtins.concatStringsSep "\n")
             (toEvent event)
           ];

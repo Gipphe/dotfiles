@@ -187,17 +187,6 @@ util.mkProgram {
             disable_splash_rendering = true;
           };
         };
-        extra.pre =
-          let
-            hmCfg = config.wayland.windowManager.hyprland;
-            variables = builtins.concatStringsSep " " hmCfg.systemd.variables;
-            extraCommands = builtins.concatStringsSep " " (map (f: "&& ${f}") hmCfg.systemd.extraCommands);
-          in
-          lib.mkBefore /* lua */ ''
-            hl.on('hyprland.start', function()
-              hl.exec_cmd('${pkgs.dbus}/bin/dbus-update-activation-environment --systemd ${variables} ${extraCommands}')
-            end)
-          '';
       };
       wayland.windowManager.hyprland = {
         enable = true;

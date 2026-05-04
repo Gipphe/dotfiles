@@ -27,7 +27,7 @@ let
       );
       flagsArg = if flags != { } then ", ${toLua' { inherit indent; } flags}" else "";
     in
-    /* lua */ "hl.bind(${toLua binding.key}, ${toLua binding.dispatcher}${flagsArg})";
+    "hl.bind(${toLua binding.key}, ${toLua binding.dispatcher}${flagsArg})";
   toBind = toInnerBind "";
 
   toInnerSubmap =
@@ -221,13 +221,13 @@ util.mkModule {
     };
   };
   hm = {
-    gipphe.programs.hyprland.settings.rendered = lib.mkMerge [
-      (lib.mkIf (cfg.settings.binds != [ ]) ''
-        ${lib.concatStringsSep "\n" (map toBind cfg.settings.binds)}
-      '')
-      (lib.mkIf (cfg.settings.submaps != [ ]) ''
-        ${lib.concatStringsSep "\n" (lib.mapAttrsToList toSubmap cfg.settings.submaps)}
-      '')
-    ];
+    gipphe.programs.hyprland.settings.rendered =
+      lib.optionalString (cfg.settings.binds != [ ]) (
+        lib.concatStringsSep "\n" (map toBind cfg.settings.binds)
+      )
+      + "\n"
+      + lib.optionalString (cfg.settings.submaps != [ ]) (
+        lib.concatStringsSep "\n" (lib.mapAttrsToList toSubmap cfg.settings.submaps)
+      );
   };
 }

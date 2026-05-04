@@ -8,9 +8,7 @@ let
   inherit (import ./utils.nix) removeNullAttrs;
   cfg = config.gipphe.programs.hyprland;
   toLua = lib.generators.toLua { };
-  toMonitorDef = monitor: /* lua */ ''
-    hl.monitor(${toLua (removeNullAttrs monitor)})
-  '';
+  toMonitorDef = monitor: "hl.monitor(${toLua (removeNullAttrs monitor)})";
 in
 util.mkModule {
   options.gipphe.programs.hyprland.settings.monitors = lib.mkOption {
@@ -221,8 +219,8 @@ util.mkModule {
     '';
   };
   hm = {
-    gipphe.programs.hyprland.settings.rendered = ''
-      ${lib.concatStringsSep "\n" (map toMonitorDef cfg.settings.monitors)}
-    '';
+    gipphe.programs.hyprland.settings.rendered = lib.mkIf (cfg.settings.monitors != [ ]) (
+      builtins.concatStringsSep "\n" (map toMonitorDef cfg.settings.monitors)
+    );
   };
 }
