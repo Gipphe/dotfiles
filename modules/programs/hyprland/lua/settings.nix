@@ -20,6 +20,9 @@ util.mkProgram {
       ./env.nix
       ./input.nix
       ./triggers.nix
+      {
+        gipphe.programs.hyprland.settings.config = config.wayland.windowManager.hyprland.settings;
+      }
     ];
     config = {
       gipphe.core.wm.actions =
