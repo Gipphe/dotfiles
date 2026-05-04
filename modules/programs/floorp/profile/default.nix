@@ -10,7 +10,7 @@ util.mkModule {
         # Show https prototol
         "browser.urlbar.trimHttps" = false;
         # Show url prototol and query params
-        "browser.urlbar.trimUrls" = false;
+        "browser.urlbar.trimURLs" = false;
         "taskbar.grouping.useprofile" = true;
         # Allow use of userChrome.css
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
