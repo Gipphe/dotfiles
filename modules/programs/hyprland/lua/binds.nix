@@ -20,7 +20,7 @@ let
         if test "$(hyprctl activewindow -j | jq -r '.class')" = 'Steam'; then
           xdotool getactivewindow windowunmap
         else
-          hyprctl dispatch 'hl.dsp.window.close()'
+          hyprctl dispatch 'hl.dsp.close()'
         fi
       '';
     }
@@ -33,27 +33,35 @@ let
         config.wayland.windowManager.hyprland.package
         pkgs.jq
       ];
-      text = /* bash */ ''
-        HYPRGAMEMODE=$(hyprctl getoption animations:enabled -j | jq -r '.int')
-        if test "$HYPRGAMEMODE" = 1; then
-          hyprctl --batch "\
-            keyword animations:enabled 0; \
-            keyword animation borderangle,0; \
-            keyword decoration:shadow:enabled 0; \
-            keyword decoration:blur:enabled 0; \
-            keyword decoration:fullscreen_opacity 1; \
-            keyword general:gaps_in 0; \
-            keyword general:gaps_out 0; \
-            keyword general:border_size 1; \
-            keyword decoration:rounding 0; \
-            keyword input:touchpad:disable_while_typing false \
-          "
-          hyprctl notify 1 5000 "rgb(40a02b)" "Gamemode [ON]"
-        else
-          hyprctl reload
-          hyprctl notify 1 5000 "rgb(d20f39)" "Gamemode [OFF]"
-        fi
-      '';
+      runtimeEnv.gamemode_config = lib.generators.toLua { } {
+        animations.enabled = false;
+        decoration = {
+          shadow.enable = false;
+          blur.enabled = false;
+          fullscreen_opacity = 1.0;
+          rounding = 0;
+        };
+        general = {
+          gaps_in = 0;
+          gaps_out = 0;
+          border_size = 1;
+        };
+        input.touchpad.disable_while_typing = false;
+      };
+      text =
+        let
+        in
+        /* bash */ ''
+          HYPRGAMEMODE=$(hyprctl getoption animations:enabled -j | jq -r '.bool')
+          if test "$HYPRGAMEMODE" = "true"; then
+            hyprctl eval "hl.config($gamemode_config)"
+            hyprctl evan "hl.animation { leaf = "borderangle", enabled = 0 }"
+            hyprctl notify 1 5000 "rgb(40a02b)" "Gamemode [ON]"
+          else
+            hyprctl reload
+            hyprctl notify 1 5000 "rgb(d20f39)" "Gamemode [OFF]"
+          fi
+        '';
     }
   );
 
