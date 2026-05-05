@@ -30,8 +30,8 @@ util.mkProgram {
           hyprctl = lib.getExe' package "hyprctl";
         in
         {
-          monitors-on = "${hyprctl} dispatch dpms on";
-          monitors-off = "${hyprctl} dispatch dpms off";
+          monitors-on = "${hyprctl} dispatch 'hl.dsp.dpms({ action = 'on' })";
+          monitors-off = "${hyprctl} dispatch 'hl.dsp.dpms({ action = 'off' })";
         };
       gipphe.programs.hyprland.settings = {
         monitors = [
