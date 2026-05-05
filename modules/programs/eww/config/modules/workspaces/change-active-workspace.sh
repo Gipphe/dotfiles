@@ -11,9 +11,9 @@ current=$2
 if test "$direction" = "down"; then
   target=$(clamp 1 10 $((current + 1)))
   echo "jumping to $target"
-  hyprctl dispatch workspace "$target"
+  hyprctl dispatch "hl.dsp.focus { workspace = '$target' }"
 elif test "$direction" = "up"; then
   target=$(clamp 1 10 $((current - 1)))
   echo "jumping to $target"
-  hyprctl dispatch workspace "$target"
+  hyprctl dispatch "hl.dsp.focus { workspace = '$target' }"
 fi

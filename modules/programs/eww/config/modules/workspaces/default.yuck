@@ -10,7 +10,7 @@
          :hexpand false
          :vexpand false
       (for workspace in workspaces
-        (eventbox :onclick "hyprctl dispatch workspace ${workspace}"
+        (eventbox :onclick "hyprctl dispatch 'hl.dsp.focus { workspace = \"${workspace}\" }"
           (box :class "workspaces__entry ${workspace == current-workspace ? 'workspaces__entry--current' : ''}"
                :vexpand false
                :hexpand false

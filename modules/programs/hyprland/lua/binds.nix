@@ -75,7 +75,7 @@ let
           if test $argv[1] == "close"
             systemctl suspend
           else
-            sleep 1 && hyprctl dispatch dpms on eDP-1
+            sleep 1 && hyprctl dispatch 'hl.dsp.dpms { action = "on", monitor = "eDP-1" }'
           end
         end
       '';
