@@ -81,21 +81,7 @@ let
             action.spawn = "${ipc} launcher clipboard";
           }
         ];
-        triggers.on-load =
-          let
-            startup = pkgs.writeShellApplication {
-              name = "noctalia-startup";
-              runtimeInputs = [ config.programs.noctalia-shell.package ];
-              text = ''
-                noctalia-shell kill || true
-                sleep 2s
-                noctalia-shell
-              '';
-            };
-          in
-          {
-            noctalia-startup.command = lib.getExe startup;
-          };
+        triggers.on-startup.noctalia-startup.command = lib.getExe config.programs.noctalia-shell.package;
       };
     };
     system-nixos = {
