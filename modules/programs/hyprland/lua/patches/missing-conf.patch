@@ -1,0 +1,15 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 7b0c4fa63f..0f1d957497 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -630,10 +630,6 @@
+ install(FILES ${INSTALLABLE_ASSETS}
+         DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/hypr)
+
+-# default config
+-install(FILES ${CMAKE_SOURCE_DIR}/example/hyprland.conf
+-        DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/hypr)
+-
+ # default lua config
+ install(FILES ${CMAKE_SOURCE_DIR}/example/hyprland.lua
+         DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/hypr)
