@@ -13,6 +13,7 @@ util.mkProfile {
       logseq.enable = true;
       mpris.enable = true;
       mpv.enable = true;
+      qalculate.enable = true;
       qimgv.enable = true;
       signal.enable = true;
       slack.enable = true;
