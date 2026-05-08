@@ -72,20 +72,34 @@ util.mkToggledModule [ "machines" ] {
   };
 
   hm = {
-    gipphe.programs.hyprland.settings.monitors = [
-      {
-        output = "desc:${monitors.left}";
-        mode = "preferred";
-        position = "0x0";
-        scale = 1.0;
-      }
-      {
-        output = "desc:${monitors.right}";
-        mode = "preferred";
-        position = "auto-right";
-        scale = 1.0;
-      }
-    ];
+    gipphe.programs.hyprland.settings = {
+      monitors = [
+        {
+          output = "desc:${monitors.left}";
+          mode = "preferred";
+          position = "0x0";
+          scale = 1.0;
+        }
+        {
+          output = "desc:${monitors.right}";
+          mode = "preferred";
+          position = "auto-right";
+          scale = 1.0;
+        }
+      ];
+      workspaceRules = [
+        {
+          workspace = "r1";
+          default = true;
+          monitor = "desc:${monitors.left}";
+        }
+        {
+          workspace = "r9";
+          default = true;
+          monitor = "desc:${monitors.right}";
+        }
+      ];
+    };
     services.syncthing = {
       settings.folders."${config.home.homeDirectory}/Documents/Notes".path =
         "/mnt/oldone/Filen/Area/Notes";
