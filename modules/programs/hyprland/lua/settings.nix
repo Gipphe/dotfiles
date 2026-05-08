@@ -7,11 +7,7 @@
   ...
 }:
 let
-  package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland.overrideAttrs (old: {
-    # TODO: Remove this patch when hyprland properly removes the missing config
-    # file from `CMakeLists.txt`.
-    patches = (old.patches or [ ]) ++ [ ./patches/missing-conf.patch ];
-  });
+  package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
   portalPackage =
     inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
 in
