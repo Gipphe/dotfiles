@@ -71,7 +71,7 @@ util.mkToggledModule [ "machines" ] {
     };
   };
 
-  hm = {
+  home-manager = {
     gipphe.programs.hyprland.settings = {
       monitors = [
         {

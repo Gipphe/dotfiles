@@ -1,5 +1,5 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "devbox";
-  hm.home.packages = [ pkgs.devbox ];
+  home-manager.home.packages = [ pkgs.devbox ];
 }

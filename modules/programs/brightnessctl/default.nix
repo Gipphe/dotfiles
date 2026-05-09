@@ -4,7 +4,7 @@ let
 in
 util.mkProgram {
   name = "brightnessctl";
-  hm = {
+  home-manager = {
     home.packages = [ pkg ];
     gipphe.core.wm.binds = [
       {

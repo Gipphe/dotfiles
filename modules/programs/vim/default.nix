@@ -1,7 +1,7 @@
 { inputs, util, ... }:
 util.mkProgram {
   name = "vim";
-  hm = {
+  home-manager = {
     imports = [
       (inputs.wlib.lib.getInstallModule {
         name = "vim";

@@ -1,7 +1,7 @@
 { inputs, util, ... }:
 util.mkProgram {
   name = "nushell";
-  hm = {
+  home-manager = {
     imports = [
       (inputs.wlib.lib.getInstallModule {
         name = "nushell";

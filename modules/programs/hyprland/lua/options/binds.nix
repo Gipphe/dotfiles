@@ -220,7 +220,7 @@ util.mkModule {
       type = submapType;
     };
   };
-  hm = {
+  home-manager = {
     gipphe.programs.hyprland.settings.rendered =
       lib.optionalString (cfg.settings.binds != [ ]) (
         lib.concatStringsSep "\n" (map toBind cfg.settings.binds)

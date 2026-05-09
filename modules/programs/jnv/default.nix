@@ -5,5 +5,5 @@
 }:
 util.mkProgram {
   name = "jnv";
-  hm.home.packages = [ pkgs.jnv ];
+  home-manager.home.packages = [ pkgs.jnv ];
 }

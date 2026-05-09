@@ -30,7 +30,7 @@ util.mkProgram {
       defaultText = "config.programs.hyprland.enable";
     };
   };
-  hm = {
+  home-manager = {
     home.packages = [
       cfg.package
       pkgs.libqalculate

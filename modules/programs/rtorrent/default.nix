@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkProgram {
   name = "rtorrent";
-  hm = {
+  home-manager = {
     programs.rtorrent.enable = true;
   };
 }

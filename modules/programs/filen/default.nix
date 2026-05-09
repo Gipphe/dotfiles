@@ -13,7 +13,7 @@ let
 in
 util.mkProgram {
   name = "filen-desktop";
-  hm = {
+  home-manager = {
     home.packages = [ pkg ];
     gipphe.programs.hyprland.settings.exec.onStartup = [
       "filen-desktop"

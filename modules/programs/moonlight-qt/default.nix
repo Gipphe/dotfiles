@@ -1,5 +1,5 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "moonlight-qt";
-  hm.home.packages = [ pkgs.moonlight-qt ];
+  home-manager.home.packages = [ pkgs.moonlight-qt ];
 }

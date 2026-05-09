@@ -17,7 +17,7 @@ let
 in
 util.mkProgram {
   name = "claude-code";
-  hm = {
+  home-manager = {
     imports = [
       (inputs.wlib.lib.getInstallModule {
         name = "claude-code";

@@ -172,7 +172,7 @@ util.mkModule {
     };
   };
 
-  hm = {
+  home-manager = {
     gipphe.programs.hyprland.settings.rendered =
       lib.optionalString (cfg.settings.curves != [ ]) (
         builtins.concatStringsSep "\n" (lib.mapAttrsToList toCurve cfg.settings.curves)

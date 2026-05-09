@@ -10,5 +10,5 @@ let
 in
 util.mkProgram {
   name = "libresprite";
-  hm.home.packages = [ pkg ];
+  home-manager.home.packages = [ pkg ];
 }

@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkProgram {
   name = "zoxide";
-  hm = {
+  home-manager = {
     programs.zoxide = {
       enable = true;
       options = [

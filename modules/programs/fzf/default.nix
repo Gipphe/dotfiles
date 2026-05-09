@@ -1,5 +1,5 @@
 { util, ... }:
 util.mkProgram {
   name = "fzf";
-  hm.programs.fzf.enable = true;
+  home-manager.programs.fzf.enable = true;
 }

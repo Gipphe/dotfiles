@@ -30,7 +30,7 @@ util.mkModule {
     };
   };
 
-  hm = {
+  home-manager = {
     home = {
       inherit (config.gipphe) username homeDirectory;
       # NO TOUCHY!

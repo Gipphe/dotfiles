@@ -4,7 +4,7 @@ let
 in
 util.mkProgram {
   name = "runelite";
-  hm = {
+  home-manager = {
     home = {
       packages = [
         (pkgs.symlinkJoin {

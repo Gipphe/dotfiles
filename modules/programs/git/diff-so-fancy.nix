@@ -6,7 +6,7 @@
 }:
 util.mkToggledModule [ "programs" "git" ] {
   name = "diff-so-fancy";
-  hm = {
+  home-manager = {
     wrappers.git = {
       settings =
         let

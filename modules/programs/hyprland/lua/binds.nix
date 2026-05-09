@@ -129,7 +129,7 @@ let
   mod = "SUPER";
 in
 util.mkModule {
-  hm = {
+  home-manager = {
     gipphe.programs.hyprland.settings = {
       binds =
         workspaceSwitching

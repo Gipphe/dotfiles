@@ -165,7 +165,7 @@ util.mkModule {
         };
       });
   };
-  hm = {
+  home-manager = {
     gipphe.programs.hyprland.settings.rendered = lib.mkIf (cfg.settings.gestures != [ ]) (
       builtins.concatStringsSep "\n" (map toGesture cfg.settings.gestures)
     );

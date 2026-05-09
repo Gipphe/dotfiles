@@ -1,6 +1,6 @@
 { util, ... }:
 util.mkModule {
-  hm = {
+  home-manager = {
     imports = [ ./search-engines.nix ];
     programs.floorp.profiles.default = {
       settings = {

@@ -172,7 +172,7 @@ util.mkModule {
         };
       });
   };
-  hm = {
+  home-manager = {
     gipphe.programs.hyprland.settings.rendered = lib.mkIf (cfg.settings.workspaceRules != [ ]) (
       builtins.concatStringsSep "\n" (map toWorkspaceRule cfg.settings.workspaceRules)
     );

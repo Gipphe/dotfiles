@@ -11,6 +11,6 @@ in
 util.mkProgram {
   name = "asciinema";
   options.gipphe.programs.asciinema.onDemand = lib.mkEnableOption "fetching asciinema on demand";
-  hm.home.packages =
+  home-manager.home.packages =
     if cfg.onDemand then [ (util.mkOnDemand pkgs.asciinema) ] else [ pkgs.asciinema ];
 }

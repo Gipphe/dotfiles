@@ -18,7 +18,7 @@ util.mkModule {
     };
     type = with lib.types; attrsOf (either luaInline str);
   };
-  hm = {
+  home-manager = {
     gipphe.programs.hyprland.settings.rendered = lib.mkIf (cfg.settings.env != { }) (
       builtins.concatStringsSep "\n" (lib.mapAttrsToList toEnv cfg.settings.env)
     );

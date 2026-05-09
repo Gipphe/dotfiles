@@ -1,6 +1,6 @@
 { util, ... }:
 util.mkModule {
-  hm = {
+  home-manager = {
     programs.floorp.policies = {
       ExtensionSettings = {
         # uBlock Origin

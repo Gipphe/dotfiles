@@ -2,5 +2,5 @@
 util.mkProgram {
   name = "xclip";
 
-  hm.home.packages = [ pkgs.xclip ];
+  home-manager.home.packages = [ pkgs.xclip ];
 }

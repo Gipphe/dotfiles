@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkProgram {
   name = "batsignal";
-  hm.services.batsignal = {
+  home-manager.services.batsignal = {
     enable = true;
   };
 }

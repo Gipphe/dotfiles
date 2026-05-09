@@ -85,7 +85,7 @@ util.mkProgram {
       default = "origin";
     };
   };
-  hm = {
+  home-manager = {
     home.packages = [
       nix-pr-tracker
     ];

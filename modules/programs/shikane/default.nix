@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkProgram {
   name = "shikane";
-  hm.services.shikane = {
+  home-manager.services.shikane = {
     enable = true;
     settings = {
       profile = [ ];

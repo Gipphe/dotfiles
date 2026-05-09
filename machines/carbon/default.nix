@@ -35,7 +35,7 @@ util.mkToggledModule [ "machines" ] {
       };
     };
   };
-  hm = {
+  home-manager = {
     home = {
       sessionVariables.XDG_RUNTIME_DIR = "${config.gipphe.homeDirectory}/.run";
       activation."sops-nix-droid-fix" =

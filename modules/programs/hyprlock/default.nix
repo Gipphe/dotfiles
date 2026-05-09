@@ -10,7 +10,7 @@ let
 in
 util.mkProgram {
   name = "hyprlock";
-  hm = {
+  home-manager = {
     options.gipphe.programs.hyprlock.package = lib.mkPackageOption pkgs "hyprlock" { } // {
       default = config.programs.hyprlock.package;
     };

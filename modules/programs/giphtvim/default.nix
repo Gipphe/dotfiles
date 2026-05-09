@@ -7,7 +7,7 @@
 }:
 util.mkProgram {
   name = "giphtvim";
-  hm = {
+  home-manager = {
     imports = [ inputs.giphtvim.homeModules.default ];
     config = {
       home.sessionVariables.EDITOR = "nvim";

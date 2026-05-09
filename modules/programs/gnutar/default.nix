@@ -2,5 +2,5 @@
 util.mkProgram {
   name = "gnutar";
 
-  hm.home.packages = [ pkgs.gnutar ];
+  home-manager.home.packages = [ pkgs.gnutar ];
 }

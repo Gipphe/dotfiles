@@ -32,5 +32,5 @@ let
 in
 util.mkProgram {
   name = "run-as-service";
-  hm.home.packages = [ run-as-service ];
+  home-manager.home.packages = [ run-as-service ];
 }

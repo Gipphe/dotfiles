@@ -110,7 +110,7 @@ let
     {
       name,
       options ? { },
-      hm ? { },
+      home-manager ? { },
       system-nixos ? { },
       system-droid ? { },
       system-all ? { },
@@ -145,7 +145,7 @@ let
               };
           in
           mkModule {
-            hm = injectMkIf hm;
+            home-manager = injectMkIf home-manager;
             system-nixos = injectMkIf system-nixos;
             system-droid = injectMkIf system-droid;
             system-all = injectMkIf system-all;
@@ -164,7 +164,7 @@ let
   mkModule =
     {
       options ? { },
-      hm ? { },
+      home-manager ? { },
       system-nixos ? { },
       system-droid ? { },
       system-all ? { },
@@ -179,7 +179,7 @@ let
               { inherit options; }
               shared
             ]
-            ++ lib.optional flags.isHm hm
+            ++ lib.optional flags.isHomeManager home-manager
             ++ lib.optional (flags.isSystem && flags.isNixos) system-nixos
             ++ lib.optional (flags.isSystem && flags.isNixOnDroid) system-droid
             ++ lib.optional flags.isSystem system-all;

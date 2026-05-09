@@ -129,7 +129,7 @@ util.mkModule {
       });
   };
 
-  hm = {
+  home-manager = {
     gipphe.programs.hyprland.settings.rendered = lib.mkIf (cfg.settings.permissions != [ ]) (
       builtins.concatStringsSep "\n" (map toPermission cfg.settings.permissions)
     );

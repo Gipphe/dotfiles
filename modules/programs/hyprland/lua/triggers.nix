@@ -5,7 +5,7 @@
   ...
 }:
 util.mkModule {
-  hm = {
+  home-manager = {
     gipphe.programs.hyprland.settings.on =
       let
         inherit (config.gipphe.core.wm) triggers;

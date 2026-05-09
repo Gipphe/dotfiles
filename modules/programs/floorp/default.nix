@@ -18,7 +18,7 @@ util.mkModule {
     ./policies.nix
     ./profile
   ];
-  hm = {
+  home-manager = {
     config = lib.mkMerge [
       {
         programs.floorp = lib.mkIf (pkgs.stdenv.hostPlatform.isLinux && !flags.isNixOnDroid) {

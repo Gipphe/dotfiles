@@ -6,7 +6,7 @@
 }:
 util.mkProgram {
   name = "atuin";
-  hm = {
+  home-manager = {
     imports = [
       (inputs.wlib.lib.getInstallModule {
         name = "atuin";

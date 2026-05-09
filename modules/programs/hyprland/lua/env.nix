@@ -1,6 +1,6 @@
 { util, ... }:
 util.mkModule {
-  hm = {
+  home-manager = {
     gipphe.programs.hyprland.settings.env = {
       # Cursor
       XCURSOR_SIZE = "24";

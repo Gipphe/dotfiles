@@ -1,5 +1,5 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "make";
-  hm.home.packages = [ pkgs.gnumake ];
+  home-manager.home.packages = [ pkgs.gnumake ];
 }

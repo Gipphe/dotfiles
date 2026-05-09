@@ -1,5 +1,5 @@
 { util, ... }:
 util.mkProgram {
   name = "jq";
-  hm.programs.jq.enable = true;
+  home-manager.programs.jq.enable = true;
 }

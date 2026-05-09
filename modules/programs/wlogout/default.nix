@@ -14,7 +14,7 @@ let
 in
 util.mkProgram {
   name = "wlogout";
-  hm.programs.wlogout = {
+  home-manager.programs.wlogout = {
     enable = true;
     layout = [
       {

@@ -14,7 +14,7 @@ util.mkProgram {
   options.gipphe.programs.grimblast = {
     package = lib.mkPackageOption pkgs "grimblast" { };
   };
-  hm = {
+  home-manager = {
     home.packages = [ cfg.package ];
     gipphe.core.wm.binds = [
       {

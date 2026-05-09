@@ -1,5 +1,5 @@
 { util, ... }:
 util.mkProgram {
   name = "fd";
-  hm.programs.fd.enable = true;
+  home-manager.programs.fd.enable = true;
 }

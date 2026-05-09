@@ -486,7 +486,7 @@ util.mkModule {
       });
   };
 
-  hm = {
+  home-manager = {
     gipphe.programs.hyprland.settings.rendered = lib.mkIf (cfg.settings.devices != [ ]) (
       builtins.concatStringsSep "\n" (map toDevice cfg.settings.devices)
     );

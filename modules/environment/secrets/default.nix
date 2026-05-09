@@ -10,7 +10,7 @@ util.mkModule {
     enable = lib.mkEnableOption "secret management with sops-nix";
   };
 
-  hm = {
+  home-manager = {
     imports = [ inputs.sops-nix.homeManagerModules.sops ];
     sops = {
       age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";

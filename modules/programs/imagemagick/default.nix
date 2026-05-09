@@ -1,5 +1,5 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "imagemagick";
-  hm.home.packages = [ pkgs.imagemagick ];
+  home-manager.home.packages = [ pkgs.imagemagick ];
 }

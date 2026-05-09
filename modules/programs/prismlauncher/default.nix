@@ -1,5 +1,5 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "prismlauncher";
-  hm.home.packages = [ pkgs.prismlauncher ];
+  home-manager.home.packages = [ pkgs.prismlauncher ];
 }

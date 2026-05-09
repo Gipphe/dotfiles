@@ -1,5 +1,5 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "unzip";
-  hm.home.packages = [ pkgs.unzip ];
+  home-manager.home.packages = [ pkgs.unzip ];
 }

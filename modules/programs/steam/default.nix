@@ -14,7 +14,7 @@ util.mkProgram {
   options.gipphe.programs.steam.package = lib.mkPackageOption pkgs "steam" { } // {
     default = pkg;
   };
-  hm = {
+  home-manager = {
     gipphe.programs.hyprland.settings.windowRules = [
       {
         match.title = "Friends List";

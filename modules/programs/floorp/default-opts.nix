@@ -9,7 +9,7 @@ let
   pkg = config.programs.floorp.finalPackage or config.programs.floorp.package;
 in
 util.mkModule {
-  hm = {
+  home-manager = {
     config = lib.mkIf cfg.default {
       home.sessionVariables = {
         BROWSER = lib.getExe' pkg "floorp";

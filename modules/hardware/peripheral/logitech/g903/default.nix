@@ -13,7 +13,7 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
       example = "046d:c539";
     };
   };
-  hm = {
+  home-manager = {
     home.packages = [ pkgs.piper ];
   };
   system-nixos = {

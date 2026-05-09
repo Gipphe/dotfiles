@@ -1,6 +1,6 @@
 { util, ... }:
 util.mkModule {
-  hm = {
+  home-manager = {
     programs.librewolf.policies = {
       ExtensionSettings = {
         # uBlock Origin

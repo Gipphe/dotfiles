@@ -12,7 +12,7 @@ util.mkProgram {
       defaultText = "config.programs.hyprland.enable";
     };
   };
-  hm = {
+  home-manager = {
     services.clipse = {
       enable = true;
     };

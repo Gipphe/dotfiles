@@ -1,7 +1,7 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "signal";
-  hm = {
+  home-manager = {
     home.packages = [ pkgs.signal-desktop ];
   };
 }

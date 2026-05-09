@@ -218,7 +218,7 @@ util.mkModule {
       ]
     '';
   };
-  hm = {
+  home-manager = {
     gipphe.programs.hyprland.settings.rendered = lib.mkIf (cfg.settings.monitors != [ ]) (
       builtins.concatStringsSep "\n" (map toMonitorDef cfg.settings.monitors)
     );

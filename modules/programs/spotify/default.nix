@@ -1,5 +1,5 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "spotify";
-  hm.home.packages = [ pkgs.spotify ];
+  home-manager.home.packages = [ pkgs.spotify ];
 }

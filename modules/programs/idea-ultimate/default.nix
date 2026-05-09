@@ -2,7 +2,7 @@
 util.mkProgram {
   name = "idea-ultimate";
 
-  hm.imports = [
+  home-manager.imports = [
     ./idea.nix
     ./config.nix
   ];

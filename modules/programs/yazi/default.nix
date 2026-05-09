@@ -22,7 +22,7 @@ util.mkProgram {
       default = true;
     };
   };
-  hm = {
+  home-manager = {
     programs.yazi = {
       enable = true;
       shellWrapperName = "y";

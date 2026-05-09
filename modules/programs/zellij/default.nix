@@ -5,7 +5,7 @@ let
 in
 util.mkProgram {
   name = "zellij";
-  hm = {
+  home-manager = {
     xdg.configFile = {
       "zellij/config.kdl".text = # kdl
         ''

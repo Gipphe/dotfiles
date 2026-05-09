@@ -1,7 +1,7 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "rustdesk-client";
-  hm = {
+  home-manager = {
     home.packages = [ pkgs.rustdesk-flutter ];
   };
   system-nixos = {

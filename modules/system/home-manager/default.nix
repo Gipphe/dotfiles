@@ -9,7 +9,7 @@
   ...
 }:
 util.mkModule {
-  hm =
+  home-manager =
     { osConfig, ... }:
     {
       # Copy config from OS to home-manager
@@ -40,7 +40,7 @@ util.mkModule {
 
         osConfig = config;
         flags = flags // {
-          isHm = true;
+          isHomeManager = true;
           isSystem = false;
         };
       };

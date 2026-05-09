@@ -1,6 +1,6 @@
 { util, pkgs, ... }:
 util.mkModule {
-  hm = {
+  home-manager = {
     programs.floorp.profiles.default = {
       search = {
         default = "startpage";

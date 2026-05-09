@@ -1,7 +1,7 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "qpwgraph";
-  hm = {
+  home-manager = {
     home.packages = [ pkgs.qpwgraph ];
   };
 }

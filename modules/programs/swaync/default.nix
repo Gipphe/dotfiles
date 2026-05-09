@@ -48,7 +48,7 @@ util.mkProgram {
       '';
     };
   };
-  hm = {
+  home-manager = {
     gipphe.programs.swaync = {
       settings = {
         widgets = [

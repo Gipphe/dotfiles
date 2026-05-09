@@ -63,7 +63,7 @@ util.mkModule {
       };
     };
   };
-  hm = {
+  home-manager = {
     xdg.configFile = {
       "hypr/hyprland.lua".text =
         lib.optionalString (hmCfg.systemd.enable) systemdActivation

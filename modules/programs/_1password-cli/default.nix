@@ -4,7 +4,7 @@ let
 in
 util.mkProgram {
   name = "_1password-cli";
-  hm = {
+  home-manager = {
     programs.fish = {
       functions = {
         opon = # fish

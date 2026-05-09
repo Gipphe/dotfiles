@@ -6,7 +6,7 @@
 }:
 util.mkProgram {
   name = "btop";
-  hm = {
+  home-manager = {
     imports = [
       (inputs.wlib.lib.getInstallModule {
         name = "btop";

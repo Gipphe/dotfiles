@@ -1,5 +1,5 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "lazydocker";
-  hm.home.packages = [ pkgs.lazydocker ];
+  home-manager.home.packages = [ pkgs.lazydocker ];
 }

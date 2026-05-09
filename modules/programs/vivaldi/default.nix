@@ -15,7 +15,7 @@ util.mkProgram {
     package = lib.mkPackageOption pkgs "vivaldi" { };
     default = lib.mkEnableOption "Vivaldi as default browser";
   };
-  hm = {
+  home-manager = {
     # TODO: Add `--enable-blink-features=MiddleClickAutoscroll` to desktop entry
     home.packages = [ cfg.package ];
     home.sessionVariables = lib.mkIf cfg.default {

@@ -10,7 +10,7 @@ in
 util.mkProgram {
   name = "tmux";
 
-  hm = {
+  home-manager = {
     imports = [
       (inputs.wlib.lib.getInstallModule {
         name = "tmux";

@@ -11,7 +11,7 @@ in
 util.mkProgram {
   name = "wl-clipboard";
   options.gipphe.programs.wl-clipboard.package = lib.mkPackageOption pkgs "wl-clipboard" { };
-  hm = {
+  home-manager = {
     home.packages = [ cfg.package ];
   };
 }

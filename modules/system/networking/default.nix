@@ -9,7 +9,7 @@ let
 in
 util.mkToggledModule [ "system" ] {
   name = "networking";
-  hm = {
+  home-manager = {
     gipphe.core.wm.binds = [
       {
         key = "XF86WLAN";

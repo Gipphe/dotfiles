@@ -14,7 +14,7 @@ util.mkProgram {
   options.gipphe.programs.pipewire = {
     higherQuantum.enable = lib.mkEnableOption "higher quantum settings";
   };
-  hm = {
+  home-manager = {
     home.packages = [ pkgs.wireplumber ];
     gipphe.core.wm.binds = [
       {

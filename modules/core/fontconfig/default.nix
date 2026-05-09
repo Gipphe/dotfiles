@@ -7,7 +7,7 @@
 }:
 util.mkToggledModule [ "core" ] {
   name = "fontconfig";
-  hm = {
+  home-manager = {
     fonts.fontconfig.enable = true;
 
     home.activation.copy-termux-font =

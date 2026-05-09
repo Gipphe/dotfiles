@@ -783,7 +783,7 @@ util.mkModule {
         });
     };
   };
-  hm = {
+  home-manager = {
     gipphe.programs.hyprland.settings.rendered =
       lib.optionalString (cfg.settings.layerRules != [ ]) (
         builtins.concatStringsSep "\n" (map toLayerRule cfg.settings.layerRules)

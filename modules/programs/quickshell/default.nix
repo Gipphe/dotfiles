@@ -20,7 +20,7 @@ util.mkProgram {
       internal = true;
     };
   };
-  hm = {
+  home-manager = {
     options.gipphe.programs.quickshell.package = lib.mkPackageOption pkgs "quickshell" { };
     config = lib.mkMerge [
       (lib.mkIf cfg.dev {

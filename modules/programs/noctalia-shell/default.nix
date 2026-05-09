@@ -18,7 +18,7 @@ let
 
   main = util.mkProgram {
     name = "noctalia-shell";
-    hm = {
+    home-manager = {
       imports = [ inputs.noctalia.homeModules.default ];
       programs.noctalia-shell = lib.mkMerge [
         {

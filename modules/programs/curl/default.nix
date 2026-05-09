@@ -1,5 +1,5 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "curl";
-  hm.home.packages = [ pkgs.curlFull ];
+  home-manager.home.packages = [ pkgs.curlFull ];
 }

@@ -131,7 +131,7 @@ util.mkModule {
       };
     };
   };
-  hm = {
+  home-manager = {
     gipphe.programs.hyprland.settings = {
       rendered = lib.mkIf (cfg.settings.on != [ ]) (
         builtins.concatStringsSep "\n" (map toOn cfg.settings.on)

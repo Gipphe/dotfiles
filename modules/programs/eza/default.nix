@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkProgram {
   name = "eza";
-  hm.programs.eza = {
+  home-manager.programs.eza = {
     enable = true;
     icons = "auto";
     git = true;

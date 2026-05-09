@@ -1,7 +1,7 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "qalculate";
-  hm = {
+  home-manager = {
     home.packages = [ pkgs.qalculate-qt ];
   };
 }

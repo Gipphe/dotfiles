@@ -1,5 +1,5 @@
 { pkgs, util, ... }:
 util.mkProgram {
   name = "vulnix";
-  hm.home.packages = [ pkgs.vulnix ];
+  home-manager.home.packages = [ pkgs.vulnix ];
 }

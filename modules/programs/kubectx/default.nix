@@ -1,7 +1,7 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "kubectx";
-  hm = {
+  home-manager = {
     home.packages = [ pkgs.kubectx ];
     programs.fish.shellAbbrs = {
       kcx = "kubectx";

@@ -14,7 +14,7 @@ in
 util.mkProgram {
   name = "hyprland";
   shared.imports = [ ./options ];
-  hm = {
+  home-manager = {
     imports = [
       ./binds.nix
       ./env.nix

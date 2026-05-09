@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkProgram {
   name = "cliphist";
-  hm.services.cliphist = {
+  home-manager.services.cliphist = {
     enable = true;
   };
 }

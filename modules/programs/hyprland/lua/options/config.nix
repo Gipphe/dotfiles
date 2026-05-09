@@ -44,7 +44,7 @@ util.mkModule {
       }
     '';
   };
-  hm = {
+  home-manager = {
     gipphe.programs.hyprland.settings.rendered = lib.mkIf (cfg.settings.config != { }) (
       lib.mkBefore "hl.config(${toLua cfg.settings.config})"
     );

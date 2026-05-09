@@ -1,5 +1,5 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "dolphin";
-  hm.home.packages = [ pkgs.kdePackages.dolphin ];
+  home-manager.home.packages = [ pkgs.kdePackages.dolphin ];
 }

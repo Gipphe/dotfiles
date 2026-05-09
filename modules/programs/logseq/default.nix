@@ -23,7 +23,7 @@ util.mkProgram {
       description = "General preferences";
     };
   };
-  hm = {
+  home-manager = {
     gipphe.programs.logseq = {
       settings = /* clojure */ ''
         {:meta/version 1

@@ -10,7 +10,7 @@ let
   flags = {
     isNixos = false;
     isNixOnDroid = true;
-    isHm = false;
+    isHomeManager = false;
     isSystem = true;
   };
 

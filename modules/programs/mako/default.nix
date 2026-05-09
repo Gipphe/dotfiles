@@ -8,7 +8,7 @@
 }:
 util.mkProgram {
   name = "mako";
-  hm = {
+  home-manager = {
     imports = [
       (inputs.wlib.lib.getInstallModule {
         name = "mako";

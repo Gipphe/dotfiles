@@ -40,7 +40,7 @@ util.mkToggledModule [ "machines" ] {
     hardware.disk.enable = true;
   };
 
-  hm = {
+  home-manager = {
     gipphe.programs.hyprland.settings.monitors = [
       {
         output = "";

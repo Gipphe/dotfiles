@@ -1,6 +1,6 @@
 { util, ... }:
 util.mkModule {
-  hm.programs.floorp.policies = {
+  home-manager.programs.floorp.policies = {
     DisableTelemetry = true;
     DNSOverHTTPS = {
       ProviderURL = "https://dns.mullvad.net/dns-query";

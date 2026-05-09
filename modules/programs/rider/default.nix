@@ -1,7 +1,7 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "rider";
-  hm = {
+  home-manager = {
     home.packages = [
       pkgs.jetbrains.rider
     ];

@@ -6,7 +6,7 @@
 }:
 util.mkProgram {
   name = "mpv";
-  hm = {
+  home-manager = {
     imports = [
       (inputs.wlib.lib.getInstallModule {
         name = "mpv";

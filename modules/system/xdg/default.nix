@@ -7,7 +7,7 @@
 }:
 util.mkSystem {
   name = "xdg";
-  hm = {
+  home-manager = {
     xdg = {
       enable = true;
       mimeApps.enable = true;

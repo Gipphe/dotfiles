@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkToggledModule [ "tweag" ] {
   name = "vcs";
-  hm = {
+  home-manager = {
     wrappers = {
       git.includes = [
         {

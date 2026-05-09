@@ -9,7 +9,7 @@ let
 in
 util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
   name = "g915";
-  hm = {
+  home-manager = {
     gipphe.core.wm.binds = [
       {
         key = "XF86AudioPlay";

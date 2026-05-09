@@ -1,7 +1,7 @@
 { pkgs, util, ... }:
 util.mkProgram {
   name = "bcn";
-  hm.home.packages = [
+  home-manager.home.packages = [
     (pkgs.writeShellApplication {
       name = "bcn";
       runtimeInputs = builtins.attrValues {

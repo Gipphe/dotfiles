@@ -1,7 +1,7 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "ffmpeg";
-  hm = {
+  home-manager = {
     home.packages = [
       pkgs.ffmpeg
       (pkgs.writeShellApplication {

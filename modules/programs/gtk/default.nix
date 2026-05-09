@@ -5,7 +5,7 @@
 }:
 util.mkProgram {
   name = "gtk";
-  hm = {
+  home-manager = {
     gtk = {
       enable = true;
       iconTheme = {

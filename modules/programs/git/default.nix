@@ -23,7 +23,7 @@ let
 in
 util.mkProgram {
   name = "git";
-  hm = {
+  home-manager = {
     options.gipphe.programs.git = {
       package = lib.mkPackageOption pkgs "git" { } // {
         default = config.wrappers.git.package;
