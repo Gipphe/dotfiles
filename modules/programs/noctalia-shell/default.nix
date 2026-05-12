@@ -85,10 +85,13 @@ let
           let
             startup = pkgs.writeShellApplication {
               name = "noctalia-startup";
-              runtimeInputs = [ config.programs.noctalia-shell.package ];
+              runtimeInputs = [
+                pkgs.procps
+                config.programs.noctalia-shell.package
+              ];
               text = ''
-                noctalia-shell kill || true
-                sleep 2s
+                pkill quickshell || true
+                sleep 1s
                 noctalia-shell
               '';
             };
