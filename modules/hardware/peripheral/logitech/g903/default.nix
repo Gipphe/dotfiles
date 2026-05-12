@@ -33,6 +33,13 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
       libinput.enable = true;
       udev.extraRules = ''
         ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="c539", ATTR{power/autosuspend}="-1"
+      ''
+      + lib.optionalString false ''
+        ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="c539", RUN+="${pkgs.systemd}/bin/systemd-run --no-block ${pkgs.writeShellScript "reload-logitech-hid" ''
+          sleep 0.5
+          modprobe -r hid_logitech_dj
+          modprobe hid_logitech_dj
+        ''}"
       '';
       hardware.openrgb.enable = true;
     };
