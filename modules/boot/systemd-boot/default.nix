@@ -5,6 +5,8 @@ util.mkToggledModule [ "boot" ] {
     systemd-boot = {
       enable = true;
       editor = false;
+      configurationLimit = 30;
+      memtest86.enable = true;
     };
     efi.canTouchEfiVariables = true;
   };
