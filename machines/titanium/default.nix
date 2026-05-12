@@ -30,6 +30,7 @@ util.mkToggledModule [ "machines" ] {
         system.enable = true;
         thumbnails.enable = true;
         time.enable = true;
+        zramswap.enable = true;
       };
       ai.enable = true;
       application.enable = true;
