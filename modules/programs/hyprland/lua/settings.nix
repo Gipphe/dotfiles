@@ -174,33 +174,60 @@ util.mkProgram {
             cursor.no_hardware_cursors = true;
             animations.enabled = true;
 
-            general = {
-              gaps_in = 2;
-              gaps_out = 2;
-              border_size = 1;
-              "col.active_border" = lib.mkForce {
-                colors = [
-                  "rgb(8aadf4)"
-                  "rgb(c6a0f6)"
-                ];
-                angle = 45;
-              };
-              layout = "dwindle";
-              resize_on_border = true;
-            };
+            general = lib.mkMerge [
+              {
+                gaps_in = 2;
+                gaps_out = 2;
+                border_size = 1;
+                "col.active_border" = lib.mkForce {
+                  colors = [
+                    "rgb(8aadf4)"
+                    "rgb(c6a0f6)"
+                  ];
+                  angle = 45;
+                };
+                layout = "dwindle";
+                resize_on_border = true;
+              }
+              # TODO: Remove once stylix supports lua config
+              {
+                "col.active_border" = "rgb(8aadf4)";
+                "col.inactive_border" = "rgb(6e738d)";
+              }
+            ];
 
-            decoration = {
-              rounding = 6;
-              blur = {
-                enabled = true;
-                size = 3;
-                passes = 1;
-              };
+            decoration = lib.mkMerge [
+              {
+                rounding = 6;
+                blur = {
+                  enabled = true;
+                  size = 3;
+                  passes = 1;
+                };
 
-              shadow = {
-                enabled = true;
-                range = 4;
-                render_power = 3;
+                shadow = {
+                  enabled = true;
+                  range = 4;
+                  render_power = 3;
+                };
+              }
+              # TODO: Remove once stylix supports lua config
+              {
+                "shadow" = {
+                  "color" = "rgba(24273a99)";
+                };
+              }
+            ];
+
+            # TODO: Remove once stylix supports lua config
+            group = {
+              "col.border_active" = "rgb(8aadf4)";
+              "col.border_inactive" = "rgb(6e738d)";
+              "col.border_locked_active" = "rgb(8bd5ca)";
+              "groupbar" = {
+                "col.active" = "rgb(8aadf4)";
+                "col.inactive" = "rgb(6e738d)";
+                "text_color" = "rgb(cad3f5)";
               };
             };
 
@@ -213,19 +240,33 @@ util.mkProgram {
               workspace_swipe_create_new = true;
             };
 
-            misc = {
-              disable_hyprland_logo = true;
-              disable_splash_rendering = true;
-            };
+            misc = lib.mkMerge [
+              {
+                disable_hyprland_logo = true;
+                disable_splash_rendering = true;
+              }
+              # TODO: Remove these once stylix supports lua config
+              {
+                "background_color" = "rgb(24273a)";
+                "disable_hyprland_logo" = true;
+              }
+            ];
           };
         };
       };
+      home.packages = [
+        (pkgs.writeShellScriptBin "hyprstart" ''
+          ${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch "hl.dsp.exec_cmd('$1')"
+        '')
+      ];
+
+      # TODO: re-enable once stylix supports lua config
+      # See https://github.com/nix-community/stylix/issues/2315
+      stylix.targets.hyprland = {
+        enable = false;
+        colors.enable = lib.mkForce false;
+      };
     };
-    home.packages = [
-      (pkgs.writeShellScriptBin "hyprstart" ''
-        ${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch "hl.dsp.exec_cmd('$1')"
-      '')
-    ];
   };
   system-nixos = {
     programs.hyprland = {
