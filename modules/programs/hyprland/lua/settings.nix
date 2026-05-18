@@ -103,32 +103,38 @@ util.mkProgram {
 
           animation = [
             {
+              enabled = true;
               leaf = "windows";
               speed = 3;
               bezier = "easeOutQuart";
             }
             {
+              enabled = true;
               leaf = "windowsOut";
               speed = 3;
               bezier = "easeInOutExpo";
               style = "popin 80%";
             }
             {
+              enabled = true;
               leaf = "border";
               speed = 5;
               bezier = "easeOutQuart";
             }
             {
+              enabled = true;
               leaf = "borderangle";
               speed = 4;
               bezier = "easeOutQuart";
             }
             {
+              enabled = true;
               leaf = "fade";
               speed = 4;
               bezier = "default";
             }
             {
+              enabled = true;
               leaf = "workspaces";
               speed = 1;
               bezier = "default";
@@ -164,56 +170,54 @@ util.mkProgram {
             }
           ];
 
-          config = [
-            {
-              cursor.no_hardware_cursors = true;
-              animations.enabled = true;
+          config = {
+            cursor.no_hardware_cursors = true;
+            animations.enabled = true;
 
-              general = {
-                gaps_in = 2;
-                gaps_out = 2;
-                border_size = 1;
-                "col.active_border" = lib.mkForce {
-                  colors = [
-                    "rgb(8aadf4)"
-                    "rgb(c6a0f6)"
-                  ];
-                  angle = 45;
-                };
-                layout = "dwindle";
-                resize_on_border = true;
+            general = {
+              gaps_in = 2;
+              gaps_out = 2;
+              border_size = 1;
+              "col.active_border" = lib.mkForce {
+                colors = [
+                  "rgb(8aadf4)"
+                  "rgb(c6a0f6)"
+                ];
+                angle = 45;
+              };
+              layout = "dwindle";
+              resize_on_border = true;
+            };
+
+            decoration = {
+              rounding = 6;
+              blur = {
+                enabled = true;
+                size = 3;
+                passes = 1;
               };
 
-              decoration = {
-                rounding = 6;
-                blur = {
-                  enabled = true;
-                  size = 3;
-                  passes = 1;
-                };
-
-                shadow = {
-                  enabled = true;
-                  range = 4;
-                  render_power = 3;
-                };
+              shadow = {
+                enabled = true;
+                range = 4;
+                render_power = 3;
               };
+            };
 
-              dwindle = {
-                preserve_split = true;
-              };
+            dwindle = {
+              preserve_split = true;
+            };
 
-              gestures = {
-                workspace_swipe_touch = true;
-                workspace_swipe_create_new = true;
-              };
+            gestures = {
+              workspace_swipe_touch = true;
+              workspace_swipe_create_new = true;
+            };
 
-              misc = {
-                disable_hyprland_logo = true;
-                disable_splash_rendering = true;
-              };
-            }
-          ];
+            misc = {
+              disable_hyprland_logo = true;
+              disable_splash_rendering = true;
+            };
+          };
         };
       };
     };

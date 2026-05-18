@@ -30,12 +30,14 @@ let
 in
 util.mkModule {
   home-manager = {
-    wayland.windowManager.hyprland.settings.env = map (n: {
-      _args = [
-        n
-        env.${n}
-      ];
-    }) (builtins.attrNames env);
+    wayland.windowManager.hyprland.settings = {
+      env = map (n: {
+        _args = [
+          n
+          env.${n}
+        ];
+      }) (builtins.attrNames env);
+    };
     home.sessionVariables.NIXOS_OZONE_WL = "1";
   };
 }

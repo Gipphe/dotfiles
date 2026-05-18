@@ -88,7 +88,7 @@ util.mkToggledModule [ "machines" ] {
           scale = 1.0;
         }
       ];
-      workspaceRules = [
+      workspace_rule = [
         {
           workspace = "r1";
           default = true;
