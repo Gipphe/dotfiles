@@ -29,7 +29,7 @@ util.mkProgram {
         theme = "catppuccin-${flavor}-${accent}";
       };
       autoLogin = {
-        enable = false;
+        enable = true;
         user = config.gipphe.username;
       };
     };
