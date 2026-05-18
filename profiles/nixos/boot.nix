@@ -1,5 +1,5 @@
 { util, ... }:
 util.mkToggledModule [ "profiles" "nixos" ] {
-  name = "boot-efi";
+  name = "boot";
   shared.gipphe.boot.systemd-boot.enable = true;
 }

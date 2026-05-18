@@ -20,7 +20,7 @@ util.mkToggledModule [ "machines" ] {
       nixos = {
         audio.enable = true;
         bluetooth.enable = true;
-        boot-efi.enable = true;
+        boot.enable = true;
         camera.enable = true;
         networking.enable = true;
         power.enable = true;

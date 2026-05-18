@@ -17,7 +17,7 @@ util.mkToggledModule [ "machines" ] {
     profiles = {
       nixos = {
         audio.enable = true;
-        boot-efi.enable = true;
+        boot.enable = true;
         networking.enable = true;
         system.enable = true;
       };
