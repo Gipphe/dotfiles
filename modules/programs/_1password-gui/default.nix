@@ -17,29 +17,29 @@ in
 util.mkProgram {
   name = "_1password-gui";
   home-manager = {
-    gipphe.core.wm.binds = [
-      {
-        mod = [
-          "CTRL"
-          "SHIFT"
-        ];
-        key = "space";
-        action.spawn = quick-access;
-      }
-    ];
-
-    gipphe.programs.hyprland.settings = {
-      exec.onStartup = [ "1password --silent" ];
-      windowRules = [
+    gipphe.core.wm = {
+      binds = [
         {
-          match.title = "Quick Access - 1Password";
-          match.class = "1Password";
-          float = true;
-          stay_focused = true;
-          allows_input = true;
+          mod = [
+            "CTRL"
+            "SHIFT"
+          ];
+          key = "space";
+          action.spawn = quick-access;
         }
       ];
+      triggers.on-startup._1password.command = "1password --silent";
     };
+
+    wayland.windowManager.hyprland.settings.window_rule = [
+      {
+        match.title = "Quick Access - 1Password";
+        match.class = "1Password";
+        float = true;
+        stay_focused = true;
+        allows_input = true;
+      }
+    ];
   };
 
   # Allows the 1password browser extension to connect to the GUI app

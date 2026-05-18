@@ -1,17 +1,6 @@
-{
-  util,
-  config,
-  lib,
-  ...
-}:
+{ util, config, ... }:
 util.mkProgram {
   name = "clipse";
-  options.gipphe.programs.clipse = {
-    hyprland.enable = lib.mkEnableOption "Hyprland integration" // {
-      default = config.programs.hyprland.enable;
-      defaultText = "config.programs.hyprland.enable";
-    };
-  };
   home-manager = {
     services.clipse = {
       enable = true;
@@ -23,9 +12,9 @@ util.mkProgram {
         action.spawn = "${config.programs.wezterm.package}/bin/wezterm start --class clipse clipse";
       }
     ];
-    gipphe.programs.hyprland.settings.windowRules = [
+    wayland.windowManager.hyprland.settings.window_rule = [
       {
-        match.class = "eclipse";
+        match.class = "clipse";
         float = true;
         size = [
           622

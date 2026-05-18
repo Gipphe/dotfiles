@@ -125,158 +125,218 @@ let
       ) 9
     );
 
-  dispatch = import ./options/dispatchers.nix { inherit lib; };
+  dispatch = import ./dispatchers.nix { inherit lib; };
   mod = "SUPER";
 in
 util.mkModule {
   home-manager = {
-    gipphe.programs.hyprland.settings = {
+    wayland.windowManager.hyprland.settings = {
       binds =
         workspaceSwitching
         ++ (map binds.toHyprBindConfig config.gipphe.core.wm.binds)
         ++ [
           {
-            key = "${mod} + Q";
-            dispatcher = dispatch.exec_cmd "${killactive}"; # Close current window
+            _args = [
+              "${mod} + Q"
+              (dispatch.exec_cmd "${killactive}") # Close current window
+            ];
           }
           {
-            key = "${mod} + SHIFT + Q";
-            dispatcher = dispatch.window.kill null; # Force close current window
+            _args = [
+              "${mod} + SHIFT + Q"
+              (dispatch.window.kill null) # Force close current window
+            ];
           }
           {
-            key = "${mod} + T";
-            dispatcher = dispatch.window.float { }; # Toggle between tiling and floating window
+            _args = [
+              "${mod} + T"
+              (dispatch.window.float { }) # Toggle between tiling and floating window
+            ];
           }
           {
-            key = "${mod} + F";
-            dispatcher = dispatch.window.fullscreen { }; # Open the window in fullscreen
+            _args = [
+              "${mod} + F"
+              (dispatch.window.fullscreen { }) # Open the window in fullscreen
+            ];
           }
           {
-            key = "${mod} + P";
-            dispatcher = dispatch.window.pseudo { }; # dwindle
+            _args = [
+              "${mod} + P"
+              (dispatch.window.pseudo { }) # dwindle
+            ];
           }
           {
-            key = "${mod} + J";
-            dispatcher = dispatch.layout "togglesplit"; # dwindle
+            _args = [
+              "${mod} + J"
+              (dispatch.layout "togglesplit") # dwindle
+            ];
           }
           {
-            key = "${mod} + F1";
-            dispatcher = dispatch.exec_cmd "${gamemode}";
+            _args = [
+              "${mod} + F1"
+              (dispatch.exec_cmd "${gamemode}")
+            ];
           }
 
           # Move focus with mod + arrow keys
           {
-            key = "${mod} + left";
-            dispatcher = dispatch.focus { direction = "l"; };
+            _args = [
+              "${mod} + left"
+              (dispatch.focus { direction = "l"; })
+            ];
           }
           {
-            key = "${mod} + right";
-            dispatcher = dispatch.focus { direction = "r"; };
+            _args = [
+              "${mod} + right"
+              (dispatch.focus { direction = "r"; })
+            ];
           }
           {
-            key = "${mod} + up";
-            dispatcher = dispatch.focus { direction = "u"; };
+            _args = [
+              "${mod} + up"
+              (dispatch.focus { direction = "u"; })
+            ];
           }
           {
-            key = "${mod} + down";
-            dispatcher = dispatch.focus { direction = "d"; };
+            _args = [
+              "${mod} + down"
+              (dispatch.focus { direction = "d"; })
+            ];
           }
 
           # Scroll through existing workspaces with mod + scroll
           {
-            key = "${mod} + mouse_down";
-            dispatcher = dispatch.focus { workspace = "e+1"; };
+            _args = [
+              "${mod} + mouse_down"
+              (dispatch.focus { workspace = "e+1"; })
+            ];
           }
           {
-            key = "${mod} + mouse_up";
-            dispatcher = dispatch.focus { workspace = "e-1"; };
+            _args = [
+              "${mod} + mouse_up"
+              (dispatch.focus { workspace = "e-1"; })
+            ];
           }
 
           {
-            key = "switch:off:Lid Switch";
-            dispatcher = dispatch.exec_cmd "${lid-switch} open";
-            locked = true;
+            _args = [
+              "switch:off:Lid Switch"
+              (dispatch.exec_cmd "${lid-switch} open")
+              { locked = true; }
+            ];
           }
           {
-            key = "switch:on:Lid Switch";
-            dispatcher = dispatch.exec_cmd "${lid-switch} close";
-            locked = true;
+            _args = [
+              "switch:on:Lid Switch"
+              (dispatch.exec_cmd "${lid-switch} close")
+              { locked = true; }
+            ];
           }
 
           # Move/resize windows with mod + LMB/RMB and dragging
           {
-            key = "${mod} + mouse:272";
-            dispatcher = dispatch.window.drag;
-            mouse = true;
+            _args = [
+              "${mod} + mouse:272"
+              (dispatch.window.drag)
+              { mouse = true; }
+            ];
           }
           {
-            key = "${mod} + mouse:273";
-            dispatcher = dispatch.window.resize;
-            mouse = true;
+            _args = [
+              "${mod} + mouse:273"
+              (dispatch.window.resize)
+              { mouse = true; }
+            ];
           }
 
           # Zoom
           {
-            key = "${mod} + mouse_down";
-            dispatcher = dispatch.exec_cmd "${increase-zoom}";
+            _args = [
+              "${mod} + mouse_down"
+              (dispatch.exec_cmd "${increase-zoom}")
+            ];
           }
           {
-            key = "${mod} + mouse_up";
-            dispatcher = dispatch.exec_cmd "${decrease-zoom}";
+            _args = [
+              "${mod} + mouse_up"
+              (dispatch.exec_cmd "${decrease-zoom}")
+            ];
           }
           {
-            key = "${mod} + SHIFT + mouse_up";
-            dispatcher = dispatch.exec_cmd "${reset-zoom}";
+            _args = [
+              "${mod} + SHIFT + mouse_up"
+              (dispatch.exec_cmd "${reset-zoom}")
+            ];
           }
           {
-            key = "${mod} + SHIFT + mouse_down";
-            dispatcher = dispatch.exec_cmd "${reset-zoom}";
+            _args = [
+              "${mod} + SHIFT + mouse_down"
+              (dispatch.exec_cmd "${reset-zoom}")
+            ];
           }
           {
-            key = "${mod} + SHIFT + minus";
-            dispatcher = dispatch.exec_cmd "${reset-zoom}";
+            _args = [
+              "${mod} + SHIFT + minus"
+              (dispatch.exec_cmd "${reset-zoom}")
+            ];
           }
           {
-            key = "${mod} + SHIFT + KP_SUBTRACT";
-            dispatcher = dispatch.exec_cmd "${reset-zoom}";
+            _args = [
+              "${mod} + SHIFT + KP_SUBTRACT"
+              (dispatch.exec_cmd "${reset-zoom}")
+            ];
           }
           {
-            key = "${mod} + SHIFT + 0";
-            dispatcher = dispatch.exec_cmd "${reset-zoom}";
+            _args = [
+              "${mod} + SHIFT + 0"
+              (dispatch.exec_cmd "${reset-zoom}")
+            ];
           }
 
           {
-            key = "${mod} + equal";
-            dispatcher = dispatch.exec_cmd "${increase-zoom}";
-            repeating = true;
+            _args = [
+              "${mod} + equal"
+              (dispatch.exec_cmd "${increase-zoom}")
+              { repeating = true; }
+            ];
           }
           {
-            key = "${mod} + minus";
-            dispatcher = dispatch.exec_cmd "${decrease-zoom}";
-            repeating = true;
+            _args = [
+              "${mod} + minus"
+              (dispatch.exec_cmd "${decrease-zoom}")
+              { repeating = true; }
+            ];
           }
           {
-            key = "${mod} + KP_ADD";
-            dispatcher = dispatch.exec_cmd "${increase-zoom}";
-            repeating = true;
+            _args = [
+              "${mod} + KP_ADD"
+              (dispatch.exec_cmd "${increase-zoom}")
+              { repeating = true; }
+            ];
           }
           {
-            key = "${mod} + KP_SUBTRACT";
-            dispatcher = dispatch.exec_cmd "${decrease-zoom}";
-            repeating = true;
+            _args = [
+              "${mod} + KP_SUBTRACT"
+              (dispatch.exec_cmd "${decrease-zoom}")
+              { repeating = true; }
+            ];
           }
 
           # Locked mode
           {
-            key = "${mod} + ALT_L + H";
-            dispatcher = dispatch.submap "locked";
+            _args = [
+              "${mod} + ALT_L + H"
+              (dispatch.submap "locked")
+            ];
           }
         ];
       submaps = {
-        reset.binds = [
+        locked.settings.binds = [
           {
-            key = "${mod} + ALT_L + H";
-            dispatcher = dispatch.submap "reset";
+            _args = [
+              "${mod} + ALT_L + H"
+              (dispatch.submap "reset")
+            ];
           }
         ];
       };

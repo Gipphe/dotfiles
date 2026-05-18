@@ -6,18 +6,20 @@
 }:
 util.mkModule {
   home-manager = {
-    gipphe.programs.hyprland.settings.on =
+    wayland.windowManager.hyprland.settings.on =
       let
         inherit (config.gipphe.core.wm) triggers;
         toLua = lib.generators.toLua { };
         triggerToExec = { command }: "hl.exec_cmd(${toLua command})";
         toEvent = event: action: {
-          inherit event;
-          action = lib.mkLuaInline ''
-            function()
-              ${action}
-            end
-          '';
+          _args = [
+            event
+            (lib.mkLuaInline ''
+              function()
+                ${action}
+              end
+            '')
+          ];
         };
         toTriggers =
           event: triggers:

@@ -15,7 +15,7 @@ util.mkProgram {
     default = pkg;
   };
   home-manager = {
-    gipphe.programs.hyprland.settings.windowRules = [
+    wayland.windowManager.hyprland.settings.window_rule = [
       {
         match.title = "Friends List";
         match.class = "steam";

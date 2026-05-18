@@ -29,19 +29,19 @@ let
       "${concatStringsSep " + " (map replaceMod mods)} + "
     else
       "";
-  toHyprBindConfig =
-    coreBind:
-    {
-      key = "${toMods coreBind.mod}${coreBind.key}";
-      dispatcher = toDispatch coreBind.action;
-    }
-    // mkFlags coreBind;
+  toHyprBindConfig = coreBind: {
+    _args = [
+      "${toMods coreBind.mod}${coreBind.key}"
+      (toDispatch coreBind.action)
+    ]
+    ++ mkFlags coreBind;
+  };
   mkFlags =
     coreBind:
     if coreBind.args ? allow-when-locked && coreBind.args.allow-when-locked then
-      { locked = true; }
+      [ { locked = true; } ]
     else
-      { };
+      [ ];
 in
 {
   inherit toHyprBindConfig;

@@ -15,8 +15,6 @@ util.mkProgram {
   name = "filen-desktop";
   home-manager = {
     home.packages = [ pkg ];
-    gipphe.programs.hyprland.settings.exec.onStartup = [
-      "filen-desktop"
-    ];
+    gipphe.core.wm.triggers.on-startup.filen.command = "filen-desktop";
   };
 }

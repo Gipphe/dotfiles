@@ -25,10 +25,6 @@ util.mkProgram {
       default = { };
       description = "Settings for walker's config.toml.";
     };
-    hyprland.enable = lib.mkEnableOption "hyprland integration" // {
-      default = config.programs.hyprland.enable;
-      defaultText = "config.programs.hyprland.enable";
-    };
   };
   home-manager = {
     home.packages = [
@@ -43,7 +39,7 @@ util.mkProgram {
       "walker/themes/catppuccin-macchiato.css".source = "${theme}/themes/macchiato.css";
     };
 
-    gipphe.core.wm.binds = lib.mkIf cfg.hyprland.enable [
+    gipphe.core.wm.binds = [
       {
         mod = "Mod";
         key = "space";

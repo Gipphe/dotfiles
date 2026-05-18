@@ -3,7 +3,7 @@ util.mkProgram {
   name = "qalculate";
   home-manager = {
     home.packages = [ pkgs.qalculate-qt ];
-    gipphe.programs.hyprland.settings.windowRules = [
+    wayland.windowManager.hyprland.settings.window_rule = [
       {
         match.initial_class = "io.github.Qalculate.qalculate-qt";
         float = true;

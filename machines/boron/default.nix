@@ -55,7 +55,7 @@ util.mkToggledModule [ "machines" ] {
   };
 
   home-manager = {
-    gipphe.programs.hyprland.settings.monitors = [
+    wayland.windowManager.hyprland.settings.monitor = [
       {
         output = "";
         mode = "preferred";

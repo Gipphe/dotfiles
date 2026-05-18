@@ -19,7 +19,7 @@ util.mkProgram {
         })
       ];
     };
-    gipphe.programs.hyprland.settings.windowRules = [
+    wayland.windowManager.hyprland.settings.window_rule = [
       {
         match.float = true;
         match.class = "net-runelite-client-RuneLite";
