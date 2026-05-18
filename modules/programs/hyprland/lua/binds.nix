@@ -114,12 +114,16 @@ let
         in
         [
           {
-            key = "${mod} + ${ws}";
-            dispatcher = dispatch.focus { workspace = ws; };
+            _args = [
+              "${mod} + ${ws}"
+              (dispatch.focus { workspace = ws; })
+            ];
           }
           {
-            key = "${mod} + SHIFT + ${ws}";
-            dispatcher = dispatch.window.move { workspace = ws; };
+            _args = [
+              "${mod} + SHIFT + ${ws}"
+              (dispatch.window.move { workspace = ws; })
+            ];
           }
         ]
       ) 9
