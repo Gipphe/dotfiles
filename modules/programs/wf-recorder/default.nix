@@ -43,7 +43,8 @@ util.mkProgram {
         ];
       runtimeEnv = {
         nicknames = builtins.toJSON cfg.nicknames;
-        window_border = config.wayland.windowManager.hyprland.settings.general."col.active_border";
+        # TODO: Use hyprland's defined color instead of hard-coding it here.
+        window_border = "rgb(8aadf4)";
       };
       text = builtins.readFile ./record.fish;
     })
