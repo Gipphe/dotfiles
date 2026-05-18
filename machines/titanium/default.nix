@@ -23,7 +23,7 @@ util.mkToggledModule [ "machines" ] {
         audio.enable = true;
         biometrics.enable = false;
         bluetooth.enable = true;
-        boot.enable = true;
+        # boot.enable = true;
         camera.enable = true;
         networking.enable = true;
         printing.enable = true;
@@ -70,6 +70,7 @@ util.mkToggledModule [ "machines" ] {
       cpu.intel.comet-lake.enable = true;
       disk.enable = true;
     };
+    boot.limine.enable = true;
   };
 
   home-manager = {
