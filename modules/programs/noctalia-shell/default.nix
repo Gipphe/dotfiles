@@ -76,6 +76,7 @@ let
             action.spawn = "${ipc} launcher clipboard";
           }
         ];
+        triggers.on-startup.noctalia-start.command = "${config.programs.noctalia-shell.package}/bin/noctalia-shell";
         triggers.on-load =
           let
             startup = pkgs.writeShellApplication {
