@@ -1,21 +1,18 @@
 {
+  pkgs,
   util,
-  lib,
   inputs,
   flags,
   ...
 }:
+let
+  giphtvim = inputs.giphtvim.packages.${pkgs.stdenv.hostPlatform.system};
+in
 util.mkProgram {
   name = "giphtvim";
   home-manager = {
-    imports = [ inputs.giphtvim.homeModules.default ];
-    config = {
-      home.sessionVariables.EDITOR = "nvim";
-      programs.fish.shellAbbrs.vim = "nvim";
-      nvim = {
-        enable = true;
-        packageNames = lib.mkIf flags.isNixOnDroid [ "droid" ];
-      };
-    };
+    home.packages = if flags.isNixOnDroid then [ giphtvim.droid ] else [ giphtvim.neovim ];
+    home.sessionVariables.EDITOR = "nvim";
+    programs.fish.shellAbbrs.vim = "nvim";
   };
 }
