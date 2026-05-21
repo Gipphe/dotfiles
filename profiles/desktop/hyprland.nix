@@ -39,7 +39,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
         cliphist.enable = true;
         clipse.enable = false;
 
-        dolphin.enable = true;
+        thunar.enable = true;
 
         # Pinentry
         pinentry-curses.enable = true;
