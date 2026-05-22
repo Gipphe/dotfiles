@@ -16,6 +16,12 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
   };
   home-manager = {
     home.packages = [ pkgs.piper ];
+    wayland.windowManager.hyprland.settings.device = [
+      {
+        name = "logitech-g903-ls-1";
+        scroll_method = "no_scroll";
+      }
+    ];
   };
   system-nixos = {
     hardware.logitech.wireless = {
@@ -46,16 +52,11 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
     };
     environment.systemPackages = [
       (pkgs.writeShellScriptBin "reset-mouse-kernel-module" ''
-        echo "Restarting the hid_logitech_dj kernel module..." >&2
-        sudo ${pkgs.kmod}/bin/modprobe -r hid_logitech_dj
-        sudo ${pkgs.kmod}/bin/modprobe hid_logitech_dj
-        echo "Restarted. Hoping the scrollwheel works now!" >&2
-      '')
-
-      (pkgs.writeShellScriptBin "debug-mouse-scroll" ''
+        echo "Rebinding the logitech-djreceiver driver..." >&2
         echo "0003:046D:C539.0003" | sudo tee /sys/bus/hid/drivers/logitech-djreceiver/unbind
         sleep 0.5
         echo "0003:046D:C539.0003" | sudo tee /sys/bus/hid/drivers/logitech-djreceiver/bind
+        echo "Rebound. Hoping the scrollwheel works now!" >&2
       '')
     ];
     security.sudo.extraRules = [
@@ -63,11 +64,11 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
         users = [ config.gipphe.username ];
         commands = [
           {
-            command = "${pkgs.kmod}/bin/modprobe -r hid_logitech_dj";
+            command = "${pkgs.coreutils}/bin/tee /sys/bus/hid/drivers/logitech-djreceiver/unbind";
             options = [ "NOPASSWD" ];
           }
           {
-            command = "${pkgs.kmod}/bin/modprobe hid_logitech_dj";
+            command = "${pkgs.coreutils}/bin/tee /sys/bus/hid/drivers/logitech-djreceiver/bind";
             options = [ "NOPASSWD" ];
           }
         ];
