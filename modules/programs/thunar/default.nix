@@ -6,11 +6,11 @@ util.mkProgram {
       thunar = {
         enable = true;
         plugins = [
-          pkgs.xfce.thunar-archive-plugin
-          pkgs.xfce.thunar-vcs-plugin
-          pkgs.xfce.thunar-volman
-          pkgs.xfce.thunar-shares-plugin
-          pkgs.xfce.thunar-media-tags-plugin
+          pkgs.thunar-archive-plugin
+          pkgs.thunar-vcs-plugin
+          pkgs.thunar-volman
+          pkgs.thunar-shares-plugin
+          pkgs.thunar-media-tags-plugin
         ];
       };
       # Without xfce, we need xfconf for thunar to save preferences.
