@@ -57,14 +57,6 @@ util.mkProgram {
             # Disable easing for cursor; blinking text and visual bell
             animation_fps = 1;
             warn_about_missing_glyphs = false;
-            # claude-code shift-enter fix
-            keys = lib.mkIf config.gipphe.programs.claude-code.enable [
-              {
-                key = "Enter";
-                mods = "SHIFT";
-                action = lib.mkLuaInline ''wezterm.action({ SendString = "\\x1b\\r" })'';
-              }
-            ];
           };
           "wezterm.lua".content = /* lua */ ''
             ${formatWindowTitle}
