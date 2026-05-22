@@ -34,7 +34,7 @@ util.mkProgram {
           enable = true;
           package = pkgs.openssh;
           enableDefaultConfig = false;
-          matchBlocks = lib.filterAttrs (_: x: x.identityFile != null) (
+          settings = lib.filterAttrs (_: x: x.identityFile != null) (
             lib.genAttrs [ "github.com" "gitlab.com" "codeberg.org" ] (
               hostname:
               let
