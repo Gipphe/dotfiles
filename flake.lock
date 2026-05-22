@@ -391,11 +391,11 @@
         "wrappers": "wrappers"
       },
       "locked": {
-        "lastModified": 1779349825,
-        "narHash": "sha256-ed7FuTBvM8QDDW1hK4mxgl4dE0cfc59Pgdx7iOikfAY=",
+        "lastModified": 1779439838,
+        "narHash": "sha256-xoNRfSlWXg2YOSm+vEv+XlziSTEmrNvgF+A1DFGN18U=",
         "owner": "Gipphe",
         "repo": "giphtvim",
-        "rev": "840902ccfb638ebe237008375aeb8903bc2802f0",
+        "rev": "910154e7253daed5933a930332e600a9a486f0ef",
         "type": "github"
       },
       "original": {
