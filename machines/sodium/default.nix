@@ -107,7 +107,7 @@ util.mkToggledModule [ "machines" ] {
       hashedPasswordFile = config.sops.secrets."sodium-gipphe-pw.txt".path;
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMmb8xuUFYGTMjI7OlwLkIlmcfi1cz/SiSB6Bx1Y0KYW gipphe@titanium"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIABZJhUC80F6MMN4++EiNuWdnlVMQBuXGxRM1t2Hz4Og gipphe@boron"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHzghQHh1ZqXhTE2dplVJZPulAvPcaxdSziDotkJBWLs gipphe@boron"
       ];
     };
     sops.secrets."sodium-gipphe-pw.txt" = {
