@@ -1,10 +1,17 @@
-{ util, osConfig, ... }:
+{
+  util,
+  osConfig,
+  pkgs,
+  ...
+}:
 util.mkProgram {
   name = "lutris";
   home-manager = {
     programs.lutris = {
       enable = true;
       steamPackage = osConfig.programs.steam.package;
+      defaultWinePackage = pkgs.proton-ge-bin;
+      winePackages = [ pkgs.wineWow64Packages.full ];
     };
   };
   system-nixos = {
