@@ -72,7 +72,7 @@ util.mkToggledModule [ "machines" ] {
     ];
 
     programs = {
-      ssh.matchBlocks."sodium.lan" = {
+      ssh.settings."sodium.lan" = {
         hostname = "sodium.lan";
         user = "gipphe";
         identityFile = config.sops.secrets."boron-sodium.ssh".path;
