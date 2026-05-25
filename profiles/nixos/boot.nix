@@ -1,5 +1,5 @@
 { util, ... }:
 util.mkToggledModule [ "profiles" "nixos" ] {
   name = "boot";
-  shared.gipphe.boot.systemd-boot.enable = true;
+  shared.gipphe.boot.limine.enable = true;
 }
