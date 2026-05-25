@@ -58,15 +58,15 @@ util.mkToggledModule [ "machines" ] {
   home-manager = {
     wayland.windowManager.hyprland.settings.monitor = [
       {
-        output = "";
-        mode = "preferred";
-        position = "auto-down";
-        scale = "auto";
-      }
-      {
         output = "desc:Samsung Display Corp. 0x4193";
         mode = "preferred";
         position = "0x0";
+        scale = "auto";
+      }
+      {
+        output = "";
+        mode = "preferred";
+        position = "auto-down";
         scale = "auto";
       }
     ];
@@ -90,7 +90,6 @@ util.mkToggledModule [ "machines" ] {
       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-11th-gen
       ./hardware-configuration.nix
     ];
-    boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
     system.stateVersion = "25.05";
     users = {
