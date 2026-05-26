@@ -70,6 +70,13 @@ util.mkToggledModule [ "machines" ] {
       cpu.intel.comet-lake.enable = true;
       disk.enable = true;
     };
+    gaming.gamescope.args = [
+      "--adaptive-sync"
+      "-O ${monitors.left}"
+      "-W 1920"
+      "-H 1080"
+      "-r 165"
+    ];
   };
 
   home-manager = {

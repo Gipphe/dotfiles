@@ -116,6 +116,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-gaming = {
+      url = "github:fufexan/nix-gaming";
+    };
+
+    nix-gaming-edge.url = "github:powerofthe69/nix-gaming-edge";
+
     comfyui = {
       url = "github:Gipphe/comfyui-nix";
     };

@@ -2,7 +2,7 @@
 let
   pkg = pkgs.runelite;
 in
-util.mkProgram {
+util.mkGaming {
   name = "runelite";
   home-manager = {
     home = {

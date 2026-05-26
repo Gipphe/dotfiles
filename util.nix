@@ -92,6 +92,8 @@ let
           acc
       ) [ ] items;
 
+  mkTopModule = ns: mkToggledModule [ ns ];
+  mkGaming = mkToggledModule [ "gaming" ];
   mkProfile = mkToggledModule [ "profiles" ];
   mkHardware = mkToggledModule [ "hardware" ];
   mkProgram = mkToggledModule [ "programs" ];
@@ -173,16 +175,20 @@ let
     {
       imports = [
         (
-          { lib, flags, ... }:
+          {
+            lib,
+            _class,
+            ...
+          }:
           {
             imports = [
               { inherit options; }
               shared
             ]
-            ++ lib.optional flags.isHomeManager home-manager
-            ++ lib.optional (flags.isSystem && flags.isNixos) system-nixos
-            ++ lib.optional (flags.isSystem && flags.isNixOnDroid) system-droid
-            ++ lib.optional flags.isSystem system-all;
+            ++ lib.optional (_class == "homeManager") home-manager
+            ++ lib.optional (_class == "nixos") system-nixos
+            ++ lib.optional (_class == "nixOnDroid") system-droid
+            ++ lib.optional (_class != "homeManager") system-all;
           }
         )
       ];
@@ -354,6 +360,7 @@ in
     findSiblings
     kdl
     mkEnvironment
+    mkGaming
     mkHardware
     mkModule
     mkOnDemand
@@ -361,6 +368,7 @@ in
     mkProgram
     mkSystem
     mkToggledModule
+    mkTopModule
     mkWallpaper
     patchDesktop
     recurseFirstMatching

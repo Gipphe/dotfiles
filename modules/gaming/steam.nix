@@ -9,7 +9,7 @@ let
     extraArgs = "-system-composer";
   };
 in
-util.mkProgram {
+util.mkGaming {
   name = "steam";
   options.gipphe.programs.steam.package = lib.mkPackageOption pkgs "steam" { } // {
     default = pkg;
@@ -23,14 +23,16 @@ util.mkProgram {
       }
     ];
   };
+  shared.gipphe.gaming.gamescope.enable = true;
   system-nixos = {
     programs.steam = {
       enable = true;
       package = pkg;
       protontricks.enable = true;
       gamescopeSession.enable = true;
-      extraCompatPackages = [ pkgs.proton-ge-bin ];
+      extraCompatPackages = [
+        pkgs.proton-ge-bin
+      ];
     };
-    programs.gamescope.enable = true;
   };
 }
