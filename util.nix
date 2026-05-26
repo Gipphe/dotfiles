@@ -106,17 +106,16 @@ let
 
   # Creates a module with an automatically created `enable` options for the
   # given name, and injects an `lib.mkIf` into each of `hm`, `nixos`,
-  # `system-all` and `shared` that toggles the module based on said option.
+  # `systems` and `shared` that toggles the module based on said option.
   mkToggledModule =
     type:
     {
       name,
       options ? { },
+      shared ? { },
       homeManager ? { },
       nixos ? { },
       nixOnDroid ? { },
-      system-all ? { },
-      shared ? { },
     }:
     {
       imports = [
@@ -150,7 +149,6 @@ let
             homeManager = injectMkIf homeManager;
             nixos = injectMkIf nixos;
             nixOnDroid = injectMkIf nixOnDroid;
-            system-all = injectMkIf system-all;
             shared = {
               imports = [
                 { inherit options; }
@@ -166,41 +164,25 @@ let
   mkModule =
     args@{
       options ? { },
+      shared ? { },
       homeManager ? { },
       nixos ? { },
       nixOnDroid ? { },
-      system-all ? { },
-      shared ? { },
     }:
     {
       imports = [
         (
-          {
-            lib,
-            _class,
-            ...
-          }:
+          { lib, _class, ... }:
           let
-            baseMods = [
+            baseModules = [
               { inherit options; }
               shared
             ];
 
-            systemClasses = [
-              "nixos"
-              "nixOnDroid"
-            ];
-
-            mods =
-              lib.optional (_class == "homeManager") homeManager
-              ++ lib.optional (_class == "nixos") nixos
-              ++ lib.optional (_class == "nixOnDroid") nixOnDroid
-              ++ lib.optional (builtins.elem _class systemClasses) system-all;
-
-            fallback = lib.optional (mods == [ ]) args.${_class};
+            classModule = lib.toList (args.${_class} or [ ]);
           in
           {
-            imports = baseMods ++ mods ++ fallback;
+            imports = baseModules ++ classModule;
           }
         )
       ];
