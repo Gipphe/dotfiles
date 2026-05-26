@@ -86,17 +86,11 @@ Google Pixel 9 Pro XL running nix-on-droid on GrapheneOS.
 
 Located in [`./machines/carbon`](./machines/carbon).
 
-## Defunct machine configurations
+### sodium
 
-_These machine configurations are no longer in use._
+Raspberry Pi 4 running NixOS.
 
-### helium
-
-![helium jdenticon](./assets/icon/helium.png)
-
-Samsung Galaxy S21 Ultra running nix-on-droid on stock Android.
-
-Located in [`./machines/helium`](./machines/helium).
+Located in [`./machines/sodium`](./machines/sodium)
 
 ## Architecture
 
