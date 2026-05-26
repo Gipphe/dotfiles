@@ -65,7 +65,7 @@ util.mkModule {
     system.stateVersion = lib.mkDefault "23.11"; # Did you read the comment?
   };
 
-  system-droid = {
+  nixOnDroid = {
     # Read the changelog before changing this value
     system.stateVersion = "24.05";
   };

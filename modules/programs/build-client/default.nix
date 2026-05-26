@@ -37,7 +37,7 @@ util.mkProgram {
       };
     };
   };
-  system-droid = {
+  nixOnDroid = {
     nix.extraOptions = ''
       builders-use-substitutes = true
       builders = ssh://builder

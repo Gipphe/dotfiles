@@ -54,5 +54,5 @@ util.mkToggledModule [ "machines" ] {
       mkdir -p '${config.home.sessionVariables."XDG_RUNTIME_DIR"}'
     '';
   };
-  system-droid.system.stateVersion = lib.mkForce "24.05";
+  nixOnDroid.system.stateVersion = lib.mkForce "24.05";
 }

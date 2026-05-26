@@ -70,7 +70,7 @@ util.mkModule {
     };
   };
 
-  system-droid = {
+  nixOnDroid = {
     nix.extraOptions = ''
       experimental-features = nix-command flakes ca-derivations
     '';

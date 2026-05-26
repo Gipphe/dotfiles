@@ -114,7 +114,7 @@ let
       options ? { },
       home-manager ? { },
       nixos ? { },
-      system-droid ? { },
+      nixOnDroid ? { },
       system-all ? { },
       shared ? { },
     }:
@@ -149,7 +149,7 @@ let
           mkModule {
             home-manager = injectMkIf home-manager;
             nixos = injectMkIf nixos;
-            system-droid = injectMkIf system-droid;
+            nixOnDroid = injectMkIf nixOnDroid;
             system-all = injectMkIf system-all;
             shared = {
               imports = [
@@ -168,7 +168,7 @@ let
       options ? { },
       home-manager ? { },
       nixos ? { },
-      system-droid ? { },
+      nixOnDroid ? { },
       system-all ? { },
       shared ? { },
     }:
@@ -187,7 +187,7 @@ let
             ]
             ++ lib.optional (_class == "homeManager") home-manager
             ++ lib.optional (_class == "nixos") nixos
-            ++ lib.optional (_class == "nixOnDroid") system-droid
+            ++ lib.optional (_class == "nixOnDroid") nixOnDroid
             ++ lib.optional (_class != "homeManager") system-all;
           }
         )

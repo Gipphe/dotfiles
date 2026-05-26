@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkEnvironment {
   name = "android";
-  system-droid = {
+  nixOnDroid = {
     android-integration = {
       termux-open.enable = true;
       termux-open-url.enable = true;

@@ -21,7 +21,7 @@ util.mkModule {
     home-manager.users.${config.gipphe.username}.imports = [ ../../../root.nix ];
   };
 
-  system-droid.home-manager = {
+  nixOnDroid.home-manager = {
     config = ../../../root.nix;
   };
 
