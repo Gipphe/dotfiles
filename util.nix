@@ -164,7 +164,7 @@ let
     };
 
   mkModule =
-    {
+    args@{
       options ? { },
       home-manager ? { },
       nixos ? { },
@@ -180,15 +180,27 @@ let
             _class,
             ...
           }:
-          {
-            imports = [
+          let
+            baseMods = [
               { inherit options; }
               shared
-            ]
-            ++ lib.optional (_class == "homeManager") home-manager
-            ++ lib.optional (_class == "nixos") nixos
-            ++ lib.optional (_class == "nixOnDroid") nixOnDroid
-            ++ lib.optional (_class != "homeManager") system-all;
+            ];
+
+            systemClasses = [
+              "nixos"
+              "nixOnDroid"
+            ];
+
+            mods =
+              lib.optional (_class == "homeManager") home-manager
+              ++ lib.optional (_class == "nixos") nixos
+              ++ lib.optional (_class == "nixOnDroid") nixOnDroid
+              ++ lib.optional (builtins.elem _class systemClasses) system-all;
+
+            fallback = lib.optional (mods == [ ]) args.${_class};
+          in
+          {
+            imports = baseMods ++ mods ++ fallback;
           }
         )
       ];
