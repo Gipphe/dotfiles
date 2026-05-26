@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkSystem {
   name = "camera";
-  system-nixos = {
+  nixos = {
     boot.kernelModules = [ "uvcvideo" ];
   };
 }

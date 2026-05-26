@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkProgram {
   name = "qemu";
-  system-nixos = {
+  nixos = {
     # environment.systemPackages = [
     #   pkgs.virt-viewer
     # ];

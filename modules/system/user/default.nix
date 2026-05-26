@@ -10,7 +10,7 @@ in
 util.mkToggledModule [ "system" ] {
   name = "user";
 
-  system-nixos = {
+  nixos = {
     users.users.${username} = {
       uid = lib.mkDefault 1010;
       isNormalUser = true;

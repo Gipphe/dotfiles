@@ -1,7 +1,7 @@
 { util, pkgs, ... }:
 util.mkToggledModule [ "system" "thumbnails" ] {
   name = "image";
-  system-nixos.environment.systemPackages = [
+  nixos.environment.systemPackages = [
     # image/png; image/jpeg; image/bmp; image/x-bmp; image/x-MS-bmp; image/gif;
     # image/x-icon; image/x-ico; image/x-win-bitmap; image/vnd.microsoft.icon;
     # application/ico; image/ico; image/icon; text/ico;

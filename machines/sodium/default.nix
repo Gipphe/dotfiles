@@ -55,7 +55,7 @@ util.mkToggledModule [ "machines" ] {
     inputs.stylix.homeModules.stylix
   ];
 
-  system-nixos = lib.optionalAttrs (hostname == host.name) {
+  nixos = lib.optionalAttrs (hostname == host.name) {
     imports = [
       "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
       inputs.stylix.nixosModules.stylix

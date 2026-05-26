@@ -6,7 +6,7 @@
 }:
 util.mkModule {
   options.gipphe.programs.nix.gc.enable = lib.mkEnableOption "nix.gc";
-  system-nixos = lib.mkIf config.gipphe.programs.nix.gc.enable {
+  nixos = lib.mkIf config.gipphe.programs.nix.gc.enable {
     programs.nh.clean = {
       enable = true;
       extraArgs = "--optimise --nogcroots --keep 3 --keep-since 8d";

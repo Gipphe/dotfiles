@@ -43,7 +43,7 @@ util.mkProgram {
   };
 
   # Allows the 1password browser extension to connect to the GUI app
-  system-nixos = {
+  nixos = {
     programs._1password-gui = {
       enable = true;
       polkitPolicyOwners = [ config.gipphe.username ];

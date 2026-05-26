@@ -23,7 +23,7 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
       }
     ];
   };
-  system-nixos = {
+  nixos = {
     hardware.logitech.wireless = {
       enable = true;
       enableGraphical = true;

@@ -1,7 +1,7 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "waydroid";
-  system-nixos = {
+  nixos = {
     virtualisation.waydroid = {
       enable = true;
     };

@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkProgram {
   name = "sunshine";
-  system-nixos = {
+  nixos = {
     services.sunshine = {
       enable = true;
       autoStart = false;

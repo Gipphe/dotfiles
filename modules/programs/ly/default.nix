@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkProgram {
   name = "ly";
-  system-nixos = {
+  nixos = {
     security.pam.services.ly = {
       enableGnomeKeyring = true;
     };

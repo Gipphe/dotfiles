@@ -6,7 +6,7 @@
 }:
 util.mkProgram {
   name = "build-host";
-  system-nixos =
+  nixos =
     let
       qemu-aarch64-static = pkgs.stdenv.mkDerivation {
         name = "qemu-aarch64-static";

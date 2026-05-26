@@ -8,7 +8,7 @@
 util.mkToggledModule [ "boot" ] {
   name = "limine";
   options.gipphe.boot.limine.secureBoot.enable = lib.mkEnableOption "limine secure boot";
-  system-nixos.boot.loader.limine = {
+  nixos.boot.loader.limine = {
     enable = true;
     efiSupport = true;
     extraEntries = ''

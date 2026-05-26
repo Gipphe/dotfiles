@@ -38,5 +38,5 @@ util.mkToggledModule [ "machines" ] {
     };
     hardware.disk.enable = true;
   };
-  system-nixos.imports = lib.optionals (hostname == host.name) [ ./hardware-configuration.nix ];
+  nixos.imports = lib.optionals (hostname == host.name) [ ./hardware-configuration.nix ];
 }

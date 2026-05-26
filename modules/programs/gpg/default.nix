@@ -12,5 +12,5 @@ util.mkProgram {
     };
   };
 
-  system-nixos.programs.gnupg.agent.enable = true;
+  nixos.programs.gnupg.agent.enable = true;
 }

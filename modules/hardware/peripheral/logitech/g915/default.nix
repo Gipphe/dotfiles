@@ -25,7 +25,7 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
       }
     ];
   };
-  system-nixos = {
+  nixos = {
     services.hardware.openrgb = {
       enable = true;
     };

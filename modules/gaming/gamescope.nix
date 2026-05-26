@@ -13,7 +13,7 @@ util.mkGaming {
       default = [ ];
     };
   };
-  system-nixos = {
+  nixos = {
     programs.gamescope = {
       enable = true;
       capSysNice = false;

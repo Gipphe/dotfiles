@@ -1,7 +1,7 @@
 { util, pkgs, ... }:
 util.mkToggledModule [ "system" "thumbnails" ] {
   name = "video";
-  system-nixos = {
+  nixos = {
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs)
         ffmpeg-headless

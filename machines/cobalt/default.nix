@@ -47,7 +47,7 @@ util.mkToggledModule [ "machines" ] {
     hardware.disk.enable = true;
   };
 
-  system-nixos.imports = lib.optionals (hostname == host.name) (
+  nixos.imports = lib.optionals (hostname == host.name) (
     with inputs.nixos-hardware.nixosModules;
     [
       common-cpu-intel

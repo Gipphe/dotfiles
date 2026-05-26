@@ -4,7 +4,7 @@ util.mkProgram {
   home-manager = {
     home.packages = [ pkgs.rustdesk-flutter ];
   };
-  system-nixos = {
+  nixos = {
     networking.firewall.allowedTCPPorts = [ 21118 ];
   };
 }

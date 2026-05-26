@@ -113,5 +113,5 @@ util.mkProgram {
       ];
     };
   };
-  system-nixos.security.pam.services.hyprlock = { };
+  nixos.security.pam.services.hyprlock = { };
 }

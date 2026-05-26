@@ -1,7 +1,7 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "thunar";
-  system-nixos = {
+  nixos = {
     programs = {
       thunar = {
         enable = true;

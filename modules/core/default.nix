@@ -50,7 +50,7 @@ util.mkModule {
     programs.home-manager.enable = true;
   };
 
-  system-nixos = {
+  nixos = {
     documentation.dev.enable = false;
 
     # Auto-upgrading with nixos-unstable is risky

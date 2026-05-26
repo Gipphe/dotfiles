@@ -16,7 +16,7 @@ util.mkModule {
       config.gipphe = lib.mkDefault osConfig.gipphe;
     };
 
-  system-nixos = {
+  nixos = {
     imports = [ inputs.home-manager.nixosModules.home-manager ];
     home-manager.users.${config.gipphe.username}.imports = [ ../../../root.nix ];
   };

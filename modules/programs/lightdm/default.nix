@@ -1,5 +1,5 @@
 { util, ... }:
 util.mkProgram {
   name = "lightdm";
-  system-nixos.services.xserver.displayManager.lightdm.enable = true;
+  nixos.services.xserver.displayManager.lightdm.enable = true;
 }

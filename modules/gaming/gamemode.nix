@@ -7,7 +7,7 @@
 }:
 util.mkGaming {
   name = "gamemode";
-  system-nixos = {
+  nixos = {
     environment.variables = {
       # Workaround for controller detection issues
       PROTON_PREFER_SDL = "1";

@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkSystem {
   name = "fprint";
-  system-nixos = {
+  nixos = {
     services.fprintd.enable = true;
     security.pam.services = {
       hyprlock.fprintAuth = true;

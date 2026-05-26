@@ -127,7 +127,7 @@ util.mkToggledModule [ "machines" ] {
     };
   };
 
-  system-nixos = {
+  nixos = {
     imports = lib.optionals (hostname == host.name) (
       [
         ./hardware-configuration.nix

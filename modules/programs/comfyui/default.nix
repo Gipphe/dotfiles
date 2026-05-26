@@ -7,7 +7,7 @@
 let
   mod = util.mkProgram {
     name = "comfyui";
-    system-nixos = {
+    nixos = {
       environment.systemPackages = [
         inputs.comfyui.packages.${pkgs.stdenv.hostPlatform.system}.cuda
       ];
@@ -20,7 +20,7 @@ let
 in
 util.mkModule {
   shared.imports = [ mod ];
-  system-nixos = {
+  nixos = {
     nix.settings = {
       extra-substituters = [
         "https://comfyui.cachix.org"

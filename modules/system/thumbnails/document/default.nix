@@ -1,7 +1,7 @@
 { util, pkgs, ... }:
 util.mkToggledModule [ "system" "thumbnails" ] {
   name = "document";
-  system-nixos = {
+  nixos = {
     environment.systemPackages = builtins.attrValues {
       inherit (pkgs)
         poppler # PDF

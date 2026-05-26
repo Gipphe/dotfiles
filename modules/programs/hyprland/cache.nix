@@ -1,6 +1,6 @@
 { util, ... }:
 util.mkModule {
-  system-nixos = {
+  nixos = {
     nix.settings = {
       substituters = [ "https://hyprland.cachix.org" ];
       trusted-substituters = [ "https://hyprland.cachix.org" ];

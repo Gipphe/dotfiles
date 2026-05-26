@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkProgram {
   name = "soteria";
-  system-nixos = {
+  nixos = {
     security.soteria.enable = true;
   };
 }

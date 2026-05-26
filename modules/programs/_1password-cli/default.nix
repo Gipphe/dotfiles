@@ -22,7 +22,7 @@ util.mkProgram {
     };
   };
 
-  system-nixos = {
+  nixos = {
     programs._1password.enable = true;
   };
 }

@@ -115,7 +115,7 @@ util.mkProgram {
       format = "binary";
     };
   };
-  system-nixos.networking.firewall = {
+  nixos.networking.firewall = {
     allowedTCPPorts = [
       8384
       22000

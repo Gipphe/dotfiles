@@ -25,7 +25,7 @@ util.mkGaming {
     ];
   };
   shared.gipphe.gaming.gamescope.enable = true;
-  system-nixos = {
+  nixos = {
     programs.steam = {
       enable = true;
       package = pkg;

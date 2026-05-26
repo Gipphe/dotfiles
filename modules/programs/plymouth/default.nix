@@ -6,7 +6,7 @@
 }:
 util.mkProgram {
   name = "plymouth";
-  system-nixos.boot.plymouth = {
+  nixos.boot.plymouth = {
     enable = true;
     theme = lib.mkForce "catppuccin-macchiato";
     themePackages = lib.mkForce [

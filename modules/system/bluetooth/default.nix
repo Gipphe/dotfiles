@@ -7,7 +7,7 @@
 util.mkToggledModule [ "system" ] {
   name = "bluetooth";
   options.gipphe.system.bluetooth.blueman.package = lib.mkPackageOption pkgs "blueman" { };
-  system-nixos = {
+  nixos = {
     services.blueman.enable = true;
     hardware.bluetooth = {
       enable = true;

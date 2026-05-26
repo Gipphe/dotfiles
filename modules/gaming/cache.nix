@@ -7,7 +7,7 @@ let
   };
 in
 util.mkModule {
-  system-nixos = {
+  nixos = {
     nix.settings = {
       substituters = builtins.attrNames subs;
       trusted-public-keys = builtins.attrValues subs;

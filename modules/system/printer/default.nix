@@ -2,7 +2,7 @@
 util.mkSystem {
   name = "printer";
   # Enable CUPS to print documents.
-  system-nixos.services = {
+  nixos.services = {
     printing = {
       enable = true;
       cups-pdf.enable = true;

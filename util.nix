@@ -105,7 +105,7 @@ let
   mkSystem = mkToggledModule [ "system" ];
 
   # Creates a module with an automatically created `enable` options for the
-  # given name, and injects an `lib.mkIf` into each of `hm`, `system-nixos`,
+  # given name, and injects an `lib.mkIf` into each of `hm`, `nixos`,
   # `system-all` and `shared` that toggles the module based on said option.
   mkToggledModule =
     type:
@@ -113,7 +113,7 @@ let
       name,
       options ? { },
       home-manager ? { },
-      system-nixos ? { },
+      nixos ? { },
       system-droid ? { },
       system-all ? { },
       shared ? { },
@@ -148,7 +148,7 @@ let
           in
           mkModule {
             home-manager = injectMkIf home-manager;
-            system-nixos = injectMkIf system-nixos;
+            nixos = injectMkIf nixos;
             system-droid = injectMkIf system-droid;
             system-all = injectMkIf system-all;
             shared = {
@@ -167,7 +167,7 @@ let
     {
       options ? { },
       home-manager ? { },
-      system-nixos ? { },
+      nixos ? { },
       system-droid ? { },
       system-all ? { },
       shared ? { },
@@ -186,7 +186,7 @@ let
               shared
             ]
             ++ lib.optional (_class == "homeManager") home-manager
-            ++ lib.optional (_class == "nixos") system-nixos
+            ++ lib.optional (_class == "nixos") nixos
             ++ lib.optional (_class == "nixOnDroid") system-droid
             ++ lib.optional (_class != "homeManager") system-all;
           }

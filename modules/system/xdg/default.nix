@@ -35,7 +35,7 @@ util.mkSystem {
       };
     };
   };
-  system-nixos = {
+  nixos = {
     environment.pathsToLink = [
       "/share/xdg-desktop-portal"
       "/share/applications"

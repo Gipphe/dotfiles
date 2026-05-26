@@ -268,7 +268,7 @@ util.mkProgram {
       };
     };
   };
-  system-nixos = {
+  nixos = {
     programs.hyprland = {
       enable = true;
       inherit package portalPackage;

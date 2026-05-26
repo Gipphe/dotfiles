@@ -41,7 +41,7 @@ util.mkEnvironment {
       inherit stylix;
     };
   };
-  system-nixos = {
+  nixos = {
     imports = [ inputs.stylix.nixosModules.stylix ];
     stylix = lib.mkMerge [
       stylix

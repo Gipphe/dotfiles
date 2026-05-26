@@ -5,7 +5,7 @@ let
 in
 util.mkToggledModule [ "system" ] {
   name = "localization";
-  system-nixos = {
+  nixos = {
     i18n = {
       defaultLocale = no;
       extraLocaleSettings = {

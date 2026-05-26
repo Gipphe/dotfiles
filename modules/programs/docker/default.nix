@@ -7,5 +7,5 @@ util.mkProgram {
     docker_clean_testcontainer = ''docker rmi -f (docker images --filter="reference=*-*-*-*-*:*-*-*-*-*" --format "{{ .ID }}" | sort | uniq)'';
     docker_pull_images = "docker images --format '{{.Repository}}:{{.Tag}}' | xargs -n 1 -P 1 docker pull";
   };
-  system-nixos.virtualisation.docker.enable = true;
+  nixos.virtualisation.docker.enable = true;
 }

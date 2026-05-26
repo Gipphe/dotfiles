@@ -17,7 +17,7 @@ util.mkToggledModule [ "system" ] {
       }
     ];
   };
-  system-nixos = {
+  nixos = {
     sops.secrets.networkmanager-secrets = {
       format = "binary";
       sopsFile = ../../../secrets/pub-networkmanager-secrets.txt;

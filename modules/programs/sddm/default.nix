@@ -11,7 +11,7 @@ let
 in
 util.mkProgram {
   name = "sddm";
-  system-nixos = {
+  nixos = {
     environment.systemPackages = [
       (pkgs.catppuccin-sddm.override {
         inherit flavor accent;

@@ -1,7 +1,7 @@
 { util, pkgs, ... }:
 util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
   name = "g935";
-  system-nixos = {
+  nixos = {
     environment.systemPackages = [ pkgs.headsetcontrol ];
     services = {
       hardware.openrgb.enable = true;

@@ -8,7 +8,7 @@ let
 in
 util.mkToggledModule [ "system" ] {
   name = "systemd";
-  system-nixos = {
+  nixos = {
     # Kills the highest-badness process as soon as free memory drops below the
     # threshold, before the system becomes unresponsive. Much faster than
     # systemd-oomd alone.

@@ -22,7 +22,7 @@ util.mkGaming {
     };
     home.packages = [ pkgs.winePackages.waylandFull ];
   };
-  system-nixos = {
+  nixos = {
     nixpkgs.overlays = [
       (_: prev: {
         # TODO: See https://github.com/nixos/nixpkgs/issues/513245

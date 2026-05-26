@@ -1,7 +1,7 @@
 { util, inputs, ... }:
 util.mkGaming {
   name = "mangohud";
-  system-nixos = {
+  nixos = {
     imports = [
       (inputs.wlib.lib.getInstallModule {
         name = "mangohud";

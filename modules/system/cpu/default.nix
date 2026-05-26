@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkSystem {
   name = "cpu";
-  system-nixos = {
+  nixos = {
     services = {
       # Regulates cpu frequencies to reduce battery usage
       auto-cpufreq.enable = true;

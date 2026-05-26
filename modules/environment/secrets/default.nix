@@ -24,7 +24,7 @@ util.mkModule {
         set -gx SECRETS_DIR $XDG_RUNTIME_DIR
       '';
   };
-  system-nixos = {
+  nixos = {
     imports = [ inputs.sops-nix.nixosModules.sops ];
     inherit sops;
   };

@@ -85,7 +85,7 @@ util.mkToggledModule [ "machines" ] {
     };
   };
 
-  system-nixos = {
+  nixos = {
     imports = lib.optionals (hostname == host.name) [
       inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-11th-gen
       ./hardware-configuration.nix

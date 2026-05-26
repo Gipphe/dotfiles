@@ -23,7 +23,7 @@ util.mkModule {
     };
   };
 
-  system-nixos = lib.mkIf config.gipphe.programs.nix.enable {
+  nixos = lib.mkIf config.gipphe.programs.nix.enable {
     nix.settings = {
       min-free = toString (mb 100);
       max-free = toString (mb 1024);
