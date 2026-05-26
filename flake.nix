@@ -22,7 +22,7 @@
             pkgs = nixpkgs.legacyPackages.${system};
           }
         );
-      hosts = import ./hosts.nix inputs;
+      hosts = import ./hosts inputs;
     in
     {
       formatter = eachSystem ({ system, ... }: self.packages.${system}.treefmt);

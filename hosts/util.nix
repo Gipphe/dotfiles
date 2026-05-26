@@ -1,11 +1,7 @@
 { lib, ... }:
 let
   inherit (lib) pipe filterAttrs mergeAttrsList;
-  inherit (builtins)
-    readDir
-    attrNames
-    map
-    ;
+  inherit (builtins) readDir attrNames;
 in
 {
   enumerateMachines =
