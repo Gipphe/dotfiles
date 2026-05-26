@@ -7,6 +7,5 @@ util.mkProfile {
     hygg.enable = true;
     pay-respects.enable = true;
     procs.enable = true;
-    pv.enable = true;
   };
 }

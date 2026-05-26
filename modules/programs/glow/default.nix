@@ -1,5 +1,7 @@
-{ util, pkgs, ... }:
+{ util, ... }:
 util.mkProgram {
   name = "glow";
-  homeManager.home.packages = [ pkgs.glow ];
+  homeManager = {
+    programs.fish.shellAbbrs.glow = ", glow";
+  };
 }
