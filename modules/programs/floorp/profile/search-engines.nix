@@ -88,6 +88,41 @@ util.mkModule {
           icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
           definedAliases = [ "!hm" ];
         };
+        "Nixpkgs function" = {
+          urls = [
+            {
+              template = "https://noogle.dev/q";
+              params = [
+                {
+                  name = "term";
+                  value = "{searchTerms}";
+                }
+              ];
+            }
+          ];
+          icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+          definedaliases = [ "!nixf" ];
+        };
+        "Nix flakes" = {
+          urls = [
+            {
+              template = "https://search.nixos.org/flakes";
+              params = [
+                {
+                  name = "channel";
+                  value = "unstable";
+                }
+                {
+                  name = "query";
+                  value = "{searchTerms}";
+                }
+              ];
+            }
+
+          ];
+          icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+          definedaliases = [ "!flakes" ];
+        };
         "GitHub" = {
           urls = [ { template = "https://github.com/{searchTerms}"; } ];
           definedAliases = [ "!gh" ];
