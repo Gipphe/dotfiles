@@ -112,7 +112,7 @@ let
     {
       name,
       options ? { },
-      home-manager ? { },
+      homeManager ? { },
       nixos ? { },
       nixOnDroid ? { },
       system-all ? { },
@@ -147,7 +147,7 @@ let
               };
           in
           mkModule {
-            home-manager = injectMkIf home-manager;
+            homeManager = injectMkIf homeManager;
             nixos = injectMkIf nixos;
             nixOnDroid = injectMkIf nixOnDroid;
             system-all = injectMkIf system-all;
@@ -166,7 +166,7 @@ let
   mkModule =
     args@{
       options ? { },
-      home-manager ? { },
+      homeManager ? { },
       nixos ? { },
       nixOnDroid ? { },
       system-all ? { },
@@ -192,7 +192,7 @@ let
             ];
 
             mods =
-              lib.optional (_class == "homeManager") home-manager
+              lib.optional (_class == "homeManager") homeManager
               ++ lib.optional (_class == "nixos") nixos
               ++ lib.optional (_class == "nixOnDroid") nixOnDroid
               ++ lib.optional (builtins.elem _class systemClasses) system-all;

@@ -133,7 +133,7 @@ let
   mod = "SUPER";
 in
 util.mkModule {
-  home-manager = {
+  homeManager = {
     wayland.windowManager.hyprland = {
       settings = {
         bind =

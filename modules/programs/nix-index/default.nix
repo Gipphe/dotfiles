@@ -1,6 +1,6 @@
 { util, inputs, ... }:
 util.mkModule {
-  home-manager = {
+  homeManager = {
     imports = [ inputs.nix-index-db.homeModules.nix-index ];
     programs.nix-index-database.comma.enable = true;
   };

@@ -5,7 +5,7 @@
   ...
 }:
 util.mkModule {
-  home-manager.programs.floorp.policies = lib.mkIf config.gipphe.programs.floorp.enable {
+  homeManager.programs.floorp.policies = lib.mkIf config.gipphe.programs.floorp.enable {
     ExtensionSettings = {
       # uBlock Origin
       "uBlock0@raymondhill.net" = {

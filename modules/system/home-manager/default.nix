@@ -9,7 +9,7 @@
   ...
 }:
 util.mkModule {
-  home-manager =
+  homeManager =
     { osConfig, ... }:
     {
       # Copy config from OS to home-manager

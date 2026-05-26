@@ -11,7 +11,7 @@ let
 in
 util.mkProgram {
   name = "tricorder";
-  home-manager = {
+  homeManager = {
     options.gipphe.programs.tricorder = {
       package = lib.mkPackageOption pkgs "tricorder" { } // {
         default = inputs.tricorder.packages.${pkgs.stdenv.hostPlatform.system}.tricorder;

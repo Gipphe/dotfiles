@@ -1,7 +1,7 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "qalculate";
-  home-manager = {
+  homeManager = {
     home.packages = [ pkgs.qalculate-qt ];
     wayland.windowManager.hyprland.settings.window_rule = [
       {

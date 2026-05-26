@@ -2,7 +2,7 @@
 util.mkProgram {
   name = "direnv";
 
-  home-manager.programs.direnv = {
+  homeManager.programs.direnv = {
     enable = true;
     config = {
       hide_env_diff = true;

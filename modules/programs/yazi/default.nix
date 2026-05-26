@@ -11,7 +11,7 @@ let
 in
 util.mkProgram {
   name = "yazi";
-  home-manager = {
+  homeManager = {
     programs.yazi = {
       enable = true;
       shellWrapperName = "y";

@@ -1,7 +1,7 @@
 { util, lib, ... }:
 util.mkToggledModule [ "tweag" ] {
   name = "gh";
-  home-manager = {
+  homeManager = {
     wrappers.gh.settings.aliases =
       let
         teamMembers = {

@@ -13,7 +13,7 @@ let
 in
 util.mkProgram {
   name = "filen-desktop";
-  home-manager = {
+  homeManager = {
     home.packages = [ pkg ];
     gipphe.core.wm.triggers.on-startup.filen.command = "filen-desktop";
   };

@@ -79,7 +79,7 @@ util.mkToggledModule [ "machines" ] {
     ];
   };
 
-  home-manager = {
+  homeManager = {
     wayland.windowManager.hyprland.settings = {
       monitor = [
         {

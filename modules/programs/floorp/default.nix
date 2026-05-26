@@ -50,7 +50,7 @@ util.mkProgram {
       default = true;
     };
   };
-  home-manager = {
+  homeManager = {
     imports = [
       ./extensions.nix
       ./profile

@@ -107,7 +107,7 @@ util.mkProgram {
   options.gipphe.programs.eww = {
     dev = lib.mkEnableOption "dev mode";
   };
-  home-manager = {
+  homeManager = {
     home.packages = [ eww ];
     systemd.user.services = {
       eww-daemon = {

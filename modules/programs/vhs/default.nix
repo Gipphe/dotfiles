@@ -11,5 +11,5 @@ in
 util.mkProgram {
   name = "vhs";
   options.gipphe.programs.vhs.onDemand = lib.mkEnableOption "fetching vhs on demand";
-  home-manager.home.packages = if cfg.onDemand then [ (util.mkOnDemand pkgs.vhs) ] else [ pkgs.vhs ];
+  homeManager.home.packages = if cfg.onDemand then [ (util.mkOnDemand pkgs.vhs) ] else [ pkgs.vhs ];
 }

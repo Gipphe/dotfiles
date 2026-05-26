@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkProgram {
   name = "kanshi";
-  home-manager.services.kanshi = {
+  homeManager.services.kanshi = {
     enable = true;
   };
 }

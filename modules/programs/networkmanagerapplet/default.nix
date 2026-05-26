@@ -13,7 +13,7 @@ util.mkProgram {
   options.gipphe.programs.networkmanagerapplet.package =
     lib.mkPackageOption pkgs "networkmanagerapplet"
       { };
-  home-manager = {
+  homeManager = {
     home.packages = [ cfg.package ];
     systemd.user.services.networkmanagerapplet = {
       Unit = {

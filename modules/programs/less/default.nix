@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkProgram {
   name = "less";
-  home-manager = {
+  homeManager = {
     programs.less.enable = true;
     home.sessionVariables.PAGER = "less -FXR";
   };

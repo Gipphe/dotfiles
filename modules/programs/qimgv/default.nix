@@ -18,7 +18,7 @@ let
 in
 util.mkProgram {
   name = "qimgv";
-  home-manager = {
+  homeManager = {
     home.packages = [ pkgs.qimgv ];
     xdg = {
       mimeApps.defaultApplications = lib.genAttrs mimeTypes (_: [ "qimgv.desktop" ]);

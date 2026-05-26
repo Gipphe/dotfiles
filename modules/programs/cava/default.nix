@@ -1,7 +1,7 @@
 { util, inputs, ... }:
 util.mkProgram {
   name = "cava";
-  home-manager = {
+  homeManager = {
     imports = [
       (inputs.wlib.lib.getInstallModule {
         name = "cava";

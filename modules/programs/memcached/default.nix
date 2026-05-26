@@ -1,5 +1,5 @@
 { pkgs, util, ... }:
 util.mkProgram {
   name = "memcached";
-  home-manager.home.packages = [ pkgs.memcached ];
+  homeManager.home.packages = [ pkgs.memcached ];
 }

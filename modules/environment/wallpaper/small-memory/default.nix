@@ -11,5 +11,5 @@ util.mkWallpaper {
     type = lib.types.path;
     default = ./wallpaper/Macchiato-hald8-wall.png;
   };
-  home-manager.stylix.image = config.environment.wallpaper.small-memory.image;
+  homeManager.stylix.image = config.environment.wallpaper.small-memory.image;
 }

@@ -51,7 +51,7 @@ util.mkToggledModule [ "machines" ] {
     };
   };
 
-  home-manager.imports = lib.optionals (hostname == host.name) [
+  homeManager.imports = lib.optionals (hostname == host.name) [
     inputs.stylix.homeModules.stylix
   ];
 

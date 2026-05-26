@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkProgram {
   name = "discord";
-  home-manager = {
+  homeManager = {
     programs.discord = {
       enable = true;
     };

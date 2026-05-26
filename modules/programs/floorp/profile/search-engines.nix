@@ -6,7 +6,7 @@
   ...
 }:
 util.mkModule {
-  home-manager.programs.floorp.profiles.default = lib.mkIf config.gipphe.programs.floorp.enable {
+  homeManager.programs.floorp.profiles.default = lib.mkIf config.gipphe.programs.floorp.enable {
     search = {
       default = "startpage";
       force = true;

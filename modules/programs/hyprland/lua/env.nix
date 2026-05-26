@@ -29,7 +29,7 @@ let
   };
 in
 util.mkModule {
-  home-manager = {
+  homeManager = {
     wayland.windowManager.hyprland.settings = {
       env = map (n: {
         _args = [

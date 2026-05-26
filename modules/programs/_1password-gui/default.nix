@@ -16,7 +16,7 @@ let
 in
 util.mkProgram {
   name = "_1password-gui";
-  home-manager = {
+  homeManager = {
     gipphe.core.wm = {
       binds = [
         {

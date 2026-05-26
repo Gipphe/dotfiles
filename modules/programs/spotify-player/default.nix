@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkProgram {
   name = "spotify-player";
-  home-manager = {
+  homeManager = {
     programs.spotify-player.enable = true;
   };
 }

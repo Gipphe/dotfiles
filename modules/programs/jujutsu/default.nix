@@ -9,7 +9,7 @@
 util.mkProgram {
   name = "jujutsu";
 
-  home-manager = {
+  homeManager = {
     options.gipphe.programs.jujutsu = {
       package = lib.mkPackageOption pkgs "jujutsu" { } // {
         default = config.wrappers.jujutsu.package;

@@ -1,7 +1,7 @@
 { util, config, ... }:
 util.mkProgram {
   name = "hyprpaper";
-  home-manager = {
+  homeManager = {
     services.hyprpaper = {
       inherit (config.gipphe.programs.hyprland) enable;
       settings = {

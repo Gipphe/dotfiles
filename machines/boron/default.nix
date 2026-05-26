@@ -55,7 +55,7 @@ util.mkToggledModule [ "machines" ] {
     hardware.disk.enable = true;
   };
 
-  home-manager = {
+  homeManager = {
     wayland.windowManager.hyprland.settings.monitor = [
       {
         output = "desc:Samsung Display Corp. 0x4193";

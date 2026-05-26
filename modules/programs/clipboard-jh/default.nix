@@ -1,7 +1,7 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "clipboard-jh";
-  home-manager.home = {
+  homeManager.home = {
     packages = [ pkgs.clipboard-jh ];
     # clipboard-jh spawns a 1x1 window to crab the current clipboard, which
     # causes flickering on Wayland compositors like Hyprland.

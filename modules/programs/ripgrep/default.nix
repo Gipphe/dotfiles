@@ -1,5 +1,5 @@
 { util, ... }:
 util.mkProgram {
   name = "ripgrep";
-  home-manager.programs.ripgrep.enable = true;
+  homeManager.programs.ripgrep.enable = true;
 }

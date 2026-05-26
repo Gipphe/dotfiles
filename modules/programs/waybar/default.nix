@@ -10,7 +10,7 @@ let
 in
 util.mkProgram {
   name = "waybar";
-  home-manager = {
+  homeManager = {
     imports = [
       (inputs.wlib.lib.getInstallModule {
         name = "waybar";

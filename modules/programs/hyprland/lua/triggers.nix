@@ -5,7 +5,7 @@
   ...
 }:
 util.mkModule {
-  home-manager = {
+  homeManager = {
     wayland.windowManager.hyprland.settings = {
       on =
         let

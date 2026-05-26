@@ -10,7 +10,7 @@ let
 in
 util.mkProgram {
   name = "giphtvim";
-  home-manager = {
+  homeManager = {
     home.packages = if flags.isNixOnDroid then [ giphtvim.droid ] else [ giphtvim.neovim ];
     home.sessionVariables.EDITOR = "nvim";
     programs.fish.shellAbbrs.vim = "nvim";

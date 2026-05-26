@@ -5,7 +5,7 @@
   ...
 }:
 util.mkModule {
-  home-manager = {
+  homeManager = {
     imports = [ ./search-engines.nix ];
     config = lib.mkIf config.gipphe.programs.floorp.enable {
       programs.floorp.profiles.default = {

@@ -5,7 +5,7 @@
 }:
 util.mkProgram {
   name = "build-client";
-  home-manager = {
+  homeManager = {
     # TODO: fix for other hosts
     programs.ssh = {
       matchBlocks = {

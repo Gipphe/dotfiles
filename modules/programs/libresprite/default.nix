@@ -10,5 +10,5 @@ let
 in
 util.mkProgram {
   name = "libresprite";
-  home-manager.home.packages = [ pkg ];
+  homeManager.home.packages = [ pkg ];
 }

@@ -14,7 +14,7 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
       example = "046d:c539";
     };
   };
-  home-manager = {
+  homeManager = {
     home.packages = [ pkgs.piper ];
     wayland.windowManager.hyprland.settings.device = [
       {

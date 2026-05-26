@@ -7,7 +7,7 @@
 }:
 util.mkProgram {
   name = "kubectl";
-  home-manager = {
+  homeManager = {
     home.packages = lib.optional (!config.gipphe.programs.google-cloud-sdk.enable) [ pkgs.kubectl ];
     programs.fish = {
       shellAbbrs.k = "kubectl";

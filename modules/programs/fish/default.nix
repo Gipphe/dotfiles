@@ -18,7 +18,7 @@ util.mkProgram {
       example = "tide";
     };
   };
-  home-manager = {
+  homeManager = {
     imports = [ ./starship ];
 
     options.gipphe.programs.fish.package = lib.mkPackageOption pkgs "fish" { } // {

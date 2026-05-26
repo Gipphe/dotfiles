@@ -2,7 +2,7 @@
 util.mkProgram {
   name = "slack";
 
-  home-manager.config = {
+  homeManager.config = {
     home.packages = [ pkgs.slack ];
   };
 }

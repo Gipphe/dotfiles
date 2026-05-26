@@ -4,7 +4,7 @@ let
 in
 util.mkProgram {
   name = "hypridle";
-  home-manager.services.hypridle = {
+  homeManager.services.hypridle = {
     enable = true;
     settings = {
       general = {

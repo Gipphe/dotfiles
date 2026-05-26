@@ -1,7 +1,7 @@
 { util, ... }:
 util.mkProgram {
   name = "librewolf";
-  home-manager = {
+  homeManager = {
     imports = [ ./extensions.nix ];
     programs.librewolf = {
       enable = true;

@@ -206,7 +206,7 @@ util.mkProgram {
       };
     };
   };
-  home-manager.home = {
+  homeManager.home = {
     packages = [ glab ];
     activation = lib.mkIf cfg.writeConfig {
       glab-config = lib.hm.dag.entryAfter [ "onFilesChanged" ] ''

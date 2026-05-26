@@ -13,7 +13,7 @@ let
 in
 util.mkProgram {
   name = "hyprland";
-  home-manager = {
+  homeManager = {
     imports = [
       ./binds.nix
       ./env.nix

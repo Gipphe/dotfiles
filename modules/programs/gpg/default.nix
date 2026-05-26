@@ -2,7 +2,7 @@
 util.mkProgram {
   name = "gpg";
 
-  home-manager = {
+  homeManager = {
     programs.gpg.enable = true;
     services.gpg-agent = {
       enable = true;

@@ -1,7 +1,7 @@
 { util, config, ... }:
 util.mkProgram {
   name = "mpd";
-  home-manager.services.mpd = {
+  homeManager.services.mpd = {
     enable = true;
     musicDirectory = "${config.gipphe.homeDirectory}/Music";
   };

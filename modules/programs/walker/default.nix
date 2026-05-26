@@ -26,7 +26,7 @@ util.mkProgram {
       description = "Settings for walker's config.toml.";
     };
   };
-  home-manager = {
+  homeManager = {
     home.packages = [
       cfg.package
       pkgs.libqalculate

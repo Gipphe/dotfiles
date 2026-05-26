@@ -4,7 +4,7 @@ let
 in
 util.mkGaming {
   name = "runelite";
-  home-manager = {
+  homeManager = {
     home = {
       packages = [
         (pkgs.symlinkJoin {

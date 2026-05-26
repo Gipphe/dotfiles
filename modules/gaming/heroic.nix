@@ -1,7 +1,7 @@
 { util, pkgs, ... }:
 util.mkGaming {
   name = "heroic";
-  home-manager = {
+  homeManager = {
     home.packages = [ pkgs.heroic ];
   };
 }

@@ -16,7 +16,7 @@ util.mkModule {
     enable = lib.mkEnableOption "secret management with sops-nix";
   };
 
-  home-manager = {
+  homeManager = {
     imports = [ inputs.sops-nix.homeManagerModules.sops ];
     inherit sops;
     programs.fish.shellInit = # fish

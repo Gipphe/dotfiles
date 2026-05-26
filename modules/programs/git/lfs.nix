@@ -9,7 +9,7 @@ let
 in
 util.mkToggledModule [ "programs" "git" ] {
   name = "lfs";
-  home-manager = {
+  homeManager = {
     home.packages = [ pkgs.git-lfs ];
     wrappers.git = {
       settings = {

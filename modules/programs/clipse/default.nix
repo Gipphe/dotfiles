@@ -1,7 +1,7 @@
 { util, config, ... }:
 util.mkProgram {
   name = "clipse";
-  home-manager = {
+  homeManager = {
     services.clipse = {
       enable = true;
     };

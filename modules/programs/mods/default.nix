@@ -7,7 +7,7 @@
 }:
 util.mkProgram {
   name = "mods";
-  home-manager = {
+  homeManager = {
     home.packages = [ pkgs.mods ];
     xdg.configFile."mods/mods.yml".source = ./mods.yaml;
     programs.fish = {

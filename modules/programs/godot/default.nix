@@ -1,7 +1,7 @@
 { pkgs, util, ... }:
 util.mkProgram {
   name = "godot";
-  home-manager = {
+  homeManager = {
     home.packages = [ pkgs.godot_4-mono ];
   };
 }

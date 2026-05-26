@@ -6,7 +6,7 @@
 }:
 util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
   name = "logi-mx-keys";
-  home-manager.config = lib.mkMerge [
+  homeManager.config = lib.mkMerge [
     (
       let
         cfg = config.gipphe.programs.grimblast;

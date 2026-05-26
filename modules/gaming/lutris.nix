@@ -7,7 +7,7 @@
 }:
 util.mkGaming {
   name = "lutris";
-  home-manager = {
+  homeManager = {
     programs.lutris = {
       enable = true;
       package = pkgs.lutris.override {

@@ -1,5 +1,5 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "timg";
-  home-manager.home.packages = [ pkgs.timg ];
+  homeManager.home.packages = [ pkgs.timg ];
 }

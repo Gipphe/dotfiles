@@ -15,7 +15,7 @@ util.mkGaming {
   options.gipphe.programs.steam.package = lib.mkPackageOption pkgs "steam" { } // {
     default = pkg;
   };
-  home-manager = {
+  homeManager = {
     wayland.windowManager.hyprland.settings.window_rule = [
       {
         match.title = "Friends List";

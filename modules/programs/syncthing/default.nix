@@ -87,7 +87,7 @@ let
 in
 util.mkProgram {
   name = "syncthing";
-  home-manager = {
+  homeManager = {
     services.syncthing = {
       enable = true;
       overrideDevices = true;

@@ -36,7 +36,7 @@ util.mkProgram {
       default = { };
     };
   };
-  home-manager = {
+  homeManager = {
     imports = [
       (inputs.wlib.lib.getInstallModule {
         name = "wezterm";

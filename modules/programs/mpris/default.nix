@@ -1,7 +1,7 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "mpris";
-  home-manager = {
+  homeManager = {
     home.packages = [ pkgs.playerctl ];
     services = {
       mpris-proxy.enable = true;

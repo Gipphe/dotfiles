@@ -35,7 +35,7 @@ in
 util.mkEnvironment {
   name = "stylix";
 
-  home-manager = lib.optionalAttrs flags.isNixOnDroid {
+  homeManager = lib.optionalAttrs flags.isNixOnDroid {
     imports = [ inputs.stylix.homeModules.stylix ];
     config = {
       inherit stylix;

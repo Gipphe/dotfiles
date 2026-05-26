@@ -23,7 +23,7 @@ util.mkProgram {
       };
     };
   };
-  home-manager.home.packages = [
+  homeManager.home.packages = [
     cfg.package
     (util.writeFishApplication {
       name = "record";

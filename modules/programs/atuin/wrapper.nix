@@ -235,7 +235,7 @@ in
           pidfile_path = lib.mkDefault "${config.dataDir}/atuin-daemon.pid";
         };
 
-        passthru.home-manager.systemd.user.services.atuin-daemon = {
+        passthru.homeManager.systemd.user.services.atuin-daemon = {
           Unit = {
             Description = "Atuin daemon";
             Requires = [ "atuin-daemon.socket" ];
@@ -255,7 +255,7 @@ in
           };
         };
 
-        passthru.home-manager.systemd.user.sockets.atuin-daemon =
+        passthru.homeManager.systemd.user.sockets.atuin-daemon =
           let
             socket_dir = if lib.versionAtLeast config.package.version "18.4.0" then "%t" else "%D/atuin";
           in
@@ -273,7 +273,7 @@ in
             };
           };
 
-        passthru.home-manager.launchd.agents.atuin-daemon = {
+        passthru.homeManager.launchd.agents.atuin-daemon = {
           enable = true;
           config = {
             ProgramArguments = [ "${config.wrapper}/bin/atuin" ] ++ daemonArgs;

@@ -1,5 +1,5 @@
 { util, pkgs, ... }:
 util.mkProgram {
   name = "gnugrep";
-  home-manager.home.packages = [ pkgs.gnugrep ];
+  homeManager.home.packages = [ pkgs.gnugrep ];
 }

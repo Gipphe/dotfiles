@@ -5,7 +5,7 @@ let
 in
 util.mkProgram {
   name = "dunst";
-  home-manager = {
+  homeManager = {
     services.dunst = {
       enable = true;
       settings = {

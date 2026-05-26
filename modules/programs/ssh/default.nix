@@ -21,7 +21,7 @@ in
 util.mkProgram {
   name = "ssh";
 
-  home-manager = {
+  homeManager = {
     options.gipphe.programs.ssh = {
       package = lib.mkPackageOption pkgs "ssh" { } // {
         default = config.programs.ssh.package;
