@@ -1,4 +1,5 @@
 {
+  config,
   inputs,
   util,
   pkgs,
@@ -23,6 +24,13 @@ util.mkGaming {
         float = true;
       }
     ];
+
+    # Fix slow steam client downloads https://redd.it/16e1l4h
+    # Speed up shader processing by using more than a single thread
+    xdg.configFile."Steam/steam_dev.cfg".text = ''
+      @nClientDownloadEnableHTTP2PlatformLinux 0
+      unShaderBackgroundProcessingThreads ${toString (builtins.head config.hardware.facter.report.hardware.cpu).siblings}
+    '';
   };
   shared.gipphe.gaming.gamescope.enable = true;
   nixos = {
