@@ -1,5 +1,0 @@
-(defwidget app-drawer []
-  (button :class "app-drawer"
-          :onclick "walker"
-          :valign "center"
-    "󱗼"))

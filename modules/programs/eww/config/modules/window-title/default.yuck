@@ -1,4 +1,0 @@
-(defwidget window-title []
-  (box :class "window-title"
-    (label :truncate true :text {window ?: ""})))
-

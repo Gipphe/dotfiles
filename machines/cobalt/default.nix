@@ -41,7 +41,6 @@ util.mkToggledModule [ "machines" ] {
       secrets.enable = true;
       sync.enable = true;
       systemd.enable = true;
-      terminal-capture.enable = true;
     };
     system.cpu.enable = true;
     hardware.disk.enable = true;

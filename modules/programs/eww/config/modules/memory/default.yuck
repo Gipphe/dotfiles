@@ -1,7 +1,0 @@
-(defwidget memory []
-  (circle-bar :class "memory"
-              :circle-class "memory__progress"
-              :button-class "memory__button"
-              :tooltip "RAM: ${round(EWW_RAM.used_mem_perc, 2)}%"
-              :value {round(EWW_RAM.used_mem_perc, 0)}
-    "󰘚"))

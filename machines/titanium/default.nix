@@ -38,8 +38,6 @@ util.mkToggledModule [ "machines" ] {
       cli.enable = true;
       core.enable = true;
       desktop.hyprland.enable = true;
-      desktop.hyprland.noctalia.enable = true;
-      desktop.plasma.enable = false;
       fonts.enable = true;
       gaming.enable = true;
       gaming.stream-host.enable = true;
@@ -50,7 +48,6 @@ util.mkToggledModule [ "machines" ] {
       secrets.enable = true;
       sync.enable = true;
       systemd.enable = true;
-      terminal-capture.enable = false;
       torrent.enable = true;
     };
     programs = {

@@ -1,18 +1,6 @@
-{
-  util,
-  lib,
-  config,
-  ...
-}:
-let
-  cfg = config.gipphe.profiles.desktop.hyprland;
-  useDefault = !cfg.noctalia.enable;
-in
+{ util, lib, ... }:
 util.mkToggledModule [ "profiles" "desktop" ] {
   name = "hyprland";
-  options.gipphe.profiles.desktop.hyprland = {
-    noctalia.enable = lib.mkEnableOption "noctalia shell";
-  };
   shared.gipphe = {
     system.xdg.enable = true;
     programs = lib.mkMerge [
@@ -45,35 +33,11 @@ util.mkToggledModule [ "profiles" "desktop" ] {
         pinentry-curses.enable = true;
 
         yazi.enable = true;
-      }
 
-      (lib.mkIf useDefault {
-        hyprpaper.enable = true;
-
-        # Launchers
-        walker.enable = true;
-
-        # Notifications
-        dunst.enable = false;
-        mako.enable = false;
-        swaync.enable = true;
-
-        networkmanagerapplet.enable = true;
-        grimblast.enable = true;
-
-        # Bars
-        eww.enable = true;
-        eww.dev = true;
-        waybar.enable = false;
-        quickshell.enable = false;
-        quickshell.dev = true;
-      })
-
-      (lib.mkIf cfg.noctalia.enable {
         grimblast.enable = true;
         noctalia-shell.enable = true;
         wezterm.enable = true;
-      })
+      }
     ];
   };
 }

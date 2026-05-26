@@ -1,5 +1,0 @@
-(defwindow bar
-  :geometry (geometry :width "100%"
-                      :anchor "top center")
-  :exclusive true
-  (bar-layout))

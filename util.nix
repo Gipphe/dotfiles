@@ -344,7 +344,7 @@ let
 
   mkOnDemand =
     pkg:
-    writeShellScriptBin "${pkg.name}-ondemand" ''
+    writeShellScriptBin "${pkg.meta.mainProgram}" ''
       nix run nixpkgs#${pkg.pname} -- "$@"
     '';
 in
