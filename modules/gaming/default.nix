@@ -6,7 +6,7 @@
     ./gamescope.nix
     ./heroic.nix
     ./lutris.nix
-    ./mangohud.nix
+    ./mangohud
     ./prismlauncher.nix
     ./runelite.nix
     ./steam.nix
