@@ -47,8 +47,6 @@
             inherit (util) writeFishApplication;
           };
           md-icons = pkgs.callPackage ./packages/md-icons.nix { inherit (util) writeFishApplication; };
-          minecraftia-font = pkgs.callPackage ./packages/minecraftia.nix { };
-          monocraft-no-ligatures-font = pkgs.callPackage ./packages/monocraft-no-ligatures.nix { };
           treefmt = pkgs.callPackage ./packages/treefmt.nix { inherit treefmt-nix; };
         }
         // (
