@@ -19,7 +19,7 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
     wayland.windowManager.hyprland.settings.device = [
       {
         name = "logitech-g903-ls-1";
-        scroll_method = "no_scroll";
+        scroll_method = "on_button_down";
       }
     ];
   };
