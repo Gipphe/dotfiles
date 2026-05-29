@@ -6,5 +6,6 @@ util.mkProfile {
     mpd.enable = true;
     mpris.enable = true;
     qpwgraph.enable = true;
+    wiremix.enable = true;
   };
 }
