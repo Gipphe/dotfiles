@@ -5,6 +5,7 @@
     ./gamemode.nix
     ./gamescope.nix
     ./heroic.nix
+    ./kernel.nix
     ./lutris.nix
     ./mangohud
     ./prismlauncher.nix

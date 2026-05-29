@@ -114,20 +114,29 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-gaming = {
-      url = "github:fufexan/nix-gaming";
-    };
+    # Do not override its nixpkgs input, since it uses bleeding edge versions
+    # of specific packages
+    nix-gaming.url = "github:fufexan/nix-gaming";
 
+    # Do not override its nixpkgs input, otherwise there can be mismatch
+    # between patches and kernel version
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel";
+
+    # Do not override its nixpkgs input, since it uses bleeding edge versions
+    # of specific packages
     nix-gaming-edge.url = "github:powerofthe69/nix-gaming-edge";
 
+    # Do not override its nixpkgs input, nixpkgs contains packages that are too
+    # up-to-date for comfyui
     comfyui.url = "github:Gipphe/comfyui-nix";
+
+    # Do not override its nixpkgs input, it is configured for specific versions
+    # of each of the plugins
     giphtvim.url = "github:Gipphe/giphtvim";
 
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      # Do _not_ follow nixpkgs for this flake's nixpkgs input! It invalidates
-      # the cachix cache, and will probably break things.
-    };
+    # Do not override its nixpkgs input, it invalidates the cachix cache, and
+    # will probably break things.
+    hyprland.url = "github:hyprwm/Hyprland";
 
     devshell = {
       url = "github:numtide/devshell";
