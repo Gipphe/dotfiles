@@ -120,19 +120,8 @@
 
     nix-gaming-edge.url = "github:powerofthe69/nix-gaming-edge";
 
-    comfyui = {
-      url = "github:Gipphe/comfyui-nix";
-    };
-
-    giphtvim = {
-      url = "github:Gipphe/giphtvim";
-      # inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    pr-tracker = {
-      url = "github:Gipphe/pr-tracker";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    comfyui.url = "github:Gipphe/comfyui-nix";
+    giphtvim.url = "github:Gipphe/giphtvim";
 
     hyprland = {
       url = "github:hyprwm/Hyprland";
