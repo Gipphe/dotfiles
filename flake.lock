@@ -918,11 +918,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779726696,
-        "narHash": "sha256-/p37CB5n6Wpw250b0Lq0CYwNq2D8uGKzDoBulyLcQqA=",
+        "lastModified": 1779969295,
+        "narHash": "sha256-HwIJ3tOcwSMiV75L7KqJXciXR9UfT+d7rwOZMX7cTnA=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "1a95e2efb477959b70b4a14c51035975c0481df6",
+        "rev": "61e2c9659324181e0f0ed911958c536333b1d4f6",
         "type": "github"
       },
       "original": {
@@ -1022,11 +1022,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1779914964,
-        "narHash": "sha256-xnAvZFURq0rIs2bv6Oky64Hh/eXfwxaGdAnWt8k9bxI=",
+        "lastModified": 1780046192,
+        "narHash": "sha256-Jg9jOzfCN/oPNlWJK2ahMovSKgK5XzD1cygCAIwc4G4=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "023169e1be01cf12f42170fe22b0623a94b5c757",
+        "rev": "558936e2382ec14b8dda6a9156522f65f6b07d15",
         "type": "github"
       },
       "original": {
@@ -2233,11 +2233,11 @@
         "tmp-postgres": "tmp-postgres"
       },
       "locked": {
-        "lastModified": 1779886304,
-        "narHash": "sha256-uTjUoVVvWuXwqoQzmrF234ZFe35Ei0by6iSj3QUbKqs=",
+        "lastModified": 1780051206,
+        "narHash": "sha256-+4lzATb6ioc7jwIXDzAenVoARTEh2o7n+h6jRs/SHag=",
         "owner": "atelier-hub",
         "repo": "tricorder",
-        "rev": "8f6537ae543e3129ba132624bf4aca7198c229ca",
+        "rev": "2f808dd14455fd642450adb42382beb498bf6b34",
         "type": "github"
       },
       "original": {
