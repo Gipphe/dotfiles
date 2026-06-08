@@ -21,6 +21,10 @@ util.mkModule {
   shared.imports = [ ./nix-gc ];
 
   nixos = lib.mkIf config.gipphe.programs.nix.enable {
+    sops.secrets.nix-github-api-access-config = {
+      format = "binary";
+      sopsFile = ../../../secrets/pub-nix-github-api-token-config.txt;
+    };
     nix = lib.mkMerge [
       nix
       {
@@ -62,8 +66,11 @@ util.mkModule {
             "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
             "nixpkgs-unfree.cachix.org-1:hqvoInulhbV4nJ9yJOEr+4wxhDV4xq2d1DK7S6Nj6rs="
           ];
-
         };
+
+        extraOptions = ''
+          !include ${config.sops.secrets.nix-github-api-access-config.path}
+        '';
       }
     ];
 
