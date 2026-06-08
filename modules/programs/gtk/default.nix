@@ -1,4 +1,5 @@
 {
+  lib,
   util,
   pkgs,
   ...
@@ -12,7 +13,7 @@ util.mkProgram {
         name = "Adwaita";
         package = pkgs.adwaita-icon-theme;
       };
-      gtk4.theme = null;
+      gtk4.theme = lib.mkForce null;
     };
   };
 }
