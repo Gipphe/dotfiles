@@ -15,6 +15,6 @@ util.mkProgram {
   name = "filen-desktop";
   homeManager = {
     home.packages = [ pkg ];
-    gipphe.core.wm.triggers.on-startup.filen.command = "filen-desktop";
+    gipphe.core.wm.triggers.on-startup.filen.command = "sleep 60s && filen-desktop";
   };
 }
