@@ -5,6 +5,9 @@
   osConfig,
   ...
 }:
+let
+  dotnet = pkgs.dotnetCorePackages.aspnetcore_9_0-bin;
+in
 util.mkGaming {
   name = "lutris";
   homeManager = {
@@ -14,7 +17,7 @@ util.mkGaming {
         extraPkgs = pkgs: [
           inputs.nix-gaming-edge.packages.${pkgs.stdenv.hostPlatform.system}.proton-cachyos-x86_64-v3
           pkgs.proton-ge-bin
-          pkgs.dotnet-sdk_9 # Needed for SPT
+          dotnet # Needed for SPT
         ];
       };
       steamPackage = osConfig.programs.steam.package;
@@ -23,6 +26,7 @@ util.mkGaming {
       protonPackages = [ pkgs.proton-ge-bin ];
     };
     home.packages = [ pkgs.winePackages.waylandFull ];
+    home.sessionVariables.DOTNET_ROOT = "${dotnet}/share/dotnet";
   };
   nixos = {
     nixpkgs.overlays = [
