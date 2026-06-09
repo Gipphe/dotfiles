@@ -2,6 +2,7 @@
 util.mkProfile {
   name = "gaming";
   shared.gipphe.gaming = {
+    aspnet.enable = true;
     bolt-launcher.enable = true;
     gamemode.enable = true;
     gamescope.enable = true;
