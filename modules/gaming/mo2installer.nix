@@ -7,6 +7,6 @@
 util.mkGaming {
   name = "mo2installer";
   homeManager.home.packages = [
-    inputs.nix-gaming.packages.${pkgs.stdenv.hostPlatform.system}.mo2installer
+    inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.mo2installer
   ];
 }
