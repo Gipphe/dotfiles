@@ -14,11 +14,13 @@ util.mkGaming {
         extraPkgs = pkgs: [
           inputs.nix-gaming-edge.packages.${pkgs.stdenv.hostPlatform.system}.proton-cachyos-x86_64-v3
           pkgs.proton-ge-bin
+          pkgs.dotnet-sdk_9 # Needed for SPT
         ];
       };
       steamPackage = osConfig.programs.steam.package;
       defaultWinePackage = pkgs.proton-ge-bin;
       winePackages = [ pkgs.wineWow64Packages.full ];
+      protonPackages = [ pkgs.proton-ge-bin ];
     };
     home.packages = [ pkgs.winePackages.waylandFull ];
   };
