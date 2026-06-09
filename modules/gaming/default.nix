@@ -1,5 +1,6 @@
 {
   imports = [
+    ./aspnet.nix
     ./bolt-launcher.nix
     ./cache.nix
     ./gamemode.nix
