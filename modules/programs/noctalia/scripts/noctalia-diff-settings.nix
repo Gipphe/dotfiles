@@ -17,11 +17,8 @@ writeShellApplication {
     yq-go
     noctalia
   ];
-  runtimeEnv.settings_file = builtins.path {
-    path = ../settings.nix;
-    name = "noctalia-settings.nix";
-  };
   text = /* bash */ ''
+    settings_file="$HOME/projects/dotfiles/modules/programs/noctalia/settings.nix"
     json-diff \
       <(nix eval --json --file "$settings_file" | jq -S .) \
       <(noctalia config export | yq -p toml -o json | jq -S .) \
