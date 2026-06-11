@@ -1,4 +1,7 @@
 {
+  audio = {
+    enable_sounds = true;
+  };
   bar = {
     widgets = {
       capsule_group = [
@@ -105,7 +108,7 @@
   theme = {
     builtin = "Catppuccin";
     templates = {
-      builtin_ids = [ "wezterm" ];
+      builtin_ids = [ ];
     };
   };
   wallpaper = {
