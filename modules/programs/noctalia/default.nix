@@ -52,28 +52,9 @@ let
           {
             mod = "Mod";
             key = "C";
-            action.spawn = "${ipc} panel-toggle launcher /clipboard";
+            action.spawn = "${ipc} panel-toggle clipboard";
           }
         ];
-        # triggers.on-startup.noctalia-start.command = "${config.programs.noctalia.package}/bin/noctalia";
-        # triggers.on-load =
-        #   let
-        #     startup = pkgs.writeShellApplication {
-        #       name = "noctalia-startup";
-        #       runtimeInputs = [
-        #         pkgs.procps
-        #         config.programs.noctalia.package
-        #       ];
-        #       text = ''
-        #         pkill quickshell || true
-        #         sleep 1s
-        #         noctalia
-        #       '';
-        #     };
-        #   in
-        #   {
-        #     noctalia-startup.command = lib.getExe startup;
-        #   };
       };
     };
     nixos = {
