@@ -34,7 +34,6 @@ let
       };
       home = {
         file = {
-          ".face".source = ../../../assets/profile.png;
           "${wallpaperDir}/small-memory.png".source = config.stylix.image;
         };
         packages = [

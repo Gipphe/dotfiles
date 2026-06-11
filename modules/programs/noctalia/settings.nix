@@ -93,6 +93,7 @@
   };
   wallpaper = {
     directory = "/home/gipphe/Pictures/wallpapers";
+    transition_on_startup = true;
   };
   widget = {
     brightness = {
