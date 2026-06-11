@@ -1,6 +1,22 @@
 {
   bar = {
     widgets = {
+      capsule_group = [
+        {
+          fill = "surface_variant";
+          id = "g1";
+          members = [
+            "cpu"
+            "ram"
+            "network_rx"
+            "network_tx"
+            "temp"
+            "sysmon"
+          ];
+          opacity = 1;
+          padding = 6;
+        }
+      ];
       center = [ "workspaces" ];
       end = [
         "tray"
@@ -20,7 +36,7 @@
       radius = 0;
       start = [
         "launcher"
-        "wallpaper"
+        "group:g1"
         "media"
         "active_window"
       ];
@@ -103,6 +119,9 @@
       format = "%H:%M";
       tooltip_format = "%A, %F";
     };
+    cpu = {
+      show_label = false;
+    };
     launcher = {
       glyph = "rocket";
     };
@@ -112,8 +131,27 @@
     network = {
       show_label = false;
     };
+    network_rx = {
+      show_label = false;
+    };
+    network_tx = {
+      show_label = false;
+    };
+    ram = {
+      show_label = false;
+    };
+    sysmon = {
+      show_label = false;
+      stat = "gpu_temp";
+    };
+    temp = {
+      show_label = false;
+    };
     volume = {
       show_label = false;
+    };
+    workspaces = {
+      empty_color = "tertiary";
     };
   };
 }
