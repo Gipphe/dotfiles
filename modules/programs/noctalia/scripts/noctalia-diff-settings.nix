@@ -3,8 +3,9 @@
   colordiff,
   json-diff,
   jq,
+  yq-go,
   nix,
-  noctalia-shell,
+  noctalia,
 }:
 writeShellApplication {
   name = "noctalia-diff-settings";
@@ -13,7 +14,8 @@ writeShellApplication {
     json-diff
     jq
     nix
-    noctalia-shell
+    yq-go
+    noctalia
   ];
   runtimeEnv.settings_file = builtins.path {
     path = ../settings.nix;
@@ -21,8 +23,8 @@ writeShellApplication {
   };
   text = /* bash */ ''
     json-diff \
-      <(jq -S . <(nix eval --json --file "$settings_file")) \
-      <(noctalia-shell ipc call state all | jq -S .settings) \
+      <(nix eval --json --file "$settings_file" | jq -S .) \
+      <(noctalia config export | yq -p toml -o json | jq -S .) \
       | colordiff --nobanner
   '';
 }

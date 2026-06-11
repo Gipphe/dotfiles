@@ -5,7 +5,7 @@
   ...
 }:
 let
-  noctalia-shell = "${lib.getExe' config.programs.noctalia-shell.package "noctalia-shell"} ipc call";
+  noctalia = "${lib.getExe' config.programs.noctalia.package "noctalia"} msg";
 in
 util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
   name = "g915";
@@ -13,15 +13,15 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
     gipphe.core.wm.binds = [
       {
         key = "XF86AudioPlay";
-        action.spawn = "${noctalia-shell} media playPause";
+        action.spawn = "${noctalia} media toggle";
       }
       {
         key = "XF86AudioPrev";
-        action.spawn = "${noctalia-shell} media previous";
+        action.spawn = "${noctalia} media previous";
       }
       {
         key = "XF86AudioNext";
-        action.spawn = "${noctalia-shell} media next";
+        action.spawn = "${noctalia} media next";
       }
     ];
   };

@@ -35,7 +35,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
         yazi.enable = true;
 
         grimblast.enable = true;
-        noctalia-shell.enable = true;
+        noctalia.enable = true;
         wezterm.enable = true;
       }
     ];
