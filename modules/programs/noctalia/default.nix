@@ -26,28 +26,8 @@ let
         package = inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default;
         settings = lib.mkMerge [
           {
-            bar = {
-              backgroundOpacity = lib.mkForce 1;
-              capsuleOpacity = lib.mkForce 1;
-            };
-            dock = {
-              backgroundOpacity = lib.mkForce 1;
-            };
-            general = {
-              avatarImage = lib.mkForce "${config.home.homeDirectory}/${config.home.file.".face".target}";
-            };
-            notifications = {
-              backgroundOpacity = lib.mkForce 1;
-            };
-            osd = {
-              backgroundOpacity = lib.mkForce 1;
-            };
-            ui = {
-              panelBackgroundOpacity = lib.mkForce 1;
-            };
-            wallpaper = {
-              directory = lib.mkForce "${config.home.homeDirectory}/${wallpaperDir}";
-            };
+            shell.avatar_path = lib.mkForce ../../../assets/profile.png;
+            wallpaper.directory = lib.mkForce "${config.home.homeDirectory}/${wallpaperDir}";
           }
           (import ./settings.nix)
         ];
