@@ -1,4 +1,5 @@
 {
+  nixfmt,
   yq-go,
   jq,
   nix,
@@ -12,6 +13,7 @@ writeShellApplication {
     nix
     jq
     yq-go
+    nixfmt
   ];
   text = /* bash */ ''
     dest="$HOME/projects/dotfiles/modules/programs/noctalia/settings.nix"

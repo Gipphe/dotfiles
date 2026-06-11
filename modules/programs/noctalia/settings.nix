@@ -20,6 +20,7 @@
       center = [ "taskbar" ];
       end = [
         "tray"
+        "spacer_2"
         "notifications"
         "clipboard"
         "network"
@@ -139,6 +140,9 @@
     };
     ram = {
       show_label = false;
+    };
+    spacer_2 = {
+      type = "spacer";
     };
     sysmon = {
       show_label = false;
