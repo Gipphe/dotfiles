@@ -17,7 +17,7 @@
           padding = 6;
         }
       ];
-      center = [ "workspaces" ];
+      center = [ "taskbar" ];
       end = [
         "tray"
         "notifications"
@@ -143,6 +143,10 @@
     sysmon = {
       show_label = false;
       stat = "gpu_temp";
+    };
+    taskbar = {
+      group_by_workspace = true;
+      inactive_opacity = 0.8;
     };
     temp = {
       show_label = false;
