@@ -1703,6 +1703,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-sunshine": {
+      "locked": {
+        "lastModified": 1780670869,
+        "narHash": "sha256-vNjd59YIP2eH6wfcjcaNW0ec+xjIe0/ZsjKHycGt/5Y=",
+        "owner": "Qubasa",
+        "repo": "nixpkgs",
+        "rev": "391d69d880514742b8612cbcd6480b5a8c3c08b5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Qubasa",
+        "ref": "update_sunshine",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1775888245,
@@ -1999,6 +2015,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_8",
         "nixpkgs-last-working-for-nix-on-droid": "nixpkgs-last-working-for-nix-on-droid",
+        "nixpkgs-sunshine": "nixpkgs-sunshine",
         "noctalia": "noctalia",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
