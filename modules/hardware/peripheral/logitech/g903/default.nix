@@ -53,9 +53,9 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
     environment.systemPackages = [
       (pkgs.writeShellScriptBin "reset-mouse-kernel-module" ''
         echo "Rebinding the logitech-djreceiver driver..." >&2
-        echo "0003:046D:C539.0003" | sudo tee /sys/bus/hid/drivers/logitech-djreceiver/unbind
+        echo "0003:046D:C539.0003" | sudo ${pkgs.coreutils}/bin/tee /sys/bus/hid/drivers/logitech-djreceiver/unbind
         sleep 0.5
-        echo "0003:046D:C539.0003" | sudo tee /sys/bus/hid/drivers/logitech-djreceiver/bind
+        echo "0003:046D:C539.0003" | sudo ${pkgs.coreutils}/bin/tee /sys/bus/hid/drivers/logitech-djreceiver/bind
         echo "Rebound. Hoping the scrollwheel works now!" >&2
       '')
     ];
