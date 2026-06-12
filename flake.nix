@@ -175,4 +175,17 @@
     # nixos-unstable.
     nixpkgs-sunshine.url = "github:Qubasa/nixpkgs/update_sunshine";
   };
+
+  nixConfig = {
+    extra-substituters = [
+      "https://attic.xuyh0120.win/lantian"
+      "https://comfyui.cachix.org"
+      "https://cuda-maintainers.cachix.org"
+      "https://hyprland.cachix.org"
+      "https://nix-cache.tokidoki.dev/tokidoki"
+      "https://nix-community.cachix.org"
+      "https://nix-gaming.cachix.org"
+      "https://noctalia.cachix.org"
+    ];
+  };
 }

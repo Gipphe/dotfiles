@@ -46,6 +46,8 @@ util.mkModule {
           sandbox = lib.mkDefault true;
           max-jobs = "auto";
 
+          accept-flake-config = true;
+
           # continue building derivations if one fails
           # keep-going = true;
           log-lines = 30;

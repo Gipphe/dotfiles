@@ -9,7 +9,7 @@ in
 util.mkModule {
   nixos = {
     nix.settings = {
-      substituters = builtins.attrNames subs;
+      trusted-substituters = builtins.attrNames subs;
       trusted-public-keys = builtins.attrValues subs;
     };
   };

@@ -22,7 +22,7 @@ util.mkModule {
   shared.imports = [ mod ];
   nixos = {
     nix.settings = {
-      substituters = [
+      trusted-substituters = [
         "https://comfyui.cachix.org"
         "https://nix-community.cachix.org"
         "https://cuda-maintainers.cachix.org" # Legacy, still works
