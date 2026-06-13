@@ -8,8 +8,8 @@
 }:
 let
   host = import ./host.nix;
-  monitors.left = "ASUSTek COMPUTER INC VG248 L9LMQS203421";
-  monitors.right = "ASUSTek COMPUTER INC VG248 L9LMQS203414";
+  monitors.right = "ASUSTek COMPUTER INC VG248 L9LMQS203421";
+  monitors.left = "ASUSTek COMPUTER INC VG248 L9LMQS203414";
 in
 util.mkToggledModule [ "machines" ] {
   inherit (host) name;
