@@ -140,6 +140,7 @@ util.mkToggledModule [ "machines" ] {
       }
     );
 
+    services.sunshine.settings.output_name = "1";
     hardware.nvidia.prime.nvidiaBusId = "PCI:1@0:0:0";
 
     system.stateVersion = "26.05";
