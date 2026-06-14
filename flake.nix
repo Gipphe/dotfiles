@@ -49,6 +49,7 @@
           md-icons = pkgs.callPackage ./packages/md-icons.nix { inherit (util) writeFishApplication; };
           treefmt = pkgs.callPackage ./packages/treefmt.nix { inherit treefmt-nix; };
           mo2installer = pkgs.callPackage ./packages/mo2installer.nix { };
+          fluorine-manager = pkgs.callPackage ./packages/fluorine-manager.nix { };
         }
         // (
           let
