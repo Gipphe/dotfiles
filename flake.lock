@@ -1399,24 +1399,6 @@
         "type": "github"
       }
     },
-    "nix-gaming-edge": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_6"
-      },
-      "locked": {
-        "lastModified": 1781358369,
-        "narHash": "sha256-pdj5y9Y29hVTB79fSkVzlqrZCYq+BMC486rX8zwmvXA=",
-        "owner": "powerofthe69",
-        "repo": "nix-gaming-edge",
-        "rev": "5bffe847cc86b648c594b85aceb5569100c13a76",
-        "type": "github"
-      },
-      "original": {
-        "owner": "powerofthe69",
-        "repo": "nix-gaming-edge",
-        "type": "github"
-      }
-    },
     "nix-index-db": {
       "inputs": {
         "nixpkgs": [
@@ -1466,7 +1448,7 @@
     },
     "nixos-hardware": {
       "inputs": {
-        "nixpkgs": "nixpkgs_7"
+        "nixpkgs": "nixpkgs_6"
       },
       "locked": {
         "lastModified": 1781168557,
@@ -1801,22 +1783,6 @@
     },
     "nixpkgs_6": {
       "locked": {
-        "lastModified": 1781074563,
-        "narHash": "sha256-md8WlXOlfnIeHeOScMTTHFyf2d6iaTwPl2apR5EQ3P4=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "9ae611a455b90cf061d8f332b977e387bda8e1ca",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_7": {
-      "locked": {
         "lastModified": 1767892417,
         "narHash": "sha256-8bW3q88CEg2u4hSP66Vf4lpbLonHz7hqDNBMcCY7E9U=",
         "rev": "3497aa5c9457a9d88d71fa93a4a8368816fbeeba",
@@ -1828,7 +1794,7 @@
         "url": "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz"
       }
     },
-    "nixpkgs_8": {
+    "nixpkgs_7": {
       "locked": {
         "lastModified": 1781074563,
         "narHash": "sha256-md8WlXOlfnIeHeOScMTTHFyf2d6iaTwPl2apR5EQ3P4=",
@@ -2009,11 +1975,10 @@
         "hyprland": "hyprland",
         "nix-cachyos-kernel": "nix-cachyos-kernel",
         "nix-gaming": "nix-gaming",
-        "nix-gaming-edge": "nix-gaming-edge",
         "nix-index-db": "nix-index-db",
         "nix-on-droid": "nix-on-droid",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_8",
+        "nixpkgs": "nixpkgs_7",
         "nixpkgs-last-working-for-nix-on-droid": "nixpkgs-last-working-for-nix-on-droid",
         "nixpkgs-sunshine": "nixpkgs-sunshine",
         "noctalia": "noctalia",

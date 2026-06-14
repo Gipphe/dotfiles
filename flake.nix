@@ -123,10 +123,6 @@
     # between patches and kernel version
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel";
 
-    # Do not override its nixpkgs input, since it uses bleeding edge versions
-    # of specific packages
-    nix-gaming-edge.url = "github:powerofthe69/nix-gaming-edge";
-
     # Do not override its nixpkgs input, nixpkgs contains packages that are too
     # up-to-date for comfyui
     comfyui.url = "github:Gipphe/comfyui-nix";
@@ -182,7 +178,6 @@
       "https://comfyui.cachix.org"
       "https://cuda-maintainers.cachix.org"
       "https://hyprland.cachix.org"
-      "https://nix-cache.tokidoki.dev/tokidoki"
       "https://nix-community.cachix.org"
       "https://nix-gaming.cachix.org"
       "https://noctalia.cachix.org"

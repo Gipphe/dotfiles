@@ -1,5 +1,4 @@
 {
-  inputs,
   util,
   pkgs,
   osConfig,
@@ -15,7 +14,6 @@ util.mkGaming {
       enable = true;
       package = pkgs.lutris.override {
         extraPkgs = pkgs: [
-          inputs.nix-gaming-edge.packages.${pkgs.stdenv.hostPlatform.system}.proton-cachyos-x86_64-v3
           pkgs.proton-ge-bin
           dotnet # Needed for SPT
         ];
