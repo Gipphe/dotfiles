@@ -21,11 +21,7 @@ util.mkToggledModule [ "system" ] {
 
     systemd = {
       inherit settings;
-      user = {
-        extraConfig = ''
-          DefaultTimeoutStopSec=16s
-        '';
-      };
+      user.settings.Manager.DefaultTimeoutStopSec = "16s";
       services = {
         "getty@tty1".enable = false;
         "autovt@tty1".enable = false;
@@ -34,7 +30,7 @@ util.mkToggledModule [ "system" ] {
       };
 
       # Systemd OOMd
-      # Fedora enables these options by deafult. See the 10-oomd-* files here:
+      # Fedora enables these options by default. See the 10-oomd-* files here:
       # https://src.fedoraproject.org/rpms/systemd/tree/acb90c49c42276b06375a66c73673ac3510255
       oomd = {
         enableRootSlice = true;
