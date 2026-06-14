@@ -2,7 +2,7 @@
 util.mkToggledModule [ "system" ] {
   name = "journald";
   nixos.services.journald.extraConfig = ''
-    SystemMaxUse=500M
-    RuntimeMaxUse=100M
+    SystemMaxUse=2000M
+    RuntimeMaxUse=500M
   '';
 }
