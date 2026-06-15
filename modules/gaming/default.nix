@@ -7,6 +7,7 @@
     ./gamescope.nix
     ./heroic.nix
     ./kernel.nix
+    ./limo.nix
     ./lutris.nix
     ./mangohud
     ./mo2installer.nix
