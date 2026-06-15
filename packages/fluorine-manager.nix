@@ -43,8 +43,12 @@ stdenv.mkDerivation (finalAttrs: {
     mkdir -p "$out"
     install -D ModOrganizer-core "$out/bin/${finalAttrs.pname}"
     mkdir -p "$out/share"
+    mkdir -p "$out/share/applications"
+    mkdir -p "$out/share/metainfo"
     mv icons plugin_data plugins python qt.conf qt6plugins stylesheets "$out/share"
     mv lib "$out"
+    mv $out/share/icons/*.desktop $out/share/applications
+    mv $out/share/icons/*.metainfo.xml $out/share/metainfo
 
     runHook postInstall
   '';
