@@ -2,6 +2,7 @@
   imports = [
     ./bolt-launcher.nix
     ./cache.nix
+    ./fluorine-manager.nix
     ./gamemode.nix
     ./gamescope.nix
     ./heroic.nix

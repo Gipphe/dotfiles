@@ -3,6 +3,7 @@ util.mkProfile {
   name = "gaming";
   shared.gipphe.gaming = {
     bolt-launcher.enable = true;
+    fluorine-manager.enable = true;
     gamemode.enable = true;
     gamescope.enable = true;
     heroic.enable = true;
