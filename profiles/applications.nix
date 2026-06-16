@@ -18,6 +18,7 @@ util.mkProfile {
       signal.enable = true;
       slack.enable = true;
       spotify.enable = true;
+      umu-launcher.enable = true;
       vivaldi.enable = true;
       wezterm.default = lib.mkDefault true;
       wezterm.enable = true;
