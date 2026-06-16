@@ -23,7 +23,7 @@ util.mkGaming {
       winePackages = [ pkgs.wineWow64Packages.full ];
       protonPackages = [ pkgs.proton-ge-bin ];
     };
-    home.packages = [ pkgs.winePackages.waylandFull ];
+    home.packages = [ pkgs.wine64Packages.waylandFull ];
     home.sessionVariables.DOTNET_ROOT = "${dotnet}/share/dotnet";
   };
   nixos = {
