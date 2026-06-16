@@ -1,4 +1,5 @@
 {
+  lib,
   util,
   config,
   pkgs,
@@ -11,12 +12,13 @@ let
 in
 util.mkProgram {
   name = "yazi";
+  options.gipphe.programs.yazi.default = lib.mkEnableOption "yazi as default file manager";
   homeManager = {
     programs.yazi = {
       enable = true;
       shellWrapperName = "y";
     };
-    gipphe.core.wm.binds = [
+    gipphe.core.wm.binds = lib.mkIf config.gipphe.programs.yazi.default [
       {
         mod = "$mod";
         key = "E";
