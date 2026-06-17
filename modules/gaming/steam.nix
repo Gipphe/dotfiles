@@ -23,6 +23,10 @@ util.mkGaming {
         match.class = "steam";
         float = true;
       }
+      {
+        match.initial_class = "steam_app_.+";
+        fullscreen = true;
+      }
     ];
 
     # TODO: fix this
