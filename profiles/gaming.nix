@@ -8,7 +8,6 @@ util.mkProfile {
     heroic.enable = true;
     limo.enable = true;
     lutris.enable = true;
-    mo2installer.enable = true;
     prismlauncher.enable = true;
     runelite.enable = true;
     steam.enable = true;
