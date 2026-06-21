@@ -175,7 +175,9 @@
 
   nixConfig = {
     extra-substituters = [
+      "https://atelier.cachix.org"
       "https://attic.xuyh0120.win/lantian"
+      "https://cache.iog.io"
       "https://comfyui.cachix.org"
       "https://cuda-maintainers.cachix.org"
       "https://hyprland.cachix.org"
