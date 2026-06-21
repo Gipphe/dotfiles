@@ -46,7 +46,5 @@ util.mkProgram {
     };
   };
 
-  nixos = {
-    nixpkgs.config.permittedInsecurePackages = [ "electron-39.8.10" ];
-  };
+  shared.gipphe.nixpkgs.config.permittedInsecurePackages = [ "electron-39.8.10" ];
 }
