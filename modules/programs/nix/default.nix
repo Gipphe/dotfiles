@@ -58,7 +58,7 @@ util.mkModule {
 
           # use binary cache, its not gentoo
           builders-use-substitutes = true;
-          substituters = [
+          trusted-substituters = [
             "https://cache.nixos.org"
             "https://nix-community.cachix.org"
             "https://nixpkgs-unfree.cachix.org"

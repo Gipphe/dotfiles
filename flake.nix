@@ -178,11 +178,13 @@
       "https://atelier.cachix.org"
       "https://attic.xuyh0120.win/lantian"
       "https://cache.iog.io"
+      "https://cache.nixos.org"
       "https://comfyui.cachix.org"
       "https://cuda-maintainers.cachix.org"
       "https://hyprland.cachix.org"
       "https://nix-community.cachix.org"
       "https://nix-gaming.cachix.org"
+      "https://nixpkgs-unfree.cachix.org"
       "https://noctalia.cachix.org"
     ];
   };
