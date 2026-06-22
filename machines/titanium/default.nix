@@ -55,7 +55,6 @@ util.mkToggledModule [ "machines" ] {
       comfyui.enable = true;
       librewolf.enable = true;
       pipewire.higherQuantum.enable = true;
-      tricorder.enable = true;
     };
     hardware = {
       gpu.nvidia.rtx3070.enable = true;

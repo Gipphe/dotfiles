@@ -1,7 +1,8 @@
 { util, ... }:
 util.mkProfile {
   name = "tweag";
-  shared.gipphe.tweag = {
-    gh.enable = true;
+  shared.gipphe = {
+    programs.tricorder.enable = true;
+    tweag.gh.enable = true;
   };
 }
