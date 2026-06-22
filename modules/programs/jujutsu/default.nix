@@ -27,7 +27,7 @@ util.mkProgram {
         settings = {
           user = {
             name = "Victor Nascimento Bakke";
-            email = "gipphe@gmail.com";
+            email = "2266817+Gipphe@users.noreply.github.com";
           };
           ui = {
             editor = "nvim";

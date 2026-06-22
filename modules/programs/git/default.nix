@@ -9,8 +9,7 @@
 let
   # Public key for secrets/pub-git-ssh-signing-key.key
   allowedSignersFile = pkgs.writeText "git_allowed_signers" ''
-    gipphe@gmail.com namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINzkW4CGcY2zjXnWx1o7uy85D0O7OvjzTa51GLtA0uQv
-    victor.bakke@tweag.io namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINzkW4CGcY2zjXnWx1o7uy85D0O7OvjzTa51GLtA0uQv
+    2266817+Gipphe@users.noreply.github.com namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINzkW4CGcY2zjXnWx1o7uy85D0O7OvjzTa51GLtA0uQv
   '';
   ignoreFile = pkgs.writeText "git_ignore" /* gitignore */ ''
     .DS_Store
@@ -59,7 +58,7 @@ util.mkProgram {
             credential.credentialStore = "gpg";
             user = {
               name = "Victor Nascimento Bakke";
-              email = "gipphe@gmail.com";
+              email = "2266817+Gipphe@users.noreply.github.com";
               signingKey = config.sops.secrets.git-signing-key.path;
             };
             commit.gpgSign = true;
