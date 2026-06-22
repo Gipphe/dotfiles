@@ -49,6 +49,7 @@ util.mkToggledModule [ "machines" ] {
       sync.enable = true;
       systemd.enable = true;
       torrent.enable = true;
+      tweag.enable = true;
     };
     programs = {
       comfyui.enable = true;

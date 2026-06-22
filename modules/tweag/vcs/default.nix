@@ -1,18 +1,24 @@
-{ util, ... }:
+{
+  pkgs,
+  util,
+  lib,
+  ...
+}:
+let
+  tweagGit = pkgs.writeText "tweag-git-config" (
+    lib.generators.toGitINI {
+      user.email = "victor.bakke@tweag.io";
+    }
+  );
+in
 util.mkToggledModule [ "tweag" ] {
   name = "vcs";
   homeManager = {
     wrappers = {
-      git.includes = [
-        {
-          condition = "gitdir:~/projects/tweag";
-          contents.user.email = "victor.bakke@tweag.io";
-        }
-        {
-          condition = "gitdir:~/projects/modus-create";
-          contents.user.email = "victor.bakke@tweag.io";
-        }
-      ];
+      git.settings.includeIf = {
+        "gitdir:~/projects/tweag".path = tweagGit.outPath;
+        "gitdir:~/projects/modus-create".path = tweagGit.outPath;
+      };
       jujutsu.settings."--scope" = [
         {
           "--when".repositories = [
