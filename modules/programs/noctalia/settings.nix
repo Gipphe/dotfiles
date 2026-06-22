@@ -116,6 +116,10 @@
     transition_on_startup = true;
   };
   widget = {
+    battery = {
+      display_mode = "graphic";
+      show_label = false;
+    };
     brightness = {
       show_label = false;
     };
