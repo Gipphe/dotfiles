@@ -18,7 +18,10 @@ let
 in
 util.mkModule {
   options.gipphe.programs.nix.enable = lib.mkEnableOption "nix";
-  shared.imports = [ ./nix-gc ];
+  shared.imports = [
+    ./nix-gc
+    ./cache.nix
+  ];
 
   nixos = lib.mkIf config.gipphe.programs.nix.enable {
     sops.secrets.nix-github-api-access-config = {
