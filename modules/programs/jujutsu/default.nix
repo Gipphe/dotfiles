@@ -93,8 +93,8 @@ util.mkProgram {
               "all()"
             ];
             bb = [
-              "bookmark"
-              "list"
+              "show"
+              "--no-patch"
               "-T"
               "local_bookmarks"
               "-r"
