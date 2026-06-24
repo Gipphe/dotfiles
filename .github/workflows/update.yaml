@@ -1,0 +1,30 @@
+name: Update flake inputs
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+      timezone: "Europe/Berlin"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  update:
+    name: Update flake inputs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: DeterminateSystems/determinate-nix-action@629b284231c2a82554b724e357e47fc6020833c8 # v3
+      - uses: DeterminateSystems/update-flake-lock@834c491b2ece4de0bbd00d85214bb5e83b4da5c6 # v28
+        id: create-pull-request
+        with:
+          branch: ci/update-flake-inputs-${{ github.head_ref }}
+          pr-title: "chore: update flake inputs"
+          commit-msg: "chore: update flake inputs"
+
+      - name: Auto merge pull request
+        run: gh pr merge --squash --auto '${{ steps.create-pull-request.outputs.pull-request-number }}'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
