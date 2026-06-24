@@ -44,3 +44,16 @@ jobs:
           name: gipphe
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - run: nix eval --accept-flake-config -L '.#checks.${{ matrix.system }}.${{ matrix.check }}'
+
+  results:
+    name: Results
+    runs-on: ubuntu-latest
+    if: always()
+    needs:
+      - checks
+    steps:
+      - run: |
+          result="${{ needs.checks.result }}"
+          if [[ "$result" != "success" && "$result" != "skipped" ]]; then
+            exit 1
+          fi
