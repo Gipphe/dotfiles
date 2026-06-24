@@ -92,6 +92,13 @@ util.mkProgram {
               "-r"
               "all()"
             ];
+            bb = [
+              "bookmark"
+              "list"
+              "-T"
+              "local_bookmarks"
+              "-r"
+            ];
             rebase-all = [
               "rebase"
               "-s"
