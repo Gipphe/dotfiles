@@ -62,23 +62,29 @@
         )
       );
 
-      checks =
+      checks = eachSystem (
+        { pkgs, system, ... }:
         let
-          inherit (nixpkgs) lib;
-        in
-        {
-          "x86_64-linux" = lib.mapAttrs' (name: x: {
-            name = "nixos_${name}";
+          inherit (pkgs) lib;
+          filterSystem = lib.filterAttrs (n: c: c.pkgs.stdenv.hostPlatform.system == system);
+          mkNixosCheck = name: x: {
+            name = "nixos-${name}";
             value = x.config.system.build.toplevel;
-          }) (lib.filterAttrs (n: _: n != "boron") self.nixosConfigurations);
-
-          "aarch64-linux" =
-            lib.mapAttrs (name: x: {
-              name = "nix-on-droid_${name}";
-              value = x.activationPackage;
-            }) self.nixOnDroidConfigurations
-            // self.checks."x86_64-linux";
-        };
+          };
+          # mkNixOnDroidCheck = name: x: {
+          #   name = "nix-on-droid-${name}";
+          #   value = x.activationPackage;
+          # };
+        in
+        lib.pipe self.nixosConfigurations [
+          filterSystem
+          (lib.mapAttrs' mkNixosCheck)
+        ]
+        # // lib.pipe self.nixOnDroidConfigurations [
+        #   filterSystem
+        #   (lib.mapAttrs' mkNixOnDroidCheck)
+        # ]
+      );
 
       images.sodium = self.nixosConfigurations.sodium.config.system.build.image;
 
@@ -181,11 +187,26 @@
       "https://cache.nixos.org"
       "https://comfyui.cachix.org"
       "https://cuda-maintainers.cachix.org"
+      "https://gipphe.cachix.org"
       "https://hyprland.cachix.org"
       "https://nix-community.cachix.org"
       "https://nix-gaming.cachix.org"
       "https://nixpkgs-unfree.cachix.org"
       "https://noctalia.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "atelier.cachix.org-1:rEyd/Z4TiXZbBVuU/lDnKZ/7WtnFTwJ17OKHGcahVUo="
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "comfyui.cachix.org-1:33mf9VzoIjzVbp0zwj+fT51HG0y31ZTK3nzYZAX0rec="
+      "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
+      "gipphe.cachix.org-1:GeHkB5yyMQkXYCPJ1FqFl8fbtDe6/aSmS9k8c57GetY="
+      "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+      "nixpkgs-unfree.cachix.org-1:hqvoInulhbV4nJ9yJOEr+4wxhDV4xq2d1DK7S6Nj6rs="
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
     ];
   };
 }

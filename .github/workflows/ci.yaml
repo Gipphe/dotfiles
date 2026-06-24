@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  find-checks:
+    name: Find checks
+    runs-on: ubuntu-latest
+    outputs:
+      checks: ${{ steps.find-checks.outputs.checks }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: DeterminateSystems/determinate-nix-action@629b284231c2a82554b724e357e47fc6020833c8 # v3
+      - name: Find checks
+        id: find-checks
+        run: |
+          systems=( 'x86_64-linux' 'aarch64-linux' )
+          checks='[]'
+          for system in "${systems[@]}"; do
+            check_names="$(nix eval --accept-flake-config --no-pretty --json ".#checks.$system" --apply builtins.attrNames)"
+            new_checks="$(echo "$check_names" | jq -c --arg system "$system" 'map({ check: ., system: $system })')"
+            checks="$(echo "$checks" | jq -c --argjson new_checks "$new_checks" '. + $new_checks')"
+          done
+          echo "checks=$checks" >> "$GITHUB_OUTPUT"
+
+  checks:
+    name: ${{ matrix.check }} (${{ matrix.system }})
+    runs-on: ${{ matrix.system == 'aarch64-linux' && 'ubuntu-24.04-arm' || 'ubuntu-latest' }}
+    needs:
+      - find-checks
+    strategy:
+      matrix:
+        include: ${{ fromJson(needs.find-checks.outputs.checks) }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+      - uses: DeterminateSystems/determinate-nix-action@629b284231c2a82554b724e357e47fc6020833c8 # v3
+      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
+        with:
+          name: gipphe
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - run: nix eval --accept-flake-config -L '.#checks.${{ matrix.system }}.${{ matrix.check }}'

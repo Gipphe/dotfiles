@@ -2,8 +2,9 @@
   callPackage,
   mkShell,
 
-  jujutsu,
+  cachix,
   deadnix,
+  jujutsu,
   nix-tree,
   nixfmt,
   sops,
@@ -17,6 +18,7 @@ mkShell {
   commands = extra.shellCommands;
   env = extra.shellEnv;
   packages = [
+    cachix
     deadnix # clean up unused nix code
     nix-tree
     nixfmt # nix formatter
