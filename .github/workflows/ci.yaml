@@ -54,6 +54,6 @@ jobs:
     steps:
       - run: |
           result="${{ needs.checks.result }}"
-          if [[ "$result" != "success" && "$result" != "skipped" ]]; then
+          if [[ "$result" != "success" ]]; then
             exit 1
           fi
