@@ -30,6 +30,8 @@ let
     };
 
     polarity = "dark";
+
+    overlays.enable = false;
   };
 in
 util.mkEnvironment {
