@@ -20,6 +20,7 @@ let
         util
         hostname
         ;
+      environment = "homeManager";
 
       osConfig = config;
       flags = flags // {

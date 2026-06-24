@@ -22,7 +22,7 @@
             pkgs = nixpkgs.legacyPackages.${system};
           }
         );
-      hosts = import ./hosts inputs;
+      environments = import ./environments inputs;
     in
     {
       formatter = eachSystem ({ system, ... }: self.packages.${system}.treefmt);
@@ -88,7 +88,7 @@
 
       images.sodium = self.nixosConfigurations.sodium.config.system.build.image;
 
-      inherit (hosts)
+      inherit (environments)
         nixOnDroidConfigurations
         nixosConfigurations
         ;

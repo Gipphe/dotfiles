@@ -172,14 +172,14 @@ let
     {
       imports = [
         (
-          { lib, _class, ... }:
+          { lib, environment, ... }:
           let
             baseModules = [
               { inherit options; }
               shared
             ];
 
-            classModule = lib.toList (args.${_class} or [ ]);
+            classModule = lib.toList (args.${environment} or [ ]);
           in
           {
             imports = baseModules ++ classModule;
