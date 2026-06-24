@@ -4,7 +4,7 @@ let
   inherit (lib.attrsets) filterAttrs mapAttrs;
   util = import ./util.nix { inherit lib; };
 
-  machines = filterAttrs (_: c: c.machine == "nixos") util.machines;
+  hosts = filterAttrs (_: c: c.machine == "nixos") util.hosts;
 
   flags = {
     isNixos = true;
@@ -32,10 +32,10 @@ let
       };
       modules = [
         ../root.nix
-        { gipphe.machines.${hostname}.enable = true; }
+        { gipphe.hosts.${hostname}.enable = true; }
       ];
     };
 in
 {
-  nixosConfigurations = mapAttrs mkMachine machines;
+  nixosConfigurations = mapAttrs mkMachine hosts;
 }

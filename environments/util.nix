@@ -4,7 +4,7 @@ let
   inherit (builtins) readDir attrNames;
 in
 {
-  machines = pipe ../hosts [
+  hosts = pipe ../hosts [
     readDir
     (filterAttrs (_: t: t == "directory"))
     attrNames

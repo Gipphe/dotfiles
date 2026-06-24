@@ -23,9 +23,9 @@ writeFishApplication {
         exit 0
       end
 
-      set hosts (find ./machines/* -maxdepth 0 -type d -exec basename {} \;)
+      set hosts (find ./hosts/* -maxdepth 0 -type d -exec basename {} \;)
       or begin
-        echo "Machines are not here" >&2
+        echo "Hosts are not here" >&2
         exit 1
       end
 

@@ -9,7 +9,7 @@
 let
   host = import ./host.nix;
 in
-util.mkToggledModule [ "machines" ] {
+util.mkToggledModule [ "hosts" ] {
   inherit (host) name;
 
   shared.gipphe = {
