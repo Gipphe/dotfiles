@@ -28,6 +28,7 @@ let
           flags
           util
           ;
+        environment = "nixos";
       };
       modules = [
         ../root.nix

@@ -32,6 +32,7 @@ let
           flags
           util
           ;
+        environment = "nixOnDroid";
       };
       modules = [
         ../root.nix
