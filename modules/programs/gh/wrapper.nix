@@ -103,7 +103,7 @@ in
     constructFiles = {
       config = {
         relPath = "config/config.yml";
-        content = toYAML config.settings;
+        content = toYAML ({ version = 1; } // config.settings);
       };
       hosts = lib.mkIf (config.hosts != { }) {
         relPath = "config/hosts.yml";
@@ -123,6 +123,7 @@ in
           helper = "${config.package}/bin/gh auth git-credential"
       '') config.gitCredentialHelper.hosts
     );
+
     meta = {
       description.pre = ''
         To use this wrapped GitHub CLI as a credential helper for GitHub with Git, pass the `passthru.git` attribute on this wrapped package to your Git wrapper.
