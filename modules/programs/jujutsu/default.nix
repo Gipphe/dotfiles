@@ -92,33 +92,6 @@ util.mkProgram {
               "-r"
               "all()"
             ];
-            sync = [
-              "util"
-              "exec"
-              "--"
-              (lib.getExe pkgs.fish)
-              "--no-config"
-              "-c"
-              # fish
-              ''
-                set -l bookmarks (${lib.getExe pkgs.jujutsu} bookmark list -T 'name ++ "\n"')
-                set -l bookmark $argv[1]
-
-                if test -z "$bookmark"
-                  echo "Missing bookmark argument" >&2
-                  exit 1
-                end
-
-                if not contains $bookmark $bookmarks
-                  echo "Can only sync existing bookmarks." >&2
-                  echo "The passed bookmark does not exist: $bookmark" >&2
-                  exit 2
-                end
-
-                ${lib.getExe pkgs.jujutsu} bookmark set -r @- $bookmark
-                exit $status
-              ''
-            ];
             rebase-all = [
               "rebase"
               "-s"
