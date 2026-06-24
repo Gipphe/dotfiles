@@ -5,7 +5,7 @@ let
   inherit (lib.attrsets) filterAttrs mapAttrs;
   util = import ./util.nix { inherit lib; };
 
-  machines = filterAttrs (_: c: c.machine == "nix-on-droid") util.machines;
+  hosts = filterAttrs (_: c: c.machine == "nix-on-droid") util.hosts;
 
   flags = {
     isNixos = false;
@@ -36,10 +36,10 @@ let
       };
       modules = [
         ../root.nix
-        { gipphe.machines.${hostname}.enable = true; }
+        { gipphe.hosts.${hostname}.enable = true; }
       ];
     };
 in
 {
-  nixOnDroidConfigurations = mapAttrs mkMachine machines;
+  nixOnDroidConfigurations = mapAttrs mkMachine hosts;
 }

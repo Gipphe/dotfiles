@@ -12,6 +12,6 @@
   settings.formatter.nixfmt.excludes = [
     "modules/system/hardware-configuration/*.nix"
     "hardware-configuration.nix"
-    "machines/*/hardware-configuration.nix"
+    "hosts/*/hardware-configuration.nix"
   ];
 }).config.build.wrapper

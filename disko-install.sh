@@ -11,7 +11,7 @@ info() {
 print_help() {
   info "Usage: ./disko-install.sh <hostname> <disk_device_path>"
   info "  hostname:"
-  info "    hostname of the machine to install"
+  info "    hostname of the host to install"
   info "  disk_device_path:"
   info "    Device path to disk to install on."
   info "    Example: /dev/sda"

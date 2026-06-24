@@ -160,7 +160,7 @@ in
       name = "lint:deadnix";
       command = # bash
         ''
-          ${lib.getExe deadnix} --exclude ./machines/*/hardware-configuration.nix
+          ${lib.getExe deadnix} --exclude ./hosts/*/hardware-configuration.nix
         '';
       category = "lint";
     }

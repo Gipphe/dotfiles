@@ -11,7 +11,7 @@ let
   monitors.left = "ASUSTek COMPUTER INC VG248 L9LMQS203421";
   monitors.right = "ASUSTek COMPUTER INC VG248 L9LMQS203414";
 in
-util.mkToggledModule [ "machines" ] {
+util.mkToggledModule [ "hosts" ] {
   inherit (host) name;
 
   shared.gipphe = {

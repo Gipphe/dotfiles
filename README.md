@@ -50,15 +50,15 @@ From Android's nix-on-droid:
 nix-on-droid switch --flake .#<hostname>
 ```
 
-## Machines
+## Hosts
 
 This dotfiles repo consists of configurations for NixOS, and nix-on-droid
-machines.
+hosts.
 
-Machines are named according to elements from the periodic table, where
+Hosts are named according to elements from the periodic table, where
 applicable.
 
-Machine configs are located in [`./machines`](./machines).
+Machine configs are located in [`./hosts`](./hosts).
 
 ### titanium
 
@@ -66,7 +66,7 @@ Machine configs are located in [`./machines`](./machines).
 
 NixOS on custom built desktop.
 
-Located in [`./machines/titanium`](./machines/titanium).
+Located in [`./hosts/titanium`](./hosts/titanium).
 
 <img src="./assets/neofetch/titanium.png" width="600px">
 
@@ -76,7 +76,7 @@ Located in [`./machines/titanium`](./machines/titanium).
 
 Lenovo Ideapad laptop running NixOS.
 
-Located in [`./machines/cobalt`](./machines/cobalt).
+Located in [`./hosts/cobalt`](./hosts/cobalt).
 
 ### carbon
 
@@ -84,13 +84,13 @@ Located in [`./machines/cobalt`](./machines/cobalt).
 
 Google Pixel 9 Pro XL running nix-on-droid on GrapheneOS.
 
-Located in [`./machines/carbon`](./machines/carbon).
+Located in [`./hosts/carbon`](./hosts/carbon).
 
 ### sodium
 
 Raspberry Pi 4 running NixOS.
 
-Located in [`./machines/sodium`](./machines/sodium)
+Located in [`./hosts/sodium`](./hosts/sodium)
 
 ## Architecture
 

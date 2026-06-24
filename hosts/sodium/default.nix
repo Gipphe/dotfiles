@@ -11,7 +11,7 @@ let
   host = import ./host.nix;
   username = "gipphe";
 in
-util.mkToggledModule [ "machines" ] {
+util.mkToggledModule [ "hosts" ] {
   inherit (host) name;
 
   shared.gipphe = {
