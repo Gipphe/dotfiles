@@ -24,7 +24,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
 
         # Clipboard
         wl-clipboard.enable = true;
-        cliphist.enable = true;
+        cliphist.enable = false;
         clipse.enable = false;
 
         dolphin.enable = true;
