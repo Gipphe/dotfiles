@@ -3,9 +3,9 @@ let
   nixpkgs = nixpkgs-last-working-for-nix-on-droid;
   inherit (nixpkgs) lib;
   inherit (lib.attrsets) filterAttrs mapAttrs;
-  inherit (import ./util.nix { inherit lib; }) enumerateMachines;
+  util = import ./util.nix { inherit lib; };
 
-  machines = filterAttrs (_: c: c.machine == "nix-on-droid") (enumerateMachines ../machines);
+  machines = filterAttrs (_: c: c.machine == "nix-on-droid") util.machines;
 
   flags = {
     isNixos = false;

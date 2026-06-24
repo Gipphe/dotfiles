@@ -4,16 +4,14 @@ let
   inherit (builtins) readDir attrNames;
 in
 {
-  enumerateMachines =
-    path:
-    pipe path [
-      readDir
-      (filterAttrs (_: t: t == "directory"))
-      attrNames
-      (map (x: {
-        ${x} = import "${path}/${x}/host.nix";
-      }))
-      mergeAttrsList
-      (filterAttrs (_: v: v.enable))
-    ];
+  machines = pipe ../machines [
+    readDir
+    (filterAttrs (_: t: t == "directory"))
+    attrNames
+    (map (x: {
+      ${x} = import ../machines/${x}/host.nix;
+    }))
+    mergeAttrsList
+    (filterAttrs (_: v: v.enable))
+  ];
 }
