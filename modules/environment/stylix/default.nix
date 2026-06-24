@@ -4,7 +4,6 @@
   pkgs,
   config,
   util,
-  # osConfig,
   lib,
   ...
 }:
@@ -31,6 +30,7 @@ let
 
     polarity = "dark";
 
+    # See https://github.com/nix-community/stylix/issues/1832
     overlays.enable = false;
   };
 in
@@ -56,5 +56,12 @@ util.mkEnvironment {
       }
     ];
     systemd.services."home-manager-${config.gipphe.username}".wants = [ "dbus.service" ];
+  };
+
+  nixOnDroid = {
+    imports = [ inputs.stylix.nixOnDroidModules.stylix ];
+    config = {
+      inherit stylix;
+    };
   };
 }
