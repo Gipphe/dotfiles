@@ -2,9 +2,9 @@
 let
   inherit (nixpkgs) lib;
   inherit (lib.attrsets) filterAttrs mapAttrs;
-  inherit (import ./util.nix { inherit lib; }) enumerateMachines;
+  util = import ./util.nix { inherit lib; };
 
-  machines = filterAttrs (_: c: c.machine == "nixos") (enumerateMachines ../machines);
+  machines = filterAttrs (_: c: c.machine == "nixos") util.machines;
 
   flags = {
     isNixos = true;
