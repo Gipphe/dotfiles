@@ -1,4 +1,9 @@
-{ util, pkgs, ... }:
+{
+  inputs,
+  util,
+  pkgs,
+  ...
+}:
 util.mkProgram {
   name = "dolphin";
   homeManager.home.packages = builtins.attrValues {
@@ -9,4 +14,5 @@ util.mkProgram {
       kio-admin # Manage files as admin
       ;
   };
+  nixos.nixpkgs.overlays = [ inputs.dolphin-overlay.overlays.default ];
 }

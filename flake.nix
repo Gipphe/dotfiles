@@ -174,6 +174,11 @@
 
     tricorder.url = "github:atelier-hub/tricorder";
 
+    dolphin-overlay = {
+      url = "github:MattiDragon/dolphin-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # TODO: Remove once https://github.com/NixOS/nixpkgs/pull/521906 is in
     # nixos-unstable.
     nixpkgs-sunshine.url = "github:Qubasa/nixpkgs/update_sunshine";
