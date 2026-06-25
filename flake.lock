@@ -259,6 +259,26 @@
         "type": "github"
       }
     },
+    "dolphin-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778858013,
+        "narHash": "sha256-qWTcnNs4iivgM09X0JQXpF7Kuxl5kxNxcJkNkLPH8ZQ=",
+        "owner": "MattiDragon",
+        "repo": "dolphin-overlay",
+        "rev": "b9dabd238054ff973e45c05a72345c756e0f286e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MattiDragon",
+        "repo": "dolphin-overlay",
+        "type": "github"
+      }
+    },
     "firefox-gnome-theme": {
       "flake": false,
       "locked": {
@@ -1974,6 +1994,7 @@
         "comfyui": "comfyui",
         "devshell": "devshell",
         "disko": "disko",
+        "dolphin-overlay": "dolphin-overlay",
         "giphtvim": "giphtvim",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
