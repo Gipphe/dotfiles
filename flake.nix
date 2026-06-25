@@ -175,7 +175,7 @@
     tricorder.url = "github:atelier-hub/tricorder";
 
     dolphin-overlay = {
-      url = "github:MattiDragon/dolphin-overlay";
+      url = "github:Gipphe/dolphin-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
