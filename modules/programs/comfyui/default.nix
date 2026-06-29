@@ -1,16 +1,9 @@
-{
-  pkgs,
-  inputs,
-  util,
-  ...
-}:
+{ util, ... }:
 let
   mod = util.mkProgram {
     name = "comfyui";
     nixos = {
-      environment.systemPackages = [
-        inputs.comfyui.packages.${pkgs.stdenv.hostPlatform.system}.cuda
-      ];
+      # Package included in separate repo
       networking.firewall.allowedTCPPorts = [
         8188
         8189
