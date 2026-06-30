@@ -22,6 +22,7 @@ util.mkProgram {
         style = "compact";
         search_mode_shell_up_key_binding = "prefix";
         enter_accept = true;
+        filter_mode = "session";
         keymap_mode = "vim-insert";
         keymap_cursor = {
           emacs = "blink-bar";
