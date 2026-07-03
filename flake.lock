@@ -1093,11 +1093,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1783027142,
-        "narHash": "sha256-kQqdgS844acOr1uXejmqolWaKGx7KR33lK/hx1VRKDE=",
+        "lastModified": 1783069121,
+        "narHash": "sha256-QjrokJ1vabIso+WMTkonz/vkD+/XQzdwKwkc6iTkwKs=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "420f112bc6e0f0fe28c9a348969ebcc9fd8ad56f",
+        "rev": "79d3a904cd8895fc517488fc8333d3a713f8d4d0",
         "type": "github"
       },
       "original": {
@@ -1879,11 +1879,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783024300,
-        "narHash": "sha256-qFdhj5qZTzSKmIVQVOCygPOTduo6WT5GBqcseP1zlvU=",
+        "lastModified": 1783093735,
+        "narHash": "sha256-f12Pu8LAOTE8wTqbHNGl1B8X+Auvg8zuPCENC2rBa68=",
         "owner": "noctalia-dev",
         "repo": "noctalia",
-        "rev": "5fb7e57ae6b9137197bf1faca285a881e2bb76f1",
+        "rev": "a0d8efc30ead165a6a56349fdda3c722309c0745",
         "type": "github"
       },
       "original": {
@@ -2259,11 +2259,11 @@
         "tmp-postgres": "tmp-postgres"
       },
       "locked": {
-        "lastModified": 1782912355,
-        "narHash": "sha256-cBiAzRQof077KR+S6c1NM2Lzcj4nHvITQFB8qA+vo2Q=",
+        "lastModified": 1783081071,
+        "narHash": "sha256-0AlUOmzPiSNjc1hkfezSzHgo49ocEyovR/j8z0zZDQ0=",
         "owner": "atelier-hub",
         "repo": "tricorder",
-        "rev": "1df9dfeec0fc060e7be78facf16056ed09754692",
+        "rev": "4de74608a251ee3d9d6da89b42e85252089b14de",
         "type": "github"
       },
       "original": {
