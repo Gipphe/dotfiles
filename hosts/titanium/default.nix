@@ -67,6 +67,11 @@ util.mkToggledModule [ "hosts" ] {
       cpu.intel.comet-lake.enable = true;
       disk.enable = true;
     };
+    gaming.minecraft.servers = {
+      enable = true;
+      dataDir = "/srv/minecraft";
+      worlds.poketards.enable = true;
+    };
     gaming.gamescope.args = [
       "--adaptive-sync"
       "-O ${monitors.left}"
@@ -138,7 +143,7 @@ util.mkToggledModule [ "hosts" ] {
                 "Videos"
               ];
             in
-            homePaths ++ configPaths ++ dataPaths;
+            [ config.gipphe.gaming.minecraft.servers.dataDir ] ++ homePaths ++ configPaths ++ dataPaths;
           exclude =
             let
               steamProtonPaths =

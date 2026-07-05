@@ -1,0 +1,61 @@
+{
+  pkgs,
+  util,
+  inputs,
+  ...
+}:
+let
+  javaPort = 25565;
+  bedrockPort = 19132;
+in
+util.mkToggledModule [ "gaming" "minecraft" "servers" "worlds" ] {
+  name = "poketards";
+  nixos = {
+    networking.firewall = {
+      allowedTCPPorts = [ javaPort ];
+      allowedUDPPorts = [ bedrockPort ];
+    };
+    services.minecraft-servers = {
+      servers.poketards = {
+        enable = true;
+        autoStart = false;
+        package =
+          inputs.nix-minecraft.legacyPackages.${pkgs.stdenv.hostPlatform.system}.paperServers.paper-26_2;
+        jvmOpts = "-Xms4G -Xmx4G -XX:+UseG1GC";
+        serverProperties = {
+          server-port = javaPort;
+          gamemode = "adventure";
+          difficulty = "peaceful";
+          white-list = false;
+          online-mode = true;
+          level-seed = "i.definitely.backed.this.one.up";
+        };
+        symlinks = {
+          # NOTE: Update hashes on first run failure
+          "plugins/Geyser-Spigot.jar" = pkgs.fetchurl {
+            pname = "Geyser-Spigot.jar";
+            version = "2026-29-6-1177";
+            url = "https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot";
+            hash = "sha256-UqBOIsSHajV7V6kFiMXl4plrfWfF2Rn6yQkaCSNSq8I=";
+          };
+          "plugins/Floodgate-Spigot.jar" = pkgs.fetchurl {
+            pname = "Floodgate-Spigot.jar";
+            version = "2026-29-6-138";
+            url = "https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot";
+            hash = "sha256-RL25COL7T/G5dNUxPQSKYlohVVqYRM+4Ylapjo4ca9E=";
+          };
+          "plugins/Geyser-Spigot/config.yml" = pkgs.writeText "config.yml" ''
+            bedrock:
+              address: 0.0.0.0
+              port: ${toString bedrockPort}
+            remote:
+              address: auto
+              port: ${toString javaPort}
+              auth-type: floodgate
+            floodgate-key-file: ../Floodgate-Spigot/key.pem
+          '';
+        };
+      };
+    };
+  };
+}

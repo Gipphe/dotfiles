@@ -10,6 +10,7 @@
     ./limo.nix
     ./lutris.nix
     ./mangohud
+    ./minecraft/servers.nix
     ./mo2installer.nix
     ./prismlauncher.nix
     ./runelite.nix
