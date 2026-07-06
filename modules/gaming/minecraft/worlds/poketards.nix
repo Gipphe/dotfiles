@@ -30,6 +30,12 @@ util.mkToggledModule [ "gaming" "minecraft" "servers" "worlds" ] {
           online-mode = true;
           level-seed = "i.definitely.backed.this.one.up";
         };
+        operators = {
+          Gipphe = {
+            level = 4;
+            uuid = "18f3cbac-ada8-4dd2-88df-37c72eb8140b";
+          };
+        };
         symlinks = {
           # NOTE: Update hashes on first run failure
           "plugins/Geyser-Spigot.jar" = pkgs.fetchurl {
