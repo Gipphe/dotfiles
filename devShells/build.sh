@@ -2,16 +2,20 @@
 
 command="$1"
 ask="${2-}"
+args=()
 if test -n "$ask"; then
-  ask="--ask"
+  args+=("--ask")
 fi
 
 if command -v nixos-rebuild &>/dev/null; then
-  nh os "$command" "$ask"
+  nh os "$command" "${args[@]}"
   if test "$?" != 0; then
     exit 1
   fi
-elif command -v nix-on-droid &>/dev/null; then
+  exit 0
+fi
+
+if command -v nix-on-droid &>/dev/null; then
   host="$(jq -r '.hostname' env.json)"
   if test -z "$host"; then
     echo 'Found no hostname in env.json' >&2
@@ -40,7 +44,8 @@ elif command -v nix-on-droid &>/dev/null; then
     ;;
   esac
   rm -f result
-else
-  echo "This is not a NixOS or nix-on-droid system" >&2
-  exit 1
+  exit 0
 fi
+
+echo "This is not a NixOS or nix-on-droid system" >&2
+exit 1
