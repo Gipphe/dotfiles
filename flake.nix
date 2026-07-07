@@ -50,8 +50,6 @@
           treefmt = pkgs.callPackage ./packages/treefmt.nix { inherit treefmt-nix; };
           mo2installer = pkgs.callPackage ./packages/mo2installer.nix { };
           fluorine-manager = pkgs.callPackage ./packages/fluorine-manager.nix { };
-          geyser-spigot = pkgs.callPackage ./packages/geyser-spigot { };
-          floodgate-spigot = pkgs.callPackage ./packages/floodgate-spigot { };
         }
         // (
           let
