@@ -37,19 +37,27 @@ util.mkToggledModule [ "gaming" "minecraft" "servers" "worlds" ] {
           };
         };
         symlinks = {
-          # NOTE: Update hashes on first run failure
+          # Allows bedrock players to join Java server
           "plugins/Geyser-Spigot.jar" = pkgs.fetchurl {
             pname = "Geyser-Spigot.jar";
             version = "2026-29-6-1177";
             url = "https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot";
             hash = "sha256-UqBOIsSHajV7V6kFiMXl4plrfWfF2Rn6yQkaCSNSq8I=";
           };
+          # Authenticates Bedrock players as Java players using their Bedrock
+          # account (otherwise they'd need a paid Java account)
           "plugins/Floodgate-Spigot.jar" = pkgs.fetchurl {
             pname = "Floodgate-Spigot.jar";
             version = "2026-29-6-138";
             url = "https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot";
             hash = "sha256-RL25COL7T/G5dNUxPQSKYlohVVqYRM+4Ylapjo4ca9E=";
           };
+          # Fixes some inconsistencies between Bedrock and Java in ways that
+          # Geyser developers don't want to include in the base Geyser mod
+          # because of potential exploitation.
+          # At this time of writing, all it does is disable server-side
+          # collision for bamboo and dripstone, since those have offset
+          # collisions between Bedrock and Java.
           "plugins/hurricane-spigot.jar" = pkgs.fetchurl {
             pname = "hurricane-spigot.jar";
             version = "2026-05-30-4";
