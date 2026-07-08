@@ -28,7 +28,7 @@ util.mkToggledModule [ "gaming" "minecraft" "servers" "worlds" ] {
           difficulty = "peaceful";
           white-list = false;
           online-mode = true;
-          level-seed = "i.definitely.backed.this.one.up";
+          level-seed = "i.backed.this.one.up";
         };
         operators = {
           Gipphe = {
