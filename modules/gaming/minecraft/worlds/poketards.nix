@@ -20,7 +20,7 @@ util.mkToggledModule [ "gaming" "minecraft" "servers" "worlds" ] {
         enable = true;
         autoStart = false;
         package =
-          inputs.nix-minecraft.legacyPackages.${pkgs.stdenv.hostPlatform.system}.paperServers.paper-26_2;
+          inputs.nix-minecraft.legacyPackages.${pkgs.stdenv.hostPlatform.system}.paperServers.paper-26_1_2;
         jvmOpts = "-Xms4G -Xmx4G -XX:+UseG1GC";
         serverProperties = {
           server-port = javaPort;
