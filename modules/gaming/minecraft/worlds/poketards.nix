@@ -56,6 +56,8 @@ util.mkToggledModule [ "gaming" "minecraft" "servers" "worlds" ] {
             url = "https://download.geysermc.org/v2/projects/hurricane/versions/latest/builds/latest/downloads/spigot";
             hash = "sha256-VhWJaY+znUxtRpiRmD7bb/u6Q+zJgkSJUNyaVRdqav4=";
           };
+        };
+        files = {
           "plugins/Geyser-Spigot/config.yml" = pkgs.writeText "config.yml" ''
             bedrock:
               address: 0.0.0.0
