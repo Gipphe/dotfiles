@@ -3,6 +3,7 @@
   hostname,
   util,
   inputs,
+  config,
   ...
 }:
 let
@@ -44,6 +45,17 @@ util.mkToggledModule [ "hosts" ] {
     };
     system.cpu.enable = true;
     hardware.disk.enable = true;
+  };
+
+  homeManager = {
+    gipphe.programs.syncthing.guiCredentials.passwordFile =
+      config.sops.secrets.cobalt-syncthing-password.path;
+
+    sops.secrets.cobalt-syncthing-password = {
+      sopsFile = ../../secrets/cobalt-syncthing-password.txt;
+      mode = "400";
+      format = "binary";
+    };
   };
 
   nixos.imports = lib.optionals (hostname == host.name) (

@@ -5,7 +5,16 @@
   ...
 }:
 let
+  cfg = config.gipphe.programs.syncthing;
   folders = {
+    "${config.home.homeDirectory}/Documents/Backups" = {
+      id = "backups";
+      label = "Backups";
+      devices = [
+        "carbon"
+        "titanium"
+      ];
+    };
     "${config.home.homeDirectory}/Documents/Notes" = {
       id = "notes";
       label = "Notes";
@@ -54,7 +63,7 @@ let
     };
     "/mnt/oldone/Filen/Archive/Backup/PhoneProfilesPlus settings" = {
       id = "phone-profiles-plus-settings";
-      lable = "PhoneProfilesPlus settings";
+      label = "PhoneProfilesPlus settings";
       devices = [
         "titanium"
         "carbon"
@@ -62,7 +71,7 @@ let
     };
     "/mnt/oldone/Filen/Archive/Backup/AnkiDroid" = {
       id = "ankidroid";
-      lable = "AnkiDroid";
+      label = "AnkiDroid";
       devices = [
         "titanium"
         "carbon"
@@ -87,6 +96,10 @@ let
 in
 util.mkProgram {
   name = "syncthing";
+  options.gipphe.programs.syncthing.guiCredentials.passwordFile = lib.mkOption {
+    type = with lib.types; either path str;
+    description = "Path to password file";
+  };
   homeManager = {
     services.syncthing = {
       enable = true;
@@ -94,12 +107,12 @@ util.mkProgram {
       overrideFolders = true;
       guiCredentials = {
         username = "syncthing";
-        passwordFile = config.sops.secrets."syncthing-password".path;
+        passwordFile = cfg.guiCredentials.passwordFile;
       };
       settings = {
         devices = removeAttrs {
           argon.id = "GKVPGI5-YOS5SQK-VFMDIPM-EIQ4NOI-72TYKH3-TU7FR4X-IUOX55J-7NEEYQY";
-          boron.id = "AC6JD6E-L45PH3D-GZ55WY6-YRKXSLN-5TLDXHL-FFL7JG7-YQ6B4PL-G7DBLQK";
+          boron.id = "SXGT2PL-UCGX25P-FVA6ZHZ-5RWMOFN-VY4YVG2-MKZLEGE-AIDTEX6-AEAGHA5";
           carbon.id = "A7LZMEF-DMVXRLI-KB3RWZ5-QLYUX7R-MK43GT5-TIRZHHD-VY6NIZ6-MRVCZAA";
           cobalt.id = "5WAUGFG-XWLSBTV-IJMCB5F-YGN7AZM-RQ2FQOT-7SWUF7Q-7OUZKSR-JBZX3AK";
           helium.id = "XM4OOHL-EP23EPU-63QRPZY-TLLMY45-JPJ5TDB-MB6LZ6J-3UO7W2A-RLOVVA2";
@@ -108,11 +121,6 @@ util.mkProgram {
         folders = foldersForThisHost;
       };
       tray.enable = true;
-    };
-    sops.secrets."syncthing-password" = {
-      sopsFile = ../../../secrets/pub-syncthing-password;
-      mode = "400";
-      format = "binary";
     };
   };
   nixos.networking.firewall = {

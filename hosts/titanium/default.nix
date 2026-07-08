@@ -220,6 +220,15 @@ util.mkToggledModule [ "hosts" ] {
       format = "binary";
       sopsFile = ../../secrets/titanium-sodium.ssh;
     };
+
+    gipphe.programs.syncthing.guiCredentials.passwordFile =
+      config.sops.secrets.titanium-syncthing-password.path;
+
+    sops.secrets.titanium-syncthing-password = {
+      sopsFile = ../../secrets/titanium-syncthing-password.txt;
+      mode = "400";
+      format = "binary";
+    };
   };
 
   nixos = {

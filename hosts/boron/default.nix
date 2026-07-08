@@ -80,6 +80,15 @@ util.mkToggledModule [ "hosts" ] {
       format = "binary";
       sopsFile = ../../secrets/boron-sodium.ssh;
     };
+
+    gipphe.programs.syncthing.guiCredentials.passwordFile =
+      config.sops.secrets.boron-syncthing-password.path;
+
+    sops.secrets.boron-syncthing-password = {
+      sopsFile = ../../secrets/boron-syncthing-password.txt;
+      mode = "400";
+      format = "binary";
+    };
   };
 
   nixos = {
