@@ -50,6 +50,12 @@ util.mkToggledModule [ "gaming" "minecraft" "servers" "worlds" ] {
             url = "https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot";
             hash = "sha256-RL25COL7T/G5dNUxPQSKYlohVVqYRM+4Ylapjo4ca9E=";
           };
+          "plugins/hurricane-spigot.jar" = pkgs.fetchurl {
+            pname = "hurricane-spigot.jar";
+            version = "2026-05-30-4";
+            url = "https://download.geysermc.org/v2/projects/hurricane/versions/latest/builds/latest/downloads/spigot";
+            hash = "sha256-VhWJaY+znUxtRpiRmD7bb/u6Q+zJgkSJUNyaVRdqav4=";
+          };
           "plugins/Geyser-Spigot/config.yml" = pkgs.writeText "config.yml" ''
             bedrock:
               address: 0.0.0.0
