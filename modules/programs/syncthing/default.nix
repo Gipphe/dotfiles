@@ -63,7 +63,7 @@ let
     };
     "/mnt/oldone/Filen/Archive/Backup/PhoneProfilesPlus settings" = {
       id = "phone-profiles-plus-settings";
-      lable = "PhoneProfilesPlus settings";
+      label = "PhoneProfilesPlus settings";
       devices = [
         "titanium"
         "carbon"
@@ -71,7 +71,7 @@ let
     };
     "/mnt/oldone/Filen/Archive/Backup/AnkiDroid" = {
       id = "ankidroid";
-      lable = "AnkiDroid";
+      label = "AnkiDroid";
       devices = [
         "titanium"
         "carbon"
