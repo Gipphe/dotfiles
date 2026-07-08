@@ -66,7 +66,7 @@ util.mkToggledModule [ "gaming" "minecraft" "servers" "worlds" ] {
               address: auto
               port: ${toString javaPort}
               auth-type: floodgate
-            floodgate-key-file: ../Floodgate-Spigot/key.pem
+            floodgate-key-file: ../floodgate/key.pem
           '';
         };
       };
