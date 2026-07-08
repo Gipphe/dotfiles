@@ -7,6 +7,14 @@
 let
   cfg = config.gipphe.programs.syncthing;
   folders = {
+    "${config.home.homeDirectory}/Documents/Backups" = {
+      id = "backups";
+      label = "Backups";
+      devices = [
+        "carbon"
+        "titanium"
+      ];
+    };
     "${config.home.homeDirectory}/Documents/Notes" = {
       id = "notes";
       label = "Notes";
