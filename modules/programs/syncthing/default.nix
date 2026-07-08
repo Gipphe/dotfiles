@@ -5,6 +5,7 @@
   ...
 }:
 let
+  cfg = config.gipphe.programs.syncthing;
   folders = {
     "${config.home.homeDirectory}/Documents/Notes" = {
       id = "notes";
@@ -87,6 +88,10 @@ let
 in
 util.mkProgram {
   name = "syncthing";
+  options.gipphe.programs.syncthing.guiCredentials.passwordFile = lib.mkOption {
+    type = with lib.types; either path str;
+    description = "Path to password file";
+  };
   homeManager = {
     services.syncthing = {
       enable = true;
@@ -94,7 +99,7 @@ util.mkProgram {
       overrideFolders = true;
       guiCredentials = {
         username = "syncthing";
-        passwordFile = config.sops.secrets."syncthing-password".path;
+        passwordFile = cfg.guiCredentials.passwordFile;
       };
       settings = {
         devices = removeAttrs {
@@ -108,11 +113,6 @@ util.mkProgram {
         folders = foldersForThisHost;
       };
       tray.enable = true;
-    };
-    sops.secrets."syncthing-password" = {
-      sopsFile = ../../../secrets/pub-syncthing-password;
-      mode = "400";
-      format = "binary";
     };
   };
   nixos.networking.firewall = {
