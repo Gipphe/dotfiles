@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   hostname,
   util,
@@ -83,6 +84,7 @@ util.mkToggledModule [ "hosts" ] {
   };
 
   homeManager = {
+    home.packages = [ pkgs.megasync ];
     wayland.windowManager.hyprland.settings = {
       monitor = [
         {
