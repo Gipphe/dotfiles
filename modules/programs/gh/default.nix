@@ -101,6 +101,7 @@ util.mkProgram {
           user = "Gipphe";
         };
       };
+      env.GH_SPINNER_DISABLED = "1";
     };
   };
 }
