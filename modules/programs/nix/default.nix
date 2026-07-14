@@ -80,6 +80,18 @@ util.mkModule {
     ];
 
     nixpkgs.config.allowUnfree = true;
+    # TODO: Remove once this is in nixos-unstable:
+    # https://nixpk.gs/pr-tracker.html?pr=540072
+    nixpkgs.overlays = [
+      (final: prev: {
+        vulkan-validation-layers = prev.vulkan-validation-layers.overrideAttrs (old: {
+          cmakeFlags = [
+            "-DUPDATE_DEPS=OFF"
+          ]
+          ++ old.cmakeFlags;
+        });
+      })
+    ];
   };
 
   nixOnDroid = {
