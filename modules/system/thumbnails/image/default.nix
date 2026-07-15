@@ -18,17 +18,15 @@ util.mkToggledModule [ "system" "thumbnails" ] {
     '')
 
     # image/heif; image/avif.
-    pkgs.libheif
+    # provides heif-thumbnailer (the program that generates HEIF thumbnails)
+    pkgs.libheif.bin
+    # provides heif.thumbnailer (allows for the viewing of HEIF thumbnails)
     pkgs.libheif.out
 
-    # image/x-canon-cr2;image/x-canon-crw;image/x-minolta-mrw;image/x-nikon-nef;image/x-pentax-pef;image/x-panasonic-rw2;image/x-panasonic-raw2;image/x-samsung-srw;image/x-olympus-orf;image/x-sony-arw
-    pkgs.nufraw
-    pkgs.nufraw-thumbnailer
-    (pkgs.writeTextDir "share/thumbnailers/custom-nufraw.thumbnailer" ''
-      [Thumbnailer Entry]
-      TryExec=nufraw-batch
-      Exec=nufraw-batch --silent --size %s --out-type=png --output=%o %i
-      MimeType=image/x-adobe-dnb;image/x-dng;
-    '')
+    # For JXL(JPEG XL) support
+    pkgs.libjxl
+
+    # For WebP support
+    pkgs.webp-pixbuf-loader
   ];
 }
