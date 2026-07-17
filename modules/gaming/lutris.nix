@@ -27,14 +27,6 @@ util.mkGaming {
     home.sessionVariables.DOTNET_ROOT = "${dotnet}/share/dotnet";
   };
   nixos = {
-    nixpkgs.overlays = [
-      (_: prev: {
-        # TODO: See https://github.com/nixos/nixpkgs/issues/513245
-        openldap = prev.openldap.overrideAttrs {
-          doCheck = !prev.stdenv.hostPlatform.isi686;
-        };
-      })
-    ];
     # Required for Windows-based Epic Games store
     hardware.graphics.enable32Bit = true;
   };
