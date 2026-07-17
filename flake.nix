@@ -167,10 +167,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    noctalia = {
-      url = "github:noctalia-dev/noctalia";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Do not override its nixpkgs input, it invalidates the cachix cache, and
+    # will probably break things.
+    noctalia.url = "github:noctalia-dev/noctalia/cachix";
 
     tricorder.url = "github:atelier-hub/tricorder";
 
