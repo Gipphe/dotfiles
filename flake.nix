@@ -180,10 +180,6 @@
     };
 
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
-
-    # TODO: Remove once https://github.com/NixOS/nixpkgs/pull/521906 is in
-    # nixos-unstable.
-    nixpkgs-sunshine.url = "github:Qubasa/nixpkgs/update_sunshine";
   };
 
   nixConfig = {
