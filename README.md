@@ -39,13 +39,7 @@ From NixOS:
 nixos-rebuild switch --flake .#<hostname>
 ```
 
-From other non-NixOS Linux distros:
-
-```
-./install.sh
-```
-
-From Android's nix-on-droid:
+From Nix-on-Droid:
 
 ```
 nix-on-droid switch --flake .#<hostname>
@@ -59,7 +53,7 @@ hosts.
 Hosts are named according to elements from the periodic table, where
 applicable.
 
-Machine configs are located in [`./hosts`](./hosts).
+Machine configurations are located in [`./hosts`](./hosts).
 
 ### titanium
 
