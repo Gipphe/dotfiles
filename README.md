@@ -8,19 +8,13 @@
   </tr>
   <tr>
     <td align="center">
-      <a href="./LICENSE">
-        <img src="https://img.shields.io/static/v1.svg?style=for-the-badge&label=License&message=ISC&logoColor=ca9ee6&colorA=313244&colorB=cba6f7">
-      </a>
-      <a href="https://nixos.org">
-        <img src="https://img.shields.io/badge/NixOS-unstable-blue.svg?style=for-the-badge&labelColor=303446&logo=NixOS&logoColor=white&color=91D7E3">
-      </a>
+      <a href="./LICENSE"><img src="https://img.shields.io/static/v1.svg?style=for-the-badge&label=License&message=ISC&logoColor=ca9ee6&colorA=313244&colorB=cba6f7"></a>
+      <a href="https://nixos.org"><img src="https://img.shields.io/badge/NixOS-unstable-blue.svg?style=for-the-badge&labelColor=303446&logo=NixOS&logoColor=white&color=91D7E3"></a>
     </td>
   </tr>
   <tr>
     <td align="center">
-      <a href="https://catppuccin.com">
-        <img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/palette/macchiato.png" width="600px" align="center">
-      </a>
+      <a href="https://catppuccin.com"><img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/palette/macchiato.png" width="600px" align="center"></a>
     </td>
   </tr>
   <tr>
