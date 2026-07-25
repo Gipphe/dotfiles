@@ -7,20 +7,7 @@
 }:
 util.mkProgram {
   name = "fish";
-  options.gipphe.programs.fish = {
-    prompt = lib.mkOption {
-      description = "Which prompt to use";
-      type = lib.types.enum [
-        "tide"
-        "starship"
-      ];
-      default = "starship";
-      example = "tide";
-    };
-  };
   homeManager = {
-    imports = [ ./starship ];
-
     options.gipphe.programs.fish.package = lib.mkPackageOption pkgs "fish" { } // {
       default = config.programs.fish.package;
     };

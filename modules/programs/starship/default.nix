@@ -1,14 +1,12 @@
 {
   lib,
-  config,
   pkgs,
+  util,
   ...
 }:
-let
-  cfg = config.gipphe.programs.fish;
-in
-{
-  config = lib.mkIf (cfg.enable && cfg.prompt == "starship") {
+util.mkProgram {
+  name = "starship";
+  homeManager = {
     programs.starship = {
       enable = true;
       enableTransience = true;
