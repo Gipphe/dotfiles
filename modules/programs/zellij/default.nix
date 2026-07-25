@@ -447,10 +447,10 @@ util.mkProgram {
     programs = {
       zellij.enable = true;
 
-      fish.shellAbbrs = {
-        zq = "zellij kill-session $ZELLIJ_SESSION_NAME";
-        zj = "zellij";
-      };
+    };
+    gipphe.core.shell.abbrs = {
+      zq = "zellij kill-session $ZELLIJ_SESSION_NAME";
+      zj = "zellij";
     };
   };
 }

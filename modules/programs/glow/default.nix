@@ -2,6 +2,6 @@
 util.mkProgram {
   name = "glow";
   homeManager = {
-    programs.fish.shellAbbrs.glow = ", glow";
+    gipphe.core.shell.abbrs.glow = ", glow";
   };
 }
