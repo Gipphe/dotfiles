@@ -446,11 +446,14 @@ util.mkProgram {
 
     programs = {
       zellij.enable = true;
-
-    };
-    gipphe.core.shell.abbrs = {
-      zq = "zellij kill-session $ZELLIJ_SESSION_NAME";
-      zj = "zellij";
+      nushell.shellAliases = {
+        zq = "zellij kill-session $env.ZELLIJ_SESSION_NAME";
+        zj = "zellij";
+      };
+      fish.shellAbbrs = {
+        zq = "zellij kill-session $ZELLIJ_SESSION_NAME";
+        zj = "zellij";
+      };
     };
   };
 }

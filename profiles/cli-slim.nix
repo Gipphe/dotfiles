@@ -12,6 +12,7 @@ util.mkProfile {
     eza.enable = true;
     fd.enable = true;
     fish.enable = true;
+    fish.default = false;
     fx.enable = true;
     gh.enable = true;
     giphtvim.enable = true;
@@ -29,6 +30,7 @@ util.mkProfile {
     less.enable = true;
     nh.enable = true;
     nushell.enable = true;
+    nushell.default = true;
     ripgrep.enable = true;
     serpl.enable = true;
     ssh.enable = true;
