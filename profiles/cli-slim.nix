@@ -32,6 +32,7 @@ util.mkProfile {
     ripgrep.enable = true;
     serpl.enable = true;
     ssh.enable = true;
+    starship.enable = true;
     yazi.enable = true;
     zellij.enable = true;
     zoxide.enable = true;
