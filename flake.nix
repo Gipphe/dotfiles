@@ -171,7 +171,7 @@
     # will probably break things.
     noctalia.url = "github:noctalia-dev/noctalia/cachix";
 
-    tricorder.url = "github:atelier-hub/tricorder";
+    tricorder.url = "github:tweag/tricorder";
 
     dolphin-overlay = {
       url = "github:Gipphe/dolphin-overlay";
@@ -183,7 +183,6 @@
 
   nixConfig = {
     extra-substituters = [
-      "https://atelier.cachix.org"
       "https://attic.xuyh0120.win/lantian"
       "https://cache.iog.io"
       "https://cache.nixos.org"
@@ -195,9 +194,9 @@
       "https://nix-gaming.cachix.org"
       "https://nixpkgs-unfree.cachix.org"
       "https://noctalia.cachix.org"
+      "https://tweag.cachix.org"
     ];
     extra-trusted-public-keys = [
-      "atelier.cachix.org-1:rEyd/Z4TiXZbBVuU/lDnKZ/7WtnFTwJ17OKHGcahVUo="
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "comfyui.cachix.org-1:33mf9VzoIjzVbp0zwj+fT51HG0y31ZTK3nzYZAX0rec="
       "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
@@ -209,6 +208,7 @@
       "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
       "nixpkgs-unfree.cachix.org-1:hqvoInulhbV4nJ9yJOEr+4wxhDV4xq2d1DK7S6Nj6rs="
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+      "tweag.cachix.org-1:1kI0+PcOXktlm12UUDAEz7SErbLXsxOEKaEsAjxT8Dg="
     ];
   };
 }
