@@ -46,6 +46,37 @@
       ];
     };
   };
+  dock = {
+    cross_axis_padding = 2;
+    icon_size = 32;
+    item_spacing = 4;
+    margin_edge = 2;
+    radius = 8;
+  };
+  idle = {
+    behavior = {
+      lock = {
+        action = "lock";
+        enabled = false;
+        timeout = 600;
+      };
+      lock-and-suspend = {
+        action = "lock_and_suspend";
+        enabled = false;
+        timeout = 900;
+      };
+      screen-off = {
+        action = "screen_off";
+        enabled = true;
+        timeout = 660;
+      };
+    };
+    behavior_order = [
+      "lock"
+      "screen-off"
+      "lock-and-suspend"
+    ];
+  };
   location = {
     auto_locate = true;
   };
@@ -100,6 +131,7 @@
   };
   shell = {
     avatar_path = "/home/gipphe/Pictures/wallpapers/small-memory.png";
+    font_family = "Source Sans 3";
     launch_apps_as_systemd_services = true;
     panel = {
       open_near_click_control_center = true;
@@ -107,6 +139,9 @@
   };
   theme = {
     builtin = "Catppuccin";
+    custom_palette = "stylix";
+    mode = "dark";
+    source = "custom";
     templates = {
       builtin_ids = [ ];
     };

@@ -8,7 +8,8 @@ util.mkToggledModule [ "profiles" "desktop" ] {
         gtk.enable = true;
         hyprland.enable = true;
         hyprpolkitagent.enable = true;
-        hypridle.enable = true;
+        # Try noctalia's idle daemon
+        hypridle.enable = false;
         hyprlock.enable = true;
 
         ly.enable = false;
