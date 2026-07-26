@@ -48,8 +48,8 @@ util.mkProgram {
                 set -U fish_color_param 80869f
                 set -U fish_color_autosuggestion 5b6078
               '';
-          shellAbbrs = {
-            tf = "terraform";
+          shellAliases = config.gipphe.core.shell.aliases;
+          shellAbbrs = config.gipphe.core.shell.abbrs // {
             rm = "rm -i";
           };
           plugins = [

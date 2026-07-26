@@ -9,6 +9,7 @@
 util.mkModule {
   shared.imports = [
     ./fontconfig
+    ./shell.nix
     ./wm.nix
   ];
 

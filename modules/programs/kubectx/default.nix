@@ -3,7 +3,7 @@ util.mkProgram {
   name = "kubectx";
   homeManager = {
     home.packages = [ pkgs.kubectx ];
-    programs.fish.shellAbbrs = {
+    gipphe.core.shell.abbrs = {
       kcx = "kubectx";
       kn = "kubens";
     };
