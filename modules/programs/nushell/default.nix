@@ -35,6 +35,14 @@ util.mkProgram {
 
       nushell = {
         enable = true;
+        envFile.text = ''
+          $env.TRANSIENT_PROMPT_COMMAND = ^starship module character
+          $env.TRANSIENT_PROMPT_INDICATOR = ""
+          $env.TRANSIENT_PROMPT_INDICATOR_VI_INSERT = ""
+          $env.TRANSIENT_PROMPT_INDICATOR_VI_NORMAL = ""
+          $env.TRANSIENT_PROMPT_MULTILINE_INDICATOR = ""
+          $env.TRANSIENT_PROMPT_COMMAND_RIGHT = ^starship module time
+        '';
         shellAliases = aliases // {
           rm = "rm -i";
         };
