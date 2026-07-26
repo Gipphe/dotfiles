@@ -1,4 +1,8 @@
-{ lib, jujutsu }:
+{
+  lib,
+  jujutsu,
+  writeShellScript,
+}:
 let
   jj = lib.getExe jujutsu;
 
@@ -104,56 +108,64 @@ let
     };
   };
 
-  custom.custom = {
-    git_branch = {
-      command = "starship module git_branch";
-      description = "Only show git_branch if we're not in a jj repo";
-      format = "[$symbol$branch ]($style)";
-      style = "";
-      when = "! ${jj} --ignore-working-copy root";
-    };
+  custom.custom =
+    let
+      when =
+        (writeShellScript "jj-when" ''
+          ! ${jj} --ignore-working-copy root
+        '').outPath;
+    in
+    {
+      git_branch = {
+        command = "starship module git_branch";
+        description = "Only show git_branch if we're not in a jj repo";
+        format = "[$symbol$branch ]($style)";
+        style = "";
+        inherit when;
+      };
 
-    git_status = {
-      command = "starship module git_status";
-      description = "Only show git_status if we're not in a jj repo";
-      format = "[$symbol$branch ]($style)";
-      style = "";
-      when = "! ${jj} --ignore-working-copy root";
-    };
+      git_status = {
+        command = "starship module git_status";
+        description = "Only show git_status if we're not in a jj repo";
+        format = "[$symbol$branch ]($style)";
+        style = "";
+        inherit when;
+      };
 
-    jj = {
-      command = ''
-        ${jj} log \
-          --revisions @ \
-          --no-graph \
-          --ignore-working-copy \
-          --color always \
-          --limit 1 \
-          --template '
-            separate(" ",
-              change_id.shortest(4),
-              truncate_end(15, bookmarks, "…"),
-              "|",
-              concat(
-                if(conflict, "💥"),
-                if(divergent, "🚧"),
-                if(hidden, "👻"),
-                if(immutable, "🔒"),
-              ),
-              raw_escape_sequence("\x1b[1;32m") ++ if(empty, "(empty)"),
-              raw_escape_sequence("\x1b[1;32m") ++ coalesce(
-                truncate_end(29, description.first_line(), "…"),
-                "(no description set)",
-              ) ++ raw_escape_sequence("\x1b[0m"),
-            )
-          '
-      '';
-      description = "The current jj status";
-      style = "";
-      symbol = " ";
-      when = "${jj} --ignore-working-copy root";
+      jj = {
+        command =
+          (writeShellScript "jj-log" ''
+            ${jj} log \
+              --revisions @ \
+              --no-graph \
+              --ignore-working-copy \
+              --color always \
+              --limit 1 \
+              --template '
+                separate(" ",
+                  change_id.shortest(4),
+                  truncate_end(15, bookmarks, "…"),
+                  "|",
+                  concat(
+                    if(conflict, "💥"),
+                    if(divergent, "🚧"),
+                    if(hidden, "👻"),
+                    if(immutable, "🔒"),
+                  ),
+                  raw_escape_sequence("\x1b[1;32m") ++ if(empty, "(empty)"),
+                  raw_escape_sequence("\x1b[1;32m") ++ coalesce(
+                    truncate_end(29, description.first_line(), "…"),
+                    "(no description set)",
+                  ) ++ raw_escape_sequence("\x1b[0m"),
+                )
+              '
+          '').outPath;
+        description = "The current jj status";
+        style = "";
+        symbol = " ";
+        when = "${jj} --ignore-working-copy root";
+      };
     };
-  };
 
   vcs = lib.mapAttrs (_: v: vcs_defaults // v) vcs_defs;
   vcs_format = "$fossil_branch$hg_branch$git_branch\${custom.git_branch}$pijul_channel$git_status\${custom.git_status}\${custom.jj}";

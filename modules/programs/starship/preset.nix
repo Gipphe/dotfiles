@@ -2,7 +2,7 @@
   lib,
   fetchFromGitHub,
   jujutsu,
-  ...
+  writeShellScript,
 }:
 let
   flavour = "macchiato";
@@ -19,7 +19,7 @@ let
   palette.palette = lib.mkForce "catppuccin_${flavour}";
 
   tide-like = import ./tide-like.nix {
-    inherit lib jujutsu;
+    inherit lib jujutsu writeShellScript;
   };
 in
 tide-like // palette // catppuccin-starship-macchiato
