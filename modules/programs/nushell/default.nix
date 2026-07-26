@@ -35,7 +35,7 @@ util.mkProgram {
 
       nushell = {
         enable = true;
-        envFile.text = ''
+        envFile.text = /* nu */ ''
           $env.TRANSIENT_PROMPT_COMMAND = ^starship module character
           $env.TRANSIENT_PROMPT_INDICATOR = ""
           $env.TRANSIENT_PROMPT_INDICATOR_VI_INSERT = ""

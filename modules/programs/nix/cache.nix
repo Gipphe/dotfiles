@@ -5,7 +5,7 @@ util.mkModule {
       sopsFile = ../../../secrets/pub-cachix-gipphe-token.txt;
       format = "binary";
     };
-    programs.nushell.extraConfig = /* nushell */ ''
+    programs.nushell.extraConfig = /* nu */ ''
       $env.CACHIX_AUTH_TOKEN = (open '${config.sops.secrets.pub-cachix-gipphe-token.path}')
     '';
     programs.fish.shellInit = /* fish */ ''

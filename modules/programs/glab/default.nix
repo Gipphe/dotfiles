@@ -39,47 +39,42 @@ let
     (lib.filterAttrs (_: x: x ? token_path && x.token_path != null && x.token_path != ""))
     (lib.mapAttrs (_: x: x.token_path))
     builtins.toJSON
-    (pkgs.writeText "host-token-paths")
+    (pkgs.writeText "host-token-paths.json")
   ];
-  add-tokens = util.writeFishApplication {
+  add-tokens = util.writeNushellApplication {
     name = "add-tokens";
-    runtimeInputs = builtins.attrValues {
-      inherit (pkgs)
-        coreutils
-        jo
-        jq
-        ;
-    };
-    text = ''
-      mkdir -p '${config-dir}'
-      chmod -R 755 '${config-dir}'
-      cp -Lf '${aliases}' '${config-dir}/aliases.yml'
-      cp -Lf '${settings}' '${config-dir}/config.yml'
-      chown -R ${config.gipphe.username}:${config.gipphe.username} '${config-dir}'
-      chmod -R 600 ${config-dir}/*
+    runtimeEnv.config_dir = config-dir;
+    runtimeEnv.aliases_file = aliases.outPath;
+    runtimeEnv.settings_file = settings.outPath;
+    runtimeEnv.username = config.gipphe.username;
+    runtimeEnv.host_token_paths_file = host-token-paths.outPath;
+    text = /* nu */ ''
+      def main[] {
+        mkdir $env.config_dir
+        chmod -R 755 $env.config_dir
+        cp -f $env.aliases_file $"($env.config_dir)/aliases.yml"
+        cp -f $env.settings_file $"($env.config_dir)/config.yml"
+        chown -R $"($env.username):($env.username)" $env.config_dir
+        chmod -R 600 $env.config_dir/*
 
-      set -l hosts (jq -r 'to_entries | .[] | .key' '${host-token-paths}')
-      set -l paths (jq -r 'to_entries | .[] | .value' '${host-token-paths}')
-      set -l tokens
+        let hosts = (open -r $env.host_token_paths_file | from json)
+        if ($hosts | length) == 0 {
+          exit 0
+        }
 
-      set -l res
+        let host_tokens = {
+          hosts: (
+            $hosts
+              | items { |host, path| 
+                { $host: { token: open -r $path } }
+              }
+              | into record
+          )
+        }
 
-      if test (count $hosts) = 0
-        exit
-      end
-
-      for idx in (seq 1 (count $hosts))
-        set -l host $hosts[$idx]
-        set -l path $paths[$idx]
-        set -l token (cat $path)
-        set -a res (jo "$host"="$(jo token="$token")")
-      end
-
-      set -l host_tokens (jo hosts="$res")
-
-      set -l tmp (mktemp)
-      jq --argjson tokens "$host_tokens" '. * $tokens' '${config-dir}/config.yml' > $tmp
-      mv $tmp '${config-dir}/config.yml'
+        let final = (open $env.config_dir/config.yml | merge $host_tokens)
+        $final | save $env.config_dir/config.yml
+      }
     '';
   };
 in

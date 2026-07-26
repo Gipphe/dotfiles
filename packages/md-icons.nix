@@ -1,38 +1,28 @@
 {
   jdenticon-cli,
   findutils,
-  writeFishApplication,
+  writeNushellApplication,
 }:
-let
-  help = "Generate jdenticons for all hosts";
+writeNushellApplication {
   name = "md:icons";
-in
-writeFishApplication {
-  inherit name;
   runtimeInputs = [
     jdenticon-cli
     findutils
   ];
-  text = # fish
-    ''
-      function info
-        echo "$argv" > &2
-      end
-      if contains -- "--help" $argv || contains -- "-h" $argv
-        info "${name} - ${help}"
-        exit 0
-      end
-
-      set hosts (find ./hosts/* -maxdepth 0 -type d -exec basename {} \;)
-      or begin
-        echo "Hosts are not here" >&2
+  text = /* nu */ ''
+    # Generate jdenticons for all hosts
+    def main []: nothing -> nothing {
+      let hosts = (ls ./hosts | where type == dir | each { $in.name })
+      if ($hosts | length) == 0 {
+        print -e "Hosts are not here"
         exit 1
-      end
+      }
 
-      mkdir -p assets/icon
+      mkdir assets/icon
 
-      for host in $hosts
-        jdenticon "$host" -s 100 -o "assets/icon/$host.png"
-      end
-    '';
+      $hosts | par-each { |host| 
+        jdenticon $host -s 100 -o $"assets/icon/($host).png"
+      }
+    }
+  '';
 }

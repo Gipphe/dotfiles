@@ -129,44 +129,24 @@ util.mkProgram {
             ];
             pub =
               let
-                script = util.writeFishApplication {
+                script = util.writeNushellApplication {
                   name = "jj-pub";
                   runtimeInputs = [
-                    config.gipphe.programs.fish.package
+                    config.gipphe.programs.nushell.package
                     config.gipphe.programs.git.package
                     config.gipphe.programs.ssh.package
-                    pkgs.coreutils
                     pkgs.jujutsu
                   ];
-                  text =
-                    # fish
-                    ''
-                      argparse h/help r/revision= -- $argv
-                      or exit 1
+                  text = /* nu */ ''
+                    def main [--revision (-r): string]: nothing -> nothing {
+                      let rev = ($revision | default '@')
+                      let desc = (nu ${./desc-to-branch-name.nu} -r $rev)
 
-                      function info
-                        echo $argv >&2
-                      end
-
-                      if set -ql _flag_help
-                        info "jj-pub [-h|--help] [-r|--revision <jj-revision>]"
-                        info "  -r or --revision REVISION"
-                        info "    Revision to publish. Defaults to @"
-                        info "  -h or --help"
-                        info "    Show this help text"
-                        exit 0
-                      end
-
-                      set -l rev @
-                      if set -ql _flag_revision
-                        set rev $_flag_revision
-                      end
-                      set -l desc (fish ${./desc-to-branch-name.fish} -r $rev)
-
-                      jj bookmark create -r "$rev" "$desc"
-                      jj bookmark track --remote origin "$desc"
-                      jj git push --bookmark "$desc"
-                    '';
+                      jj bookmark create -r $rev $desc
+                      jj bookmark track --remote origin $desc
+                      jj git push --bookmark $desc
+                    }
+                  '';
                 };
               in
               [

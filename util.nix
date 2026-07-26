@@ -3,7 +3,6 @@
   gnused,
   runCommand,
   lib,
-  fishMinimal,
   nushell,
   writeShellScript,
   writeShellScriptBin,
@@ -16,10 +15,10 @@ let
     isList
     isAttrs
     hasAttr
-    concatStringsSep
     readDir
     ;
   inherit (lib)
+    throwIfNot
     flatten
     isStringLike
     escapeShellArg
@@ -188,71 +187,15 @@ let
       ];
     };
 
-  toFishShellVar =
+  toNushellVar =
     name: value:
-    lib.throwIfNot (isValidPosixName name) "toFishShellVar: ${name} is not a valid shell variable name"
-      (
-        if isAttrs value && !isStringLike value then
-          "set ${name} ${
-            concatStringsSep " " (lib.mapAttrsToList (n: v: "${escapeShellArg n}=${escapeShellArg v}"))
-          }"
-        else if isList value then
-          "set ${name} ${concatStringsSep " " (map escapeShellArg value)}"
-        else
-          "set ${name} ${escapeShellArg value}"
-      );
+    throwIfNot (isValidPosixName name) "toNushellVar: ${name} is not a valid Nushell variable name" (
+      if (isAttrs value && !isStringLike value) || isList value then
+        "$env.${name} = ${builtins.toJSON value}"
+      else
+        "$env.${name} = ${escapeShellArg value}"
+    );
 
-  writeFishApplication =
-    {
-      name,
-      text,
-      runtimeInputs ? [ ],
-      runtimeEnv ? null,
-      meta ? { },
-      checkPhase ? null,
-      derivationArgs ? { },
-      inheritPath ? false,
-    }:
-    writeTextFile {
-      inherit name meta derivationArgs;
-      executable = true;
-      destination = "/bin/${name}";
-      allowSubstitutes = true;
-      preferLocalBuild = false;
-      text =
-        let
-          fishShell = writeShellScript "fish-bare" ''
-            ${lib.getExe fishMinimal} --no-config --private "$@"
-          '';
-        in
-        ''
-          #!${fishShell}
-        ''
-        + lib.optionalString (runtimeEnv != null) (
-          lib.concatStrings (
-            lib.mapAttrsToList (name: value: ''
-              ${toFishShellVar name value}; set -gx ${name} ''$${name};
-            '') runtimeEnv
-          )
-        )
-        + lib.optionalString (runtimeInputs != [ ]) ''
-          set -x --path PATH "${lib.makeBinPath runtimeInputs}${lib.optionalString inheritPath ":$PATH"}"
-        ''
-        + ''
-
-          ${text}
-        '';
-      checkPhase =
-        if checkPhase == null then
-          # bash
-          ''
-            runHook preCheck
-            ${lib.getExe fishMinimal} --no-execute "$target"
-            runHook postCheck
-          ''
-        else
-          checkPhase;
-    };
   writeNushellApplication =
     {
       name,
@@ -264,6 +207,9 @@ let
       derivationArgs ? { },
       inheritPath ? false,
     }:
+    let
+      path = builtins.toJSON (map (i: lib.escapeShellArg "${i}/bin") runtimeInputs);
+    in
     writeTextFile {
       inherit name meta derivationArgs;
       executable = true;
@@ -280,14 +226,13 @@ let
           #!${nushell-shell}
         ''
         + lib.optionalString (runtimeEnv != null) (
-          lib.concatStrings (
-            lib.mapAttrsToList (name: value: ''
-              ${toFishShellVar name value}; set -gx ${name} ''$${name};
-            '') runtimeEnv
-          )
+          lib.concatStrings (lib.mapAttrsToList (name: value: toNushellVar name value) runtimeEnv)
         )
+        + lib.optionalString (!inheritPath) ''
+          $env.PATH = []
+        ''
         + lib.optionalString (runtimeInputs != [ ]) ''
-          set -x --path PATH "${lib.makeBinPath runtimeInputs}${lib.optionalString inheritPath ":$PATH"}"
+          $env.PATH =  ($env.PATH | prepend ${path})
         ''
         + ''
 
@@ -369,7 +314,6 @@ in
     recurseFirstMatchingIncludingSibling
     setCaskHash
     storeFileName
-    writeFishApplication
     writeNushellApplication
     ;
 }

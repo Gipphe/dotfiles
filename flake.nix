@@ -44,9 +44,9 @@
         in
         {
           md-fastfetch = pkgs.callPackage ./packages/md-fastfetch.nix {
-            inherit (util) writeFishApplication;
+            inherit (util) writeNushellApplication;
           };
-          md-icons = pkgs.callPackage ./packages/md-icons.nix { inherit (util) writeFishApplication; };
+          md-icons = pkgs.callPackage ./packages/md-icons.nix { inherit (util) writeNushellApplication; };
           treefmt = pkgs.callPackage ./packages/treefmt.nix { inherit treefmt-nix; };
           mo2installer = pkgs.callPackage ./packages/mo2installer.nix { };
           fluorine-manager = pkgs.callPackage ./packages/fluorine-manager.nix { };
