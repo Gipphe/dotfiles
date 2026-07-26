@@ -5,6 +5,7 @@ util.mkProfile {
     atuin.enable = true;
     bat.enable = true;
     btop.enable = true;
+    carapace.enable = true;
     curl.enable = true;
     direnv.enable = true;
     dua.enable = true;
