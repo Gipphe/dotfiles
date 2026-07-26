@@ -47,7 +47,7 @@ util.mkProgram {
           rm = "rm -i";
         };
         settings = {
-          edit_mode = "vim";
+          edit_mode = "vi";
         };
       };
     };
