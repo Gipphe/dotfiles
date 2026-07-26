@@ -5,8 +5,12 @@
   config,
   ...
 }:
+let
+  cfg = config.gipphe.programs.fish;
+in
 util.mkProgram {
   name = "fish";
+  options.gipphe.programs.fish.default = lib.mkEnableOption "fish as default shell";
   homeManager = {
     options.gipphe.programs.fish.package = lib.mkPackageOption pkgs "fish" { } // {
       default = config.programs.fish.package;
@@ -16,7 +20,7 @@ util.mkProgram {
       home.packages = [ pkgs.procps ];
 
       programs = {
-        bash = {
+        bash = lib.mkIf cfg.default {
           enable = true;
           initExtra = ''
             if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]; then

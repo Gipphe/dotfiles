@@ -50,6 +50,9 @@ util.mkToggledModule [ "hosts" ] {
           run ${script}
         '';
     };
+    programs.nushell.extraConfig = ''
+      mkdir "${config.home.sessionVariables."XDG_RUNTIME_DIR"}"
+    '';
     programs.fish.shellInit = lib.mkBefore ''
       mkdir -p '${config.home.sessionVariables."XDG_RUNTIME_DIR"}'
     '';
