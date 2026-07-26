@@ -46,6 +46,9 @@ util.mkProgram {
         shellAliases = aliases // {
           rm = "rm -i";
         };
+        settings = {
+          edit_mode = "vim";
+        };
       };
     };
   };
