@@ -23,30 +23,5 @@ util.mkProgram {
       };
     };
   };
-  homeManager.home.packages = [
-    cfg.package
-    (util.writeFishApplication {
-      name = "record";
-      runtimeInputs =
-        builtins.attrValues {
-          inherit (pkgs)
-            busybox
-            coreutils
-            ffmpeg
-            gum
-            slurp
-            ;
-        }
-        ++ [
-          cfg.package
-          config.wayland.windowManager.hyprland.package
-        ];
-      runtimeEnv = {
-        nicknames = builtins.toJSON cfg.nicknames;
-        # TODO: Use hyprland's defined color instead of hard-coding it here.
-        window_border = "rgb(8aadf4)";
-      };
-      text = builtins.readFile ./record.fish;
-    })
-  ];
+  homeManager.home.packages = [ cfg.package ];
 }

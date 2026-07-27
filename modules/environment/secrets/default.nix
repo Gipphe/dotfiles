@@ -19,7 +19,7 @@ util.mkModule {
   homeManager = {
     imports = [ inputs.sops-nix.homeManagerModules.sops ];
     inherit sops;
-    programs.nushell.extraConfig = /* nushell */ ''
+    programs.nushell.extraConfig = /* nu */ ''
       $env.SECRETS_DIR = $env.XDG_RUNTIME_DIR
     '';
     programs.fish.shellInit = /* fish */ ''

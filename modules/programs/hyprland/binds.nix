@@ -66,18 +66,21 @@ let
   );
 
   lid-switch = lib.getExe (
-    util.writeFishApplication {
+    util.writeNushellApplication {
       name = "lid-switch";
       runtimeInputs = [ config.wayland.windowManager.hyprland.package ];
-      text = /* fish */ ''
-        set -l monitors "$(hyprctl monitors all -j | jq 'length')"
-        if test $monitors == 1
-          if test $argv[1] == "close"
-            systemctl suspend
-          else
-            sleep 1 && hyprctl dispatch 'hl.dsp.dpms { action = "on", monitor = "eDP-1" }'
-          end
-        end
+      text = /* nu */ ''
+        def main [action: string] {
+          let num_monitors = (hyprctl monitors all -j | from json | length)
+          if $num_monitors == 1 {
+            if $action == "close" {
+              systemctl suspend
+            } else {
+              sleep 1
+              hyprctl dispatch 'hl.dsp.dpms { action = "on", monitor = "eDP-1" }'
+            }
+          }
+        }
       '';
     }
   );
