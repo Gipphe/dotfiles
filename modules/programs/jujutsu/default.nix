@@ -132,21 +132,11 @@ util.mkProgram {
                 script = util.writeNushellApplication {
                   name = "jj-pub";
                   runtimeInputs = [
-                    config.gipphe.programs.nushell.package
                     config.gipphe.programs.git.package
                     config.gipphe.programs.ssh.package
                     pkgs.jujutsu
                   ];
-                  text = /* nu */ ''
-                    def main [--revision (-r): string]: nothing -> nothing {
-                      let rev = ($revision | default '@')
-                      let desc = (nu ${./desc-to-branch-name.nu} -r $rev)
-
-                      jj bookmark create -r $rev $desc
-                      jj bookmark track --remote origin $desc
-                      jj git push --bookmark $desc
-                    }
-                  '';
+                  text = builtins.readFile ./jj-pub.nu;
                 };
               in
               [
