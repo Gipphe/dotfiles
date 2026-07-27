@@ -2280,13 +2280,13 @@
       "locked": {
         "lastModified": 1784550897,
         "narHash": "sha256-14ZvvxaWs76QPJFdTLMtKwvgFRQLHKewsqz6liR3VOE=",
-        "owner": "atelier-hub",
+        "owner": "tweag",
         "repo": "tricorder",
         "rev": "9a00391883e0b3ac2e836ba9267a68a44cd91dc7",
         "type": "github"
       },
       "original": {
-        "owner": "atelier-hub",
+        "owner": "tweag",
         "repo": "tricorder",
         "type": "github"
       }
