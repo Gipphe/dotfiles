@@ -194,7 +194,7 @@
       "https://nix-gaming.cachix.org"
       "https://nixpkgs-unfree.cachix.org"
       "https://noctalia.cachix.org"
-      "https://tweag.cachix.org"
+      "https://tweag-tricorder.cachix.org"
     ];
     extra-trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
@@ -208,7 +208,7 @@
       "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
       "nixpkgs-unfree.cachix.org-1:hqvoInulhbV4nJ9yJOEr+4wxhDV4xq2d1DK7S6Nj6rs="
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
-      "tweag.cachix.org-1:1kI0+PcOXktlm12UUDAEz7SErbLXsxOEKaEsAjxT8Dg="
+      "tweag-tricorder.cachix.org-1:PbwYPJ9gF8Wns14ai0sHK3iblqFd5YUrj0zEzGsJ/wg="
     ];
   };
 }
