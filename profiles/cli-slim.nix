@@ -12,8 +12,6 @@ util.mkProfile {
     entr.enable = true;
     eza.enable = true;
     fd.enable = true;
-    fish.enable = true;
-    fish.default = false;
     fx.enable = true;
     gh.enable = true;
     giphtvim.enable = true;

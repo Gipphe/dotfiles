@@ -1,16 +1,18 @@
-{ util, config, ... }:
+{
+  util,
+  config,
+  lib,
+  ...
+}:
 util.mkModule {
   homeManager = {
     sops.secrets.pub-cachix-gipphe-token = {
       sopsFile = ../../../secrets/pub-cachix-gipphe-token.txt;
       format = "binary";
     };
-    programs.nushell.extraConfig = /* nu */ ''
-      $env.CACHIX_AUTH_TOKEN = (open '${config.sops.secrets.pub-cachix-gipphe-token.path}')
-    '';
-    programs.fish.shellInit = /* fish */ ''
-      set -gx CACHIX_AUTH_TOKEN "$(cat '${config.sops.secrets.pub-cachix-gipphe-token.path}')"
-    '';
+    programs.nushell.environmentVariables = {
+      CACHIX_AUTH_TOKEN = lib.hm.nushell.mkNushellInline "(open ${lib.escapeShellArg config.sops.secrets.pub-cachix-gipphe-token.path})";
+    };
   };
   nixos = {
     nix.settings = {

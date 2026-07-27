@@ -24,12 +24,13 @@ util.mkToggledModule [ "hosts" ] {
       programs = {
         direnv.enable = true;
         eza.enable = true;
-        fish.enable = true;
         giphtvim.enable = true;
         git.enable = true;
         jq.enable = true;
         jujutsu.enable = true;
         less.enable = true;
+        nushell.default = true;
+        nushell.enable = true;
         ssh.enable = true;
         zoxide.enable = true;
       };
@@ -52,9 +53,6 @@ util.mkToggledModule [ "hosts" ] {
     };
     programs.nushell.extraConfig = ''
       mkdir "${config.home.sessionVariables."XDG_RUNTIME_DIR"}"
-    '';
-    programs.fish.shellInit = lib.mkBefore ''
-      mkdir -p '${config.home.sessionVariables."XDG_RUNTIME_DIR"}'
     '';
   };
   nixOnDroid.system.stateVersion = lib.mkForce "24.05";

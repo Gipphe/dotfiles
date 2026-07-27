@@ -22,9 +22,6 @@ util.mkModule {
     programs.nushell.extraConfig = /* nu */ ''
       $env.SECRETS_DIR = $env.XDG_RUNTIME_DIR
     '';
-    programs.fish.shellInit = /* fish */ ''
-      set -gx SECRETS_DIR $XDG_RUNTIME_DIR
-    '';
   };
   nixos = {
     imports = [ inputs.sops-nix.nixosModules.sops ];
