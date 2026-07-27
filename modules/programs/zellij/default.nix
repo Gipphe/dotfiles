@@ -284,7 +284,7 @@ util.mkProgram {
         // Choose the path to the default shell that zellij will use for opening new panes
         // Default: $SHELL
         // 
-        default_shell "fish"
+        default_shell "nu"
 
         // Choose the path to override cwd that zellij will use for opening new panes
         // 
@@ -447,10 +447,6 @@ util.mkProgram {
       zellij.enable = true;
       nushell.shellAliases = {
         zq = "zellij kill-session $env.ZELLIJ_SESSION_NAME";
-        zj = "zellij";
-      };
-      fish.shellAbbrs = {
-        zq = "zellij kill-session $ZELLIJ_SESSION_NAME";
         zj = "zellij";
       };
     };
