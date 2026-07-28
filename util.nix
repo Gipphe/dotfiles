@@ -245,10 +245,9 @@ let
         '';
       checkPhase =
         if checkPhase == null then
-          # bash
-          ''
+          /* bash */ ''
             runHook preCheck
-            ${lib.getExe nushell} --no-config-file --no-history --commands "nu-check '$target'"
+            ${lib.getExe nushell} --no-config-file --no-history --commands "nu-check --debug '$target'"
             runHook postCheck
           ''
         else
