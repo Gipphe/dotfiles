@@ -66,7 +66,7 @@
         { pkgs, system, ... }:
         let
           inherit (pkgs) lib;
-          filterSystem = lib.filterAttrs (n: c: c.pkgs.stdenv.hostPlatform.system == system);
+          filterSystem = lib.filterAttrs (_: c: c.pkgs.stdenv.hostPlatform.system == system);
           mkNixosCheck = name: x: {
             name = "nixos-${name}";
             value = x.config.system.build.toplevel;

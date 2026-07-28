@@ -5,7 +5,7 @@
   ...
 }:
 let
-  spt = pkgs.stdenv.mkDerivation (finalAttrs: {
+  spt = pkgs.stdenv.mkDerivation {
     pname = "sptMO2";
     version = "2.0.0";
     src = pkgs.fetchFromGitHub {
@@ -18,7 +18,7 @@ let
       mkdir -p $out/share
       mv plugins $out/share
     '';
-  });
+  };
 in
 util.mkGaming {
   name = "fluorine-manager";

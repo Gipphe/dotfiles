@@ -130,7 +130,7 @@ util.mkProgram {
             };
           };
         }
-        (lib.mkIf (config.wrappers.gh.enable) config.wrappers.gh.passthru.git)
+        (lib.mkIf config.wrappers.gh.enable config.wrappers.gh.passthru.git)
       ];
 
       sops.secrets.git-signing-key = {
