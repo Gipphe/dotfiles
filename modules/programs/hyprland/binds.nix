@@ -245,14 +245,14 @@ util.mkModule {
             {
               _args = [
                 "${mod} + mouse:272"
-                (dispatch.window.drag)
+                dispatch.window.drag
                 { mouse = true; }
               ];
             }
             {
               _args = [
                 "${mod} + mouse:273"
-                (dispatch.window.resize)
+                dispatch.window.resize
                 { mouse = true; }
               ];
             }

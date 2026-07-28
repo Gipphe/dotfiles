@@ -43,11 +43,13 @@ let
   ];
   add-tokens = util.writeNushellApplication {
     name = "add-tokens";
-    runtimeEnv.config_dir = config-dir;
-    runtimeEnv.aliases_file = aliases.outPath;
-    runtimeEnv.settings_file = settings.outPath;
-    runtimeEnv.username = config.gipphe.username;
-    runtimeEnv.host_token_paths_file = host-token-paths.outPath;
+    runtimeEnv = {
+      config_dir = config-dir;
+      aliases_file = aliases.outPath;
+      settings_file = settings.outPath;
+      username = config.gipphe.username;
+      host_token_paths_file = host-token-paths.outPath;
+    };
     text = /* nu */ ''
       def main[] {
         mkdir $env.config_dir

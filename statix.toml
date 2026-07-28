@@ -1,7 +1,8 @@
 disabled = [
   # Produces false positives
   "manual_inherit",
-  "manual_inherit_from"
+  "manual_inherit_from",
+  "repeated_keys"
 ]
 nix_version = '2.24'
 ignore = ['.direnv', 'modules/system/hardware-configuration', 'hardware-configuration.nix']
