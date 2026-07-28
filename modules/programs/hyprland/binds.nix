@@ -76,7 +76,7 @@ let
             if $action == "close" {
               systemctl suspend
             } else {
-              sleep 1
+              sleep 1sec
               hyprctl dispatch 'hl.dsp.dpms { action = "on", monitor = "eDP-1" }'
             }
           }

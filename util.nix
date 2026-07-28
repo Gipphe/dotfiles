@@ -210,7 +210,7 @@ let
       meta ? { },
       checkPhase ? null,
       derivationArgs ? { },
-      inheritPath ? false,
+      inheritPath ? true,
     }:
     let
       path = builtins.toJSON (map (i: lib.escapeShellArg "${i}/bin") runtimeInputs);
@@ -245,10 +245,9 @@ let
         '';
       checkPhase =
         if checkPhase == null then
-          # bash
-          ''
+          /* bash */ ''
             runHook preCheck
-            ${lib.getExe nushell} --no-config-file --no-history --commands "nu-check '$target'"
+            ${lib.getExe nushell} --no-config-file --no-history --commands "nu-check --debug '$target'"
             runHook postCheck
           ''
         else
