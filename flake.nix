@@ -34,7 +34,6 @@
         in
         {
           default = pkgs.callPackage ./devShells/default.nix {
-            inherit (inputs.devshell.legacyPackages.${system}) mkShell;
             inherit (self.packages.${system}) jujutsu;
             inherit (util) writeNushellApplication;
           };
@@ -145,11 +144,6 @@
     # Do not override its nixpkgs input, it invalidates the cachix cache, and
     # will probably break things.
     hyprland.url = "github:hyprwm/Hyprland";
-
-    devshell = {
-      url = "github:numtide/devshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
