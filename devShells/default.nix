@@ -1,15 +1,11 @@
 {
   lib,
-  writeShellApplication,
+  writeNushellApplication,
   mkShell,
 
   comma,
-  gitMinimal,
-  gnugrep,
-  jq,
   jujutsu,
   nh,
-  nix,
   nix-tree,
   nixfmt,
   nvd,
@@ -18,14 +14,13 @@
 let
   build =
     let
-      script = writeShellApplication {
+      script = writeNushellApplication {
         name = "switch-build";
         runtimeInputs = [
           nh
-          jq
           nvd
         ];
-        text = builtins.readFile ./build.sh;
+        text = builtins.readFile ./build.nu;
       };
     in
     lib.getExe script;
@@ -53,14 +48,16 @@ mkShell {
     {
       help = "Rebuild the system using nh os boot";
       name = "boot";
-      command = /* bash */ ''
-        if command -v nixos-rebuild &>/dev/null; then
-          ${lib.getExe nh} os boot
-        else
-          echo "This is not a NixOS system" >&2
-          exit 1
-        fi
-      '';
+      package = writeNushellApplication {
+        name = "boot";
+        text = /* nu */ ''
+          if (which nixos-rebuild | length | $in > 0) {
+            nh os boot
+          } else {
+            error make "This is not a NixOS system"
+          }
+        '';
+      };
       category = "build";
     }
     {
@@ -86,8 +83,8 @@ mkShell {
       help = "Update flake inputs and commit changes";
       name = "update";
       command = /* bash */ ''
-        ${lib.getExe nix} flake update && \
-        ${lib.getExe jujutsu} commit flake.lock -m 'chore: update flake inputs'
+        nix flake update && \
+        jujutsu commit flake.lock -m 'chore: update flake inputs'
       '';
       category = "utils";
     }
@@ -96,26 +93,21 @@ mkShell {
     {
       help = "Track distribution of PR";
       name = "nix:pr";
-      command = /* bash */ ''
-        if [[ $# == 0 || $* == *--help* || $* == *-h* ]]; then
-          echo "Usage: nix:pr <pr number>" >&2
-          exit 1
-        fi
-        pr="$1"
-        opener="$(command -v open || command -v xdg-open)"
-        if test "$?" != 0; then
-          echo "Cannot open link in browser automatically. Copy it yourself:" >&2
-          opener="echo"
-        fi
-        "$opener" "https://nixpk.gs/pr-tracker.html?pr=$pr"
-      '';
+      package = writeNushellApplication {
+        name = "nix:pr";
+        text = /* nu */ ''
+          def main [pr_number: int] {
+            start $"https://nixpk.gs/pr-tracker.html?pr=($pr_number)"
+          }
+        '';
+      };
       category = "nix utils";
     }
     {
       help = "View store path sizes";
       name = "nix:du";
       command = /* bash */ ''
-        ${lib.getExe nix} path-info -rS /run/current-system | sort -nk2
+        nix path-info -rS /run/current-system | sort -nk2
       '';
       category = "nix utils";
     }
@@ -124,30 +116,27 @@ mkShell {
     {
       help = "Check .nix files with nil";
       name = "lint:nil";
-      command = /* bash */ ''
-        mapfile -t files < <( \
-          ${lib.getExe gitMinimal} ls-files | \
-          ${lib.getExe gnugrep} '\.nix$' | \
-          ${lib.getExe gnugrep} -v 'hardware-configuration/.*\.nix' | \
-          ${lib.getExe gnugrep} -v 'hardware-configuration\.nix$' \
-        )
-        for file in "''${files[@]}"; do
-          ${lib.getExe comma} nil diagnostics "$file"
-        done
-      '';
+      package = writeNushellApplication {
+        name = "lint:nil";
+        text = /* nu */ ''
+          (glob --exclude ['**/hardware-configuration.nix', '**/hardware-configuration/*.nix'] **/*.nix
+            | each { , nil diagnostics $in }
+          )
+        '';
+      };
       category = "lint";
     }
     {
       help = "Check .nix files with statix";
       name = "lint:statix";
-      command = /* bash */ "${lib.getExe comma} statix check";
+      command = /* bash */ ", statix check";
       category = "lint";
     }
     {
       help = "Check .nix files with deadnix";
       name = "lint:deadnix";
       command = /* bash */ ''
-        ${lib.getExe comma} deadnix --exclude ./hosts/*/hardware-configuration.nix
+        , deadnix --exclude ./hosts/*/hardware-configuration.nix
       '';
       category = "lint";
     }
@@ -165,8 +154,11 @@ mkShell {
     }
   ];
   packages = [
+    comma
     nix-tree
     nixfmt # nix formatter
     sops
+    jujutsu
+    nh
   ];
 }

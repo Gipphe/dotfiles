@@ -210,7 +210,7 @@ let
       meta ? { },
       checkPhase ? null,
       derivationArgs ? { },
-      inheritPath ? false,
+      inheritPath ? true,
     }:
     let
       path = builtins.toJSON (map (i: lib.escapeShellArg "${i}/bin") runtimeInputs);

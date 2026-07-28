@@ -29,10 +29,14 @@
 
       devShells = eachSystem (
         { pkgs, system }:
+        let
+          util = pkgs.callPackage ./util.nix { };
+        in
         {
           default = pkgs.callPackage ./devShells/default.nix {
             inherit (inputs.devshell.legacyPackages.${system}) mkShell;
             inherit (self.packages.${system}) jujutsu;
+            inherit (util) writeNushellApplication;
           };
         }
       );
