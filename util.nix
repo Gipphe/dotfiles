@@ -161,13 +161,18 @@ let
     };
 
   mkModule =
-    args@{
+    {
       options ? { },
       shared ? { },
       homeManager ? { },
       nixos ? { },
       nixOnDroid ? { },
     }:
+    let
+      envs = {
+        inherit homeManager nixos nixOnDroid;
+      };
+    in
     {
       imports = [
         (
@@ -178,7 +183,7 @@ let
               shared
             ];
 
-            classModule = lib.toList (args.${environment} or [ ]);
+            classModule = lib.toList (envs.${environment} or [ ]);
           in
           {
             imports = baseModules ++ classModule;
