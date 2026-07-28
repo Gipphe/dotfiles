@@ -3,20 +3,17 @@
   writeShellApplication,
   mkShell,
 
-  cachix,
-  deadnix,
+  comma,
   gitMinimal,
   gnugrep,
   jq,
   jujutsu,
   nh,
-  nil,
   nix,
   nix-tree,
   nixfmt,
   nvd,
   sops,
-  statix,
 }:
 let
   build =
@@ -40,7 +37,7 @@ mkShell {
     {
       help = "Rebuild NixOS or nix-on-droid system.";
       name = "sw";
-      command = ''
+      command = /* bash */ ''
         ${build} switch
       '';
       category = "build";
@@ -48,7 +45,7 @@ mkShell {
     {
       help = "Rebuild NixOS or nix-on-droid system, asking first.";
       name = "swa";
-      command = ''
+      command = /* bash */ ''
         ${build} switch --ask
       '';
       category = "build";
@@ -56,31 +53,29 @@ mkShell {
     {
       help = "Rebuild the system using nh os boot";
       name = "boot";
-      command =
-        # bash
-        ''
-          if command -v nixos-rebuild &>/dev/null; then
-            ${lib.getExe nh} os boot
-          else
-            echo "This is not a NixOS system" >&2
-            exit 1
-          fi
-        '';
+      command = /* bash */ ''
+        if command -v nixos-rebuild &>/dev/null; then
+          ${lib.getExe nh} os boot
+        else
+          echo "This is not a NixOS system" >&2
+          exit 1
+        fi
+      '';
       category = "build";
     }
     {
       help = "Test new configuration without saving to bootloader";
       name = "swt";
-      command = ''
+      command = /* bash */ ''
         ${build} test
       '';
       category = "build";
     }
 
     {
-      help = "Test new configuration without saving to bootloader";
+      help = "Test new configuration without saving to bootloader, asking first";
       name = "swta";
-      command = ''
+      command = /* bash */ ''
         ${build} test --ask
       '';
       category = "build";
@@ -90,20 +85,10 @@ mkShell {
     {
       help = "Update flake inputs and commit changes";
       name = "update";
-      command =
-        # bash
-        ''
-          ${lib.getExe nix} flake update
-          res="$?"
-          if test "$res" != 0; then
-            exit "$res"
-          fi
-          if test -d .jj; then
-            ${lib.getExe jujutsu} commit flake.lock -m 'chore: update flake inputs'
-          else
-            ${lib.getExe gitMinimal} commit flake.lock -m 'chore: update flake inputs'
-          fi
-        '';
+      command = /* bash */ ''
+        ${lib.getExe nix} flake update && \
+        ${lib.getExe jujutsu} commit flake.lock -m 'chore: update flake inputs'
+      '';
       category = "utils";
     }
 
@@ -111,29 +96,27 @@ mkShell {
     {
       help = "Track distribution of PR";
       name = "nix:pr";
-      command = # bash
-        ''
-          if [[ $# == 0 || $* == *--help* || $* == *-h* ]]; then
-            echo "Usage: nix:pr <pr number>" >&2
-            exit 1
-          fi
-          pr="$1"
-          opener="$(command -v open || command -v xdg-open)"
-          if test "$?" != 0; then
-            echo "Cannot open link in browser automatically. Copy it yourself:" >&2
-            opener="echo"
-          fi
-          "$opener" "https://nixpk.gs/pr-tracker.html?pr=$pr"
-        '';
+      command = /* bash */ ''
+        if [[ $# == 0 || $* == *--help* || $* == *-h* ]]; then
+          echo "Usage: nix:pr <pr number>" >&2
+          exit 1
+        fi
+        pr="$1"
+        opener="$(command -v open || command -v xdg-open)"
+        if test "$?" != 0; then
+          echo "Cannot open link in browser automatically. Copy it yourself:" >&2
+          opener="echo"
+        fi
+        "$opener" "https://nixpk.gs/pr-tracker.html?pr=$pr"
+      '';
       category = "nix utils";
     }
     {
       help = "View store path sizes";
       name = "nix:du";
-      command = # bash
-        ''
-          ${lib.getExe nix} path-info -rS /run/current-system | sort -nk2
-        '';
+      command = /* bash */ ''
+        ${lib.getExe nix} path-info -rS /run/current-system | sort -nk2
+      '';
       category = "nix utils";
     }
 
@@ -141,33 +124,31 @@ mkShell {
     {
       help = "Check .nix files with nil";
       name = "lint:nil";
-      command = # bash
-        ''
-          mapfile -t files < <( \
-            ${lib.getExe gitMinimal} ls-files | \
-            ${lib.getExe gnugrep} '\.nix$' | \
-            ${lib.getExe gnugrep} -v 'hardware-configuration/.*\.nix' | \
-            ${lib.getExe gnugrep} -v 'hardware-configuration\.nix$' \
-          )
-          for file in "''${files[@]}"; do
-            ${lib.getExe nil} diagnostics "$file"
-          done
-        '';
+      command = /* bash */ ''
+        mapfile -t files < <( \
+          ${lib.getExe gitMinimal} ls-files | \
+          ${lib.getExe gnugrep} '\.nix$' | \
+          ${lib.getExe gnugrep} -v 'hardware-configuration/.*\.nix' | \
+          ${lib.getExe gnugrep} -v 'hardware-configuration\.nix$' \
+        )
+        for file in "''${files[@]}"; do
+          ${lib.getExe comma} nil diagnostics "$file"
+        done
+      '';
       category = "lint";
     }
     {
       help = "Check .nix files with statix";
       name = "lint:statix";
-      command = "${lib.getExe statix} check";
+      command = /* bash */ "${lib.getExe comma} statix check";
       category = "lint";
     }
     {
       help = "Check .nix files with deadnix";
       name = "lint:deadnix";
-      command = # bash
-        ''
-          ${lib.getExe deadnix} --exclude ./hosts/*/hardware-configuration.nix
-        '';
+      command = /* bash */ ''
+        ${lib.getExe comma} deadnix --exclude ./hosts/*/hardware-configuration.nix
+      '';
       category = "lint";
     }
   ];
@@ -184,11 +165,8 @@ mkShell {
     }
   ];
   packages = [
-    cachix
-    deadnix # clean up unused nix code
     nix-tree
     nixfmt # nix formatter
     sops
-    statix # lints and suggestions
   ];
 }
