@@ -4,13 +4,13 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-      day: sunday
-      time: 04:00
+      day: monday
+      time: "02:00"
   - package-ecosystem: "nix"
     directory: "/"
     schedule:
       interval: "daily"
-      time: 04:00
+      time: "02:00"
     groups:
       daily-updates:
         applies-to: version-updates
