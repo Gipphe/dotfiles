@@ -24,15 +24,73 @@ let
       };
     in
     lib.getExe script;
+  commandToPackage =
+    command:
+    if command ? package && lib.isDerivation command.package then
+      command.package
+    else
+      writeNushellApplication {
+        inherit (command) name;
+        text = command.command;
+      };
+  mkShell' =
+    {
+      name,
+      commands,
+      env,
+      packages,
+    }:
+    mkShell {
+      inherit name;
+      packages = packages ++ map commandToPackage commands ++ [ (menu commands) ];
+      shellHook = ''
+        ${builtins.concatStringsSep "\n" (
+          map ({ name, value }: "export ${name}=${lib.escapeShellArg value}") env
+        )}
+
+        menu
+      '';
+    };
+  menu =
+    commands:
+    writeNushellApplication {
+      name = "menu";
+      runtimeEnv.commands = builtins.toJSON (map (c: { inherit (c) name category help; }) commands);
+      text = /* nu */ ''
+        def intersperse []: list -> list {
+          each { [null, $in] } | update 0 first | flatten
+        }
+        let category_commands = ($env.commands | from json | group-by category)
+        [ $"(ansi yellow)dotfiles(ansi reset)", { menu: 'Show this menu' }]
+          | table --collapse --index false --theme none
+          | print
+        $category_commands
+          | items { |cat, comms|
+              [
+                $"(ansi yellow)($cat)(ansi reset)"
+                ($comms
+                  | select name help
+                  | each { { $in.name: $in.help } }
+                  | into record
+                )
+              ]
+          }
+          | each { |r|
+            print ""
+            $r | table --collapse --index false --theme none | print
+          }
+        null
+      '';
+    };
 in
-mkShell {
+mkShell' {
   name = "dotfiles";
   commands = [
     # Build
     {
       help = "Rebuild NixOS or nix-on-droid system.";
       name = "sw";
-      command = /* bash */ ''
+      command = /* nu */ ''
         ${build} switch
       '';
       category = "build";
@@ -40,7 +98,7 @@ mkShell {
     {
       help = "Rebuild NixOS or nix-on-droid system, asking first.";
       name = "swa";
-      command = /* bash */ ''
+      command = /* nu */ ''
         ${build} switch --ask
       '';
       category = "build";
@@ -63,7 +121,7 @@ mkShell {
     {
       help = "Test new configuration without saving to bootloader";
       name = "swt";
-      command = /* bash */ ''
+      command = /* nu */ ''
         ${build} test
       '';
       category = "build";
@@ -82,8 +140,8 @@ mkShell {
     {
       help = "Update flake inputs and commit changes";
       name = "update";
-      command = /* bash */ ''
-        nix flake update && \
+      command = /* nu */ ''
+        nix flake update
         jujutsu commit flake.lock -m 'chore: update flake inputs'
       '';
       category = "utils";
@@ -106,8 +164,17 @@ mkShell {
     {
       help = "View store path sizes";
       name = "nix:du";
-      command = /* bash */ ''
-        nix path-info -rS /run/current-system | sort -nk2
+      command = /* nu */ ''
+        (
+          nix path-info -rS /run/current-system
+          | lines
+          | each {
+            split column --regex '\s+' path size | get 0
+          }
+          | update size { into filesize }
+          | sort-by --reverse size
+          | explore
+        )
       '';
       category = "nix utils";
     }
@@ -129,13 +196,13 @@ mkShell {
     {
       help = "Check .nix files with statix";
       name = "lint:statix";
-      command = /* bash */ ", statix check";
+      command = /* nu */ ", statix check";
       category = "lint";
     }
     {
       help = "Check .nix files with deadnix";
       name = "lint:deadnix";
-      command = /* bash */ ''
+      command = /* nu */ ''
         , deadnix --exclude ./hosts/*/hardware-configuration.nix
       '';
       category = "lint";
