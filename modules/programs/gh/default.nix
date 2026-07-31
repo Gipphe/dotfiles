@@ -1,4 +1,10 @@
-{ inputs, util, ... }:
+{
+  config,
+  inputs,
+  util,
+  pkgs,
+  ...
+}:
 util.mkProgram {
   name = "gh";
   homeManager = {
@@ -10,6 +16,7 @@ util.mkProgram {
     ];
     wrappers.gh = {
       enable = true;
+      extensions = [ pkgs.gh-stack ];
       settings = {
         editor = "";
         prompt = "enabled";
@@ -33,5 +40,7 @@ util.mkProgram {
       };
       env.GH_SPINNER_DISABLED = "1";
     };
+    wrappers.git = config.wrappers.gh.passthru.git;
+    xdg = config.wrappers.gh.passthru.xdg;
   };
 }

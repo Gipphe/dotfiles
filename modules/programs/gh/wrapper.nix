@@ -109,13 +109,8 @@ in
         relPath = "config/hosts.yml";
         content = toYAML config.hosts;
       };
-    }
-    // builtins.listToAttrs (
-      map (p: {
-        name = "config/extensions/${p.pname}";
-        value = lib.getExe p;
-      }) config.extensions
-    );
+    };
+
     passthru.git.constructFiles.gitconfig.content = builtins.concatStringsSep "\n" (
       map (host: ''
         [credental "${host}"]
@@ -123,6 +118,14 @@ in
           helper = "${config.package}/bin/gh auth git-credential"
       '') config.gitCredentialHelper.hosts
     );
+    passthru.xdg.dataFile."gh/extensions" = lib.mkIf (config.extensions != [ ]) {
+      source = pkgs.linkFarm "gh-extensions" (
+        map (p: {
+          name = p.pname;
+          path = "${p}/bin";
+        }) config.extensions
+      );
+    };
 
     meta = {
       description.pre = ''
