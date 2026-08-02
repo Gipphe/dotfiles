@@ -6,13 +6,18 @@ updates:
       interval: "weekly"
       day: monday
       time: "02:00"
+    groups:
+      actions:
+        applies-to: version-updates
+        patterns:
+          - "*"
   - package-ecosystem: "nix"
     directory: "/"
     schedule:
       interval: "daily"
       time: "02:00"
     groups:
-      daily-updates:
+      nix-updates:
         applies-to: version-updates
         patterns:
           - "*"
