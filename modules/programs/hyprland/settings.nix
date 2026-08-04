@@ -185,7 +185,7 @@ util.mkProgram {
                 ];
                 angle = 45;
               };
-              layout = "dwindle";
+              layout = "scrolling";
               resize_on_border = true;
             };
 
