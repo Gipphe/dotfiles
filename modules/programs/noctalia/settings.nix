@@ -52,6 +52,7 @@
     item_spacing = 4;
     margin_edge = 2;
     radius = 8;
+    background_opacity = 1.0;
   };
   idle = {
     behavior = {
@@ -129,6 +130,12 @@
       "lockscreen-login-box@DP-2"
     ];
   };
+  notification = {
+    background_opacity = 1.0;
+  };
+  osd = {
+    background_opacity = 1.0;
+  };
   shell = {
     avatar_path = "/home/gipphe/Pictures/wallpapers/small-memory.png";
     font_family = "Source Sans 3";
@@ -162,9 +169,7 @@
       format = "%H:%M";
       tooltip_format = "%A, %F";
     };
-    cpu = {
-      show_label = false;
-    };
+    cpu = { };
     launcher = {
       glyph = "rocket";
     };
@@ -174,29 +179,22 @@
     network = {
       show_label = false;
     };
-    network_rx = {
-      show_label = false;
-    };
-    network_tx = {
-      show_label = false;
-    };
-    ram = {
-      show_label = false;
-    };
+    network_rx = { };
+    network_tx = { };
+    ram = { };
     spacer_2 = {
       type = "spacer";
     };
     sysmon = {
-      show_label = false;
+      show_value = true;
       stat = "gpu_temp";
+      glyph = "engine";
     };
     taskbar = {
       group_by_workspace = true;
       inactive_opacity = 0.8;
     };
-    temp = {
-      show_label = false;
-    };
+    temp = { };
     volume = {
       show_label = false;
     };
