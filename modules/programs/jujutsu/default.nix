@@ -90,16 +90,32 @@ util.mkProgram {
           aliases = {
             lol = [
               "log"
-              "-r"
+              "--revision"
               "all()"
             ];
+            get = {
+              definition = [
+                "show"
+                "--no-patch"
+                "--template"
+              ];
+              doc = "Get a property for a revision";
+            };
+            id = {
+              definition = [
+                "show"
+                "--no-patch"
+                "--template"
+                "change_id"
+              ];
+              doc = "Get change ID for a revision";
+            };
             bb = {
               definition = [
                 "show"
                 "--no-patch"
-                "-T"
+                "--template"
                 "local_bookmarks"
-                "-r"
               ];
               doc = "Get the bookmark for a revision, if there is one.";
             };
@@ -133,9 +149,9 @@ util.mkProgram {
             };
             rebase-all = [
               "rebase"
-              "-s"
+              "--source"
               "bookmarks() ~ trunk()"
-              "-d"
+              "--destination"
               "trunk()"
             ];
             p = [
