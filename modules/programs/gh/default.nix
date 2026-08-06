@@ -1,4 +1,5 @@
 {
+  lib,
   config,
   inputs,
   util,
@@ -14,6 +15,9 @@ util.mkProgram {
         value = ./wrapper.nix;
       })
     ];
+    options.gipphe.programs.gh.package = lib.mkPackageOption pkgs "gh" { } // {
+      default = config.wrappers.gh.wrapper;
+    };
     wrappers.gh = {
       enable = true;
       extensions = [ pkgs.gh-stack ];
