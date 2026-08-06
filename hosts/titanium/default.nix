@@ -83,6 +83,11 @@ util.mkToggledModule [ "hosts" ] {
     ];
   };
 
+  shared.imports = lib.optionals (hostname == host.name) [
+    ./restic.nix
+    ./ssh.nix
+  ];
+
   homeManager = {
     home.packages = [ pkgs.megasync ];
     wayland.windowManager.hyprland.settings = {
@@ -113,120 +118,11 @@ util.mkToggledModule [ "hosts" ] {
         }
       ];
     };
-    services = {
-      syncthing = {
-        settings.folders."${config.home.homeDirectory}/Documents/Notes".path =
-          "/mnt/oldone/Filen/Area/Notes";
-      };
-      restic = {
-        enable = true;
-        backups.main = {
-          repository = "rclone:filen:/Resource/Restic";
-          passwordFile = config.sops.secrets.restic-password.path;
-          inhibitsSleep = true;
-          paths =
-            let
-              dataPaths = map (p: "${config.xdg.dataHome}/${p}") [
-                "dV"
-                "PrismLauncher/instances"
-                "songsofsyx/saves"
-                "Steam/userdata"
-                "Steam/steamapps/compatdata"
-                "Tachiyomi Backups"
-                "zoxide"
-                "bolt-launcher/.runelite"
-              ];
-              configPaths = map (p: "${config.xdg.configHome}/${p}") [
-                "EgoSoft/X4/31098541/save"
-                "lutris"
-              ];
-              homePaths = map (p: "${config.home.homeDirectory}/${p}") [
-                "Documents"
-                "Dwarf Fortress saves"
-                "Videos"
-              ];
-            in
-            [ config.gipphe.gaming.minecraft.servers.dataDir ] ++ homePaths ++ configPaths ++ dataPaths;
-          exclude =
-            let
-              steamProtonPaths =
-                map (p: "${config.xdg.dataHome}/Steam/steamapps/compatdata/**/pfx/drive_c/${p}")
-                  [
-                    "*/Common Files"
-                    "*/Internet Explorer"
-                    "*/Steam"
-                    "*/Windows Media Player"
-                    "Windows"
-                    "windows"
-                    "vrclient"
-                  ];
-            in
-            steamProtonPaths
-            ++ [
-              "${config.xdg.dataHome}/bolt-launcher/.runelite/jagexcache"
-              "${config.xdg.dataHome}/bolt-launcher/.runelite/cache"
-              "${config.xdg.dataHome}/bolt-launcher/.runelite/logs"
-              "${config.xdg.dataHome}/bolt-launcher/.runelite/repository2"
-            ];
-          pruneOpts = [
-            "--compact"
-            "--keep-hourly 3"
-            "--keep-daily 7"
-            "--keep-weekly 4"
-            "--keep-monthly 6"
-            "--keep-yearly 3"
-          ];
-          timerConfig = {
-            OnCalendar = "daily";
-            Persistent = true;
-          };
-        };
-      };
-    };
-
-    programs = {
-      rclone = {
-        enable = true;
-        remotes.filen = {
-          config.type = "filen";
-          secrets = {
-            email = config.sops.secrets.filen-email.path;
-            password = config.sops.secrets.filen-password.path;
-            api_key = config.sops.secrets.filen-api-key.path;
-          };
-        };
-      };
-      ssh.settings."sodium.lan" = {
-        hostname = "sodium.lan";
-        user = "gipphe";
-        identityFile = config.sops.secrets."titanium-sodium.ssh".path;
-      };
-    };
-
-    sops.secrets.restic-password = {
-      format = "binary";
-      sopsFile = ../../secrets/pub-restic-password.txt;
-    };
-    sops.secrets.filen-email = {
-      format = "binary";
-      sopsFile = ../../secrets/pub-filen-email.txt;
-    };
-    sops.secrets.filen-password = {
-      format = "binary";
-      sopsFile = ../../secrets/pub-filen-password.txt;
-    };
-    sops.secrets.filen-api-key = {
-      format = "binary";
-      sopsFile = ../../secrets/pub-filen-api-key.txt;
-    };
-    sops.secrets."titanium-sodium.ssh" = {
-      format = "binary";
-      sopsFile = ../../secrets/titanium-sodium.ssh;
-    };
+    services.syncthing.settings.folders."${config.home.homeDirectory}/Documents/Notes".path =
+      "/mnt/oldone/Filen/Area/Notes";
 
     gipphe.programs.syncthing.guiCredentials.passwordFile =
       config.sops.secrets.titanium-syncthing-password.path;
-
     sops.secrets.titanium-syncthing-password = {
       sopsFile = ../../secrets/titanium-syncthing-password.txt;
       mode = "400";
@@ -250,25 +146,6 @@ util.mkToggledModule [ "hosts" ] {
       }
     );
 
-    # Required for restic's inhibitSleep
-    security.polkit.enable = true;
-
-    services.openssh = {
-      enable = true;
-      openFirewall = true;
-      settings = {
-        PasswordAuthentication = false;
-        KbdInteractiveAuthentication = false;
-        PermitRootLogin = "no";
-        AllowUsers = [ config.gipphe.username ];
-        MaxAuthTries = 3;
-        PerSourcePenalties = "crash:3600s authfail:3600s max:86400s";
-      };
-    };
-
-    users.users.${config.gipphe.username}.openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJLC+gAQcmXgnkb9seOXdDln/HQkAxxL9s4+hXRJUm0P u0_a342@localhost"
-    ];
     services.sunshine.settings.output_name = "DP-2";
 
     hardware.nvidia.prime.nvidiaBusId = "PCI:1@0:0:0";
