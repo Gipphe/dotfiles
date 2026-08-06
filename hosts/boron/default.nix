@@ -81,8 +81,7 @@ util.mkToggledModule [ "hosts" ] {
       sopsFile = ../../secrets/boron-sodium.ssh;
     };
 
-    gipphe.programs.syncthing.guiCredentials.passwordFile =
-      config.sops.secrets.boron-syncthing-password.path;
+    services.syncthing.guiCredentials.passwordFile = config.sops.secrets.boron-syncthing-password.path;
 
     sops.secrets.boron-syncthing-password = {
       sopsFile = ../../secrets/boron-syncthing-password.txt;

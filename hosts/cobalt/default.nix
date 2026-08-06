@@ -48,8 +48,7 @@ util.mkToggledModule [ "hosts" ] {
   };
 
   homeManager = {
-    gipphe.programs.syncthing.guiCredentials.passwordFile =
-      config.sops.secrets.cobalt-syncthing-password.path;
+    services.syncthing.guiCredentials.passwordFile = config.sops.secrets.cobalt-syncthing-password.path;
 
     sops.secrets.cobalt-syncthing-password = {
       sopsFile = ../../secrets/cobalt-syncthing-password.txt;

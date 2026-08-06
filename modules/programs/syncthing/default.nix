@@ -5,7 +5,6 @@
   ...
 }:
 let
-  cfg = config.gipphe.programs.syncthing;
   folders = {
     "${config.home.homeDirectory}/Documents/Backups" = {
       id = "backups";
@@ -96,10 +95,6 @@ let
 in
 util.mkProgram {
   name = "syncthing";
-  options.gipphe.programs.syncthing.guiCredentials.passwordFile = lib.mkOption {
-    type = with lib.types; either path str;
-    description = "Path to password file";
-  };
   homeManager = {
     services.syncthing = {
       enable = true;
@@ -107,7 +102,7 @@ util.mkProgram {
       overrideFolders = true;
       guiCredentials = {
         username = "syncthing";
-        passwordFile = cfg.guiCredentials.passwordFile;
+        passwordFile = lib.mkDefault (throw "Missing services.syncthing.guiCredentials.passwordFile");
       };
       settings = {
         devices = removeAttrs {
