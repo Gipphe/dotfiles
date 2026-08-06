@@ -93,13 +93,44 @@ util.mkProgram {
               "-r"
               "all()"
             ];
-            bb = [
-              "show"
-              "--no-patch"
-              "-T"
-              "local_bookmarks"
-              "-r"
-            ];
+            bb = {
+              definition = [
+                "show"
+                "--no-patch"
+                "-T"
+                "local_bookmarks"
+                "-r"
+              ];
+              doc = "Get the bookmark for a revision, if there is one.";
+            };
+            bn = {
+              definition = [
+                "util"
+                "exec"
+                "--"
+                (lib.getExe (
+                  util.writeNushellApplication {
+                    name = "jj-bn";
+                    runtimeInputs = [
+                      config.gipphe.programs.gh.package
+                      config.gipphe.programs.jujutsu.package
+                    ];
+                    text = /* nu */ ''
+                      def main [--revision (-r): string]: nothing -> string {
+                        if $revision == null or $revision == "" {
+                          error make "Missing revision"
+                        }
+                        gh pr view (jj bb $revision) | from json | get number
+                      }
+                    '';
+                  }
+                ))
+              ];
+              doc = ''
+                Get the PR number for a given revision with a bookmark, if a PR
+                for that bookmark exists.
+              '';
+            };
             rebase-all = [
               "rebase"
               "-s"
@@ -119,13 +150,6 @@ util.mkProgram {
               "git"
               "push"
               "--all"
-            ];
-            pub-change = [
-
-              "git"
-              "push"
-              "--change"
-              "@"
             ];
             pub =
               let
@@ -149,17 +173,6 @@ util.mkProgram {
               "squash"
               "--use-destination-message"
               "--into"
-            ];
-            get-desc = [
-              "util"
-              "exec"
-              "--"
-              (lib.getExe pkgs.dash)
-              "--no-config"
-              "-c"
-              ''
-                ${lib.getExe pkgs.jujutsu} show --template 'description' --no-patch | ${pkgs.wl-clipboard}/bin/wl-copy
-              ''
             ];
           };
         };
