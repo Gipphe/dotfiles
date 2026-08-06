@@ -269,6 +269,7 @@ util.mkToggledModule [ "hosts" ] {
     users.users.${config.gipphe.username}.openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJLC+gAQcmXgnkb9seOXdDln/HQkAxxL9s4+hXRJUm0P u0_a342@localhost"
     ];
+    services.sunshine.settings.output_name = "DP-2";
 
     hardware.nvidia.prime.nvidiaBusId = "PCI:1@0:0:0";
 
