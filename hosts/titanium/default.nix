@@ -102,12 +102,12 @@ util.mkToggledModule [ "hosts" ] {
       ];
       workspace_rule = [
         {
-          workspace = "r1";
+          workspace = "1";
           default = true;
           monitor = "desc:${monitors.left}";
         }
         {
-          workspace = "r9";
+          workspace = "9";
           default = true;
           monitor = "desc:${monitors.right}";
         }
