@@ -118,11 +118,11 @@ util.mkToggledModule [ "hosts" ] {
         }
       ];
     };
-    services.syncthing.settings.folders."${config.home.homeDirectory}/Documents/Notes".path =
-      "/mnt/oldone/Filen/Area/Notes";
-
-    gipphe.programs.syncthing.guiCredentials.passwordFile =
-      config.sops.secrets.titanium-syncthing-password.path;
+    services.syncthing = {
+      settings.folders."${config.home.homeDirectory}/Documents/Notes".path =
+        "/mnt/oldone/Filen/Area/Notes";
+      guiCredentials.passwordFile = config.sops.secrets.titanium-syncthing-password.path;
+    };
     sops.secrets.titanium-syncthing-password = {
       sopsFile = ../../secrets/titanium-syncthing-password.txt;
       mode = "400";
