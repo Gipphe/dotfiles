@@ -136,7 +136,7 @@ util.mkProgram {
                         if $revision == null or $revision == "" {
                           error make "Missing revision"
                         }
-                        gh pr view (jj bb $revision) | from json | get number
+                        gh pr view --json number --template '{{ .number }}' (jj bb $revision)
                       }
                     '';
                   }
