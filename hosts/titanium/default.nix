@@ -146,7 +146,46 @@ util.mkToggledModule [ "hosts" ] {
       }
     );
 
-    services.sunshine.settings.output_name = "DP-2";
+    services.sunshine = {
+      settings.output_name = "DP-2";
+      applications.apps =
+        let
+          dispatchers = import ../../modules/programs/hyprland/dispatchers.nix { inherit lib; };
+          detached = pkgs.writeShellScript "sunshine-steam-detached" ''
+            ${
+              dispatchers.toCmd (
+                dispatchers.window.move {
+                  initialclass = "steam";
+                  workspace = "10";
+                  follow = true;
+                }
+              )
+            } || true
+
+            ${dispatchers.toCmd (
+              dispatchers.exec_cmdr "setsid steam steam://open/bigpicture" {
+                workspace = "10";
+                monitor = monitors.left;
+              }
+            )}
+          '';
+        in
+        [
+          {
+            name = "Steam Big Picture (dedicated workspace)";
+            detached = [
+              detached.outPath
+            ];
+            prep-cmd = [
+              {
+                do = "";
+                undo = "setsid steam steam://close/bigpicture";
+              }
+            ];
+            image-path = "steam.png";
+          }
+        ];
+    };
 
     hardware.nvidia.prime.nvidiaBusId = "PCI:1@0:0:0";
 

@@ -91,4 +91,6 @@ lib.genAttrs one_arg (fn: args: lit "hl.dsp.${fn}(${toLua args})")
       ];
     in
     lib.genAttrs one_arg (fn: args: lit "hl.dsp.cursor.${fn}(${toLua args})");
+
+  toCmd = dispatcher: "hyprctl dispatch ${lib.escapeShellArg (toLua dispatcher)}";
 }
