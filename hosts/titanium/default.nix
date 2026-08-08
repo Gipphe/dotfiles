@@ -89,7 +89,10 @@ util.mkToggledModule [ "hosts" ] {
   ];
 
   homeManager = {
-    home.packages = [ pkgs.megasync ];
+    home.packages = [
+      pkgs.megasync
+      pkgs.protonup-qt
+    ];
     wayland.windowManager.hyprland.settings = {
       monitor = [
         {
