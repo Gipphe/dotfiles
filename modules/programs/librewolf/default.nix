@@ -14,7 +14,9 @@ util.mkProgram {
         OfferToSaveLogins = false;
         PasswordManagerEnabled = false;
       };
-      profiles.default = { };
+      profiles.default = {
+        settings = import ./settings.nix;
+      };
     };
     stylix.targets.librewolf.profileNames = [ "default" ];
   };
