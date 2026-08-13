@@ -15,6 +15,7 @@ def desc-to-branch-name [--rev(-r): string]: nothing -> string {
           | str replace -ar ':+' '/'
           | prepend "gipphe/"
           | str join
+          | str trim --char '-'
         )
     } else {
         $"gipphe/push-(jj show --template short_id --no-patch $rev)"
