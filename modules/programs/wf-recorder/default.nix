@@ -12,16 +12,18 @@ util.mkProgram {
   name = "wf-recorder";
   options.gipphe.programs.wf-recorder = {
     package = lib.mkPackageOption pkgs "wf-recorder" { };
-    nicknames = lib.mkOption {
-      type = with lib.types; attrsOf str;
-      description = "Unique descriptions and their corresponding nicknames.";
-      default = { };
-      example = {
-        "Dell Inc. DELL U2724D G11T4Z3" = "center";
-        "Dell Inc. DELL U2724D G27V4Z3" = "right";
-        "Dell Inc. DELL U2724D G15V4Z3" = "left";
-      };
-    };
   };
-  homeManager.home.packages = [ cfg.package ];
+  homeManager.home.packages = [
+    cfg.package
+    (util.writeNushellApplication {
+      name = "record";
+      runtimeInputs = [
+        pkgs.slurp
+        pkgs.ffmpeg
+        cfg.package
+        config.wayland.windowManager.hyprland.package
+      ];
+      text = builtins.readFile ./record.nu;
+    })
+  ];
 }
