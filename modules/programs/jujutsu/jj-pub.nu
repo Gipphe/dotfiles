@@ -18,7 +18,7 @@ def desc-to-branch-name [--rev(-r): string]: nothing -> string {
           | str trim --char '-'
         )
     } else {
-        $"gipphe/push-(jj show --template short_id --no-patch $rev)"
+        $"gipphe/push-(jj show --template 'change_id.shortest(8)' --no-patch $rev)"
     }
 }
 
