@@ -40,6 +40,7 @@ util.mkToggledModule [ "hosts" ] {
       core.enable = true;
       desktop.hyprland.enable = true;
       fonts.enable = true;
+      game-dev.enable = true;
       gaming.enable = true;
       gaming.stream-host.enable = true;
       gc.enable = true;
