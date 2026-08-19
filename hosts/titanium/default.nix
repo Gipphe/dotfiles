@@ -61,8 +61,6 @@ util.mkToggledModule [ "hosts" ] {
     hardware = {
       gpu.nvidia.rtx3070.enable = true;
       peripheral.logitech = {
-        # g903.enable = true;
-        # g903.id = "046d:c539";
         g502x.enable = true;
         g915.enable = true;
         g935.enable = true;

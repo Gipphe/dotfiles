@@ -42,7 +42,17 @@ let
       [ { locked = true; } ]
     else
       [ ];
+
+  toNiceHyprBindConfig =
+    binds:
+    map ({ name, value }: {
+      _args = [
+        name
+        (toDispatch value.action)
+      ]
+      ++ mkFlags value;
+    }) (lib.attrsToList binds);
 in
 {
-  inherit toHyprBindConfig;
+  inherit toHyprBindConfig toNiceHyprBindConfig;
 }
