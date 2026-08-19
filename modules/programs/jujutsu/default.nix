@@ -6,6 +6,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.wrappers.jujutsu;
+in
 util.mkProgram {
   name = "jujutsu";
 
@@ -192,6 +195,15 @@ util.mkProgram {
             ];
           };
         };
+      };
+      programs.nushell = {
+        extraConfig = lib.mkOrder 2000 ''
+          source ${
+            pkgs.runCommand "jj-completions" { } ''
+              ${cfg.wrapper}/bin/jj util completion nushell >> "$out"
+            ''
+          }
+        '';
       };
       sops.secrets."git-ssh-signing-key.pub" = {
         format = "binary";
