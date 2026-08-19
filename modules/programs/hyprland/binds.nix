@@ -8,6 +8,27 @@
 let
   inherit (lib) genList concatLists;
   binds = import ./toHyprBinds.nix { inherit lib; };
+  cfg = config.gipphe.programs.hyprland;
+  niceBinds = mkNiceBinds cfg.settings.bind;
+  mkNiceBinds =
+    binds:
+    lib.pipe binds [
+      lib.attrsToList
+      (map (
+        { name, value }: {
+          _args = [
+            name
+            value.action
+          ]
+          ++ lib.optional (value.opts != { }) value.opts;
+        }
+      ))
+    ];
+  niceSubmaps = lib.mapAttrs (_: v: {
+    inherit (v) onDispatch;
+    settings.bind = mkNiceBinds (v.settings.bind or { });
+  }) cfg.submaps;
+  wmBinds = map binds.toHyprBindConfig config.gipphe.core.wm.binds;
 
   killactive = lib.getExe (
     pkgs.writeShellApplication {
@@ -133,214 +154,131 @@ let
     );
 
   dispatch = import ./dispatchers.nix { inherit lib; };
-  mod = "SUPER";
+  bindType =
+    with lib.types;
+    attrsOf (submodule {
+      options = {
+        action = lib.mkOption {
+          description = "Action to perform on keybind";
+          type = either luaInline str;
+        };
+        opts = lib.mkOption {
+          description = "Other options to pass to the key bind registration";
+          default = { };
+          type = attrsOf (oneOf [
+            str
+            int
+            float
+            bool
+            path
+          ]);
+        };
+      };
+    });
+  inherit (cfg) mod;
 in
 util.mkModule {
+  options.gipphe.programs.hyprland = {
+    mod = lib.mkOption {
+      description = "Mod key";
+      type = lib.types.str;
+      default = "SUPER";
+    };
+    settings.bind = lib.mkOption {
+      description = "Key bindings";
+      default = { };
+      type = bindType;
+    };
+    submaps = lib.mkOption {
+      description = "Submap key bindings";
+      default = { };
+      type =
+        with lib.types;
+        attrsOf (submodule {
+          options = {
+            onDispatch = lib.mkOption {
+              description = "Submap to use after dispatch";
+              type = str;
+              default = "";
+            };
+            settings.bind = lib.mkOption {
+              description = "Binds for the submap";
+              default = { };
+              type = bindType;
+            };
+          };
+        });
+    };
+  };
+  shared = {
+    imports = [ ./layouts/scrolling.nix ];
+    gipphe.programs.hyprland.layouts.scrolling.enable = true;
+  };
   homeManager = {
-    wayland.windowManager.hyprland = {
-      settings = {
-        bind =
-          workspaceSwitching
-          ++ (map binds.toHyprBindConfig config.gipphe.core.wm.binds)
-          ++ [
-            {
-              _args = [
-                "${mod} + Q"
-                (dispatch.exec_cmd "${killactive}") # Close current window
-              ];
-            }
-            {
-              _args = [
-                "${mod} + SHIFT + Q"
-                (dispatch.window.kill null) # Force close current window
-              ];
-            }
-            {
-              _args = [
-                "${mod} + T"
-                (dispatch.window.float { }) # Toggle between tiling and floating window
-              ];
-            }
-            {
-              _args = [
-                "${mod} + F"
-                (dispatch.window.fullscreen { }) # Open the window in fullscreen
-              ];
-            }
-            {
-              _args = [
-                "${mod} + P"
-                (dispatch.window.pseudo { }) # dwindle
-              ];
-            }
-            {
-              _args = [
-                "${mod} + J"
-                (dispatch.layout "togglesplit") # dwindle
-              ];
-            }
-            {
-              _args = [
-                "${mod} + F1"
-                (dispatch.exec_cmd "${gamemode}")
-              ];
-            }
+    gipphe.programs.hyprland.settings.bind = {
+      # Close current window
+      "${mod} + Q".action = dispatch.exec_cmd "${killactive}";
+      # Force close current window
+      "${mod} + SHIFT + Q".action = dispatch.window.kill null;
+      "${mod} + F1".action = dispatch.exec_cmd "${gamemode}";
 
-            # Move focus with mod + arrow keys
-            {
-              _args = [
-                "${mod} + left"
-                (dispatch.focus { direction = "l"; })
-              ];
-            }
-            {
-              _args = [
-                "${mod} + right"
-                (dispatch.focus { direction = "r"; })
-              ];
-            }
-            {
-              _args = [
-                "${mod} + up"
-                (dispatch.focus { direction = "u"; })
-              ];
-            }
-            {
-              _args = [
-                "${mod} + down"
-                (dispatch.focus { direction = "d"; })
-              ];
-            }
+      # Move focus with mod + arrow keys
+      "${mod} + left".action = dispatch.focus { direction = "l"; };
+      "${mod} + right".action = dispatch.focus { direction = "r"; };
+      "${mod} + up".action = dispatch.focus { direction = "u"; };
+      "${mod} + down".action = dispatch.focus { direction = "d"; };
 
-            # Scroll through existing workspaces with mod + scroll
-            {
-              _args = [
-                "${mod} + mouse_down"
-                (dispatch.focus { workspace = "e+1"; })
-              ];
-            }
-            {
-              _args = [
-                "${mod} + mouse_up"
-                (dispatch.focus { workspace = "e-1"; })
-              ];
-            }
-
-            {
-              _args = [
-                "switch:off:Lid Switch"
-                (dispatch.exec_cmd "${lid-switch} open")
-                { locked = true; }
-              ];
-            }
-            {
-              _args = [
-                "switch:on:Lid Switch"
-                (dispatch.exec_cmd "${lid-switch} close")
-                { locked = true; }
-              ];
-            }
-
-            # Move/resize windows with mod + LMB/RMB and dragging
-            {
-              _args = [
-                "${mod} + mouse:272"
-                dispatch.window.drag
-                { mouse = true; }
-              ];
-            }
-            {
-              _args = [
-                "${mod} + mouse:273"
-                dispatch.window.resize
-                { mouse = true; }
-              ];
-            }
-
-            # Zoom
-            {
-              _args = [
-                "${mod} + mouse_down"
-                (dispatch.exec_cmd "${increase-zoom}")
-              ];
-            }
-            {
-              _args = [
-                "${mod} + mouse_up"
-                (dispatch.exec_cmd "${decrease-zoom}")
-              ];
-            }
-            {
-              _args = [
-                "${mod} + SHIFT + mouse_up"
-                (dispatch.exec_cmd "${reset-zoom}")
-              ];
-            }
-            {
-              _args = [
-                "${mod} + SHIFT + mouse_down"
-                (dispatch.exec_cmd "${reset-zoom}")
-              ];
-            }
-            {
-              _args = [
-                "${mod} + SHIFT + minus"
-                (dispatch.exec_cmd "${reset-zoom}")
-              ];
-            }
-            {
-              _args = [
-                "${mod} + SHIFT + KP_SUBTRACT"
-                (dispatch.exec_cmd "${reset-zoom}")
-              ];
-            }
-            {
-              _args = [
-                "${mod} + SHIFT + 0"
-                (dispatch.exec_cmd "${reset-zoom}")
-              ];
-            }
-
-            {
-              _args = [
-                "${mod} + equal"
-                (dispatch.exec_cmd "${increase-zoom}")
-                { repeating = true; }
-              ];
-            }
-            {
-              _args = [
-                "${mod} + minus"
-                (dispatch.exec_cmd "${decrease-zoom}")
-                { repeating = true; }
-              ];
-            }
-            {
-              _args = [
-                "${mod} + KP_ADD"
-                (dispatch.exec_cmd "${increase-zoom}")
-                { repeating = true; }
-              ];
-            }
-            {
-              _args = [
-                "${mod} + KP_SUBTRACT"
-                (dispatch.exec_cmd "${decrease-zoom}")
-                { repeating = true; }
-              ];
-            }
-
-            # Locked mode
-            {
-              _args = [
-                "${mod} + ALT_L + H"
-                (dispatch.submap "locked")
-              ];
-            }
-          ];
+      "switch:off:Lid Switch" = {
+        action = dispatch.exec_cmd "${lid-switch} open";
+        opts.locked = true;
+      };
+      "switch:on:Lid Switch" = {
+        action = dispatch.exec_cmd "${lid-switch} close";
+        opts.locked = true;
       };
 
-      submaps = {
+      # Move/resize windows with mod + LMB/RMB and dragging
+      "${mod} + mouse:272" = {
+        action = dispatch.window.drag;
+        opts.mouse = true;
+      };
+      "${mod} + mouse:273" = {
+        action = dispatch.window.resize;
+        opts.mouse = true;
+      };
+
+      # Zoom
+      "${mod} + mouse_down".action = dispatch.exec_cmd "${increase-zoom}";
+      "${mod} + mouse_up".action = dispatch.exec_cmd "${decrease-zoom}";
+      "${mod} + SHIFT + mouse_up".action = dispatch.exec_cmd "${reset-zoom}";
+      "${mod} + SHIFT + mouse_down".action = dispatch.exec_cmd "${reset-zoom}";
+      "${mod} + SHIFT + minus".action = dispatch.exec_cmd "${reset-zoom}";
+      "${mod} + SHIFT + KP_SUBTRACT".action = dispatch.exec_cmd "${reset-zoom}";
+      "${mod} + SHIFT + 0".action = dispatch.exec_cmd "${reset-zoom}";
+      "${mod} + equal" = {
+        action = dispatch.exec_cmd "${increase-zoom}";
+        opts.repeating = true;
+      };
+      "${mod} + minus" = {
+        action = dispatch.exec_cmd "${decrease-zoom}";
+        opts.repeating = true;
+      };
+      "${mod} + KP_ADD" = {
+        action = dispatch.exec_cmd "${increase-zoom}";
+        opts.repeating = true;
+      };
+      "${mod} + KP_SUBTRACT" = {
+        action = dispatch.exec_cmd "${decrease-zoom}";
+        opts.repeating = true;
+      };
+
+      # Locked mode
+      "${mod} + ALT_L + H".action = dispatch.submap "locked";
+    };
+    wayland.windowManager.hyprland = {
+      settings.bind = workspaceSwitching ++ wmBinds ++ niceBinds;
+
+      submaps = niceSubmaps // {
         locked.settings.bind = [
           {
             _args = [
