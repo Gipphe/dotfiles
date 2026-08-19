@@ -12,23 +12,19 @@ let
   niceBinds = mkNiceBinds cfg.settings.bind;
   mkNiceBinds =
     binds:
-    lib.pipe binds [
-      lib.attrsToList
-      (map (
-        { name, value }: {
-          _args = [
-            name
-            value.action
-          ]
-          ++ lib.optional (value.opts != { }) value.opts;
-        }
-      ))
-    ];
+    map ({ name, value }: {
+      _args = [
+        name
+        value.action
+      ]
+      ++ lib.optional (value.opts != { }) value.opts;
+    }) (lib.attrsToList binds);
   niceSubmaps = lib.mapAttrs (_: v: {
     inherit (v) onDispatch;
     settings.bind = mkNiceBinds (v.settings.bind or { });
   }) cfg.submaps;
   wmBinds = map binds.toHyprBindConfig config.gipphe.core.wm.binds;
+  niceWmBinds = binds.toNiceHyprBindConfig config.gipphe.core.wm.bind;
 
   killactive = lib.getExe (
     pkgs.writeShellApplication {
@@ -276,7 +272,7 @@ util.mkModule {
       "${mod} + ALT_L + H".action = dispatch.submap "locked";
     };
     wayland.windowManager.hyprland = {
-      settings.bind = workspaceSwitching ++ wmBinds ++ niceBinds;
+      settings.bind = workspaceSwitching ++ wmBinds ++ niceBinds ++ niceWmBinds;
 
       submaps = niceSubmaps // {
         locked.settings.bind = [

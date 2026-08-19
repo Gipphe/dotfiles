@@ -38,7 +38,7 @@ util.mkToggledModule [ "programs" "hyprland" "layouts" ] {
         "${mod} + SHIFT + H".action = dispatch.layout "swapcol l";
         "${mod} + SHIFT + L".action = dispatch.layout "swapcol r";
 
-        "${mod} + S".action = dispatch.submap "scrolling";
+        "${mod} + S".action = dispatch.submap "Scrolling";
 
         # Open the window in fullscreen
         "${mod} + F".action = dispatch.window.fullscreen { layout_aware = true; };
@@ -46,12 +46,14 @@ util.mkToggledModule [ "programs" "hyprland" "layouts" ] {
         # Toggle between layout controlled and floating window
         "${mod} + T".action = dispatch.window.float { };
       };
-      submaps.scrolling = {
+      submaps.Scrolling = {
         onDispatch = "reset";
         settings.bind = {
           "${mod} + S".action = dispatch.submap "reset";
+          "Escape".action = dispatch.submap "reset";
           "S".action = dispatch.submap "reset";
-          "F".action = dispatch.layout "fit_into_view";
+          "F".action = dispatch.layout "fit expand";
+          "SHIFT + F".action = dispatch.layout "fit_into_view";
           "L".action = dispatch.layout "expel";
           "H".action = dispatch.layout "consume";
           "K".action = dispatch.layout "promote";
