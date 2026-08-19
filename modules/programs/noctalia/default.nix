@@ -18,6 +18,20 @@ let
 
   main = util.mkProgram {
     name = "noctalia";
+    shared = {
+      imports = [
+        ./plugins/screen-toolkit.nix
+        ./plugins/hypr-layout-switcher.nix
+        ./plugins/hypr-submap.nix
+        ./plugins/special-workspaces.nix
+      ];
+      gipphe.programs.noctalia.plugins = {
+        hypr-layout-switcher.enable = true;
+        hypr-submap.enable = true;
+        screen-toolkit.enable = true;
+        special-workspaces.enable = true;
+      };
+    };
     homeManager = {
       imports = [ inputs.noctalia.homeModules.default ];
       programs.noctalia = {
@@ -39,21 +53,12 @@ let
         packages = [
           noctalia-copy-gui-settings
           noctalia-diff-settings
+          pkgs.socat # Required for hypr-submap plugin
         ];
       };
-      gipphe.core.wm = {
-        binds = [
-          {
-            mod = "Mod";
-            key = "space";
-            action.spawn = "${ipc} panel-toggle launcher";
-          }
-          {
-            mod = "Mod";
-            key = "C";
-            action.spawn = "${ipc} panel-toggle clipboard";
-          }
-        ];
+      gipphe.core.wm.bind = {
+        "SUPER + space".action.spawn = "${ipc} panel-toggle launcher";
+        "SUPER + C".action.spawn = "${ipc} panel-toggle clipboard";
       };
     };
     nixos = {
