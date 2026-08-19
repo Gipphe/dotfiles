@@ -41,7 +41,14 @@ util.mkToggledModule [ "programs" "hyprland" "layouts" ] {
         "${mod} + S".action = dispatch.submap "scrolling";
 
         # Open the window in fullscreen
-        "${mod} + F".action = dispatch.window.fullscreen { layout_aware = true; };
+        "${mod} + F".action = dispatch.window.fullscreen {
+          mode = "maximized";
+          layout_aware = true;
+        };
+        "${mod} + SHIFT + F".action = dispatch.window.fullscreen {
+          layout_aware = true;
+          mode = "fullscreen";
+        };
 
         # Toggle between layout controlled and floating window
         "${mod} + T".action = dispatch.window.float { };
