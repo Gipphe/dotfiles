@@ -6,10 +6,21 @@
   ...
 }:
 let
-  cfg = config.programs.carapace;
+  cfg = config.gipphe.programs.carapace;
+  hmCfg = config.programs.carapace;
 in
 util.mkProgram {
   name = "carapace";
+  options.gipphe.programs.carapace = {
+    specs = lib.mkOption {
+      description = ''
+        Custom Carapace specs to include. Will be converted to YAML, using the
+        attr name as the final file name for the spec.
+      '';
+      default = { };
+      type = lib.types.attrsOf (pkgs.formats.yaml { }).type;
+    };
+  };
   homeManager = {
     config = {
       programs = {
@@ -34,8 +45,16 @@ util.mkProgram {
         zsh.dotDir = "${config.xdg.configHome}/zsh";
       };
       home.activation.clearCarapaceCache = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        run ${cfg.package}/bin/carapace --clear-cache
+        run ${hmCfg.package}/bin/carapace --clear-cache
       '';
+      xdg.configFile =
+        let
+          yamlFormat = pkgs.formats.yaml { };
+        in
+        lib.mapAttrs' (name: value: {
+          name = "carapace/specs/${name}.yaml";
+          value.source = yamlFormat.generate "carapace-spec-${name}.yaml" value;
+        }) cfg.specs;
     };
   };
 }
