@@ -118,7 +118,7 @@ util.mkProgram {
                 "show"
                 "--no-patch"
                 "--template"
-                "local_bookmarks"
+                "local_bookmarks.first().name()"
               ];
               doc = "Get the bookmark for a revision, if there is one.";
             };
