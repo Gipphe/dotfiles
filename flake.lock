@@ -1856,6 +1856,22 @@
         "type": "github"
       }
     },
+    "nu_scripts": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1787145501,
+        "narHash": "sha256-GrJYWbvkfLKFJitvyGjybpI7Vc+6HIiMq0xNoT+g2Pc=",
+        "owner": "nushell",
+        "repo": "nu_scripts",
+        "rev": "eb43c8c0df920f4fc7f15058939c66ff89be9d61",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nushell",
+        "repo": "nu_scripts",
+        "type": "github"
+      }
+    },
     "nur": {
       "inputs": {
         "flake-parts": [
@@ -1969,6 +1985,7 @@
         "nixpkgs": "nixpkgs_8",
         "nixpkgs-last-working-for-nix-on-droid": "nixpkgs-last-working-for-nix-on-droid",
         "noctalia": "noctalia",
+        "nu_scripts": "nu_scripts",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
         "treefmt-nix": "treefmt-nix",

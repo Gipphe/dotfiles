@@ -1,4 +1,4 @@
-{ util, ... }:
+{ inputs, util, ... }:
 util.mkProgram {
   name = "zellij";
   homeManager = {
@@ -9,6 +9,9 @@ util.mkProgram {
         zq = "zellij kill-session $env.ZELLIJ_SESSION_NAME";
         zj = "zellij";
       };
+      nushell.extraConfig = ''
+        source ${inputs.nu_scripts}/custom-completions/zellij/zellij-completions.nu
+      '';
     };
   };
 }

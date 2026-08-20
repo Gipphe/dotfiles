@@ -125,6 +125,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nu_scripts = {
+      url = "github:nushell/nu_scripts";
+      flake = false;
+    };
+
     # Do not override its nixpkgs input, since it uses bleeding edge versions
     # of specific packages
     nix-gaming.url = "github:fufexan/nix-gaming";
