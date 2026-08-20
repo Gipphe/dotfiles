@@ -7,13 +7,6 @@
 }:
 let
   cfg = config.gipphe.programs.nushell;
-  abbrsAsAliases = lib.mapAttrs (
-    _: v: if builtins.isAttrs v then v.expansion else v
-  ) config.gipphe.core.shell.abbrs;
-  aliases = lib.mkMerge [
-    abbrsAsAliases
-    config.gipphe.core.shell.aliases
-  ];
 in
 util.mkProgram {
   name = "nushell";
@@ -43,9 +36,7 @@ util.mkProgram {
           $env.TRANSIENT_PROMPT_MULTILINE_INDICATOR = ""
           $env.TRANSIENT_PROMPT_COMMAND_RIGHT = ^starship module time
         '';
-        shellAliases = aliases // {
-          rm = "rm -i";
-        };
+        settings.abbreviations.rm = "rm -i";
         settings = {
           edit_mode = "vi";
           show_banner = false;

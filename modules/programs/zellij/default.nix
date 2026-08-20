@@ -5,7 +5,7 @@ util.mkProgram {
     imports = [ ./config.nix ];
     programs = {
       zellij.enable = true;
-      nushell.shellAliases = {
+      nushell.settings.abbreviations = {
         zq = "zellij kill-session $env.ZELLIJ_SESSION_NAME";
         zj = "zellij";
       };

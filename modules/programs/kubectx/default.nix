@@ -3,7 +3,7 @@ util.mkProgram {
   name = "kubectx";
   homeManager = {
     home.packages = [ pkgs.kubectx ];
-    gipphe.core.shell.abbrs = {
+    programs.nushell.settings.abbreviations = {
       kcx = "kubectx";
       kn = "kubens";
     };

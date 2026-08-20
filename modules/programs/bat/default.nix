@@ -12,7 +12,9 @@ util.mkProgram {
         ${pkgs.man-db}/bin/man "$@" | ${pkgs.unixtools.col}/bin/col -bx | ${config.programs.bat.package}/bin/bat -l man -p
       '')
     ];
-    programs.bat.enable = true;
-    gipphe.core.shell.abbrs.cat = "bat";
+    programs = {
+      bat.enable = true;
+      nushell.settings.abbreviations.cat = "bat";
+    };
   };
 }

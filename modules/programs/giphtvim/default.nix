@@ -13,6 +13,6 @@ util.mkProgram {
   homeManager = {
     home.packages = if flags.isNixOnDroid then [ giphtvim.droid ] else [ giphtvim.neovim ];
     home.sessionVariables.EDITOR = "nvim";
-    gipphe.core.shell.abbrs.vim = "nvim";
+    programs.nushell.settings.abbreviations.vim = "nvim";
   };
 }
