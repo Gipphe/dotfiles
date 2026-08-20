@@ -115,9 +115,24 @@ util.mkProgram {
                 "show"
                 "--no-patch"
                 "--template"
-                "local_bookmarks.first().name()"
+                "if(local_bookmarks, local_bookmarks.first().name())"
               ];
               doc = "Get the bookmark for a revision, if there is one.";
+            };
+            bc = {
+              doc = "Create a bookmark for a revision based on its description";
+              definition = [
+                "util"
+                "exec"
+                "--"
+                (lib.getExe (
+                  util.writeNushellApplication {
+                    name = "jj-bc";
+                    runtimeInputs = [ config.gipphe.programs.jujutsu.package ];
+                    text = builtins.readFile ./jj-bc.nu;
+                  }
+                ))
+              ];
             };
             bn = {
               definition = [
@@ -167,24 +182,83 @@ util.mkProgram {
               "push"
               "--all"
             ];
-            pub =
-              let
-                script = util.writeNushellApplication {
+            pub = [
+              "util"
+              "exec"
+              "--"
+              (lib.getExe (
+                util.writeNushellApplication {
                   name = "jj-pub";
                   runtimeInputs = [
                     config.gipphe.programs.git.package
                     config.gipphe.programs.ssh.package
-                    pkgs.jujutsu
+                    config.gipphe.programs.jujutsu.package
                   ];
-                  text = builtins.readFile ./jj-pub.nu;
-                };
-              in
-              [
-                "util"
-                "exec"
-                "--"
-                (lib.getExe script)
-              ];
+                  text = /* nu */ ''
+                    def main [revision: string]: nothing -> string {
+                      let bookmark = jj bc $revision
+                      jj bookmark track --remote origin $bookmark
+                      jj git push --bookmark $bookmark
+                      $bookmark
+                    }
+                  '';
+                }
+              ))
+            ];
+            puf = {
+              doc = "Push bookmark, create PR, mark PR as ready, and enable auto-merging of PR";
+              definition =
+                let
+                  outer = util.writeNushellApplication {
+                    name = "jj-full_pub";
+                    text = /* nu */ ''
+                      def main [
+                        jj_dir: string
+                        --revision(-r): string
+                      ] {
+                        if $revision == null or $revision == "" {
+                          error make "Missing --revision"
+                        }
+                        let jj = $"($jj_dir)/bin/jj"
+
+                        let bookmark = ^$jj bc $revision
+
+                        (
+                          systemd-run 
+                            --user 
+                            --same-dir 
+                            '${lib.getExe inner}' 
+                            $jj_dir 
+                            $bookmark
+                        )
+                      }
+                    '';
+                  };
+                  inner = util.writeNushellApplication {
+                    name = "jj-full_pub-inner";
+                    runtimeInputs = [ config.gipphe.programs.gh.package ];
+                    text = /* nu */ ''
+                      def main [
+                        jj_dir: string
+                        bookmark: string
+                      ] {
+                        let jj = $"($jj_dir)/bin/jj"
+                        ^$jj pub $bookmark
+                        gh prc -H $bookmark
+                        gh pr ready $bookmark
+                        gh prm $bookmark
+                      }
+                    '';
+                  };
+                in
+                [
+                  "util"
+                  "exec"
+                  "--"
+                  (lib.getExe outer)
+                  (placeholder "out")
+                ];
+            };
             fixup = [
               "squash"
               "--use-destination-message"
