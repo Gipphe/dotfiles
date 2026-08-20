@@ -42,7 +42,6 @@ util.mkProgram {
           user = "Gipphe";
         };
       };
-      env.GH_SPINNER_DISABLED = "1";
     };
     wrappers.git = config.wrappers.gh.passthru.git;
     xdg = config.wrappers.gh.passthru.xdg;
