@@ -244,9 +244,8 @@ util.mkProgram {
                       ] {
                         let jj = $"($jj_dir)/bin/jj"
                         ^$jj pub $bookmark
-                        gh prc -H $bookmark
-                        gh pr ready $bookmark
-                        gh prm $bookmark
+                        gh pr create --fill-first --no-maintainer-edit --assignee '@me' -H $bookmark
+                        gh pr merge --auto --squash --delete-branch $bookmark
                       }
                     '';
                   };
