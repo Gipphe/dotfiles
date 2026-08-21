@@ -7,7 +7,9 @@ util.mkToggledModule [ "programs" "noctalia" "plugins" ] {
   homeManager = {
     programs.noctalia.settings.plugins.enabled = [ "jamesfeeder/special-workspaces" ];
     home.packages = [ pkgs.socat ];
-    xdg.stateFile."noctalia/plugins/materialized/community/special-workspaces".source =
-      "${sources.community}/special-workspaces";
+    xdg.stateFile."noctalia/plugins/materialized/community/special-workspaces" = {
+      source = "${sources.community}/special-workspaces";
+      force = true;
+    };
   };
 }

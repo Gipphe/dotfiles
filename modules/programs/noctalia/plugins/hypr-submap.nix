@@ -10,7 +10,9 @@ util.mkToggledModule [ "programs" "noctalia" "plugins" ] {
       pkgs.socat
       pkgs.coreutils
     ];
-    xdg.stateFile."noctalia/plugins/materialized/community/hypr-submap".source =
-      "${sources.community}/hypr-submap";
+    xdg.stateFile."noctalia/plugins/materialized/community/hypr-submap" = {
+      source = "${sources.community}/hypr-submap";
+      force = true;
+    };
   };
 }
