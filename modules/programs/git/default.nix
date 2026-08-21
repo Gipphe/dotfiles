@@ -18,10 +18,16 @@ let
     .vscode/
     Session.vim
     .claude/*.local.*
+    ${config.gipphe.programs.git.ignores}
   '';
 in
 util.mkProgram {
   name = "git";
+  options.gipphe.programs.git.ignores = lib.mkOption {
+    description = "Git ignore";
+    type = lib.types.lines;
+    default = "";
+  };
   homeManager = {
     options.gipphe.programs.git = {
       package = lib.mkPackageOption pkgs "git" { } // {

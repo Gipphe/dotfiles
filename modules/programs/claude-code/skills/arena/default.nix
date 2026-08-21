@@ -2,11 +2,10 @@
   util,
   lib,
   config,
-  pkgs,
   ...
 }:
 util.mkModule {
   homeManager.config = lib.mkIf config.gipphe.programs.claude-code.enable {
-    home.file.".claude/skills/cardano-search".source = pkgs.callPackage ./skill.nix { };
+    home.file.".claude/skills/arena/SKILL.md".source = ./SKILL.md;
   };
 }
