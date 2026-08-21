@@ -30,7 +30,9 @@ util.mkToggledModule [ "programs" "noctalia" "plugins" ] {
       mpv.enable = true;
       wf-recorder.enable = true;
     };
-    xdg.stateFile."noctalia/plugins/materialized/community/screen-toolkit".source =
-      "${sources.community}/screen-toolkit";
+    xdg.stateFile."noctalia/plugins/materialized/community/screen-toolkit" = {
+      source = "${sources.community}/screen-toolkit";
+      force = true;
+    };
   };
 }

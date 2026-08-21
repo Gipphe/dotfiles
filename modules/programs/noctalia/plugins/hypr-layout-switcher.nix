@@ -8,7 +8,9 @@ util.mkToggledModule [ "programs" "noctalia" "plugins" ] {
     programs.noctalia.settings.plugins = {
       enabled = [ "maddingo/hypr-layout-switcher" ];
     };
-    xdg.stateFile."noctalia/plugins/materialized/community/hypr-layout-switcher".source =
-      "${sources.community}/hypr-layout-switcher";
+    xdg.stateFile."noctalia/plugins/materialized/community/hypr-layout-switcher" = {
+      force = true;
+      source = "${sources.community}/hypr-layout-switcher";
+    };
   };
 }
