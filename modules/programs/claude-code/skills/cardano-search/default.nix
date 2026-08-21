@@ -5,8 +5,11 @@
   pkgs,
   ...
 }:
+let
+  dir = pkgs.callPackage ./skill.nix { };
+in
 util.mkModule {
   homeManager.config = lib.mkIf config.gipphe.programs.claude-code.enable {
-    home.file.".claude/skills/cardano-search".source = pkgs.callPackage ./skill.nix { };
+    gipphe.programs.claude-code.skills.cardano-search = dir;
   };
 }

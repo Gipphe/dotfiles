@@ -53,7 +53,6 @@ let
         packages = [
           noctalia-copy-gui-settings
           noctalia-diff-settings
-          pkgs.socat # Required for hypr-submap plugin
         ];
       };
       gipphe.core.wm.bind = {

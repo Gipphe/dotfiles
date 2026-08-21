@@ -6,7 +6,7 @@
 }:
 util.mkModule {
   homeManager.config = lib.mkIf config.gipphe.programs.claude-code.enable {
-    home.file.".claude/skills/issue-tracker/SKILL.md".source = ./SKILL.md;
+    gipphe.programs.claude-code.skills.issue-tracker = ./.;
     gipphe.programs.git.ignores = /* gitignore */ ''
       .scratch/
     '';
