@@ -59,17 +59,17 @@
       lock = {
         action = "lock";
         enabled = false;
-        timeout = 600;
+        timeout = 1580;
       };
       lock-and-suspend = {
         action = "lock_and_suspend";
         enabled = false;
-        timeout = 900;
+        timeout = 3600;
       };
       screen-off = {
         action = "screen_off";
         enabled = true;
-        timeout = 660;
+        timeout = 1800;
       };
     };
     behavior_order = [
