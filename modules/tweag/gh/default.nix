@@ -2,7 +2,7 @@
 util.mkToggledModule [ "tweag" ] {
   name = "gh";
   homeManager = {
-    wrappers.gh.settings.aliases =
+    gipphe.programs.gh.settings.aliases =
       let
         teamMembers = {
           "christian" = "cgeorgii";

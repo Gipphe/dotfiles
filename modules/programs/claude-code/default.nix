@@ -1,19 +1,21 @@
-{ inputs, util, ... }:
+{
+  inputs,
+  util,
+  pkgs,
+  ...
+}:
+let
+  module = inputs.wrappers.wrappers.claude-code.wrap {
+    inherit pkgs;
+    settings = {
+      alwaysThinkingEnabled = true;
+    };
+  };
+in
 util.mkProgram {
   name = "claude-code";
   homeManager = {
-    imports = [
-      (inputs.wrappers.lib.getInstallModule {
-        name = "claude-code";
-        value = inputs.wrappers.lib.wrapperModules.claude-code;
-      })
-      ./skills
-    ];
-    wrappers.claude-code = {
-      enable = true;
-      settings = {
-        alwaysThinkingEnabled = true;
-      };
-    };
+    imports = [ ./skills ];
+    home.packages = [ module ];
   };
 }
