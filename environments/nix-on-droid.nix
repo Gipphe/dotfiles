@@ -17,7 +17,10 @@ let
   mkMachine =
     hostname: config:
     let
-      util = nixpkgs.legacyPackages.${config.system}.callPackage ../util.nix { };
+      util = nixpkgs.legacyPackages.${config.system}.callPackage ../util.nix {
+        # TODO: Remove once 0.115.1 is in nixos-unstable.
+        inherit (self.packages.${config.system}) nushell;
+      };
     in
     inputs.nix-on-droid.lib.nixOnDroidConfiguration {
       pkgs = import nixpkgs {

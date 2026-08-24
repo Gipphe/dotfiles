@@ -1,4 +1,5 @@
 {
+  inputs,
   util,
   pkgs,
   config,
@@ -43,5 +44,13 @@ util.mkProgram {
         };
       };
     };
+  };
+  nixos = {
+    nixpkgs.overlays = [
+      (_: _: {
+        # TODO: Remove once 0.115.1 is in nixos-unstable.
+        inherit (inputs.self.packages.${pkgs.stdenv.hostPlatform.system}) nushell;
+      })
+    ];
   };
 }
