@@ -1,7 +1,9 @@
-{ util, pkgs, ... }:
-let
-  sources = pkgs.callPackage ./sources.nix { };
-in
+{
+  inputs,
+  util,
+  pkgs,
+  ...
+}:
 util.mkToggledModule [ "programs" "noctalia" "plugins" ] {
   name = "hypr-submap";
   homeManager = {
@@ -10,9 +12,7 @@ util.mkToggledModule [ "programs" "noctalia" "plugins" ] {
       pkgs.socat
       pkgs.coreutils
     ];
-    xdg.stateFile."noctalia/plugins/materialized/community/hypr-submap" = {
-      source = "${sources.community}/hypr-submap";
-      force = true;
-    };
+    xdg.dataFile."noctalia/plugins/hypr-submap".source =
+      "${inputs.noctalia-community-plugins}/hypr-submap";
   };
 }

@@ -1,7 +1,9 @@
-{ util, pkgs, ... }:
-let
-  sources = pkgs.callPackage ./sources.nix { };
-in
+{
+  util,
+  inputs,
+  pkgs,
+  ...
+}:
 util.mkToggledModule [ "programs" "noctalia" "plugins" ] {
   name = "screen-toolkit";
   homeManager = {
@@ -30,9 +32,7 @@ util.mkToggledModule [ "programs" "noctalia" "plugins" ] {
       mpv.enable = true;
       wf-recorder.enable = true;
     };
-    xdg.stateFile."noctalia/plugins/materialized/community/screen-toolkit" = {
-      source = "${sources.community}/screen-toolkit";
-      force = true;
-    };
+    xdg.dataFile."noctalia/plugins/screen-toolkit".source =
+      "${inputs.noctalia-community-plugins}/screen-toolkit";
   };
 }

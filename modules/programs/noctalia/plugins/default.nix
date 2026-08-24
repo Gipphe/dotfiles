@@ -6,7 +6,6 @@
 }:
 util.mkModule {
   homeManager.config = lib.mkIf config.gipphe.programs.noctalia.enable {
-    # Handle updates declaratively.
-    programs.noctalia.settings.plugins.auto_update = "none";
+    programs.noctalia.settings.plugins.auto_update = "official";
   };
 }
