@@ -3,25 +3,23 @@
   util,
   inputs,
   config,
+  pkgs,
   ...
 }:
+let
+  module = inputs.wlib.wrappers.btop.eval {
+    inherit pkgs;
+    settings = {
+      color_theme = "stylix";
+    };
+    themes = lib.mkIf config.gipphe.environment.stylix.enable {
+      stylix = config.programs.btop.themes.stylix;
+    };
+  };
+in
 util.mkProgram {
   name = "btop";
   homeManager = {
-    imports = [
-      (inputs.wlib.lib.getInstallModule {
-        name = "btop";
-        value = inputs.wlib.lib.wrapperModules.btop;
-      })
-    ];
-    wrappers.btop = {
-      enable = true;
-      settings = {
-        color_theme = "stylix";
-      };
-      themes = lib.mkIf config.gipphe.environment.stylix.enable {
-        stylix = config.programs.btop.themes.stylix;
-      };
-    };
+    home.packages = [ module.config.wrapper ];
   };
 }

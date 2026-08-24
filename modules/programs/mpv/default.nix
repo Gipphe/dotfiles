@@ -7,15 +7,11 @@
 util.mkProgram {
   name = "mpv";
   homeManager = {
-    imports = [
-      (inputs.wlib.lib.getInstallModule {
-        name = "mpv";
-        value = inputs.wlib.lib.wrapperModules.mpv;
+    home.packages = [
+      (inputs.wlib.wrappers.mpv.wrap {
+        inherit pkgs;
+        script.mpris.path = pkgs.mpvScripts.mpris;
       })
     ];
-    wrappers.mpv = {
-      enable = true;
-      script.mpris.path = pkgs.mpvScripts.mpris;
-    };
   };
 }
