@@ -92,6 +92,7 @@ util.mkToggledModule [ "hosts" ] {
   homeManager = {
     home.packages = [
       pkgs.megasync
+      pkgs.squeekboard
     ];
     wayland.windowManager.hyprland.settings = {
       monitor = [
