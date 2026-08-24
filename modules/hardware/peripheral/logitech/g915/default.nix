@@ -26,6 +26,10 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
     ];
   };
   nixos = {
+    programs.solaar = {
+      enable = true;
+      userService.enable = true;
+    };
     services.hardware.openrgb = {
       enable = true;
     };

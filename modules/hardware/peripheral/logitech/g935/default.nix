@@ -2,6 +2,10 @@
 util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
   name = "g935";
   nixos = {
+    programs.solaar = {
+      enable = true;
+      userService.enable = true;
+    };
     environment.systemPackages = [ pkgs.headsetcontrol ];
     services = {
       hardware.openrgb.enable = true;
