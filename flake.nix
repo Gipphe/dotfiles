@@ -184,6 +184,15 @@
     };
 
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+
+    noctalia-official-plugins = {
+      url = "github:noctalia-dev/official-plugins";
+      flake = false;
+    };
+    noctalia-community-plugins = {
+      url = "github:noctalia-dev/community-plugins";
+      flake = false;
+    };
   };
 
   nixConfig = {
