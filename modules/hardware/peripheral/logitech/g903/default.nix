@@ -25,7 +25,10 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
   };
   nixos = {
     hardware.logitech.wireless.enable = true;
-    programs.solaar.enable = true;
+    programs.solaar = {
+      enable = true;
+      userService.enable = true;
+    };
     # Wait longer before suspending USB devices (like mice)
     boot.kernelParams = [ "usbcore.autosuspend=120" ];
     environment.etc."libinput/local-overrides.quirks".text = ''
