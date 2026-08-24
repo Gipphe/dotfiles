@@ -14,6 +14,6 @@
     ./mo2installer.nix
     ./prismlauncher.nix
     ./runelite.nix
-    ./steam.nix
+    ./steam
   ];
 }

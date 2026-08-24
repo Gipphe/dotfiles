@@ -26,14 +26,9 @@ util.mkGaming {
         fullscreen = true;
       }
     ];
-
-    # TODO: fix this
-    # Fix slow steam client downloads https://redd.it/16e1l4h
-    # Speed up shader processing by using more than a single thread
-    # xdg.configFile."Steam/steam_dev.cfg".text = ''
-    #   @nClientDownloadEnableHTTP2PlatformLinux 0
-    #   unShaderBackgroundProcessingThreads ${toString (builtins.head osConfig.hardware.facter.report.hardware.cpu).siblings}
-    # '';
+    xdg.configFile."autostart/steam.desktop".source = "${
+      pkgs.callPackage ./autostart.nix { }
+    }/share/applications/steam-autostart.desktop";
   };
   shared.gipphe.gaming.gamescope.enable = true;
   nixos = {
