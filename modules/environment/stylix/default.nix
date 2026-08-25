@@ -39,15 +39,9 @@ util.mkEnvironment {
 
   homeManager = {
     imports = lib.optional flags.isNixOnDroid inputs.stylix.homeModules.stylix;
-    config = lib.mkMerge [
-      (lib.optionalAttrs flags.isNixOnDroid {
-        inherit stylix;
-      })
-      {
-        # TODO: Remove this redundant enabling when stylix catches up.
-        home.pointerCursor.enable = true;
-      }
-    ];
+    config = lib.optionalAttrs flags.isNixOnDroid {
+      inherit stylix;
+    };
   };
   nixos = {
     imports = [ inputs.stylix.nixosModules.stylix ];
