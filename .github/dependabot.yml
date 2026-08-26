@@ -11,11 +11,21 @@ updates:
         applies-to: version-updates
         patterns:
           - "*"
+    cooldown:
+      default-days: 3
+    commit-message:
+      prefix: actions
   - package-ecosystem: "nix"
     directory: "/"
     schedule:
       interval: "daily"
       time: "02:00"
+    commit-message:
+      prefix: nix inputs
+    cooldown:
+      default-days: 1
+      exclude:
+        - "*"
     groups:
       nix-updates:
         applies-to: version-updates
