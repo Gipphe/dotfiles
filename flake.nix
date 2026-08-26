@@ -67,6 +67,15 @@
         )
       );
 
+      overlays = {
+        nushell = final: prev: {
+          inherit (self.packages.${final.stdenv.hostPlatform.system}) nushell;
+        };
+        atuin = final: prev: {
+          inherit (inputs.atuin.packages.${final.stdenv.hostPlatform.system}) atuin;
+        };
+      };
+
       checks = eachSystem (
         { pkgs, system, ... }:
         let
@@ -184,6 +193,12 @@
     };
 
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
+
+    # TODO: Remove once 18.20.0 is in nixos-unstable
+    atuin = {
+      url = "github:atuinsh/atuin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     noctalia-official-plugins = {
       url = "github:noctalia-dev/official-plugins";

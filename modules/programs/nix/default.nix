@@ -23,7 +23,7 @@ util.mkModule {
     ./cache.nix
   ];
 
-  nixos = lib.mkIf config.gipphe.programs.nix.enable {
+  nixos.config = lib.mkIf config.gipphe.programs.nix.enable {
     sops.secrets.nix-github-api-access-config = {
       format = "binary";
       sopsFile = ../../../secrets/pub-nix-github-api-token-config.txt;
@@ -78,8 +78,6 @@ util.mkModule {
         '';
       }
     ];
-
-    nixpkgs.config.allowUnfree = true;
   };
 
   nixOnDroid = {

@@ -30,12 +30,6 @@ util.mkModule {
     };
   };
 
-  options.gipphe.nixpkgs.config.permittedInsecurePackages = lib.mkOption {
-    type = with lib.types; listOf str;
-    default = [ ];
-    description = "Permitted insecure packages that will be set as nixpkgs.config.permittedInsecurePackages";
-  };
-
   homeManager = {
     home = {
       inherit (config.gipphe) username homeDirectory;
@@ -58,8 +52,6 @@ util.mkModule {
 
   nixos = {
     config = {
-      nixpkgs.config.permittedInsecurePackages = config.gipphe.nixpkgs.config.permittedInsecurePackages;
-
       documentation.dev.enable = false;
 
       # Auto-upgrading with nixos-unstable is risky
