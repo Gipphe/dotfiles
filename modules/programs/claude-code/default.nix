@@ -9,7 +9,6 @@ util.mkProgram {
       })
       ./skills
     ];
-    # ++ util.recurseFirstMatchingIncludingSibling "default.nix" ./skills;
     wrappers.claude-code = {
       enable = true;
       settings = {
