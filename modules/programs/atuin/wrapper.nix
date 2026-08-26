@@ -216,6 +216,13 @@ in
         '';
         passthru.nushell.extraConfig = ''
           source ${
+            pkgs.runCommand "atuin-pty-proxy-nushell-config.nu"
+              { nativeBuildInputs = [ pkgs.writableTmpDirAsHomeHook ]; }
+              ''
+                ${config.wrapper}/bin/atuin pty-proxy init nu >> "$out"
+              ''
+          }
+          source ${
             pkgs.runCommand "atuin-nushell-config.nu"
               {
                 nativeBuildInputs = [ pkgs.writableTmpDirAsHomeHook ];
