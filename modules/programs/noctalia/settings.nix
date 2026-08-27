@@ -6,6 +6,9 @@
     widgets = {
       capsule_group = [
         {
+          accordion = false;
+          accordion_direction = "end";
+          enabled = true;
           fill = "surface_variant";
           id = "g1";
           members = [
@@ -19,9 +22,25 @@
           opacity = 1;
           padding = 6;
         }
+        {
+          accordion = false;
+          accordion_direction = "end";
+          enabled = true;
+          fill = "surface_variant";
+          id = "g2";
+          members = [
+            "widget"
+            "special-workspaces"
+            "hypr-submap"
+            "toggle"
+          ];
+          opacity = 1;
+          padding = 6;
+        }
       ];
       center = [ "taskbar" ];
       end = [
+        "group:g2"
         "tray"
         "spacer_2"
         "notifications"
@@ -91,13 +110,23 @@
     schema_version = 2;
     widget = {
       "lockscreen-login-box@DP-1" = {
-        box_height = 0;
-        box_width = 0;
+        placement_height = 1080;
+        placement_width = 1920;
+        box_height = 196;
+        box_width = 810;
         cx = 960;
         cy = 957;
         output = "DP-1";
         rotation = 0;
         settings = {
+          layout = "regular";
+          show_caps_lock = true;
+          show_keyboard_layout = true;
+          show_media = true;
+          show_session_buttons = true;
+          show_unlock_hint = true;
+          show_weather = true;
+          center_password_text = false;
           background_color = "surface_variant";
           background_opacity = 0.88;
           background_radius = 12;
@@ -108,13 +137,23 @@
         type = "login_box";
       };
       "lockscreen-login-box@DP-2" = {
-        box_height = 0;
-        box_width = 0;
+        placement_height = 1080;
+        placement_width = 1920;
+        box_height = 196;
+        box_width = 810;
         cx = 960;
         cy = 957;
         output = "DP-2";
         rotation = 0;
         settings = {
+          layout = "regular";
+          show_caps_lock = true;
+          show_keyboard_layout = true;
+          show_media = true;
+          show_session_buttons = true;
+          show_unlock_hint = true;
+          show_weather = true;
+          center_password_text = false;
           background_color = "surface_variant";
           background_opacity = 0.88;
           background_radius = 12;
@@ -124,8 +163,36 @@
         };
         type = "login_box";
       };
+      "lockscreen-login-box@FALLBACK" = {
+        box_height = 196;
+        box_width = 810;
+        cx = 960;
+        cy = 898;
+        output = "FALLBACK";
+        placement_height = 1080;
+        placement_width = 1920;
+        rotation = 0;
+        settings = {
+          background_color = "surface_variant";
+          background_opacity = 0.88;
+          background_radius = 12;
+          center_password_text = false;
+          input_opacity = 1;
+          input_radius = 6;
+          layout = "regular";
+          show_caps_lock = true;
+          show_keyboard_layout = true;
+          show_login_button = true;
+          show_media = true;
+          show_session_buttons = true;
+          show_unlock_hint = true;
+          show_weather = true;
+        };
+        type = "login_box";
+      };
     };
     widget_order = [
+      "lockscreen-login-box@FALLBACK"
       "lockscreen-login-box@DP-1"
       "lockscreen-login-box@DP-2"
     ];
