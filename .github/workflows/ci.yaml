@@ -14,8 +14,8 @@ jobs:
     outputs:
       checks: ${{ steps.find-checks.outputs.checks }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      - uses: DeterminateSystems/determinate-nix-action@527f17dd63d2d60d3e5552934bc84b9a33a14d11 # v3
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: DeterminateSystems/determinate-nix-action@527f17dd63d2d60d3e5552934bc84b9a33a14d11
       - name: Find checks
         id: find-checks
         run: |
@@ -37,9 +37,9 @@ jobs:
       matrix:
         include: ${{ fromJson(needs.find-checks.outputs.checks) }}
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      - uses: DeterminateSystems/determinate-nix-action@527f17dd63d2d60d3e5552934bc84b9a33a14d11 # v3
-      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: DeterminateSystems/determinate-nix-action@527f17dd63d2d60d3e5552934bc84b9a33a14d11
+      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71
         with:
           name: gipphe
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"

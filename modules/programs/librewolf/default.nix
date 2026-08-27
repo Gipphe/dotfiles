@@ -20,8 +20,4 @@ util.mkProgram {
     };
     stylix.targets.librewolf.profileNames = [ "default" ];
   };
-  shared.gipphe.nixpkgs.config.permittedInsecurePackages = [
-    "librewolf-151.0.2-1"
-    "librewolf-unwrapped-151.0.2-1"
-  ];
 }

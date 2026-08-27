@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib }:
 let
   inherit (lib) pipe filterAttrs mergeAttrsList;
   inherit (builtins) readDir attrNames;

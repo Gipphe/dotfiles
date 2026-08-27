@@ -16,13 +16,13 @@ let
   mkMachine =
     hostname: config:
     let
-      util = nixpkgs.legacyPackages.${config.system}.callPackage ../util.nix {
-        # TODO: Remove once 0.115.1 is in nixos-unstable.
-        inherit (self.packages.${config.system}) nushell;
+      pkgs = import ./nixpkgs.nix {
+        inherit (config) system;
+        inherit inputs;
       };
+      util = pkgs.callPackage ../util.nix { };
     in
     lib.nixosSystem {
-      inherit (config) system;
       specialArgs = {
         inherit
           inputs
@@ -36,6 +36,7 @@ let
       modules = [
         ../root.nix
         { gipphe.hosts.${hostname}.enable = true; }
+        { nixpkgs.pkgs = pkgs; }
       ];
     };
 in

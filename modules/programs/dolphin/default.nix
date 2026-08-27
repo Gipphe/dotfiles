@@ -1,12 +1,9 @@
-{
-  inputs,
-  util,
-  pkgs,
-  ...
-}:
+{ util, pkgs, ... }:
 util.mkProgram {
   name = "dolphin";
   homeManager.home.packages = builtins.attrValues {
+    # Depends on the dolphin-overlay enabled in
+    # `../../../environments/nixpkgs.nix`.
     inherit (pkgs.kdePackages)
       dolphin
       ark # Archiving support in Dolphin
@@ -14,5 +11,4 @@ util.mkProgram {
       kio-admin # Manage files as admin
       ;
   };
-  nixos.nixpkgs.overlays = [ inputs.dolphin-overlay.overlays.default ];
 }
