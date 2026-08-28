@@ -53,8 +53,6 @@
           treefmt = pkgs.callPackage ./packages/treefmt.nix { inherit treefmt-nix; };
           mo2installer = pkgs.callPackage ./packages/mo2installer.nix { };
           fluorine-manager = pkgs.callPackage ./packages/fluorine-manager.nix { };
-          # TODO: Remove once 0.115.1 is in nixos-unstable.
-          nushell = pkgs.callPackage ./packages/nushell.nix { };
         }
         // (
           let
@@ -68,9 +66,6 @@
       );
 
       overlays = {
-        nushell = final: prev: {
-          inherit (self.packages.${final.stdenv.hostPlatform.system}) nushell;
-        };
         atuin = final: prev: {
           inherit (inputs.atuin.packages.${final.stdenv.hostPlatform.system}) atuin;
         };
