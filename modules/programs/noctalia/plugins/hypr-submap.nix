@@ -7,7 +7,13 @@
 util.mkToggledModule [ "programs" "noctalia" "plugins" ] {
   name = "hypr-submap";
   homeManager = {
-    programs.noctalia.settings.plugins.enabled = [ "k4n4t4/hypr-submap" ];
+    programs.noctalia.settings = {
+      plugins.enabled = [ "k4n4t4/hypr-submap" ];
+      widget.hypr-submap = {
+        hide_when_default = true;
+        type = "k4n4t4/hypr-submap:hypr-submap";
+      };
+    };
     home.packages = [
       pkgs.socat
       pkgs.coreutils
