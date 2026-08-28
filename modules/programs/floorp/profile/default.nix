@@ -40,6 +40,12 @@ util.mkModule {
           "sidebar.verticalTabs" = true;
           # Don't show suggestion to drag tabs to top of tab column to pin them
           "sidebar.verticalTabs.dragToPinPromo.dismissed" = true;
+          # Allow editing the URL of a tab from its right-click context menu
+          "floorp.tabs.inlineUrlEdit.enabled" = true;
+          # Hover over an unloaded tab to reload it with the reload button that appears
+          "floorp.tabs.hoverReload.enabled" = true;
+          # Tab stacks do not yet support vertical tabs
+          "floorp.tabstacks.enabled" = false;
         };
       };
     };
