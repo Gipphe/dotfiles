@@ -24,7 +24,9 @@ def main [
     hyprctl eval "hl.config { general = {['col.active_border'] = 'rgb(ff0000)'}}"
 
     let recorder_id = job spawn { 
-        wf-recorder ...$opts
+        let state = $"($env.XDG_STATE_HOME)/gipphe/record"
+        mkdir $state
+        wf-recorder ...$opts o+e>| save -a $"($state)/log.out"
     }
     print "Press any key to stop the recording..."
     input listen --types [key]
