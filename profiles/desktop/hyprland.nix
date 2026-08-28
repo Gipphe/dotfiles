@@ -22,6 +22,7 @@ util.mkToggledModule [ "profiles" "desktop" ] {
 
         # Screenshotting and recording
         wf-recorder.enable = true;
+        gpu-screen-recorder.enable = true;
 
         # Clipboard
         wl-clipboard.enable = true;

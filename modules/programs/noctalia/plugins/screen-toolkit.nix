@@ -19,7 +19,6 @@ util.mkToggledModule [ "programs" "noctalia" "plugins" ] {
       inherit (pkgs)
         bc
         coreutils
-        gpu-screen-recorder
         grim
         hyprpicker
         procps
@@ -32,10 +31,11 @@ util.mkToggledModule [ "programs" "noctalia" "plugins" ] {
         ;
     };
     gipphe.programs = {
-      imagemagick.enable = true;
       curl.enable = true;
-      jq.enable = true;
       ffmpeg.enable = true;
+      gpu-screen-recorder.enable = true;
+      imagemagick.enable = true;
+      jq.enable = true;
       mpv.enable = true;
       wf-recorder.enable = true;
     };
