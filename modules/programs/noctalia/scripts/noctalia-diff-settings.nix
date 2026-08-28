@@ -18,9 +18,8 @@ writeShellApplication {
     noctalia
   ];
   text = /* bash */ ''
-    settings_file="$HOME/projects/dotfiles/modules/programs/noctalia/settings.nix"
     json-diff \
-      <(nix eval --json --file "$settings_file" | jq -S .) \
+      <(nix eval --json /home/gipphe/projects/dotfiles#nixosConfigurations.titanium.config.home-manager.users.gipphe.programs.noctalia.settings | jq -S .) \
       <(noctalia config export | yq -p toml -o json | jq -S .) \
       | colordiff --nobanner
   '';
