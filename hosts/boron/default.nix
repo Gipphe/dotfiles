@@ -53,6 +53,20 @@ util.mkToggledModule [ "hosts" ] {
   };
 
   homeManager = {
+    programs.noctalia.settings.idle.behavior = {
+      lock = lib.mkForce {
+        enabled = true;
+        timeout = 300;
+      };
+      lock-and-suspend = lib.mkForce {
+        enabled = true;
+        timeout = 420;
+      };
+      screen-off = lib.mkForce {
+        enabled = true;
+        timeout = 330;
+      };
+    };
     wayland.windowManager.hyprland.settings.monitor = [
       {
         output = "desc:Samsung Display Corp. 0x4193";
