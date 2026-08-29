@@ -38,6 +38,7 @@ util.mkToggledModule [ "hosts" ] {
       desktop.hyprland.enable = true;
       fonts.enable = true;
       gaming.enable = true;
+      gaming.stream-host.enable = true;
       gc.enable = true;
       keyring.enable = true;
       laptop.enable = true;
