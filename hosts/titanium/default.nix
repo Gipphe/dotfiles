@@ -63,7 +63,7 @@ util.mkToggledModule [ "hosts" ] {
       peripheral.logitech = {
         g502x.enable = true;
         g915.enable = true;
-        g935.enable = true;
+        g935.enable = false;
       };
       peripheral.xbox.one.controller.enable = true;
       cpu.intel.comet-lake.enable = true;
