@@ -18,12 +18,8 @@ util.mkProgram {
       enable = true;
       shellWrapperName = "y";
     };
-    gipphe.core.wm.binds = lib.mkIf config.gipphe.programs.yazi.default [
-      {
-        mod = "$mod";
-        key = "E";
-        action.spawn = "${file_manager_script}";
-      }
-    ];
+    gipphe.core.wm.bind = lib.mkIf config.gipphe.programs.yazi.default {
+      "SUPER + E".action.spawn = "${file_manager_script}";
+    };
   };
 }

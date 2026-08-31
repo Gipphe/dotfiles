@@ -16,16 +16,9 @@ util.mkProgram {
   };
   homeManager = {
     home.packages = [ cfg.package ];
-    gipphe.core.wm.binds = [
-      {
-        key = "Print";
-        action.spawn = "${grimblast} copy area";
-      }
-      {
-        mod = "Alt_L";
-        key = "Print";
-        action.spawn = "${grimblast} copy screen";
-      }
-    ];
+    gipphe.core.wm.bind = {
+      "SUPER + Print".action.spawn = "${grimblast} copy area";
+      "SUPER + Alt_L + Print".action.spawn = "${grimblast} copy screen";
+    };
   };
 }

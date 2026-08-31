@@ -16,24 +16,12 @@ util.mkProgram {
   };
   homeManager = {
     home.packages = [ pkgs.wireplumber ];
-    gipphe.core.wm.binds = [
-      {
-        key = "XF86AudioRaiseVolume";
-        action.spawn = "${wpctl} set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+";
-      }
-      {
-        key = "XF86AudioLowerVolume";
-        action.spawn = "${wpctl} set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-";
-      }
-      {
-        key = "XF86AudioMute";
-        action.spawn = "${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle";
-      }
-      {
-        key = "XF86AudioMicMute";
-        action.spawn = "${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
-      }
-    ];
+    gipphe.core.wm.bind = {
+      "XF86AudioRaiseVolume".action.spawn = "${wpctl} set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%+";
+      "XF86AudioLowerVolume".action.spawn = "${wpctl} set-volume -l 1.4 @DEFAULT_AUDIO_SINK@ 5%-";
+      "XF86AudioMute".action.spawn = "${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle";
+      "XF86AudioMicMute".action.spawn = "${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+    };
   };
   nixos.config = lib.mkMerge [
     {

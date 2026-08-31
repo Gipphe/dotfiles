@@ -21,12 +21,8 @@ util.mkProgram {
     home.sessionVariables = lib.mkIf cfg.default {
       BROWSER = "${cfg.package}/bin/vivaldi";
     };
-    gipphe.core.wm.binds = lib.mkIf cfg.default [
-      {
-        mod = "Mod";
-        key = "B";
-        action.spawn = "${hmCfg.package}/bin/vivaldi";
-      }
-    ];
+    gipphe.core.wm.bind = lib.mkIf cfg.default {
+      "SUPER + B".action.spawn = "${hmCfg.package}/bin/vivaldi";
+    };
   };
 }

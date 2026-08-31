@@ -64,13 +64,9 @@ util.mkProgram {
           '';
         };
 
-        gipphe.core.wm.binds = [
-          {
-            mod = "Mod";
-            key = "Return";
-            action.spawn = "${config.wrappers.wezterm.wrapper}/bin/wezterm";
-          }
-        ];
+        gipphe.core.wm.bind = {
+          "SUPER + Return".action.spawn = "${config.wrappers.wezterm.wrapper}/bin/wezterm";
+        };
       }
 
       (lib.mkIf cfg.default {
