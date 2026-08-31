@@ -18,16 +18,7 @@ util.mkProgram {
   name = "_1password-gui";
   homeManager = {
     gipphe.core.wm = {
-      binds = [
-        {
-          mod = [
-            "CTRL"
-            "SHIFT"
-          ];
-          key = "space";
-          action.spawn = quick-access;
-        }
-      ];
+      bind."CTRL + SHIFT + space".action.spawn = quick-access;
       triggers.on-startup._1password.command = "1password --silent";
     };
 

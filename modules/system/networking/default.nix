@@ -10,12 +10,9 @@ in
 util.mkToggledModule [ "system" ] {
   name = "networking";
   homeManager = {
-    gipphe.core.wm.binds = [
-      {
-        key = "XF86WLAN";
-        action.spawn = "${pkg}/bin/nmcli radio wifi toggle";
-      }
-    ];
+    gipphe.core.wm.bind = {
+      "XF86WLAN".action.spawn = "${pkg}/bin/nmcli radio wifi toggle";
+    };
   };
   nixos = {
     sops.secrets.networkmanager-secrets = {

@@ -15,7 +15,7 @@ util.mkProgram {
   name = "hyprland";
   homeManager = {
     imports = [
-      ./binds.nix
+      ./binds
       ./env.nix
       ./input.nix
       ./triggers.nix

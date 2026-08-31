@@ -98,19 +98,12 @@ util.mkProgram {
           ];
         };
       };
-      gipphe.core.wm.binds = [
-        {
-          mod = [
-            "Mod"
-            "ALT_L"
-          ];
-          key = "L";
-          args = {
-            allow-when-locked = true;
-          };
+      gipphe.core.wm.bind = {
+        "SUPER + ALT_L + L" = {
+          args.allow-when-locked = true;
           action.spawn = lib.getExe cfg.package;
-        }
-      ];
+        };
+      };
     };
   };
   nixos.security.pam.services.hyprlock = { };
