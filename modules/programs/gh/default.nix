@@ -1,27 +1,17 @@
 {
-  lib,
   config,
+  lib,
   inputs,
   util,
   pkgs,
   ...
 }:
-util.mkProgram {
-  name = "gh";
-  homeManager = {
-    imports = [
-      (inputs.wlib.lib.getInstallModule {
-        name = "gh";
-        value = ./wrapper.nix;
-      })
-    ];
-    options.gipphe.programs.gh.package = lib.mkPackageOption pkgs "gh" { } // {
-      default = config.wrappers.gh.wrapper;
-    };
-    wrappers.gh = {
-      enable = true;
-      extensions = [ pkgs.gh-stack ];
-      settings = {
+let
+  module = (inputs.wlib.lib.evalModule ./wrapper.nix).config.eval {
+    inherit pkgs;
+    extensions = [ pkgs.gh-stack ];
+    settings = lib.mkMerge [
+      {
         editor = "";
         prompt = "enabled";
         pager = "";
@@ -34,16 +24,27 @@ util.mkProgram {
           prm = "pr merge --auto -sd";
           addme = "pr edit --add-assignee @me";
         };
-      };
-      hosts = {
-        "github.com" = {
-          git_protocol = "ssh";
-          users.Gipphe = { };
-          user = "Gipphe";
-        };
+      }
+      config.gipphe.programs.gh.settings
+    ];
+    hosts = {
+      "github.com" = {
+        git_protocol = "ssh";
+        users.Gipphe = { };
+        user = "Gipphe";
       };
     };
-    wrappers.git = config.wrappers.gh.passthru.git;
-    xdg = config.wrappers.gh.passthru.xdg;
+  };
+in
+util.mkProgram {
+  name = "gh";
+  options.gipphe.programs.gh.settings = module.options.settings;
+  homeManager = {
+    home.packages = [ module.config.wrapper ];
+    options.gipphe.programs.gh.package = lib.mkPackageOption pkgs "gh" { } // {
+      default = module.config.wrapper;
+    };
+    gipphe.programs.git = module.config.passthru.git;
+    xdg = module.config.passthru.xdg;
   };
 }
