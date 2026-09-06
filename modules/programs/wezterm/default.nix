@@ -47,17 +47,20 @@ util.mkProgram {
       {
         wrappers.wezterm = {
           enable = true;
-          luaInfo = {
-            font_size = 10.0;
-            color_scheme = "Catppuccin Macchiato";
-            hide_tab_bar_if_only_one_tab = true;
-            send_composed_key_when_left_alt_is_pressed = true;
-            send_composed_key_when_right_alt_is_pressed = false;
-            default_cursor_style = "BlinkingBar";
-            # Disable easing for cursor; blinking text and visual bell
-            animation_fps = 1;
-            warn_about_missing_glyphs = false;
-          };
+          luaInfo = lib.mkMerge [
+            config.programs.wezterm.settings
+            {
+              font_size = lib.mkForce 10.0;
+              # color_scheme = "Catppuccin Macchiato";
+              hide_tab_bar_if_only_one_tab = true;
+              send_composed_key_when_left_alt_is_pressed = true;
+              send_composed_key_when_right_alt_is_pressed = false;
+              default_cursor_style = "BlinkingBar";
+              # Disable easing for cursor; blinking text and visual bell
+              animation_fps = 1;
+              warn_about_missing_glyphs = false;
+            }
+          ];
           "wezterm.lua".content = /* lua */ ''
             ${formatWindowTitle}
             return require('nix-info')
