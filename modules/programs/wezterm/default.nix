@@ -51,7 +51,7 @@ util.mkProgram {
             config.programs.wezterm.settings
             {
               font_size = lib.mkForce 10.0;
-              # color_scheme = "Catppuccin Macchiato";
+              color_scheme = lib.mkForce "Catppuccin Macchiato";
               hide_tab_bar_if_only_one_tab = true;
               send_composed_key_when_left_alt_is_pressed = true;
               send_composed_key_when_right_alt_is_pressed = false;
