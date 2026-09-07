@@ -2133,7 +2133,7 @@
         "stylix": "stylix",
         "treefmt-nix": "treefmt-nix",
         "tricorder": "tricorder",
-        "wlib": "wlib"
+        "wrappers": "wrappers_2"
       }
     },
     "rust-analyzer-src": {
@@ -2426,26 +2426,6 @@
         "type": "github"
       }
     },
-    "wlib": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1788744583,
-        "narHash": "sha256-oNMrijfyaoRjjWhxHNFSBYyEB4u/zb/AxoKewC56LvE=",
-        "owner": "BirdeeHub",
-        "repo": "nix-wrapper-modules",
-        "rev": "e88c449105c6aafa460196d3cbd16718655aee0f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "BirdeeHub",
-        "repo": "nix-wrapper-modules",
-        "type": "github"
-      }
-    },
     "wrappers": {
       "inputs": {
         "nixpkgs": [
@@ -2463,6 +2443,26 @@
       },
       "original": {
         "owner": "BirdeeHub",
+        "repo": "nix-wrapper-modules",
+        "type": "github"
+      }
+    },
+    "wrappers_2": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788744583,
+        "narHash": "sha256-oNMrijfyaoRjjWhxHNFSBYyEB4u/zb/AxoKewC56LvE=",
+        "owner": "nix-community",
+        "repo": "nix-wrapper-modules",
+        "rev": "e88c449105c6aafa460196d3cbd16718655aee0f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
         "repo": "nix-wrapper-modules",
         "type": "github"
       }

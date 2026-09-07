@@ -3,9 +3,9 @@ util.mkProgram {
   name = "claude-code";
   homeManager = {
     imports = [
-      (inputs.wlib.lib.getInstallModule {
+      (inputs.wrappers.lib.getInstallModule {
         name = "claude-code";
-        value = inputs.wlib.lib.wrapperModules.claude-code;
+        value = inputs.wrappers.lib.wrapperModules.claude-code;
       })
       ./skills
     ];

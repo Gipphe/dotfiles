@@ -3,9 +3,9 @@ util.mkProgram {
   name = "vim";
   homeManager = {
     imports = [
-      (inputs.wlib.lib.getInstallModule {
+      (inputs.wrappers.lib.getInstallModule {
         name = "vim";
-        value = inputs.wlib.lib.wrapperModules.vim;
+        value = inputs.wrappers.lib.wrapperModules.vim;
       })
     ];
     wrappers.vim = {

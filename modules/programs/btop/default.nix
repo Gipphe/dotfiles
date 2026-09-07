@@ -9,9 +9,9 @@ util.mkProgram {
   name = "btop";
   homeManager = {
     imports = [
-      (inputs.wlib.lib.getInstallModule {
+      (inputs.wrappers.lib.getInstallModule {
         name = "btop";
-        value = inputs.wlib.lib.wrapperModules.btop;
+        value = inputs.wrappers.lib.wrapperModules.btop;
       })
     ];
     wrappers.btop = {

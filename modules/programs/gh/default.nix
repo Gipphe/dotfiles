@@ -10,7 +10,7 @@ util.mkProgram {
   name = "gh";
   homeManager = {
     imports = [
-      (inputs.wlib.lib.getInstallModule {
+      (inputs.wrappers.lib.getInstallModule {
         name = "gh";
         value = ./wrapper.nix;
       })

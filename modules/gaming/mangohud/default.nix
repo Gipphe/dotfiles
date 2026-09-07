@@ -3,7 +3,7 @@ util.mkGaming {
   name = "mangohud";
   nixos = {
     imports = [
-      (inputs.wlib.lib.getInstallModule {
+      (inputs.wrappers.lib.getInstallModule {
         name = "mangohud";
         value = ./wrapper.nix;
       })

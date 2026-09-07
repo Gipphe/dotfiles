@@ -126,8 +126,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    wlib = {
-      url = "github:BirdeeHub/nix-wrapper-modules";
+    wrappers = {
+      url = "github:nix-community/nix-wrapper-modules";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
