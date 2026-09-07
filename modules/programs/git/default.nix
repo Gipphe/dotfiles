@@ -35,9 +35,9 @@ util.mkProgram {
       };
     };
     imports = [
-      (inputs.wlib.lib.getInstallModule {
+      (inputs.wrappers.lib.getInstallModule {
         name = "git";
-        value = inputs.wlib.lib.wrapperModules.git;
+        value = inputs.wrappers.lib.wrapperModules.git;
       })
       ./lfs.nix
       ./diff-so-fancy.nix

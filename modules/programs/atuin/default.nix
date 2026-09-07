@@ -8,7 +8,7 @@ util.mkProgram {
   name = "atuin";
   homeManager = {
     imports = [
-      (inputs.wlib.lib.getInstallModule {
+      (inputs.wrappers.lib.getInstallModule {
         name = "atuin";
         value = ./wrapper.nix;
       })

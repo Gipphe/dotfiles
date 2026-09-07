@@ -8,9 +8,9 @@ util.mkProgram {
   name = "mpv";
   homeManager = {
     imports = [
-      (inputs.wlib.lib.getInstallModule {
+      (inputs.wrappers.lib.getInstallModule {
         name = "mpv";
-        value = inputs.wlib.lib.wrapperModules.mpv;
+        value = inputs.wrappers.lib.wrapperModules.mpv;
       })
     ];
     wrappers.mpv = {

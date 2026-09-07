@@ -16,9 +16,9 @@ util.mkProgram {
       };
     };
     imports = [
-      (inputs.wlib.lib.getInstallModule {
+      (inputs.wrappers.lib.getInstallModule {
         name = "jujutsu";
-        value = inputs.wlib.lib.wrapperModules.jujutsu;
+        value = inputs.wrappers.lib.wrapperModules.jujutsu;
       })
     ];
     config = {

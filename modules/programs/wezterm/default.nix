@@ -38,9 +38,9 @@ util.mkProgram {
   };
   homeManager = {
     imports = [
-      (inputs.wlib.lib.getInstallModule {
+      (inputs.wrappers.lib.getInstallModule {
         name = "wezterm";
-        value = inputs.wlib.lib.wrapperModules.wezterm;
+        value = inputs.wrappers.lib.wrapperModules.wezterm;
       })
     ];
     config = lib.mkMerge [
