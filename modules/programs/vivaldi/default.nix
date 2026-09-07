@@ -12,7 +12,19 @@ in
 util.mkProgram {
   name = "vivaldi";
   options.gipphe.programs.vivaldi = {
-    package = lib.mkPackageOption pkgs "vivaldi" { };
+    package = lib.mkPackageOption pkgs "vivaldi" { } // {
+      default = pkgs.vivaldi.overrideAttrs (prevAttrs: {
+        builInputs = (prevAttrs.buildInputs or [ ]) ++ [ pkgs.makeWrapper ];
+        postInstall = ''
+          ${prevAttrs.postInstall or ""}
+
+          substituteInPlace $out/share/applications/vivaldi-stable.desktop \
+            --replace-fail "vivaldi %U" "vivaldi --enable-blink-features=MiddleClickAutoscroll %U" \
+            --replace-fail "vivaldi --new-window" "vivaldi --enable-blink-features=MiddleClickAutoscroll --new-window" \
+            --replace-fail "vivaldi --incognito" "vivaldi --enable-blink-features=MiddleClickAutoscroll --incognito"
+        '';
+      });
+    };
     default = lib.mkEnableOption "Vivaldi as default browser";
   };
   homeManager = {
