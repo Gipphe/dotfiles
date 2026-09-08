@@ -49,6 +49,8 @@ util.mkProgram {
         floorp
         librewolf-bin
         librewolf
+        zen
+        zen-bin
       '';
     };
   };

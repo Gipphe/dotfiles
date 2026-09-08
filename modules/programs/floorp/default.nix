@@ -42,9 +42,7 @@ in
 util.mkProgram {
   name = "floorp";
   options.gipphe.programs.floorp = {
-    default = lib.mkEnableOption "Floorp as default browser" // {
-      default = true;
-    };
+    default = lib.mkEnableOption "Floorp as default browser";
   };
   homeManager = {
     imports = [

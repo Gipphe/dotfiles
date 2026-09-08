@@ -24,6 +24,7 @@ let
   configPaths = map (p: "${config.xdg.configHome}/${p}") [
     "EgoSoft/X4/31098541/save"
     "lutris"
+    "zen-main/b24qi70i.Default Profile/bookmarkbackups"
   ];
   homePaths = map (p: "${config.home.homeDirectory}/${p}") [
     "Documents"
