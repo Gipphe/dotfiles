@@ -57,8 +57,9 @@ util.mkToggledModule [ "hosts" ] {
       comfyui.enable = true;
       librewolf.enable = true;
       pipewire.higherQuantum.enable = true;
-      zen-browser.video.enable = true;
+      vivaldi.enable = true;
       zen-browser.private.enable = true;
+      zen-browser.video.enable = true;
     };
     hardware = {
       gpu.nvidia.rtx3070.enable = true;
