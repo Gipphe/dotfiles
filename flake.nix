@@ -136,6 +136,11 @@
       flake = false;
     };
 
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Do not override its nixpkgs input, since it uses bleeding edge versions
     # of specific packages
     nix-gaming.url = "github:fufexan/nix-gaming";

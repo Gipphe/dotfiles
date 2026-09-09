@@ -2133,7 +2133,8 @@
         "stylix": "stylix",
         "treefmt-nix": "treefmt-nix",
         "tricorder": "tricorder",
-        "wrappers": "wrappers_2"
+        "wrappers": "wrappers_2",
+        "zen-browser": "zen-browser"
       }
     },
     "rust-analyzer-src": {
@@ -2505,6 +2506,26 @@
       "original": {
         "owner": "hyprwm",
         "repo": "xdg-desktop-portal-hyprland",
+        "type": "github"
+      }
+    },
+    "zen-browser": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788682845,
+        "narHash": "sha256-E03KyK0Sj+ia+FSy47XC4v9enU1C/lGiW5ZKmcJoI1M=",
+        "owner": "youwen5",
+        "repo": "zen-browser-flake",
+        "rev": "3aadc420e763a8243aedd2ce925ae1dc13663ed9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "youwen5",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     }

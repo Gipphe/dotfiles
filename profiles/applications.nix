@@ -5,7 +5,6 @@ util.mkProfile {
     programs = {
       _1password-gui.enable = true;
       filen-desktop.enable = true;
-      floorp.default = lib.mkDefault true;
       floorp.enable = true;
       gimp.enable = true;
       localsend.enable = true;
@@ -21,6 +20,8 @@ util.mkProfile {
       vivaldi.enable = true;
       wezterm.default = lib.mkDefault true;
       wezterm.enable = true;
+      zen-browser.main.enable = true;
+      zen-browser.main.default = true;
     };
   };
 }
