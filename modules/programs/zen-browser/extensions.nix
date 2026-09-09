@@ -21,22 +21,14 @@ let
     (extension "youtube-addon" "{3c6bf0cc-3ae2-42fb-9993-0d33104fdcaf}")
     # Facebook Container
     (extension "facebook-container" "@contain-facebook")
-    # Firefox Color
-    (extension "firefox-color" "FirefoxColor@mozilla.com")
-    # Firefox Multi-Account Containers
-    (extension "multi-account-containers" "@testpilot-containers")
     # Privacy Badger
     (extension "privacy-badger17" "jid1-MnnxcxisBPnSXQ@jetpack")
     # Reddit Enhancement Suite
     (extension "reddit-enhancement-suite" "jid1-xUfzOsOFlzSOXg@jetpack")
     # SponsorBlock
     (extension "sponsorblock" "sponsorBlocker@ajay.app")
-    # Tab Session Manager
-    (extension "tab-session-manager" "Tab-Session-Manager@sienori")
     # Tridactyl
     (extension "tridactyl-vim" "tridactyl.vim@cmcaine.co.uk")
-    # User-Agent Switcher
-    (extension "uaswitcher" "user-agent-switcher@ninetailed.ninja")
   ];
 in
 builtins.listToAttrs extensions
