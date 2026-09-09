@@ -55,7 +55,6 @@ util.mkToggledModule [ "hosts" ] {
     };
     programs = {
       comfyui.enable = true;
-      librewolf.enable = true;
       pipewire.higherQuantum.enable = true;
       zen-browser.video.enable = true;
       zen-browser.private.enable = true;
