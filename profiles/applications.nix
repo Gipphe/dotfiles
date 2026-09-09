@@ -17,7 +17,6 @@ util.mkProfile {
       slack.enable = true;
       spotify.enable = true;
       umu-launcher.enable = true;
-      vivaldi.enable = true;
       wezterm.default = lib.mkDefault true;
       wezterm.enable = true;
       zen-browser.main.enable = true;
