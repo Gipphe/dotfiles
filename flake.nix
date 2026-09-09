@@ -194,9 +194,9 @@
 
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
 
-    # TODO: Remove once 18.20.0 is in nixos-unstable
+    # TODO: Remove once 18.21.0 is in nixos-unstable
     atuin = {
-      url = "github:atuinsh/atuin";
+      url = "github:atuinsh/atuin/v18.21.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
