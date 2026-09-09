@@ -15,6 +15,6 @@ util.mkProgram {
     // lib.optionalAttrs config.gipphe.programs.sddm.enable {
       sddm.enableGnomeKeyring = true;
     };
-    environment.systemPackages = [ pkgs.gcr ];
+    environment.systemPackages = [ pkgs.gcr_4 ];
   };
 }
