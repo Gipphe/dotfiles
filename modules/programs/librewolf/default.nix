@@ -8,7 +8,7 @@ util.mkProgram {
       policies = {
         DisableTelemetry = true;
         DNSOverHTTPS = {
-          ProviderURL = "https://dns.mullvad.net/dns-query";
+          ProviderURL = "https://dns.quad9.net/dns-query";
           Fallback = false;
         };
         OfferToSaveLogins = false;
