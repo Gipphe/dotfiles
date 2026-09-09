@@ -5,11 +5,6 @@ let
     "extensions.pocket.enabled" = false;
     # Scroll by pressing middle mouse and dragging
     "general.autoScroll" = true;
-    # Show https prototol
-    "browser.urlbar.trimHttps" = false;
-    # Show url prototol and query params
-    "browser.urlbar.trimURLs" = false;
-    # "taskbar.grouping.useprofile" = true;
     # Allow use of userChrome.css
     "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
     # Disable kinetic/momentum/inertia when scrolling (especially bad
