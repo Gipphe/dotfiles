@@ -266,11 +266,6 @@ util.mkProgram {
           };
         };
       };
-      programs.nushell = {
-        extraConfig = ''
-          source ${inputs.nu_scripts}/custom-completions/jj/jj-completions.nu
-        '';
-      };
       sops.secrets."git-ssh-signing-key.pub" = {
         format = "binary";
         sopsFile = ../../../secrets/pub-git-ssh-signing-key.pub;
