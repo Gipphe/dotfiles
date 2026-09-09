@@ -11,6 +11,8 @@ let
     # the short ID in the url (like https://addons.mozilla.org/en-US/firefox/addon/!SHORT_ID!/)
     # Then go to https://addons.mozilla.org/api/v5/addons/addon/!SHORT_ID!/ to get the guid
 
+    # uBlock Origin
+    (extension "ublock-origin" "uBlock0@raymondhill.net")
     # 1Password
     (extension "1password-x-password-manager" "{d634138d-c276-4fc8-924b-40a0ea21d284}")
     # DeArrow
