@@ -40,6 +40,7 @@ util.mkProgram {
         settings = {
           edit_mode = "vi";
           show_banner = false;
+          max_last_result_size = lib.hm.nushell.mkNushellInline "10mb";
         };
       };
     };
