@@ -7,7 +7,7 @@
 util.mkToggledModule [ "programs" "git" ] {
   name = "diff-so-fancy";
   homeManager = {
-    wrappers.git = {
+    gipphe.programs.git = {
       settings =
         let
           dsf = lib.getExe pkgs.diff-so-fancy;

@@ -11,7 +11,7 @@ util.mkToggledModule [ "programs" "git" ] {
   name = "lfs";
   homeManager = {
     home.packages = [ pkgs.git-lfs ];
-    wrappers.git = {
+    gipphe.programs.git = {
       settings = {
         filter.lfs = {
           clean = "${lfs} clean -- %f";
