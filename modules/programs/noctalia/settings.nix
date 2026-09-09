@@ -61,7 +61,6 @@
         "launcher"
         "group:g1"
         "media"
-        "active_window"
       ];
     };
   };
