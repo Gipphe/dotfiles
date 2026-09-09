@@ -56,7 +56,7 @@ util.mkToggledModule [ "system" ] {
       };
 
       nameservers = [
-        "194.242.2.2" # dns.mullvad.net
+        "9.9.9.9" # dns.quad9.net
       ];
     };
     users.users.${config.gipphe.username}.extraGroups = [ "networkmanager" ];
