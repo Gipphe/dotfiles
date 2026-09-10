@@ -196,7 +196,7 @@
 
     # TODO: Remove once 18.21.0 is in nixos-unstable
     atuin = {
-      url = "github:atuinsh/atuin/v18.21.0";
+      url = "github:atuinsh/atuin/v18.22.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
