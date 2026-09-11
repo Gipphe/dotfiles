@@ -195,7 +195,7 @@ let
                 ];
                 text = /* nu */ ''
                   def main [revision: string]: nothing -> string {
-                    let bookmark = jj bc $revision
+                    let bookmark = ^jj bc $revision
                     jj bookmark track --remote origin $bookmark
                     jj git push --bookmark $bookmark
                     $bookmark
@@ -224,11 +224,11 @@ let
                     let bookmark = ^$jj bc $revision
 
                     (
-                      systemd-run 
-                        --user 
-                        --same-dir 
-                        '${lib.getExe inner}' 
-                        $jj_dir 
+                      ^systemd-run
+                        --user
+                        --same-dir
+                        '${lib.getExe inner}'
+                        $jj_dir
                         $bookmark
                     )
                   }
@@ -237,17 +237,7 @@ let
               inner = util.writeNushellApplication {
                 name = "jj-full_pub-inner";
                 runtimeInputs = [ config.gipphe.programs.gh.package ];
-                text = /* nu */ ''
-                  def main [
-                    jj_dir: string
-                    bookmark: string
-                  ] {
-                    let jj = $"($jj_dir)/bin/jj"
-                    ^$jj pub $bookmark
-                    gh pr create --fill-first --no-maintainer-edit --assignee '@me' -H $bookmark
-                    gh pr merge --auto --squash --delete-branch $bookmark
-                  }
-                '';
+                text = builtins.readFile ./jj-puf-inner.nu;
               };
             in
             [
