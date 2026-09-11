@@ -1,4 +1,4 @@
-name:
+{ name, iconColor }:
 {
   config,
   lib,
@@ -45,7 +45,10 @@ let
     pname = binaryName;
     version = browser.version;
     paths = [ wrapped ];
-    buildInputs = [ pkgs.makeWrapper ];
+    buildInputs = [
+      pkgs.makeWrapper
+      pkgs.imagemagick
+    ];
 
     postBuild = ''
       mv "$out/bin/${wrapped.meta.mainProgram}" "$out/bin/${binaryName}"
@@ -55,9 +58,17 @@ let
         --replace-fail 'zen --private-window %U' '${binaryName} --private-windoe %U' \
         --replace-fail 'zen --new-window %U' '${binaryName} --new-window %U' \
         --replace-fail 'zen --ProfileManager' '${binaryName} --ProfileManager' \
-        --replace-fail 'Name=Zen Browser' 'Name=Zen ${name}'
+        --replace-fail 'Name=Zen Browser' 'Name=Zen ${name}' \
+        --replace-fail 'Icon=zen' 'Icon=${binaryName}' \
+        --replace-fail 'StartupWMClass=zen' 'StartupWMClass=${binaryName}'
       rm -f "$out/share/applications/zen.desktop"
       mv "./${binaryName}.desktop" "$out/share/applications/${binaryName}.desktop"
+
+      for icon in $out/share/icons/hicolor/*/apps/zen.png; do
+        dir="$(dirname "$icon")"
+        magick "$icon" -fill "${iconColor}" -colorize 55% "$dir/${binaryName}.png"
+        rm -f "$icon"
+      done
     '';
 
     meta = wrapped.meta // {
