@@ -56,11 +56,11 @@
         }
         // (
           let
-            x = self.nixosConfigurations.titanium.config.home-manager.users.gipphe.wrappers;
+            x = self.nixosConfigurations.titanium.config.home-manager.users.gipphe.gipphe.programs;
           in
           {
-            jujutsu = x.jujutsu.wrapper;
-            git = x.git.wrapper;
+            jujutsu = x.jujutsu.package;
+            git = x.git.package;
           }
         )
       );
