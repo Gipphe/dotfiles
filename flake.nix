@@ -65,11 +65,7 @@
         )
       );
 
-      overlays = {
-        atuin = final: prev: {
-          inherit (inputs.atuin.packages.${final.stdenv.hostPlatform.system}) atuin;
-        };
-      };
+      overlays = { };
 
       checks = eachSystem (
         { pkgs, system, ... }:
@@ -193,12 +189,6 @@
     };
 
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
-
-    # TODO: Remove once 18.21.0 is in nixos-unstable
-    atuin = {
-      url = "github:atuinsh/atuin/v18.22.0";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     noctalia-official-plugins = {
       url = "github:noctalia-dev/official-plugins";
