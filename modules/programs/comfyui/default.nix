@@ -7,6 +7,7 @@ let
       networking.firewall.allowedTCPPorts = [
         8188
         8189
+        8190
       ];
     };
   };
