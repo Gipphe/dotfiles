@@ -10,8 +10,6 @@
           inherit (util) writeNushellApplication;
         };
         md-icons = pkgs.callPackage ./md-icons.nix { inherit (util) writeNushellApplication; };
-        mo2installer = pkgs.callPackage ./mo2installer.nix { };
-        fluorine-manager = pkgs.callPackage ./fluorine-manager.nix { };
       }
       // (
         let
