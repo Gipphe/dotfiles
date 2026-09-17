@@ -2,101 +2,13 @@
   description = "Home Manager configuration of gipphe";
 
   outputs =
-    inputs@{
-      self,
-      treefmt-nix,
-      nixpkgs,
-      ...
-    }:
-    let
+    { flake-parts, nixpkgs, ... }@inputs:
+    flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
         "aarch64-linux"
         "x86_64-linux"
       ];
-      eachSystem =
-        f:
-        nixpkgs.lib.genAttrs systems (
-          system:
-          f {
-            inherit system;
-            pkgs = nixpkgs.legacyPackages.${system};
-          }
-        );
-      environments = import ./environments inputs;
-    in
-    {
-      formatter = eachSystem ({ system, ... }: self.packages.${system}.treefmt);
-
-      devShells = eachSystem (
-        { pkgs, system }:
-        let
-          util = pkgs.callPackage ./util.nix { };
-        in
-        {
-          default = pkgs.callPackage ./devShells/default.nix {
-            inherit (self.packages.${system}) jujutsu;
-            inherit (util) writeNushellApplication;
-          };
-        }
-      );
-
-      packages = eachSystem (
-        { pkgs, ... }:
-        let
-          util = pkgs.callPackage ./util.nix { };
-        in
-        {
-          md-fastfetch = pkgs.callPackage ./packages/md-fastfetch.nix {
-            inherit (util) writeNushellApplication;
-          };
-          md-icons = pkgs.callPackage ./packages/md-icons.nix { inherit (util) writeNushellApplication; };
-          treefmt = pkgs.callPackage ./packages/treefmt.nix { inherit treefmt-nix; };
-          mo2installer = pkgs.callPackage ./packages/mo2installer.nix { };
-          fluorine-manager = pkgs.callPackage ./packages/fluorine-manager.nix { };
-        }
-        // (
-          let
-            x = self.nixosConfigurations.titanium.config.home-manager.users.gipphe.gipphe.programs;
-          in
-          {
-            jujutsu = x.jujutsu.package;
-            git = x.git.package;
-          }
-        )
-      );
-
-      overlays = { };
-
-      checks = eachSystem (
-        { pkgs, system, ... }:
-        let
-          inherit (pkgs) lib;
-          filterSystem = lib.filterAttrs (_: c: c.pkgs.stdenv.hostPlatform.system == system);
-          mkNixosCheck = name: x: {
-            name = "nixos-${name}";
-            value = x.config.system.build.toplevel;
-          };
-          # mkNixOnDroidCheck = name: x: {
-          #   name = "nix-on-droid-${name}";
-          #   value = x.activationPackage;
-          # };
-        in
-        lib.pipe self.nixosConfigurations [
-          filterSystem
-          (lib.mapAttrs' mkNixosCheck)
-        ]
-        # // lib.pipe self.nixOnDroidConfigurations [
-        #   filterSystem
-        #   (lib.mapAttrs' mkNixOnDroidCheck)
-        # ]
-      );
-
-      images.sodium = self.nixosConfigurations.sodium.config.system.build.image;
-
-      inherit (environments)
-        nixOnDroidConfigurations
-        nixosConfigurations
-        ;
+      imports = [ ./flake-module.nix ];
     };
 
   inputs = {
@@ -120,6 +32,11 @@
     disko = {
       url = "github:nix-community/disko/latest";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
     wrappers = {

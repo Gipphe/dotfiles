@@ -4,12 +4,12 @@ let
   inherit (builtins) readDir attrNames;
 in
 {
-  hosts = pipe ../hosts [
+  hosts = pipe ../../hosts [
     readDir
     (filterAttrs (_: t: t == "directory"))
     attrNames
     (map (x: {
-      ${x} = import ../hosts/${x}/host.nix;
+      ${x} = import ../../hosts/${x}/host.nix;
     }))
     mergeAttrsList
     (filterAttrs (_: v: v.enable))
