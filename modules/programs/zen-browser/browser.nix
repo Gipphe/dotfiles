@@ -5,17 +5,29 @@
   pkgs,
   inputs,
   util,
+  osConfig,
   ...
 }:
 let
   cfg = config.gipphe.programs.zen-browser.${name};
 
-  browser = inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.zen-browser-unwrapped;
+  # zen-browser-unwrapped only sets the (now unused) `ffmpegSupport`
+  # passthru attr, but nixpkgs' wrapFirefox reads `withFFmpeg`. Without
+  # this, libavcodec is never added to LD_LIBRARY_PATH, so H264/AAC/HEVC
+  # can't be decoded at all, not even in software.
+  browser =
+    (inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.zen-browser-unwrapped).overrideAttrs
+      (old: {
+        passthru = (old.passthru or { }) // {
+          withFFmpeg = true;
+        };
+      });
+
   wrapped = pkgs.wrapFirefox browser {
     pname = "${browser.pname}-${name}";
     appDataDir = "${config.xdg.configHome}/zen-${name}";
 
-    extraPrefs = import ./preferences.nix { inherit lib; };
+    extraPrefs = import ./preferences.nix { inherit lib osConfig; };
 
     # See docs for policies here: https://mozilla.github.io/policy-templates/
     extraPolicies = {
