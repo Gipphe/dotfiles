@@ -19,7 +19,6 @@ if [[ -t 1 ]] && command -v tput >/dev/null 2>&1 && [[ "$(tput colors 2>/dev/nul
   BLUE=$(tput setaf 4)
   GREEN=$(tput setaf 2)
   YELLOW=$(tput setaf 3)
-  RED=$(tput setaf 1)
 else
   BOLD=""
   DIM=""
@@ -27,7 +26,6 @@ else
   BLUE=""
   GREEN=""
   YELLOW=""
-  RED=""
 fi
 
 # Author sets this at the top of the stages section.
@@ -101,12 +99,12 @@ confirm() {
   local reply=""
   printf '  %s? %s [y/N] ' "$YELLOW" "$1"
   read -r reply || true
-  [[ "$reply" =~ ^[Yy] ]]
+  [[ $reply =~ ^[Yy] ]]
 }
 
 # _existing KEY: current value of KEY in ENV_FILE, if any.
 _existing() {
-  [[ -f "$ENV_FILE" ]] || return 1
+  [[ -f $ENV_FILE ]] || return 1
   local line
   line=$(grep -E "^${1}=" "$ENV_FILE" | tail -n1) || return 1
   printf '%s' "${line#*=}"
@@ -117,13 +115,13 @@ _existing() {
 ask() {
   local key="$1" prompt="$2" current input
   current=$(_existing "$key" || true)
-  if [[ -n "$current" ]]; then
+  if [[ -n $current ]]; then
     printf '  %s%s%s %s[Enter keeps current]%s ' "$BOLD" "$prompt" "$RESET" "$DIM" "$RESET"
   else
     printf '  %s%s%s ' "$BOLD" "$prompt" "$RESET"
   fi
   read -r input || true
-  [[ -z "$input" && -n "$current" ]] && input="$current"
+  [[ -z $input && -n $current ]] && input="$current"
   printf -v "$key" '%s' "$input"
 }
 
@@ -131,14 +129,14 @@ ask() {
 ask_secret() {
   local key="$1" prompt="$2" current input
   current=$(_existing "$key" || true)
-  if [[ -n "$current" ]]; then
+  if [[ -n $current ]]; then
     printf '  %s%s%s %s[Enter keeps current]%s ' "$BOLD" "$prompt" "$RESET" "$DIM" "$RESET"
   else
     printf '  %s%s%s ' "$BOLD" "$prompt" "$RESET"
   fi
   read -rs input || true
   printf '\n'
-  [[ -z "$input" && -n "$current" ]] && input="$current"
+  [[ -z $input && -n $current ]] && input="$current"
   printf -v "$key" '%s' "$input"
 }
 
