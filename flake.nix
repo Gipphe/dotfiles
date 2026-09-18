@@ -107,6 +107,16 @@
 
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
 
+    pyproject-nix = {
+      url = "github:nix-community/pyproject.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    headset-battery-indicator = {
+      url = "github:ruflas/headset-battery-indicator";
+      flake = false;
+    };
+
     noctalia-official-plugins = {
       url = "github:noctalia-dev/official-plugins";
       flake = false;
