@@ -12,6 +12,7 @@ util.mkProfile {
     prismlauncher.enable = true;
     runelite.enable = true;
     steam.enable = true;
+    wine.enable = true;
   };
   shared.gipphe.programs = {
     discord.enable = true;
