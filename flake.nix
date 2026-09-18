@@ -123,7 +123,6 @@
       "https://cache.iog.io"
       "https://cache.nixos.org"
       "https://comfyui.cachix.org"
-      "https://cuda-maintainers.cachix.org"
       "https://gipphe.cachix.org"
       "https://hyprland.cachix.org"
       "https://nix-community.cachix.org"
@@ -135,7 +134,6 @@
     extra-trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "comfyui.cachix.org-1:33mf9VzoIjzVbp0zwj+fT51HG0y31ZTK3nzYZAX0rec="
-      "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
       "gipphe.cachix.org-1:GeHkB5yyMQkXYCPJ1FqFl8fbtDe6/aSmS9k8c57GetY="
       "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
