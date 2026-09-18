@@ -62,9 +62,9 @@ util.mkToggledModule [ "hosts" ] {
     hardware = {
       gpu.nvidia.rtx3070.enable = true;
       peripheral.logitech = {
+        a50gen5.enable = true;
         g502x.enable = true;
         g915.enable = true;
-        g935.enable = false;
       };
       peripheral.xbox.one.controller.enable = true;
       cpu.intel.comet-lake.enable = true;
