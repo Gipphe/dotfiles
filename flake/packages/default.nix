@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, inputs, ... }:
 {
   perSystem = { pkgs, ... }: {
     packages =
@@ -10,6 +10,12 @@
           inherit (util) writeNushellApplication;
         };
         md-icons = pkgs.callPackage ./md-icons.nix { inherit (util) writeNushellApplication; };
+        headset-battery-indicator = pkgs.callPackage ./headset-battery-indicator.nix {
+          inherit (inputs)
+            pyproject-nix
+            headset-battery-indicator
+            ;
+        };
       }
       // (
         let
