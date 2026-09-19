@@ -1,6 +1,7 @@
 { util, pkgs, ... }:
 util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
   name = "a50gen5";
+  shared.gipphe.programs.headset-battery-indicator.enable = true;
   nixos = {
     programs.solaar = {
       enable = true;
