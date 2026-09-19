@@ -2,7 +2,6 @@
   imports = [
     ./bolt-launcher.nix
     ./cache.nix
-    ./fluorine-manager.nix
     ./gamemode.nix
     ./gamescope.nix
     ./heroic.nix
@@ -11,7 +10,6 @@
     ./lutris.nix
     ./mangohud
     ./minecraft/servers.nix
-    ./mo2installer.nix
     ./prismlauncher.nix
     ./runelite.nix
     ./steam
