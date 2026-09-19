@@ -13,5 +13,6 @@
     ./prismlauncher.nix
     ./runelite.nix
     ./steam
+    ./wine.nix
   ];
 }
