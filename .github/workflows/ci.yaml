@@ -15,7 +15,7 @@ jobs:
       checks: ${{ steps.find-checks.outputs.checks }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      - uses: DeterminateSystems/determinate-nix-action@021c8a1bd3570eb21f5c20a054812b0c4d9ca614
+      - uses: DeterminateSystems/determinate-nix-action@8d87e8d5e5b8a8309d4281094560f127d9a265f1
       - name: Find checks
         id: find-checks
         run: |
@@ -38,7 +38,7 @@ jobs:
         include: ${{ fromJson(needs.find-checks.outputs.checks) }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      - uses: DeterminateSystems/determinate-nix-action@021c8a1bd3570eb21f5c20a054812b0c4d9ca614
+      - uses: DeterminateSystems/determinate-nix-action@8d87e8d5e5b8a8309d4281094560f127d9a265f1
       - uses: cachix/cachix-action@38b082610b782e7e93e209c35fd730d399dee866
         with:
           name: gipphe
