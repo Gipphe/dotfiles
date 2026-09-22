@@ -21,6 +21,10 @@ let
     browser.aboutConfig.showWarning = false;
     # Tab groups
     browser.tabs.groups.enabled = true;
+    # Switch to previous tab instead of previously used tab on close
+    zen.tabs.select-recently-used-on-close = false;
+    # Make new tabs appear at the bottom
+    zen.view.show-newtab-button-top = false;
   }
   // lib.optionalAttrs nvidiaHwDecode {
     # Support additional video codecs
