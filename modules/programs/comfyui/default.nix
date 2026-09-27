@@ -5,6 +5,8 @@ let
     nixos = {
       # Package included in separate repo
       networking.firewall.allowedTCPPorts = [
+        8179
+        8180
         8188
         8189
         8190
