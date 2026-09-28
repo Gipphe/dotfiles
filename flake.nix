@@ -54,6 +54,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # TODO: Remove once millennium is in nixos-unstable
+    # See https://github.com/NixOS/nixpkgs/pull/538226
+    nixpkgs-with-millennium = {
+      url = "github:DrymarchonShaun/nixpkgs/millennium-init";
+    };
+
     # Do not override its nixpkgs input, since it uses bleeding edge versions
     # of specific packages
     nix-gaming.url = "github:fufexan/nix-gaming";
