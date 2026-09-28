@@ -1,13 +1,17 @@
 {
+  inputs,
   util,
   pkgs,
   lib,
   ...
 }:
 let
-  pkg = pkgs.steam.override {
-    extraArgs = "-system-composer";
-  };
+  pkg =
+    inputs.nixpkgs-with-millennium.legacyPackages.${pkgs.stdenv.hostPlatform.system}.steamWithMillennium.override
+      {
+        inherit (pkgs) steam;
+        extraArgs = "-system-composer";
+      };
 in
 util.mkGaming {
   name = "steam";
