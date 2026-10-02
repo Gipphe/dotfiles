@@ -1,7 +1,10 @@
 { system, inputs }:
 import inputs.nixpkgs {
   inherit system;
-  overlays = builtins.attrValues inputs.self.overlays ++ [
+  overlays = [
+    (inputs.nixpkgs.lib.composeManyExtensions (
+      builtins.attrValues (removeAttrs inputs.self.overlays [ "default" ])
+    ))
     inputs.dolphin-overlay.overlays.default
   ];
   config = {
