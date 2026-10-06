@@ -1647,6 +1647,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-filen-desktop": {
+      "locked": {
+        "lastModified": 1791028987,
+        "narHash": "sha256-xU05JDnXUofR4E75QectxnJkiUqQPEddEqEIOSMxN4I=",
+        "owner": "kashw2",
+        "repo": "nixpkgs",
+        "rev": "230cb0e018ae9b6086b86e66e3d524153f8cd84f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kashw2",
+        "ref": "filen-desktop-canvas-fix",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-for-bootstrap": {
       "locked": {
         "lastModified": 1720244366,
@@ -2131,6 +2147,7 @@
         "nix-on-droid": "nix-on-droid",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_8",
+        "nixpkgs-filen-desktop": "nixpkgs-filen-desktop",
         "nixpkgs-last-working-for-nix-on-droid": "nixpkgs-last-working-for-nix-on-droid",
         "nixpkgs-with-millennium": "nixpkgs-with-millennium",
         "noctalia": "noctalia",

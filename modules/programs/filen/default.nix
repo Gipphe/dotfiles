@@ -1,12 +1,21 @@
-{ pkgs, util, ... }:
+{
+  inputs,
+  pkgs,
+  util,
+  ...
+}:
 let
+  # TODO: Remove once this PR is in nixos-unstable:
+  # https://github.com/NixOS/nixpkgs/pull/569777
+  filenPkg =
+    inputs.nixpkgs-filen-desktop.legacyPackages.${pkgs.stdenv.hostPlatform.system}.filen-desktop;
   pkg = pkgs.symlinkJoin {
-    inherit (pkgs.filen-desktop) name pname version;
+    inherit (filenPkg) name pname version;
     paths = [
-      pkgs.filen-desktop
+      filenPkg
       (pkgs.linkFarm "filen-icon" {
         "share/pixmaps/filen-desktop.png" =
-          "${pkgs.filen-desktop}/share/icons/hicolor/128x128/apps/filen-desktop.png";
+          "${filenPkg}/share/icons/hicolor/128x128/apps/filen-desktop.png";
       })
     ];
   };

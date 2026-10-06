@@ -131,6 +131,10 @@
       url = "github:noctalia-dev/community-plugins";
       flake = false;
     };
+
+    # TODO: Remove once this PR is in nixos-unstable:
+    # https://github.com/NixOS/nixpkgs/pull/569777
+    nixpkgs-filen-desktop.url = "github:kashw2/nixpkgs/filen-desktop-canvas-fix";
   };
 
   nixConfig = {
