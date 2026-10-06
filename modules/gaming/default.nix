@@ -6,7 +6,7 @@
     ./gamescope.nix
     ./heroic.nix
     ./kernel.nix
-    ./limo.nix
+    ./limo
     ./lutris.nix
     ./mangohud
     ./minecraft/servers.nix
