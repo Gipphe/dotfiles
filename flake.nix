@@ -135,6 +135,11 @@
     # TODO: Remove once this PR is in nixos-unstable:
     # https://github.com/NixOS/nixpkgs/pull/569777
     nixpkgs-filen-desktop.url = "github:kashw2/nixpkgs/filen-desktop-canvas-fix";
+
+    maki = {
+      url = "github:tontinton/maki";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   nixConfig = {

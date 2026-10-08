@@ -186,6 +186,21 @@
         "type": "github"
       }
     },
+    "crane": {
+      "locked": {
+        "lastModified": 1784407669,
+        "narHash": "sha256-gcFMcRjw0ZSn380Rx2QLlU1goUQeSrKX/DF12omI6+o=",
+        "owner": "ipetkov",
+        "repo": "crane",
+        "rev": "1316b7d278ad77a16aec024b71d971366e123bec",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ipetkov",
+        "repo": "crane",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -1351,6 +1366,28 @@
         "type": "github"
       }
     },
+    "maki": {
+      "inputs": {
+        "crane": "crane",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1791451216,
+        "narHash": "sha256-1EIwefaCIKdevn+Al3oMnUi/Tln/HncXm0mJaqn12Wk=",
+        "owner": "tontinton",
+        "repo": "maki",
+        "rev": "14e8e07af0f5592471eb9873da1be984c55168ff",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tontinton",
+        "repo": "maki",
+        "type": "github"
+      }
+    },
     "nix-cachyos-kernel": {
       "inputs": {
         "flake-compat": "flake-compat_2",
@@ -2140,6 +2177,7 @@
         "headset-battery-indicator": "headset-battery-indicator",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
+        "maki": "maki",
         "nix-cachyos-kernel": "nix-cachyos-kernel",
         "nix-gaming": "nix-gaming",
         "nix-index-db": "nix-index-db",
@@ -2161,6 +2199,27 @@
         "tricorder": "tricorder",
         "wrappers": "wrappers_2",
         "zen-browser": "zen-browser"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "maki",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1790928989,
+        "narHash": "sha256-5r3MN/Rx7N9tLapCBmUq6/zCc3C9J7gNif1HybD1fJQ=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "368fee9beaab04ca6fe7af28db63caa9badb22fa",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
       }
     },
     "scss-reset": {
