@@ -3,6 +3,7 @@
   writeNushellApplication,
   mkShell,
 
+  cachix,
   comma,
   jujutsu,
   nh,
@@ -10,6 +11,8 @@
   nixfmt,
   nvd,
   sops,
+
+  sopsSecrets,
 }:
 let
   build =
@@ -17,9 +20,11 @@ let
       script = writeNushellApplication {
         name = "switch-build";
         runtimeInputs = [
+          cachix
           nh
           nvd
         ];
+        runtimeEnv.CACHIX_TOKEN_FILE_PATH = sopsSecrets.pub-cachix-gipphe-token.path;
         text = builtins.readFile ./build.nu;
       };
     in
@@ -221,6 +226,7 @@ mkShell' {
     }
   ];
   packages = [
+    cachix
     comma
     nix-tree
     nixfmt # nix formatter

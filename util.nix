@@ -192,11 +192,15 @@ let
       ];
     };
 
+  escapeQuote = builtins.replaceStrings [ "'" ] [ "\\'" ];
+
   toNushellVar =
     name: value:
     throwIfNot (isValidPosixName name) "toNushellVar: ${name} is not a valid Nushell variable name" (
       if (isAttrs value && !isStringLike value) || isList value then
         "$env.${name} = ${builtins.toJSON value}"
+      else if (isStringLike value) then
+        "$env.${name} = '${escapeQuote value}'"
       else
         "$env.${name} = ${escapeShellArg value}"
     );
@@ -231,7 +235,7 @@ let
           #!${nushell-shell}
         ''
         + lib.optionalString (runtimeEnv != null) (
-          lib.concatStrings (lib.mapAttrsToList (name: value: toNushellVar name value) runtimeEnv)
+          lib.concatStrings (lib.mapAttrsToList (name: value: toNushellVar name value + "\n") runtimeEnv)
         )
         + lib.optionalString (!inheritPath) ''
           $env.PATH = []

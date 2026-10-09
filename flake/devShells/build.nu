@@ -1,6 +1,18 @@
 #!/usr/bin/env nu
 
 def main [command: string, --ask, ...rest: string] {
+    if $env.CACHIX_TOKEN_FILE_PATH? != null {
+        let path_type = $env.CACHIX_TOKEN_FILE_PATH | path type
+        if $path_type == "file" or $path_type == "symlink" {
+            job spawn { 
+                with-env {
+                    CACHIX_AUTH_TOKEN: (open --raw $env.CACHIX_TOKEN_FILE_PATH | str trim) 
+                } {
+                    cachix watch-store gipphe
+                }
+            }
+        }
+    }
     if (which nixos-rebuild | length | $in > 0) {
         nh os $command ...$rest
         exit 0
