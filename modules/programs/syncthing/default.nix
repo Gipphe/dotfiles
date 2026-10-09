@@ -14,6 +14,18 @@ let
         "titanium"
       ];
     };
+    "${config.home.homeDirectory}/logseq/graphs" = {
+      id = "logseq-graphs";
+      label = "Logseq graphs";
+      devices = [
+        "argon"
+        "carbon"
+        "cobalt"
+        "helium"
+        "titanium"
+        "boron"
+      ];
+    };
     "${config.home.homeDirectory}/Documents/Notes" = {
       id = "notes";
       label = "Notes";
