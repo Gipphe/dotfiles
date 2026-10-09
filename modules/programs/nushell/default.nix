@@ -36,6 +36,9 @@ util.mkProgram {
           $env.TRANSIENT_PROMPT_MULTILINE_INDICATOR = ""
           $env.TRANSIENT_PROMPT_COMMAND_RIGHT = ^starship module time
         '';
+        extraConfig = /* nu */ ''
+          use std/dirs
+        '';
         settings.abbreviations.rm = "rm -i";
         settings = {
           edit_mode = "vi";
