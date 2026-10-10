@@ -16,6 +16,7 @@
             headset-battery-indicator
             ;
         };
+        jagex-launcher = pkgs.callPackage ./jagex-launcher.nix { };
       }
       // (
         let
