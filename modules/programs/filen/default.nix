@@ -1,14 +1,6 @@
-{
-  inputs,
-  pkgs,
-  util,
-  ...
-}:
+{ pkgs, util, ... }:
 let
-  # TODO: Remove once this PR is in nixos-unstable:
-  # https://github.com/NixOS/nixpkgs/pull/569777
-  filenPkg =
-    inputs.nixpkgs-filen-desktop.legacyPackages.${pkgs.stdenv.hostPlatform.system}.filen-desktop;
+  filenPkg = pkgs.filen-desktop;
   pkg = pkgs.symlinkJoin {
     inherit (filenPkg) name pname version;
     paths = [
