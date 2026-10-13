@@ -1792,6 +1792,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-logseq-og": {
+      "locked": {
+        "lastModified": 1779964555,
+        "narHash": "sha256-RY2mq4v5Imb1wE0tZFGSLRTu60vpmAN19CFrRVIUmks=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "ec0c722e017dfccbb2f66a8aafbe003320266d33",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "ec0c722e017dfccbb2f66a8aafbe003320266d33",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1784364478,
@@ -2187,6 +2203,7 @@
         "nixpkgs": "nixpkgs_8",
         "nixpkgs-filen-desktop": "nixpkgs-filen-desktop",
         "nixpkgs-last-working-for-nix-on-droid": "nixpkgs-last-working-for-nix-on-droid",
+        "nixpkgs-logseq-og": "nixpkgs-logseq-og",
         "nixpkgs-with-millennium": "nixpkgs-with-millennium",
         "noctalia": "noctalia",
         "noctalia-community-plugins": "noctalia-community-plugins",

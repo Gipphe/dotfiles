@@ -140,6 +140,10 @@
       url = "github:tontinton/maki";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # TODO: Remove once Logseq is properly renamed and split.
+    # See https://github.com/NixOS/nixpkgs/pull/516682
+    nixpkgs-logseq-og.url = "github:nixos/nixpkgs/ec0c722e017dfccbb2f66a8aafbe003320266d33";
   };
 
   nixConfig = {
