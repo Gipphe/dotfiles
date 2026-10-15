@@ -15,6 +15,7 @@ def desc-to-bookmark []: string -> string {
           | prepend "gipphe/"
           | str join
           | str trim --char '-'
+          | str substring 0..45
         )
     } else {
         null
