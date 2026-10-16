@@ -6,7 +6,7 @@ def desc-to-bookmark []: string -> string {
     let desc = $in
     if $desc != "" and ($desc | str contains ':') {
         ($desc
-          | str replace -r '\)?: ' '/'
+          | str replace -ra '\)?: ' '/'
           | str replace -ra '[^\w/]' '-'
           | str replace -ra "'\"`" ''
           | str lowercase
@@ -14,8 +14,8 @@ def desc-to-bookmark []: string -> string {
           | str replace -ar ':+' '/'
           | prepend "gipphe/"
           | str join
-          | str trim --char '-'
           | str substring 0..45
+          | str trim --char '-'
         )
     } else {
         null
