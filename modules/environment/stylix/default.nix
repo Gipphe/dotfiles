@@ -44,6 +44,7 @@ util.mkEnvironment {
         stylix
         {
           targets.rofi.enable = false;
+          targets.nixos-icons.enable = false;
         }
       ];
     };
