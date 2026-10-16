@@ -40,7 +40,12 @@ util.mkEnvironment {
   homeManager = {
     imports = lib.optional flags.isNixOnDroid inputs.stylix.homeModules.stylix;
     config = lib.optionalAttrs flags.isNixOnDroid {
-      inherit stylix;
+      stylix = lib.merge [
+        stylix
+        {
+          targets.rofi.enable = false;
+        }
+      ];
     };
   };
   nixos = {
