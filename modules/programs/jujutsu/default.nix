@@ -222,15 +222,41 @@ let
                     let jj = $"($jj_dir)/bin/jj"
 
                     let bookmark = ^$jj bc $revision
+                    let unit = $"jj-puf-(random chars --length 8)"
 
                     (
                       ^systemd-run
                         --user
                         --same-dir
-                        '${lib.getExe inner}'
+                        --unit $unit
+                        '${lib.getExe job}'
+                        $unit
                         $jj_dir
                         $bookmark
                     )
+                  }
+                '';
+              };
+              job = util.writeNushellApplication {
+                name = "jj-full_pub-job";
+                runtimeInputs = [ pkgs.libnotify ];
+                text = /* nu */ ''
+                  # Runs the inner script, and sends a notification if it fails, since
+                  # failures of the transient unit would otherwise go unnoticed.
+                  def main [unit: string, jj_dir: string, bookmark: string] {
+                    let res = ^'${lib.getExe inner}' $jj_dir $bookmark | complete
+                    print $res.stdout
+                    print --stderr $res.stderr
+                    if $res.exit_code != 0 {
+                      (
+                        ^notify-send
+                          --urgency critical
+                          --app-name jj
+                          $"jj puf failed for ($bookmark)\n"
+                          $"See: journalctl --user -u ($unit)\n\n($res.stderr | str trim)"
+                      )
+                      exit $res.exit_code
+                    }
                   }
                 '';
               };
