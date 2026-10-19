@@ -15,6 +15,8 @@ util.mkProgram {
       autoStart = false;
       capSysAdmin = true;
       openFirewall = true;
+      # Let right alt act as super for Nvidia SHIELD.
+      settings.key_rightalt_to_key_win = true;
       applications = {
         env = {
           PATH = "$(PATH):$(HOME)/.local/bin";
