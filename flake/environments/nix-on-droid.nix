@@ -1,4 +1,9 @@
-{ self, inputs, ... }:
+{
+  withSystem,
+  self,
+  inputs,
+  ...
+}:
 let
   nixpkgs = inputs.nixpkgs-last-working-for-nix-on-droid;
   inherit (nixpkgs) lib;
@@ -17,10 +22,7 @@ let
   mkMachine =
     hostname: config:
     let
-      pkgs = import ./nixpkgs.nix {
-        inherit (config) system;
-        inherit inputs;
-      };
+      pkgs = withSystem config.system ({ pkgs, ... }: pkgs);
       util = pkgs.callPackage ../../util.nix { };
     in
     inputs.nix-on-droid.lib.nixOnDroidConfiguration {
