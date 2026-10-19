@@ -3,6 +3,7 @@
   writeNushellApplication,
   mkShell,
 
+  libnotify,
   cachix,
   comma,
   jujutsu,
@@ -21,11 +22,17 @@ let
         name = "switch-build";
         runtimeInputs = [
           cachix
+          libnotify
           nh
           nvd
         ];
         runtimeEnv.CACHIX_TOKEN_FILE_PATH = sopsSecrets.pub-cachix-gipphe-token.path;
-        text = builtins.readFile ./build.nu;
+        text = /* nu */ ''
+          use ${./.}/build.nu
+          def --wrapped main [...args]: nothing -> nothing {
+            build ...($args)
+          }
+        '';
       };
     in
     lib.getExe script;
@@ -61,31 +68,7 @@ let
     writeNushellApplication {
       name = "menu";
       runtimeEnv.commands = builtins.toJSON (map (c: { inherit (c) name category help; }) commands);
-      text = /* nu */ ''
-        def intersperse []: list -> list {
-          each { [null, $in] } | update 0 first | flatten
-        }
-        let category_commands = ($env.commands | from json | group-by category)
-        [ $"(ansi yellow)dotfiles(ansi reset)", { menu: 'Show this menu' }]
-          | table --collapse --index false --theme none
-          | print
-        $category_commands
-          | items { |cat, comms|
-              [
-                $"(ansi yellow)($cat)(ansi reset)"
-                ($comms
-                  | select name help
-                  | each { { $in.name: $in.help } }
-                  | into record
-                )
-              ]
-          }
-          | each { |r|
-            print ""
-            $r | table --collapse --index false --theme none | print
-          }
-        null
-      '';
+      text = builtins.readFile ./menu.nu;
     };
 in
 mkShell' {
