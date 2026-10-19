@@ -5,6 +5,7 @@
     ./gamemode.nix
     ./gamescope.nix
     ./heroic.nix
+    ./jagex-launcher.nix
     ./kernel.nix
     ./limo
     ./lutris.nix

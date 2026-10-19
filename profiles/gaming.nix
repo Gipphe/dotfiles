@@ -6,6 +6,7 @@ util.mkProfile {
     gamemode.enable = false;
     gamescope.enable = true;
     heroic.enable = true;
+    jagex-launcher.enable = false;
     limo.enable = true;
     lutris.enable = true;
     mangohud.enable = true;

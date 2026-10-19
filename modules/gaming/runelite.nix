@@ -1,5 +1,12 @@
-{ util, pkgs, ... }:
+{
+  util,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
+  cfg = config.gipphe.gaming.runelite;
   pkg = pkgs.runelite;
 in
 # Runelite has some issues with scaling, but setting the following property
@@ -16,20 +23,20 @@ in
 # resolution.
 util.mkGaming {
   name = "runelite";
+  options.gipphe.gaming.runelite.package = lib.mkPackageOption pkgs "runelite" { } // {
+    default = pkgs.symlinkJoin {
+      inherit (pkg) name version;
+      paths = [ pkg ];
+      buildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/runelite \
+          --set _JAVA_AWT_WM_NONREPARENTING 1
+      '';
+    };
+  };
   homeManager = {
     home = {
-      packages = [
-        (pkgs.symlinkJoin {
-          inherit (pkg) name version;
-          paths = [ pkg ];
-          buildInputs = [ pkgs.makeWrapper ];
-          postBuild = ''
-            wrapProgram $out/bin/runelite \
-              --set GDK_SCALE 2 \
-              --set _JAVA_AWT_WM_NONREPARENTING 1
-          '';
-        })
-      ];
+      packages = [ cfg.package ];
     };
     wayland.windowManager.hyprland.settings.window_rule = [
       {
