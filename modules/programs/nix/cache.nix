@@ -11,7 +11,7 @@ util.mkModule {
       format = "binary";
     };
     programs.nushell.environmentVariables = {
-      CACHIX_AUTH_TOKEN = lib.hm.nushell.mkNushellInline "(open ${lib.escapeShellArg config.sops.secrets.pub-cachix-gipphe-token.path})";
+      CACHIX_AUTH_TOKEN = lib.hm.nushell.mkNushellInline "(open ${lib.escapeShellArg config.sops.secrets.pub-cachix-gipphe-token.path} | str trim)";
     };
   };
   nixos = {
