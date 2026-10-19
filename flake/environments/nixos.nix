@@ -1,4 +1,9 @@
-{ self, inputs, ... }:
+{
+  withSystem,
+  self,
+  inputs,
+  ...
+}:
 let
   inherit (inputs.nixpkgs) lib;
   inherit (lib.attrsets) filterAttrs mapAttrs;
@@ -16,10 +21,7 @@ let
   mkMachine =
     hostname: config:
     let
-      pkgs = import ./nixpkgs.nix {
-        inherit (config) system;
-        inherit inputs;
-      };
+      pkgs = withSystem config.system ({ pkgs, ... }: pkgs);
       util = pkgs.callPackage ../../util.nix { };
     in
     lib.nixosSystem {
