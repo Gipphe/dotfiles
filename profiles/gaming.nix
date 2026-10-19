@@ -3,7 +3,7 @@ util.mkProfile {
   name = "gaming";
   shared.gipphe.gaming = {
     bolt-launcher.enable = true;
-    gamemode.enable = true;
+    gamemode.enable = false;
     gamescope.enable = true;
     heroic.enable = true;
     limo.enable = true;
