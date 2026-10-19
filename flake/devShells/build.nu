@@ -1,52 +1,14 @@
 #!/usr/bin/env nu
 
-def main [command: string, --ask, ...rest: string] {
-    if $env.CACHIX_TOKEN_FILE_PATH? != null {
-        let path_type = $env.CACHIX_TOKEN_FILE_PATH | path type
-        if $path_type == "file" or $path_type == "symlink" {
-            job spawn { 
-                with-env {
-                    CACHIX_AUTH_TOKEN: (open --raw $env.CACHIX_TOKEN_FILE_PATH | str trim) 
-                } {
-                    cachix watch-store gipphe
-                }
-            }
-        }
-    }
+use ./build-nix-on-droid.nu
+use ./build-nixos.nu
+
+export def main [...rest]: nothing -> nothing {
     if (which nixos-rebuild | length | $in > 0) {
-        nh os $command ...$rest
-        exit 0
+        build-nixos ...($rest)
+    } else if (which nix-on-droid | length | $in > 0) {
+        build-nix-on-droid ...($rest)
+    } else {
+        error make "This is not a NixOS or nix-on-droid system"
     }
-
-    if (which nix-on-droid | length | $in > 0) {
-        let host = open env.json | get 'hostname'
-        if $host == null or $host == "" {
-            error make 'Found no hostname in env.json'
-        }
-
-        nix-on-droid build --flake $"(pwd)#($host)"
-
-        print -e ""
-        let nixOnDroidPkg = nix path-info --impure $"($env.NH_FLAKE)#nixOnDroidConfigurations.($host).activationPackage"
-        nvd diff $nixOnDroidPkg result
-        print -e ""
-
-        let reply = if $ask {
-            print -e 'Apply the config?'
-            input --default 'n' --numchar 1 '[y/n]'
-        } else {
-            'y'
-        }
-
-        match ($reply | str lowercase) {
-            'y' => {
-                nix-on-droid switch --flake $"(pwd)#($host)"
-            }
-        }
-
-        rm -f result
-        exit 0
-    }
-
-    error make "This is not a NixOS or nix-on-droid system"
 }
