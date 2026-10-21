@@ -2,6 +2,7 @@
   util,
   lib,
   config,
+  pkgs,
   ...
 }:
 let
@@ -21,8 +22,20 @@ util.mkToggledModule [ "hardware" "peripheral" "logitech" ] {
       enable = true;
       userService.enable = true;
     };
-    services.hardware.openrgb = {
-      enable = true;
-    };
+    # Solaar drives the G915 lighting (per-key colors, idle dim, sleep). Keep
+    # OpenRGB, if enabled by other devices, from grabbing the keyboard and
+    # fighting Solaar over it.
+    systemd.services.openrgb.preStart = lib.mkIf config.services.hardware.openrgb.enable ''
+      config=/var/lib/OpenRGB/OpenRGB.json
+      [ -s "$config" ] || echo '{}' > "$config"
+      ${lib.getExe pkgs.jq} '
+        .Detectors.detectors += {
+          "Logitech G915 Wireless RGB Mechanical Gaming Keyboard": false,
+          "Logitech G915 Wireless RGB Mechanical Gaming Keyboard (Receiver 2)": false,
+          "Logitech G915 Wireless RGB Mechanical Gaming Keyboard (Wired)": false
+        }
+      ' "$config" > "$config.tmp"
+      mv "$config.tmp" "$config"
+    '';
   };
 }
