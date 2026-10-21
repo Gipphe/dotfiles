@@ -97,8 +97,8 @@ util.mkToggledModule [ "hosts" ] {
     services.avahi = {
       enable = true;
       nssmdns4 = true;
-      publish.enable = true;
-      publish.addresses = true;
+      settings.publish.disable-publishing = false;
+      settings.publish.publish-addresses = true;
     };
 
     services.openssh.enable = true;
