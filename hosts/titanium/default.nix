@@ -149,6 +149,10 @@ util.mkToggledModule [ "hosts" ] {
       }
     );
 
+    programs.gamemode.settings = {
+      gpu.gpu_device = 1;
+    };
+
     services.sunshine = {
       settings.output_name = "DP-2";
       applications.apps =
