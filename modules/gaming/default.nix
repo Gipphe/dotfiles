@@ -2,7 +2,7 @@
   imports = [
     ./bolt-launcher.nix
     ./cache.nix
-    ./gamemode.nix
+    ./gamemode
     ./gamescope.nix
     ./heroic.nix
     ./jagex-launcher.nix
