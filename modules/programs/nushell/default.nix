@@ -39,6 +39,7 @@ util.mkProgram {
         extraConfig = /* nu */ ''
           use std/dirs
         '';
+        loadSessionVariables = true;
         settings.abbreviations.rm = "rm -i";
         settings = {
           edit_mode = "vi";
