@@ -36,7 +36,7 @@ let
       DisableTelemetry = true;
       DisablePocket = true;
       DisableFirefoxStudies = true;
-      DisableFirefoxAccounts = true;
+      DisableFirefoxAccounts = false; # Allow sync
       ExtensionSettings = import ./extensions.nix;
       DontCheckDefaultBrowser = true;
       AIControls.Default = "blocked";
