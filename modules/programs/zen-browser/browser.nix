@@ -16,9 +16,7 @@ let
   # this, libavcodec is never added to LD_LIBRARY_PATH, so H264/AAC/HEVC
   # can't be decoded at all, not even in software.
   browser =
-    (inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.zen-browser-unwrapped.override {
-      hash = "sha256-uyBF0+IWVNQP6EElAJLurf0sH8gx7vtQkiJ3PIvcoUk=";
-    }).overrideAttrs
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.zen-browser-unwrapped.overrideAttrs
       (old: {
         passthru = (old.passthru or { }) // {
           withFFmpeg = true;
