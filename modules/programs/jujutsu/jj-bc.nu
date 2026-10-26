@@ -12,6 +12,7 @@ def desc-to-bookmark []: string -> string {
           | str lowercase
           | str replace -ar '[^/:\w\d]' '-'
           | str replace -ar ':+' '/'
+          | str replace -ar '-+' '-'
           | prepend "gipphe/"
           | str join
           | str substring 0..45
