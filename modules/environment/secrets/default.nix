@@ -6,9 +6,10 @@
   ...
 }:
 let
-  sops.age = {
+  sensitive.secrets = {
+    enable = true;
     keyFile = "${config.gipphe.homeDirectory}/.config/sops/age/keys.txt";
-    generateKey = false;
+    inherit (config.gipphe) hostName;
   };
 in
 util.mkModule {
@@ -17,14 +18,14 @@ util.mkModule {
   };
 
   homeManager = {
-    imports = [ inputs.sops-nix.homeManagerModules.sops ];
-    inherit sops;
+    imports = [ inputs.secrets.homeModules.default ];
+    inherit sensitive;
     programs.nushell.extraConfig = /* nu */ ''
       $env.SECRETS_DIR = $env.XDG_RUNTIME_DIR
     '';
   };
   nixos = {
-    imports = [ inputs.sops-nix.nixosModules.sops ];
-    inherit sops;
+    imports = [ inputs.secrets.nixosModules.default ];
+    inherit sensitive;
   };
 }

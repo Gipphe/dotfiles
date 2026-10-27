@@ -56,7 +56,7 @@ let
       signing = {
         behavior = "own";
         backend = "ssh";
-        key = config.sops.secrets.git-signing-key.path;
+        key = config.sensitive.secrets.secrets."pub/git-ssh-signing-key.key";
         backends.ssh = {
           program = "${pkgs.openssh}/bin/ssh-keygen";
           allowed-signers = config.gipphe.programs.git.settings.gpg.ssh.allowedSignersFile;
@@ -292,12 +292,6 @@ util.mkProgram {
         default = module.config.wrapper;
       };
     };
-    config = {
-      home.packages = [ module.config.wrapper ];
-      sops.secrets."git-ssh-signing-key.pub" = {
-        format = "binary";
-        sopsFile = ../../../secrets/pub-git-ssh-signing-key.pub;
-      };
-    };
+    home.packages = [ module.config.wrapper ];
   };
 }

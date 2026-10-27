@@ -30,9 +30,11 @@ util.mkToggledModule [ "hosts" ] {
       ai.enable = true;
       application.enable = true;
       audio.enable = true;
+      calendar.enable = true;
       cli.enable = true;
       core.enable = true;
       desktop.hyprland.enable = true;
+      email.enable = true;
       fonts.enable = true;
       gaming.enable = true;
       gc.enable = true;
@@ -48,13 +50,8 @@ util.mkToggledModule [ "hosts" ] {
   };
 
   homeManager = {
-    services.syncthing.guiCredentials.passwordFile = config.sops.secrets.cobalt-syncthing-password.path;
-
-    sops.secrets.cobalt-syncthing-password = {
-      sopsFile = ../../secrets/cobalt-syncthing-password.txt;
-      mode = "400";
-      format = "binary";
-    };
+    services.syncthing.guiCredentials.passwordFile =
+      config.sensitive.secrets.secrets."cobalt/syncthing-password.txt";
   };
 
   nixos.imports = lib.optionals (hostname == host.name) (

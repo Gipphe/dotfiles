@@ -5,19 +5,6 @@
   pkgs,
   ...
 }:
-let
-  raw_services = [
-    "github"
-    "gitlab"
-    "codeberg"
-  ];
-  services = map (x: "${x}.ssh") raw_services;
-  mkSecret = service: {
-    sopsFile = ../../../secrets/${config.gipphe.hostName}-${service};
-    mode = "400";
-    format = "binary";
-  };
-in
 util.mkProgram {
   name = "ssh";
 
@@ -44,17 +31,13 @@ util.mkProgram {
               {
                 inherit hostname;
                 user = "git";
-                identityFile = config.sops.secrets."${name}.ssh".path or null;
+                identityFile = config.sensitive.secrets.secrets."${config.gipphe.hostName}/${name}.ssh";
                 addKeysToAgent = "yes";
               }
             )
           );
         };
       };
-
-      sops.secrets = lib.mkIf config.gipphe.environment.secrets.enable (
-        lib.concatMapAttrs (k: v: { ${k} = v; }) (lib.genAttrs services mkSecret)
-      );
     };
   };
 }

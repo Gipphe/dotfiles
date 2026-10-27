@@ -15,16 +15,12 @@ util.mkToggledModule [ "system" ] {
     };
   };
   nixos = {
-    sops.secrets.networkmanager-secrets = {
-      format = "binary";
-      sopsFile = ../../../secrets/pub-networkmanager-secrets.txt;
-    };
     networking = {
       inherit (config.gipphe) hostName;
       networkmanager = {
         enable = true;
         ensureProfiles = {
-          environmentFiles = [ config.sops.secrets.networkmanager-secrets.path ];
+          environmentFiles = [ config.sensitive.secrets.secrets."pub/networkmanager-secrets.txt" ];
           profiles = {
             "GiphtNet" = {
               connection = {

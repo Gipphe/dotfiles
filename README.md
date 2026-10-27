@@ -11,6 +11,8 @@
 
 ## Getting started
 
+See `dotfiles-secrets` for instructions on how to use the private flake.
+
 From NixOS:
 
 ```

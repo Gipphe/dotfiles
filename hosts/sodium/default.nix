@@ -104,16 +104,11 @@ util.mkToggledModule [ "hosts" ] {
     services.openssh.enable = true;
     systemd.services.sshd.wantedBy = lib.mkForce [ "multi-user.target" ];
     users.users.${username} = {
-      hashedPasswordFile = config.sops.secrets."sodium-gipphe-pw.txt".path;
+      hashedPasswordFile = config.sensitive.secrets.secrets."sodium/gipphe-pw.txt";
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMmb8xuUFYGTMjI7OlwLkIlmcfi1cz/SiSB6Bx1Y0KYW gipphe@titanium"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHzghQHh1ZqXhTE2dplVJZPulAvPcaxdSziDotkJBWLs gipphe@boron"
       ];
-    };
-    sops.secrets."sodium-gipphe-pw.txt" = {
-      format = "binary";
-      neededForUsers = true;
-      sopsFile = ../../secrets/sodium-gipphe-pw.txt;
     };
 
     system.stateVersion = "26.05";

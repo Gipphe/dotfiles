@@ -6,12 +6,10 @@
 }:
 util.mkModule {
   homeManager = {
-    sops.secrets.pub-cachix-gipphe-token = {
-      sopsFile = ../../../secrets/pub-cachix-gipphe-token.txt;
-      format = "binary";
-    };
     programs.nushell.environmentVariables = {
-      CACHIX_AUTH_TOKEN = lib.hm.nushell.mkNushellInline "(open ${lib.escapeShellArg config.sops.secrets.pub-cachix-gipphe-token.path} | str trim)";
+      CACHIX_AUTH_TOKEN = lib.hm.nushell.mkNushellInline "(open ${
+        lib.escapeShellArg config.sensitive.secrets.secrets."pub/cachix-gipphe-token.txt"
+      } | str trim)";
     };
   };
   nixos = {

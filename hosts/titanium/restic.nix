@@ -38,7 +38,7 @@ util.mkModule {
       enable = true;
       backups.main = {
         repository = "rclone:filen:/Resource/Restic";
-        passwordFile = config.sops.secrets.restic-password.path;
+        passwordFile = config.sensitive.secrets.secrets."pub/restic-password.txt";
         inhibitsSleep = true;
         paths = [ config.gipphe.gaming.minecraft.servers.dataDir ] ++ homePaths ++ configPaths ++ dataPaths;
         exclude = steamProtonPaths ++ [
@@ -67,28 +67,10 @@ util.mkModule {
       remotes.filen = {
         config.type = "filen";
         secrets = {
-          email = config.sops.secrets.filen-email.path;
-          password = config.sops.secrets.filen-password.path;
-          api_key = config.sops.secrets.filen-api-key.path;
+          email = config.sensitive.secrets.secrets."pub/filen-email.txt";
+          password = config.sensitive.secrets.secrets."pub/filen-password.txt";
+          api_key = config.sensitive.secrets.secrets."pub/filen-api-key.txt";
         };
-      };
-    };
-    sops.secrets = {
-      restic-password = {
-        format = "binary";
-        sopsFile = ../../secrets/pub-restic-password.txt;
-      };
-      filen-email = {
-        format = "binary";
-        sopsFile = ../../secrets/pub-filen-email.txt;
-      };
-      filen-password = {
-        format = "binary";
-        sopsFile = ../../secrets/pub-filen-password.txt;
-      };
-      filen-api-key = {
-        format = "binary";
-        sopsFile = ../../secrets/pub-filen-api-key.txt;
       };
     };
   };
