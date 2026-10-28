@@ -29,7 +29,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    secrets.url = "github:Gipphe/dotfiles-secrets";
+    secrets = {
+      url = "github:Gipphe/dotfiles-secrets";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    flaketilities = {
+      url = "github:Gipphe/flaketilities";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     disko = {
       url = "github:nix-community/disko/latest";

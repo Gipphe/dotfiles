@@ -1,9 +1,9 @@
 { self, inputs, ... }:
 {
-  perSystem = { pkgs, ... }: {
+  perSystem = { pkgs, system, ... }: {
     packages =
       let
-        util = pkgs.callPackage ../../util.nix { };
+        util = inputs.flaketilities.lib.${system};
       in
       {
         md-fastfetch = pkgs.callPackage ./md-fastfetch.nix {
