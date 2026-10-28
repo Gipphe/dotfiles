@@ -11,7 +11,6 @@
   nix-tree,
   nixfmt,
   nvd,
-  sops,
 
   sopsSecrets,
 }:
@@ -26,7 +25,7 @@ let
           nh
           nvd
         ];
-        runtimeEnv.CACHIX_TOKEN_FILE_PATH = sopsSecrets.pub-cachix-gipphe-token.path;
+        runtimeEnv.CACHIX_TOKEN_FILE_PATH = sopsSecrets."pub/cachix-gipphe-token.txt".path;
         text = /* nu */ ''
           use ${./.}/build.nu
           def --wrapped main [...args]: nothing -> nothing {
@@ -213,7 +212,6 @@ mkShell' {
     comma
     nix-tree
     nixfmt # nix formatter
-    sops
     jujutsu
     nh
   ];

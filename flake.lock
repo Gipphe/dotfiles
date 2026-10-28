@@ -485,6 +485,27 @@
         "type": "github"
       }
     },
+    "flaketilities": {
+      "inputs": {
+        "nixpkgs": [
+          "secrets",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793174819,
+        "narHash": "sha256-CCN5CLpBLzydPp3bS3lJEjFZrKJwP5olnMrZCPZktcM=",
+        "owner": "Gipphe",
+        "repo": "flaketilities",
+        "rev": "01c6b9202a1441e6f2eb59a4da65d9c5e85846e0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Gipphe",
+        "repo": "flaketilities",
+        "type": "github"
+      }
+    },
     "fromYaml": {
       "flake": false,
       "locked": {
@@ -1833,6 +1854,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_10": {
+      "locked": {
+        "lastModified": 1792773339,
+        "narHash": "sha256-rZLrzrC6i+jnTAlvPZHogKDulY7WWDEv9hJeHieO7Zw=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "3ec636362e1816bc2f0888fa0fa2c69f1bc9e504",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1788179007,
@@ -2202,7 +2239,7 @@
         "noctalia-official-plugins": "noctalia-official-plugins",
         "nu_scripts": "nu_scripts",
         "pyproject-nix": "pyproject-nix",
-        "sops-nix": "sops-nix",
+        "secrets": "secrets",
         "stylix": "stylix",
         "treefmt-nix": "treefmt-nix",
         "tricorder": "tricorder",
@@ -2247,9 +2284,30 @@
         "type": "github"
       }
     },
+    "secrets": {
+      "inputs": {
+        "flaketilities": "flaketilities",
+        "nixpkgs": "nixpkgs_10",
+        "sops-nix": "sops-nix"
+      },
+      "locked": {
+        "lastModified": 1793176795,
+        "narHash": "sha256-jj34Q08zOPZvMXVF3woM8u3US8QurBj0jt0oLkW//bE=",
+        "owner": "Gipphe",
+        "repo": "dotfiles-secrets",
+        "rev": "4bfecd92ecbf0398970d1eac1d9c38e7d6cd9828",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Gipphe",
+        "repo": "dotfiles-secrets",
+        "type": "github"
+      }
+    },
     "sops-nix": {
       "inputs": {
         "nixpkgs": [
+          "secrets",
           "nixpkgs"
         ]
       },

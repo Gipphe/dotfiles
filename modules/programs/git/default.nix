@@ -35,7 +35,7 @@ let
         user = {
           name = "Victor Nascimento Bakke";
           email = "2266817+Gipphe@users.noreply.github.com";
-          signingKey = config.sops.secrets.git-signing-key.path;
+          signingKey = config.sensitive.secrets.secrets."pub/git-ssh-signing-key.key";
         };
         commit.gpgSign = true;
         tag.gpgSign = true;
@@ -142,11 +142,6 @@ util.mkProgram {
       };
 
       home.packages = [ module.config.wrapper ];
-
-      sops.secrets.git-signing-key = {
-        sopsFile = ../../../secrets/pub-git-ssh-signing-key.key;
-        format = "binary";
-      };
     };
   };
 }

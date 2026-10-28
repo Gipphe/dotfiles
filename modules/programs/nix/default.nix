@@ -28,10 +28,6 @@ util.mkModule {
   ];
 
   nixos.config = lib.mkIf config.gipphe.programs.nix.enable {
-    sops.secrets.nix-github-api-access-config = {
-      format = "binary";
-      sopsFile = ../../../secrets/pub-nix-github-api-token-config.txt;
-    };
     nix = lib.mkMerge [
       nix
       {
@@ -78,7 +74,7 @@ util.mkModule {
         };
 
         extraOptions = ''
-          !include ${config.sops.secrets.nix-github-api-access-config.path}
+          !include ${config.sensitive.secrets.secrets."pub/nix-github-api-token-config.txt"}
         '';
       }
     ];

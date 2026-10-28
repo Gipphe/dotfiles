@@ -36,9 +36,11 @@ util.mkToggledModule [ "hosts" ] {
       ai.enable = true;
       application.enable = true;
       audio.enable = true;
+      calendar.enable = true;
       cli.enable = true;
       core.enable = true;
       desktop.hyprland.enable = true;
+      email.enable = true;
       fonts.enable = true;
       game-dev.enable = true;
       gaming.enable = true;
@@ -124,12 +126,7 @@ util.mkToggledModule [ "hosts" ] {
     services.syncthing = {
       settings.folders."${config.home.homeDirectory}/Documents/Notes".path =
         "/mnt/oldone/Filen/Area/Notes";
-      guiCredentials.passwordFile = config.sops.secrets.titanium-syncthing-password.path;
-    };
-    sops.secrets.titanium-syncthing-password = {
-      sopsFile = ../../secrets/titanium-syncthing-password.txt;
-      mode = "400";
-      format = "binary";
+      guiCredentials.passwordFile = config.sensitive.secrets.secrets."titanium/syncthing-password.txt";
     };
   };
 

@@ -33,9 +33,11 @@ util.mkToggledModule [ "hosts" ] {
       ai.enable = true;
       application.enable = true;
       audio.enable = true;
+      calendar.enable = true;
       cli.enable = true;
       core.enable = true;
       desktop.hyprland.enable = true;
+      email.enable = true;
       fonts.enable = true;
       gaming.enable = true;
       gaming.stream-host.enable = true;
@@ -87,22 +89,12 @@ util.mkToggledModule [ "hosts" ] {
       ssh.settings."sodium.lan" = {
         hostname = "sodium.lan";
         user = "gipphe";
-        identityFile = config.sops.secrets."boron-sodium.ssh".path;
+        identityFile = config.sensitive.secrets.secrets."boron/sodium.ssh";
       };
     };
 
-    sops.secrets."boron-sodium.ssh" = {
-      format = "binary";
-      sopsFile = ../../secrets/boron-sodium.ssh;
-    };
-
-    services.syncthing.guiCredentials.passwordFile = config.sops.secrets.boron-syncthing-password.path;
-
-    sops.secrets.boron-syncthing-password = {
-      sopsFile = ../../secrets/boron-syncthing-password.txt;
-      mode = "400";
-      format = "binary";
-    };
+    services.syncthing.guiCredentials.passwordFile =
+      config.sensitive.secrets.secrets."boron/syncthing-password.txt";
   };
 
   nixos = {

@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       checks: ${{ steps.find-checks.outputs.checks }}
+    env:
+      NIX_CONFIG: "access-tokens = github.com=${{ secrets.DOTFILES_SECRETS_PAT }}"
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: DeterminateSystems/determinate-nix-action@f296148a827001a9a82d3685b53210c06e5d3b67
@@ -36,6 +38,8 @@ jobs:
     strategy:
       matrix:
         include: ${{ fromJson(needs.find-checks.outputs.checks) }}
+    env:
+      NIX_CONFIG: "access-tokens = github.com=${{ secrets.DOTFILES_SECRETS_PAT }}"
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - uses: DeterminateSystems/determinate-nix-action@f296148a827001a9a82d3685b53210c06e5d3b67

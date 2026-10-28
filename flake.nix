@@ -29,6 +29,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    secrets.url = "github:Gipphe/dotfiles-secrets";
+
     disko = {
       url = "github:nix-community/disko/latest";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -79,11 +81,6 @@
     # Do not override its nixpkgs input, it invalidates the cachix cache, and
     # will probably break things.
     hyprland.url = "github:hyprwm/Hyprland";
-
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     nix-index-db = {
       url = "github:Mic92/nix-index-database";
