@@ -23,7 +23,7 @@ let
     hostname: config:
     let
       pkgs = withSystem config.system ({ pkgs, ... }: pkgs);
-      util = pkgs.callPackage ../../util.nix { };
+      util = inputs.flaketilities.lib.${pkgs.stdenv.hostPlatform.system};
     in
     inputs.nix-on-droid.lib.nixOnDroidConfiguration {
       inherit pkgs;

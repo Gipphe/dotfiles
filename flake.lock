@@ -488,6 +488,26 @@
     "flaketilities": {
       "inputs": {
         "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793174819,
+        "narHash": "sha256-CCN5CLpBLzydPp3bS3lJEjFZrKJwP5olnMrZCPZktcM=",
+        "owner": "Gipphe",
+        "repo": "flaketilities",
+        "rev": "01c6b9202a1441e6f2eb59a4da65d9c5e85846e0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Gipphe",
+        "repo": "flaketilities",
+        "type": "github"
+      }
+    },
+    "flaketilities_2": {
+      "inputs": {
+        "nixpkgs": [
           "secrets",
           "nixpkgs"
         ]
@@ -1854,22 +1874,6 @@
         "type": "github"
       }
     },
-    "nixpkgs_10": {
-      "locked": {
-        "lastModified": 1792773339,
-        "narHash": "sha256-rZLrzrC6i+jnTAlvPZHogKDulY7WWDEv9hJeHieO7Zw=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "3ec636362e1816bc2f0888fa0fa2c69f1bc9e504",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1788179007,
@@ -2219,6 +2223,7 @@
         "disko": "disko",
         "dolphin-overlay": "dolphin-overlay",
         "flake-parts": "flake-parts_2",
+        "flaketilities": "flaketilities",
         "giphtvim": "giphtvim",
         "headset-battery-indicator": "headset-battery-indicator",
         "home-manager": "home-manager",
@@ -2286,8 +2291,10 @@
     },
     "secrets": {
       "inputs": {
-        "flaketilities": "flaketilities",
-        "nixpkgs": "nixpkgs_10",
+        "flaketilities": "flaketilities_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
         "sops-nix": "sops-nix"
       },
       "locked": {
