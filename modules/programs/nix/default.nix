@@ -14,20 +14,18 @@ let
     # This will additionally add your inputs to the system's legacy channels
     # Making legacy nix commands consistent as well, awesome!
     settings.nix-path = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
-    settings.deprecated-features = [
-      "or-as-identifier"
-      "broken-string-escape"
-    ];
   };
 in
-util.mkModule {
-  options.gipphe.programs.nix.enable = lib.mkEnableOption "nix";
+util.mkProgram {
+  name = "nix";
+
   shared.imports = [
-    ./nix-gc
+    ./gc.nix
     ./cache.nix
+    ./determinate.nix
   ];
 
-  nixos.config = lib.mkIf config.gipphe.programs.nix.enable {
+  nixos.config = {
     nix = lib.mkMerge [
       nix
       {
