@@ -62,15 +62,18 @@ util.mkToggledModule [ "hosts" ] {
       zen-browser.video.enable = true;
     };
     hardware = {
-      gpu.nvidia.rtx3070.enable = true;
-      peripheral.logitech = {
-        a50gen5.enable = true;
-        g502x.enable = true;
-        g915.enable = true;
-      };
-      peripheral.xbox.one.controller.enable = true;
       cpu.intel.comet-lake.enable = true;
+      gpu.nvidia.rtx3070.enable = true;
       disk.enable = true;
+      motherboard.gigabyte.z490.enable = true;
+      peripheral = {
+        logitech = {
+          a50gen5.enable = true;
+          g502x.enable = true;
+          g915.enable = true;
+        };
+        xbox.one.controller.enable = true;
+      };
     };
     gaming.minecraft.servers = {
       enable = true;
