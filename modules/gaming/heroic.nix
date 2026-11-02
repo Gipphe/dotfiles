@@ -1,7 +1,7 @@
-{ util, pkgs, ... }:
-util.mkGaming {
-  name = "heroic";
-  homeManager = {
-    home.packages = [ pkgs.heroic ];
-  };
+{
+  den.aspects.gaming.heroic.homeManager =
+    { pkgs, ... }:
+    {
+      home.packages = [ pkgs.heroic ];
+    };
 }

@@ -1,11 +1,4 @@
 {
-  util,
-  config,
-  lib,
-  ...
-}:
-util.mkModule {
-  homeManager.config = lib.mkIf config.gipphe.programs.claude-code.enable {
-    gipphe.programs.claude-code.skills.show-me-your-work = ./.;
-  };
+  den.aspects.programs.claude-code.skills.show-me-your-work.homeManager.home.file.".claude/skills/show-me-your-work".source =
+    ./.;
 }

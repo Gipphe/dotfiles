@@ -1,57 +1,55 @@
-{
-  flags,
-  lib,
-  config,
-  pkgs,
-  util,
-  ...
-}:
-util.mkModule {
-  shared.imports = [
-    ./fontconfig
-    ./wm.nix
+{ den, lib, ... }: {
+  den.schema.host.imports = [
+    {
+      options.settings = lib.mkOption {
+        type = import ./_settings-type.nix { inherit den lib; };
+        default = { };
+        description = "Per-aspect typed settings";
+      };
+    }
   ];
 
-  options.gipphe.core.xdg = {
-    stateDir = lib.mkOption {
-      type = lib.types.path;
-      description = "Path to XDG_STATE_DIRS directory for own state";
-      default = "${config.xdg.stateHome}/gipphe";
+  den.schema.user = { user, lib, ... }: {
+    imports = [
+      {
+        options.settings = lib.mkOption {
+          type = import ./_settings-type.nix { inherit den lib; };
+          default = { };
+          description = "Per-aspect typed settings";
+        };
+      }
+    ];
+    options.homeDirectory = lib.mkOption {
+      description = "Path to home directory for the user";
+      type = lib.types.str;
+      default = "/home/${user.userName}";
     };
-    configDir = lib.mkOption {
-      type = lib.types.path;
-      description = "Path to XDG_CONFIG_DIRS directory for own config";
-      default = "${config.xdg.configHome}/gipphe";
-    };
-    shareDir = lib.mkOption {
-      type = lib.types.path;
-      description = "Path to XDG_SHARE_DIRS directory for own shared files";
-      default = "${config.xdg.shareHome}/gipphe";
-    };
+    config.isStrict = true;
+    config.includes = [ den.batteries.host-aspects ];
   };
+  den.schema.host.isStrict = true;
+  den.schema.home.isStrict = true;
+  den.reservedKeys = [ "settings" ];
+  den.aspects.core = {
+    # options.gipphe.core.xdg = {
+    #   stateDir = lib.mkOption {
+    #     type = lib.types.path;
+    #     description = "Path to XDG_STATE_DIRS directory for own state";
+    #     default = "${config.xdg.stateHome}/gipphe";
+    #   };
+    #   configDir = lib.mkOption {
+    #     type = lib.types.path;
+    #     description = "Path to XDG_CONFIG_DIRS directory for own config";
+    #     default = "${config.xdg.configHome}/gipphe";
+    #   };
+    #   shareDir = lib.mkOption {
+    #     type = lib.types.path;
+    #     description = "Path to XDG_SHARE_DIRS directory for own shared files";
+    #     default = "${config.xdg.shareHome}/gipphe";
+    #   };
+    # };
 
-  homeManager = {
-    home = {
-      inherit (config.gipphe) username homeDirectory;
-      # NO TOUCHY!
-      stateVersion = "23.11";
-      sessionVariables = {
-        NH_FLAKE = "${config.home.homeDirectory}/projects/dotfiles";
-        # Help dynamically linked libraries and other libraries depending upon the
-        # c++ stdenv find their stuff
-        # This broke Hyprland in commit af855fa, and the root cause was found
-        # and resolved in 41d13c6.
-        # LD_LIBRARY_PATH = "${pkgs.stdenv.cc.cc.lib}/lib";
-      };
-      packages = lib.optionals (!flags.isNixOnDroid) [ pkgs.xdg-utils ];
-    };
-
-    # Manage home-manager executable
-    programs.home-manager.enable = true;
-  };
-
-  nixos = {
-    config = {
+    nixos = { lib, ... }: {
       documentation.dev.enable = false;
 
       # Auto-upgrading with nixos-unstable is risky
@@ -65,10 +63,10 @@ util.mkModule {
       # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
       system.stateVersion = lib.mkDefault "23.11"; # Did you read the comment?
     };
-  };
 
-  nixOnDroid = {
-    # Read the changelog before changing this value
-    system.stateVersion = "24.05";
+    nixOnDroid = {
+      # Read the changelog before changing this value
+      system.stateVersion = "24.05";
+    };
   };
 }

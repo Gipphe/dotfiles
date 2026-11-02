@@ -1,57 +1,44 @@
+{ lib, ... }:
 {
-  config,
-  util,
-  lib,
-  pkgs,
-  flags,
-  ...
-}:
-let
-  cfg = config.gipphe.programs.floorp;
-  pkg = config.programs.floorp.finalPackage or config.programs.floorp.package or pkgs.floorp;
+  den.aspects.programs.floorp = {
+    settings.default = lib.mkEnableOption "Floorp as default browser";
+    homeManager =
+      { user }:
+      { config, pkgs, ... }:
+      let
+        pkg = config.programs.floorp.finalPackage or config.programs.floorp.package or pkgs.floorp;
 
-  base = {
-    programs.floorp = lib.mkIf (pkgs.stdenv.hostPlatform.isLinux && !flags.isNixOnDroid) {
-      enable = true;
-      nativeMessagingHosts = [ pkgs.tridactyl-native ];
-      policies = {
-        DisableTelemetry = true;
-        DNSOverHTTPS = {
-          ProviderURL = "https://dns.quad9.net/dns-query";
-          Fallback = false;
+        base = {
+          programs.floorp = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+            enable = true;
+            nativeMessagingHosts = [ pkgs.tridactyl-native ];
+            policies = {
+              DisableTelemetry = true;
+              DNSOverHTTPS = {
+                ProviderURL = "https://dns.quad9.net/dns-query";
+                Fallback = false;
+              };
+              OfferToSaveLogins = false;
+              PasswordManagerEnabled = false;
+            };
+          };
+          stylix.targets.floorp.profileNames = [ "default" ];
         };
-        OfferToSaveLogins = false;
-        PasswordManagerEnabled = false;
+
+        defaultConf = {
+          home.sessionVariables = {
+            BROWSER = lib.getExe' pkg "floorp";
+            DEFAULT_BROWSER = lib.getExe' pkg "floorp";
+          };
+          gipphe.core.wm.bind."SUPER + B".action.spawn = lib.getExe' pkg "floorp";
+          xdg.mimeApps.defaultApplicationPackages = [ pkg ];
+        };
+      in
+      {
+        config = lib.mkMerge [
+          base
+          (lib.mkIf user.settings.programs.floorp.default defaultConf)
+        ];
       };
-    };
-    stylix.targets.floorp.profileNames = [ "default" ];
-  };
-
-  defaultConf = lib.mkIf cfg.default {
-    home.sessionVariables = {
-      BROWSER = lib.getExe' pkg "floorp";
-      DEFAULT_BROWSER = lib.getExe' pkg "floorp";
-    };
-    gipphe.core.wm.bind = lib.mkIf cfg.default {
-      "SUPER + B".action.spawn = lib.getExe' pkg "floorp";
-    };
-    xdg.mimeApps.defaultApplicationPackages = [ pkg ];
-  };
-
-in
-util.mkProgram {
-  name = "floorp";
-  options.gipphe.programs.floorp = {
-    default = lib.mkEnableOption "Floorp as default browser";
-  };
-  homeManager = {
-    imports = [
-      ./extensions.nix
-      ./profile
-    ];
-    config = lib.mkMerge [
-      base
-      defaultConf
-    ];
   };
 }

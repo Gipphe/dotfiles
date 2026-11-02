@@ -1,23 +1,19 @@
 {
-  util,
-  config,
-  lib,
-  ...
-}:
-util.mkModule {
-  homeManager = {
-    programs.nushell.environmentVariables = {
-      CACHIX_AUTH_TOKEN = lib.hm.nushell.mkNushellInline "(open ${
-        lib.escapeShellArg config.sensitive.secrets.secrets."pub/cachix-gipphe-token.txt"
-      } | str trim)";
+  den.aspects.programs.nix = {
+    homeManager = { lib, config, ... }: {
+      programs.nushell.environmentVariables = {
+        CACHIX_AUTH_TOKEN = lib.hm.nushell.mkNushellInline "(open ${
+          lib.escapeShellArg config.sensitive.secrets.secrets."pub/cachix-gipphe-token.txt"
+        } | str trim)";
+      };
     };
-  };
-  nixos = {
-    nix.settings = {
-      trusted-substituters = [ "https://gipphe.cachix.org" ];
-      trusted-public-keys = [
-        "gipphe.cachix.org-1:GeHkB5yyMQkXYCPJ1FqFl8fbtDe6/aSmS9k8c57GetY="
-      ];
+    nixos = {
+      nix.settings = {
+        trusted-substituters = [ "https://gipphe.cachix.org" ];
+        trusted-public-keys = [
+          "gipphe.cachix.org-1:GeHkB5yyMQkXYCPJ1FqFl8fbtDe6/aSmS9k8c57GetY="
+        ];
+      };
     };
   };
 }

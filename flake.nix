@@ -1,15 +1,7 @@
 {
   description = "Home Manager configuration of gipphe";
 
-  outputs =
-    { flake-parts, nixpkgs, ... }@inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [
-        "aarch64-linux"
-        "x86_64-linux"
-      ];
-      imports = [ ./flake-module.nix ];
-    };
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -28,6 +20,9 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    import-tree.url = "github:denful/import-tree";
+    den.url = "github:denful/den";
 
     secrets = {
       url = "github:Gipphe/dotfiles-secrets";
