@@ -18,6 +18,7 @@
         };
         jagex-launcher = pkgs.callPackage ./_packages/jagex-launcher.nix { };
         openmouse-bridge = pkgs.callPackage ./_packages/openmouse-bridge.nix { };
+        videoduplicatefinder = pkgs.callPackage ./_packages/videoduplicatefinder { };
       }
       // (
         let
