@@ -13,6 +13,10 @@
         permittedInsecurePackages = [
           "electron-39.8.10"
         ];
+
+        problems.handlers = {
+          "gtk+".broken = "warn"; # or "ignore"
+        };
       };
     };
   };
