@@ -17,6 +17,7 @@
             ;
         };
         jagex-launcher = pkgs.callPackage ./jagex-launcher.nix { };
+        openmouse-bridge = pkgs.callPackage ./openmouse-bridge.nix { };
       }
       // (
         let
