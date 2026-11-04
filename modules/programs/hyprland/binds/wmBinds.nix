@@ -1,7 +1,5 @@
 {
-  config,
   lib,
-  util,
   ...
 }:
 let
@@ -33,6 +31,8 @@ let
     toDispatch value.action // lib.optionalAttrs (opts != { }) { inherit opts; }
   );
 in
-util.mkModule {
-  shared.gipphe.programs.hyprland.settings.bind = toNiceHyprBindConfig config.gipphe.core.wm.bind;
+{
+  den.aspects.programs.hyprland.homeManager = { config, ... }: {
+    gipphe.programs.hyprland.settings.bind = toNiceHyprBindConfig config.gipphe.core.wm.bind;
+  };
 }

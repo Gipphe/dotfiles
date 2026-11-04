@@ -1,12 +1,6 @@
+{ inputs, ... }:
 {
-  inputs,
-  util,
-  pkgs,
-  ...
-}:
-util.mkToggledModule [ "programs" "noctalia" "plugins" ] {
-  name = "special-workspaces";
-  homeManager = {
+  den.aspects.programs.noctalia.plugins.special-workspaces.homeManager = { pkgs, ... }: {
     programs.noctalia.settings = {
       plugins.enabled = [ "jamesfeeder/special-workspaces" ];
       widget.special-workspaces.type = "jamesfeeder/special-workspaces:special-workspaces";

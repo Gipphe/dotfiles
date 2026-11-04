@@ -1,0 +1,17 @@
+{
+  den.aspects.programs.bat = {
+    homeManager =
+      { pkgs, config, ... }:
+      {
+        home.packages = [
+          (pkgs.writeShellScriptBin "batman" ''
+            ${pkgs.man-db}/bin/man "$@" | ${pkgs.unixtools.col}/bin/col -bx | ${config.programs.bat.package}/bin/bat -l man -p
+          '')
+        ];
+        programs = {
+          bat.enable = true;
+          nushell.settings.abbreviations.cat = "bat";
+        };
+      };
+  };
+}

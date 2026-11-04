@@ -1,21 +1,5 @@
-{
-  config,
-  lib,
-  util,
-  inputs,
-  ...
-}:
-let
-  cfg = config.gipphe.programs.nix.determinate;
-in
-util.mkToggledModule [ "programs" "nix" ] {
-  name = "determinate";
-  options.gipphe.programs.nix.determinate.daemon.settings = lib.mkOption {
-    type = lib.types.attrsOf lib.types.anything;
-    default = { };
-    description = "Configuration for Determinate nixd";
-  };
-  nixos = {
+{ den, inputs, ... }: {
+  den.aspects.programs.nix.determinate.nixos = { host }: { lib, ... }: {
     imports = [ inputs.determinate.nixosModules.default ];
     nix.settings = {
       extra-experimental-features = [ "provenance" ];
@@ -31,12 +15,8 @@ util.mkToggledModule [ "programs" "nix" ] {
       ];
     };
 
-    gipphe.programs.nix.determinate.daemon.settings = {
-      garbageCollector.strategy = lib.mkIf config.gipphe.programs.nh.enable "disabled";
-    };
-
-    environment.etc."determinate/config.json" = lib.mkIf (cfg.daemon.settings != { }) {
-      text = builtins.toJSON cfg.daemon.settings;
+    environment.etc."determinate/config.json".text = builtins.toJSON {
+      garbageCollector.strategy = lib.mkIf (host.hasAspect den.aspects.programs.nh.gc) "disabled";
     };
   };
 }

@@ -1,11 +1,4 @@
 {
-  util,
-  lib,
-  config,
-  ...
-}:
-util.mkModule {
-  homeManager.config = lib.mkIf config.gipphe.programs.claude-code.enable {
-    gipphe.programs.claude-code.skills.wayfinder = ./.;
-  };
+  den.aspects.programs.claude-code.skills.wayfinder.homeManager.home.file.".claude/skills/wayfinder".source =
+    ./.;
 }

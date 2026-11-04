@@ -1,52 +1,43 @@
 {
-  util,
-  lib,
-  config,
-  ...
-}:
-util.mkModule {
-  homeManager = {
-    imports = [ ./search-engines.nix ];
-    config = lib.mkIf config.gipphe.programs.floorp.enable {
-      programs.floorp.profiles.default = {
-        settings = {
-          "app.normandy.first_run" = false;
-          # Scroll by pressing middle mouse and dragging
-          "general.autoScroll" = true;
-          # Show https prototol
-          "browser.urlbar.trimHttps" = false;
-          # Show url prototol and query params
-          "browser.urlbar.trimURLs" = false;
-          "taskbar.grouping.useprofile" = true;
-          # Allow use of userChrome.css
-          "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-          # Disable kinetic/momentum/inertia when scrolling (especially bad
-          # with touchpad)
-          "apz.gtk.kinetic_scroll.enabled" = false;
-          # Disable warning when entering about:config
-          "browser.aboutConfig.showWarning" = false;
-          # Disable AI chatbot in sidebar
-          "browser.ai.control.sidebarChatBot" = "blocked";
-          # Do not add default bookmarks to bookmarks menu
-          "browser.bookmarks.restore_default_bookmarks" = false;
-          "browser.bookmarks.showMobileBookmarks" = false;
-          # Do not block content
-          "browser.contentblocking.category" = "standard";
-          # Show download panel when starting to download a file
-          "browser.download.panel.shown" = true;
-          # Use new sidebar
-          "sidebar.revamp" = true;
-          # Vertical tabs
-          "sidebar.verticalTabs" = true;
-          # Don't show suggestion to drag tabs to top of tab column to pin them
-          "sidebar.verticalTabs.dragToPinPromo.dismissed" = true;
-          # Allow editing the URL of a tab from its right-click context menu
-          "floorp.tabs.inlineUrlEdit.enabled" = true;
-          # Hover over an unloaded tab to reload it with the reload button that appears
-          "floorp.tabs.hoverReload.enabled" = true;
-          # Tab stacks do not yet support vertical tabs
-          "floorp.tabstacks.enabled" = false;
-        };
+  den.aspects.programs.floorp.homeManager = {
+    programs.floorp.profiles.default = {
+      settings = {
+        "app.normandy.first_run" = false;
+        # Scroll by pressing middle mouse and dragging
+        "general.autoScroll" = true;
+        # Show https prototol
+        "browser.urlbar.trimHttps" = false;
+        # Show url prototol and query params
+        "browser.urlbar.trimURLs" = false;
+        "taskbar.grouping.useprofile" = true;
+        # Allow use of userChrome.css
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        # Disable kinetic/momentum/inertia when scrolling (especially bad
+        # with touchpad)
+        "apz.gtk.kinetic_scroll.enabled" = false;
+        # Disable warning when entering about:config
+        "browser.aboutConfig.showWarning" = false;
+        # Disable AI chatbot in sidebar
+        "browser.ai.control.sidebarChatBot" = "blocked";
+        # Do not add default bookmarks to bookmarks menu
+        "browser.bookmarks.restore_default_bookmarks" = false;
+        "browser.bookmarks.showMobileBookmarks" = false;
+        # Do not block content
+        "browser.contentblocking.category" = "standard";
+        # Show download panel when starting to download a file
+        "browser.download.panel.shown" = true;
+        # Use new sidebar
+        "sidebar.revamp" = true;
+        # Vertical tabs
+        "sidebar.verticalTabs" = true;
+        # Don't show suggestion to drag tabs to top of tab column to pin them
+        "sidebar.verticalTabs.dragToPinPromo.dismissed" = true;
+        # Allow editing the URL of a tab from its right-click context menu
+        "floorp.tabs.inlineUrlEdit.enabled" = true;
+        # Hover over an unloaded tab to reload it with the reload button that appears
+        "floorp.tabs.hoverReload.enabled" = true;
+        # Tab stacks do not yet support vertical tabs
+        "floorp.tabstacks.enabled" = false;
       };
     };
   };

@@ -1,13 +1,7 @@
-{
-  lib,
-  config,
-  inputs,
-  util,
-  ...
-}:
+{ lib, inputs, ... }:
 let
   mb = x: x * 1024 * 1024;
-  nix = {
+  nix = config: {
     # pin the registry to avoid downloading and evaling a new nixpkgs version every time
     registry = lib.mapAttrs (_: v: { flake = v; }) (lib.filterAttrs (x: _: x != "self") inputs);
 
@@ -16,76 +10,70 @@ let
     settings.nix-path = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
   };
 in
-util.mkProgram {
-  name = "nix";
+{
+  den.aspects.programs.nix = {
+    nixos = { config, ... }: {
+      nix = lib.mkMerge [
+        (nix config)
+        {
+          # Disable generating channel-related files and commands
+          channel.enable = false;
+          # Make builds run with low priority so my system stays responsive
+          daemonCPUSchedPolicy = "idle";
+          daemonIOSchedClass = "idle";
+          settings = {
+            min-free = toString (mb 100);
+            max-free = toString (mb 1024);
 
-  shared.imports = [
-    ./gc.nix
-    ./cache.nix
-    ./determinate.nix
-  ];
+            flake-registry = "/etc/nix/registry.json";
+            auto-optimise-store = true;
 
-  nixos.config = {
-    nix = lib.mkMerge [
-      nix
-      {
-        # Disable generating channel-related files and commands
-        channel.enable = false;
-        # Make builds run with low priority so my system stays responsive
-        daemonCPUSchedPolicy = "idle";
-        daemonIOSchedClass = "idle";
-        settings = {
-          min-free = toString (mb 100);
-          max-free = toString (mb 1024);
+            # allow sudo users to mark the following values as trusted
+            allowed-users = [ "@wheel" ];
+            trusted-users = [ "@wheel" ];
+            sandbox = lib.mkDefault true;
+            max-jobs = "auto";
 
-          flake-registry = "/etc/nix/registry.json";
-          auto-optimise-store = true;
+            accept-flake-config = true;
 
-          # allow sudo users to mark the following values as trusted
-          allowed-users = [ "@wheel" ];
-          trusted-users = [ "@wheel" ];
-          sandbox = lib.mkDefault true;
-          max-jobs = "auto";
+            # continue building derivations if one fails
+            # keep-going = true;
+            log-lines = 30;
+            extra-experimental-features = [
+              "flakes"
+              "nix-command"
+            ];
 
-          accept-flake-config = true;
+            # use binary cache, its not gentoo
+            builders-use-substitutes = true;
+            trusted-substituters = [
+              "https://cache.nixos.org"
+              "https://nix-community.cachix.org"
+              "https://nixpkgs-unfree.cachix.org"
+            ];
+            trusted-public-keys = [
+              "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+              "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+              "nixpkgs-unfree.cachix.org-1:hqvoInulhbV4nJ9yJOEr+4wxhDV4xq2d1DK7S6Nj6rs="
+            ];
+          };
 
-          # continue building derivations if one fails
-          # keep-going = true;
-          log-lines = 30;
-          extra-experimental-features = [
-            "flakes"
-            "nix-command"
-          ];
+          extraOptions = ''
+            !include ${config.sensitive.secrets.secrets."pub/nix-github-api-token-config.txt"}
+          '';
+        }
+      ];
+    };
 
-          # use binary cache, its not gentoo
-          builders-use-substitutes = true;
-          trusted-substituters = [
-            "https://cache.nixos.org"
-            "https://nix-community.cachix.org"
-            "https://nixpkgs-unfree.cachix.org"
-          ];
-          trusted-public-keys = [
-            "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-            "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-            "nixpkgs-unfree.cachix.org-1:hqvoInulhbV4nJ9yJOEr+4wxhDV4xq2d1DK7S6Nj6rs="
-          ];
-        };
-
-        extraOptions = ''
-          !include ${config.sensitive.secrets.secrets."pub/nix-github-api-token-config.txt"}
-        '';
-      }
-    ];
-  };
-
-  nixOnDroid = {
-    nix = lib.mkMerge [
-      nix
-      {
-        extraOptions = ''
-          experimental-features = nix-command flakes ca-derivations
-        '';
-      }
-    ];
+    nixOnDroid = { config, ... }: {
+      nix = lib.mkMerge [
+        (nix config)
+        {
+          extraOptions = ''
+            experimental-features = nix-command flakes ca-derivations
+          '';
+        }
+      ];
+    };
   };
 }

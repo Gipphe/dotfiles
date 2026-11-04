@@ -1,0 +1,41 @@
+{ den, ... }:
+{
+  den.aspects.profiles.cli-slim.includes = [
+    den.aspects.programs.atuin
+    den.aspects.programs.bat
+    den.aspects.programs.btop
+    den.aspects.programs.carapace
+    den.aspects.programs.curl
+    den.aspects.programs.direnv
+    den.aspects.programs.dua
+    den.aspects.programs.entr
+    den.aspects.programs.eza
+    den.aspects.programs.fd
+    den.aspects.programs.fx
+    den.aspects.programs.gh
+    den.aspects.programs.giphtvim.base
+    den.aspects.programs.giphtvim.full
+    den.aspects.programs.git
+    den.aspects.programs.glab
+    den.aspects.programs.glow
+    den.aspects.programs.gnugrep
+    den.aspects.programs.gnused
+    den.aspects.programs.gnutar
+    den.aspects.programs.gpg
+    den.aspects.programs.gum
+    den.aspects.programs.jnv
+    den.aspects.programs.jq
+    den.aspects.programs.jujutsu
+    den.aspects.programs.less
+    den.aspects.programs.nh
+    den.aspects.programs.nix-index
+    den.aspects.programs.nushell
+    den.aspects.programs.ripgrep
+    den.aspects.programs.serpl
+    den.aspects.programs.ssh
+    den.aspects.programs.starship
+    den.aspects.programs.yazi
+    den.aspects.programs.zellij
+    den.aspects.programs.zoxide
+  ];
+}

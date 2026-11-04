@@ -1,20 +1,15 @@
 {
-  lib,
-  pkgs,
-  util,
-  ...
-}:
-util.mkProgram {
-  name = "starship";
-  homeManager = {
-    programs.starship = {
-      enable = true;
-      enableTransience = true;
-      settings = import ./preset.nix {
-        inherit lib;
-        inherit (pkgs) jujutsu fetchFromGitHub writeShellScript;
+  den.aspects.programs.starship.homeManager =
+    { lib, pkgs, ... }:
+    {
+      programs.starship = {
+        enable = true;
+        enableTransience = true;
+        settings = import ./_preset.nix {
+          inherit lib;
+          inherit (pkgs) jujutsu fetchFromGitHub writeShellScript;
+        };
       };
+      stylix.targets.starship.enable = false;
     };
-    stylix.targets.starship.enable = false;
-  };
 }

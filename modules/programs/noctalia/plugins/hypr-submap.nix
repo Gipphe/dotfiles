@@ -1,12 +1,6 @@
+{ inputs, ... }:
 {
-  inputs,
-  util,
-  pkgs,
-  ...
-}:
-util.mkToggledModule [ "programs" "noctalia" "plugins" ] {
-  name = "hypr-submap";
-  homeManager = {
+  den.aspects.programs.noctalia.plugins.hypr-submap.homeManager = { pkgs, ... }: {
     programs.noctalia.settings = {
       plugins.enabled = [ "k4n4t4/hypr-submap" ];
       widget.hypr-submap = {

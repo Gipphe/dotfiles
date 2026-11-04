@@ -1,11 +1,4 @@
 {
-  util,
-  config,
-  lib,
-  ...
-}:
-util.mkModule {
-  homeManager.config = lib.mkIf config.gipphe.programs.claude-code.enable {
-    gipphe.programs.claude-code.skills.wait-what = ./.;
-  };
+  den.aspects.programs.claude-code.skills.wait-what.homeManager.home.file.".claude/skills/wait-what".source =
+    ./.;
 }

@@ -1,30 +1,22 @@
+{ inputs, lib, ... }:
 {
-  lib,
-  util,
-  inputs,
-  config,
-  ...
-}:
-let
-  cfg = config.gipphe.gaming.minecraft.servers;
-in
-util.mkToggledModule [ "gaming" "minecraft" ] {
-  name = "servers";
-  options.gipphe.gaming.minecraft.servers.dataDir = lib.mkOption {
-    type = lib.types.str;
-    default = "/srv/minecraft";
-    description = "Location to store server data";
-  };
-  shared.imports = [
-    ./worlds/poketards.nix
-  ];
-  nixos = {
-    imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
-    services.minecraft-servers = {
-      enable = true;
-      eula = true;
-      dataDir = cfg.dataDir;
+  den.aspects.gaming.minecraft.servers = {
+    settings.dataDir = lib.mkOption {
+      type = lib.types.str;
+      default = "/srv/minecraft";
+      description = "Location to store server data";
     };
-    users.users.${config.gipphe.username}.extraGroups = [ config.services.minecraft-servers.group ];
+    nixos =
+      { user, host }:
+      { config, ... }:
+      {
+        imports = [ inputs.nix-minecraft.nixosModules.minecraft-servers ];
+        services.minecraft-servers = {
+          enable = true;
+          eula = true;
+          dataDir = host.settings.gaming.minecraft.servers.dataDir;
+        };
+        users.users.${user.userName}.extraGroups = [ config.services.minecraft-servers.group ];
+      };
   };
 }

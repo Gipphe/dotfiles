@@ -1,11 +1,4 @@
 {
-  util,
-  config,
-  lib,
-  ...
-}:
-util.mkModule {
-  homeManager.config = lib.mkIf config.gipphe.programs.claude-code.enable {
-    gipphe.programs.claude-code.skills.grilling = ./.;
-  };
+  den.aspects.programs.claude-code.skills.grilling.homeManager.home.file.".claude/skills/grilling".source =
+    ./.;
 }

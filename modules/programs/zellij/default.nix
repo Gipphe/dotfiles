@@ -1,8 +1,7 @@
-{ inputs, util, ... }:
-util.mkProgram {
-  name = "zellij";
-  homeManager = {
-    imports = [ ./config.nix ];
+{ inputs, ... }:
+{
+  den.aspects.programs.zellij.homeManager = {
+    imports = [ ./_config.nix ];
     programs = {
       zellij.enable = true;
       nushell.settings.abbreviations = {

@@ -1,4 +1,3 @@
-{ util, ... }:
 let
   env = {
     # Cursor
@@ -28,8 +27,8 @@ let
     OZONE_PLATFORM = "wayland";
   };
 in
-util.mkModule {
-  homeManager = {
+{
+  den.aspects.programs.hyprland.homeManager = {
     wayland.windowManager.hyprland.settings = {
       env = map (n: {
         _args = [

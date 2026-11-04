@@ -1,13 +1,6 @@
 {
-  lib,
-  config,
-  util,
-  pkgs,
-  ...
-}:
-util.mkModule {
-  homeManager.programs.floorp.profiles.default = lib.mkIf config.gipphe.programs.floorp.enable {
-    search = {
+  den.aspects.programs.floorp.homeManager = { pkgs, ... }: {
+    programs.floorp.profiles.default.search = {
       default = "startpage";
       force = true;
       engines = {

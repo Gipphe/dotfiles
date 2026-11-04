@@ -1,11 +1,4 @@
 {
-  util,
-  lib,
-  config,
-  ...
-}:
-util.mkModule {
-  homeManager.config = lib.mkIf config.gipphe.programs.claude-code.enable {
-    gipphe.programs.claude-code.skills.blast-radius = ./.;
-  };
+  den.aspects.programs.claude-code.skills.blast-radius.homeManager.home.file.".claude/skills/blast-radius".source =
+    ./.;
 }
