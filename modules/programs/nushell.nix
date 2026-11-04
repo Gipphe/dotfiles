@@ -44,6 +44,5 @@
           };
         };
       };
-      stylix.targets.nushell.enable = false;
     };
 }

@@ -9,7 +9,7 @@
           accordion = false;
           accordion_direction = "end";
           enabled = true;
-          fill = "surface_variant";
+          fill = "surface_container";
           id = "g1";
           members = [
             "cpu"
@@ -26,7 +26,7 @@
           accordion = false;
           accordion_direction = "end";
           enabled = true;
-          fill = "surface_variant";
+          fill = "surface_container";
           id = "g2";
           members = [
             "widget"
@@ -40,6 +40,7 @@
       ];
       center = [ "taskbar" ];
       end = [
+        "audio_visualizer"
         "group:g2"
         "tray"
         "spacer_2"
@@ -63,6 +64,16 @@
         "media"
       ];
     };
+  };
+  control_center = {
+    shortcuts = [
+      { type = "wifi"; }
+      { type = "bluetooth"; }
+      { type = "caffeine"; }
+      { type = "notification"; }
+      { type = "power_profile"; }
+      { type = "alexander/screen-toolkit:toggle"; }
+    ];
   };
   dock = {
     cross_axis_padding = 2;
@@ -126,7 +137,7 @@
           show_unlock_hint = true;
           show_weather = true;
           center_password_text = false;
-          background_color = "surface_variant";
+          background_color = "surface_container";
           background_opacity = 0.88;
           background_radius = 12;
           input_opacity = 1;
@@ -153,7 +164,7 @@
           show_unlock_hint = true;
           show_weather = true;
           center_password_text = false;
-          background_color = "surface_variant";
+          background_color = "surface_container";
           background_opacity = 0.88;
           background_radius = 12;
           input_opacity = 1;
@@ -172,7 +183,7 @@
         placement_width = 1920;
         rotation = 0;
         settings = {
-          background_color = "surface_variant";
+          background_color = "surface_container";
           background_opacity = 0.88;
           background_radius = 12;
           center_password_text = false;
@@ -214,7 +225,7 @@
     builtin = "Catppuccin";
     custom_palette = "stylix";
     mode = "dark";
-    source = "custom";
+    source = "builtin";
     templates = {
       builtin_ids = [ ];
     };
@@ -224,6 +235,11 @@
     transition_on_startup = true;
   };
   widget = {
+    audio_visualizer = {
+      centered = false;
+      color_2 = "secondary";
+      mirrored = false;
+    };
     battery = {
       display_mode = "graphic";
       show_label = false;
@@ -241,6 +257,11 @@
     };
     media = {
       title_scroll = "on_hover";
+      artist_first = true;
+      capsule = true;
+      hide_when_no_media = true;
+      rotate_album_art = true;
+      show_progress = true;
     };
     network = {
       show_label = false;

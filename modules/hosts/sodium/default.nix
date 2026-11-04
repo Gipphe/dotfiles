@@ -35,10 +35,6 @@
       den.aspects.programs.zoxide
     ];
 
-    homeManager = {
-      imports = [ inputs.stylix.homeModules.stylix ];
-    };
-
     nixos =
       { user }:
       {
@@ -50,7 +46,6 @@
       {
         imports = [
           "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-          inputs.stylix.nixosModules.stylix
         ];
 
         hardware.enableRedistributableFirmware = true;

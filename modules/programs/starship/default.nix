@@ -10,6 +10,5 @@
           inherit (pkgs) jujutsu fetchFromGitHub writeShellScript;
         };
       };
-      stylix.targets.starship.enable = false;
     };
 }

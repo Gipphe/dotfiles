@@ -1,7 +1,20 @@
 {
-  den.aspects.core.fontconfig = {
-    homeManager = {
-      fonts.fontconfig.enable = true;
+  den.aspects.system.fonts = {
+    homeManager = { pkgs, ... }: {
+      fonts.fontconfig = {
+        enable = true;
+        defaultFonts = {
+          monospace = [ "FiraCode Nerd Font Mono" ];
+          sansSerif = [ "Noto Sans" ];
+          serif = [ "Noto Serif" ];
+          emoji = [ "Noto Color Emoji" ];
+        };
+      };
+      home.packages = [
+        pkgs.noto-fonts
+        pkgs.nerd-fonts.fira-code
+        pkgs.noto-fonts-color-emoji
+      ];
     };
 
     termux-font = {

@@ -26,7 +26,6 @@
       den.aspects.profiles.core
       den.aspects.profiles.desktop.hyprland
       den.aspects.profiles.email
-      den.aspects.profiles.fonts
       den.aspects.profiles.gaming
       den.aspects.profiles.gaming.stream.host
       den.aspects.profiles.gc
