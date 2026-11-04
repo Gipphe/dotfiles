@@ -11,7 +11,6 @@
     includes = [
       den.aspects.profiles.android
       den.aspects.profiles.core
-      den.aspects.profiles.fonts
       den.aspects.profiles.secrets
 
       den.aspects.programs.direnv

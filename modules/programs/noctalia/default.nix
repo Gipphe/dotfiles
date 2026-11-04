@@ -35,9 +35,6 @@
           ];
         };
         home = {
-          file = {
-            "${wallpaperDir}/small-memory.png".source = config.stylix.image;
-          };
           packages = [
             noctalia-copy-gui-settings
             noctalia-diff-settings
@@ -47,7 +44,6 @@
           "SUPER + space".action.spawn = "${ipc} panel-toggle launcher";
           "SUPER + C".action.spawn = "${ipc} panel-toggle clipboard";
         };
-        stylix.targets.noctalia.enable = false;
       };
     nixos = { lib, ... }: {
       networking.networkmanager.enable = true;

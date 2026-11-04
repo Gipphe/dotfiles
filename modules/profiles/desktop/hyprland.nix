@@ -3,7 +3,6 @@
   den.aspects.profiles.desktop.hyprland.includes = [
     den.aspects.system.xdg
 
-    den.aspects.programs.gtk
     den.aspects.programs.hyprland
     den.aspects.programs.hyprpolkitagent
     # Try noctalia's idle daemon

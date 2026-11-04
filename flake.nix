@@ -97,11 +97,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Do not override its nixpkgs input, it invalidates the cachix cache, and
     # will probably break things.
     noctalia.url = "github:noctalia-dev/noctalia/cachix";
@@ -142,6 +137,11 @@
     # TODO: Remove once Logseq is properly renamed and split.
     # See https://github.com/NixOS/nixpkgs/pull/516682
     nixpkgs-logseq-og.url = "github:nixos/nixpkgs/ec0c722e017dfccbb2f66a8aafbe003320266d33";
+
+    catppuccin = {
+      url = "github:catppuccin/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   nixConfig = {
@@ -159,6 +159,7 @@
       "https://nix-gaming.cachix.org"
       "https://nixpkgs-unfree.cachix.org"
       "https://noctalia.cachix.org"
+      "https://catppuccin.cachix.org"
       "https://tweag-tricorder.cachix.org"
     ];
     extra-trusted-public-keys = [
@@ -173,6 +174,7 @@
       # "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
+      "catppuccin.cachix.org-1:noG/4HkbhJb+lUAdKrph6LaozJvAeEEZj4N732IysmU="
       "nixpkgs-unfree.cachix.org-1:hqvoInulhbV4nJ9yJOEr+4wxhDV4xq2d1DK7S6Nj6rs="
       "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
       "tweag-tricorder.cachix.org-1:PbwYPJ9gF8Wns14ai0sHK3iblqFd5YUrj0zEzGsJ/wg="

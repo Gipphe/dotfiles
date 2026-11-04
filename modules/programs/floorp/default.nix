@@ -22,7 +22,6 @@
               PasswordManagerEnabled = false;
             };
           };
-          stylix.targets.floorp.profileNames = [ "default" ];
         };
 
         defaultConf = {
@@ -38,6 +37,9 @@
         config = lib.mkMerge [
           base
           (lib.mkIf user.settings.programs.floorp.default defaultConf)
+          {
+            catppuccin.floorp.enable = false;
+          }
         ];
       };
   };

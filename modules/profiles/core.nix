@@ -10,6 +10,8 @@
   den.aspects.profiles.core.includes = [
     den.aspects.core
     den.aspects.core.wm
+    den.aspects.system.cursor
+    den.aspects.system.fonts
     den.aspects.programs.nix
     den.aspects.programs.nix.determinate
     den.aspects.system.home-manager
