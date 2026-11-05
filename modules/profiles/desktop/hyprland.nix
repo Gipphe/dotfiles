@@ -36,6 +36,7 @@
 
     den.aspects.programs.grimblast
     den.aspects.programs.noctalia
+    den.aspects.programs.variety
     den.aspects.programs.wezterm
   ];
 }
