@@ -22,7 +22,7 @@
 
       sources = [
         "True|favorites|The Favorites folder"
-        "True|wallhaven|https://wallhaven.cc/search?categories=100&purity=100&atleast=2560x1440&ratios=landscape&sorting=toplist&topRange=1M"
+        "True|wallhaven|https://wallhaven.cc/search?categories=100&purity=100&atleast=1920x1080&ratios=landscape&sorting=toplist&topRange=1M"
         "True|unsplash|Unsplash"
         "True|bing|Bing"
         "False|apod|NASA's Astronomy Picture of the Day"
