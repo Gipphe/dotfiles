@@ -54,8 +54,6 @@
       flake = false;
     };
 
-    determinate.url = "github:DeterminateSystems/determinate";
-
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -154,7 +152,6 @@
       "https://comfyui.cachix.org"
       "https://gipphe.cachix.org"
       "https://hyprland.cachix.org"
-      "https://install.determinate.systems"
       "https://nix-community.cachix.org"
       "https://nix-gaming.cachix.org"
       "https://nixpkgs-unfree.cachix.org"
@@ -163,7 +160,6 @@
       "https://tweag-tricorder.cachix.org"
     ];
     extra-trusted-public-keys = [
-      "cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM="
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "comfyui.cachix.org-1:33mf9VzoIjzVbp0zwj+fT51HG0y31ZTK3nzYZAX0rec="
       "gipphe.cachix.org-1:GeHkB5yyMQkXYCPJ1FqFl8fbtDe6/aSmS9k8c57GetY="
