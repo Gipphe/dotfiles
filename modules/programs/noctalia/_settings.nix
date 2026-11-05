@@ -233,6 +233,10 @@
   wallpaper = {
     directory = "/home/gipphe/Pictures/wallpapers";
     transition_on_startup = true;
+    automation = {
+      enabled = true;
+      recursive = true;
+    };
   };
   widget = {
     audio_visualizer = {
