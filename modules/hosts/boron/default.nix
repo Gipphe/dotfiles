@@ -36,6 +36,7 @@
       den.aspects.profiles.sync
       den.aspects.profiles.systemd
       den.aspects.profiles.torrent
+      den.aspects.profiles.tweag
 
       den.aspects.programs.pipewire.higher-quantum
       den.aspects.system.cpu
