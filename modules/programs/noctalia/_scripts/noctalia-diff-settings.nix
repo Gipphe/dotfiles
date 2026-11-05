@@ -1,26 +1,28 @@
 {
-  writeShellApplication,
-  colordiff,
-  json-diff,
-  jq,
-  yq-go,
+  writeNushellApplication,
   nix,
+  fastgron,
   noctalia,
+  colordiff,
 }:
-writeShellApplication {
+writeNushellApplication {
   name = "noctalia-diff-settings";
   runtimeInputs = [
-    colordiff
-    json-diff
-    jq
     nix
-    yq-go
     noctalia
+    colordiff
+    fastgron
   ];
-  text = /* bash */ ''
-    json-diff \
-      <(nix eval --json /home/gipphe/projects/dotfiles#nixosConfigurations.titanium.config.home-manager.users.gipphe.programs.noctalia.settings | jq -S .) \
-      <(noctalia config export | yq -p toml -o json | jq -S .) \
-      | colordiff --nobanner
+  text = /* nu */ ''
+    let old = mktemp
+    let new = mktemp
+    nix eval --json /home/gipphe/projects/dotfiles#nixosConfigurations.titanium.config.home-manager.users.gipphe.programs.noctalia.settings | fastgron - | save -f $old
+    noctalia config export 
+    | from toml 
+    | to json 
+    | fastgron -
+    | save -f $new
+
+    colordiff --nobanner $old $new
   '';
 }
