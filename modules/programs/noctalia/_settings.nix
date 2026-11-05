@@ -242,7 +242,7 @@
     };
     battery = {
       display_mode = "graphic";
-      show_label = false;
+      show_label = true;
     };
     brightness = {
       show_label = false;
