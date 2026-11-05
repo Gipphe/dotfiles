@@ -13,18 +13,6 @@
               "titanium"
             ];
           };
-          "${user.homeDirectory}/logseq/graphs" = {
-            id = "logseq-graphs";
-            label = "Logseq graphs";
-            devices = [
-              "argon"
-              "carbon"
-              "cobalt"
-              "helium"
-              "titanium"
-              "boron"
-            ];
-          };
           "${user.homeDirectory}/Documents/Notes" = {
             id = "notes";
             label = "Notes";
