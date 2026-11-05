@@ -1,6 +1,6 @@
 { inputs, den, ... }: {
   den.aspects.overlays.os.nixpkgs.overlays = [
-    (final: prev: {
+    (_final: prev: {
       inherit (inputs.flaketilities.lib.${prev.stdenv.hostPlatform.system}) writeNushellApplication;
     })
   ];

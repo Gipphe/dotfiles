@@ -1,4 +1,4 @@
-{ pkgs }: {
+{
   Default = "Startpage";
   Add = [
     {

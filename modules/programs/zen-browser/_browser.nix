@@ -50,7 +50,7 @@ let
           ExcludedDomains = [ ];
           Fallback = false;
         };
-        SearchEngines = import ./_search-engines.nix { inherit pkgs; };
+        SearchEngines = import ./_search-engines.nix;
       };
     };
   binaryName = "zen-${name}";

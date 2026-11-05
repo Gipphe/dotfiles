@@ -141,7 +141,10 @@ mkShell' {
       package = writeNushellApplication {
         name = "nix:pr";
         text = /* nu */ ''
-          def main [pr_number: int] {
+          # Check which nixpkgs branches a given PR has been deployed to.
+          def main [
+            pr_number: int # PR to check.
+          ] {
             start $"https://nixpk.gs/pr-tracker.html?pr=($pr_number)"
           }
         '';
@@ -154,13 +157,13 @@ mkShell' {
       command = /* nu */ ''
         (
           nix path-info -rS /run/current-system
-          | lines
-          | each {
-            split column --regex '\s+' path size | get 0
-          }
-          | update size { into filesize }
-          | sort-by --reverse size
-          | explore
+            | lines
+            | each {
+              split column --regex '\s+' path size | get 0
+            }
+            | update size { into filesize }
+            | sort-by --reverse size
+            | explore
         )
       '';
       category = "nix utils";
@@ -173,9 +176,9 @@ mkShell' {
       package = writeNushellApplication {
         name = "lint:nil";
         text = /* nu */ ''
-          (glob --exclude ['**/hardware-configuration.nix', '**/hardware-configuration/*.nix'] **/*.nix
-            | each { , nil diagnostics $in }
-          )
+          for file in (glob --exclude ['**/_hardware-configuration.nix'] **/*.nix) {
+            , nil diagnostics --deny-warnings $file
+          }
         '';
       };
       category = "lint";
@@ -183,14 +186,16 @@ mkShell' {
     {
       help = "Check .nix files with statix";
       name = "lint:statix";
-      command = /* nu */ ", statix check";
+      command = /* nu */ ''
+        , statix check
+      '';
       category = "lint";
     }
     {
       help = "Check .nix files with deadnix";
       name = "lint:deadnix";
       command = /* nu */ ''
-        , deadnix --exclude ./hosts/*/hardware-configuration.nix
+        , deadnix
       '';
       category = "lint";
     }
@@ -207,6 +212,7 @@ mkShell' {
       value = "true";
     }
   ];
+
   packages = [
     cachix
     comma
