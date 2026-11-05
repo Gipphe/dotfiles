@@ -27,6 +27,7 @@
         "True|bing|Bing"
         "False|apod|NASA's Astronomy Picture of the Day"
         "False|earthview|Google Earth View"
+        "True|fetched|The Fetched folder"
       ];
 
       varietyConf = pkgs.writeText "variety.conf" ''
