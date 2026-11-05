@@ -8,7 +8,10 @@
       ...
     }:
     {
-      programs.ssh = {
+      options.gipphe.programs.ssh.package = lib.mkPackageOption pkgs "openssh" { } // {
+        default = config.programs.ssh.package;
+      };
+      config.programs.ssh = {
         enable = true;
         package = pkgs.openssh;
         enableDefaultConfig = false;

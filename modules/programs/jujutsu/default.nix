@@ -139,7 +139,7 @@
                       pkgs.writeNushellApplication {
                         name = "jj-bn";
                         runtimeInputs = [
-                          config.programs.gh.package
+                          config.gipphe.programs.gh.package
                           pkg
                         ];
                         text = /* nu */ ''
@@ -192,7 +192,7 @@
                       name = "jj-pub";
                       runtimeInputs = [
                         config.gipphe.programs.git.package
-                        config.programs.ssh.package
+                        config.gipphe.programs.ssh.package
                         pkg
                       ];
                       text = /* nu */ ''
@@ -264,7 +264,7 @@
                     };
                     inner = pkgs.writeNushellApplication {
                       name = "jj-full_pub-inner";
-                      runtimeInputs = [ config.programs.gh.package ];
+                      runtimeInputs = [ config.gipphe.programs.gh.package ];
                       text = builtins.readFile ./jj-puf-inner.nu;
                     };
                   in
