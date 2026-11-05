@@ -13,7 +13,6 @@
     den.aspects.system.cursor
     den.aspects.system.fonts
     den.aspects.programs.nix
-    den.aspects.programs.nix.determinate
     den.aspects.system.home-manager
     den.aspects.system.user
     den.aspects.system.xdg
