@@ -12,6 +12,8 @@
         openFirewall = true;
         # Let right alt act as super for Nvidia SHIELD.
         settings.key_rightalt_to_key_win = true;
+        # Emulate an Xbox 360 pad instead of auto-selecting the uhid-based Series pad.
+        settings.gamepad = "x360";
         applications = {
           env = {
             PATH = "$(PATH):$(HOME)/.local/bin";
