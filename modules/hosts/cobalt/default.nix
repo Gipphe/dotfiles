@@ -1,21 +1,24 @@
 { den, inputs, ... }:
 {
   den.hosts.x86_64-linux.cobalt = {
+    includes = [ den.batteries.define-user ];
     users.gipphe = { };
   };
-
   den.aspects.cobalt = {
     includes = [
       den.aspects.profiles.nixos.audio
       den.aspects.profiles.nixos.bluetooth
       den.aspects.profiles.nixos.boot
+      den.aspects.profiles.nixos.camera
       den.aspects.profiles.nixos.networking
+      den.aspects.profiles.nixos.printing
       den.aspects.profiles.nixos.power
       den.aspects.profiles.nixos.system
       den.aspects.profiles.nixos.thumbnails
       den.aspects.profiles.nixos.time
+      den.aspects.profiles.nixos.zramswap
 
-      den.aspects.profiles.ai
+      # den.aspects.profiles.ai
       den.aspects.profiles.applications
       den.aspects.profiles.audio
       den.aspects.profiles.calendar
@@ -41,7 +44,7 @@
         config.sensitive.secrets.secrets."cobalt/syncthing-password.txt";
     };
 
-    nixos = {
+    nixos = { user }: {
       imports = [
         ./_hardware-configuration.nix
       ]
@@ -52,6 +55,10 @@
           common-pc-laptop
           common-pc-laptop-ssd
           ;
+      };
+      config = {
+        users.users.${user.userName}.uid = 1000;
+        users.groups.${user.userName}.gid = 990;
       };
     };
   };
