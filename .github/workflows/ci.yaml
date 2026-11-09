@@ -17,7 +17,7 @@ jobs:
       NIX_CONFIG: "access-tokens = github.com=${{ secrets.DOTFILES_SECRETS_PAT }}"
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      - uses: DeterminateSystems/determinate-nix-action@92957199488000b908fdad19f63711000965d8f3
+      - uses: DeterminateSystems/determinate-nix-action@16f94ba7aae399b9f9077c254b6719ec6de7e3e3
       - name: Find checks
         id: find-checks
         run: |
@@ -42,7 +42,7 @@ jobs:
       NIX_CONFIG: "access-tokens = github.com=${{ secrets.DOTFILES_SECRETS_PAT }}"
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-      - uses: DeterminateSystems/determinate-nix-action@92957199488000b908fdad19f63711000965d8f3
+      - uses: DeterminateSystems/determinate-nix-action@16f94ba7aae399b9f9077c254b6719ec6de7e3e3
       - uses: cachix/cachix-action@38b082610b782e7e93e209c35fd730d399dee866
         with:
           name: gipphe
