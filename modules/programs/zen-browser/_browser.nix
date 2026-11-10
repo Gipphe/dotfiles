@@ -86,7 +86,7 @@ let
         cp -L "$out/share/applications/zen.desktop" "./${binaryName}.desktop"
         substituteInPlace "./${binaryName}.desktop" \
           --replace-fail 'zen --name zen %U' '${binaryName} --name ${binaryName} %U' \
-          --replace-fail 'zen --private-window %U' '${binaryName} --private-windoe %U' \
+          --replace-fail 'zen --private-window %U' '${binaryName} --private-window %U' \
           --replace-fail 'zen --new-window %U' '${binaryName} --new-window %U' \
           --replace-fail 'zen --ProfileManager' '${binaryName} --ProfileManager' \
           --replace-fail 'Name=Zen Browser' 'Name=Zen ${name}' \
