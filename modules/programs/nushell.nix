@@ -1,4 +1,4 @@
-{
+{ inputs, ... }: {
   den.quirks.nushell-abbrs.description = "Abbreviations";
   den.aspects.programs.nushell.homeManager =
     {
@@ -24,6 +24,9 @@
 
         nushell = {
           enable = true;
+          # TODO: Remove once nushell 0.117.0 is in nixos-unstable.
+          # See https://nixpk.gs/pr-tracker.html?pr=586153
+          package = inputs.nixpkgs-nushell.legacyPackages.${pkgs.stdenv.hostPlatform.system}.nushell;
           envFile.text = /* nu */ ''
             $env.TRANSIENT_PROMPT_COMMAND = ^starship module character
             $env.TRANSIENT_PROMPT_INDICATOR = ""
@@ -32,6 +35,8 @@
             $env.TRANSIENT_PROMPT_MULTILINE_INDICATOR = ""
             $env.TRANSIENT_PROMPT_COMMAND_RIGHT = ^starship module time
           '';
+          # TODO: Use nushell 0.117.0's new `generate completions` command to
+          # generate completions from carapace and fish completions.
           extraConfig = /* nu */ ''
             use std/dirs
           '';

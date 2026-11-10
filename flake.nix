@@ -9,6 +9,7 @@
     # TODO: Remove this once this issue is resolved:
     # https://github.com/nix-community/nix-on-droid/issues/495
     nixpkgs-last-working-for-nix-on-droid.url = "github:NixOS/nixpkgs/88d3861";
+    nixpkgs-nushell.url = "github:indium114/nixpkgs/nushell/0.117.0";
 
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid";
