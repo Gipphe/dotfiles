@@ -157,7 +157,7 @@ in
           BROWSER = lib.getExe pkg;
           DEFAULT_BROWSER = lib.getExe pkg;
         };
-        gipphe.core.wm.bind."SUPER + B".action.spawn = lib.getExe pkg;
+        gipphe.core.wm.bind."SUPER + B".action.spawn = "${lib.getExe pkg} --name ${binaryName}";
         xdg.mimeApps.defaultApplicationPackages = [ pkg ];
       };
   };
