@@ -14,11 +14,12 @@ in
     settings.gaming = {
       inherit minecraft;
       gamescope.args = [
+        "--prefer-output ${monitors.left}"
+        "--output-width 1920"
+        "--output-height 1080"
+        "--nested-width 1920"
+        "--nested-height 1080"
         "--adaptive-sync"
-        "-O ${monitors.left}"
-        "-W 1920"
-        "-H 1080"
-        "-r 165"
       ];
     };
   };
