@@ -52,7 +52,9 @@ in
       den.aspects.profiles.gaming.stream.host
       den.aspects.profiles.gc
       den.aspects.profiles.keyring
-      den.aspects.profiles.rdp
+      # TODO: Enable once fix is in nixos-unstable.
+      # https://nixpk.gs/pr-tracker.html?pr=585583
+      # den.aspects.profiles.rdp
       den.aspects.profiles.rice
       den.aspects.profiles.secrets
       den.aspects.profiles.sync
