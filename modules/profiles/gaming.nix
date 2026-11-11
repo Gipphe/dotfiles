@@ -1,5 +1,8 @@
 { den, ... }:
 {
+  den.aspects.profiles.gaming.psx.includes = [
+    den.aspects.programs.mednafen
+  ];
   den.aspects.profiles.gaming.includes = [
     den.aspects.gaming.bolt-launcher
     den.aspects.gaming.gamemode

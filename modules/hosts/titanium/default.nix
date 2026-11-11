@@ -50,6 +50,7 @@ in
       den.aspects.profiles.email
       den.aspects.profiles.game-dev
       den.aspects.profiles.gaming
+      den.aspects.profiles.gaming.psx
       den.aspects.profiles.gaming.stream.host
       den.aspects.profiles.gc
       den.aspects.profiles.keyring
