@@ -9,26 +9,17 @@
     nixos = { host }: {
       programs.gamescope = {
         enable = true;
-        capSysNice = false;
+        capSysNice = true;
         args = [
-          "-f"
+          "--fullscreen"
           "--rt"
           "--expose-wayland"
-          "--mangoapp"
-          # "--hdr-enabled"
-          # "--hdr-itm-enable"
           "--hide-cursor-delay"
           "3000"
-          "--fade-out-duration"
-          "200"
-          "--xwayland-count"
-          "2"
         ]
         ++ host.settings.gaming.gamescope.args;
         env = {
-          # DXVK_HDR = "1";
           ENABLE_GAMESCOPE_WSI = "1";
-          # PROTON_ENABLE_HDR = "1";
         };
       };
     };
