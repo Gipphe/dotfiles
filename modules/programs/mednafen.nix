@@ -21,12 +21,21 @@
     {
       # Set the following config in `~/.mednafen/mednafen.cfg` if no audio is
       # playing:
+      #     sound.driver alsa
+      #     sound.device sexyal-literal-default
       #
-      # sound.driver alsa
-      # sound.device sexyal-literal-default
+      # Enable caching entire CD contents into memory (necessary to run games from .zip):
+      #     cd.image_memcache 1
       #
-      # Enable caching entire CD contents into memory (necessary to run games from .zip)
-      # cd.image_memcache 1
+      # Automatically save and load game state:
+      #     autosave 1
+      #
+      # Extract .chd files with `ghcman extractcd -i "<name>.chd" -o
+      # "<name>.cue" -ob "<name>.bin"`.
+      #
+      # Bundle the resulting .cue and .bin files into a .zip with `zip
+      # "<name>.zip" "<name>.bin" "<name>.cue"`.
+      # TODO: make a convenience script for rebundling .chd into .zip.
       home = {
         packages = [
           pkgs.mednafen
