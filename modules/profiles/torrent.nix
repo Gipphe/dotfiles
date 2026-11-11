@@ -1,6 +1,5 @@
-{ den, ... }:
-{
+{ den, ... }: {
   den.aspects.profiles.torrent.includes = [
-    den.aspects.programs.rtorrent
+    den.aspects.programs.qbittorrent
   ];
 }
