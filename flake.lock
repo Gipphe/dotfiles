@@ -1752,6 +1752,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-nushell": {
+      "locked": {
+        "lastModified": 1794338892,
+        "narHash": "sha256-eL5n4bk1QlY1daegOUJW+E92tSv6Lgjolp0CNIm5LNU=",
+        "owner": "indium114",
+        "repo": "nixpkgs",
+        "rev": "200969dcb514918f21663ab9b047a0b3e28c28b7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "indium114",
+        "ref": "nushell/0.117.0",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1784364478,
@@ -2126,6 +2142,7 @@
         "nixpkgs": "nixpkgs_8",
         "nixpkgs-last-working-for-nix-on-droid": "nixpkgs-last-working-for-nix-on-droid",
         "nixpkgs-logseq-og": "nixpkgs-logseq-og",
+        "nixpkgs-nushell": "nixpkgs-nushell",
         "nixpkgs-with-millennium": "nixpkgs-with-millennium",
         "noctalia": "noctalia",
         "noctalia-community-plugins": "noctalia-community-plugins",
