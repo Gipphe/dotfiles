@@ -7,7 +7,6 @@
   den.aspects.boron = {
     includes = [
       den.aspects.profiles.nixos.audio
-      # den.aspects.profiles.nixos.biometrics
       den.aspects.profiles.nixos.bluetooth
       den.aspects.profiles.nixos.boot
       den.aspects.profiles.nixos.camera
@@ -40,8 +39,6 @@
 
       den.aspects.programs.pipewire.higher-quantum
       den.aspects.system.cpu
-
-      den.aspects.hardware.disk
     ];
 
     homeManager = { lib, config, ... }: {

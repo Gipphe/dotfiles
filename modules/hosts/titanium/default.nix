@@ -29,7 +29,6 @@ in
   den.aspects.titanium = {
     includes = [
       den.aspects.profiles.nixos.audio
-      # den.aspects.profiles.nixos.biometrics
       den.aspects.profiles.nixos.bluetooth
       den.aspects.profiles.nixos.boot
       den.aspects.profiles.nixos.camera
@@ -71,7 +70,6 @@ in
 
       den.aspects.hardware.cpu.intel.comet-lake
       den.aspects.hardware.gpu.nvidia.rtx3070
-      den.aspects.hardware.disk
       den.aspects.hardware.motherboard.gigabyte.z490
       den.aspects.hardware.peripheral.logitech.a50gen5
       den.aspects.hardware.peripheral.logitech.g502x

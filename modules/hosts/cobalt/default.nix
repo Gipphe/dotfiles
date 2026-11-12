@@ -18,7 +18,6 @@
       den.aspects.profiles.nixos.time
       den.aspects.profiles.nixos.zramswap
 
-      # den.aspects.profiles.ai
       den.aspects.profiles.applications
       den.aspects.profiles.audio
       den.aspects.profiles.calendar
@@ -36,7 +35,6 @@
       den.aspects.profiles.systemd
 
       den.aspects.system.cpu
-      den.aspects.hardware.disk
     ];
 
     homeManager = { config, ... }: {
