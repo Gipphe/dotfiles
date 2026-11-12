@@ -2219,11 +2219,11 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "lastModified": 1794404598,
-        "narHash": "sha256-g8NzMmO29+OELCzPPFM/99EW5nkPs+hz8YTU+1WV9Rs=",
+        "lastModified": 1794525360,
+        "narHash": "sha256-fcv9Aqqziiirw0dFWD8lpd4w9fqo97B4oVLS8QrQzr0=",
         "owner": "Gipphe",
         "repo": "dotfiles-secrets",
-        "rev": "9fcd66b1fd2a53c80f93593afa65bb0f76dc80d3",
+        "rev": "80a1b97d8adaccfee42a36aff5b0df55dc6814cb",
         "type": "github"
       },
       "original": {
@@ -2240,11 +2240,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793052255,
-        "narHash": "sha256-Y/JIHTnMlOabDfyaSBubWGLDIVGihLEUuoMhFvQKaDo=",
+        "lastModified": 1794261845,
+        "narHash": "sha256-Ivif/kuD68yEOKcZZG3zSwNMFUuIgzUgeJuzcHrQy+8=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "60182817ee048ac94b4c68ea76d5ef2e8aac730d",
+        "rev": "fe7b4228405aeac2ce7192c2049a6e2bc8637082",
         "type": "github"
       },
       "original": {

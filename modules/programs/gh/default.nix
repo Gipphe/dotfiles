@@ -1,6 +1,7 @@
 { inputs, ... }:
 {
   den.aspects.programs.gh.homeManager =
+    { host }:
     {
       lib,
       config,
@@ -48,6 +49,11 @@
         home.packages = [ module.config.wrapper ];
         gipphe.programs.git = module.config.passthru.git;
         xdg = module.config.passthru.xdg;
+        programs.nushell.extraConfig = /* nu */ ''
+          $env.GH_TOKEN = open --raw '${
+            config.sensitive.secrets.secrets."${host.hostName}/gh-token.txt"
+          }' | str trim
+        '';
       };
     };
 }
