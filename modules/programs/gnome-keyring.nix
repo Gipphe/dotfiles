@@ -6,6 +6,7 @@
       security.pam.services = {
         login.enableGnomeKeyring = true;
         sddm.enableGnomeKeyring = true;
+        ly.enableGnomeKeyring = true;
       };
       environment.systemPackages = [ pkgs.gcr_4 ];
     };
