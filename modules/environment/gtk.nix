@@ -1,20 +1,19 @@
+let
+  size = "standard";
+in
 {
   den.aspects.environment.gtk = {
-    homeManager = { pkgs, ... }: {
+    homeManager = { pkgs, config, ... }: {
       home.pointerCursor.gtk.enable = true;
       gtk = {
         enable = true;
-        iconTheme = {
-          name = "Adwaita";
-          package = pkgs.adwaita-icon-theme;
-        };
         theme = {
           package = pkgs.catppuccin-gtk.override {
-            size = "standard";
-            accents = [ "sapphire" ];
-            variant = "macchiato";
+            inherit size;
+            accents = [ config.catppuccin.accent ];
+            variant = config.catppuccin.flavor;
           };
-          name = "catppuccin-macchiato-sapphire-standard";
+          name = "catppuccin-${config.catppuccin.flavor}-${config.catppuccin.accent}-${size}";
         };
         gtk4.theme = null;
       };
