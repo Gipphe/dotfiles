@@ -15,7 +15,7 @@
         qt6ctSettings = config.qt.qt5ctSettings;
         kvantum = {
           enable = true;
-          settings.General.theme = "catppuccin-macchiato-sapphire";
+          settings.General.theme = "catppuccin-${config.catppuccin.flavor}-${config.catppuccin.accent}";
           themes = [ pkgs.catppuccin-kvantum ];
         };
       };
