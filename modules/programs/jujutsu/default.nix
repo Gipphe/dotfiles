@@ -2,7 +2,6 @@
 {
   den.aspects.programs.jujutsu = {
     homeManager =
-      { host }:
       {
         lib,
         pkgs,
@@ -266,13 +265,7 @@
                     inner = pkgs.writeNushellApplication {
                       name = "jj-full_pub-inner";
                       runtimeInputs = [ config.gipphe.programs.gh.package ];
-                      text = /* nu */ ''
-                        $env.GH_TOKEN = open '${
-                          config.sensitive.secrets.secrets."${host.hostName}/gh-token.txt"
-                        }' | str trim
-
-                        ${builtins.readFile ./jj-puf-inner.nu} 
-                      '';
+                      text = builtins.readFile ./jj-puf-inner.nu;
                     };
                   in
                   [
