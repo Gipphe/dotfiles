@@ -1,5 +1,4 @@
-{ inputs, den, ... }:
-{
+{ den, ... }: {
   den.aspects.gaming.steam = {
     includes = [
       den.aspects.gaming.gamescope
@@ -28,12 +27,9 @@
     nixos =
       { pkgs, ... }:
       let
-        pkg =
-          inputs.nixpkgs-with-millennium.legacyPackages.${pkgs.stdenv.hostPlatform.system}.steamWithMillennium.override
-            {
-              inherit (pkgs) steam;
-              extraArgs = "-system-composer";
-            };
+        pkg = pkgs.steamWithMillennium.override {
+          extraArgs = "-system-composer";
+        };
       in
       {
         environment.variables = {
