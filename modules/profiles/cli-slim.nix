@@ -11,6 +11,7 @@
     den.aspects.programs.entr
     den.aspects.programs.eza
     den.aspects.programs.fd
+    den.aspects.programs.forgejo-cli
     den.aspects.programs.fx
     den.aspects.programs.gh
     den.aspects.programs.giphtvim.base
