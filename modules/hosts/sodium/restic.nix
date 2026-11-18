@@ -7,6 +7,7 @@
           repository = "rclone:filen:/Resource/sodium";
           passwordFile = config.sensitive.secrets.secrets."sodium/restic-password.txt";
           inhibitsSleep = true;
+          initialize = true;
           paths = [
             osConfig.services.forgejo.stateDir
           ];
