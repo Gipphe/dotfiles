@@ -30,6 +30,8 @@
       den.aspects.programs.ripgrep
       den.aspects.programs.ssh
       den.aspects.programs.zoxide
+
+      den.aspects.sodium.restic
     ];
 
     nixos =

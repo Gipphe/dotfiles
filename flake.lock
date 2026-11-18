@@ -2313,11 +2313,11 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "lastModified": 1794924761,
-        "narHash": "sha256-YLX1MdrNF75HMn1HRR/BdVvjbwMWOPUJyMrr+iERd0s=",
+        "lastModified": 1795011159,
+        "narHash": "sha256-+ASQC/pZt/b2q1qyF/KqFmoxMVPITxdls2pFPWjOUAs=",
         "owner": "Gipphe",
         "repo": "dotfiles-secrets",
-        "rev": "773b3480732f0cd36b01b5362516400229df8429",
+        "rev": "c495bf0e98f6192429805da2583ffcc8b58d4b66",
         "type": "github"
       },
       "original": {
