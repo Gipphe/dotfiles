@@ -20,6 +20,7 @@
       den.aspects.programs.curl
       den.aspects.programs.eza
       den.aspects.programs.fd
+      den.aspects.programs.forgejo
       den.aspects.programs.git
       den.aspects.programs.gnugrep
       den.aspects.programs.gnused
