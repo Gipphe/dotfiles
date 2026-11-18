@@ -123,7 +123,7 @@ in
       };
     };
 
-    nixos = { pkgs, lib, ... }: {
+    nixos = { user }: { pkgs, lib, ... }: {
       imports = [
         ./_hardware-configuration.nix
         inputs.disko.nixosModules.disko
@@ -182,6 +182,23 @@ in
       system.stateVersion = "26.05";
 
       boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+      services.openssh = {
+        enable = true;
+        openFirewall = true;
+        settings = {
+          PasswordAuthentication = false;
+          KbdInteractiveAuthentication = false;
+          PermitRootLogin = "no";
+          AllowUsers = [ user.userName ];
+          MaxAuthTries = 3;
+          PerSourcePenalties = "crash:3600s authfail:3600s max:86400s";
+        };
+      };
+
+      users.users.${user.userName}.openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJLC+gAQcmXgnkb9seOXdDln/HQkAxxL9s4+hXRJUm0P u0_a342@localhost"
+      ];
     };
   };
 }
