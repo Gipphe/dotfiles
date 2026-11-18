@@ -1,5 +1,15 @@
-{
+{ den, ... }: {
   den.aspects.system.networking = {
+    includes = [ den.aspects.system.networking.core ];
+    homeManager =
+      { pkgs, ... }:
+      {
+        gipphe.core.wm.bind = {
+          "XF86WLAN".action.spawn = "${pkgs.networkmanager}/bin/nmcli radio wifi toggle";
+        };
+      };
+  };
+  den.aspects.system.networking.core = {
     homeManager =
       { pkgs, ... }:
       {

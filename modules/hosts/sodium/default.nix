@@ -1,18 +1,14 @@
 { den, inputs, ... }:
 {
-  # TODO: Remove once sodium or carbon hosts are back in place.
-  flake.checks.aarch64-linux = { };
-  # TODO: Fix for raspberry-pi
-  # den.hosts.aarch64-linux.sodium = {
-  #   users.gipphe = { };
-  # };
+  den.hosts.aarch64-linux.sodium = {
+    instantiate = inputs.nixos-raspberrypi.lib.nixosSystem;
+    users.gipphe = { };
+  };
   den.aspects.sodium = {
     includes = [
-      den.aspects.profiles.nixos.networking
+      den.aspects.system.networking.core
       den.aspects.profiles.nixos.system
       den.aspects.profiles.nixos.time
-      # den.aspects.profiles.nixos.wifi
-      # den.aspects.profiles.cli-slim
       den.aspects.profiles.core
       den.aspects.profiles.gc
       den.aspects.profiles.keyring
@@ -38,68 +34,88 @@
     nixos =
       { user }:
       {
-        lib,
         config,
-        pkgs,
+        lib,
+        options,
         ...
       }:
       {
         imports = [
-          "${inputs.nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-        ];
+          inputs.nixos-raspberrypi.nixosModules.sd-image
+        ]
+        ++ builtins.attrValues {
+          inherit (inputs.nixos-raspberrypi.nixosModules.raspberry-pi-4)
+            base
+            bluetooth
+            display-vc4
+            ;
+          inherit (inputs.nixos-raspberrypi.nixosModules)
+            usb-gadget-ethernet
+            ;
+        };
 
-        hardware.enableRedistributableFirmware = true;
-        hardware.firmware = [ pkgs.raspberrypiWirelessFirmware ];
-        hardware.bluetooth.enable = false;
+        boot = {
+          zfs.forceImportRoot = false;
+          # # WiFi driver fixes for Pi 4
+          # # Change regulatory domain to your country: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+          extraModprobeConfig = ''
+            options cfg80211 ieee80211_regdom=NO
+          '';
+          # options brcmfmac roamoff=1 feature_disable=0x82000
+        };
 
-        boot.zfs.forceImportRoot = true;
-        boot.loader.grub.enable = false;
-        boot.loader.generic-extlinux-compatible.enable = true;
-
-        # WiFi driver fixes for Pi 4
-        # Change regulatory domain to your country: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
-        boot.extraModprobeConfig = ''
-          options cfg80211 ieee80211_regdom=NO
-          options brcmfmac roamoff=1 feature_disable=0x82000
-        '';
         networking.networkmanager.wifi.powersave = false;
-        networking.networkmanager.ensureProfiles = {
-          environmentFiles = lib.mkForce [ ];
-          profiles.GiphtNet.wifi-security.psk = lib.mkForce "giphthopp";
-        };
 
-        # Unblock WiFi at boot (common Pi issue)
-        systemd.services.rfkill-unblock-wifi = {
-          description = "Unblock WiFi";
-          wantedBy = [ "multi-user.target" ];
-          before = [ "NetworkManager.service" ];
-          serviceConfig = {
-            Type = "oneshot";
-            ExecStart = "${pkgs.util-linux}/bin/rfkill unblock wifi";
-            RemainAfterExit = true;
-          };
-        };
-
-        # mDNS for raspberry.local
+        # # mDNS for raspberry.local
         services.avahi = {
           enable = true;
           nssmdns4 = true;
-          settings.publish.disable-publishing = false;
-          settings.publish.publish-addresses = true;
-        };
+        }
+        // (
+          if (options.services.avahi ? settings) then
+            {
+              settings.publish = {
+                disable-publishing = false;
+                publish-addresses = true;
+              };
+            }
+          else
+            {
+              publish = {
+                enable = true;
+                addresses = true;
+              };
+            }
+        );
 
-        services.openssh.enable = true;
-        systemd.services.sshd.wantedBy = lib.mkForce [ "multi-user.target" ];
         users.users.${user.userName} = {
           hashedPasswordFile = config.sensitive.secrets.secrets."sodium/gipphe-pw.txt";
-          openssh.authorizedKeys.keys = [
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMmb8xuUFYGTMjI7OlwLkIlmcfi1cz/SiSB6Bx1Y0KYW gipphe@titanium"
-            "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHzghQHh1ZqXhTE2dplVJZPulAvPcaxdSziDotkJBWLs gipphe@boron"
-          ];
+          # Fixed so the image-injected sops key can be chowned to the right
+          # owner before the system has ever booted.
+          uid = 1000;
+        };
+        # The shared systemd aspect disables getty on tty1 (desktop hosts use a
+        # greeter instead). This host has no greeter, so bring the login prompt
+        # back, otherwise there's no console to debug from.
+        systemd.services = {
+          "getty@tty1".enable = lib.mkForce true;
+          "autovt@tty1".enable = lib.mkForce true;
         };
 
-        system.stateVersion = "26.05";
+        # This host is built with nixos-raspberrypi's nixpkgs, but the shared
+        # nix module pins the registry's `nixpkgs` to this flake's input. Make
+        # the NixOS-provided registry entry agree with it.
+        nixpkgs.flake.source = lib.mkForce inputs.nixpkgs.outPath;
+
+        system.stateVersion = "26.10";
         sdImage.compressImage = false;
+
+        nix.settings = {
+          trusted-substituters = [ "https://nixos-raspberrypi.cachix.org" ];
+          trusted-public-keys = [
+            "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
+          ];
+        };
       };
   };
 }
