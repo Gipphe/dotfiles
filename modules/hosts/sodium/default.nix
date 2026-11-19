@@ -27,7 +27,7 @@
       den.aspects.programs.gnutar
       den.aspects.programs.less
       den.aspects.programs.nh
-      den.aspects.programs.nushell
+      den.aspects.programs.podman
       den.aspects.programs.ripgrep
       den.aspects.programs.ssh
       den.aspects.programs.zoxide
