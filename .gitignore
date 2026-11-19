@@ -1,7 +1,7 @@
 .direnv/
 STAMP/
 .DS_Store
-result
+result*
 **/_temp/
 env.json
 sd-image-wifi-pw.nix
