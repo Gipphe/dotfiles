@@ -35,6 +35,10 @@
       den.aspects.sodium.restic
     ];
 
+    homeManager = {
+      home.enableNixpkgsReleaseCheck = false;
+    };
+
     nixos =
       { user }:
       {

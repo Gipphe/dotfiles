@@ -1,4 +1,4 @@
-{ inputs, ... }: {
+{ self, inputs, ... }: {
   # Applies sodium's configuration to the running Pi: builds on this machine,
   # copies the closure over SSH, and activates it there.
   #
@@ -21,6 +21,7 @@
             name = "nh-sodium";
             runtimeInputs = builtins.attrValues {
               inherit (pkgs) nixos-rebuild openssh;
+              inherit (inputs.nixpkgs-raspberrypi.legacyPackages.${system}) nh;
             };
             text = /* nu */ ''
               def main [
@@ -32,7 +33,11 @@
                       error make { msg: $"Unknown mode '($mode)'. Use one of: ($modes | str join ', ')" }
                   }
 
-                  ^nh os $mode --hostname "sodium" --target-host "gipphe@sodium.lan" --elevation-strategy auto -- ...$extra
+                  ( ^nh os $mode '${self}#sodium'
+                      --target-host "gipphe@sodium.lan"
+                      --elevation-strategy auto
+                      -- ...$extra
+                  )
                   if $env.LAST_EXIT_CODE != 0 {
                       exit $env.LAST_EXIT_CODE
                   }
