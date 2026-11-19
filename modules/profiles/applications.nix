@@ -16,6 +16,7 @@
     den.aspects.programs.spotify
     den.aspects.programs.umu-launcher
     den.aspects.programs.wezterm
+    den.aspects.programs.zathura
     den.aspects.programs.zen-browser.main
     den.aspects.programs.zen-browser.main.default
   ];
