@@ -129,7 +129,7 @@ mkShell' {
       name = "update";
       command = /* nu */ ''
         nix flake update
-        jujutsu commit flake.lock -m 'chore: update flake inputs'
+        jj commit flake.lock -m 'chore: update flake inputs'
       '';
       category = "utils";
     }
