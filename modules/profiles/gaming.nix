@@ -3,6 +3,9 @@
   den.aspects.profiles.gaming.psx.includes = [
     den.aspects.programs.mednafen
   ];
+  den.aspects.profiles.gaming.ps2.includes = [
+    den.aspects.programs.pcsx2
+  ];
   den.aspects.profiles.gaming.includes = [
     den.aspects.gaming.bolt-launcher
     den.aspects.gaming.gamemode
