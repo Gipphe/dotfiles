@@ -142,19 +142,17 @@
 
   nixConfig = {
     extra-substituters = [
-      # TODO: Re-enable once cache is back online.
-      # See https://github.com/xddxdd/nix-cachyos-kernel/issues/110
-      # "https://attic.xuyh0120.win/lantian"
-      "https://cache.iog.io"
       "https://cache.nixos.org"
-      "https://comfyui.cachix.org"
       "https://gipphe.cachix.org"
-      "https://hyprland.cachix.org"
       "https://nix-community.cachix.org"
-      "https://nix-gaming.cachix.org"
       "https://nixpkgs-unfree.cachix.org"
+      "https://hyprland.cachix.org"
+      "https://nix-gaming.cachix.org"
       "https://noctalia.cachix.org"
       "https://catppuccin.cachix.org"
+      "https://cache.lantian.pub/lantian"
+      "https://cache.iog.io"
+      "https://comfyui.cachix.org"
       "https://tweag-tricorder.cachix.org"
       "https://nixos-raspberrypi.cachix.org"
     ];
@@ -164,9 +162,7 @@
       "gipphe.cachix.org-1:GeHkB5yyMQkXYCPJ1FqFl8fbtDe6/aSmS9k8c57GetY="
       "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-      # TODO: Re-enable once cache is back online.
-      # See https://github.com/xddxdd/nix-cachyos-kernel/issues/110
-      # "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
+      "lantian:WVGO7vsRMSEN+h7Lp7kv6SAmrkEXgUGbbXm7jMDjBuQ="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
       "catppuccin.cachix.org-1:noG/4HkbhJb+lUAdKrph6LaozJvAeEEZj4N732IysmU="
