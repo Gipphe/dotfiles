@@ -21,7 +21,7 @@
       rebundle-chd = pkgs.writeNushellApplication {
         name = "rebundle-chd";
         runtimeInputs = [
-          pkgs.make-tools
+          pkgs.mame-tools
           pkgs.zip
         ];
         text = /* nu */ ''
