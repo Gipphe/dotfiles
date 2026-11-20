@@ -30,26 +30,37 @@
           pkgs.zip
         ];
         text = /* nu */ ''
-          def path-to-str []: record -> string {
-            $"($in.parent)/($in.stem).($in.extension)"
-          }
           def main [
-            input: string
-            output?: string
+            input: string # Input `.chd` file to rebundle.
+            output?: string # Output path for `.zip` bundle. Defaults to same directory as `input`.
           ]: nothing -> nothing {
-            let path = $file | path parse
+            let abs_input = $input | path expand
+            let path = $abs_input | path parse
             let tmp = mktemp --directory
-            let basename = $file | path basename
-            let output_dir = $file | path dirname
+            let basename = $abs_input | path basename
             let cue_output = $"($tmp)/($basename | path parse | upsert extension "cue" | path join)"
             let bin_output = $"($tmp)/($basename | path parse | upsert extension "bin" | path join)"
-            let zip_output = $output | default {
-              $"($tmp)/($basename | path parse | upsert extension "zip" | path join)"
+
+            let zip_output = if $output == null {
+              $"($abs_input | path dirname)/($basename | path parse | upsert extension "zip" | path join)"
+            } else if ($output | path type) == dir {
+              $"($output)/($basename | path parse | upsert extension "zip" | path join)"
+            } else if ($output | path exists) and ($output | path type) != "dir"  {
+              error make $"Output file ($output) already exists"
+            } else {
+              $output
             }
-            , chdman extractcd --input $file --output $cue_output --outputbin $bin_output
-            ^zip -j $zip_output $cue_output $bin_output
-            mv $zip_output $output_dir
-            print -e $"Rebundled as ($zip_output)"
+
+            try {
+              , chdman extractcd --input $abs_input --output $cue_output --outputbin $bin_output
+              mkdir ($zip_output | path dirname)
+              ^zip -j $zip_output $cue_output $bin_output
+              print -e $"Rebundled as ($zip_output)"
+            } catch { |e|
+              print -e $"Failed: ($e)"
+            } finally {
+              rm -rf $tmp
+            }
           }
         '';
       };
