@@ -44,6 +44,7 @@ in
       den.aspects.profiles.audio
       den.aspects.profiles.calendar
       den.aspects.profiles.cli
+      den.aspects.profiles.containers
       den.aspects.profiles.core
       den.aspects.profiles.desktop.hyprland
       den.aspects.profiles.email
