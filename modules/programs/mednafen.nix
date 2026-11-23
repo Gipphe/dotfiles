@@ -73,10 +73,10 @@
         "cd.image_memcache" = "1";
 
         # Automatically save and load game state.
-        autosafe = "1";
+        autosave = "1";
       };
 
-      confLine = { name, value }: "| str replace --regex '^${name} .*$' '${name} ${value}'";
+      confLine = { name, value }: "| str replace --multiline --regex '^${name} .*$' '${name} ${value}'";
 
       replace-conf-values = pkgs.writeNushellApplication {
         name = "mednafen-replace-conf-values";
@@ -86,6 +86,7 @@
           open --raw $conf_path
           ${lib.concatStringsSep "\n" (map confLine (lib.attrsToList conf))}
           | save -f $tmp
+
           mv $tmp $conf_path
         '';
       };
@@ -96,8 +97,10 @@
         packages = [
           pkgs.mednafen
           pkgs.mednaffe
-          replace-conf-values
         ];
+        activation.mednafen-apply-config = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          run '${lib.getExe replace-conf-values}'
+        '';
       };
       sops = {
         inherit secrets;
