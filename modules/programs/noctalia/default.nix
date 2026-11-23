@@ -35,7 +35,9 @@
           ];
         };
         gipphe.programs.gipphe.commands.noctalia.settings = {
+          copy.doc = "Copy settings from GUI to repo";
           copy.cmd = lib.getExe noctalia-copy-gui-settings;
+          diff.doc = "Diff GUI settings from settings in repo";
           diff.cmd = lib.getExe noctalia-diff-settings;
         };
         gipphe.core.wm.bind = {

@@ -92,7 +92,10 @@
       };
     in
     {
-      gipphe.programs.gipphe.commands.mednafen.rebundle-chd.cmd = lib.getExe rebundle-chd;
+      gipphe.programs.gipphe.commands.mednafen.rebundle-chd = {
+        doc = "Rebundle CHD archives into ZIP";
+        cmd = lib.getExe rebundle-chd;
+      };
       home = {
         packages = [
           pkgs.mednafen

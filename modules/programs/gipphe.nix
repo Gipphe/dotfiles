@@ -22,7 +22,6 @@
           ''
         else
           /* nu */ ''
-            export def "${lib.concatStringsSep " " subCommand}" []: nothing -> nothing {}
             ${lib.concatStringsSep "\n" (
               map ({ name, value }: commandToFunc' (subCommand ++ [ name ]) value) (lib.attrsToList value)
             )}
