@@ -9,6 +9,7 @@
         enableBashIntegration = false;
         enableZshIntegration = false;
         enableFishIntegration = false;
+        enableNushellIntegration = false;
       };
       programs.nix-index-database.comma.enable = true;
     };
