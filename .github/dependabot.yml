@@ -17,6 +17,8 @@ updates:
       prefix: actions
   - package-ecosystem: "nix"
     directory: "/"
+    ignore:
+      - dependency-name: "secrets"
     schedule:
       interval: "daily"
       time: "02:00"
