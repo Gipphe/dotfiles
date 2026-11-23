@@ -91,11 +91,11 @@
       };
     in
     {
+      gipphe.programs.gipphe.commands.mednafen.rebundle-chd.cmd = lib.getExe rebundle-chd;
       home = {
         packages = [
           pkgs.mednafen
           pkgs.mednaffe
-          rebundle-chd
           replace-conf-values
         ];
       };

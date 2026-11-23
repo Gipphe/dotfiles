@@ -34,11 +34,9 @@
             (import ./_settings.nix)
           ];
         };
-        home = {
-          packages = [
-            noctalia-copy-gui-settings
-            noctalia-diff-settings
-          ];
+        gipphe.programs.gipphe.commands.noctalia.settings = {
+          copy.cmd = lib.getExe noctalia-copy-gui-settings;
+          diff.cmd = lib.getExe noctalia-diff-settings;
         };
         gipphe.core.wm.bind = {
           "SUPER + space".action.spawn = "${ipc} panel-toggle launcher";
