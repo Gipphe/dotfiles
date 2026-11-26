@@ -25,6 +25,7 @@
       den.aspects.programs.gnugrep
       den.aspects.programs.gnused
       den.aspects.programs.gnutar
+      den.aspects.programs.home-assistant
       den.aspects.programs.less
       den.aspects.programs.nh
       den.aspects.programs.podman
